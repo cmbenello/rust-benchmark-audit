@@ -13,6 +13,7 @@ from typing import Dict, Tuple
 from apply_patch import apply_patch
 from mutate_patch import mutate_patch_text
 from policy_checks import run_policy_checks
+from swebench_adapter import SWEBenchAdapter
 
 
 VARIANT_TO_MODE = {
@@ -184,6 +185,28 @@ def run_instance(
 
     return result
 
+
+def run_swebench_evaluation(patches: Dict, out_dir: Path) -> Dict:
+    # patches in format {instance_id: {variant: patch_text}}
+    adapter = SWEBenchAdapter(
+            work_dir=Path("work"),
+            output_dir=Path("out")
+        )
+
+    predictions = []
+    for instance_id, variants in patches.items():
+        for variant, patch_text in variants.items():
+            prediction = {
+                "instance" : instance_id,
+                "variant_type" : variant,
+                "variant_patch" : patch_text
+            }
+            predictions.append(prediction)
+
+    return adapter.run_swebench_evaluation(
+        predictions=predictions,
+        run_id="rust-audit"
+    )
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
