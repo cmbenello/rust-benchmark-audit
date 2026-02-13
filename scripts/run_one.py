@@ -13,7 +13,7 @@ from typing import Dict, Tuple
 from apply_patch import apply_patch
 from mutate_patch import mutate_patch_text
 from policy_checks import run_policy_checks
-from swebench_adapter import SWEBenchAdapter
+from swe-bench-evaluation.swebench_adapter import SWEBenchAdapter
 
 
 VARIANT_TO_MODE = {
@@ -22,7 +22,6 @@ VARIANT_TO_MODE = {
     "mut_unsafe": "unsafe",
     "unsafe": "unsafe",
 }
-
 
 def _load_instance(instances_jsonl: Path, instance_id: str) -> Dict:
     with instances_jsonl.open("r", encoding="utf-8") as f:
@@ -192,7 +191,6 @@ def run_swebench_evaluation(patches: Dict, out_dir: Path) -> Dict:
             work_dir=Path("work"),
             output_dir=Path("out")
         )
-
     predictions = []
     for instance_id, variants in patches.items():
         for variant, patch_text in variants.items():
@@ -206,7 +204,9 @@ def run_swebench_evaluation(patches: Dict, out_dir: Path) -> Dict:
     return adapter.run_swebench_evaluation(
         predictions=predictions,
         run_id="rust-audit"
+        dataset_name="princeton-nlp/SWE-bench_multilingual"
     )
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)

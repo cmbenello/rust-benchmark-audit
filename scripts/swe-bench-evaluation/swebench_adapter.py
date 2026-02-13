@@ -18,7 +18,7 @@ class SWEBenchAdapter:
     def run_swebench_evaluation(
             self, 
             predictions: List[Dict],
-            dataset_name: str = "princeton-nlp/SWE-bench",
+            dataset_name: str,
             max_workers: int = 4,
             run_id: str = "rust-audit"
             ) -> Dict:
@@ -43,8 +43,10 @@ class SWEBenchAdapter:
         # Run SWE-bench evaluation
         from swebench.harness.run_evaluation import main as run_eval_main
         
+        # https://github.com/SWE-bench/SWE-bench/blob/main/docs/guides/evaluation.md
         results = run_eval_main(
-            dataset_name=dataset_name,
+            instance_ids=predictions["instance"],
+            dataset_name=predications["dataset_name"],
             predictions_path=str(pred_file),
             max_workers=max_workers,
             run_id=run_id,
