@@ -1,16 +1,16 @@
 # benchmark-policy-gap
-(This readme is vibe coded along with some of the files)
+Disclaimer: Portions of the respository are vibecoded with FOO BAR.
+
 ## Purpose
 This repository evaluates a policy gap in code-generation benchmark evaluation for Rust tasks.
 
 The concrete question in this implementation is:
 - Can code pass benchmark tests while violating project-defined safety/style expectations?
 
-This is implemented for a focused slice:
-- Benchmark: `Multi-SWE-bench`
-- Language: `Rust`
-- Project: `nushell/nushell`
-- Instances: 14 (`data/multi_swe_bench_nushell_rows.csv`)
+This research focuses on the following benchmarks: 
+- `Multi-SWE-bench`
+- `SWE-bench Multilingual`
+- `SWE-bench++`
 
 ## What Is Implemented
 For each instance, the pipeline runs three variants:
