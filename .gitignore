@@ -8,7 +8,7 @@ __pycache__/
 
 # benchmark-policy-gap generated artifacts (large/noisy)
 work/
-out/logs/
+logs/
 out/patches/
 benchmark-policy-gap-export.tgz
 data/nushell__nushell_dataset.jsonl
