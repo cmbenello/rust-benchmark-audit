@@ -1,9 +1,12 @@
-
 import pandas as pd
 from swebench.harness import run_evaluation
 import json
 import sys
 import subprocess
+from pathlib import Path
+import shutil
+from datetime import datetime
+import os
 
 def create_predictions_from_dataframe(df, benchmark):
     '''
@@ -27,7 +30,7 @@ def create_predictions_from_dataframe(df, benchmark):
         }
         predictions.append(prediction)
     benchmark_path = benchmark.replace('/', '_')
-    predictions_path = f"{benchmark_path}_formatted.json"
+    predictions_path = f"{benchmark_path}_temp.json"
     with open(predictions_path, 'w') as f:
         json.dump(predictions, f, indent=2)
     return predictions_path
@@ -37,13 +40,14 @@ def evaluate_predictions(predictions_paths):
     results = {}
     for benchmark in predictions_paths.keys():
         print(f"Evaluating benchmark: {benchmark}")
-        
+        #update the run_id to reflect the benchmark and date/time of evaluation
+        run_id = f"{benchmark.replace('/', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         cmd = [
             sys.executable, '-m', 'swebench.harness.run_evaluation',
             '--predictions_path', predictions_paths[benchmark],
             '--dataset_name', benchmark,
             '--max_workers', '4',
-            '--run_id', f"{benchmark}_evaluation"
+            '--run_id', run_id,
         ]
         
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
@@ -52,7 +56,38 @@ def evaluate_predictions(predictions_paths):
         with open(f"{benchmark_path}_results.json", 'w') as f:
             json.dump(results, f, indent=2)
     
-    return results
+    return run_id
+
+def collate_and_clean_results(run_id, predictions_paths):
+    logs_dir = Path(f"logs/run_evaluation/{run_id}/gs/")
+
+    all_results = {}
+    
+    for instance_dir in logs_dir.iterdir():
+        if instance_dir.is_dir():
+            report_path = instance_dir / "report.json"
+            
+            if report_path.exists():
+                try:
+                    with open(report_path, 'r') as f:
+                        report_data = json.load(f)
+                        # Add instance_id to the report data
+                        report_data['instance_id'] = instance_dir.name
+                        report_data['run_id'] = run_id
+                        all_results[run_id+'_'+instance_dir.name] = report_data
+                except json.JSONDecodeError as e:
+                    print(f"Error reading {report_path}: {e}")
+    
+    # Save collated results_date
+    output_path = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_swebench_evals_total.json"
+    with open(output_path, 'w') as f:
+        json.dump(all_results, f, indent=2)
+
+    #cleaning up temporary predictions files
+    for benchmark, path in predictions_paths.items():
+        print(f"Removing temporary predictions file: {benchmark} - {path}")
+        shutil.rmtree(Path(f"logs/run_evaluation/{run_id}/"))
+        os.remove(path)
 
 if __name__ == "__main__":
     # testing with swebench-lite gs
@@ -60,7 +95,8 @@ if __name__ == "__main__":
     df['benchmark'] = 'swe-bench/swe-bench_lite'
     df['patch_diff'] = df['patch']
     df['augmentation'] = 'gs'
-    
+    df = df.head(8)
+
     # Create predictions in the required format for evaluation
     benchmarks = df['benchmark'].unique()
     predictions_paths = {}
@@ -69,10 +105,6 @@ if __name__ == "__main__":
         predictions_paths[benchmark] = create_predictions_from_dataframe(benchmark_df, benchmark)
     
     # Evaluate the predictions and save results
-    results = evaluate_predictions(predictions_paths)
-    print(results)
+    results_run_id = evaluate_predictions(predictions_paths)
     
-    #cleaning up
-    for benchmark, path in predictions_paths.items():
-        print(f"Removing temporary predictions file: {benchmark} - {path}")
-        os.remove(path)
+    collate_and_clean_results(results_run_id, predictions_paths)
