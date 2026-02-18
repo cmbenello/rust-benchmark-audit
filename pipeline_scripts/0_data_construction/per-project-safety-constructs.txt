@@ -1,3 +1,7 @@
+POLICY SELECTION CRITERIA:
+    - strong rule e.g. not a suggestion but more of a requirement 
+    - changes code semantics e.g. not guidance on code readability or naming
+
 nushell/nushell
     - policy: https://github.com/nushell/nushell/blob/main/devdocs/rust_style.md
         1. L20 "panicking is not an allowed error handling strategy for anything that could be triggered by user input OR behavior of the outside system."
