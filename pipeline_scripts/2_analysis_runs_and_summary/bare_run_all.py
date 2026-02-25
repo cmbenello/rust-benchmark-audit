@@ -57,15 +57,36 @@ def instances_policy_checks(instances: List[dict]) -> List[dict]:
     
     Args:
         instances: List of instance dictionaries
+        
+    Returns:
+        List of dictionaries with source_benchmark, instance_id, and policy_count_results
     """    
     results = []
     for instance in instances:
         instance_id = instance.get("instance_id")
+        source_benchmark = instance.get("source_benchmark")
         policy_count_results = count_from_bm_diff(instance.get("fix_patch", ""))
         #TODOD maybe something for tests too?
-        results.append([instance_id, policy_count_results])
-    #these are just the results from the policy counts
+        results.append({
+            "source_benchmark": source_benchmark,
+            "instance_id": instance_id,
+            "policy_count_results": policy_count_results
+        })
     return results
+
+def save_policy_results_to_jsonl(results: List[dict], output_path: str | Path) -> None:
+    """Save policy check results to a JSONL file.
+    
+    Args:
+        results: List of result dictionaries
+        output_path: Path to save the JSONL file
+    """
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    with open(output_path, 'w') as f:
+        for result in results:
+            f.write(json.dumps(result) + '\n')
 
 def patch_mutation(instances: List[dict]) -> List[dict]:
     """Apply mutations to the patches of the given instances.
@@ -102,16 +123,16 @@ def mutations_evaluation(mutated_instances: List[dict]) -> List[dict]:
         mutated_instances: List of mutated instance dictionaries
     """
     prediction_paths = create_predictions_from_mutated_instances(mutated_instances)
-    prediction_paths = {'TuringEnterprises/SWE-Bench-plus-plus': prediction_paths['TuringEnterprises/SWE-Bench-plus-plus']}
+    prediction_paths = {'SWE-bench/SWE-bench_Multilingual': prediction_paths['SWE-bench/SWE-bench_Multilingual']}
     evaluation_results = evaluate_predictions(prediction_paths)
     print(evaluation_results)
 
 def main() -> int:
     filtered_instances = load_instances_from_jsonl("data/instances_unified.jsonl")
     policy_results = instances_policy_checks(filtered_instances)
-    #print(policy_results)
-    mutated_instances = patch_mutation(filtered_instances)
-    mutations_evaluation(mutated_instances)
+    save_policy_results_to_jsonl(policy_results, "results/policy_check_results.jsonl")
+    #mutated_instances = patch_mutation(filtered_instances)
+    #mutations_evaluation(mutated_instances)
     return 0
 
 if __name__ == "__main__":
