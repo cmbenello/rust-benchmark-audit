@@ -123,16 +123,16 @@ def mutations_evaluation(mutated_instances: List[dict]) -> List[dict]:
         mutated_instances: List of mutated instance dictionaries
     """
     prediction_paths = create_predictions_from_mutated_instances(mutated_instances)
-    prediction_paths = {'SWE-bench/SWE-bench_Multilingual': prediction_paths['SWE-bench/SWE-bench_Multilingual']}
-    evaluation_results = evaluate_predictions(prediction_paths)
-    print(evaluation_results)
+    #prediction_paths = {'SWE-bench/SWE-bench_Multilingual': prediction_paths['SWE-bench/SWE-bench_Multilingual']}
+    #evaluation_results = evaluate_predictions(prediction_paths)
+    #print(evaluation_results)
 
 def main() -> int:
     filtered_instances = load_instances_from_jsonl("data/instances_unified.jsonl")
-    policy_results = instances_policy_checks(filtered_instances)
-    save_policy_results_to_jsonl(policy_results, "results/policy_check_results.jsonl")
-    #mutated_instances = patch_mutation(filtered_instances)
-    #mutations_evaluation(mutated_instances)
+    #policy_results = instances_policy_checks(filtered_instances)
+    #save_policy_results_to_jsonl(policy_results, "results/policy_check_results.jsonl")
+    mutated_instances = patch_mutation(filtered_instances)
+    create_predictions_from_mutated_instances(mutated_instances)
     return 0
 
 if __name__ == "__main__":
