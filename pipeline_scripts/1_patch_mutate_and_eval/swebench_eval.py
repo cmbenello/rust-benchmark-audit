@@ -11,13 +11,13 @@ from collections import defaultdict
 
 def create_predictions_from_mutated_instances(mutated_instances):
     '''
-    Convert mutated instances to swebench predictions format, grouped by source_benchmark.
+    Convert mutated instances to swebench predictions format, grouped by source_benchmark and mutation.
     
     Each mutated_instance should have:
     - instance_id
     - diff (the patch content)
     - mutation (mutation type: 'gs', 'unsafe', 'unwrap', 'panic!')
-    - source_benchmark (benchmark name for grouping)
+    - hf_bm (benchmark name for grouping)
     
     output prediction format for each instance:
     {
@@ -27,35 +27,43 @@ def create_predictions_from_mutated_instances(mutated_instances):
     }
     
     Returns:
-        dict: mapping of benchmark -> predictions_path
+        dict: mapping of benchmark_mutation -> predictions_path
     '''
     
-    # Group instances by source_benchmark
-    instances_by_benchmark = defaultdict(list)
+    # Group instances by source_benchmark and mutation
+    instances_by_benchmark_mutation = defaultdict(list)
     for instance in mutated_instances:
         benchmark = instance.get('hf_bm')
+        mutation = instance.get('mutation')
         if not benchmark:
-            raise ValueError(f"Instance {instance.get('instance_id')} missing source_benchmark field")
-        instances_by_benchmark[benchmark].append(instance)
+            raise ValueError(f"Instance {instance.get('instance_id')} missing hf_bm field")
+        if not mutation:
+            raise ValueError(f"Instance {instance.get('instance_id')} missing mutation field")
+        key = (benchmark, mutation)
+        instances_by_benchmark_mutation[key].append(instance)
     
-    # Create predictions files for each benchmark
+    # Create predictions JSONL files for each benchmark/mutation combination
     predictions_paths = {}
-    for benchmark, instances in instances_by_benchmark.items():
+    for (benchmark, mutation), instances in instances_by_benchmark_mutation.items():
         predictions = []
         for instance in instances:
             prediction = {
                 "instance_id": instance['instance_id'],
-                "model_name_or_path": instance['mutation'],  # mutation type (gs, unsafe, unwrap, panic!)
-                "model_patch": instance['diff']  # the patch content
+                "model_name_or_path": instance['mutation'],
+                "model_patch": instance['diff']
             }
             predictions.append(prediction)
         
-        # Save to temp file
+        # Save to JSONL file
         benchmark_path = benchmark.replace('/', '_')
-        predictions_path = f"{benchmark_path}_mutated_temp.json"
+        predictions_path = f"{benchmark_path}_{mutation}_mutated.jsonl"
         with open(predictions_path, 'w') as f:
-            json.dump(predictions, f, indent=2)
-        predictions_paths[benchmark] = predictions_path
+            for prediction in predictions:
+                f.write(json.dumps(prediction) + '\n')
+        
+        # Create a composite key for the dictionary
+        key = f"{benchmark}_{mutation}"
+        predictions_paths[key] = predictions_path
     
     return predictions_paths
 
