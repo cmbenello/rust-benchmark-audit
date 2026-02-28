@@ -117,6 +117,41 @@ Baseline findings from the latest unified-sample run:
 - RQ2 (`mut_unwrap`): `3/27` test-passing mutants, and all `3` are policy-violating.
 - RQ2 (`mut_unsafe`): `8/27` test-passing mutants, and all `8` are policy-violating.
 
+## Latest Harness Run (2026-02-28, Partial)
+Run command used:
+```bash
+python3 -u pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
+  --instances-jsonl data/instances_unified.jsonl \
+  --mutations gs,unwrap,unsafe,panic \
+  --run-eval \
+  --docker-host unix://$HOME/.docker/run/docker.sock \
+  --mutated-out-jsonl results/mutated_instances_20260228_005456.jsonl \
+  --policy-out-jsonl results/policy_check_results_20260228_005456.jsonl \
+  --predictions-dir /tmp/mutated_patches_20260228_005456 \
+  --eval-output-dir results/harness_eval_20260228_005456
+```
+
+Artifacts generated:
+- `results/mutated_instances_20260228_005456.jsonl` (`108` rows)
+- `results/policy_check_results_20260228_005456.jsonl` (`108` rows)
+- `logs/run_evaluation/SWE-bench_SWE-bench_Multilingual_gs_20260228_005456` (completed)
+- `logs/run_evaluation/SWE-bench_SWE-bench_Multilingual_panic_20260228_011017` (started but interrupted)
+
+Completed harness results from this run:
+- `SWE-bench/SWE-bench_Multilingual` + `gs`: `9/10` resolved, `1/10` unresolved.
+- Unresolved instance: `uutils__coreutils-6377`.
+
+Policy-count totals from this run (`results/policy_check_results_20260228_005456.jsonl`):
+- `gs`: `unwrap=6`, `unsafe=1`, `panic=1`, `unsafe_without_safety_comment=0`
+- `unwrap`: `unwrap=33`, `unsafe=1`, `panic=1`, `unsafe_without_safety_comment=0`
+- `unsafe`: `unwrap=6`, `unsafe=28`, `panic=1`, `unsafe_without_safety_comment=27`
+- `panic`: `unwrap=6`, `unsafe=1`, `panic=4`, `unsafe_without_safety_comment=0`
+
+Notes:
+- Full 12-job harness completion takes significant wall-clock time because each mutation run re-enters a long image/setup stage.
+- By default, `ByteDance-Seed/Multi-SWE-bench` jobs are skipped by the runner because of a current `swebench`/`datasets` loader incompatibility.
+- Detailed snapshot is also stored at `results/20260228_harness_partial_summary.md`.
+
 ## NL Policy To Executable Checks (TODO: manual update of policy executables?)
 The policy text in `nushell` docs is operationalized into machine-checkable proxies:
 - `fmt` policy proxy: `cargo fmt --check`

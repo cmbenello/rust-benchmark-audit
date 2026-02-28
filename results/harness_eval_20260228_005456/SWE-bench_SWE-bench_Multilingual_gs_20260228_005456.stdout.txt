@@ -1,0 +1,15 @@
+Running 10 instances...
+All instances run.
+Cleaning cached images...
+Removed 0 images.
+Total instances: 300
+Instances submitted: 10
+Instances completed: 10
+Instances incomplete: 290
+Instances resolved: 9
+Instances unresolved: 1
+Instances with empty patches: 0
+Instances with errors: 0
+Unstopped containers: 0
+Unremoved images: 0
+Report written to gs.SWE-bench_SWE-bench_Multilingual_gs_20260228_005456.json
