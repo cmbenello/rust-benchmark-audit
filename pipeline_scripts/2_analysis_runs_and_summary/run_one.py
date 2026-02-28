@@ -27,6 +27,9 @@ VARIANT_TO_MODE = {
     "unwrap": "unwrap",
     "mut_unsafe": "unsafe",
     "unsafe": "unsafe",
+    "mut_panic": "panic",
+    "panic": "panic",
+    "panic!": "panic",
 }
 
 
@@ -42,14 +45,29 @@ def _load_instance(instances_jsonl: Path, instance_id: str) -> Dict:
     raise ValueError(f"instance_id not found: {instance_id}")
 
 
-def _repo_url(instance: Dict) -> str:
+def _normalized_repo_parts(instance: Dict) -> Tuple[str, str]:
     org = instance.get("org")
     repo = instance.get("repo")
-    if org and repo:
-        return f"https://github.com/{org}/{repo}"
     if isinstance(repo, str) and "/" in repo:
-        return f"https://github.com/{repo}"
-    raise ValueError("Cannot determine repo URL from instance record")
+        repo_org, repo_name = repo.split("/", 1)
+        if not org:
+            org = repo_org
+        repo = repo_name
+    if org and repo:
+        return str(org), str(repo)
+    raise ValueError("Cannot determine org/repo from instance record")
+
+
+def _repo_url(instance: Dict) -> str:
+    org, repo = _normalized_repo_parts(instance)
+    return f"https://github.com/{org}/{repo}"
+
+
+def _benchmark_name(instance: Dict) -> str:
+    source_benchmark = instance.get("source_benchmark")
+    if isinstance(source_benchmark, str) and source_benchmark:
+        return source_benchmark
+    return "unknown"
 
 
 def _run_tests(repo_dir: Path) -> Tuple[bool, str, str]:
@@ -92,9 +110,9 @@ def run_instance(
     base_commit = instance.get("base_commit")
     pr_number = instance.get("number")
 
+    benchmark = _benchmark_name(instance)
     repo_url = _repo_url(instance)
-    org = instance.get("org") or repo_url.rstrip("/").split("/")[-2]
-    repo = instance.get("repo") or repo_url.rstrip("/").split("/")[-1]
+    org, repo = _normalized_repo_parts(instance)
 
     if repo_dir_override:
         repo_dir = repo_dir_override
@@ -164,7 +182,7 @@ def run_instance(
     _write_log(log_path, log_sections)
 
     result = {
-        "benchmark": "Multi-SWE-bench",
+        "benchmark": benchmark,
         "language": "Rust",
         "repo": f"{org}/{repo}",
         "instance_id": instance_id,

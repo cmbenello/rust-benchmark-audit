@@ -1,173 +1,254 @@
-import pandas as pd
-from swebench.harness import run_evaluation
+#!/usr/bin/env python3
+"""Helpers for preparing and running SWE-bench harness evaluations."""
+from __future__ import annotations
+
+import argparse
+import csv
 import json
-import sys
 import subprocess
-from pathlib import Path
-import shutil
+import sys
 from datetime import datetime
-import os
-from collections import defaultdict
+from pathlib import Path
+from typing import Dict, Iterable, List
 
-def create_predictions_from_mutated_instances(mutated_instances):
-    '''
-    Convert mutated instances to swebench predictions format, grouped by source_benchmark and mutation.
-    
-    Each mutated_instance should have:
+
+def _slug(text: str) -> str:
+    cleaned = []
+    for ch in text:
+        if ch.isalnum() or ch in ("-", "_"):
+            cleaned.append(ch)
+        else:
+            cleaned.append("_")
+    return "".join(cleaned).strip("_")
+
+
+def _write_jsonl(path: Path, rows: Iterable[dict]) -> int:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    count = 0
+    with path.open("w", encoding="utf-8") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=True) + "\n")
+            count += 1
+    return count
+
+
+def create_predictions_from_mutated_instances(
+    mutated_instances: List[dict],
+    out_dir: str | Path = "data/mutated_patches",
+) -> List[dict]:
+    """Write grouped predictions JSONL files for SWE-bench harness runs.
+
+    Expects each row to include:
     - instance_id
-    - diff (the patch content)
-    - mutation (mutation type: 'gs', 'unsafe', 'unwrap', 'panic!')
-    - hf_bm (benchmark name for grouping)
-    
-    output prediction format for each instance:
-    {
-    "instance_id": "repo_owner__repo_name-issue_number",
-    "model_name_or_path": "your-model-name",
-    "model_patch": "the patch content as a string"
-    }
-    
-    Returns:
-        dict: mapping of benchmark_mutation -> predictions_path
-    '''
-    
-    # Group instances by source_benchmark and mutation
-    instances_by_benchmark_mutation = defaultdict(list)
-    for instance in mutated_instances:
-        benchmark = instance.get('hf_bm')
-        mutation = instance.get('mutation')
-        if not benchmark:
-            raise ValueError(f"Instance {instance.get('instance_id')} missing hf_bm field")
-        if not mutation:
-            raise ValueError(f"Instance {instance.get('instance_id')} missing mutation field")
-        key = (benchmark, mutation)
-        instances_by_benchmark_mutation[key].append(instance)
-    
-    # Create predictions JSONL files for each benchmark/mutation combination
-    predictions_paths = {}
-    for (benchmark, mutation), instances in instances_by_benchmark_mutation.items():
-        predictions = []
-        for instance in instances:
-            prediction = {
-                "instance_id": instance['instance_id'],
-                "model_name_or_path": instance['mutation'],
-                "model_patch": instance['diff']
+    - diff
+    - mutation
+    - hf_bm (dataset name, e.g. TuringEnterprises/SWE-Bench-plus-plus)
+    """
+    out_dir = Path(out_dir)
+
+    grouped: Dict[tuple[str, str], List[dict]] = {}
+    for row in mutated_instances:
+        benchmark = row.get("hf_bm")
+        mutation = row.get("mutation")
+        instance_id = row.get("instance_id")
+        diff = row.get("diff")
+
+        if not benchmark or not mutation or not instance_id or diff is None:
+            continue
+        key = (str(benchmark), str(mutation))
+        grouped.setdefault(key, []).append(row)
+
+    jobs: List[dict] = []
+    for (benchmark, mutation), rows in sorted(grouped.items()):
+        dataset_slug = _slug(benchmark)
+        mutation_slug = _slug(mutation)
+        predictions_path = out_dir / f"{dataset_slug}_{mutation_slug}_mutated.jsonl"
+
+        prediction_rows = [
+            {
+                "instance_id": row["instance_id"],
+                "model_name_or_path": mutation,
+                "model_patch": row["diff"],
             }
-            predictions.append(prediction)
-        
-        # Save to JSONL file
-        benchmark_path = benchmark.replace('/', '_')
-        predictions_path = f"{benchmark_path}_{mutation}_mutated.jsonl"
-        with open(predictions_path, 'w') as f:
-            for prediction in predictions:
-                f.write(json.dumps(prediction) + '\n')
-        
-        # Create a composite key for the dictionary
-        key = f"{benchmark}_{mutation}"
-        predictions_paths[key] = predictions_path
-    
-    return predictions_paths
-
-
-def create_predictions_from_dataframe(df, benchmark):
-    '''
-    output prediction format
-    {
-    "instance_id": "repo_owner__repo_name-issue_number",
-    "model_name_or_path": "your-model-name",
-    "model_patch": "the patch content as a string"
-    }
-    '''
-    predictions = []
-    for _, row in df.iterrows():
-        instance_id = f"{row['instance_id']}"
-        model_name_or_path = row['augmentation']
-        model_patch = row['patch_diff']
-        
-        prediction = {
-            "instance_id": instance_id,
-            "model_name_or_path": model_name_or_path,
-            "model_patch": model_patch
-        }
-        predictions.append(prediction)
-    benchmark_path = benchmark.replace('/', '_')
-    predictions_path = f"{benchmark_path}_temp.json"
-    with open(predictions_path, 'w') as f:
-        json.dump(predictions, f, indent=2)
-    return predictions_path
-
-
-def evaluate_predictions(predictions_paths):
-    results = {}
-    for benchmark in predictions_paths.keys():
-        print(f"Evaluating benchmark: {benchmark}")
-        #update the run_id to reflect the benchmark and date/time of evaluation
-        run_id = f"{benchmark.replace('/', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-        print(f"Running evaluation with run_id: {run_id}")
-        cmd = [
-            sys.executable, '-m', 'swebench.harness.run_evaluation',
-            '--predictions_path', predictions_paths[benchmark],
-            '--dataset_name', benchmark,
-            '--max_workers', '4',
-            '--run_id', run_id,
+            for row in rows
         ]
-        
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        results[benchmark] = result.stdout
-        benchmark_path = benchmark.replace('/', '_')
-        with open(f"{benchmark_path}_results.json", 'w') as f:
-            json.dump(results[benchmark], f, indent=2)
-    
-    return results
+        _write_jsonl(predictions_path, prediction_rows)
 
-def collate_and_clean_results(run_id, predictions_paths):
-    logs_dir = Path(f"logs/run_evaluation/{run_id}/gs/")
+        jobs.append(
+            {
+                "benchmark": benchmark,
+                "mutation": mutation,
+                "predictions_path": str(predictions_path),
+                "num_predictions": len(prediction_rows),
+            }
+        )
 
-    all_results = {}
-    
-    for instance_dir in logs_dir.iterdir():
-        if instance_dir.is_dir():
-            report_path = instance_dir / "report.json"
-            
-            if report_path.exists():
-                try:
-                    with open(report_path, 'r') as f:
-                        report_data = json.load(f)
-                        # Add instance_id to the report data
-                        report_data['instance_id'] = instance_dir.name
-                        report_data['run_id'] = run_id
-                        all_results[run_id+'_'+instance_dir.name] = report_data
-                except json.JSONDecodeError as e:
-                    print(f"Error reading {report_path}: {e}")
-    
-    # Save collated results_date
-    output_path = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_swebench_evals_total.json"
-    with open(output_path, 'w') as f:
-        json.dump(all_results, f, indent=2)
+    return jobs
 
-    #cleaning up temporary predictions files
-    for benchmark, path in predictions_paths.items():
-        print(f"Removing temporary predictions file: {benchmark} - {path}")
-        shutil.rmtree(Path(f"logs/run_evaluation/{run_id}/"))
-        os.remove(path)
+
+def _collect_reports_for_run(run_id: str, logs_root: Path = Path("logs/run_evaluation")) -> List[dict]:
+    run_dir = logs_root / run_id
+    if not run_dir.exists():
+        return []
+
+    rows: List[dict] = []
+    for report_path in run_dir.rglob("report.json"):
+        try:
+            data = json.loads(report_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+
+        instance_dir = report_path.parent
+        model_dir = instance_dir.parent
+
+        data["instance_id"] = instance_dir.name
+        data["model_name_or_path"] = model_dir.name
+        data["run_id"] = run_id
+        rows.append(data)
+    return rows
+
+
+def evaluate_prediction_jobs(
+    prediction_jobs: List[dict],
+    *,
+    max_workers: int = 4,
+    output_dir: str | Path = "results/harness_eval",
+    fail_fast: bool = False,
+) -> List[dict]:
+    """Run swebench harness for each prediction job and collect run metadata."""
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    summaries: List[dict] = []
+    for job in prediction_jobs:
+        benchmark = job["benchmark"]
+        mutation = job.get("mutation", "unknown")
+        predictions_path = job["predictions_path"]
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        run_id = f"{_slug(benchmark)}_{_slug(mutation)}_{timestamp}"
+
+        cmd = [
+            sys.executable,
+            "-m",
+            "swebench.harness.run_evaluation",
+            "--predictions_path",
+            predictions_path,
+            "--dataset_name",
+            benchmark,
+            "--max_workers",
+            str(max_workers),
+            "--run_id",
+            run_id,
+        ]
+
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        stdout_path = output_dir / f"{run_id}.stdout.txt"
+        stderr_path = output_dir / f"{run_id}.stderr.txt"
+        stdout_path.write_text(res.stdout or "", encoding="utf-8")
+        stderr_path.write_text(res.stderr or "", encoding="utf-8")
+
+        report_rows = _collect_reports_for_run(run_id)
+        reports_path = output_dir / f"{run_id}.reports.jsonl"
+        _write_jsonl(reports_path, report_rows)
+
+        summary = {
+            "benchmark": benchmark,
+            "mutation": mutation,
+            "predictions_path": predictions_path,
+            "num_predictions": job.get("num_predictions", 0),
+            "run_id": run_id,
+            "returncode": res.returncode,
+            "stdout_path": str(stdout_path),
+            "stderr_path": str(stderr_path),
+            "reports_path": str(reports_path),
+            "num_reports": len(report_rows),
+        }
+        summaries.append(summary)
+
+        if fail_fast and res.returncode != 0:
+            break
+
+    summary_jsonl = output_dir / "evaluation_runs.jsonl"
+    _write_jsonl(summary_jsonl, summaries)
+
+    summary_csv = output_dir / "evaluation_runs.csv"
+    with summary_csv.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "benchmark",
+                "mutation",
+                "predictions_path",
+                "num_predictions",
+                "run_id",
+                "returncode",
+                "stdout_path",
+                "stderr_path",
+                "reports_path",
+                "num_reports",
+            ],
+        )
+        writer.writeheader()
+        writer.writerows(summaries)
+
+    return summaries
+
+
+def evaluate_predictions(
+    predictions: Dict[str, str] | List[dict],
+    *,
+    max_workers: int = 4,
+    output_dir: str | Path = "results/harness_eval",
+    fail_fast: bool = False,
+) -> List[dict]:
+    """Backwards-compatible wrapper around `evaluate_prediction_jobs`."""
+    if isinstance(predictions, dict):
+        jobs = []
+        for benchmark, predictions_path in predictions.items():
+            jobs.append(
+                {
+                    "benchmark": benchmark,
+                    "mutation": "unknown",
+                    "predictions_path": predictions_path,
+                    "num_predictions": 0,
+                }
+            )
+    else:
+        jobs = predictions
+
+    return evaluate_prediction_jobs(
+        jobs,
+        max_workers=max_workers,
+        output_dir=output_dir,
+        fail_fast=fail_fast,
+    )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--predictions-jsonl", required=True, type=Path)
+    parser.add_argument("--dataset-name", required=True)
+    parser.add_argument("--mutation", default="manual")
+    parser.add_argument("--max-workers", type=int, default=4)
+    parser.add_argument("--output-dir", default="results/harness_eval", type=Path)
+    args = parser.parse_args()
+
+    jobs = [
+        {
+            "benchmark": args.dataset_name,
+            "mutation": args.mutation,
+            "predictions_path": str(args.predictions_jsonl),
+            "num_predictions": sum(1 for _ in args.predictions_jsonl.open("r", encoding="utf-8")),
+        }
+    ]
+    summaries = evaluate_prediction_jobs(
+        jobs,
+        max_workers=args.max_workers,
+        output_dir=args.output_dir,
+    )
+    print(json.dumps(summaries, ensure_ascii=True, indent=2))
+    return 0
+
 
 if __name__ == "__main__":
-    '''
-    # testing with swebench-lite gs
-    df = pd.read_csv("data/benchmark-sets/test-swebench-lite.csv")
-    df['benchmark'] = 'swe-bench/swe-bench_lite'
-    df['patch_diff'] = df['patch']
-    df['augmentation'] = 'gs'
-    df = df.head(8)
-
-    # Create predictions in the required format for evaluation
-    benchmarks = df['benchmark'].unique()
-    predictions_paths = {}
-    for benchmark in benchmarks:
-        benchmark_df = df[df['benchmark'] == benchmark]
-        predictions_paths[benchmark] = create_predictions_from_dataframe(benchmark_df, benchmark)
-    '''
-    predictions_paths = {'TuringEnterprises/SWE-Bench-plus-plus': 'TuringEnterprises_SWE-Bench-plus-plus_mutated_temp.json'}
-    # Evaluate the predictions and save results
-    results_run_id = evaluate_predictions(predictions_paths)
-    
-    collate_and_clean_results(results_run_id, predictions_paths)
+    raise SystemExit(main())

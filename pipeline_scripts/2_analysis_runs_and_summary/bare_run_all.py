@@ -1,23 +1,13 @@
 #!/usr/bin/env python3
-"""Run a batch of instances and emit JSONL + summary CSV."""
+"""Mutation + evaluation harness runner for unified benchmark instances."""
 from __future__ import annotations
 
 import argparse
-import csv
 import json
-import shutil
-import subprocess
 import sys
 from pathlib import Path
 from typing import List
 
-
-BENCHMARK_NAMES = {
-    "swe-bench_plus-plus": "TuringEnterprises/SWE-Bench-plus-plus",
-    "swe-bench_multilingual":"SWE-bench/SWE-bench_Multilingual",
-    "multi-swe-bench":"ByteDance-Seed/Multi-SWE-bench"
-}
-MUTATIONS = ['unsafe', 'unwrap', 'panic!']
 
 # Allow imports from the refactored pipeline directory tree.
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -25,115 +15,170 @@ PIPELINE_DIR = SCRIPT_DIR.parent
 sys.path.insert(0, str(PIPELINE_DIR / "1_patch_mutate_and_eval"))
 sys.path.insert(0, str(PIPELINE_DIR / "0_data_construction"))
 
-from policy_checks import count_from_bm_diff
 from mutate_patch import mutate_patch_text
-from swebench_eval import create_predictions_from_mutated_instances, evaluate_predictions
+from policy_checks import count_from_bm_diff
+from swebench_eval import create_predictions_from_mutated_instances, evaluate_prediction_jobs
 
-def load_instances_from_jsonl(filepath: str | Path) -> List[dict]:
-    """Load instances from a JSONL file.
-    
-    Args:
-        filepath: Path to the instances JSONL file
-        
-    Returns:
-        List of instance dictionaries
-    """
-    instances = []
-    filepath = Path(filepath)
-    
-    if not filepath.exists():
-        raise FileNotFoundError(f"File not found: {filepath}")
-    
-    with open(filepath, 'r') as f:
+
+BENCHMARK_NAMES = {
+    "swe-bench_plus-plus": "TuringEnterprises/SWE-Bench-plus-plus",
+    "swe-bench_multilingual": "SWE-bench/SWE-bench_Multilingual",
+    "multi-swe-bench": "ByteDance-Seed/Multi-SWE-bench",
+}
+
+DEFAULT_MUTATIONS = ("gs", "unwrap", "unsafe", "panic")
+
+
+def _load_instances_jsonl(path: Path) -> List[dict]:
+    rows = []
+    with path.open("r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if line:  # Skip empty lines
-                instances.append(json.loads(line))
-    
-    return instances
+            if not line:
+                continue
+            rows.append(json.loads(line))
+    return rows
 
-def instances_policy_checks(instances: List[dict]) -> List[dict]:
-    """Run policy checks on a list of instances and return results.
-    
-    Args:
-        instances: List of instance dictionaries
-        
-    Returns:
-        List of dictionaries with source_benchmark, instance_id, and policy_count_results
-    """    
-    results = []
+
+def _write_jsonl(path: Path, rows: List[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=True) + "\n")
+
+
+def _normalize_mutations(mutations_arg: str) -> List[str]:
+    out = []
+    for raw in mutations_arg.split(","):
+        value = raw.strip()
+        if not value:
+            continue
+        if value == "panic!":
+            value = "panic"
+        if value not in DEFAULT_MUTATIONS:
+            raise ValueError(f"Unsupported mutation: {value}")
+        out.append(value)
+    if "gs" not in out:
+        out.insert(0, "gs")
+    return out
+
+
+def _get_patch_text(instance: dict) -> str:
+    patch = instance.get("fix_patch")
+    if isinstance(patch, str) and patch.strip():
+        return patch
+    patch = instance.get("patch")
+    if isinstance(patch, str) and patch.strip():
+        return patch
+    return ""
+
+
+def build_mutated_instances(instances: List[dict], mutations: List[str]) -> List[dict]:
+    rows: List[dict] = []
     for instance in instances:
-        instance_id = instance.get("instance_id")
         source_benchmark = instance.get("source_benchmark")
-        policy_count_results = count_from_bm_diff(instance.get("fix_patch", ""))
-        #TODOD maybe something for tests too?
-        results.append({
-            "source_benchmark": source_benchmark,
+        hf_bm = BENCHMARK_NAMES.get(source_benchmark)
+        patch = _get_patch_text(instance)
+        instance_id = instance.get("instance_id")
+        if not instance_id or not patch or not hf_bm:
+            continue
+
+        base = {
             "instance_id": instance_id,
-            "policy_count_results": policy_count_results
-        })
-    return results
+            "source_benchmark": source_benchmark,
+            "hf_bm": hf_bm,
+            "repo": instance.get("repo"),
+            "org": instance.get("org"),
+            "number": instance.get("number"),
+        }
 
-def save_policy_results_to_jsonl(results: List[dict], output_path: str | Path) -> None:
-    """Save policy check results to a JSONL file.
-    
-    Args:
-        results: List of result dictionaries
-        output_path: Path to save the JSONL file
-    """
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    with open(output_path, 'w') as f:
-        for result in results:
-            f.write(json.dumps(result) + '\n')
+        if "gs" in mutations:
+            gs_row = dict(base)
+            gs_row["mutation"] = "gs"
+            gs_row["diff"] = patch
+            gs_row["mutation_count"] = 0
+            gs_row["policy_count_results"] = count_from_bm_diff(patch)
+            rows.append(gs_row)
 
-def patch_mutation(instances: List[dict]) -> List[dict]:
-    """Apply mutations to the patches of the given instances.
-    
-    Args:
-        instances: List of instance dictionaries
-        
-    Returns:
-        List of mutated instance dictionaries
-    """
-    mutated_instances = []
-    for instance in instances:
-        instance['hf_bm'] = BENCHMARK_NAMES.get(instance.get('source_benchmark'))
-        #save the gs diff
-        diff = instance.get("fix_patch", "")
-        #save gs to mutated_instances for evaluation later
-        gs_instance = instance.copy()
-        gs_instance['mutation'] = 'gs'
-        gs_instance['diff'] = diff
-        mutated_instances.append(gs_instance)
-        for mutation in MUTATIONS:
-            #for each of the three types of patch mutations
-            mutated_instance = instance.copy()
-            mutated_instance['mutation'] = mutation
-            mutated_diff = mutate_patch_text(diff, mutation)
-            mutated_instance['diff'] = mutated_diff
-            mutated_instances.append(mutated_instance)
-    return mutated_instances
+        for mutation in mutations:
+            if mutation == "gs":
+                continue
+            mutated_patch, mutation_count = mutate_patch_text(patch, mutation)
+            mut_row = dict(base)
+            mut_row["mutation"] = mutation
+            mut_row["diff"] = mutated_patch
+            mut_row["mutation_count"] = mutation_count
+            mut_row["policy_count_results"] = count_from_bm_diff(mutated_patch)
+            rows.append(mut_row)
+    return rows
 
-def mutations_evaluation(mutated_instances: List[dict]) -> List[dict]:
-    """Evaluate the mutated instances and return results.
-    
-    Args:
-        mutated_instances: List of mutated instance dictionaries
-    """
-    prediction_paths = create_predictions_from_mutated_instances(mutated_instances)
-    #prediction_paths = {'SWE-bench/SWE-bench_Multilingual': prediction_paths['SWE-bench/SWE-bench_Multilingual']}
-    #evaluation_results = evaluate_predictions(prediction_paths)
-    #print(evaluation_results)
 
 def main() -> int:
-    filtered_instances = load_instances_from_jsonl("data/instances_unified.jsonl")
-    #policy_results = instances_policy_checks(filtered_instances)
-    #save_policy_results_to_jsonl(policy_results, "results/policy_check_results.jsonl")
-    mutated_instances = patch_mutation(filtered_instances)
-    create_predictions_from_mutated_instances(mutated_instances)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--instances-jsonl", default="data/instances_unified.jsonl", type=Path)
+    parser.add_argument("--mutations", default="gs,unwrap,unsafe,panic")
+    parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--mutated-out-jsonl", default="results/mutated_instances.jsonl", type=Path)
+    parser.add_argument("--policy-out-jsonl", default="results/policy_check_results.jsonl", type=Path)
+    parser.add_argument("--predictions-dir", default="data/mutated_patches", type=Path)
+    parser.add_argument("--run-eval", action="store_true")
+    parser.add_argument("--eval-output-dir", default="results/harness_eval", type=Path)
+    parser.add_argument("--max-workers", type=int, default=4)
+    parser.add_argument("--fail-fast", action="store_true")
+    args = parser.parse_args()
+
+    instances = _load_instances_jsonl(args.instances_jsonl)
+    if args.limit:
+        instances = instances[: args.limit]
+
+    mutations = _normalize_mutations(args.mutations)
+    mutated_instances = build_mutated_instances(instances, mutations)
+    _write_jsonl(args.mutated_out_jsonl, mutated_instances)
+    _write_jsonl(
+        args.policy_out_jsonl,
+        [
+            {
+                "source_benchmark": row["source_benchmark"],
+                "instance_id": row["instance_id"],
+                "mutation": row["mutation"],
+                "policy_count_results": row["policy_count_results"],
+            }
+            for row in mutated_instances
+        ],
+    )
+
+    prediction_jobs = create_predictions_from_mutated_instances(
+        mutated_instances,
+        out_dir=args.predictions_dir,
+    )
+
+    print(f"Loaded instances: {len(instances)}")
+    print(f"Mutated rows: {len(mutated_instances)}")
+    print(f"Prediction jobs: {len(prediction_jobs)}")
+    print(f"Mutated output: {args.mutated_out_jsonl}")
+    print(f"Policy output: {args.policy_out_jsonl}")
+
+    if args.run_eval:
+        summaries = evaluate_prediction_jobs(
+            prediction_jobs,
+            max_workers=args.max_workers,
+            output_dir=args.eval_output_dir,
+            fail_fast=args.fail_fast,
+        )
+        failed = [row for row in summaries if row.get("returncode") != 0]
+        print(f"Evaluation runs: {len(summaries)}")
+        print(f"Evaluation failures: {len(failed)}")
+        if failed:
+            for row in failed:
+                print(
+                    f"  - {row['benchmark']} [{row['mutation']}] "
+                    f"rc={row['returncode']} stderr={row['stderr_path']}"
+                )
+    else:
+        print("Skipped harness evaluation (use --run-eval to execute swebench harness).")
+
     return 0
 
+
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -33,7 +33,7 @@ def _is_test_or_bench(path: str) -> bool:
     return False
 
 
-def count_from_bm_diff(diff_text: str) -> Tuple[int, int, int]:
+def count_from_bm_diff(diff_text: str) -> Dict[str, int]:
     unwrap_count = 0
     unsafe_count = 0
     panic_count = 0
@@ -91,10 +91,15 @@ def count_from_bm_diff(diff_text: str) -> Tuple[int, int, int]:
     return results
 
 
-def _count_from_diff(repo_dir: Path, check_safety_comments: bool = False) -> Tuple[int, int, int, int]:
+def _count_from_diff(repo_dir: Path, check_safety_comments: bool = False) -> Dict[str, int]:
     diff = _run(["git", "diff", "--unified=0"], repo_dir)
     if diff.returncode != 0:
-        return 0, 0, 0, 0
+        return {
+            "unwrap_count": 0,
+            "unsafe_count": 0,
+            "panic_count": 0,
+            "unsafe_without_safety_comment": 0,
+        }
 
     unwrap_count = 0
     unsafe_count = 0
@@ -130,7 +135,6 @@ def _count_from_diff(repo_dir: Path, check_safety_comments: bool = False) -> Tup
         unsafe_in_line = len(UNSAFE_RE.findall(added))
         unsafe_count += unsafe_in_line
         
-        unsafe_without_safety_comment = 0
         # If checking for safety comments and unsafe was found, look for corresponding comment
         if check_safety_comments and unsafe_in_line > 0:
             # Check if this line or surrounding lines have a SAFETY comment
@@ -145,13 +149,12 @@ def _count_from_diff(repo_dir: Path, check_safety_comments: bool = False) -> Tup
             if not has_safety:
                 unsafe_without_safety_comment += unsafe_in_line
 
-        result = {
+    result = {
         "unwrap_count": unwrap_count,
         "unsafe_count": unsafe_count,
         "panic_count": panic_count,
         "unsafe_without_safety_comment": unsafe_without_safety_comment,
     }
-        
     return result
 
 def run_policy_checks(repo_dir: Path) -> Tuple[Dict, Dict]:
@@ -170,7 +173,11 @@ def run_policy_checks(repo_dir: Path) -> Tuple[Dict, Dict]:
     if not clippy_ok:
         notes.append("cargo clippy failed")
 
-    unwrap_count, unsafe_count, panic_count, unsafe_without_safety = _count_from_diff(repo_dir, check_safety_comments=True)
+    count_result = _count_from_diff(repo_dir, check_safety_comments=True)
+    unwrap_count = count_result["unwrap_count"]
+    unsafe_count = count_result["unsafe_count"]
+    panic_count = count_result["panic_count"]
+    unsafe_without_safety = count_result["unsafe_without_safety_comment"]
     if unwrap_count > 0:
         notes.append("unwrap/expect found in added lines")
     if unsafe_count > 0:

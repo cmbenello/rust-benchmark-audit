@@ -170,7 +170,7 @@ def _fallback_comment_mutation(lines: list[str], mode: str) -> bool:
     elif mode == "unsafe":
         marker = "unsafe"
         comment = " // mutation_fallback unsafe"
-    elif mode == "panic":
+    elif mode in ("panic", "panic!"):
         marker = "panic!"
         comment = " // mutation_fallback panic!"
     else:
@@ -235,7 +235,7 @@ def mutate_patch_text(patch_text: str, mode: str) -> Tuple[str, int]:
             new_line, changed = _mutate_unwrap_line(line)
         elif mode == "unsafe":
             new_line, changed = _mutate_unsafe_line(line)
-        elif mode == "panic!":
+        elif mode in ("panic", "panic!"):
             new_line, changed = _mutate_panic_line(line, i, lines)
         else:
             raise ValueError(f"Unknown mode: {mode}")
@@ -253,7 +253,7 @@ def mutate_patch_text(patch_text: str, mode: str) -> Tuple[str, int]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--in-patch", required=True, type=Path)
-    parser.add_argument("--mode", required=True, choices=["unwrap", "unsafe", "panic"])
+    parser.add_argument("--mode", required=True, choices=["unwrap", "unsafe", "panic", "panic!"])
     parser.add_argument("--out-patch", required=True, type=Path)
     args = parser.parse_args()
 

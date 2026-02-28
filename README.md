@@ -158,8 +158,28 @@ python pipeline_scripts/2_analysis_runs_and_summary/summarize_totals.py \
   --out-csv results/summary_totals.csv
 ```
 
+Run mutation generation + SWE-bench harness preparation:
+```bash
+python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
+  --instances-jsonl data/instances_unified.jsonl \
+  --mutations gs,unwrap,unsafe,panic \
+  --mutated-out-jsonl results/mutated_instances.jsonl \
+  --policy-out-jsonl results/policy_check_results.jsonl \
+  --predictions-dir data/mutated_patches
+```
+
+Run the same flow and execute the SWE-bench harness:
+```bash
+python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
+  --instances-jsonl data/instances_unified.jsonl \
+  --mutations gs,unwrap,unsafe,panic \
+  --run-eval \
+  --eval-output-dir results/harness_eval
+```
+
 ## Limitations
 - Test execution currently uses local `cargo test`, not the official Multi-SWE-bench docker harness.
 - Policy checks are proxies and heuristics, not complete formalization of all prose policy constraints.
 - `aptos-labs/aptos-core` cloning failed in this environment because `git-lfs` is missing; this affects 3 variant rows.
 - `summary_by_instance.csv` currently keys by `instance_id` only, so duplicated IDs across benchmarks can collapse to one row. Use `results/rq_baseline_*.csv` for the full 27-instance baseline summary.
+- SWE-bench harness execution requires `swebench` (and runtime dependencies like Docker) to be installed in the active Python environment.
