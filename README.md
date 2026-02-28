@@ -177,9 +177,17 @@ python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
   --eval-output-dir results/harness_eval
 ```
 
+Optional: force Docker host if Docker Desktop socket is not auto-detected:
+```bash
+python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
+  --run-eval \
+  --docker-host unix://$HOME/.docker/run/docker.sock
+```
+
 ## Limitations
 - Test execution currently uses local `cargo test`, not the official Multi-SWE-bench docker harness.
 - Policy checks are proxies and heuristics, not complete formalization of all prose policy constraints.
 - `aptos-labs/aptos-core` cloning failed in this environment because `git-lfs` is missing; this affects 3 variant rows.
 - `summary_by_instance.csv` currently keys by `instance_id` only, so duplicated IDs across benchmarks can collapse to one row. Use `results/rq_baseline_*.csv` for the full 27-instance baseline summary.
 - SWE-bench harness execution requires `swebench` (and runtime dependencies like Docker) to be installed in the active Python environment.
+- By default, eval runs skip `ByteDance-Seed/Multi-SWE-bench` because of a known dataset loading incompatibility with current `swebench`/`datasets`; use `--include-known-incompatible` to force it.

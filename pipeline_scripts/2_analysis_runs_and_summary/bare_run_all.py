@@ -125,6 +125,12 @@ def main() -> int:
     parser.add_argument("--eval-output-dir", default="results/harness_eval", type=Path)
     parser.add_argument("--max-workers", type=int, default=4)
     parser.add_argument("--fail-fast", action="store_true")
+    parser.add_argument("--docker-host", default=None)
+    parser.add_argument(
+        "--include-known-incompatible",
+        action="store_true",
+        help="Include benchmarks known to error with current swebench/datasets versions.",
+    )
     args = parser.parse_args()
 
     instances = _load_instances_jsonl(args.instances_jsonl)
@@ -164,6 +170,8 @@ def main() -> int:
             max_workers=args.max_workers,
             output_dir=args.eval_output_dir,
             fail_fast=args.fail_fast,
+            docker_host=args.docker_host,
+            skip_known_incompatible=not args.include_known_incompatible,
         )
         failed = [row for row in summaries if row.get("returncode") != 0]
         print(f"Evaluation runs: {len(summaries)}")

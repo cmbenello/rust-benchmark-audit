@@ -5,11 +5,19 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Iterable, List
+
+KNOWN_DATASET_INCOMPATIBLE = {
+    "ByteDance-Seed/Multi-SWE-bench": (
+        "Known dataset loader schema incompatibility with current "
+        "swebench/datasets versions"
+    )
+}
 
 
 def _slug(text: str) -> str:
@@ -30,6 +38,24 @@ def _write_jsonl(path: Path, rows: Iterable[dict]) -> int:
             f.write(json.dumps(row, ensure_ascii=True) + "\n")
             count += 1
     return count
+
+
+def _resolve_docker_host(explicit_docker_host: str | None = None) -> str | None:
+    if explicit_docker_host:
+        return explicit_docker_host
+    existing = os.environ.get("DOCKER_HOST")
+    if existing:
+        return existing
+
+    desktop_sock = Path.home() / ".docker" / "run" / "docker.sock"
+    if desktop_sock.exists():
+        return f"unix://{desktop_sock}"
+
+    default_sock = Path("/var/run/docker.sock")
+    if default_sock.exists():
+        return "unix:///var/run/docker.sock"
+
+    return None
 
 
 def create_predictions_from_mutated_instances(
@@ -114,10 +140,13 @@ def evaluate_prediction_jobs(
     max_workers: int = 4,
     output_dir: str | Path = "results/harness_eval",
     fail_fast: bool = False,
+    docker_host: str | None = None,
+    skip_known_incompatible: bool = True,
 ) -> List[dict]:
     """Run swebench harness for each prediction job and collect run metadata."""
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    resolved_docker_host = _resolve_docker_host(docker_host)
 
     summaries: List[dict] = []
     for job in prediction_jobs:
@@ -126,6 +155,25 @@ def evaluate_prediction_jobs(
         predictions_path = job["predictions_path"]
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         run_id = f"{_slug(benchmark)}_{_slug(mutation)}_{timestamp}"
+
+        if skip_known_incompatible and benchmark in KNOWN_DATASET_INCOMPATIBLE:
+            summary = {
+                "benchmark": benchmark,
+                "mutation": mutation,
+                "predictions_path": predictions_path,
+                "num_predictions": job.get("num_predictions", 0),
+                "run_id": run_id,
+                "returncode": 0,
+                "status": "skipped",
+                "note": KNOWN_DATASET_INCOMPATIBLE[benchmark],
+                "docker_host_used": resolved_docker_host or "",
+                "stdout_path": "",
+                "stderr_path": "",
+                "reports_path": "",
+                "num_reports": 0,
+            }
+            summaries.append(summary)
+            continue
 
         cmd = [
             sys.executable,
@@ -141,7 +189,11 @@ def evaluate_prediction_jobs(
             run_id,
         ]
 
-        res = subprocess.run(cmd, capture_output=True, text=True)
+        env = os.environ.copy()
+        if resolved_docker_host and not env.get("DOCKER_HOST"):
+            env["DOCKER_HOST"] = resolved_docker_host
+
+        res = subprocess.run(cmd, capture_output=True, text=True, env=env)
         stdout_path = output_dir / f"{run_id}.stdout.txt"
         stderr_path = output_dir / f"{run_id}.stderr.txt"
         stdout_path.write_text(res.stdout or "", encoding="utf-8")
@@ -158,6 +210,9 @@ def evaluate_prediction_jobs(
             "num_predictions": job.get("num_predictions", 0),
             "run_id": run_id,
             "returncode": res.returncode,
+            "status": "ok" if res.returncode == 0 else "failed",
+            "note": "",
+            "docker_host_used": env.get("DOCKER_HOST", ""),
             "stdout_path": str(stdout_path),
             "stderr_path": str(stderr_path),
             "reports_path": str(reports_path),
@@ -182,6 +237,9 @@ def evaluate_prediction_jobs(
                 "num_predictions",
                 "run_id",
                 "returncode",
+                "status",
+                "note",
+                "docker_host_used",
                 "stdout_path",
                 "stderr_path",
                 "reports_path",
@@ -200,6 +258,8 @@ def evaluate_predictions(
     max_workers: int = 4,
     output_dir: str | Path = "results/harness_eval",
     fail_fast: bool = False,
+    docker_host: str | None = None,
+    skip_known_incompatible: bool = True,
 ) -> List[dict]:
     """Backwards-compatible wrapper around `evaluate_prediction_jobs`."""
     if isinstance(predictions, dict):
@@ -221,6 +281,8 @@ def evaluate_predictions(
         max_workers=max_workers,
         output_dir=output_dir,
         fail_fast=fail_fast,
+        docker_host=docker_host,
+        skip_known_incompatible=skip_known_incompatible,
     )
 
 
@@ -231,6 +293,12 @@ def main() -> int:
     parser.add_argument("--mutation", default="manual")
     parser.add_argument("--max-workers", type=int, default=4)
     parser.add_argument("--output-dir", default="results/harness_eval", type=Path)
+    parser.add_argument("--docker-host", default=None)
+    parser.add_argument(
+        "--include-known-incompatible",
+        action="store_true",
+        help="Include benchmarks known to error with current swebench/datasets versions.",
+    )
     args = parser.parse_args()
 
     jobs = [
@@ -245,6 +313,8 @@ def main() -> int:
         jobs,
         max_workers=args.max_workers,
         output_dir=args.output_dir,
+        docker_host=args.docker_host,
+        skip_known_incompatible=not args.include_known_incompatible,
     )
     print(json.dumps(summaries, ensure_ascii=True, indent=2))
     return 0
