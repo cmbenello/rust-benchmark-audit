@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import csv
 import json
 import os
@@ -18,6 +19,9 @@ KNOWN_DATASET_INCOMPATIBLE = {
         "swebench/datasets versions"
     )
 }
+
+LOCAL_NORMALIZE_BENCHMARKS = {"TuringEnterprises/SWE-Bench-plus-plus"}
+RUNNER_SCRIPT = Path(__file__).resolve().parent / "run_swebench_eval.py"
 
 
 def _slug(text: str) -> str:
@@ -40,6 +44,17 @@ def _write_jsonl(path: Path, rows: Iterable[dict]) -> int:
     return count
 
 
+def _read_jsonl(path: Path) -> List[dict]:
+    rows = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            rows.append(json.loads(line))
+    return rows
+
+
 def _resolve_docker_host(explicit_docker_host: str | None = None) -> str | None:
     if explicit_docker_host:
         return explicit_docker_host
@@ -56,6 +71,98 @@ def _resolve_docker_host(explicit_docker_host: str | None = None) -> str | None:
         return "unix:///var/run/docker.sock"
 
     return None
+
+
+def _normalize_test_list(value):
+    """Normalize FAIL_TO_PASS/PASS_TO_PASS values to list objects."""
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return value
+    if isinstance(value, tuple):
+        return list(value)
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return []
+        # Preferred parser: strict JSON.
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError:
+            # Fallback for python-literal style strings (single quotes, etc.).
+            try:
+                parsed = ast.literal_eval(text)
+            except Exception:
+                return []
+        if isinstance(parsed, list):
+            return parsed
+        if isinstance(parsed, tuple):
+            return list(parsed)
+        if isinstance(parsed, str):
+            return [parsed]
+        return []
+    return []
+
+
+def _infer_version_from_instance_id(instance_id: str | None) -> str | None:
+    if not isinstance(instance_id, str):
+        return None
+    if "-" not in instance_id:
+        return None
+    return instance_id.rsplit("-", 1)[-1]
+
+
+def _prepare_local_dataset_for_job(
+    benchmark: str,
+    predictions_path: str,
+    output_dir: Path,
+) -> tuple[str, bool, str, str | None]:
+    """
+    For benchmarks with known schema quirks, materialize a local JSONL dataset
+    with normalized PASS_TO_PASS/FAIL_TO_PASS fields and return that path.
+    """
+    if benchmark not in LOCAL_NORMALIZE_BENCHMARKS:
+        return benchmark, False, "", None
+
+    try:
+        from datasets import load_dataset
+    except Exception:
+        return benchmark, False, "", None
+
+    try:
+        pred_rows = _read_jsonl(Path(predictions_path))
+        instance_ids = {r["instance_id"] for r in pred_rows if "instance_id" in r}
+        if not instance_ids:
+            return benchmark, False, "", None
+
+        ds = load_dataset(benchmark, split="test")
+        rows = []
+        inferred_versions = 0
+        for row in ds:
+            iid = row.get("instance_id")
+            if iid not in instance_ids:
+                continue
+            item = dict(row)
+            # Some SWE-Bench++ rows have missing/None version fields.
+            if not item.get("version"):
+                inferred_version = _infer_version_from_instance_id(iid)
+                if inferred_version:
+                    item["version"] = inferred_version
+                    inferred_versions += 1
+            item["PASS_TO_PASS"] = _normalize_test_list(item.get("PASS_TO_PASS"))
+            item["FAIL_TO_PASS"] = _normalize_test_list(item.get("FAIL_TO_PASS"))
+            rows.append(item)
+
+        if not rows:
+            return benchmark, False, "", None
+
+        dataset_path = output_dir / f"{_slug(benchmark)}_normalized_dataset.jsonl"
+        _write_jsonl(dataset_path, rows)
+        note = f"Normalized local dataset rows={len(rows)}, inferred_versions={inferred_versions}"
+        return str(dataset_path), False, note, str(dataset_path)
+    except Exception:
+        # Fail open to the original benchmark so runs still proceed if normalization fails.
+        return benchmark, False, "", None
 
 
 def create_predictions_from_mutated_instances(
@@ -167,6 +274,32 @@ def evaluate_prediction_jobs(
                 "status": "skipped",
                 "note": KNOWN_DATASET_INCOMPATIBLE[benchmark],
                 "docker_host_used": resolved_docker_host or "",
+                "dataset_name_used": benchmark,
+                "stdout_path": "",
+                "stderr_path": "",
+                "reports_path": "",
+                "num_reports": 0,
+            }
+            summaries.append(summary)
+            continue
+
+        dataset_arg, skip_for_specs, prep_note, dynamic_specs_dataset = _prepare_local_dataset_for_job(
+            benchmark=benchmark,
+            predictions_path=predictions_path,
+            output_dir=output_dir,
+        )
+        if skip_for_specs:
+            summary = {
+                "benchmark": benchmark,
+                "mutation": mutation,
+                "predictions_path": predictions_path,
+                "num_predictions": job.get("num_predictions", 0),
+                "run_id": run_id,
+                "returncode": 0,
+                "status": "skipped",
+                "note": prep_note,
+                "docker_host_used": resolved_docker_host or "",
+                "dataset_name_used": dataset_arg,
                 "stdout_path": "",
                 "stderr_path": "",
                 "reports_path": "",
@@ -177,17 +310,18 @@ def evaluate_prediction_jobs(
 
         cmd = [
             sys.executable,
-            "-m",
-            "swebench.harness.run_evaluation",
+            str(RUNNER_SCRIPT),
             "--predictions_path",
             predictions_path,
             "--dataset_name",
-            benchmark,
+            dataset_arg,
             "--max_workers",
             str(max_workers),
             "--run_id",
             run_id,
         ]
+        if dynamic_specs_dataset:
+            cmd.extend(["--dynamic_specs_dataset", dynamic_specs_dataset])
 
         env = os.environ.copy()
         if resolved_docker_host and not env.get("DOCKER_HOST"):
@@ -211,8 +345,9 @@ def evaluate_prediction_jobs(
             "run_id": run_id,
             "returncode": res.returncode,
             "status": "ok" if res.returncode == 0 else "failed",
-            "note": "",
+            "note": prep_note,
             "docker_host_used": env.get("DOCKER_HOST", ""),
+            "dataset_name_used": dataset_arg,
             "stdout_path": str(stdout_path),
             "stderr_path": str(stderr_path),
             "reports_path": str(reports_path),
@@ -240,6 +375,7 @@ def evaluate_prediction_jobs(
                 "status",
                 "note",
                 "docker_host_used",
+                "dataset_name_used",
                 "stdout_path",
                 "stderr_path",
                 "reports_path",
