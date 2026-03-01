@@ -1,0 +1,13 @@
+benchmark,mutation,status,resolved,total,unresolved_instance_ids
+ByteDance-Seed/Multi-SWE-bench,gs,skipped,0,0,
+ByteDance-Seed/Multi-SWE-bench,panic,skipped,0,0,
+ByteDance-Seed/Multi-SWE-bench,unsafe,skipped,0,0,
+ByteDance-Seed/Multi-SWE-bench,unwrap,skipped,0,0,
+SWE-bench/SWE-bench_Multilingual,gs,ok,10,10,
+SWE-bench/SWE-bench_Multilingual,panic,ok,10,10,
+SWE-bench/SWE-bench_Multilingual,unsafe,ok,10,10,
+SWE-bench/SWE-bench_Multilingual,unwrap,ok,7,10,"nushell__nushell-12901,uutils__coreutils-6377,uutils__coreutils-6731"
+TuringEnterprises/SWE-Bench-plus-plus,gs,ok,2,3,uutils__coreutils-8478
+TuringEnterprises/SWE-Bench-plus-plus,panic,ok,2,3,uutils__coreutils-8478
+TuringEnterprises/SWE-Bench-plus-plus,unsafe,ok,2,3,uutils__coreutils-8478
+TuringEnterprises/SWE-Bench-plus-plus,unwrap,ok,1,3,"uutils__coreutils-8478,unicode-org__icu4x-6776"

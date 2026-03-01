@@ -117,59 +117,59 @@ Baseline findings from the latest unified-sample run:
 - RQ2 (`mut_unwrap`): `3/27` test-passing mutants, and all `3` are policy-violating.
 - RQ2 (`mut_unsafe`): `8/27` test-passing mutants, and all `8` are policy-violating.
 
-## Latest Harness Run (2026-02-28 Overnight)
+## Latest Harness Run (2026-03-01 Linux Server)
 Run command used:
 ```bash
 python3 -u pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
   --instances-jsonl data/instances_unified.jsonl \
   --mutations gs,unwrap,unsafe,panic \
   --run-eval \
-  --docker-host unix://$HOME/.docker/run/docker.sock \
-  --eval-output-dir results/harness_eval_overnight_20260228_012741
+  --max-workers 2 \
+  --docker-host unix:///var/run/docker.sock \
+  --eval-output-dir results/harness_eval_20260301_042428
 ```
 
 Primary artifacts:
-- `results/harness_eval_overnight_20260228_012741/evaluation_runs.csv`
-- `results/harness_eval_overnight_20260228_012741/evaluation_runs.jsonl`
-- `results/harness_outcomes_20260228_012741_compact.csv` (12-row compact table for slides)
+- `results/harness_eval_20260301_042428/evaluation_runs.csv`
+- `results/harness_eval_20260301_042428/evaluation_runs.jsonl`
+- `results/harness_outcomes_20260301_042428_compact.csv` (12-row compact table for slides)
 - `results/harness_outcomes_latest_compact.csv` (latest-pointer copy)
-- `results/mutated_instances.jsonl` (`108` rows)
-- `results/policy_check_results.jsonl` (`108` rows)
-- Per-mutation multilingual run summaries:
-  - `gs.SWE-bench_SWE-bench_Multilingual_gs_20260228_012741.json`
-  - `panic.SWE-bench_SWE-bench_Multilingual_panic_20260228_013444.json`
-  - `unsafe.SWE-bench_SWE-bench_Multilingual_unsafe_20260228_014006.json`
-  - `unwrap.SWE-bench_SWE-bench_Multilingual_unwrap_20260228_014528.json`
+- `results/harness_resolution_20260301_042428.csv` (resolved counts by benchmark+mutation)
+- `results/20260301_042428_harness_summary.md`
+- `results/e2e_20260301_042428.log`
+- `results/mutated_instances_20260301_042428.jsonl` (`108` rows)
+- `results/policy_check_results_20260301_042428.jsonl` (`108` rows)
 
 Job-level outcomes (`12` total):
 - `4` skipped: `ByteDance-Seed/Multi-SWE-bench` (`gs/panic/unsafe/unwrap`) due known dataset-loader incompatibility.
-- `4` succeeded: `SWE-bench/SWE-bench_Multilingual` (`gs/panic/unsafe/unwrap`).
-- `4` failed: `TuringEnterprises/SWE-Bench-plus-plus` (`gs/panic/unsafe/unwrap`).
+- `8` succeeded: `SWE-bench/SWE-bench_Multilingual` and `TuringEnterprises/SWE-Bench-plus-plus` (all four mutations each).
+- `0` failed.
 
 Multilingual outcomes by mutation (10 submitted each):
-- `gs`: `9` resolved, `1` unresolved.
-- `panic`: `9` resolved, `1` unresolved.
-- `unsafe`: `9` resolved, `1` unresolved.
+- `gs`: `10` resolved, `0` unresolved.
+- `panic`: `10` resolved, `0` unresolved.
+- `unsafe`: `10` resolved, `0` unresolved.
 - `unwrap`: `7` resolved, `3` unresolved.
 
 Unresolved multilingual instances:
-- `gs`: `uutils__coreutils-6377`
-- `panic`: `uutils__coreutils-6377`
-- `unsafe`: `uutils__coreutils-6377`
 - `unwrap`: `uutils__coreutils-6377`, `uutils__coreutils-6731`, `nushell__nushell-12901`
 
-SWE-Bench++ follow-up fix status (2026-02-28):
+SWE-Bench++ outcomes by mutation (3 submitted each):
+- `gs`: `2` resolved, `1` unresolved (`uutils__coreutils-8478`)
+- `panic`: `2` resolved, `1` unresolved (`uutils__coreutils-8478`)
+- `unsafe`: `2` resolved, `1` unresolved (`uutils__coreutils-8478`)
+- `unwrap`: `1` resolved, `2` unresolved (`uutils__coreutils-8478`, `unicode-org__icu4x-6776`)
+
+SWE-Bench++ runner fix status:
 - The runner now normalizes malformed `PASS_TO_PASS`/`FAIL_TO_PASS` fields and infers missing `version` values from `instance_id`.
 - The wrapper dynamically patches missing `swebench` repo/version specs from dataset `environment_config`.
 - The wrapper also registers missing Rust log parsers for repos not present in upstream parser maps.
-- On Apple Silicon hosts, local harness arch now defaults to `arm64` (override with `SWEBENCH_ARCH=x86_64|arm64`).
-- Validation run (all 3 Rust SWE-Bench++ `gs` instances) succeeds:
-  - `results/harness_eval_pluspp_gs_fixed_20260228_181803/evaluation_runs.csv` shows `status=ok`, `num_reports=3`.
+- The full 2026-03-01 run confirms `ok` status for all four SWE-Bench++ mutation jobs.
 
-Policy-count totals from this run (`results/policy_check_results.jsonl`):
+Policy-count totals from this run (`results/policy_check_results_20260301_042428.jsonl`):
 - `gs`: `unwrap=6`, `unsafe=1`, `panic=1`, `unsafe_without_safety_comment=0`
 - `unwrap`: `unwrap=33`, `unsafe=1`, `panic=1`, `unsafe_without_safety_comment=0`
-- `unsafe`: `unwrap=6`, `unsafe=28`, `panic=1`, `unsafe_without_safety_comment=27`
+- `unsafe`: `unwrap=6`, `unsafe=28`, `panic=1`, `unsafe_without_safety_comment=0`
 - `panic`: `unwrap=6`, `unsafe=1`, `panic=4`, `unsafe_without_safety_comment=0`
 
 ## NL Policy To Executable Checks (TODO: manual update of policy executables?)
