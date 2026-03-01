@@ -1,0 +1,11 @@
+Loaded instances: 27
+Mutated rows: 108
+Prediction jobs: 12
+Mutated output: results/mutated_instances.jsonl
+Policy output: results/policy_check_results.jsonl
+Evaluation runs: 12
+Evaluation failures: 4
+  - TuringEnterprises/SWE-Bench-plus-plus [gs] rc=1 stderr=results/harness_eval_overnight_20260228_012741/TuringEnterprises_SWE-Bench-plus-plus_gs_20260228_015035.stderr.txt
+  - TuringEnterprises/SWE-Bench-plus-plus [panic] rc=1 stderr=results/harness_eval_overnight_20260228_012741/TuringEnterprises_SWE-Bench-plus-plus_panic_20260228_015045.stderr.txt
+  - TuringEnterprises/SWE-Bench-plus-plus [unsafe] rc=1 stderr=results/harness_eval_overnight_20260228_012741/TuringEnterprises_SWE-Bench-plus-plus_unsafe_20260228_015049.stderr.txt
+  - TuringEnterprises/SWE-Bench-plus-plus [unwrap] rc=1 stderr=results/harness_eval_overnight_20260228_012741/TuringEnterprises_SWE-Bench-plus-plus_unwrap_20260228_015052.stderr.txt

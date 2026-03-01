@@ -1,0 +1,49 @@
+2026-02-28 01:50:49,523 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+<frozen runpy>:128: RuntimeWarning: 'swebench.harness.run_evaluation' found in sys.modules after import of package 'swebench.harness', but prior to execution of 'swebench.harness.run_evaluation'; this may result in unpredictable behaviour
+2026-02-28 01:50:50,219 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/datasets/TuringEnterprises/SWE-Bench-plus-plus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-02-28 01:50:50,257 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/TuringEnterprises/SWE-Bench-plus-plus/da364537055b9bb5091783af78a02b6a3bc0e130/README.md "HTTP/1.1 200 OK"
+2026-02-28 01:50:50,313 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/datasets/TuringEnterprises/SWE-Bench-plus-plus/resolve/da364537055b9bb5091783af78a02b6a3bc0e130/SWE-Bench-plus-plus.py "HTTP/1.1 404 Not Found"
+2026-02-28 01:50:50,471 - httpx - INFO - HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/TuringEnterprises/SWE-Bench-plus-plus/TuringEnterprises/SWE-Bench-plus-plus.py "HTTP/1.1 404 Not Found"
+2026-02-28 01:50:50,542 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/datasets/TuringEnterprises/SWE-Bench-plus-plus/revision/da364537055b9bb5091783af78a02b6a3bc0e130 "HTTP/1.1 200 OK"
+2026-02-28 01:50:50,627 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/datasets/TuringEnterprises/SWE-Bench-plus-plus/resolve/da364537055b9bb5091783af78a02b6a3bc0e130/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-02-28 01:50:50,755 - httpx - INFO - HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=TuringEnterprises/SWE-Bench-plus-plus "HTTP/1.1 200 OK"
+2026-02-28 01:50:50,838 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/datasets/TuringEnterprises/SWE-Bench-plus-plus/tree/da364537055b9bb5091783af78a02b6a3bc0e130/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-02-28 01:50:50,921 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/datasets/TuringEnterprises/SWE-Bench-plus-plus/tree/da364537055b9bb5091783af78a02b6a3bc0e130?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-02-28 01:50:51,031 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/datasets/TuringEnterprises/SWE-Bench-plus-plus/resolve/da364537055b9bb5091783af78a02b6a3bc0e130/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-02-28 01:50:51,295 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/datasets/TuringEnterprises/SWE-Bench-plus-plus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-02-28 01:50:51,333 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/TuringEnterprises/SWE-Bench-plus-plus/da364537055b9bb5091783af78a02b6a3bc0e130/README.md "HTTP/1.1 200 OK"
+2026-02-28 01:50:51,416 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/datasets/TuringEnterprises/SWE-Bench-plus-plus/resolve/da364537055b9bb5091783af78a02b6a3bc0e130/SWE-Bench-plus-plus.py "HTTP/1.1 404 Not Found"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-02-28 01:50:51,416 - huggingface_hub.utils._http - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-02-28 01:50:51,491 - httpx - INFO - HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/TuringEnterprises/SWE-Bench-plus-plus/TuringEnterprises/SWE-Bench-plus-plus.py "HTTP/1.1 404 Not Found"
+2026-02-28 01:50:51,594 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/datasets/TuringEnterprises/SWE-Bench-plus-plus/resolve/da364537055b9bb5091783af78a02b6a3bc0e130/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-02-28 01:50:51,693 - httpx - INFO - HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=TuringEnterprises/SWE-Bench-plus-plus "HTTP/1.1 200 OK"
+2026-02-28 01:50:51,783 - httpx - INFO - HTTP Request: HEAD https://huggingface.co/datasets/TuringEnterprises/SWE-Bench-plus-plus/resolve/da364537055b9bb5091783af78a02b6a3bc0e130/dataset_infos.json "HTTP/1.1 404 Not Found"
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/cmbenello/.local/lib/python3.12/site-packages/swebench/harness/run_evaluation.py", line 677, in <module>
+    main(**vars(args))
+  File "/Users/cmbenello/.local/lib/python3.12/site-packages/swebench/harness/run_evaluation.py", line 552, in main
+    run_instances(
+  File "/Users/cmbenello/.local/lib/python3.12/site-packages/swebench/harness/run_evaluation.py", line 304, in run_instances
+    test_specs = list(
+                 ^^^^^
+  File "/Users/cmbenello/.local/lib/python3.12/site-packages/swebench/harness/run_evaluation.py", line 306, in <lambda>
+    lambda instance: make_test_spec(
+                     ^^^^^^^^^^^^^^^
+  File "/Users/cmbenello/.local/lib/python3.12/site-packages/swebench/harness/test_spec/test_spec.py", line 204, in make_test_spec
+    pass_to_pass = _from_json_or_obj("PASS_TO_PASS")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cmbenello/.local/lib/python3.12/site-packages/swebench/harness/test_spec/test_spec.py", line 201, in _from_json_or_obj
+    return json.loads(instance[key])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 2 (char 1)

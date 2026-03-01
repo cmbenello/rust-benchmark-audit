@@ -1,0 +1,6 @@
+2026-02-28 19:58:42,292 - numexpr.utils - INFO - NumExpr defaulting to 10 threads.
+
+Evaluation:   0%|          | 0/1 [00:00<?, ?it/s, error=0, ✓=0, ✖=0]
+Evaluation:   0%|          | 0/1 [09:19<?, ?it/s, ✓=0, ✖=1, error=0]
+Evaluation: 100%|██████████| 1/1 [09:19<00:00, 559.65s/it, ✓=0, ✖=1, error=0]
+Evaluation: 100%|██████████| 1/1 [09:19<00:00, 559.65s/it, ✓=0, ✖=1, error=0]

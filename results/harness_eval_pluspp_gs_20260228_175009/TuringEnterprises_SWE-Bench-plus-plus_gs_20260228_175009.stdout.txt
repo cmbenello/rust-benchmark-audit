@@ -1,0 +1,23 @@
+Dynamic swebench specs patch: patched=3, skipped_rows=0, dataset=results/harness_eval_pluspp_gs_20260228_175009/TuringEnterprises_SWE-Bench-plus-plus_normalized_dataset.jsonl
+Using swebench local arch: arm64
+Base image sweb.base.rs.arm64.66f185cf9b:latest already exists, skipping build.
+Building base image (sweb.base.rs.arm64.923514b46b:latest)
+Building base image (sweb.base.rs.arm64.605b300cee:latest)
+Base images built successfully.
+Total environment images to build: 2
+All environment images built successfully.
+Running 3 instances...
+All instances run.
+Cleaning cached images...
+Removed 0 images.
+Total instances: 3
+Instances submitted: 3
+Instances completed: 1
+Instances incomplete: 0
+Instances resolved: 0
+Instances unresolved: 1
+Instances with empty patches: 0
+Instances with errors: 2
+Unstopped containers: 0
+Unremoved images: 0
+Report written to gs.TuringEnterprises_SWE-Bench-plus-plus_gs_20260228_175009.json

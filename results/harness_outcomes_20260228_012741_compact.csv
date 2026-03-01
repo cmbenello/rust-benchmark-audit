@@ -1,0 +1,13 @@
+benchmark,mutation,status,submitted_predictions,completed_instances,resolved_instances,unresolved_instances,error_instances,returncode,note,stderr_path
+ByteDance-Seed/Multi-SWE-bench,gs,skipped,14,,,,,0,Known dataset loader schema incompatibility with current swebench/datasets versions,
+ByteDance-Seed/Multi-SWE-bench,panic,skipped,14,,,,,0,Known dataset loader schema incompatibility with current swebench/datasets versions,
+ByteDance-Seed/Multi-SWE-bench,unsafe,skipped,14,,,,,0,Known dataset loader schema incompatibility with current swebench/datasets versions,
+ByteDance-Seed/Multi-SWE-bench,unwrap,skipped,14,,,,,0,Known dataset loader schema incompatibility with current swebench/datasets versions,
+SWE-bench/SWE-bench_Multilingual,gs,ok,10,10,9,1,0,0,,results/harness_eval_overnight_20260228_012741/SWE-bench_SWE-bench_Multilingual_gs_20260228_012741.stderr.txt
+SWE-bench/SWE-bench_Multilingual,panic,ok,10,10,9,1,0,0,,results/harness_eval_overnight_20260228_012741/SWE-bench_SWE-bench_Multilingual_panic_20260228_013444.stderr.txt
+SWE-bench/SWE-bench_Multilingual,unsafe,ok,10,10,9,1,0,0,,results/harness_eval_overnight_20260228_012741/SWE-bench_SWE-bench_Multilingual_unsafe_20260228_014006.stderr.txt
+SWE-bench/SWE-bench_Multilingual,unwrap,ok,10,10,7,3,0,0,,results/harness_eval_overnight_20260228_012741/SWE-bench_SWE-bench_Multilingual_unwrap_20260228_014528.stderr.txt
+TuringEnterprises/SWE-Bench-plus-plus,gs,failed,3,,,,,1,,results/harness_eval_overnight_20260228_012741/TuringEnterprises_SWE-Bench-plus-plus_gs_20260228_015035.stderr.txt
+TuringEnterprises/SWE-Bench-plus-plus,panic,failed,3,,,,,1,,results/harness_eval_overnight_20260228_012741/TuringEnterprises_SWE-Bench-plus-plus_panic_20260228_015045.stderr.txt
+TuringEnterprises/SWE-Bench-plus-plus,unsafe,failed,3,,,,,1,,results/harness_eval_overnight_20260228_012741/TuringEnterprises_SWE-Bench-plus-plus_unsafe_20260228_015049.stderr.txt
+TuringEnterprises/SWE-Bench-plus-plus,unwrap,failed,3,,,,,1,,results/harness_eval_overnight_20260228_012741/TuringEnterprises_SWE-Bench-plus-plus_unwrap_20260228_015052.stderr.txt

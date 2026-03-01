@@ -1,0 +1,35 @@
+Using swebench local arch: arm64
+Building base image (sweb.base.rs.arm64.33e11622d2:latest)
+Building base image (sweb.base.rs.arm64.d141c1b022:latest)
+Building base image (sweb.base.rs.arm64.7d3701dab7:latest)
+Building base image (sweb.base.rs.arm64.3db6f9beeb:latest)
+Base images built successfully.
+Total environment images to build: 4
+All environment images built successfully.
+Running 10 instances...
+Error building image sweb.eval.arm64.nushell__nushell-12901:latest: The command '/bin/sh -c /bin/bash /root/setup_repo.sh' returned a non-zero code: 101
+Check (logs/build_images/instances/sweb.eval.arm64.nushell__nushell-12901__latest/build_image.log) for more information.
+Error building image sweb.eval.arm64.nushell__nushell-13246:latest: The command '/bin/sh -c /bin/bash /root/setup_repo.sh' returned a non-zero code: 101
+Check (logs/build_images/instances/sweb.eval.arm64.nushell__nushell-13246__latest/build_image.log) for more information.
+Error building image sweb.eval.arm64.uutils__coreutils-6377:latest: The command '/bin/sh -c /bin/bash /root/setup_repo.sh' returned a non-zero code: 101
+Check (logs/build_images/instances/sweb.eval.arm64.uutils__coreutils-6377__latest/build_image.log) for more information.
+Error building image sweb.eval.arm64.nushell__nushell-12950:latest: failed to apply diff: write /var/lib/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/snapshots/667/fs/testbed/target/debug/deps/librstest_macros-3999c1e578a4e127.so: no space left on device: unknown
+Check (logs/build_images/instances/sweb.eval.arm64.nushell__nushell-12950__latest/build_image.log) for more information.
+Error building image sweb.eval.arm64.nushell__nushell-13605:latest: The command '/bin/sh -c /bin/bash /root/setup_repo.sh' returned a non-zero code: 101
+Check (logs/build_images/instances/sweb.eval.arm64.nushell__nushell-13605__latest/build_image.log) for more information.
+Error building image sweb.eval.arm64.nushell__nushell-13831:latest: The command '/bin/sh -c /bin/bash /root/setup_repo.sh' returned a non-zero code: 101
+Check (logs/build_images/instances/sweb.eval.arm64.nushell__nushell-13831__latest/build_image.log) for more information.
+All instances run.
+Cleaning cached images...
+Removed 0 images.
+Total instances: 300
+Instances submitted: 10
+Instances completed: 4
+Instances incomplete: 290
+Instances resolved: 4
+Instances unresolved: 0
+Instances with empty patches: 0
+Instances with errors: 6
+Unstopped containers: 0
+Unremoved images: 0
+Report written to gs.SWE-bench_SWE-bench_Multilingual_gs_20260228_200934.json

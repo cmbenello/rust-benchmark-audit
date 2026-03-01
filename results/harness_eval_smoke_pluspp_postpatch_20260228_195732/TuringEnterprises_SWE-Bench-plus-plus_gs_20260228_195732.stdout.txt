@@ -1,0 +1,22 @@
+Dynamic swebench specs patch: patched=1, skipped_rows=0, parser_patched=0, dataset=results/harness_eval_smoke_pluspp_postpatch_20260228_195732/TuringEnterprises_SWE-Bench-plus-plus_normalized_dataset.jsonl
+Using swebench local arch: arm64
+Base image sweb.base.rs.arm64.66f185cf9b:latest already exists, skipping build.
+Base images built successfully.
+No environment images need to be built.
+Running 1 instances...
+Error building image uutils__coreutils-8478: Environment image sweb.env.rs.x86_64.8b2ece10af893f987d6b0a:latest not found for uutils__coreutils-8478
+Check (logs/run_evaluation/TuringEnterprises_SWE-Bench-plus-plus_gs_20260228_195732/gs/uutils__coreutils-8478/run_instance.log) for more information.
+All instances run.
+Cleaning cached images...
+Removed 0 images.
+Total instances: 1
+Instances submitted: 1
+Instances completed: 0
+Instances incomplete: 0
+Instances resolved: 0
+Instances unresolved: 0
+Instances with empty patches: 0
+Instances with errors: 1
+Unstopped containers: 0
+Unremoved images: 0
+Report written to gs.TuringEnterprises_SWE-Bench-plus-plus_gs_20260228_195732.json
