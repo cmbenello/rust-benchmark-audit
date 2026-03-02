@@ -29,10 +29,15 @@ This research focuses on the following benchmarks:
 - `SWE-bench++`
 
 ## What Is Implemented
-For each instance, the pipeline runs three variants:
+For each instance, the pipeline runs four variants:
 - `gold`: original benchmark `fix_patch`
 - `mut_unwrap`: policy-violating mutation that introduces `unwrap/expect` patterns where possible
 - `mut_unsafe`: policy-violating mutation that introduces `unsafe` wrappers where possible
+- `mut_panic`: policy-violating mutation that introduces `panic!` patterns where possible
+
+Mutation generation supports two styles:
+- `heuristic` (default): minimal syntax-local edits.
+- `adversarial`: stronger policy-violating edits (including real `unsafe` pointer activity patterns).
 
 For each patch variant, the pipeline records:
 - Patch apply success
@@ -85,6 +90,8 @@ benchmark-policy-gap/
 6. `pipeline_scripts/1_patch_mutate_and_eval/mutate_patch.py`
 - `mut_unwrap`: line-local replacement of `?`/call patterns to `unwrap()`.
 - `mut_unsafe`: wraps selected statements/let assignments in `unsafe { ... }`.
+- `mut_panic`: swaps selected statements to `panic!("mutation")`.
+- `--style heuristic|adversarial`: choose mutation strength profile.
 - Keeps unified diff structure valid and newline-safe.
 - Includes fallback mutation logic so `mutation_count` is non-zero for mutants whenever a Rust added line is available.
 
@@ -123,6 +130,7 @@ Run command used:
 python3 -u pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
   --instances-jsonl data/instances_unified.jsonl \
   --mutations gs,unwrap,unsafe,panic \
+  --mutation-style heuristic \
   --run-eval \
   --max-workers 2 \
   --docker-host unix:///var/run/docker.sock \
@@ -139,6 +147,10 @@ Primary artifacts:
 - `results/e2e_20260301_042428.log`
 - `results/mutated_instances_20260301_042428.jsonl` (`108` rows)
 - `results/policy_check_results_20260301_042428.jsonl` (`108` rows)
+
+Note:
+- This run used the `heuristic` mutation style.
+- For stronger pilot evidence, rerun with `--mutation-style adversarial` (recommended for unsafe/panic stress tests).
 
 Job-level outcomes (`12` total):
 - `4` skipped: `ByteDance-Seed/Multi-SWE-bench` (`gs/panic/unsafe/unwrap`) due known dataset-loader incompatibility.
@@ -171,6 +183,12 @@ Policy-count totals from this run (`results/policy_check_results_20260301_042428
 - `unwrap`: `unwrap=33`, `unsafe=1`, `panic=1`, `unsafe_without_safety_comment=0`
 - `unsafe`: `unwrap=6`, `unsafe=28`, `panic=1`, `unsafe_without_safety_comment=0`
 - `panic`: `unwrap=6`, `unsafe=1`, `panic=4`, `unsafe_without_safety_comment=0`
+
+## Presentation Scope Update (2026-03-01)
+- Current presentation scope is `SWE-bench/SWE-bench_Multilingual` and `TuringEnterprises/SWE-Bench-plus-plus`.
+- `ByteDance-Seed/Multi-SWE-bench` is deferred until after presentation due current dataset-loader incompatibility in upstream `swebench`/`datasets`.
+- For stronger mutation evidence, use `--mutation-style adversarial` in reruns.
+- Historical Claude-mutated patch snapshots are recoverable from commit `04f34fc` under `data/mutated_patches/`.
 
 ## NL Policy To Executable Checks (TODO: manual update of policy executables?)
 The policy text in `nushell` docs is operationalized into machine-checkable proxies:
@@ -218,6 +236,7 @@ Run mutation generation + SWE-bench harness preparation:
 python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
   --instances-jsonl data/instances_unified.jsonl \
   --mutations gs,unwrap,unsafe,panic \
+  --mutation-style heuristic \
   --mutated-out-jsonl results/mutated_instances.jsonl \
   --policy-out-jsonl results/policy_check_results.jsonl \
   --predictions-dir data/mutated_patches
@@ -228,8 +247,44 @@ Run the same flow and execute the SWE-bench harness:
 python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
   --instances-jsonl data/instances_unified.jsonl \
   --mutations gs,unwrap,unsafe,panic \
+  --mutation-style heuristic \
   --run-eval \
   --eval-output-dir results/harness_eval
+```
+
+Adversarial rerun (stronger mutation profile):
+```bash
+python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
+  --instances-jsonl data/instances_unified.jsonl \
+  --mutations gs,unwrap,unsafe,panic \
+  --mutation-style adversarial \
+  --run-eval \
+  --max-workers 2 \
+  --docker-host unix:///var/run/docker.sock \
+  --eval-output-dir results/harness_eval_adversarial_$(date +%Y%m%d_%H%M%S)
+```
+
+Use historical Claude mutations directly from commit `04f34fc`:
+```bash
+python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
+  --instances-jsonl data/instances_unified.jsonl \
+  --mutations gs,unwrap,unsafe,panic \
+  --external-predictions-commit 04f34fc \
+  --require-external-predictions \
+  --run-eval \
+  --max-workers 2 \
+  --docker-host unix:///var/run/docker.sock \
+  --eval-output-dir results/harness_eval_claude_$(date +%Y%m%d_%H%M%S)
+```
+
+External prediction overrides can also come from a local folder:
+```bash
+python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
+  --instances-jsonl data/instances_unified.jsonl \
+  --mutations gs,unwrap,unsafe,panic \
+  --external-predictions-dir data/mutated_patches \
+  --require-external-predictions \
+  --run-eval
 ```
 
 Optional: force Docker host if Docker Desktop socket is not auto-detected:

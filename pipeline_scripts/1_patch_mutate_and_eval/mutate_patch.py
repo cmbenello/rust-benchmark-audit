@@ -5,13 +5,31 @@ from __future__ import annotations
 import argparse
 import re
 from pathlib import Path
-from typing import Tuple
+from typing import Literal, Tuple
 
 QUESTION_MARK_RE = re.compile(r"\?([;,\)\]\}])")
 QUESTION_SEMI_RE = re.compile(r"\?[ \t]*;")
 CALL_LINE_RE = re.compile(r"\w[\w.:]*[ \t]*\(.*\)[ \t]*;[ \t]*$")
 CALL_LINE_NO_SEMI_RE = re.compile(r"\w[\w.:]*[ \t]*\(.*\)[ \t]*$")
 LET_ASSIGN_RE = re.compile(r"^([ \t]*let[ \t]+[^=]+?=[ \t]*)(.+?);([ \t]*(//.*)?)$")
+
+MUTATION_STYLE_HEURISTIC = "heuristic"
+MUTATION_STYLE_ADVERSARIAL = "adversarial"
+MUTATION_STYLES = (MUTATION_STYLE_HEURISTIC, MUTATION_STYLE_ADVERSARIAL)
+
+MutationStyle = Literal["heuristic", "adversarial"]
+
+DECLARATION_PREFIXES = (
+    "use ",
+    "fn ",
+    "pub ",
+    "struct ",
+    "enum ",
+    "impl ",
+    "trait ",
+    "type ",
+    "mod ",
+)
 
 
 def _mutate_panic_line(line: str, line_idx: int = -1, all_lines: list[str] | None = None) -> Tuple[str, bool]:
@@ -162,6 +180,158 @@ def _mutate_unsafe_line(line: str) -> Tuple[str, bool]:
     return line, False
 
 
+def _is_non_mutatable_declaration(body: str) -> bool:
+    stripped = body.lstrip()
+    return stripped.startswith(DECLARATION_PREFIXES)
+
+
+def _mutate_unwrap_line_adversarial(line: str) -> Tuple[str, bool]:
+    """Stronger unwrap-style mutation that prefers explicit expect()-based panics."""
+    if not line.startswith("+") or line.startswith("+++"):
+        return line, False
+
+    newline = "\n" if line.endswith("\n") else ""
+    body = line[1:-1] if newline else line[1:]
+
+    if ".unwrap(" in body or ".expect(" in body:
+        return line, False
+
+    if "?" in body:
+        if QUESTION_MARK_RE.search(body):
+            new_body = QUESTION_MARK_RE.sub(r'.expect("mutation")\1', body, count=1)
+            return "+" + new_body + newline, True
+        if QUESTION_SEMI_RE.search(body):
+            new_body = QUESTION_SEMI_RE.sub('.expect("mutation");', body, count=1)
+            return "+" + new_body + newline, True
+
+    if CALL_LINE_RE.search(body):
+        new_body = re.sub(
+            r"\)[ \t]*;[ \t]*$",
+            ').expect("mutation");',
+            body,
+            count=1,
+        )
+        if new_body != body:
+            return "+" + new_body + newline, True
+
+    return line, False
+
+
+def _mutate_panic_line_adversarial(line: str, line_idx: int = -1, all_lines: list[str] | None = None) -> Tuple[str, bool]:
+    """Stronger panic mutation that directly swaps a mutable statement for panic!()."""
+    if not line.startswith("+") or line.startswith("+++"):
+        return line, False
+
+    newline = "\n" if line.endswith("\n") else ""
+    body = line[1:-1] if newline else line[1:]
+
+    if "panic!" in body:
+        return line, False
+
+    stripped = body.strip()
+    if not stripped or stripped.startswith("//"):
+        return line, False
+    if _is_non_mutatable_declaration(body):
+        return line, False
+
+    if stripped in ("break;", "continue;"):
+        leading_ws = body[: len(body) - len(body.lstrip())]
+        new_body = f'{leading_ws}panic!("mutation");'
+        return "+" + new_body + newline, True
+
+    if stripped.startswith("return ") and stripped.endswith(";"):
+        leading_ws = body[: len(body) - len(body.lstrip())]
+        new_body = f'{leading_ws}panic!("mutation");'
+        return "+" + new_body + newline, True
+
+    if stripped.endswith(";"):
+        leading_ws = body[: len(body) - len(body.lstrip())]
+        new_body = f'{leading_ws}panic!("mutation");'
+        return "+" + new_body + newline, True
+
+    return line, False
+
+
+def _mutate_unsafe_line_adversarial(line: str) -> Tuple[str, bool]:
+    """Stronger unsafe mutation that injects real pointer reads inside unsafe blocks."""
+    if not line.startswith("+") or line.startswith("+++"):
+        return line, False
+
+    newline = "\n" if line.endswith("\n") else ""
+    body = line[1:-1] if newline else line[1:]
+
+    if "unsafe" in body:
+        return line, False
+    if _is_non_mutatable_declaration(body):
+        return line, False
+
+    match = LET_ASSIGN_RE.match(body)
+    if match:
+        prefix, expr, suffix = match.group(1), match.group(2), match.group(3)
+        new_body = f"{prefix}unsafe {{ core::ptr::read(&({expr.strip()})) }};{suffix}"
+        return "+" + new_body + newline, True
+
+    if CALL_LINE_RE.search(body):
+        leading_ws = body[: len(body) - len(body.lstrip())]
+        stmt = body.strip().rstrip(";")
+        new_body = f"{leading_ws}unsafe {{ core::ptr::read(&({stmt})); }};"
+        return "+" + new_body + newline, True
+
+    if CALL_LINE_NO_SEMI_RE.search(body) and "(" in body and ")" in body:
+        leading_ws = body[: len(body) - len(body.lstrip())]
+        stmt = body.strip()
+        new_body = f"{leading_ws}unsafe {{ core::ptr::read(&({stmt})) }}"
+        return "+" + new_body + newline, True
+
+    return line, False
+
+
+def _fallback_statement_mutation(lines: list[str], mode: str) -> bool:
+    """Fallback used by adversarial style to avoid comment-only mutations."""
+    current_file = None
+    if mode == "unwrap":
+        marker = ".expect("
+        statement = 'let _ = Some(0u8).expect("mutation");'
+    elif mode == "unsafe":
+        marker = "unsafe"
+        statement = "unsafe { core::ptr::read(&0u8); };"
+    elif mode in ("panic", "panic!"):
+        marker = "panic!"
+        statement = 'panic!("mutation");'
+    else:
+        return False
+
+    for idx, line in enumerate(lines):
+        if line.startswith("+++ b/"):
+            current_file = line[len("+++ b/") :].strip()
+            if current_file == "/dev/null":
+                current_file = None
+            continue
+
+        if not line.startswith("+") or line.startswith("+++"):
+            continue
+        if not current_file or not current_file.endswith(".rs"):
+            continue
+
+        newline = "\n" if line.endswith("\n") else ""
+        body = line[1:-1] if newline else line[1:]
+        stripped = body.strip()
+        if not stripped or stripped.startswith("//"):
+            continue
+        if _is_non_mutatable_declaration(body):
+            continue
+        if marker in body:
+            continue
+        if not stripped.endswith(";"):
+            continue
+
+        leading_ws = body[: len(body) - len(body.lstrip())]
+        lines[idx] = "+" + f"{leading_ws}{statement}" + newline
+        return True
+
+    return False
+
+
 def _fallback_comment_mutation(lines: list[str], mode: str) -> bool:
     current_file = None
     if mode == "unwrap":
@@ -204,7 +374,11 @@ def _fallback_comment_mutation(lines: list[str], mode: str) -> bool:
     return False
 
 
-def mutate_patch_text(patch_text: str, mode: str) -> Tuple[str, int]:
+def mutate_patch_text(
+    patch_text: str,
+    mode: str,
+    style: MutationStyle = MUTATION_STYLE_HEURISTIC,
+) -> Tuple[str, int]:
     """Apply semantic mutations to a unified diff patch.
     
     Mutates added lines in the patch to violate safety policies without breaking compilation.
@@ -212,12 +386,17 @@ def mutate_patch_text(patch_text: str, mode: str) -> Tuple[str, int]:
     - "unwrap": Replace error handling (?) with .unwrap() calls
     - "unsafe": Wrap function calls in unsafe blocks
     - "panic": Replace control flow or function calls with panic!() invocations
+
+    Supports two styles:
+    - "heuristic": minimal syntax-local mutation (existing behavior)
+    - "adversarial": stronger policy-violating mutation with real unsafe/panic constructs
     
     Uses fallback comment-based mutation if no structural mutations found.
     
     Args:
         patch_text: A unified diff format patch string
         mode: One of "unwrap", "unsafe", or "panic"
+        style: One of "heuristic" or "adversarial"
     
     Returns:
         Tuple of (mutated patch text, count of mutations applied)
@@ -226,17 +405,28 @@ def mutate_patch_text(patch_text: str, mode: str) -> Tuple[str, int]:
     mutated = []
     count = 0
     is_mutated = False
+    if style not in MUTATION_STYLES:
+        raise ValueError(f"Unknown mutation style: {style}")
     for i, line in enumerate(lines):
         #For now, only mutate once
         if is_mutated:
             mutated.append(line)
             continue
         if mode == "unwrap":
-            new_line, changed = _mutate_unwrap_line(line)
+            if style == MUTATION_STYLE_ADVERSARIAL:
+                new_line, changed = _mutate_unwrap_line_adversarial(line)
+            else:
+                new_line, changed = _mutate_unwrap_line(line)
         elif mode == "unsafe":
-            new_line, changed = _mutate_unsafe_line(line)
+            if style == MUTATION_STYLE_ADVERSARIAL:
+                new_line, changed = _mutate_unsafe_line_adversarial(line)
+            else:
+                new_line, changed = _mutate_unsafe_line(line)
         elif mode in ("panic", "panic!"):
-            new_line, changed = _mutate_panic_line(line, i, lines)
+            if style == MUTATION_STYLE_ADVERSARIAL:
+                new_line, changed = _mutate_panic_line_adversarial(line, i, lines)
+            else:
+                new_line, changed = _mutate_panic_line(line, i, lines)
         else:
             raise ValueError(f"Unknown mode: {mode}")
         mutated.append(new_line)
@@ -244,8 +434,12 @@ def mutate_patch_text(patch_text: str, mode: str) -> Tuple[str, int]:
             count += 1
             is_mutated = True
 
-    if count == 0 and _fallback_comment_mutation(mutated, mode):
-        count = 1
+    if count == 0:
+        if style == MUTATION_STYLE_ADVERSARIAL:
+            if _fallback_statement_mutation(mutated, mode):
+                count = 1
+        elif _fallback_comment_mutation(mutated, mode):
+            count = 1
 
     return "".join(mutated), count
 
@@ -254,11 +448,17 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--in-patch", required=True, type=Path)
     parser.add_argument("--mode", required=True, choices=["unwrap", "unsafe", "panic", "panic!"])
+    parser.add_argument(
+        "--style",
+        default=MUTATION_STYLE_HEURISTIC,
+        choices=MUTATION_STYLES,
+        help="Mutation strategy: heuristic (default) or adversarial.",
+    )
     parser.add_argument("--out-patch", required=True, type=Path)
     args = parser.parse_args()
 
     patch_text = args.in_patch.read_text(encoding="utf-8")
-    mutated_text, count = mutate_patch_text(patch_text, args.mode)
+    mutated_text, count = mutate_patch_text(patch_text, args.mode, style=args.style)
 
     if count == 0:
         print("Warning: no mutations applied", flush=True)

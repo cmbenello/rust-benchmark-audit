@@ -81,6 +81,12 @@ def main() -> int:
     parser.add_argument("--out-dir", default="out", type=Path)
     parser.add_argument("--repo-base-dir", default="work/repos", type=Path)
     parser.add_argument("--cargo-target-dir", default="work/cargo-target", type=Path)
+    parser.add_argument(
+        "--mutation-style",
+        default="heuristic",
+        choices=["heuristic", "adversarial"],
+        help="Mutation strategy for non-gold variants.",
+    )
     parser.add_argument("--append", action="store_true")
     args = parser.parse_args()
 
@@ -119,6 +125,8 @@ def main() -> int:
                 str(args.repo_base_dir),
                 "--cargo-target-dir",
                 str(args.cargo_target_dir),
+                "--mutation-style",
+                args.mutation_style,
             ]
             res = subprocess.run(cmd, text=True, capture_output=True)
             if res.returncode != 0:

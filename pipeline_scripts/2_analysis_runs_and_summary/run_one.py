@@ -103,6 +103,7 @@ def run_instance(
     out_dir: Path,
     cargo_target_dir: Path,
     repo_dir_override: Path | None = None,
+    mutation_style: str = "heuristic",
 ) -> Dict:
     errors = []
 
@@ -132,7 +133,11 @@ def run_instance(
         mode = VARIANT_TO_MODE.get(variant)
         if not mode:
             raise ValueError(f"Unknown variant: {variant}")
-        patch_text, mutation_count = mutate_patch_text(fix_patch, mode)
+        patch_text, mutation_count = mutate_patch_text(
+            fix_patch,
+            mode,
+            style=mutation_style,
+        )
         if mutation_count == 0:
             errors.append("mutation_count=0")
 
@@ -220,6 +225,11 @@ def main() -> int:
     parser.add_argument("--repo-base-dir", default="work/repos", type=Path)
     parser.add_argument("--cargo-target-dir", default="work/cargo-target", type=Path)
     parser.add_argument("--repo-dir", default=None, type=Path)
+    parser.add_argument(
+        "--mutation-style",
+        default="heuristic",
+        choices=["heuristic", "adversarial"],
+    )
     args = parser.parse_args()
 
     instance = _load_instance(args.instances_jsonl, args.instance_id)
@@ -231,6 +241,7 @@ def main() -> int:
         out_dir=args.out_dir,
         cargo_target_dir=args.cargo_target_dir,
         repo_dir_override=args.repo_dir,
+        mutation_style=args.mutation_style,
     )
     return 0
 
