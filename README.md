@@ -323,6 +323,25 @@ python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
   --run-eval
 ```
 
+Evaluate prebuilt prediction artifacts directly (no mutation generation, no patch rewriting):
+```bash
+python pipeline_scripts/2_analysis_runs_and_summary/eval_existing_predictions.py \
+  --predictions-dir data/mutated_patches \
+  --mutations gs,unwrap,unsafe,panic \
+  --run-eval \
+  --max-workers 2 \
+  --docker-host unix:///var/run/docker.sock \
+  --eval-output-dir results/harness_eval_from_existing_$(date +%Y%m%d_%H%M%S)
+```
+
+Same direct-eval flow for frozen artifacts:
+```bash
+python pipeline_scripts/2_analysis_runs_and_summary/eval_existing_predictions.py \
+  --predictions-dir data/frozen_mutated_patches \
+  --mutations gs,unwrap,unsafe,panic \
+  --run-eval
+```
+
 Optional: force Docker host if Docker Desktop socket is not auto-detected:
 ```bash
 python pipeline_scripts/2_analysis_runs_and_summary/bare_run_all.py \
@@ -343,3 +362,4 @@ SWEBENCH_ARCH=arm64 python pipeline_scripts/2_analysis_runs_and_summary/bare_run
 - SWE-bench harness execution requires `swebench` (and runtime dependencies like Docker) to be installed in the active Python environment.
 - By default, eval runs skip `ByteDance-Seed/Multi-SWE-bench` because of a known dataset loading incompatibility with current `swebench`/`datasets`; use `--include-known-incompatible` to force it.
 - Historical note: early 2026-02-28 SWE-Bench++ harness runs failed before instance grading; use the post-fix runner in this repo for current runs.
+- SWE-Bench++ support here does not require manual editing of benchmark static files: the runner generates a local normalized dataset file per run under `results/harness_eval_*/..._normalized_dataset.jsonl` and patches runtime specs dynamically in memory.
