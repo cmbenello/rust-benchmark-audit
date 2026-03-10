@@ -9,18 +9,20 @@ import json
 import os
 import subprocess
 import sys
+import urllib.parse
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Iterable, List
 
-KNOWN_DATASET_INCOMPATIBLE = {
-    "ByteDance-Seed/Multi-SWE-bench": (
-        "Known dataset loader schema incompatibility with current "
-        "swebench/datasets versions"
-    )
-}
+KNOWN_DATASET_INCOMPATIBLE: dict[str, str] = {}
 
-LOCAL_NORMALIZE_BENCHMARKS = {"TuringEnterprises/SWE-Bench-plus-plus"}
+LOCAL_NORMALIZE_BENCHMARKS = {"TuringEnterprises/SWE-Bench-plus-plus", "ByteDance-Seed/Multi-SWE-bench"}
+
+# Datasets whose per-repo JSONL files have heterogeneous Arrow schemas,
+# preventing load_dataset() from merging them.  We load the raw JSONL
+# files individually via huggingface_hub instead.
+_RAW_JSONL_DATASETS = {"ByteDance-Seed/Multi-SWE-bench"}
 RUNNER_SCRIPT = Path(__file__).resolve().parent / "run_swebench_eval.py"
 
 
@@ -112,6 +114,53 @@ def _infer_version_from_instance_id(instance_id: str | None) -> str | None:
     return instance_id.rsplit("-", 1)[-1]
 
 
+def _load_raw_jsonl_from_hub(benchmark: str, instance_ids: set[str]) -> List[dict]:
+    """Download individual JSONL files from a HuggingFace dataset repo and
+    filter to *instance_ids*, bypassing Arrow schema merging.
+
+    Uses only stdlib (urllib) so it works without huggingface_hub installed.
+    """
+    api_url = f"https://huggingface.co/api/datasets/{benchmark}/tree/main"
+    req = urllib.request.Request(api_url)
+    token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
+    if token:
+        req.add_header("Authorization", f"Bearer {token}")
+    with urllib.request.urlopen(req) as resp:
+        tree = json.loads(resp.read().decode("utf-8"))
+
+    jsonl_paths = [
+        entry["path"] for entry in tree
+        if entry.get("path", "").endswith(".jsonl")
+    ]
+    # The tree API may not recurse into subdirs by default; try recursive.
+    if not jsonl_paths:
+        req2 = urllib.request.Request(api_url + "?recursive=true")
+        if token:
+            req2.add_header("Authorization", f"Bearer {token}")
+        with urllib.request.urlopen(req2) as resp2:
+            tree = json.loads(resp2.read().decode("utf-8"))
+        jsonl_paths = [
+            entry["path"] for entry in tree
+            if entry.get("path", "").endswith(".jsonl")
+        ]
+
+    rows: List[dict] = []
+    for fpath in jsonl_paths:
+        download_url = f"https://huggingface.co/datasets/{benchmark}/resolve/main/{urllib.parse.quote(fpath)}"
+        dl_req = urllib.request.Request(download_url)
+        if token:
+            dl_req.add_header("Authorization", f"Bearer {token}")
+        with urllib.request.urlopen(dl_req) as dl_resp:
+            for raw_line in dl_resp:
+                line = raw_line.decode("utf-8").strip()
+                if not line:
+                    continue
+                row = json.loads(line)
+                if row.get("instance_id") in instance_ids:
+                    rows.append(row)
+    return rows
+
+
 def _prepare_local_dataset_for_job(
     benchmark: str,
     predictions_path: str,
@@ -125,25 +174,24 @@ def _prepare_local_dataset_for_job(
         return benchmark, False, "", None
 
     try:
-        from datasets import load_dataset
-    except Exception:
-        return benchmark, False, "", None
-
-    try:
         pred_rows = _read_jsonl(Path(predictions_path))
         instance_ids = {r["instance_id"] for r in pred_rows if "instance_id" in r}
         if not instance_ids:
             return benchmark, False, "", None
 
-        ds = load_dataset(benchmark, split="test")
+        # For datasets with heterogeneous per-repo schemas, load the raw JSONL
+        # files individually to avoid Arrow schema casting failures.
+        if benchmark in _RAW_JSONL_DATASETS:
+            ds_rows = _load_raw_jsonl_from_hub(benchmark, instance_ids)
+        else:
+            from datasets import load_dataset
+            ds = load_dataset(benchmark, split="test")
+            ds_rows = [dict(row) for row in ds if row.get("instance_id") in instance_ids]
+
         rows = []
         inferred_versions = 0
-        for row in ds:
-            iid = row.get("instance_id")
-            if iid not in instance_ids:
-                continue
-            item = dict(row)
-            # Some SWE-Bench++ rows have missing/None version fields.
+        for item in ds_rows:
+            iid = item.get("instance_id")
             if not item.get("version"):
                 inferred_version = _infer_version_from_instance_id(iid)
                 if inferred_version:
@@ -160,8 +208,18 @@ def _prepare_local_dataset_for_job(
         _write_jsonl(dataset_path, rows)
         note = f"Normalized local dataset rows={len(rows)}, inferred_versions={inferred_versions}"
         return str(dataset_path), False, note, str(dataset_path)
-    except Exception:
-        # Fail open to the original benchmark so runs still proceed if normalization fails.
+    except Exception as exc:
+        import traceback
+        print(
+            f"WARNING: local dataset normalization failed for {benchmark}: {exc}",
+            file=sys.stderr,
+        )
+        traceback.print_exc(file=sys.stderr)
+        # For raw-JSONL datasets the HF load_dataset fallback will always fail
+        # with the same schema error, so propagate instead of silently degrading.
+        if benchmark in _RAW_JSONL_DATASETS:
+            raise
+        # Other benchmarks: fail open to the original name.
         return benchmark, False, "", None
 
 

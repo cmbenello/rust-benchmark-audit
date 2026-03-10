@@ -11,7 +11,7 @@ from typing import Dict, List, Tuple
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PIPELINE_DIR = SCRIPT_DIR.parent
-sys.path.insert(0, str(PIPELINE_DIR / "1_patch_mutate_and_eval"))
+#sys.path.insert(0, str(PIPELINE_DIR / "1_patch_mutate_and_eval"))
 
 from swebench_eval import evaluate_prediction_jobs
 
