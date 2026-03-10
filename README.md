@@ -1,14 +1,33 @@
-This is the mostly-replication package for 'Is it correct to be 'unsafe'? A pilot study of Rust safety in CodeGen SE benchmarks' [A true replication package would subset this directory and delete out any unused data, scripts, or printouts; for posterity and ongoing development, these superfluous files are kept in for now.]
+# Replication Package
 
-In /data we provide all benchmark data sets and mutations that were used in our pilot analysis. 
-    /data/0_benchmark-sets contains the full versions of the three unmutated benchmarks in our study 
-    /data/1_manually_sampled_data contains the rows which were manually sampeld from each of those data sets for project coding policies --- sampled by benchmark as well as unified.
-    /data/2_frozen_mutated_patches contains the claude-mutated sampled patches (gold standard, panic, unsafe, unwrap)
+> **Note:** This is a *mostly*-replication package for **"Is it correct to be 'unsafe'? A pilot study of Rust safety in CodeGen SE benchmarks"**. A true replication package would subset this directory and remove unused data, scripts, and printouts. These superfluous files are retained for posterity and ongoing development.
 
-In /pipeline_scripts we provide all code used in our analysis pipeline 
-    /pipeline_scripts/0_data_construction contains relevant scripts for checking the presence of policy-risky language within gold standard patches --- per-project-safety-constructs.txt contains manual annotations to project safety policies 
-    /pipeline_scripts/1_analysis_runs_and_summary contains scripts for the analysis pipeline, more information can be found in TODO README.
+---
 
-/results contains the outputs from the evaluation harnesses. 
-    /results/20260225_results contains the final policy check results for gold-standard patches 
-    /results/20260309_harness_eval_results contains all results from the swe-bench evaluation harness for multilingual and plus-plus
+## `/data` — Benchmark Data & Mutations
+
+All benchmark datasets and mutations used in the pilot analysis.
+
+| Directory | Contents |
+|---|---|
+| `0_benchmark-sets` | Full versions of the three unmutated benchmarks |
+| `1_manually_sampled_data` | Rows manually sampled from each dataset for project coding policies (per-benchmark and unified) |
+| `2_frozen_mutated_patches` | Claude-mutated sampled patches (`gold standard`, `panic`, `unsafe`, `unwrap`) |
+
+---
+
+## `/pipeline_scripts` — Analysis Pipeline Code
+
+All code used in the analysis pipeline.
+
+- **`0_data_construction`** — Scripts for checking the presence of policy-risky language within gold standard patches. Includes `per-project-safety-constructs.txt`, which contains manual annotations to project safety policies.
+- **`1_analysis_runs_and_summary`** — Scripts for the analysis pipeline. See the README for more information.
+
+---
+
+## `/results` — Evaluation Harness Outputs
+
+| Directory | Contents |
+|---|---|
+| `20260225_results` | Final policy check results for gold-standard patches |
+| `20260309_harness_eval_results` | All results from the SWE-bench evaluation harness for `multilingual` and `plus-plus` |
