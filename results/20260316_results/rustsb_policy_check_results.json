@@ -1,0 +1,382 @@
+[
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-1346",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-1228",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-1099",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-1048",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-1043",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-741",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-584",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-574",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-562",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-1559",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-1524",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-1491",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-10",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "async-graphql__async-graphql-170",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-1934",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-1810",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-1469",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-3059",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-3051",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 2,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-3039",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-2992",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-2903",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-868",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-755",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-682",
+    "policy_count_results": {
+      "unwrap_count": 5,
+      "unsafe_count": 0,
+      "panic_count": 2,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-533",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-530",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-529",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 2,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-423",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-412",
+    "policy_count_results": {
+      "unwrap_count": 4,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-1189",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-892",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "tokio-rs__axum-2881",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "nushell__nushell-13357",
+    "policy_count_results": {
+      "unwrap_count": 1,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "nushell__nushell-12901",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "nushell__nushell-11169",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "nushell__nushell-10405",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  },
+  {
+    "source_benchmark": "rust-swe-bench",
+    "instance_id": "nushell__nushell-10395",
+    "policy_count_results": {
+      "unwrap_count": 0,
+      "unsafe_count": 0,
+      "panic_count": 0,
+      "unsafe_without_safety_comment": 0
+    }
+  }
+]
