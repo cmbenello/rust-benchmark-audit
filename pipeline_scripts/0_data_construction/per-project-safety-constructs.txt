@@ -104,5 +104,22 @@ unicode_org/icu4x
         10. clippy enforced rules 
         11. check wether allow is used, if so, does the usage violate one of the four acceptance criteria
 
+async-graphql/async-graphql
+    - policy:
+        https://github.com/async-graphql/async-graphql/blob/master/README.md?plain=1
+        1. L22 "_This crate uses `#![forbid(unsafe_code)]` to ensure everything is implemented in 100% safe Rust._"
+    - measurement:
+        1. is 'unsafe' present in the code, full stop
+    - rationale: 
+        1. compile-enforced rule
+        
+tokio-rs/axum
+    - policy:
+        https://github.com/tokio-rs/axum/blob/main/axum/README.md?plain=1
+        1. L109: This crate uses `#![forbid(unsafe_code)]` to ensure everything is implemented in 100% safe Rust.
+    - measurement:
+        1. is 'unsafe' present in the code, full stop
+    - rationale: 
+        1. compile-enforced rule
 
 
