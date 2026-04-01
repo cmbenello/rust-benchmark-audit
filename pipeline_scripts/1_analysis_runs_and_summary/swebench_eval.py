@@ -17,7 +17,11 @@ from typing import Dict, Iterable, List
 
 KNOWN_DATASET_INCOMPATIBLE: dict[str, str] = {}
 
-LOCAL_NORMALIZE_BENCHMARKS = {"TuringEnterprises/SWE-Bench-plus-plus", "ByteDance-Seed/Multi-SWE-bench"}
+LOCAL_NORMALIZE_BENCHMARKS = {
+    "TuringEnterprises/SWE-Bench-plus-plus",
+    "ByteDance-Seed/Multi-SWE-bench",
+    "user2f86/rustbench",
+}
 
 # Datasets whose per-repo JSONL files have heterogeneous Arrow schemas,
 # preventing load_dataset() from merging them.  We load the raw JSONL
@@ -185,7 +189,13 @@ def _prepare_local_dataset_for_job(
             ds_rows = _load_raw_jsonl_from_hub(benchmark, instance_ids)
         else:
             from datasets import load_dataset
-            ds = load_dataset(benchmark, split="test")
+            try:
+                ds = load_dataset(benchmark, split="test")
+            except ValueError as exc:
+                # Some community datasets (e.g., rustbench) publish only "train".
+                if 'Unknown split "test"' not in str(exc):
+                    raise
+                ds = load_dataset(benchmark, split="train")
             ds_rows = [dict(row) for row in ds if row.get("instance_id") in instance_ids]
 
         rows = []
@@ -379,7 +389,12 @@ def evaluate_prediction_jobs(
             run_id,
         ]
         if dynamic_specs_dataset:
-            cmd.extend(["--dynamic_specs_dataset", dynamic_specs_dataset])
+            cmd.extend([
+                "--dynamic_specs_dataset",
+                dynamic_specs_dataset,
+                "--benchmark_hint",
+                benchmark,
+            ])
 
         env = os.environ.copy()
         if resolved_docker_host and not env.get("DOCKER_HOST"):

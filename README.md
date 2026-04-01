@@ -1,3 +1,9 @@
+TODO for pilot:
+[ ] run multi-sb evaluation 
+[~] mutate rust-sb filtered rows 
+[ ] run rust-sb evaluation 
+[ ] write-up of pilot study 
+
 # Replication Package
 
 > **Note:** This is a *mostly*-replication package for **"Is it correct to be 'unsafe'? A pilot study of Rust safety in CodeGen SE benchmarks"**. A true replication package would subset this directory and remove unused data, scripts, and printouts. These superfluous files are retained for posterity and ongoing development.

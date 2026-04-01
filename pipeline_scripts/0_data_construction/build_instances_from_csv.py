@@ -103,8 +103,8 @@ def _normalize_row(row: pd.Series) -> dict[str, Any] | None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--in-csv", default="data/20260218_unified_sample.csv", type=Path)
-    parser.add_argument("--out-jsonl", default="data/instances_unified.jsonl", type=Path)
+    parser.add_argument("--in-csv", default="data/1_manually_sampled_data/sampled_rustsb_rows.csv", type=Path)
+    parser.add_argument("--out-jsonl", default="data/rustsb_instances_gs.jsonl", type=Path)
     args = parser.parse_args()
 
     df = pd.read_csv(args.in_csv)

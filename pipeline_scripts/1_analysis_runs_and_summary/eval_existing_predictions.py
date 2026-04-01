@@ -21,6 +21,7 @@ KNOWN_DATASETS = (
     "SWE-bench/SWE-bench_Multilingual",
     "TuringEnterprises/SWE-Bench-plus-plus",
     "ByteDance-Seed/Multi-SWE-bench",
+    "user2f86/rustbench",
 )
 
 
@@ -95,6 +96,9 @@ def _parse_benchmarks(raw: str | None) -> set[str] | None:
         if lowered in {"multi-swe", "multi-swe-bench"}:
             out.add("ByteDance-Seed/Multi-SWE-bench")
             continue
+        if lowered in {"rustbench", "user2f86", "user2f86_rustbench"}:
+            out.add("user2f86/rustbench")
+            continue
         raise ValueError(f"Unsupported benchmark selector: {token}")
     return out
 
@@ -155,7 +159,7 @@ def main() -> int:
         default=None,
         help=(
             "Optional comma-separated benchmark filters "
-            "(dataset names or aliases: multilingual, plusplus, multi-swe)."
+            "(dataset names or aliases: multilingual, plusplus, multi-swe, rustbench)."
         ),
     )
     parser.add_argument("--run-eval", action="store_true")
