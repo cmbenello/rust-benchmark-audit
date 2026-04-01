@@ -1,6 +1,6 @@
 TODO for pilot:
 [ ] run multi-sb evaluation 
-[ ] mutate rust-sb filtered rows 
+[~] mutate rust-sb filtered rows 
 [ ] run rust-sb evaluation 
 [ ] write-up of pilot study 
 

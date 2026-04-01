@@ -76,7 +76,100 @@ def _default_parser_for_extension(ext: str):
     return None
 
 
-def _patch_swebench_specs_from_dataset(dataset_jsonl: Path) -> tuple[int, int, int]:
+def _normalize_test_cmd(value):
+    if value is None:
+        return None
+    if isinstance(value, list):
+        return value
+    if isinstance(value, tuple):
+        return list(value)
+    if isinstance(value, str):
+        text = value.strip()
+        return [text] if text else None
+    return None
+
+
+def _infer_repo_from_instance_id(instance_id: str | None) -> str | None:
+    if not isinstance(instance_id, str):
+        return None
+    head = instance_id.rsplit("-", 1)[0]
+    if "__" not in head:
+        return None
+    owner, repo = head.split("__", 1)
+    if not owner or not repo:
+        return None
+    return f"{owner}/{repo}"
+
+
+def _prediction_instance_ids(predictions_path: Path) -> list[str]:
+    rows = _read_jsonl(predictions_path)
+    ids: list[str] = []
+    for idx, row in enumerate(rows, start=1):
+        iid = row.get("instance_id")
+        if not isinstance(iid, str) or not iid.strip():
+            raise ValueError(
+                f"predictions row {idx} in {predictions_path} is missing a non-empty instance_id"
+            )
+        ids.append(iid)
+    return ids
+
+
+def _dataset_instance_ids(dataset_name: str, split: str) -> tuple[set[str], str]:
+    dataset_path = Path(dataset_name)
+    if dataset_path.exists():
+        ids = {
+            row["instance_id"]
+            for row in _read_jsonl(dataset_path)
+            if isinstance(row.get("instance_id"), str) and row.get("instance_id")
+        }
+        return ids, f"local:{dataset_path}"
+
+    from datasets import load_dataset
+
+    try:
+        ds = load_dataset(dataset_name, split=split)
+        used_split = split
+    except ValueError as exc:
+        # Community datasets can publish only train; support the common test->train fallback.
+        if split != "test" or 'Unknown split "test"' not in str(exc):
+            raise
+        ds = load_dataset(dataset_name, split="train")
+        used_split = "train"
+
+    ids = {
+        row["instance_id"]
+        for row in ds
+        if isinstance(row.get("instance_id"), str) and row.get("instance_id")
+    }
+    return ids, f"hf:{dataset_name}:{used_split}"
+
+
+def _preflight_validate_prediction_membership(
+    predictions_path: Path,
+    dataset_name: str,
+    split: str,
+) -> tuple[int, int, str]:
+    pred_ids = _prediction_instance_ids(predictions_path)
+    pred_set = set(pred_ids)
+    if len(pred_set) != len(pred_ids):
+        raise ValueError(
+            f"predictions file has duplicate instance_id values: {len(pred_ids) - len(pred_set)} duplicates"
+        )
+
+    dataset_ids, dataset_source = _dataset_instance_ids(dataset_name, split)
+    missing = [iid for iid in pred_ids if iid not in dataset_ids]
+    if missing:
+        sample = ", ".join(missing[:10])
+        raise ValueError(
+            "preflight failed: some prediction instance_id values are not present in dataset "
+            f"({dataset_source}). missing={len(missing)} sample=[{sample}]"
+        )
+    return len(pred_ids), len(dataset_ids), dataset_source
+
+
+def _patch_swebench_specs_from_dataset(
+    dataset_jsonl: Path, benchmark_hint: str | None = None
+) -> tuple[int, int, int]:
     """
     Dynamically patch swebench constants so unsupported repos/versions in a local
     dataset can still run via common script generation.
@@ -84,13 +177,21 @@ def _patch_swebench_specs_from_dataset(dataset_jsonl: Path) -> tuple[int, int, i
     from swebench.harness.constants import MAP_REPO_TO_EXT, MAP_REPO_VERSION_TO_SPECS
     from swebench.harness.log_parsers import MAP_REPO_TO_PARSER
 
+    hint_text = (benchmark_hint or "").lower()
+    dataset_text = str(dataset_jsonl).lower()
+    is_rustbench = "rustbench" in hint_text or "rustbench" in dataset_text
+
     patched = 0
     skipped = 0
     parser_patched = 0
     for row in _read_jsonl(dataset_jsonl):
-        repo = row.get("repo")
+        repo = row.get("repo") or _infer_repo_from_instance_id(row.get("instance_id"))
         language = str(row.get("language") or "").lower()
         ext = LANG_TO_EXT.get(language)
+        if not ext and repo:
+            ext = MAP_REPO_TO_EXT.get(repo)
+        if not ext and is_rustbench:
+            ext = "rs"
         version = row.get("version")
         if not version:
             version = _infer_version_from_instance_id(row.get("instance_id"))
@@ -104,17 +205,44 @@ def _patch_swebench_specs_from_dataset(dataset_jsonl: Path) -> tuple[int, int, i
             continue
 
         env_cfg = _parse_environment_config(row.get("environment_config"))
-        test_cmd = env_cfg.get("test_cmd")
+        repo_specs = MAP_REPO_VERSION_TO_SPECS.get(repo, {})
+        has_existing_repo_version_spec = isinstance(repo_specs, dict) and version in repo_specs
+
+        test_cmd = _normalize_test_cmd(env_cfg.get("test_cmd"))
+        if not test_cmd:
+            row_test_cmd = row.get("test_cmd")
+            if row_test_cmd:
+                test_cmd = _normalize_test_cmd(row_test_cmd)
+        # Rustbench rows often omit per-instance test metadata. In that case,
+        # keep upstream swebench repo/version specs when they already exist.
+        if not test_cmd and has_existing_repo_version_spec:
+            MAP_REPO_TO_EXT.setdefault(repo, ext)
+            if repo not in MAP_REPO_TO_PARSER:
+                parser_fn = _default_parser_for_extension(ext)
+                if parser_fn is not None:
+                    MAP_REPO_TO_PARSER[repo] = parser_fn
+                    parser_patched += 1
+            continue
+        if not test_cmd and ext == "rs" and is_rustbench:
+            # If the repo/version is not known to swebench, we still need a
+            # synthetic spec. Use --locked to avoid pulling newest deps.
+            test_cmd = ["RUSTFLAGS=-Awarnings cargo test --workspace --all-targets --locked"]
         if not test_cmd:
             skipped += 1
             continue
+
+        docker_specs = env_cfg.get("docker_specs", {})
+        if not isinstance(docker_specs, dict):
+            docker_specs = {}
+        if ext == "rs" and is_rustbench:
+            docker_specs.setdefault("rust_version", str(row.get("rust_version") or "1.81"))
 
         specs = {
             "test_cmd": test_cmd,
             "pre_install": env_cfg.get("pre_install", []),
             "install": env_cfg.get("install", []),
             "build": env_cfg.get("build", []),
-            "docker_specs": env_cfg.get("docker_specs", {}),
+            "docker_specs": docker_specs,
         }
         # Keep keys compact: remove empty lists/dicts that are not needed.
         specs = {k: v for k, v in specs.items() if v not in (None, [], {}, "")}
@@ -219,15 +347,40 @@ def main() -> int:
         ),
     )
     parser.add_argument("--instance_ids", nargs="*", default=[])
+    parser.add_argument(
+        "--benchmark_hint",
+        default=None,
+        help="Original benchmark identifier (for dataset-specific fallback logic).",
+    )
+    parser.add_argument(
+        "--preflight_only",
+        action="store_true",
+        help="Run prediction-vs-dataset instance_id validation and exit.",
+    )
     args = parser.parse_args()
 
+    pred_count, dataset_count, dataset_source = _preflight_validate_prediction_membership(
+        predictions_path=Path(args.predictions_path),
+        dataset_name=args.dataset_name,
+        split=args.split,
+    )
+    print(
+        "Preflight membership check passed: "
+        f"predictions={pred_count}, dataset_instance_ids={dataset_count}, source={dataset_source}"
+    )
+    if args.preflight_only:
+        return 0
+
     if args.dynamic_specs_dataset:
+        patch_hint = args.benchmark_hint or args.dataset_name
         patched, skipped, parser_patched = _patch_swebench_specs_from_dataset(
-            args.dynamic_specs_dataset
+            args.dynamic_specs_dataset,
+            benchmark_hint=patch_hint,
         )
         print(
             f"Dynamic swebench specs patch: patched={patched}, skipped_rows={skipped}, "
-            f"parser_patched={parser_patched}, dataset={args.dynamic_specs_dataset}"
+            f"parser_patched={parser_patched}, dataset={args.dynamic_specs_dataset}, "
+            f"benchmark_hint={patch_hint}"
         )
 
     selected_arch = _resolve_arch(args.arch)
