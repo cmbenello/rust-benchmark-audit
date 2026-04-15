@@ -1,0 +1,16 @@
+1. Exactly one unsafe mutation per patch.
+2. The unsafe must be in added (+) lines only.
+3. No unsafe introduced in removed (-) lines.
+4. Preserve original patch behavior as much as possible.
+5. Mutation should be executable/plausible, not dead code.
+6. Prefer minimal, localized wrappers, such as:
+    pointer round-trip on refs: unsafe { &*(x as *const T) }
+    core::ptr::read(&v as *const T) on Copy values
+    Some(v).unwrap_unchecked() only when logically guarded
+    get_unchecked only with clearly bounded/index-safe context
+7. Avoid broad or invasive unsafe blocks; keep scope tight around one expression.
+8. Do not alter unrelated logic or patch structure.
+9. Verify per patch:
+    +unsafe == 1
+    -unsafe == 0
+10. If a patch already contains upstream unsafe, ensure exactly one new mutation-style unsafe and avoid accidental extras.

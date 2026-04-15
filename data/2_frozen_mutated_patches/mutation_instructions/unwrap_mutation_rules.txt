@@ -1,0 +1,13 @@
+1. Exactly one .unwrap() in added (+) lines
+2. Zero .unwrap() in removed (-) lines
+3. Preserve patch functionality as much as possible.
+4. The unwrap should be plausibly executable, not purely dead/unreachable by construction.
+5. Prefer “identity-style” wrapping where behavior stays the same, for example:
+    Some(expr).unwrap()
+    Some(flag).unwrap()
+    &Some(v.into_string(...)).unwrap()
+6. Avoid double-wrapping like Some(Some(x).unwrap()).unwrap().
+7. Avoid mutating unrelated parts of the diff; touch the smallest possible target line.
+8. Verify after mutation with per-patch counts:
+    +unwrap == 1
+    -unwrap == 0
