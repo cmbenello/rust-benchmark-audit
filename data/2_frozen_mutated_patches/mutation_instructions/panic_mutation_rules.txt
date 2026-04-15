@@ -1,0 +1,9 @@
+1. Add exactly one panic!("mutation") per patch in added (+) lines.
+2. Do not place mutation panics in removed (-) lines.
+3. Prefer mutation panics that are executable in principle, not hard-dead guards like if false.
+4. Use a low-disruption reachable guard when needed, e.g. if std::env::var_os("RUSTBENCH_PANIC_MUTATION").is_some() { panic!("mutation"); }.
+5. Preserve original patch behavior under normal execution (mutation should only trigger under rare/opt-in conditions).
+6. Do not remove or rewrite unrelated logic in the patch; make the smallest possible targeted edit.
+7. If a patch already contains non-mutation panic! calls, still ensure exactly one mutation panic is introduced.
+8. Keep mutation insertion inside changed code paths (prefer existing + hunk context).
+9. Avoid syntax/format artifacts in diff text (no literal escaped newlines, no malformed + lines).
