@@ -28,7 +28,10 @@ on every dimension.
 
 Note (Apr 23 email from Xihua): the rust-swe-bench authors themselves used
 an **80-CPU / 300+ GB RAM / 1 TB** machine — i.e. ~10× the published minimum.
-Their latest mitigation suggestion is `max_workers=1`, retried on Apr 23.
+Their latest mitigation suggestion was `max_workers=1`, which we retried on
+Apr 23. **The VM hung a third time within ~60 minutes at `max_workers=1`**
+(faster than the 4-6hr hangs at `max_workers=8`), so concurrency is not the
+root cause. Auto-stopped after the third hang.
 
 ## What we did
 
