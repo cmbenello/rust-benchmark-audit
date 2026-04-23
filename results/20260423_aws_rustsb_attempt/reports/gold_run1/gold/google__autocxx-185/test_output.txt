@@ -1,0 +1,896 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/lib.rs...
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
++ cd engine
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded cfg-if v1.0.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded lazycell v1.3.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded link-cplusplus v1.0.5 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded humantime v2.0.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded cfg-if v0.1.10 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded ansi_term v0.11.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded bitflags v1.2.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded thread_local v1.1.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded vec_map v0.8.2 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded rand_chacha v0.3.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded indoc v1.0.3 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded unicode-xid v0.2.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded dunce v1.0.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded proc-macro-error-attr v1.0.4 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded peeking_take_while v0.1.2 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded unindent v0.1.7 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded version_check v0.9.2 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded remove_dir_all v0.5.3 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded either v1.6.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded unzip-n v0.1.2 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded atty v0.2.14 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded rustc-hash v1.1.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded quick-error v1.2.3 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded strsim v0.8.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded shlex v0.1.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded libloading v0.6.6 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded itoa v0.4.7 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded cxxbridge-flags v1.0.27 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded textwrap v0.11.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded ppv-lite86 v0.2.10 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded humantime v1.3.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded memchr v2.3.4 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded unicode-width v0.1.8 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded proc-macro-error v1.0.4 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded quote v1.0.8 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded env_logger v0.8.2 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded cexpr v0.4.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded rand_core v0.6.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded which v3.1.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded termcolor v1.1.2 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded env_logger v0.7.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded clang-sys v1.0.3 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded tempfile v3.2.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded getrandom v0.2.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded proc-macro2 v1.0.24 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded log v0.4.13 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded trybuild v1.0.38 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded cxx-gen v0.7.27 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded cc v1.0.66 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded toml v0.5.8 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded cxxbridge-macro v1.0.27 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded codespan-reporting v0.9.5 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded serde_derive v1.0.119 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded serde v1.0.119 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded rand v0.8.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded itertools v0.9.0 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded aho-corasick v0.7.15 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded serde_json v1.0.61 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded nom v5.1.2 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded cxx v1.0.27 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded autocxx-bindgen v0.56.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded clap v2.33.3 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded syn v1.0.58 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded regex v1.4.3 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded regex-syntax v0.6.22 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded test-env-log v0.2.3 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded rust_info v0.3.1 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+  Downloaded libc v0.2.82 (registry `/testbed/.cargo/lts-repo-at-7498409eb6`)
+   Compiling proc-macro2 v1.0.24
+   Compiling unicode-xid v0.2.1
+   Compiling syn v1.0.58
+   Compiling libc v0.2.82
+   Compiling version_check v0.9.2
+   Compiling memchr v2.3.4
+   Compiling cfg-if v1.0.0
+   Compiling cc v1.0.66
+   Compiling log v0.4.13
+   Compiling lazy_static v1.4.0
+   Compiling glob v0.3.0
+   Compiling termcolor v1.1.2
+   Compiling cfg-if v0.1.10
+   Compiling unicode-width v0.1.8
+   Compiling regex-syntax v0.6.22
+   Compiling bitflags v1.2.1
+   Compiling getrandom v0.2.1
+   Compiling serde_derive v1.0.119
+   Compiling serde v1.0.119
+   Compiling cxxbridge-flags v1.0.27
+   Compiling humantime v2.0.1
+   Compiling vec_map v0.8.2
+   Compiling ryu v1.0.5
+   Compiling autocxx-bindgen v0.56.1
+   Compiling strsim v0.8.0
+   Compiling ansi_term v0.11.0
+   Compiling serde_json v1.0.61
+   Compiling shlex v0.1.1
+   Compiling peeking_take_while v0.1.2
+   Compiling ppv-lite86 v0.2.10
+   Compiling lazycell v1.3.0
+   Compiling either v1.6.1
+   Compiling rustc-hash v1.1.0
+   Compiling unindent v0.1.7
+   Compiling quick-error v1.2.3
+   Compiling dunce v1.0.1
+   Compiling itoa v0.4.7
+   Compiling trybuild v1.0.38
+   Compiling remove_dir_all v0.5.3
+   Compiling rust_info v0.3.1
+   Compiling libloading v0.6.6
+   Compiling textwrap v0.11.0
+   Compiling thread_local v1.1.0
+   Compiling itertools v0.9.0
+   Compiling humantime v1.3.0
+   Compiling codespan-reporting v0.9.5
+   Compiling indoc v1.0.3
+   Compiling nom v5.1.2
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling clang-sys v1.0.3
+   Compiling aho-corasick v0.7.15
+   Compiling link-cplusplus v1.0.5
+   Compiling cxx v1.0.27
+   Compiling atty v0.2.14
+   Compiling which v3.1.1
+   Compiling quote v1.0.8
+   Compiling clap v2.33.3
+   Compiling rand_core v0.6.1
+   Compiling rand_chacha v0.3.0
+   Compiling rand v0.8.1
+   Compiling tempfile v3.2.0
+   Compiling cexpr v0.4.0
+   Compiling regex v1.4.3
+   Compiling env_logger v0.8.2
+   Compiling env_logger v0.7.1
+   Compiling autocxx-parser v0.5.0 (/workspace/parser)
+   Compiling cxx-gen v0.7.27
+   Compiling cxxbridge-macro v1.0.27
+   Compiling unzip-n v0.1.2
+   Compiling autocxx-macro v0.5.0 (/workspace/macro)
+   Compiling test-env-log v0.2.3
+   Compiling autocxx-engine v0.5.0 (/workspace/engine)
+   Compiling autocxx v0.5.0 (/workspace)
+   Compiling toml v0.5.8
+    Finished test [unoptimized + debuginfo] target(s) in 27.02s
+     Running /workspace/target/debug/deps/autocxx_engine-6621a89ca66333f4
+
+running 140 tests
+test integration_tests::test_associated_type_templated_typedef::f ... ignored
+test conversion::parse::overload_tracker::tests::test_by_function ... ok
+test integration_tests::test_conflicting_ns_structs::f ... ignored
+test conversion::parse::overload_tracker::tests::test_by_method ... ok
+test conversion::parse::rust_name_tracker::tests::test ... ok
+test conversion::parse::bridge_name_tracker::tests::test ... ok
+test integration_tests::test_conflicting_static_functions::f ... ignored
+test conversion::namespace_organizer::tests::test_ns_entries_sort ... ok
+test integration_tests::test_cycle_up_vector::f ... ignored
+test integration_tests::test_cycle_vector::f ... ignored
+test byvalue_checker::tests::test_primitive_by_itself ... ok
+test byvalue_checker::tests::test_with_cxxstring ... ok
+test byvalue_checker::tests::test_primitives ... ok
+test byvalue_checker::tests::test_nested_primitives ... ok
+test byvalue_checker::tests::test_with_up ... ok
+test integration_tests::test_foreign_ns_cons_arg_pod::f ... FAILED
+test integration_tests::test_conflicting_methods_in_ns::f ... FAILED
+test integration_tests::test_define_int::f ... FAILED
+test integration_tests::test_foreign_ns_func_arg_pod::f ... FAILED
+test integration_tests::test_get_str_by_value::f ... FAILED
+test integration_tests::test_enum_with_funcs::f ... FAILED
+test integration_tests::test_conflicting_ns_up_functions::f ... FAILED
+test integration_tests::test_cycle_string_by_ref::f ... FAILED
+test integration_tests::test_conflicting_methods::f ... FAILED
+test integration_tests::test_foreign_ns_func_ret_nonpod::f ... FAILED
+test integration_tests::test_foreign_ns_meth_ret_pod::f ... FAILED
+test integration_tests::test_cycle_string::f ... FAILED
+test integration_tests::test_foreign_ns_cons_arg_nonpod::f ... FAILED
+test integration_tests::test_conflicting_up_wrapper_methods_in_ns::f ... FAILED
+test integration_tests::test_cycle_nonpod_with_str_by_ref::f ... FAILED
+test integration_tests::test_cycle_string_up::f ... FAILED
+test integration_tests::test_give_nonpod_typedef_by_value::f ... FAILED
+test integration_tests::test_conflicting_ns_funcs::f ... FAILED
+test integration_tests::test_foreign_ns_func_arg_nonpod::f ... FAILED
+test integration_tests::test_foreign_ns_meth_arg_nonpod::f ... FAILED
+test integration_tests::test_foreign_ns_meth_arg_pod::f ... FAILED
+test integration_tests::test_get_str_by_up::f ... FAILED
+test integration_tests::test_cycle_string_by_mut_ref::f ... FAILED
+test integration_tests::test_foreign_ns_func_ret_pod::f ... FAILED
+test integration_tests::test_generic_type::f ... FAILED
+test integration_tests::test_give_pod_by_up::f ... FAILED
+test integration_tests::test_give_up_int::f ... ignored
+test integration_tests::test_forward_declaration::f ... FAILED
+test integration_tests::test_define_str::f ... FAILED
+test integration_tests::test_make_up_int::f ... ignored
+test integration_tests::test_enum_no_funcs::f ... FAILED
+test integration_tests::test_foreign_ns_meth_ret_nonpod::f ... FAILED
+test integration_tests::test_conflicting_up_wrapper_methods_not_in_ns::f ... FAILED
+test integration_tests::test_non_pod_constant::f ... ignored
+test integration_tests::test_give_pod_by_value::f ... FAILED
+test integration_tests::test_give_string_plain::f ... FAILED
+test integration_tests::test_i32_const::f ... FAILED
+test integration_tests::test_make_up::f ... FAILED
+test integration_tests::test_give_string_up::f ... FAILED
+test integration_tests::test_give_pod_typedef_by_value::f ... FAILED
+test integration_tests::test_method_pass_nonpod_by_value::f ... FAILED
+test integration_tests::test_make_string::f ... FAILED
+test integration_tests::test_overload_numeric_functions::f ... ignored
+test integration_tests::test_inline_method::f ... FAILED
+test integration_tests::test_ns_return_struct::f ... FAILED
+test integration_tests::test_negative_make_nonpod::f ... FAILED
+test integration_tests::test_pod_constant::f ... ignored
+test integration_tests::test_method_return_string_by_value::f ... FAILED
+test integration_tests::test_method_pass_pod_by_reference::f ... FAILED
+test integration_tests::test_method_pass_nonpod_by_mut_reference::f ... FAILED
+test integration_tests::test_method_pass_nonpod_by_reference::f ... FAILED
+test integration_tests::test_ns_take_struct::f ... FAILED
+test integration_tests::test_method_pass_nonpod_by_up::f ... FAILED
+test integration_tests::test_make_up_with_args::f ... FAILED
+test integration_tests::test_ns_struct_pod_request::f ... FAILED
+test integration_tests::test_negative_cpp_nonsense::f ... FAILED
+test integration_tests::test_destructor::f ... FAILED
+test integration_tests::test_negative_rs_nonsense::f ... ok
+test integration_tests::test_overload_constructors::f ... FAILED
+test integration_tests::test_method_return_nonpod_by_value::f ... FAILED
+test integration_tests::test_pass_rust_string_by_value::f ... FAILED
+test integration_tests::test_method_pass_nonpod_by_value_with_up::f ... FAILED
+test integration_tests::test_pass_rust_string_by_ref::f ... FAILED
+test integration_tests::test_method_pass_pod_by_up::f ... FAILED
+test integration_tests::test_pass_rust_str::f ... FAILED
+test integration_tests::test_method_pass_pod_by_mut_reference::f ... FAILED
+test integration_tests::test_multiple_classes_with_methods::f ... FAILED
+test integration_tests::test_overload_functions::f ... FAILED
+test integration_tests::test_string_templated_typedef::f ... ignored
+test integration_tests::test_ns_up_direct::f ... FAILED
+test integration_tests::test_ns_constructor::f ... FAILED
+test integration_tests::test_ns_up_wrappers::f ... FAILED
+test integration_tests::test_method_pass_string_by_value::f ... FAILED
+test integration_tests::test_overload_methods::f ... FAILED
+test integration_tests::test_take_nonpod_by_ptr::f ... ignored
+test integration_tests::test_method_pass_pod_by_value::f ... FAILED
+test integration_tests::test_ns_up_wrappers_in_up::f ... FAILED
+test integration_tests::test_ns_func::f ... FAILED
+test integration_tests::test_root_ns_func_ret_nonpod::f ... FAILED
+test integration_tests::test_return_nonpod_by_value::f ... FAILED
+test integration_tests::test_struct_templated_typedef::f ... FAILED
+test integration_tests::test_root_ns_func_ret_pod::f ... FAILED
+test integration_tests::test_root_ns_meth_arg_pod::f ... FAILED
+test integration_tests::test_root_ns_func_arg_nonpod::f ... FAILED
+test integration_tests::test_string_constant::f ... FAILED
+test integration_tests::test_root_ns_func_arg_pod::f ... FAILED
+test integration_tests::test_return_void::f ... FAILED
+test integration_tests::test_static_func::f ... FAILED
+test integration_tests::test_return_string_by_value::f ... FAILED
+test integration_tests::test_root_ns_meth_ret_pod::f ... FAILED
+test integration_tests::test_use_pod_typedef::f ... ignored
+test integration_tests::test_use_pod_typedef_with_allowpod::f ... ignored
+test integration_tests::test_root_ns_meth_ret_nonpod::f ... FAILED
+test integration_tests::test_static_func_wrapper::f ... FAILED
+test integration_tests::test_root_ns_cons_arg_nonpod::f ... FAILED
+test integration_tests::test_root_ns_meth_arg_nonpod::f ... FAILED
+test types::tests::test_ints ... ok
+test integration_tests::test_take_i32::f ... FAILED
+test integration_tests::test_take_nonpod_by_ref::f ... FAILED
+test integration_tests::test_take_nonpod_by_mut_ref::f ... FAILED
+test integration_tests::test_take_nonpod_by_value::f ... FAILED
+test integration_tests::test_take_nested_pod_by_value::f ... FAILED
+test integration_tests::test_take_pod_by_ref::f ... FAILED
+test integration_tests::test_take_pod_by_mut_ref::f ... FAILED
+test integration_tests::test_two_funcs::f ... FAILED
+test integration_tests::test_take_pod_by_value::f ... FAILED
+test integration_tests::test_typedef_to_ulong::f ... FAILED
+test integration_tests::test_take_pod_class_by_value::f ... FAILED
+test integration_tests::test_templated_typedef::f ... FAILED
+test integration_tests::test_typedef_to_std_in_struct::f ... FAILED
+test integration_tests::test_virtual_fns::f ... FAILED
+test integration_tests::test_two_funcs_with_definition::f ... FAILED
+test integration_tests::test_typedef_in_pod_struct::f ... FAILED
+test integration_tests::test_typedef_to_up_in_struct::f ... FAILED
+test integration_tests::test_typedef_to_std::f ... FAILED
+test integration_tests::test_typedef_to_up_in_fn_call::f ... FAILED
+test integration_tests::test_ulong::f ... FAILED
+test integration_tests::test_pass_string_by_value::f ... FAILED
+test integration_tests::test_give_pod_class_by_value::f ... FAILED
+test integration_tests::test_root_ns_cons_arg_pod::f ... FAILED
+test integration_tests::test_return_reference::f ... FAILED
+test integration_tests::test_reserved_name::f ... FAILED
+test integration_tests::test_return_i32::f ... FAILED
+test integration_tests::test_pod_mut_method::f ... FAILED
+test integration_tests::test_pod_method::f ... FAILED
+
+failures:
+
+---- integration_tests::test_foreign_ns_cons_arg_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpFdfrEU/target/rs
+thread 'integration_tests::test_foreign_ns_cons_arg_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_conflicting_methods_in_ns::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpvT6e7p/target/rs
+thread 'integration_tests::test_conflicting_methods_in_ns::f' panicked at 'Unable to find libclang: "couldn\'t find any valid shared libraries matching: [\'libclang.so\', \'libclang-*.so\', \'libclang.so.*\', \'libclang-*.so.*\'], set the `LIBCLANG_PATH` environment variable to a path where one of these files can be found (invalid: [])"', /root/.cargo/registry/src/-92dcd95e05cd9899/autocxx-bindgen-0.56.1/src/lib.rs:1922:31
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- integration_tests::test_define_int::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpAvKm8F/target/rs
+thread 'integration_tests::test_define_int::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_foreign_ns_func_arg_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpsHTsE1/target/rs
+thread 'integration_tests::test_foreign_ns_func_arg_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_get_str_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpKodhFi/target/rs
+thread 'integration_tests::test_get_str_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_enum_with_funcs::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp3zNXAQ/target/rs
+thread 'integration_tests::test_enum_with_funcs::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_conflicting_ns_up_functions::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpbepG1Y/target/rs
+thread 'integration_tests::test_conflicting_ns_up_functions::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_cycle_string_by_ref::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpwkbGtH/target/rs
+thread 'integration_tests::test_cycle_string_by_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_conflicting_methods::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpQCdpca/target/rs
+thread 'integration_tests::test_conflicting_methods::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_foreign_ns_func_ret_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpeXJPjg/target/rs
+thread 'integration_tests::test_foreign_ns_func_ret_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_foreign_ns_meth_ret_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpYMCcco/target/rs
+thread 'integration_tests::test_foreign_ns_meth_ret_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_cycle_string::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpbM0Ygv/target/rs
+thread 'integration_tests::test_cycle_string::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_foreign_ns_cons_arg_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpUT0Jan/target/rs
+thread 'integration_tests::test_foreign_ns_cons_arg_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_conflicting_up_wrapper_methods_in_ns::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpWt7WnF/target/rs
+thread 'integration_tests::test_conflicting_up_wrapper_methods_in_ns::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_cycle_nonpod_with_str_by_ref::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpelJ9xk/target/rs
+thread 'integration_tests::test_cycle_nonpod_with_str_by_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_cycle_string_up::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpQ79nHH/target/rs
+thread 'integration_tests::test_cycle_string_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_give_nonpod_typedef_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp1F2N4l/target/rs
+thread 'integration_tests::test_give_nonpod_typedef_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_conflicting_ns_funcs::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpiyU6fZ/target/rs
+thread 'integration_tests::test_conflicting_ns_funcs::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_foreign_ns_func_arg_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpbC0dH4/target/rs
+thread 'integration_tests::test_foreign_ns_func_arg_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_foreign_ns_meth_arg_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp7bBJoq/target/rs
+thread 'integration_tests::test_foreign_ns_meth_arg_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_foreign_ns_meth_arg_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpy3zZ19/target/rs
+thread 'integration_tests::test_foreign_ns_meth_arg_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_get_str_by_up::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpUr8Veb/target/rs
+thread 'integration_tests::test_get_str_by_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_cycle_string_by_mut_ref::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp4En4NR/target/rs
+thread 'integration_tests::test_cycle_string_by_mut_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_foreign_ns_func_ret_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp5ptHFr/target/rs
+thread 'integration_tests::test_foreign_ns_func_ret_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_generic_type::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpdK3S7n/target/rs
+thread 'integration_tests::test_generic_type::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_give_pod_by_up::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpAxLTLP/target/rs
+thread 'integration_tests::test_give_pod_by_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_forward_declaration::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpoJo9QM/target/rs
+thread 'integration_tests::test_forward_declaration::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_define_str::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpaCeQgi/target/rs
+thread 'integration_tests::test_define_str::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_enum_no_funcs::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpaqCvUv/target/rs
+thread 'integration_tests::test_enum_no_funcs::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_foreign_ns_meth_ret_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpJesXjs/target/rs
+thread 'integration_tests::test_foreign_ns_meth_ret_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_conflicting_up_wrapper_methods_not_in_ns::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp43EaZk/target/rs
+thread 'integration_tests::test_conflicting_up_wrapper_methods_not_in_ns::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_give_pod_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpH3M7fm/target/rs
+thread 'integration_tests::test_give_pod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_give_string_plain::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpN9MyvX/target/rs
+thread 'integration_tests::test_give_string_plain::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_i32_const::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpLV6Hys/target/rs
+thread 'integration_tests::test_i32_const::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_make_up::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp0qFxL2/target/rs
+thread 'integration_tests::test_make_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_give_string_up::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpqB6YTS/target/rs
+thread 'integration_tests::test_give_string_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_give_pod_typedef_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpUEcbYx/target/rs
+thread 'integration_tests::test_give_pod_typedef_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_nonpod_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmphHPG2A/target/rs
+thread 'integration_tests::test_method_pass_nonpod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_make_string::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpWfHFqN/target/rs
+thread 'integration_tests::test_make_string::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_inline_method::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpepLwH3/target/rs
+thread 'integration_tests::test_inline_method::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_ns_return_struct::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpAiSK9z/target/rs
+thread 'integration_tests::test_ns_return_struct::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_negative_make_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpgW6cuc/target/rs
+thread 'integration_tests::test_negative_make_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_return_string_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpUOsCOJ/target/rs
+thread 'integration_tests::test_method_return_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_pod_by_reference::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpzFw3ly/target/rs
+thread 'integration_tests::test_method_pass_pod_by_reference::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_nonpod_by_mut_reference::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpSaaO5x/target/rs
+thread 'integration_tests::test_method_pass_nonpod_by_mut_reference::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_nonpod_by_reference::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpHsdoxz/target/rs
+thread 'integration_tests::test_method_pass_nonpod_by_reference::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_ns_take_struct::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpJ4p4kz/target/rs
+thread 'integration_tests::test_ns_take_struct::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_nonpod_by_up::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp6pIQ4s/target/rs
+thread 'integration_tests::test_method_pass_nonpod_by_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_make_up_with_args::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpLuCaVn/target/rs
+thread 'integration_tests::test_make_up_with_args::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_ns_struct_pod_request::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpri31X3/target/rs
+thread 'integration_tests::test_ns_struct_pod_request::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_negative_cpp_nonsense::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmphktQnb/target/rs
+thread 'integration_tests::test_negative_cpp_nonsense::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_destructor::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpmrM4iI/target/rs
+thread 'integration_tests::test_destructor::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_overload_constructors::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp6lmapW/target/rs
+thread 'integration_tests::test_overload_constructors::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_return_nonpod_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpsvdTU3/target/rs
+thread 'integration_tests::test_method_return_nonpod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_pass_rust_string_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpsr1Bp7/target/rs
+thread 'integration_tests::test_pass_rust_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_nonpod_by_value_with_up::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpi6hx2O/target/rs
+thread 'integration_tests::test_method_pass_nonpod_by_value_with_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_pass_rust_string_by_ref::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpNhUUmy/target/rs
+thread 'integration_tests::test_pass_rust_string_by_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_pod_by_up::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpT3zQwW/target/rs
+thread 'integration_tests::test_method_pass_pod_by_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_pass_rust_str::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpydWSlT/target/rs
+thread 'integration_tests::test_pass_rust_str::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_pod_by_mut_reference::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp5r0vRZ/target/rs
+thread 'integration_tests::test_method_pass_pod_by_mut_reference::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_multiple_classes_with_methods::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpy2OYIw/target/rs
+thread 'integration_tests::test_multiple_classes_with_methods::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_overload_functions::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpswU9eE/target/rs
+thread 'integration_tests::test_overload_functions::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_ns_up_direct::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpj9IPRw/target/rs
+thread 'integration_tests::test_ns_up_direct::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_ns_constructor::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpHKbb6H/target/rs
+thread 'integration_tests::test_ns_constructor::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_ns_up_wrappers::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpZUXuK4/target/rs
+thread 'integration_tests::test_ns_up_wrappers::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_string_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpNee08K/target/rs
+thread 'integration_tests::test_method_pass_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_overload_methods::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp6NAUqC/target/rs
+thread 'integration_tests::test_overload_methods::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_method_pass_pod_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpFoJTjB/target/rs
+thread 'integration_tests::test_method_pass_pod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_ns_up_wrappers_in_up::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpZFc9cl/target/rs
+thread 'integration_tests::test_ns_up_wrappers_in_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_ns_func::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpmXAbLv/target/rs
+thread 'integration_tests::test_ns_func::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_func_ret_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpaNzlf8/target/rs
+thread 'integration_tests::test_root_ns_func_ret_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_return_nonpod_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpbjzaMU/target/rs
+thread 'integration_tests::test_return_nonpod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_struct_templated_typedef::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpa5IVfo/target/rs
+thread 'integration_tests::test_struct_templated_typedef::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_func_ret_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpSCLqKj/target/rs
+thread 'integration_tests::test_root_ns_func_ret_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_meth_arg_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpQAN6mh/target/rs
+thread 'integration_tests::test_root_ns_meth_arg_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_func_arg_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp60QokM/target/rs
+thread 'integration_tests::test_root_ns_func_arg_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_string_constant::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpYZIn3N/target/rs
+thread 'integration_tests::test_string_constant::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_func_arg_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpTMj1Nu/target/rs
+thread 'integration_tests::test_root_ns_func_arg_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_return_void::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpvQbagV/target/rs
+thread 'integration_tests::test_return_void::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_static_func::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmptIM2QD/target/rs
+thread 'integration_tests::test_static_func::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_return_string_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmplOlA9w/target/rs
+thread 'integration_tests::test_return_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_meth_ret_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpZ10FqS/target/rs
+thread 'integration_tests::test_root_ns_meth_ret_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_meth_ret_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpNfuDtR/target/rs
+thread 'integration_tests::test_root_ns_meth_ret_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_static_func_wrapper::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpmO4lJ0/target/rs
+thread 'integration_tests::test_static_func_wrapper::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_cons_arg_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpiKF6lI/target/rs
+thread 'integration_tests::test_root_ns_cons_arg_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_meth_arg_nonpod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpyvA6Yx/target/rs
+thread 'integration_tests::test_root_ns_meth_arg_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_take_i32::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp9pChLw/target/rs
+thread 'integration_tests::test_take_i32::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_take_nonpod_by_ref::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpubjOVQ/target/rs
+thread 'integration_tests::test_take_nonpod_by_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_take_nonpod_by_mut_ref::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpMZNq1C/target/rs
+thread 'integration_tests::test_take_nonpod_by_mut_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_take_nonpod_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp9pE9kG/target/rs
+thread 'integration_tests::test_take_nonpod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_take_nested_pod_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpTJOEJv/target/rs
+thread 'integration_tests::test_take_nested_pod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_take_pod_by_ref::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp62nyWh/target/rs
+thread 'integration_tests::test_take_pod_by_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_take_pod_by_mut_ref::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpyjom9e/target/rs
+thread 'integration_tests::test_take_pod_by_mut_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_two_funcs::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpbNqtTx/target/rs
+thread 'integration_tests::test_two_funcs::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_take_pod_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp9XZv4o/target/rs
+thread 'integration_tests::test_take_pod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_typedef_to_ulong::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp6SctHg/target/rs
+thread 'integration_tests::test_typedef_to_ulong::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_take_pod_class_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpMGe84L/target/rs
+thread 'integration_tests::test_take_pod_class_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_templated_typedef::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpB6qM0E/target/rs
+thread 'integration_tests::test_templated_typedef::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_typedef_to_std_in_struct::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpopo2m2/target/rs
+thread 'integration_tests::test_typedef_to_std_in_struct::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_virtual_fns::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpcdZQOb/target/rs
+thread 'integration_tests::test_virtual_fns::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_two_funcs_with_definition::f stdout ----
+Here
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp3c2jRq/target/rs
+thread 'integration_tests::test_two_funcs_with_definition::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_typedef_in_pod_struct::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpuyuTCm/target/rs
+thread 'integration_tests::test_typedef_in_pod_struct::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_typedef_to_up_in_struct::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpHanWQW/target/rs
+thread 'integration_tests::test_typedef_to_up_in_struct::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_typedef_to_std::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp1offhB/target/rs
+thread 'integration_tests::test_typedef_to_std::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_typedef_to_up_in_fn_call::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpywKzu2/target/rs
+thread 'integration_tests::test_typedef_to_up_in_fn_call::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_ulong::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpJuYDTm/target/rs
+thread 'integration_tests::test_ulong::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_pass_string_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpEPcgSq/target/rs
+thread 'integration_tests::test_pass_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_give_pod_class_by_value::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpITO0AR/target/rs
+thread 'integration_tests::test_give_pod_class_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_root_ns_cons_arg_pod::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpVgSaxP/target/rs
+thread 'integration_tests::test_root_ns_cons_arg_pod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_return_reference::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpm7S3K4/target/rs
+thread 'integration_tests::test_return_reference::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_reserved_name::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpJqxoT1/target/rs
+thread 'integration_tests::test_reserved_name::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_return_i32::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpKfcM0d/target/rs
+thread 'integration_tests::test_return_i32::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_pod_mut_method::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmpbZvqeL/target/rs
+thread 'integration_tests::test_pod_mut_method::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+---- integration_tests::test_pod_method::f stdout ----
+cargo:rustc-env=AUTOCXX_RS=/tmp/.tmp5aRnE9/target/rs
+thread 'integration_tests::test_pod_method::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:394:21
+
+
+failures:
+    integration_tests::test_conflicting_methods::f
+    integration_tests::test_conflicting_methods_in_ns::f
+    integration_tests::test_conflicting_ns_funcs::f
+    integration_tests::test_conflicting_ns_up_functions::f
+    integration_tests::test_conflicting_up_wrapper_methods_in_ns::f
+    integration_tests::test_conflicting_up_wrapper_methods_not_in_ns::f
+    integration_tests::test_cycle_nonpod_with_str_by_ref::f
+    integration_tests::test_cycle_string::f
+    integration_tests::test_cycle_string_by_mut_ref::f
+    integration_tests::test_cycle_string_by_ref::f
+    integration_tests::test_cycle_string_up::f
+    integration_tests::test_define_int::f
+    integration_tests::test_define_str::f
+    integration_tests::test_destructor::f
+    integration_tests::test_enum_no_funcs::f
+    integration_tests::test_enum_with_funcs::f
+    integration_tests::test_foreign_ns_cons_arg_nonpod::f
+    integration_tests::test_foreign_ns_cons_arg_pod::f
+    integration_tests::test_foreign_ns_func_arg_nonpod::f
+    integration_tests::test_foreign_ns_func_arg_pod::f
+    integration_tests::test_foreign_ns_func_ret_nonpod::f
+    integration_tests::test_foreign_ns_func_ret_pod::f
+    integration_tests::test_foreign_ns_meth_arg_nonpod::f
+    integration_tests::test_foreign_ns_meth_arg_pod::f
+    integration_tests::test_foreign_ns_meth_ret_nonpod::f
+    integration_tests::test_foreign_ns_meth_ret_pod::f
+    integration_tests::test_forward_declaration::f
+    integration_tests::test_generic_type::f
+    integration_tests::test_get_str_by_up::f
+    integration_tests::test_get_str_by_value::f
+    integration_tests::test_give_nonpod_typedef_by_value::f
+    integration_tests::test_give_pod_by_up::f
+    integration_tests::test_give_pod_by_value::f
+    integration_tests::test_give_pod_class_by_value::f
+    integration_tests::test_give_pod_typedef_by_value::f
+    integration_tests::test_give_string_plain::f
+    integration_tests::test_give_string_up::f
+    integration_tests::test_i32_const::f
+    integration_tests::test_inline_method::f
+    integration_tests::test_make_string::f
+    integration_tests::test_make_up::f
+    integration_tests::test_make_up_with_args::f
+    integration_tests::test_method_pass_nonpod_by_mut_reference::f
+    integration_tests::test_method_pass_nonpod_by_reference::f
+    integration_tests::test_method_pass_nonpod_by_up::f
+    integration_tests::test_method_pass_nonpod_by_value::f
+    integration_tests::test_method_pass_nonpod_by_value_with_up::f
+    integration_tests::test_method_pass_pod_by_mut_reference::f
+    integration_tests::test_method_pass_pod_by_reference::f
+    integration_tests::test_method_pass_pod_by_up::f
+    integration_tests::test_method_pass_pod_by_value::f
+    integration_tests::test_method_pass_string_by_value::f
+    integration_tests::test_method_return_nonpod_by_value::f
+    integration_tests::test_method_return_string_by_value::f
+    integration_tests::test_multiple_classes_with_methods::f
+    integration_tests::test_negative_cpp_nonsense::f
+    integration_tests::test_negative_make_nonpod::f
+    integration_tests::test_ns_constructor::f
+    integration_tests::test_ns_func::f
+    integration_tests::test_ns_return_struct::f
+    integration_tests::test_ns_struct_pod_request::f
+    integration_tests::test_ns_take_struct::f
+    integration_tests::test_ns_up_direct::f
+    integration_tests::test_ns_up_wrappers::f
+    integration_tests::test_ns_up_wrappers_in_up::f
+    integration_tests::test_overload_constructors::f
+    integration_tests::test_overload_functions::f
+    integration_tests::test_overload_methods::f
+    integration_tests::test_pass_rust_str::f
+    integration_tests::test_pass_rust_string_by_ref::f
+    integration_tests::test_pass_rust_string_by_value::f
+    integration_tests::test_pass_string_by_value::f
+    integration_tests::test_pod_method::f
+    integration_tests::test_pod_mut_method::f
+    integration_tests::test_reserved_name::f
+    integration_tests::test_return_i32::f
+    integration_tests::test_return_nonpod_by_value::f
+    integration_tests::test_return_reference::f
+    integration_tests::test_return_string_by_value::f
+    integration_tests::test_return_void::f
+    integration_tests::test_root_ns_cons_arg_nonpod::f
+    integration_tests::test_root_ns_cons_arg_pod::f
+    integration_tests::test_root_ns_func_arg_nonpod::f
+    integration_tests::test_root_ns_func_arg_pod::f
+    integration_tests::test_root_ns_func_ret_nonpod::f
+    integration_tests::test_root_ns_func_ret_pod::f
+    integration_tests::test_root_ns_meth_arg_nonpod::f
+    integration_tests::test_root_ns_meth_arg_pod::f
+    integration_tests::test_root_ns_meth_ret_nonpod::f
+    integration_tests::test_root_ns_meth_ret_pod::f
+    integration_tests::test_static_func::f
+    integration_tests::test_static_func_wrapper::f
+    integration_tests::test_string_constant::f
+    integration_tests::test_struct_templated_typedef::f
+    integration_tests::test_take_i32::f
+    integration_tests::test_take_nested_pod_by_value::f
+    integration_tests::test_take_nonpod_by_mut_ref::f
+    integration_tests::test_take_nonpod_by_ref::f
+    integration_tests::test_take_nonpod_by_value::f
+    integration_tests::test_take_pod_by_mut_ref::f
+    integration_tests::test_take_pod_by_ref::f
+    integration_tests::test_take_pod_by_value::f
+    integration_tests::test_take_pod_class_by_value::f
+    integration_tests::test_templated_typedef::f
+    integration_tests::test_two_funcs::f
+    integration_tests::test_two_funcs_with_definition::f
+    integration_tests::test_typedef_in_pod_struct::f
+    integration_tests::test_typedef_to_std::f
+    integration_tests::test_typedef_to_std_in_struct::f
+    integration_tests::test_typedef_to_ulong::f
+    integration_tests::test_typedef_to_up_in_fn_call::f
+    integration_tests::test_typedef_to_up_in_struct::f
+    integration_tests::test_ulong::f
+    integration_tests::test_virtual_fns::f
+
+test result: FAILED. 12 passed; 114 failed; 14 ignored; 0 measured; 0 filtered out
+
+   Doc-tests autocxx-engine
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
++ cd ../
++ git reset --hard 75c76ab9ab0075cf5c7d01eaaf800213a98a80ec
+HEAD is now at 75c76ab9 Merge pull request #184 from google/more-tests
++ git clean -fd
+Removing .cargo/
+Removing dev/

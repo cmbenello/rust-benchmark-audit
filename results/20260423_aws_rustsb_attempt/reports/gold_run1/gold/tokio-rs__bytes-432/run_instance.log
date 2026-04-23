@@ -1,0 +1,193 @@
+2026-04-17 08:28:08,605 - INFO - Environment image rustb.env.x86_64.tokio-rs_bytes:latest found for tokio-rs__bytes-432
+Building instance image rustbench/tokio-rs__bytes:pr-432 for tokio-rs__bytes-432
+2026-04-17 08:36:40,975 - INFO - Creating container for tokio-rs__bytes-432...
+2026-04-17 08:36:41,126 - INFO - Container for tokio-rs__bytes-432 created: c8797f6a7e2f8b71fa4e9f098bb42b2dd1585ef2db4e79e7e4180ffef131a37b
+2026-04-17 08:36:41,279 - INFO - Container for tokio-rs__bytes-432 started: c8797f6a7e2f8b71fa4e9f098bb42b2dd1585ef2db4e79e7e4180ffef131a37b
+2026-04-17 08:36:41,279 - INFO - Intermediate patch for tokio-rs__bytes-432 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-432/patch.diff, now applying to container...
+2026-04-17 08:36:41,504 - INFO - >>>>> Applied Patch:
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/chain.rs...
+Checking patch src/buf/limit.rs...
+Checking patch src/bytes_mut.rs...
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/chain.rs cleanly.
+Applied patch src/buf/limit.rs cleanly.
+Applied patch src/bytes_mut.rs cleanly.
+
+2026-04-17 08:36:41,569 - INFO - Git diff before:
+diff --git a/src/buf/buf_mut.rs b/src/buf/buf_mut.rs
+index 4f6e47d..026bcad 100644
+--- a/src/buf/buf_mut.rs
++++ b/src/buf/buf_mut.rs
+@@ -30,7 +30,7 @@ use alloc::{boxed::Box, vec::Vec};
+ ///
+ /// assert_eq!(buf, b"hello world");
+ /// ```
+-pub trait BufMut {
++pub unsafe trait BufMut {
+     /// Returns the number of bytes that can be written from the current
+     /// position until the end of the buffer is reached.
+     ///
+@@ -992,15 +992,15 @@ macro_rules! deref_forward_bufmut {
+     };
+ }
+ 
+-impl<T: BufMut + ?Sized> BufMut for &mut T {
++unsafe impl<T: BufMut + ?Sized> BufMut for &mut T {
+     deref_forward_bufmut!();
+ }
+ 
+-impl<T: BufMut + ?Sized> BufMut for Box<T> {
++unsafe impl<T: BufMut + ?Sized> BufMut for Box<T> {
+     deref_forward_bufmut!();
+ }
+ 
+-impl BufMut for &mut [u8] {
++unsafe impl BufMut for &mut [u8] {
+     #[inline]
+     fn remaining_mut(&self) -> usize {
+         self.len()
+@@ -1020,7 +1020,7 @@ impl BufMut for &mut [u8] {
+     }
+ }
+ 
+-impl BufMut for Vec<u8> {
++unsafe impl BufMut for Vec<u8> {
+     #[inline]
+     fn remaining_mut(&self) -> usize {
+         usize::MAX - self.len()
+diff --git a/src/buf/chain.rs b/src/buf/chain.rs
+index 020bf08..cc2c944 100644
+--- a/src/buf/chain.rs
++++ b/src/buf/chain.rs
+@@ -174,7 +174,7 @@ where
+     }
+ }
+ 
+-impl<T, U> BufMut for Chain<T, U>
++unsafe impl<T, U> BufMut for Chain<T, U>
+ where
+     T: BufMut,
+     U: BufMut,
+diff --git a/src/buf/limit.rs b/src/buf/limit.rs
+index a36ecee..c6ed3c7 100644
+--- a/src/buf/limit.rs
++++ b/src/buf/limit.rs
+@@ -55,7 +55,7 @@ impl<T> Limit<T> {
+     }
+ }
+ 
+-impl<T: BufMut> BufMut for Limit<T> {
++unsafe impl<T: BufMut> BufMut for Limit<T> {
+     fn remaining_mut(&self) -> usize {
+         cmp::min(self.inner.remaining_mut(), self.limit)
+     }
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+index a7a8e57..16cb72c 100644
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -966,7 +966,7 @@ impl Buf for BytesMut {
+     }
+ }
+ 
+-impl BufMut for BytesMut {
++unsafe impl BufMut for BytesMut {
+     #[inline]
+     fn remaining_mut(&self) -> usize {
+         usize::MAX - self.len()
+2026-04-17 08:36:41,569 - INFO - Eval script for tokio-rs__bytes-432 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-432/eval.sh; copying to container...
+2026-04-17 08:37:15,056 - INFO - Test runtime: 33.34 seconds
+2026-04-17 08:37:15,057 - INFO - Test output for tokio-rs__bytes-432 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-432/test_output.txt
+2026-04-17 08:37:15,101 - INFO - Git diff after:
+diff --git a/src/buf/buf_mut.rs b/src/buf/buf_mut.rs
+index 4f6e47d..026bcad 100644
+--- a/src/buf/buf_mut.rs
++++ b/src/buf/buf_mut.rs
+@@ -30,7 +30,7 @@ use alloc::{boxed::Box, vec::Vec};
+ ///
+ /// assert_eq!(buf, b"hello world");
+ /// ```
+-pub trait BufMut {
++pub unsafe trait BufMut {
+     /// Returns the number of bytes that can be written from the current
+     /// position until the end of the buffer is reached.
+     ///
+@@ -992,15 +992,15 @@ macro_rules! deref_forward_bufmut {
+     };
+ }
+ 
+-impl<T: BufMut + ?Sized> BufMut for &mut T {
++unsafe impl<T: BufMut + ?Sized> BufMut for &mut T {
+     deref_forward_bufmut!();
+ }
+ 
+-impl<T: BufMut + ?Sized> BufMut for Box<T> {
++unsafe impl<T: BufMut + ?Sized> BufMut for Box<T> {
+     deref_forward_bufmut!();
+ }
+ 
+-impl BufMut for &mut [u8] {
++unsafe impl BufMut for &mut [u8] {
+     #[inline]
+     fn remaining_mut(&self) -> usize {
+         self.len()
+@@ -1020,7 +1020,7 @@ impl BufMut for &mut [u8] {
+     }
+ }
+ 
+-impl BufMut for Vec<u8> {
++unsafe impl BufMut for Vec<u8> {
+     #[inline]
+     fn remaining_mut(&self) -> usize {
+         usize::MAX - self.len()
+diff --git a/src/buf/chain.rs b/src/buf/chain.rs
+index 020bf08..cc2c944 100644
+--- a/src/buf/chain.rs
++++ b/src/buf/chain.rs
+@@ -174,7 +174,7 @@ where
+     }
+ }
+ 
+-impl<T, U> BufMut for Chain<T, U>
++unsafe impl<T, U> BufMut for Chain<T, U>
+ where
+     T: BufMut,
+     U: BufMut,
+diff --git a/src/buf/limit.rs b/src/buf/limit.rs
+index a36ecee..c6ed3c7 100644
+--- a/src/buf/limit.rs
++++ b/src/buf/limit.rs
+@@ -55,7 +55,7 @@ impl<T> Limit<T> {
+     }
+ }
+ 
+-impl<T: BufMut> BufMut for Limit<T> {
++unsafe impl<T: BufMut> BufMut for Limit<T> {
+     fn remaining_mut(&self) -> usize {
+         cmp::min(self.inner.remaining_mut(), self.limit)
+     }
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+index a7a8e57..16cb72c 100644
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -966,7 +966,7 @@ impl Buf for BytesMut {
+     }
+ }
+ 
+-impl BufMut for BytesMut {
++unsafe impl BufMut for BytesMut {
+     #[inline]
+     fn remaining_mut(&self) -> usize {
+         usize::MAX - self.len()
+2026-04-17 08:37:15,102 - INFO - Grading answer for tokio-rs__bytes-432...
+2026-04-17 08:37:15,102 - INFO - report: {'tokio-rs__bytes-432': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_bufs_vec', 'test_deref_buf_forwards', 'test_fresh_cursor_vec', 'test_get_u8', 'test_get_u16', 'test_get_u16_buffer_underflow', 'test_vec_deque', 'test_clone', 'test_deref_bufmut_forwards', 'test_mut_slice', 'test_put_u16', 'test_put_u8', 'test_vec_as_mut_buf', 'test_vec_advance_mut', 'advance_bytes_mut', 'advance_static', 'advance_vec', 'bytes_buf_mut_advance', 'advance_past_len', 'bytes_mut_unsplit_arc_different', 'bytes_buf_mut_reuse_when_fully_consumed', 'bytes_mut_unsplit_arc_non_contiguous', 'bytes_mut_unsplit_basic', 'bytes_mut_unsplit_empty_other', 'bytes_mut_unsplit_empty_self', 'bytes_with_capacity_but_empty', 'bytes_mut_unsplit_two_split_offs', 'bytes_reserve_overflow', 'empty_slice_ref_not_an_empty_subset', 'extend_from_slice_mut', 'extend_mut', 'fmt', 'extend_mut_without_size_hint', 'fns_defined_for_bytes_mut', 'fmt_write', 'freeze_after_advance', 'freeze_after_advance_arc', 'freeze_after_split_off', 'freeze_after_split_to', 'freeze_after_truncate', 'freeze_after_truncate_arc', 'freeze_clone_shared', 'freeze_clone_unique', 'from_iter_no_size_hint', 'from_slice', 'index', 'from_static', 'len', 'partial_eq_bytesmut', 'reserve_convert', 'reserve_growth', 'reserve_in_arc_nonunique_does_not_overallocate', 'reserve_in_arc_unique_does_not_overallocate', 'reserve_allocates_at_least_original_capacity', 'reserve_in_arc_unique_doubles', 'reserve_vec_recycling', 'slice', 'slice_oob_1', 'slice_oob_2', 'slice_ref_empty', 'slice_ref_catches_not_a_subset', 'slice_ref_empty_subslice', 'slice_ref_not_an_empty_subset', 'slice_ref_works', 'split_off', 'split_off_oob', 'split_off_to_at_gt_len', 'split_off_uninitialized', 'split_to_1', 'split_to_2', 'split_to_oob', 'split_to_oob_mut', 'split_to_uninitialized', 'test_bounds', 'test_layout', 'split_off_to_loop', 'truncate', 'reserve_max_original_capacity_value', 'stress', 'sanity_check_odd_allocator', 'test_bytes_clone_drop', 'test_bytes_from_vec_drop', 'test_bytes_advance', 'test_bytes_truncate', 'test_bytes_truncate_and_advance', 'collect_two_bufs', 'vectored_read', 'iterating_two_bufs', 'writing_chained', 'empty_iter_len', 'iter_len', 'buf_read', 'read', 'test_ser_de', 'test_ser_de_empty', 'long_take', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i8 (line 297)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::remaining (line 85)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_uint_le (line 660)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_int_le (line 700)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put (line 177)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f64_le (line 784)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i128 (line 600)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f32 (line 721)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f64 (line 763)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i32_le (line 460)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_int (line 680)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u64 (line 480)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u64_le (line 500)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f32_le (line 742)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i64_le (line 557)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u16 (line 320)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u32 (line 403)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::last_mut (line 100)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::advance_mut (line 71)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u16 (line 315)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f64_le (line 825)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::bytes_mut (line 140)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::advance (line 180)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i32_le (line 469)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::reader (line 874)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::remaining_mut (line 42)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::copy_to_slice (line 233)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i128 (line 623)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::has_remaining (line 211)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::bytes (line 113)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i16 (line 360)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u128 (line 560)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f32_le (line 779)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i16_le (line 380)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_uint (line 640)', 'src/buf/iter.rs - buf::iter::IntoIter<T>::get_mut (line 96)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i32 (line 440)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_int_le (line 733)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u16_le (line 337)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i64_le (line 540)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_slice (line 221)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf (line 62)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u64_le (line 513)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u64 (line 491)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i8 (line 292)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i128_le (line 620)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut (line 24)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_uint_le (line 689)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u16_le (line 340)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u32 (line 400)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u128_le (line 580)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::limit (line 845)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i64 (line 535)', 'src/buf/chain.rs - buf::chain::Chain (line 20)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i16 (line 359)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::take (line 822)', 'src/buf/iter.rs - buf::iter::IntoIter (line 11)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_uint (line 667)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f64 (line 802)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::chain (line 850)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i128_le (line 645)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i64 (line 520)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::to_bytes (line 802)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u32_le (line 420)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u8 (line 274)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u128 (line 579)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::first_mut (line 65)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::chain_mut (line 898)', 'src/bytes_mut.rs - bytes_mut::_split_to_must_use (line 1518)', 'src/bytes.rs - bytes::_split_to_must_use (line 1057)', 'src/bytes_mut.rs - bytes_mut::_split_must_use (line 1538)', 'src/bytes_mut.rs - bytes_mut::_split_off_must_use (line 1528)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i32 (line 447)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::into_inner (line 119)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i16_le (line 381)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u128_le (line 601)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u8 (line 269)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_int (line 711)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::first_ref (line 49)', 'src/bytes.rs - bytes::_split_off_must_use (line 1067)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::last_ref (line 84)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u32_le (line 425)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::has_remaining_mut (line 113)', 'src/buf/iter.rs - buf::iter::IntoIter<T>::new (line 35)', 'src/buf/reader.rs - buf::reader::Reader<B>::get_ref (line 26)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f32 (line 756)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::writer (line 870)', 'src/buf/iter.rs - buf::iter::IntoIter<T>::get_ref (line 76)', 'src/buf/iter.rs - buf::iter::IntoIter<T>::into_inner (line 55)', 'src/bytes.rs - bytes::Bytes::len (line 152)', 'src/buf/writer.rs - buf::writer::Writer<B>::get_mut (line 43)', 'src/buf/take.rs - buf::take::Take<T>::get_ref (line 49)', 'src/buf/writer.rs - buf::writer::Writer<B>::get_ref (line 26)', 'src/buf/reader.rs - buf::reader::Reader<B>::into_inner (line 48)', 'src/bytes.rs - bytes::Bytes::clear (line 442)', 'src/buf/take.rs - buf::take::Take<T>::get_mut (line 66)', 'src/buf/take.rs - buf::take::Take<T>::set_limit (line 112)', 'src/bytes.rs - bytes::Bytes (line 24)', 'src/bytes_mut.rs - bytes_mut::BytesMut::len (line 173)', 'src/bytes.rs - bytes::Bytes::is_empty (line 167)', 'src/buf/take.rs - buf::take::Take<T>::limit (line 90)', 'src/buf/take.rs - buf::take::Take<T>::into_inner (line 24)', 'src/bytes_mut.rs - bytes_mut::BytesMut::is_empty (line 188)', 'src/bytes.rs - bytes::Bytes::slice (line 192)', 'src/bytes.rs - bytes::Bytes::split_to (line 364)', 'src/bytes.rs - bytes::Bytes::slice_ref (line 258)', 'src/bytes.rs - bytes::Bytes::truncate (line 413)', 'src/bytes.rs - bytes::Bytes::new (line 93)', 'src/bytes_mut.rs - bytes_mut::BytesMut::with_capacity (line 128)', 'src/bytes.rs - bytes::Bytes::split_off (line 315)', 'src/bytes_mut.rs - bytes_mut::BytesMut::reserve (line 515)', 'src/bytes_mut.rs - bytes_mut::BytesMut::capacity (line 203)', 'src/bytes_mut.rs - bytes_mut::BytesMut::new (line 152)', 'src/bytes_mut.rs - bytes_mut::BytesMut::resize (line 428)', 'src/lib.rs - (line 33)', 'src/bytes_mut.rs - bytes_mut::BytesMut (line 40)', 'src/bytes_mut.rs - bytes_mut::BytesMut::clear (line 409)', 'src/bytes_mut.rs - bytes_mut::BytesMut::truncate (line 388)', 'src/bytes_mut.rs - bytes_mut::BytesMut::set_len (line 465)', 'src/buf/writer.rs - buf::writer::Writer<B>::into_inner (line 60)', 'src/bytes_mut.rs - bytes_mut::BytesMut::split (line 315)', 'src/bytes_mut.rs - bytes_mut::BytesMut::reserve (line 505)', 'src/bytes.rs - bytes::Bytes::from_static (line 121)', 'src/bytes_mut.rs - bytes_mut::BytesMut::extend_from_slice (line 673)', 'src/bytes_mut.rs - bytes_mut::BytesMut::split_off (line 271)', 'src/bytes_mut.rs - bytes_mut::BytesMut::unsplit (line 709)', 'src/bytes_mut.rs - bytes_mut::BytesMut::split_to (line 344)', 'src/bytes_mut.rs - bytes_mut::BytesMut::freeze (line 222)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for tokio-rs__bytes-432: resolved: True
+2026-04-17 08:37:15,102 - INFO - Attempting to stop container rustb.eval.tokio-rs__bytes-432.gold_run1...
+2026-04-17 08:40:31,399 - INFO - Attempting to remove container rustb.eval.tokio-rs__bytes-432.gold_run1...
+2026-04-17 08:40:31,425 - INFO - Container rustb.eval.tokio-rs__bytes-432.gold_run1 removed.
+2026-04-17 08:40:31,426 - INFO - Attempting to remove image rustbench/tokio-rs__bytes:pr-432...
+2026-04-17 08:40:31,978 - INFO - Image rustbench/tokio-rs__bytes:pr-432 removed.

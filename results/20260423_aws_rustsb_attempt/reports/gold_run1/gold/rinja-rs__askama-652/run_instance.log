@@ -1,0 +1,85 @@
+2026-04-17 09:14:33,965 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-652
+Building instance image rustbench/rinja-rs__askama:pr-652 for rinja-rs__askama-652
+2026-04-17 09:29:02,268 - INFO - Creating container for rinja-rs__askama-652...
+2026-04-17 09:29:02,410 - INFO - Container for rinja-rs__askama-652 created: c2227d4790922eb4b6c5437f86e7eac24353a7bfc3f8a1984a3bc1770e0bf824
+2026-04-17 09:29:02,542 - INFO - Container for rinja-rs__askama-652 started: c2227d4790922eb4b6c5437f86e7eac24353a7bfc3f8a1984a3bc1770e0bf824
+2026-04-17 09:29:02,542 - INFO - Intermediate patch for rinja-rs__askama-652 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-652/patch.diff, now applying to container...
+2026-04-17 09:29:02,720 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/filters/mod.rs...
+Applied patch askama_shared/src/filters/mod.rs cleanly.
+
+2026-04-17 09:29:02,767 - INFO - Git diff before:
+diff --git a/askama_shared/src/filters/mod.rs b/askama_shared/src/filters/mod.rs
+index 9fb10d2..367ff5d 100644
+--- a/askama_shared/src/filters/mod.rs
++++ b/askama_shared/src/filters/mod.rs
+@@ -330,20 +330,14 @@ where
+ 
+ /// Capitalize a value. The first character will be uppercase, all others lowercase.
+ pub fn capitalize<T: fmt::Display>(s: T) -> Result<String> {
+-    let mut s = s.to_string();
+-
+-    match s.get_mut(0..1).map(|s| {
+-        s.make_ascii_uppercase();
+-        &*s
+-    }) {
+-        None => Ok(s),
+-        _ => {
+-            s.get_mut(1..).map(|s| {
+-                s.make_ascii_lowercase();
+-                &*s
+-            });
+-            Ok(s)
++    let s = s.to_string();
++    match s.chars().next() {
++        Some(c) => {
++            let mut replacement: String = c.to_uppercase().collect();
++            replacement.push_str(&s[c.len_utf8()..].to_lowercase());
++            Ok(replacement)
+         }
++        _ => Ok(s),
+     }
+ }
+2026-04-17 09:29:02,767 - INFO - Eval script for rinja-rs__askama-652 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-652/eval.sh; copying to container...
+2026-04-17 09:31:13,951 - INFO - Test runtime: 131.05 seconds
+2026-04-17 09:31:13,951 - INFO - Test output for rinja-rs__askama-652 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-652/test_output.txt
+2026-04-17 09:31:14,005 - INFO - Git diff after:
+diff --git a/askama_shared/src/filters/mod.rs b/askama_shared/src/filters/mod.rs
+index 9fb10d2..367ff5d 100644
+--- a/askama_shared/src/filters/mod.rs
++++ b/askama_shared/src/filters/mod.rs
+@@ -330,20 +330,14 @@ where
+ 
+ /// Capitalize a value. The first character will be uppercase, all others lowercase.
+ pub fn capitalize<T: fmt::Display>(s: T) -> Result<String> {
+-    let mut s = s.to_string();
+-
+-    match s.get_mut(0..1).map(|s| {
+-        s.make_ascii_uppercase();
+-        &*s
+-    }) {
+-        None => Ok(s),
+-        _ => {
+-            s.get_mut(1..).map(|s| {
+-                s.make_ascii_lowercase();
+-                &*s
+-            });
+-            Ok(s)
++    let s = s.to_string();
++    match s.chars().next() {
++        Some(c) => {
++            let mut replacement: String = c.to_uppercase().collect();
++            replacement.push_str(&s[c.len_utf8()..].to_lowercase());
++            Ok(replacement)
+         }
++        _ => Ok(s),
+     }
+ }
+2026-04-17 09:31:14,005 - INFO - Grading answer for rinja-rs__askama-652...
+2026-04-17 09:31:14,006 - INFO - report: {'rinja-rs__askama-652': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['filters::tests::test_capitalize'], 'failure': []}, 'PASS_TO_PASS': {'success': ['filters::tests::test_abs', 'filters::tests::test_center', 'filters::tests::test_filesizeformat', 'filters::json::tests::test_json', 'filters::tests::test_indent', 'filters::tests::test_into_f64', 'filters::tests::test_into_isize', 'filters::tests::test_join', 'filters::tests::test_linebreaks', 'filters::tests::test_linebreaksbr', 'filters::tests::test_lower', 'filters::tests::test_paragraphbreaks', 'filters::tests::test_trim', 'filters::tests::test_truncate', 'filters::tests::test_upper', 'filters::tests::test_wordcount', 'filters::tests::test_urlencoding', 'input::tests::test_double_ext', 'input::tests::test_ext', 'input::tests::test_only_jinja_ext', 'input::tests::test_skip_jinja_ext', 'parser::tests::change_delimiters_parse_filter', 'parser::tests::test_invalid_block - should panic', 'parser::tests::test_parse_comments', 'parser::tests::test_parse_const', 'parser::tests::test_parse_filter', 'parser::tests::test_parse_numbers', 'parser::tests::test_parse_var', 'parser::tests::test_parse_path', 'parser::tests::test_ws_splitter', 'parser::tests::test_parse_root_path', 'parser::tests::test_parse_var_call', 'parser::tests::test_odd_calls', 'parser::tests::test_parse_path_call', 'parser::tests::test_associativity', 'tests::add_syntax', 'tests::find_absolute', 'tests::find_relative', 'tests::find_relative_sub', 'tests::add_syntax_two', 'tests::duplicated_syntax_name_on_list - should panic', 'tests::find_relative_nonexistent - should panic', 'tests::escape_modes', 'tests::get_source', 'tests::is_not_exist_default_syntax - should panic', 'tests::test_default_config', 'parser::tests::test_precedence', 'tests::use_default_at_syntax_name - should panic', 'tests::test_config_dirs', 'parser::tests::test_parse_tuple'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-652: resolved: True
+2026-04-17 09:31:14,006 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-652.gold_run1...
+2026-04-17 09:31:29,925 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-652.gold_run1...
+2026-04-17 09:31:30,015 - INFO - Container rustb.eval.rinja-rs__askama-652.gold_run1 removed.
+2026-04-17 09:31:30,016 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-652...
+2026-04-17 09:31:33,986 - INFO - Image rustbench/rinja-rs__askama:pr-652 removed.

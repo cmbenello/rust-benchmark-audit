@@ -1,0 +1,71 @@
+2026-04-17 09:34:30,366 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-499
+Building instance image rustbench/rinja-rs__askama:pr-499 for rinja-rs__askama-499
+2026-04-17 09:44:06,042 - INFO - Creating container for rinja-rs__askama-499...
+2026-04-17 09:44:06,176 - INFO - Container for rinja-rs__askama-499 created: 08f0396fadf8200e047493de0bc44ecd5f107f7fddfe503f2a692027c6685dd9
+2026-04-17 09:44:06,309 - INFO - Container for rinja-rs__askama-499 started: 08f0396fadf8200e047493de0bc44ecd5f107f7fddfe503f2a692027c6685dd9
+2026-04-17 09:44:06,310 - INFO - Intermediate patch for rinja-rs__askama-499 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-499/patch.diff, now applying to container...
+2026-04-17 09:44:06,526 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/generator.rs...
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/generator.rs cleanly.
+
+2026-04-17 09:44:06,627 - INFO - Git diff before:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index 638a25f..b0489ec 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -717,6 +717,7 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+ 
+         let mut names = Buffer::new(0);
+         let mut values = Buffer::new(0);
++        let mut is_first_variable = true;
+         for (i, arg) in def.args.iter().enumerate() {
+             let expr = args.get(i).ok_or_else(|| {
+                 CompileError::String(format!("macro '{}' takes more than {} arguments", name, i))
+@@ -742,7 +743,9 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+                 // multiple times, e.g. in the case of macro
+                 // parameters being used multiple times.
+                 _ => {
+-                    if i > 0 {
++                    if is_first_variable {
++                        is_first_variable = false
++                    } else {
+                         names.write(", ");
+                         values.write(", ");
+                     }
+2026-04-17 09:44:06,627 - INFO - Eval script for rinja-rs__askama-499 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-499/eval.sh; copying to container...
+2026-04-17 09:44:49,885 - INFO - Test runtime: 43.13 seconds
+2026-04-17 09:44:49,886 - INFO - Test output for rinja-rs__askama-499 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-499/test_output.txt
+2026-04-17 09:44:50,077 - INFO - Git diff after:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index 638a25f..b0489ec 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -717,6 +717,7 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+ 
+         let mut names = Buffer::new(0);
+         let mut values = Buffer::new(0);
++        let mut is_first_variable = true;
+         for (i, arg) in def.args.iter().enumerate() {
+             let expr = args.get(i).ok_or_else(|| {
+                 CompileError::String(format!("macro '{}' takes more than {} arguments", name, i))
+@@ -742,7 +743,9 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+                 // multiple times, e.g. in the case of macro
+                 // parameters being used multiple times.
+                 _ => {
+-                    if i > 0 {
++                    if is_first_variable {
++                        is_first_variable = false
++                    } else {
+                         names.write(", ");
+                         values.write(", ");
+                     }
+2026-04-17 09:44:50,077 - INFO - Grading answer for rinja-rs__askama-499...
+2026-04-17 09:44:50,078 - INFO - report: {'rinja-rs__askama-499': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_deep_import', 'test_nested', 'test_macro', 'test_import', 'test_short_circuit'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-499: resolved: True
+2026-04-17 09:44:50,078 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-499.gold_run1...
+2026-04-17 09:46:02,405 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-499.gold_run1...
+2026-04-17 09:46:02,545 - INFO - Container rustb.eval.rinja-rs__askama-499.gold_run1 removed.
+2026-04-17 09:46:02,545 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-499...
+2026-04-17 09:46:05,363 - INFO - Image rustbench/rinja-rs__askama:pr-499 removed.

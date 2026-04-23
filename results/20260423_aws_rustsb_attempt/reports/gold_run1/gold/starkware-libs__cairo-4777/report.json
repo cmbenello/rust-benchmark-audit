@@ -1,0 +1,90 @@
+{
+    "starkware-libs__cairo-4777": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "store_variables::test::push_values_with_hole"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "store_variables::known_stack::test::merge_stacks",
+                    "resolve_labels::test::test_resolve_labels",
+                    "canonical_id_replacer::test::test_replacer",
+                    "store_variables::test::consecutive_push_values",
+                    "store_variables::test::push_values_temp_not_on_top",
+                    "store_variables::test::push_values_optimization",
+                    "store_variables::test::same_as_param_push_value_optimization",
+                    "store_variables::test::push_values_clear_known_stack",
+                    "store_variables::test::store_temp_push_values_with_dup",
+                    "store_variables::test::store_temp_for_branch_command",
+                    "store_variables::test::same_as_param",
+                    "store_variables::test::push_values_early_return",
+                    "store_variables::test::store_temp_push_values",
+                    "store_variables::test::consecutive_const_additions",
+                    "store_variables::test::store_temp_simple",
+                    "store_variables::test::consecutive_appends_with_branch",
+                    "store_variables::test::consecutive_const_additions_with_branch",
+                    "store_variables::test::push_values_after_branch_merge",
+                    "store_variables::test::store_local_result_of_if",
+                    "store_variables::test::store_local_simple",
+                    "program_generator::test::test_only_include_dependencies::f5_f6",
+                    "program_generator::test::test_only_include_dependencies::self_loop",
+                    "program_generator::test::test_only_include_dependencies::f3_f5_f6",
+                    "program_generator::test::test_only_include_dependencies::f4_f5_f6_f6_",
+                    "program_generator::test::test_only_include_dependencies::all_but_first",
+                    "program_generator::test::test_only_include_dependencies::finds_all",
+                    "program_generator::test::test_type_dependency",
+                    "lifetime::test::variable_lifetime::snapshot",
+                    "function_generator::test::function_generator::simple",
+                    "function_generator::test::function_generator::literals",
+                    "lifetime::test::variable_lifetime::block",
+                    "lifetime::test::variable_lifetime::simple",
+                    "lifetime::test::variable_lifetime::locals",
+                    "local_variables::test::find_local_variables::block",
+                    "local_variables::test::find_local_variables::construct_enum",
+                    "lifetime::test::variable_lifetime::struct_",
+                    "function_generator::test::function_generator::inline",
+                    "function_generator::test::function_generator::match_",
+                    "lifetime::test::variable_lifetime::enum_",
+                    "lifetime::test::variable_lifetime::early_return",
+                    "local_variables::test::find_local_variables::match_enum",
+                    "function_generator::test::function_generator::stack_tracking",
+                    "local_variables::test::find_local_variables::simple",
+                    "local_variables::test::find_local_variables::struct_",
+                    "program_generator::test::test_program_generator",
+                    "local_variables::test::find_local_variables::snapshot",
+                    "lifetime::test::variable_lifetime::match_",
+                    "local_variables::test::find_local_variables::inline",
+                    "ap_change::test::ap_change::tests",
+                    "function_generator::test::function_generator::struct_",
+                    "local_variables::test::find_local_variables::match_extern",
+                    "local_variables::test::e2e::e2e",
+                    "lifetime::test::variable_lifetime::inline",
+                    "function_generator::test::function_generator::snapshot",
+                    "block_generator::test::block_generator::early_return",
+                    "block_generator::test::block_generator::panic",
+                    "block_generator::test::block_generator::serialization",
+                    "block_generator::test::block_generator::literals",
+                    "block_generator::test::block_generator::inline",
+                    "block_generator::test::block_generator::function_call",
+                    "block_generator::test::block_generator::match_"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

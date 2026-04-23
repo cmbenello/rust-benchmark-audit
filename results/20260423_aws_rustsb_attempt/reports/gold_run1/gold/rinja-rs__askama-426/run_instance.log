@@ -1,0 +1,89 @@
+2026-04-17 09:42:42,447 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-426
+Building instance image rustbench/rinja-rs__askama:pr-426 for rinja-rs__askama-426
+2026-04-17 09:53:00,930 - INFO - Creating container for rinja-rs__askama-426...
+2026-04-17 09:53:01,079 - INFO - Container for rinja-rs__askama-426 created: 8be7c3891b198db9c448f59e7dc1dea2e376087c7a22b65bcd8386d69f9ca9e3
+2026-04-17 09:53:01,662 - INFO - Container for rinja-rs__askama-426 started: 8be7c3891b198db9c448f59e7dc1dea2e376087c7a22b65bcd8386d69f9ca9e3
+2026-04-17 09:53:01,662 - INFO - Intermediate patch for rinja-rs__askama-426 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-426/patch.diff, now applying to container...
+2026-04-17 09:53:02,055 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/parser.rs...
+Checking patch askama_shared/src/parser.rs...
+Checking patch askama_shared/src/parser.rs...
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+
+2026-04-17 09:53:02,132 - INFO - Git diff before:
+diff --git a/askama_shared/src/parser.rs b/askama_shared/src/parser.rs
+index 275c92b..58f29f6 100644
+--- a/askama_shared/src/parser.rs
++++ b/askama_shared/src/parser.rs
+@@ -539,7 +539,7 @@ fn filter(i: &[u8]) -> IResult<&[u8], (&str, Option<Vec<Expr>>)> {
+ }
+ 
+ fn expr_filtered(i: &[u8]) -> IResult<&[u8], Expr> {
+-    let (i, (obj, filters)) = tuple((expr_index, many0(filter)))(i)?;
++    let (i, (obj, filters)) = tuple((expr_unary, many0(filter)))(i)?;
+ 
+     let mut res = obj;
+     for (fname, args) in filters {
+@@ -557,7 +557,7 @@ fn expr_filtered(i: &[u8]) -> IResult<&[u8], Expr> {
+ }
+ 
+ fn expr_unary(i: &[u8]) -> IResult<&[u8], Expr> {
+-    let (i, (op, expr)) = tuple((opt(alt((ws(tag("!")), ws(tag("-"))))), expr_filtered))(i)?;
++    let (i, (op, expr)) = tuple((opt(alt((ws(tag("!")), ws(tag("-"))))), expr_index))(i)?;
+     Ok((
+         i,
+         match op {
+@@ -605,7 +605,7 @@ macro_rules! expr_prec_layer {
+     }
+ }
+ 
+-expr_prec_layer!(expr_muldivmod, expr_unary, "*", "/", "%");
++expr_prec_layer!(expr_muldivmod, expr_filtered, "*", "/", "%");
+ expr_prec_layer!(expr_addsub, expr_muldivmod, "+", "-");
+ expr_prec_layer!(expr_shifts, expr_addsub, ">>", "<<");
+ expr_prec_layer!(expr_band, expr_shifts, "&");
+2026-04-17 09:53:02,133 - INFO - Eval script for rinja-rs__askama-426 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-426/eval.sh; copying to container...
+2026-04-17 09:54:30,840 - INFO - Test runtime: 88.51 seconds
+2026-04-17 09:54:30,840 - INFO - Test output for rinja-rs__askama-426 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-426/test_output.txt
+2026-04-17 09:54:30,886 - INFO - Git diff after:
+diff --git a/askama_shared/src/parser.rs b/askama_shared/src/parser.rs
+index 275c92b..58f29f6 100644
+--- a/askama_shared/src/parser.rs
++++ b/askama_shared/src/parser.rs
+@@ -539,7 +539,7 @@ fn filter(i: &[u8]) -> IResult<&[u8], (&str, Option<Vec<Expr>>)> {
+ }
+ 
+ fn expr_filtered(i: &[u8]) -> IResult<&[u8], Expr> {
+-    let (i, (obj, filters)) = tuple((expr_index, many0(filter)))(i)?;
++    let (i, (obj, filters)) = tuple((expr_unary, many0(filter)))(i)?;
+ 
+     let mut res = obj;
+     for (fname, args) in filters {
+@@ -557,7 +557,7 @@ fn expr_filtered(i: &[u8]) -> IResult<&[u8], Expr> {
+ }
+ 
+ fn expr_unary(i: &[u8]) -> IResult<&[u8], Expr> {
+-    let (i, (op, expr)) = tuple((opt(alt((ws(tag("!")), ws(tag("-"))))), expr_filtered))(i)?;
++    let (i, (op, expr)) = tuple((opt(alt((ws(tag("!")), ws(tag("-"))))), expr_index))(i)?;
+     Ok((
+         i,
+         match op {
+@@ -605,7 +605,7 @@ macro_rules! expr_prec_layer {
+     }
+ }
+ 
+-expr_prec_layer!(expr_muldivmod, expr_unary, "*", "/", "%");
++expr_prec_layer!(expr_muldivmod, expr_filtered, "*", "/", "%");
+ expr_prec_layer!(expr_addsub, expr_muldivmod, "+", "-");
+ expr_prec_layer!(expr_shifts, expr_addsub, ">>", "<<");
+ expr_prec_layer!(expr_band, expr_shifts, "&");
+2026-04-17 09:54:30,886 - INFO - Grading answer for rinja-rs__askama-426...
+2026-04-17 09:54:30,886 - INFO - report: {'rinja-rs__askama-426': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['parser::tests::test_parse_filter'], 'failure': []}, 'PASS_TO_PASS': {'success': ['filters::tests::test_abs', 'filters::tests::test_center', 'filters::json::tests::test_json', 'filters::tests::test_capitalize', 'filters::tests::test_filesizeformat', 'filters::tests::test_indent', 'filters::tests::test_into_isize', 'filters::tests::test_into_f64', 'filters::tests::test_lower', 'filters::tests::test_linebreaksbr', 'filters::tests::test_linebreaks', 'filters::tests::test_join', 'filters::tests::test_trim', 'filters::tests::test_truncate', 'filters::tests::test_upper', 'filters::tests::test_wordcount', 'filters::tests::test_urlencoding', 'filters::yaml::tests::test_yaml', 'parser::tests::test_parse_comments', 'parser::tests::change_delimiters_parse_filter', 'parser::tests::test_invalid_block', 'parser::tests::test_ws_splitter', 'tests::duplicated_syntax_name_on_list', 'tests::find_relative', 'tests::find_absolute', 'tests::add_syntax', 'tests::add_syntax_two', 'tests::find_relative_nonexistent', 'tests::test_default_config', 'tests::find_relative_sub', 'parser::tests::test_parse_path_call', 'tests::get_source', 'tests::is_not_exist_default_syntax', 'tests::test_config_dirs', 'parser::tests::test_parse_var_call', 'tests::use_default_at_syntax_name', 'tests::escape_modes', 'parser::tests::test_parse_root_path', 'parser::tests::test_associativity', 'parser::tests::test_precedence'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-426: resolved: True
+2026-04-17 09:54:30,886 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-426.gold_run1...
+2026-04-17 09:56:16,439 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-426.gold_run1...
+2026-04-17 09:56:16,740 - INFO - Container rustb.eval.rinja-rs__askama-426.gold_run1 removed.
+2026-04-17 09:56:16,740 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-426...
+2026-04-17 09:56:21,556 - INFO - Image rustbench/rinja-rs__askama:pr-426 removed.

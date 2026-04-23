@@ -1,0 +1,639 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch testing/tests/macro.rs...
+Checking patch testing/tests/ui/macro_named_argument.rs...
+Checking patch testing/tests/ui/macro_named_argument.stderr...
+Applied patch testing/tests/macro.rs cleanly.
+Applied patch testing/tests/ui/macro_named_argument.rs cleanly.
+Applied patch testing/tests/ui/macro_named_argument.stderr cleanly.
++ cd testing
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded typed-arena v2.0.2 (registry `lts-repo-at-148f3650e0`)
+  Downloaded tinytemplate v1.2.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-148f3650e0`)
+  Downloaded plotters-backend v0.3.5 (registry `lts-repo-at-148f3650e0`)
+  Downloaded plotters-svg v0.3.5 (registry `lts-repo-at-148f3650e0`)
+  Downloaded rayon-core v1.12.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded walkdir v2.4.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded unicode_categories v0.1.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded unicode-ident v1.0.12 (registry `lts-repo-at-148f3650e0`)
+  Downloaded aho-corasick v1.1.2 (registry `lts-repo-at-148f3650e0`)
+  Downloaded syn v2.0.39 (registry `lts-repo-at-148f3650e0`)
+  Downloaded unicase v2.7.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded trybuild v1.0.85 (registry `lts-repo-at-148f3650e0`)
+  Downloaded regex v1.10.2 (registry `lts-repo-at-148f3650e0`)
+  Downloaded itertools v0.10.5 (registry `lts-repo-at-148f3650e0`)
+  Downloaded nom v7.1.3 (registry `lts-repo-at-148f3650e0`)
+  Downloaded mime_guess v2.0.4 (registry `lts-repo-at-148f3650e0`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-148f3650e0`)
+  Downloaded minimal-lexical v0.2.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded half v1.8.2 (registry `lts-repo-at-148f3650e0`)
+  Downloaded quote v1.0.33 (registry `lts-repo-at-148f3650e0`)
+  Downloaded termcolor v1.4.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded num-traits v0.2.17 (registry `lts-repo-at-148f3650e0`)
+  Downloaded oorandom v11.1.3 (registry `lts-repo-at-148f3650e0`)
+  Downloaded slug v0.1.5 (registry `lts-repo-at-148f3650e0`)
+  Downloaded libc v0.2.150 (registry `lts-repo-at-148f3650e0`)
+  Downloaded clap_lex v0.6.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded bitflags v2.4.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded humansize v2.1.3 (registry `lts-repo-at-148f3650e0`)
+  Downloaded errno v0.3.8 (registry `lts-repo-at-148f3650e0`)
+  Downloaded crossbeam-deque v0.8.3 (registry `lts-repo-at-148f3650e0`)
+  Downloaded criterion-plot v0.5.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded anes v0.1.6 (registry `lts-repo-at-148f3650e0`)
+  Downloaded mime v0.3.17 (registry `lts-repo-at-148f3650e0`)
+  Downloaded serde v1.0.193 (registry `lts-repo-at-148f3650e0`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded is-terminal v0.4.9 (registry `lts-repo-at-148f3650e0`)
+  Downloaded glob v0.3.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded ryu v1.0.15 (registry `lts-repo-at-148f3650e0`)
+  Downloaded memchr v2.6.4 (registry `lts-repo-at-148f3650e0`)
+  Downloaded rustix v0.38.25 (registry `lts-repo-at-148f3650e0`)
+  Downloaded serde_derive v1.0.193 (registry `lts-repo-at-148f3650e0`)
+  Downloaded libm v0.2.8 (registry `lts-repo-at-148f3650e0`)
+  Downloaded regex-automata v0.4.3 (registry `lts-repo-at-148f3650e0`)
+  Downloaded rayon v1.8.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded plotters v0.3.5 (registry `lts-repo-at-148f3650e0`)
+  Downloaded once_cell v1.18.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded memoffset v0.9.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded linux-raw-sys v0.4.11 (registry `lts-repo-at-148f3650e0`)
+  Downloaded either v1.9.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded deunicode v1.4.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded crossbeam-utils v0.8.16 (registry `lts-repo-at-148f3650e0`)
+  Downloaded comrak v0.18.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded ciborium-ll v0.2.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded ciborium-io v0.2.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded ciborium v0.2.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded criterion v0.5.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded regex-syntax v0.8.2 (registry `lts-repo-at-148f3650e0`)
+  Downloaded percent-encoding v2.3.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded itoa v1.0.9 (registry `lts-repo-at-148f3650e0`)
+  Downloaded entities v1.0.1 (registry `lts-repo-at-148f3650e0`)
+  Downloaded crossbeam-epoch v0.9.15 (registry `lts-repo-at-148f3650e0`)
+  Downloaded clap v4.4.10 (registry `lts-repo-at-148f3650e0`)
+  Downloaded clap_builder v4.4.9 (registry `lts-repo-at-148f3650e0`)
+  Downloaded cast v0.3.0 (registry `lts-repo-at-148f3650e0`)
+  Downloaded anstyle v1.0.4 (registry `lts-repo-at-148f3650e0`)
+  Downloaded serde_json v1.0.108 (registry `lts-repo-at-148f3650e0`)
+  Downloaded proc-macro2 v1.0.70 (registry `lts-repo-at-148f3650e0`)
+  Downloaded basic-toml v0.1.7 (registry `lts-repo-at-148f3650e0`)
+   Compiling proc-macro2 v1.0.70
+   Compiling autocfg v1.1.0
+   Compiling unicode-ident v1.0.12
+   Compiling serde v1.0.193
+   Compiling version_check v0.9.4
+   Compiling crossbeam-utils v0.8.16
+   Compiling memchr v2.6.4
+   Compiling serde_json v1.0.108
+   Compiling cfg-if v1.0.0
+   Compiling ryu v1.0.15
+   Compiling itoa v1.0.9
+   Compiling regex-syntax v0.8.2
+   Compiling scopeguard v1.2.0
+   Compiling either v1.9.0
+   Compiling minimal-lexical v0.2.1
+   Compiling rayon-core v1.12.0
+   Compiling once_cell v1.18.0
+   Compiling rustix v0.38.25
+   Compiling libm v0.2.8
+   Compiling deunicode v1.4.1
+   Compiling ciborium-io v0.2.1
+   Compiling bitflags v2.4.1
+   Compiling plotters-backend v0.3.5
+   Compiling clap_lex v0.6.0
+   Compiling mime v0.3.17
+   Compiling anstyle v1.0.4
+   Compiling linux-raw-sys v0.4.11
+   Compiling half v1.8.2
+   Compiling same-file v1.0.6
+   Compiling trybuild v1.0.85
+   Compiling typed-arena v2.0.2
+   Compiling cast v0.3.0
+   Compiling unicode_categories v0.1.1
+   Compiling entities v1.0.1
+   Compiling walkdir v2.4.0
+   Compiling glob v0.3.1
+   Compiling termcolor v1.4.0
+   Compiling itertools v0.10.5
+   Compiling anes v0.1.6
+   Compiling clap_builder v4.4.9
+   Compiling plotters-svg v0.3.5
+   Compiling percent-encoding v2.3.1
+   Compiling oorandom v11.1.3
+   Compiling slug v0.1.5
+   Compiling ciborium-ll v0.2.1
+   Compiling askama_escape v0.10.3 (/workspace/askama_escape)
+   Compiling memoffset v0.9.0
+   Compiling crossbeam-epoch v0.9.15
+   Compiling num-traits v0.2.17
+   Compiling unicase v2.7.0
+   Compiling aho-corasick v1.1.2
+   Compiling nom v7.1.3
+   Compiling humansize v2.1.3
+   Compiling quote v1.0.33
+   Compiling mime_guess v2.0.4
+   Compiling syn v2.0.39
+   Compiling crossbeam-deque v0.8.3
+   Compiling is-terminal v0.4.9
+   Compiling rayon v1.8.0
+   Compiling plotters v0.3.5
+   Compiling criterion-plot v0.5.0
+   Compiling regex-automata v0.4.3
+   Compiling clap v4.4.10
+   Compiling askama_parser v0.1.1 (/workspace/askama_parser)
+   Compiling serde_derive v1.0.193
+   Compiling regex v1.10.2
+   Compiling comrak v0.18.0
+   Compiling basic-toml v0.1.7
+   Compiling ciborium v0.2.1
+   Compiling askama_derive v0.12.2 (/workspace/askama_derive)
+   Compiling tinytemplate v1.2.1
+   Compiling criterion v0.5.1
+   Compiling askama v0.12.1 (/workspace/askama)
+   Compiling askama_testing v0.1.0 (/workspace/testing)
+    Finished test [unoptimized + debuginfo] target(s) in 12.33s
+     Running tests/calls.rs (/workspace/target/debug/deps/calls-997d607add147eb3)
+
+running 4 tests
+test test_one_func ... ok
+test test_one_func_binop ... ok
+test test_one_func_self ... ok
+test test_one_func_index ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/coerce.rs (/workspace/target/debug/deps/coerce-094de536aa5f369e)
+
+running 1 test
+test test_coerce ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ext.rs (/workspace/target/debug/deps/ext-e6cf14ab6ed59f56)
+
+running 6 tests
+test test_path_ext_html ... ok
+test test_path_ext_html_and_ext_txt ... ok
+test test_path_ext_html_jinja ... ok
+test test_path_ext_html_jinja_and_ext_txt ... ok
+test test_path_ext_jinja ... ok
+test test_path_ext_jinja_and_ext_txt ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/filters.rs (/workspace/target/debug/deps/filters-57e85b97d9d2cf8b)
+
+running 16 tests
+test filter_escape ... ok
+test filter_fmt ... ok
+test filter_format ... ok
+test filter_opt_escaper_none ... ok
+test filter_opt_escaper_html ... ok
+test into_numbers_fmt ... ok
+test test_filter_let_filter ... ok
+test test_filter_truncate ... ok
+test test_join ... ok
+test test_json ... ok
+test test_json_attribute ... ok
+test test_json_attribute2 ... ok
+test test_json_script ... ok
+test test_nested_filter_ref ... ok
+test test_vec_join ... ok
+test test_my_filter ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/hello.rs (/workspace/target/debug/deps/hello-011c43b573a4d7dc)
+
+running 1 test
+test main ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/if_let.rs (/workspace/target/debug/deps/if_let-8b72b7fbc2280a32)
+
+running 5 tests
+test test_if_let ... ok
+test test_if_let_else ... ok
+test test_if_let_shadowing ... ok
+test test_if_let_struct ... ok
+test test_if_let_struct_ref ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/include.rs (/workspace/target/debug/deps/include-98b230aaa7ced3ab)
+
+running 1 test
+test test_include ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/inheritance.rs (/workspace/target/debug/deps/inheritance-1d3b80838451ab72)
+
+running 9 tests
+test test_different_module ... ok
+test test_deep ... ok
+test test_empty_child ... ok
+test test_flat_deep ... ok
+test test_let_block ... ok
+test test_named_end ... ok
+test test_nested_blocks ... ok
+test test_simple_extends ... ok
+test test_use_base_directly ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/let_destructoring.rs (/workspace/target/debug/deps/let_destructoring-4640e9ecc8dfb0df)
+
+running 7 tests
+test test_let_destruct_named_struct ... ok
+test test_let_destruct_named_struct_ref ... ok
+test test_let_destruct_tuple ... ok
+test test_let_destruct_unnamed_struct ... ok
+test test_let_destruct_unnamed_struct_ref ... ok
+test test_let_destruct_with_path ... ok
+test test_let_destruct_with_path_and_with_keyword ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/loop_else.rs (/workspace/target/debug/deps/loop_else-4f45a3086519a42e)
+
+running 65 tests
+test test_for_else ... ok
+test test_loop_else_trim00 ... ok
+test test_loop_else_trim01 ... ok
+test test_loop_else_trim02 ... ok
+test test_loop_else_trim03 ... ok
+test test_loop_else_trim04 ... ok
+test test_loop_else_trim05 ... ok
+test test_loop_else_trim06 ... ok
+test test_loop_else_trim07 ... ok
+test test_loop_else_trim08 ... ok
+test test_loop_else_trim09 ... ok
+test test_loop_else_trim10 ... ok
+test test_loop_else_trim11 ... ok
+test test_loop_else_trim12 ... ok
+test test_loop_else_trim13 ... ok
+test test_loop_else_trim14 ... ok
+test test_loop_else_trim15 ... ok
+test test_loop_else_trim16 ... ok
+test test_loop_else_trim17 ... ok
+test test_loop_else_trim18 ... ok
+test test_loop_else_trim19 ... ok
+test test_loop_else_trim20 ... ok
+test test_loop_else_trim21 ... ok
+test test_loop_else_trim22 ... ok
+test test_loop_else_trim23 ... ok
+test test_loop_else_trim24 ... ok
+test test_loop_else_trim25 ... ok
+test test_loop_else_trim26 ... ok
+test test_loop_else_trim27 ... ok
+test test_loop_else_trim28 ... ok
+test test_loop_else_trim29 ... ok
+test test_loop_else_trim30 ... ok
+test test_loop_else_trim31 ... ok
+test test_loop_else_trim32 ... ok
+test test_loop_else_trim33 ... ok
+test test_loop_else_trim34 ... ok
+test test_loop_else_trim35 ... ok
+test test_loop_else_trim36 ... ok
+test test_loop_else_trim37 ... ok
+test test_loop_else_trim38 ... ok
+test test_loop_else_trim39 ... ok
+test test_loop_else_trim40 ... ok
+test test_loop_else_trim41 ... ok
+test test_loop_else_trim42 ... ok
+test test_loop_else_trim43 ... ok
+test test_loop_else_trim44 ... ok
+test test_loop_else_trim45 ... ok
+test test_loop_else_trim46 ... ok
+test test_loop_else_trim47 ... ok
+test test_loop_else_trim48 ... ok
+test test_loop_else_trim49 ... ok
+test test_loop_else_trim50 ... ok
+test test_loop_else_trim51 ... ok
+test test_loop_else_trim52 ... ok
+test test_loop_else_trim53 ... ok
+test test_loop_else_trim54 ... ok
+test test_loop_else_trim55 ... ok
+test test_loop_else_trim56 ... ok
+test test_loop_else_trim57 ... ok
+test test_loop_else_trim58 ... ok
+test test_loop_else_trim59 ... ok
+test test_loop_else_trim60 ... ok
+test test_loop_else_trim61 ... ok
+test test_loop_else_trim62 ... ok
+test test_loop_else_trim63 ... ok
+
+test result: ok. 65 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/loops.rs (/workspace/target/debug/deps/loops-6aea7dc22d8f9e73)
+
+running 23 tests
+test test_for ... ok
+test test_for_array ... ok
+test test_for_cycle ... ok
+test test_for_cycle_dynamic ... ok
+test test_for_cycle_empty ... ok
+test test_for_destructoring_ref_tuple ... ok
+test test_for_destructoring_tuple ... ok
+test test_for_enumerate ... ok
+test test_for_in_if ... ok
+test test_for_index ... ok
+test test_for_method_call ... ok
+test test_for_path_call ... ok
+test test_for_range ... ok
+test test_for_vec_attr_range ... ok
+test test_for_vec_attr_slice ... ok
+test test_for_vec_attr_slice_shadowing ... ok
+test test_for_vec_attr_vec ... ok
+test test_for_zip_ranges ... ok
+test test_loop_break ... ok
+test test_loop_break_continue ... ok
+test test_loop_continue ... ok
+test test_nested_for ... ok
+test test_precedence_for ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/macro.rs (/workspace/target/debug/deps/macro-fb387e9ad30a22de)
+
+running 10 tests
+test str_cmp ... ok
+test test_deep_import ... ok
+test test_import ... ok
+test test_macro ... ok
+test test_macro_no_args ... ok
+test test_macro_self_arg ... ok
+test test_named_argument ... ok
+test test_nested ... ok
+test test_nested_macro_with_args ... ok
+test test_short_circuit ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/markdown.rs (/workspace/target/debug/deps/markdown-2b8d8c0fe0744d7a)
+
+running 2 tests
+test test_markdown ... ok
+test test_markdown_with_options ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/matches.rs (/workspace/target/debug/deps/matches-0ffae64375507d84)
+
+running 12 tests
+test test_match_custom_enum ... ok
+test test_match_enum_or ... ok
+test test_match_literal ... ok
+test test_match_literal_char ... ok
+test test_match_literal_num ... ok
+test test_match_no_whitespace ... ok
+test test_match_option ... ok
+test test_match_option_bool ... ok
+test test_match_option_result_option ... ok
+test test_match_ref_deref ... ok
+test test_match_with_comment ... ok
+test test_match_without_with_keyword ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/methods.rs (/workspace/target/debug/deps/methods-b95e4672530b6331)
+
+running 3 tests
+test test_nested ... ok
+test test_self_method ... ok
+test test_self_raw_identifier_method ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/operators.rs (/workspace/target/debug/deps/operators-7b3a25407a22605c)
+
+running 5 tests
+test test_compare ... ok
+test test_operators ... ok
+test test_precedence ... ok
+test test_ranges ... ok
+test test_short_circuit ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/render_in_place.rs (/workspace/target/debug/deps/render_in_place-54b509fde250cab3)
+
+running 1 test
+test test_render_in_place ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/rust_macro.rs (/workspace/target/debug/deps/rust_macro-12495aaa08541281)
+
+running 3 tests
+test macro_basic ... ok
+test macro_full_path ... ok
+test macro_with_args ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/simple.rs (/workspace/target/debug/deps/simple-34953e2c0d1f5ecc)
+
+running 33 tests
+test test_attr ... ok
+test test_comment ... ok
+test test_composition ... ok
+test test_constants ... ok
+test test_define_string_var ... ok
+test test_else ... ok
+test test_else_if ... ok
+test test_empty ... ok
+test test_escape ... ok
+test test_func_ref_call ... ok
+test test_generics ... ok
+test test_if ... ok
+test test_index ... ok
+test test_literals ... ok
+test test_literals_escape ... ok
+test test_minus ... ok
+test test_negation ... ok
+test test_nested_attr ... ok
+test test_num_literals ... ok
+test test_option ... ok
+test test_option_none_some ... ok
+test test_path_compare ... ok
+test test_path_func_call ... ok
+test test_raw_complex ... ok
+test test_raw_simple ... ok
+test test_raw_ws ... ok
+test test_root_path_func_call ... ok
+test test_simple_float ... ok
+test test_slice_literal ... ok
+test test_tuple_attr ... ok
+test test_variables ... ok
+test test_variables_no_escape ... ok
+test without_import_on_derive::test_without_import ... ok
+
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/size_hint.rs (/workspace/target/debug/deps/size_hint-2ebe15eaeabc93df)
+
+running 5 tests
+test test_block_size_hint ... ok
+test test_cond_size_hint ... ok
+test test_loop_size_hint ... ok
+test test_match_size_hint ... ok
+test test_super_size_hint ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/try.rs (/workspace/target/debug/deps/try-b328fc349a75dd11)
+
+running 3 tests
+test fail_fmt ... ok
+test fail_str ... ok
+test test_int_parser ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/tuple.rs (/workspace/target/debug/deps/tuple-c7b36e71cf0e7c8f)
+
+running 1 test
+test test_tuple ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ui.rs (/workspace/target/debug/deps/ui-91d94aa6557d099d)
+
+running 1 test
+   Compiling autocfg v1.1.0
+   Compiling proc-macro2 v1.0.70
+   Compiling unicode-ident v1.0.12
+   Compiling version_check v0.9.4
+   Compiling crossbeam-utils v0.8.16
+    Checking cfg-if v1.0.0
+   Compiling serde v1.0.193
+    Checking scopeguard v1.2.0
+   Compiling memchr v2.6.4
+   Compiling rustix v0.38.25
+   Compiling serde_json v1.0.108
+    Checking either v1.9.0
+   Compiling rayon-core v1.12.0
+   Compiling minimal-lexical v0.2.1
+   Compiling libm v0.2.8
+    Checking half v1.8.2
+    Checking itoa v1.0.9
+    Checking anstyle v1.0.4
+    Checking regex-syntax v0.8.2
+   Compiling mime v0.3.17
+    Checking clap_lex v0.6.0
+    Checking ryu v1.0.15
+    Checking linux-raw-sys v0.4.11
+    Checking bitflags v2.4.1
+    Checking ciborium-io v0.2.1
+    Checking plotters-backend v0.3.5
+    Checking same-file v1.0.6
+    Checking cast v0.3.0
+    Checking once_cell v1.18.0
+    Checking percent-encoding v2.3.1
+    Checking askama_escape v0.10.3 (/workspace/askama_escape)
+    Checking anes v0.1.6
+    Checking oorandom v11.1.3
+    Checking walkdir v2.4.0
+    Checking itertools v0.10.5
+    Checking clap_builder v4.4.9
+    Checking ciborium-ll v0.2.1
+    Checking plotters-svg v0.3.5
+   Compiling unicase v2.7.0
+   Compiling memoffset v0.9.0
+   Compiling crossbeam-epoch v0.9.15
+   Compiling num-traits v0.2.17
+   Compiling nom v7.1.3
+    Checking humansize v2.1.3
+   Compiling mime_guess v2.0.4
+   Compiling quote v1.0.33
+    Checking crossbeam-deque v0.8.3
+   Compiling syn v2.0.39
+    Checking regex-automata v0.4.3
+    Checking is-terminal v0.4.9
+    Checking rayon v1.8.0
+    Checking criterion-plot v0.5.0
+    Checking plotters v0.3.5
+    Checking clap v4.4.10
+   Compiling askama_parser v0.1.1 (/workspace/askama_parser)
+    Checking regex v1.10.2
+   Compiling serde_derive v1.0.193
+    Checking ciborium v0.2.1
+   Compiling basic-toml v0.1.7
+    Checking tinytemplate v1.2.1
+    Checking criterion v0.5.1
+   Compiling askama_derive v0.12.2 (/workspace/askama_derive)
+    Checking askama v0.12.1 (/workspace/askama)
+    Checking askama_testing-tests v0.0.0 (/workspace/target/tests/trybuild/askama_testing)
+    Finished dev [unoptimized + debuginfo] target(s) in 7.77s
+
+
+test tests/ui/duplicated_template_attribute.rs ... ok
+test tests/ui/elif.rs ... ok
+test tests/ui/excessive_nesting.rs ... ok
+test tests/ui/lit_on_assignment_lhs.rs ... ok
+test tests/ui/loop_cycle_empty.rs ... ok
+test tests/ui/loop_cycle_wrong_argument_count.rs ... ok
+test tests/ui/macro.rs ... ok
+test tests/ui/macro_named_argument.rs ... ok
+test tests/ui/match_with_extra.rs ... ok
+test tests/ui/name_mismatch_endblock.rs ... ok
+test tests/ui/name_mismatch_endmacro.rs ... ok
+test tests/ui/no_template_attribute.rs ... ok
+test tests/ui/since_1.58/break_outside_of_loop.rs ... ok
+test tests/ui/since_1.58/incorrect_path.rs ... ok
+test tests/ui/since_1.58/typo_in_keyword.rs ... ok
+
+
+test ui ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.17s
+
+     Running tests/vars.rs (/workspace/target/debug/deps/vars-6a344b80665ad4ca)
+
+running 9 tests
+test test_decl_assign_range ... ok
+test test_decl_range ... ok
+test test_destruct_tuple ... ok
+test test_if_let ... ok
+test test_let ... ok
+test test_let_decl ... ok
+test test_let_shadow ... ok
+test test_let_tuple ... ok
+test test_self_iter ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/whitespace.rs (/workspace/target/debug/deps/whitespace-b50b5f782501f823)
+
+running 4 tests
+test test_minimize_whitespace ... ok
+test test_extra_whitespace ... ok
+test test_outer_whitespace ... ok
+test test_template_whitespace_config ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ws.rs (/workspace/target/debug/deps/ws-d6ef2cd2dbfa1395)
+
+running 3 tests
+test test_match_ws ... ok
+test test_cond_ws ... ok
+test test_cond_ws_inverted ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../
++ git reset --hard 80238d7f48fd86ef939e74df9fdc9678ee78a208
+HEAD is now at 80238d7 askama_axum: update axum to 0.7 (#918)
++ git clean -fd
+Removing .cargo/
+Removing testing/tests/ui/macro_named_argument.rs
+Removing testing/tests/ui/macro_named_argument.stderr

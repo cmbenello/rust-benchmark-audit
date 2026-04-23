@@ -1,0 +1,283 @@
+2026-04-17 06:56:04,087 - INFO - Environment image rustb.env.x86_64.google_autocxx:latest found for google__autocxx-341
+Building instance image rustbench/google__autocxx:pr-341 for google__autocxx-341
+2026-04-17 07:10:11,115 - INFO - Creating container for google__autocxx-341...
+2026-04-17 07:10:11,394 - INFO - Container for google__autocxx-341 created: 8817b895bf7738643c082351d694ae8f77cf7f6d15e31fef9eed3aa259398822
+2026-04-17 07:10:11,583 - INFO - Container for google__autocxx-341 started: 8817b895bf7738643c082351d694ae8f77cf7f6d15e31fef9eed3aa259398822
+2026-04-17 07:10:11,584 - INFO - Intermediate patch for google__autocxx-341 written to logs/run_evaluation/gold_run1/gold/google__autocxx-341/patch.diff, now applying to container...
+2026-04-17 07:10:11,826 - INFO - >>>>> Applied Patch:
+Checking patch engine/src/conversion/analysis/fun/mod.rs...
+Checking patch engine/src/conversion/codegen_rs/fun_codegen.rs...
+Checking patch engine/src/conversion/codegen_rs/mod.rs...
+Checking patch engine/src/conversion/codegen_rs/mod.rs...
+Checking patch engine/src/conversion/parse/parse_foreign_mod.rs...
+Checking patch engine/src/conversion/parse/parse_foreign_mod.rs...
+Checking patch engine/src/known_types.rs...
+Checking patch engine/src/known_types.rs...
+Checking patch engine/src/known_types.rs...
+Applied patch engine/src/conversion/analysis/fun/mod.rs cleanly.
+Applied patch engine/src/conversion/codegen_rs/fun_codegen.rs cleanly.
+Applied patch engine/src/conversion/codegen_rs/mod.rs cleanly.
+Applied patch engine/src/conversion/codegen_rs/mod.rs cleanly.
+Applied patch engine/src/conversion/parse/parse_foreign_mod.rs cleanly.
+Applied patch engine/src/conversion/parse/parse_foreign_mod.rs cleanly.
+Applied patch engine/src/known_types.rs cleanly.
+Applied patch engine/src/known_types.rs cleanly.
+Applied patch engine/src/known_types.rs cleanly.
+
+2026-04-17 07:10:11,921 - INFO - Git diff before:
+diff --git a/engine/src/conversion/analysis/fun/mod.rs b/engine/src/conversion/analysis/fun/mod.rs
+index 955af17b..ba8fba65 100644
+--- a/engine/src/conversion/analysis/fun/mod.rs
++++ b/engine/src/conversion/analysis/fun/mod.rs
+@@ -639,7 +639,7 @@ impl<'a> FnAnalyzer<'a> {
+                             }) => match elem.as_ref() {
+                                 Type::Path(typ) => {
+                                     let mut this_type = TypeName::from_type_path(typ);
+-                                    if this_type.is_cvoid() && pp.ident.to_string() == "this" {
++                                    if this_type.is_cvoid() && pp.ident == "this" {
+                                         is_virtual = true;
+                                         this_type = virtual_this.ok_or_else(|| {
+                                             ConvertError::VirtualThisType(
+diff --git a/engine/src/conversion/codegen_rs/fun_codegen.rs b/engine/src/conversion/codegen_rs/fun_codegen.rs
+index 420939ae..83c39863 100644
+--- a/engine/src/conversion/codegen_rs/fun_codegen.rs
++++ b/engine/src/conversion/codegen_rs/fun_codegen.rs
+@@ -192,12 +192,12 @@ fn generate_function_impl(
+     rust_name: &str,
+     ret_type: &ReturnType,
+     unsafety: &Option<Unsafe>,
+-) -> Item {
++) -> Box<Item> {
+     let (wrapper_params, arg_list) = generate_arg_lists(param_details, false);
+     let rust_name = make_ident(&rust_name);
+-    Item::Fn(parse_quote! {
++    Box::new(Item::Fn(parse_quote! {
+         pub #unsafety fn #rust_name ( #wrapper_params ) #ret_type {
+             cxxbridge::#rust_name ( #(#arg_list),* )
+         }
+-    })
++    }))
+ }
+diff --git a/engine/src/conversion/codegen_rs/mod.rs b/engine/src/conversion/codegen_rs/mod.rs
+index da00f93f..f33c5f33 100644
+--- a/engine/src/conversion/codegen_rs/mod.rs
++++ b/engine/src/conversion/codegen_rs/mod.rs
+@@ -57,7 +57,7 @@ enum Use {
+     /// 'use' directive points to bindgen
+     UsedFromBindgen,
+     /// Some kind of custom item
+-    Custom(Item),
++    Custom(Box<Item>),
+ }
+ 
+ fn get_string_items() -> Vec<Item> {
+@@ -255,7 +255,7 @@ impl<'a> RsCodeGenerator<'a> {
+                 ))),
+                 Use::UsedFromBindgen => output_items.push(Self::generate_bindgen_use_stmt(ns, id)),
+                 Use::Unused => {}
+-                Use::Custom(item) => output_items.push(item.clone()),
++                Use::Custom(item) => output_items.push(*item.clone()),
+             };
+         }
+         for (child_name, child_ns_entries) in ns_entries.children() {
+diff --git a/engine/src/conversion/parse/parse_foreign_mod.rs b/engine/src/conversion/parse/parse_foreign_mod.rs
+index c4ff4810..dfb542de 100644
+--- a/engine/src/conversion/parse/parse_foreign_mod.rs
++++ b/engine/src/conversion/parse/parse_foreign_mod.rs
+@@ -19,7 +19,7 @@ use crate::{
+     types::{Namespace, TypeName},
+ };
+ use std::collections::{HashMap, HashSet};
+-use syn::{ForeignItem, Ident, ImplItem, ItemImpl, Type};
++use syn::{Block, Expr, ExprCall, ForeignItem, Ident, ImplItem, ItemImpl, Stmt, Type};
+ 
+ /// Parses a given bindgen-generated 'mod' into suitable
+ /// [Api]s. In bindgen output, a given mod concerns
+@@ -97,7 +97,10 @@ impl ParseForeignMod {
+                 let effective_fun_name = if itm.sig.ident == "new" {
+                     ty_id.clone()
+                 } else {
+-                    itm.sig.ident
++                    match get_called_function(&itm.block) {
++                        Some(id) => id.clone(),
++                        None => itm.sig.ident,
++                    }
+                 };
+                 self.method_receivers.insert(
+                     effective_fun_name,
+diff --git a/engine/src/known_types.rs b/engine/src/known_types.rs
+index 3f068606..67ec1946 100644
+--- a/engine/src/known_types.rs
++++ b/engine/src/known_types.rs
+@@ -199,9 +199,11 @@ impl TypeDatabase {
+     /// which we need to wrap.
+     pub(crate) fn is_ctype(&self, ty: &TypeName) -> bool {
+         self.get(ty)
+-            .map(|td| match td.behavior {
+-                Behavior::CVariableLengthByValue | Behavior::CVoid => true,
+-                _ => false,
++            .map(|td| {
++                matches!(
++                    td.behavior,
++                    Behavior::CVariableLengthByValue | Behavior::CVoid
++                )
+             })
+             .unwrap_or(false)
+     }
+@@ -211,9 +213,11 @@ impl TypeDatabase {
+     /// type.
+     pub(crate) fn is_cxx_acceptable_generic(&self, ty: &TypeName) -> bool {
+         self.get(ty)
+-            .map(|x| match x.behavior {
+-                Behavior::CxxContainerByValueSafe | Behavior::CxxContainerNotByValueSafe => true,
+-                _ => false,
++            .map(|x| {
++                matches!(
++                    x.behavior,
++                    Behavior::CxxContainerByValueSafe | Behavior::CxxContainerNotByValueSafe
++                )
+             })
+             .unwrap_or(false)
+     }
+@@ -339,7 +343,7 @@ fn create_type_database() -> TypeDatabase {
+         "autocxx::c_void",
+         "void",
+         Behavior::CVoid,
+-        Some(format!("std::os::raw::c_void")),
++        Some("std::os::raw::c_void".into()),
+     );
+     by_rs_name.insert(TypeName::new_from_user_input(&td.rs_name), td);
+2026-04-17 07:10:11,922 - INFO - Eval script for google__autocxx-341 written to logs/run_evaluation/gold_run1/gold/google__autocxx-341/eval.sh; copying to container...
+2026-04-17 07:11:58,068 - INFO - Test runtime: 106.01 seconds
+2026-04-17 07:11:58,069 - INFO - Test output for google__autocxx-341 written to logs/run_evaluation/gold_run1/gold/google__autocxx-341/test_output.txt
+2026-04-17 07:11:58,192 - INFO - Git diff after:
+diff --git a/engine/src/conversion/analysis/fun/mod.rs b/engine/src/conversion/analysis/fun/mod.rs
+index 955af17b..ba8fba65 100644
+--- a/engine/src/conversion/analysis/fun/mod.rs
++++ b/engine/src/conversion/analysis/fun/mod.rs
+@@ -639,7 +639,7 @@ impl<'a> FnAnalyzer<'a> {
+                             }) => match elem.as_ref() {
+                                 Type::Path(typ) => {
+                                     let mut this_type = TypeName::from_type_path(typ);
+-                                    if this_type.is_cvoid() && pp.ident.to_string() == "this" {
++                                    if this_type.is_cvoid() && pp.ident == "this" {
+                                         is_virtual = true;
+                                         this_type = virtual_this.ok_or_else(|| {
+                                             ConvertError::VirtualThisType(
+diff --git a/engine/src/conversion/codegen_rs/fun_codegen.rs b/engine/src/conversion/codegen_rs/fun_codegen.rs
+index 420939ae..83c39863 100644
+--- a/engine/src/conversion/codegen_rs/fun_codegen.rs
++++ b/engine/src/conversion/codegen_rs/fun_codegen.rs
+@@ -192,12 +192,12 @@ fn generate_function_impl(
+     rust_name: &str,
+     ret_type: &ReturnType,
+     unsafety: &Option<Unsafe>,
+-) -> Item {
++) -> Box<Item> {
+     let (wrapper_params, arg_list) = generate_arg_lists(param_details, false);
+     let rust_name = make_ident(&rust_name);
+-    Item::Fn(parse_quote! {
++    Box::new(Item::Fn(parse_quote! {
+         pub #unsafety fn #rust_name ( #wrapper_params ) #ret_type {
+             cxxbridge::#rust_name ( #(#arg_list),* )
+         }
+-    })
++    }))
+ }
+diff --git a/engine/src/conversion/codegen_rs/mod.rs b/engine/src/conversion/codegen_rs/mod.rs
+index da00f93f..f33c5f33 100644
+--- a/engine/src/conversion/codegen_rs/mod.rs
++++ b/engine/src/conversion/codegen_rs/mod.rs
+@@ -57,7 +57,7 @@ enum Use {
+     /// 'use' directive points to bindgen
+     UsedFromBindgen,
+     /// Some kind of custom item
+-    Custom(Item),
++    Custom(Box<Item>),
+ }
+ 
+ fn get_string_items() -> Vec<Item> {
+@@ -255,7 +255,7 @@ impl<'a> RsCodeGenerator<'a> {
+                 ))),
+                 Use::UsedFromBindgen => output_items.push(Self::generate_bindgen_use_stmt(ns, id)),
+                 Use::Unused => {}
+-                Use::Custom(item) => output_items.push(item.clone()),
++                Use::Custom(item) => output_items.push(*item.clone()),
+             };
+         }
+         for (child_name, child_ns_entries) in ns_entries.children() {
+diff --git a/engine/src/conversion/parse/parse_foreign_mod.rs b/engine/src/conversion/parse/parse_foreign_mod.rs
+index c4ff4810..dfb542de 100644
+--- a/engine/src/conversion/parse/parse_foreign_mod.rs
++++ b/engine/src/conversion/parse/parse_foreign_mod.rs
+@@ -19,7 +19,7 @@ use crate::{
+     types::{Namespace, TypeName},
+ };
+ use std::collections::{HashMap, HashSet};
+-use syn::{ForeignItem, Ident, ImplItem, ItemImpl, Type};
++use syn::{Block, Expr, ExprCall, ForeignItem, Ident, ImplItem, ItemImpl, Stmt, Type};
+ 
+ /// Parses a given bindgen-generated 'mod' into suitable
+ /// [Api]s. In bindgen output, a given mod concerns
+@@ -97,7 +97,10 @@ impl ParseForeignMod {
+                 let effective_fun_name = if itm.sig.ident == "new" {
+                     ty_id.clone()
+                 } else {
+-                    itm.sig.ident
++                    match get_called_function(&itm.block) {
++                        Some(id) => id.clone(),
++                        None => itm.sig.ident,
++                    }
+                 };
+                 self.method_receivers.insert(
+                     effective_fun_name,
+diff --git a/engine/src/known_types.rs b/engine/src/known_types.rs
+index 3f068606..67ec1946 100644
+--- a/engine/src/known_types.rs
++++ b/engine/src/known_types.rs
+@@ -199,9 +199,11 @@ impl TypeDatabase {
+     /// which we need to wrap.
+     pub(crate) fn is_ctype(&self, ty: &TypeName) -> bool {
+         self.get(ty)
+-            .map(|td| match td.behavior {
+-                Behavior::CVariableLengthByValue | Behavior::CVoid => true,
+-                _ => false,
++            .map(|td| {
++                matches!(
++                    td.behavior,
++                    Behavior::CVariableLengthByValue | Behavior::CVoid
++                )
+             })
+             .unwrap_or(false)
+     }
+@@ -211,9 +213,11 @@ impl TypeDatabase {
+     /// type.
+     pub(crate) fn is_cxx_acceptable_generic(&self, ty: &TypeName) -> bool {
+         self.get(ty)
+-            .map(|x| match x.behavior {
+-                Behavior::CxxContainerByValueSafe | Behavior::CxxContainerNotByValueSafe => true,
+-                _ => false,
++            .map(|x| {
++                matches!(
++                    x.behavior,
++                    Behavior::CxxContainerByValueSafe | Behavior::CxxContainerNotByValueSafe
++                )
+             })
+             .unwrap_or(false)
+     }
+@@ -339,7 +343,7 @@ fn create_type_database() -> TypeDatabase {
+         "autocxx::c_void",
+         "void",
+         Behavior::CVoid,
+-        Some(format!("std::os::raw::c_void")),
++        Some("std::os::raw::c_void".into()),
+     );
+     by_rs_name.insert(TypeName::new_from_user_input(&td.rs_name), td);
+2026-04-17 07:11:58,193 - INFO - Grading answer for google__autocxx-341...
+2026-04-17 07:11:58,194 - INFO - report: {'google__autocxx-341': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['conversion::analysis::fun::overload_tracker::tests::test_by_function', 'conversion::analysis::fun::overload_tracker::tests::test_by_method', 'conversion::analysis::fun::rust_name_tracker::tests::test', 'conversion::codegen_rs::namespace_organizer::tests::test_ns_entries_sort', 'conversion::analysis::fun::bridge_name_tracker::tests::test', 'conversion::analysis::pod::byvalue_checker::tests::test_primitive_by_itself', 'conversion::analysis::pod::byvalue_checker::tests::test_with_cxxstring', 'conversion::analysis::pod::byvalue_checker::tests::test_primitives', 'conversion::analysis::pod::byvalue_checker::tests::test_nested_primitives', 'conversion::analysis::pod::byvalue_checker::tests::test_with_up', 'integration_tests::test_negative_rs_nonsense', 'types::tests::test_ints'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for google__autocxx-341: resolved: True
+2026-04-17 07:11:58,195 - INFO - Attempting to stop container rustb.eval.google__autocxx-341.gold_run1...
+2026-04-17 07:13:48,408 - INFO - Attempting to remove container rustb.eval.google__autocxx-341.gold_run1...
+2026-04-17 07:13:48,980 - INFO - Container rustb.eval.google__autocxx-341.gold_run1 removed.
+2026-04-17 07:13:48,980 - INFO - Attempting to remove image rustbench/google__autocxx:pr-341...
+2026-04-17 07:13:49,705 - INFO - Image rustbench/google__autocxx:pr-341 removed.

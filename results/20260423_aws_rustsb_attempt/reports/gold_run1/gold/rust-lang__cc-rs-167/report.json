@@ -1,0 +1,49 @@
+{
+    "rust-lang__cc-rs-167": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "main",
+                    "msvc_debug",
+                    "msvc_include",
+                    "gnu_compile_assembly",
+                    "msvc_opt_level_0",
+                    "msvc_static_crt",
+                    "gnu_include",
+                    "gnu_opt_level_1",
+                    "msvc_define",
+                    "msvc_smoke",
+                    "gnu_opt_level_s",
+                    "gnu_debug",
+                    "msvc_no_static_crt",
+                    "gnu_set_stdlib",
+                    "gnu_smoke",
+                    "gnu_define",
+                    "gnu_x86_64",
+                    "gnu_i686",
+                    "gnu_x86_64_no_pic",
+                    "gnu_i686_pic",
+                    "src/lib.rs -  (line 24)",
+                    "src/lib.rs -  (line 35)"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

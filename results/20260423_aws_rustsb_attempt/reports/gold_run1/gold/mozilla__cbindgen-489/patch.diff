@@ -1,0 +1,22 @@
+diff --git a/src/bindgen/ir/ty.rs b/src/bindgen/ir/ty.rs
+--- a/src/bindgen/ir/ty.rs
++++ b/src/bindgen/ir/ty.rs
+@@ -392,6 +392,7 @@ impl Type {
+             // FIXME(#223): This is not quite correct.
+             "Option" if generic.is_repr_ptr() => Some(generic),
+             "NonNull" => Some(Type::Ptr(Box::new(generic))),
++            "Cell" => Some(generic),
+             _ => None,
+         }
+     }
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -387,6 +387,7 @@ impl Parse {
+ 
+         add_opaque("String", vec![]);
+         add_opaque("Box", vec!["T"]);
++        add_opaque("RefCell", vec!["T"]);
+         add_opaque("Rc", vec!["T"]);
+         add_opaque("Arc", vec!["T"]);
+         add_opaque("Result", vec!["T", "E"]);

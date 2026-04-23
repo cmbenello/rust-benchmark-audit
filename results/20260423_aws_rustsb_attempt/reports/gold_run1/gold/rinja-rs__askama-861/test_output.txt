@@ -1,0 +1,54 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch askama_parser/src/tests.rs...
+Applied patch askama_parser/src/tests.rs cleanly.
++ cd askama_parser
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded minimal-lexical v0.2.1 (registry `lts-repo-at-6036aed151`)
+  Downloaded nom v7.1.3 (registry `lts-repo-at-6036aed151`)
+  Downloaded memchr v2.6.3 (registry `lts-repo-at-6036aed151`)
+   Compiling memchr v2.6.3
+   Compiling minimal-lexical v0.2.1
+   Compiling nom v7.1.3
+   Compiling askama_parser v0.1.0 (/workspace/askama_parser)
+    Finished test [unoptimized + debuginfo] target(s) in 14.89s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/askama_parser-49495fec7144db8e)
+
+running 20 tests
+test tests::change_delimiters_parse_filter ... ok
+test tests::fuzzed_unicode_slice ... ok
+test tests::test_invalid_block - should panic ... ok
+test tests::test_missing_space_after_kw ... ok
+test tests::test_associativity ... ok
+test tests::test_parse_comments ... ok
+test tests::test_parse_const ... ok
+test tests::test_parse_filter ... ok
+test tests::test_parse_numbers ... ok
+test tests::test_parse_array ... ok
+test tests::test_parse_path_call ... ok
+test tests::test_odd_calls ... ok
+test tests::test_parse_path ... ok
+test tests::test_parse_root_path ... ok
+test tests::test_parse_var ... ok
+test tests::test_parse_var_call ... ok
+test tests::test_ws_splitter ... ok
+test tests::test_precedence ... ok
+test tests::test_rust_macro ... ok
+test tests::test_parse_tuple ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests askama_parser
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../
++ git reset --hard 43e92aa3b6b9cd967a70bd0fd54d1f087d6ed76b
+HEAD is now at 43e92aa build(deps): update mendes requirement from 0.3.0 to 0.5.0
++ git clean -fd
+Removing .cargo/

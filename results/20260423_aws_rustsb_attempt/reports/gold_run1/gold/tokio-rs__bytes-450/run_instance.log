@@ -1,0 +1,1225 @@
+2026-04-17 08:28:08,468 - INFO - Environment image rustb.env.x86_64.tokio-rs_bytes:latest found for tokio-rs__bytes-450
+Building instance image rustbench/tokio-rs__bytes:pr-450 for tokio-rs__bytes-450
+2026-04-17 08:34:50,928 - INFO - Creating container for tokio-rs__bytes-450...
+2026-04-17 08:34:51,103 - INFO - Container for tokio-rs__bytes-450 created: 98ba31c41438adaaa641eb9c306d9318396f7b1826ced770ac163d41f4caca63
+2026-04-17 08:34:51,268 - INFO - Container for tokio-rs__bytes-450 started: 98ba31c41438adaaa641eb9c306d9318396f7b1826ced770ac163d41f4caca63
+2026-04-17 08:34:51,268 - INFO - Intermediate patch for tokio-rs__bytes-450 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-450/patch.diff, now applying to container...
+2026-04-17 08:34:51,554 - INFO - >>>>> Applied Patch:
+Checking patch .github/workflows/ci.yml...
+Checking patch .github/workflows/ci.yml...
+Checking patch benches/buf.rs...
+Checking patch benches/buf.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_impl.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/buf_mut.rs...
+Checking patch src/buf/chain.rs...
+Checking patch src/buf/chain.rs...
+Checking patch src/buf/chain.rs...
+Checking patch src/buf/iter.rs...
+Checking patch src/buf/limit.rs...
+Checking patch src/buf/reader.rs...
+Checking patch src/buf/take.rs...
+Checking patch src/buf/uninit_slice.rs...
+Checking patch src/buf/uninit_slice.rs...
+Checking patch src/buf/uninit_slice.rs...
+Checking patch src/buf/vec_deque.rs...
+Checking patch src/bytes.rs...
+Checking patch src/bytes_mut.rs...
+Checking patch src/bytes_mut.rs...
+Checking patch src/bytes_mut.rs...
+Checking patch src/bytes_mut.rs...
+Applied patch .github/workflows/ci.yml cleanly.
+Applied patch .github/workflows/ci.yml cleanly.
+Applied patch benches/buf.rs cleanly.
+Applied patch benches/buf.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_impl.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/buf_mut.rs cleanly.
+Applied patch src/buf/chain.rs cleanly.
+Applied patch src/buf/chain.rs cleanly.
+Applied patch src/buf/chain.rs cleanly.
+Applied patch src/buf/iter.rs cleanly.
+Applied patch src/buf/limit.rs cleanly.
+Applied patch src/buf/reader.rs cleanly.
+Applied patch src/buf/take.rs cleanly.
+Applied patch src/buf/uninit_slice.rs cleanly.
+Applied patch src/buf/uninit_slice.rs cleanly.
+Applied patch src/buf/uninit_slice.rs cleanly.
+Applied patch src/buf/vec_deque.rs cleanly.
+Applied patch src/bytes.rs cleanly.
+Applied patch src/bytes_mut.rs cleanly.
+Applied patch src/bytes_mut.rs cleanly.
+Applied patch src/bytes_mut.rs cleanly.
+Applied patch src/bytes_mut.rs cleanly.
+
+2026-04-17 08:34:51,622 - INFO - Git diff before:
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 8b99832..a911122 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -11,6 +11,7 @@ on:
+ env:
+   RUSTFLAGS: -Dwarnings
+   RUST_BACKTRACE: 1
++  nightly: nightly-2020-12-17
+ 
+ defaults:
+   run:
+@@ -120,7 +121,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v2
+       - name: Install Rust
+-        run: rustup update nightly && rustup default nightly
++        run: rustup update $nightly && rustup default $nightly
+       - name: Install rust-src
+         run: rustup component add rust-src
+       - name: ASAN / TSAN
+diff --git a/benches/buf.rs b/benches/buf.rs
+index 4b5d286..6dc8516 100644
+--- a/benches/buf.rs
++++ b/benches/buf.rs
+@@ -53,7 +53,7 @@ impl Buf for TestBuf {
+         assert!(self.pos <= self.buf.len());
+         self.next_readlen();
+     }
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         if self.readlen == 0 {
+             Default::default()
+         } else {
+@@ -87,8 +87,8 @@ impl Buf for TestBufC {
+         self.inner.advance(cnt)
+     }
+     #[inline(never)]
+-    fn bytes(&self) -> &[u8] {
+-        self.inner.bytes()
++    fn chunk(&self) -> &[u8] {
++        self.inner.chunk()
+     }
+ }
+ 
+diff --git a/src/buf/buf_impl.rs b/src/buf/buf_impl.rs
+index 3c596f1..16ad8a7 100644
+--- a/src/buf/buf_impl.rs
++++ b/src/buf/buf_impl.rs
+@@ -16,7 +16,7 @@ macro_rules! buf_get_impl {
+         // this Option<ret> trick is to avoid keeping a borrow on self
+         // when advance() is called (mut borrow) and to call bytes() only once
+         let ret = $this
+-            .bytes()
++            .chunk()
+             .get(..SIZE)
+             .map(|src| unsafe { $typ::$conv(*(src as *const _ as *const [_; SIZE])) });
+ 
+@@ -78,7 +78,7 @@ pub trait Buf {
+     /// the buffer.
+     ///
+     /// This value is greater than or equal to the length of the slice returned
+-    /// by `bytes`.
++    /// by `chunk()`.
+     ///
+     /// # Examples
+     ///
+@@ -115,31 +115,31 @@ pub trait Buf {
+     ///
+     /// let mut buf = &b"hello world"[..];
+     ///
+-    /// assert_eq!(buf.bytes(), &b"hello world"[..]);
++    /// assert_eq!(buf.chunk(), &b"hello world"[..]);
+     ///
+     /// buf.advance(6);
+     ///
+-    /// assert_eq!(buf.bytes(), &b"world"[..]);
++    /// assert_eq!(buf.chunk(), &b"world"[..]);
+     /// ```
+     ///
+     /// # Implementer notes
+     ///
+     /// This function should never panic. Once the end of the buffer is reached,
+-    /// i.e., `Buf::remaining` returns 0, calls to `bytes` should return an
++    /// i.e., `Buf::remaining` returns 0, calls to `chunk()` should return an
+     /// empty slice.
+-    fn bytes(&self) -> &[u8];
++    fn chunk(&self) -> &[u8];
+ 
+     /// Fills `dst` with potentially multiple slices starting at `self`'s
+     /// current position.
+     ///
+-    /// If the `Buf` is backed by disjoint slices of bytes, `bytes_vectored` enables
++    /// If the `Buf` is backed by disjoint slices of bytes, `chunk_vectored` enables
+     /// fetching more than one slice at once. `dst` is a slice of `IoSlice`
+     /// references, enabling the slice to be directly used with [`writev`]
+     /// without any further conversion. The sum of the lengths of all the
+     /// buffers in `dst` will be less than or equal to `Buf::remaining()`.
+     ///
+     /// The entries in `dst` will be overwritten, but the data **contained** by
+-    /// the slices **will not** be modified. If `bytes_vectored` does not fill every
++    /// the slices **will not** be modified. If `chunk_vectored` does not fill every
+     /// entry in `dst`, then `dst` is guaranteed to contain all remaining slices
+     /// in `self.
+     ///
+@@ -149,7 +149,7 @@ pub trait Buf {
+     /// # Implementer notes
+     ///
+     /// This function should never panic. Once the end of the buffer is reached,
+-    /// i.e., `Buf::remaining` returns 0, calls to `bytes_vectored` must return 0
++    /// i.e., `Buf::remaining` returns 0, calls to `chunk_vectored` must return 0
+     /// without mutating `dst`.
+     ///
+     /// Implementations should also take care to properly handle being called
+@@ -157,13 +157,13 @@ pub trait Buf {
+     ///
+     /// [`writev`]: http://man7.org/linux/man-pages/man2/readv.2.html
+     #[cfg(feature = "std")]
+-    fn bytes_vectored<'a>(&'a self, dst: &mut [IoSlice<'a>]) -> usize {
++    fn chunks_vectored<'a>(&'a self, dst: &mut [IoSlice<'a>]) -> usize {
+         if dst.is_empty() {
+             return 0;
+         }
+ 
+         if self.has_remaining() {
+-            dst[0] = IoSlice::new(self.bytes());
++            dst[0] = IoSlice::new(self.chunk());
+             1
+         } else {
+             0
+@@ -172,7 +172,7 @@ pub trait Buf {
+ 
+     /// Advance the internal cursor of the Buf
+     ///
+-    /// The next call to `bytes` will return a slice starting `cnt` bytes
++    /// The next call to `chunk()` will return a slice starting `cnt` bytes
+     /// further into the underlying buffer.
+     ///
+     /// # Examples
+@@ -182,11 +182,11 @@ pub trait Buf {
+     ///
+     /// let mut buf = &b"hello world"[..];
+     ///
+-    /// assert_eq!(buf.bytes(), &b"hello world"[..]);
++    /// assert_eq!(buf.chunk(), &b"hello world"[..]);
+     ///
+     /// buf.advance(6);
+     ///
+-    /// assert_eq!(buf.bytes(), &b"world"[..]);
++    /// assert_eq!(buf.chunk(), &b"world"[..]);
+     /// ```
+     ///
+     /// # Panics
+@@ -253,7 +253,7 @@ pub trait Buf {
+             let cnt;
+ 
+             unsafe {
+-                let src = self.bytes();
++                let src = self.chunk();
+                 cnt = cmp::min(src.len(), dst.len() - off);
+ 
+                 ptr::copy_nonoverlapping(src.as_ptr(), dst[off..].as_mut_ptr(), cnt);
+@@ -283,7 +283,7 @@ pub trait Buf {
+     /// This function panics if there is no more remaining data in `self`.
+     fn get_u8(&mut self) -> u8 {
+         assert!(self.remaining() >= 1);
+-        let ret = self.bytes()[0];
++        let ret = self.chunk()[0];
+         self.advance(1);
+         ret
+     }
+@@ -306,7 +306,7 @@ pub trait Buf {
+     /// This function panics if there is no more remaining data in `self`.
+     fn get_i8(&mut self) -> i8 {
+         assert!(self.remaining() >= 1);
+-        let ret = self.bytes()[0] as i8;
++        let ret = self.chunk()[0] as i8;
+         self.advance(1);
+         ret
+     }
+@@ -861,7 +861,7 @@ pub trait Buf {
+     /// let mut chain = b"hello "[..].chain(&b"world"[..]);
+     ///
+     /// let full = chain.copy_to_bytes(11);
+-    /// assert_eq!(full.bytes(), b"hello world");
++    /// assert_eq!(full.chunk(), b"hello world");
+     /// ```
+     fn chain<U: Buf>(self, next: U) -> Chain<Self, U>
+     where
+@@ -908,13 +908,13 @@ macro_rules! deref_forward_buf {
+             (**self).remaining()
+         }
+ 
+-        fn bytes(&self) -> &[u8] {
+-            (**self).bytes()
++        fn chunk(&self) -> &[u8] {
++            (**self).chunk()
+         }
+ 
+         #[cfg(feature = "std")]
+-        fn bytes_vectored<'b>(&'b self, dst: &mut [IoSlice<'b>]) -> usize {
+-            (**self).bytes_vectored(dst)
++        fn chunks_vectored<'b>(&'b self, dst: &mut [IoSlice<'b>]) -> usize {
++            (**self).chunks_vectored(dst)
+         }
+ 
+         fn advance(&mut self, cnt: usize) {
+@@ -1022,7 +1022,7 @@ impl Buf for &[u8] {
+     }
+ 
+     #[inline]
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         self
+     }
+ 
+@@ -1045,7 +1045,7 @@ impl<T: AsRef<[u8]>> Buf for std::io::Cursor<T> {
+         len - pos as usize
+     }
+ 
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         let len = self.get_ref().as_ref().len();
+         let pos = self.position();
+ 
+diff --git a/src/buf/buf_mut.rs b/src/buf/buf_mut.rs
+index fb3623d..16e3ffa 100644
+--- a/src/buf/buf_mut.rs
++++ b/src/buf/buf_mut.rs
+@@ -31,7 +31,7 @@ pub unsafe trait BufMut {
+     /// position until the end of the buffer is reached.
+     ///
+     /// This value is greater than or equal to the length of the slice returned
+-    /// by `bytes_mut`.
++    /// by `chunk_mut()`.
+     ///
+     /// # Examples
+     ///
+@@ -56,7 +56,7 @@ pub unsafe trait BufMut {
+ 
+     /// Advance the internal cursor of the BufMut
+     ///
+-    /// The next call to `bytes_mut` will return a slice starting `cnt` bytes
++    /// The next call to `chunk_mut` will return a slice starting `cnt` bytes
+     /// further into the underlying buffer.
+     ///
+     /// This function is unsafe because there is no guarantee that the bytes
+@@ -70,11 +70,11 @@ pub unsafe trait BufMut {
+     /// let mut buf = Vec::with_capacity(16);
+     ///
+     /// // Write some data
+-    /// buf.bytes_mut()[0..2].copy_from_slice(b"he");
++    /// buf.chunk_mut()[0..2].copy_from_slice(b"he");
+     /// unsafe { buf.advance_mut(2) };
+     ///
+     /// // write more bytes
+-    /// buf.bytes_mut()[0..3].copy_from_slice(b"llo");
++    /// buf.chunk_mut()[0..3].copy_from_slice(b"llo");
+     ///
+     /// unsafe { buf.advance_mut(3); }
+     ///
+@@ -135,14 +135,14 @@ pub unsafe trait BufMut {
+     ///
+     /// unsafe {
+     ///     // MaybeUninit::as_mut_ptr
+-    ///     buf.bytes_mut()[0..].as_mut_ptr().write(b'h');
+-    ///     buf.bytes_mut()[1..].as_mut_ptr().write(b'e');
++    ///     buf.chunk_mut()[0..].as_mut_ptr().write(b'h');
++    ///     buf.chunk_mut()[1..].as_mut_ptr().write(b'e');
+     ///
+     ///     buf.advance_mut(2);
+     ///
+-    ///     buf.bytes_mut()[0..].as_mut_ptr().write(b'l');
+-    ///     buf.bytes_mut()[1..].as_mut_ptr().write(b'l');
+-    ///     buf.bytes_mut()[2..].as_mut_ptr().write(b'o');
++    ///     buf.chunk_mut()[0..].as_mut_ptr().write(b'l');
++    ///     buf.chunk_mut()[1..].as_mut_ptr().write(b'l');
++    ///     buf.chunk_mut()[2..].as_mut_ptr().write(b'o');
+     ///
+     ///     buf.advance_mut(3);
+     /// }
+@@ -153,12 +153,12 @@ pub unsafe trait BufMut {
+     ///
+     /// # Implementer notes
+     ///
+-    /// This function should never panic. `bytes_mut` should return an empty
+-    /// slice **if and only if** `remaining_mut` returns 0. In other words,
+-    /// `bytes_mut` returning an empty slice implies that `remaining_mut` will
+-    /// return 0 and `remaining_mut` returning 0 implies that `bytes_mut` will
++    /// This function should never panic. `chunk_mut` should return an empty
++    /// slice **if and only if** `remaining_mut()` returns 0. In other words,
++    /// `chunk_mut()` returning an empty slice implies that `remaining_mut()` will
++    /// return 0 and `remaining_mut()` returning 0 implies that `chunk_mut()` will
+     /// return an empty slice.
+-    fn bytes_mut(&mut self) -> &mut UninitSlice;
++    fn chunk_mut(&mut self) -> &mut UninitSlice;
+ 
+     /// Transfer bytes into `self` from `src` and advance the cursor by the
+     /// number of bytes written.
+@@ -190,8 +190,8 @@ pub unsafe trait BufMut {
+             let l;
+ 
+             unsafe {
+-                let s = src.bytes();
+-                let d = self.bytes_mut();
++                let s = src.chunk();
++                let d = self.chunk_mut();
+                 l = cmp::min(s.len(), d.len());
+ 
+                 ptr::copy_nonoverlapping(s.as_ptr(), d.as_mut_ptr() as *mut u8, l);
+@@ -237,7 +237,7 @@ pub unsafe trait BufMut {
+             let cnt;
+ 
+             unsafe {
+-                let dst = self.bytes_mut();
++                let dst = self.chunk_mut();
+                 cnt = cmp::min(dst.len(), src.len() - off);
+ 
+                 ptr::copy_nonoverlapping(src[off..].as_ptr(), dst.as_mut_ptr() as *mut u8, cnt);
+@@ -913,8 +913,8 @@ macro_rules! deref_forward_bufmut {
+             (**self).remaining_mut()
+         }
+ 
+-        fn bytes_mut(&mut self) -> &mut UninitSlice {
+-            (**self).bytes_mut()
++        fn chunk_mut(&mut self) -> &mut UninitSlice {
++            (**self).chunk_mut()
+         }
+ 
+         unsafe fn advance_mut(&mut self, cnt: usize) {
+@@ -998,7 +998,7 @@ unsafe impl BufMut for &mut [u8] {
+     }
+ 
+     #[inline]
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
+         // UninitSlice is repr(transparent), so safe to transmute
+         unsafe { &mut *(*self as *mut [u8] as *mut _) }
+     }
+@@ -1033,7 +1033,7 @@ unsafe impl BufMut for Vec<u8> {
+     }
+ 
+     #[inline]
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
+         if self.capacity() == self.len() {
+             self.reserve(64); // Grow the vec
+         }
+@@ -1060,7 +1060,7 @@ unsafe impl BufMut for Vec<u8> {
+ 
+             // a block to contain the src.bytes() borrow
+             {
+-                let s = src.bytes();
++                let s = src.chunk();
+                 l = s.len();
+                 self.extend_from_slice(s);
+             }
+diff --git a/src/buf/chain.rs b/src/buf/chain.rs
+index c21fd35..d68bc2d 100644
+--- a/src/buf/chain.rs
++++ b/src/buf/chain.rs
+@@ -138,11 +138,11 @@ where
+         self.a.remaining() + self.b.remaining()
+     }
+ 
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         if self.a.has_remaining() {
+-            self.a.bytes()
++            self.a.chunk()
+         } else {
+-            self.b.bytes()
++            self.b.chunk()
+         }
+     }
+ 
+@@ -165,9 +165,9 @@ where
+     }
+ 
+     #[cfg(feature = "std")]
+-    fn bytes_vectored<'a>(&'a self, dst: &mut [IoSlice<'a>]) -> usize {
+-        let mut n = self.a.bytes_vectored(dst);
+-        n += self.b.bytes_vectored(&mut dst[n..]);
++    fn chunks_vectored<'a>(&'a self, dst: &mut [IoSlice<'a>]) -> usize {
++        let mut n = self.a.chunks_vectored(dst);
++        n += self.b.chunks_vectored(&mut dst[n..]);
+         n
+     }
+ }
+@@ -181,11 +181,11 @@ where
+         self.a.remaining_mut() + self.b.remaining_mut()
+     }
+ 
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
+         if self.a.has_remaining_mut() {
+-            self.a.bytes_mut()
++            self.a.chunk_mut()
+         } else {
+-            self.b.bytes_mut()
++            self.b.chunk_mut()
+         }
+     }
+ 
+diff --git a/src/buf/iter.rs b/src/buf/iter.rs
+index 16a2c55..8914a40 100644
+--- a/src/buf/iter.rs
++++ b/src/buf/iter.rs
+@@ -117,7 +117,7 @@ impl<T: Buf> Iterator for IntoIter<T> {
+             return None;
+         }
+ 
+-        let b = self.inner.bytes()[0];
++        let b = self.inner.chunk()[0];
+         self.inner.advance(1);
+ 
+         Some(b)
+diff --git a/src/buf/limit.rs b/src/buf/limit.rs
+index 5cbbbfe..b422be5 100644
+--- a/src/buf/limit.rs
++++ b/src/buf/limit.rs
+@@ -61,8 +61,8 @@ unsafe impl<T: BufMut> BufMut for Limit<T> {
+         cmp::min(self.inner.remaining_mut(), self.limit)
+     }
+ 
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
+-        let bytes = self.inner.bytes_mut();
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
++        let bytes = self.inner.chunk_mut();
+         let end = cmp::min(bytes.len(), self.limit);
+         &mut bytes[..end]
+     }
+diff --git a/src/buf/reader.rs b/src/buf/reader.rs
+index 135db41..f2b4d98 100644
+--- a/src/buf/reader.rs
++++ b/src/buf/reader.rs
+@@ -73,7 +73,7 @@ impl<B: Buf + Sized> io::Read for Reader<B> {
+ 
+ impl<B: Buf + Sized> io::BufRead for Reader<B> {
+     fn fill_buf(&mut self) -> io::Result<&[u8]> {
+-        Ok(self.buf.bytes())
++        Ok(self.buf.chunk())
+     }
+     fn consume(&mut self, amt: usize) {
+         self.buf.advance(amt)
+diff --git a/src/buf/take.rs b/src/buf/take.rs
+index 57b9f45..1747f6e 100644
+--- a/src/buf/take.rs
++++ b/src/buf/take.rs
+@@ -134,8 +134,8 @@ impl<T: Buf> Buf for Take<T> {
+         cmp::min(self.inner.remaining(), self.limit)
+     }
+ 
+-    fn bytes(&self) -> &[u8] {
+-        let bytes = self.inner.bytes();
++    fn chunk(&self) -> &[u8] {
++        let bytes = self.inner.chunk();
+         &bytes[..cmp::min(bytes.len(), self.limit)]
+     }
+ 
+diff --git a/src/buf/uninit_slice.rs b/src/buf/uninit_slice.rs
+index 32ebde4..73f4e89 100644
+--- a/src/buf/uninit_slice.rs
++++ b/src/buf/uninit_slice.rs
+@@ -6,7 +6,7 @@ use core::ops::{
+ 
+ /// Uninitialized byte slice.
+ ///
+-/// Returned by `BufMut::bytes_mut()`, the referenced byte slice may be
++/// Returned by `BufMut::chunk_mut()`, the referenced byte slice may be
+ /// uninitialized. The wrapper provides safe access without introducing
+ /// undefined behavior.
+ ///
+@@ -114,7 +114,7 @@ impl UninitSlice {
+     ///
+     /// let mut data = [0, 1, 2];
+     /// let mut slice = &mut data[..];
+-    /// let ptr = BufMut::bytes_mut(&mut slice).as_mut_ptr();
++    /// let ptr = BufMut::chunk_mut(&mut slice).as_mut_ptr();
+     /// ```
+     pub fn as_mut_ptr(&mut self) -> *mut u8 {
+         self.0.as_mut_ptr() as *mut _
+@@ -129,7 +129,7 @@ impl UninitSlice {
+     ///
+     /// let mut data = [0, 1, 2];
+     /// let mut slice = &mut data[..];
+-    /// let len = BufMut::bytes_mut(&mut slice).len();
++    /// let len = BufMut::chunk_mut(&mut slice).len();
+     ///
+     /// assert_eq!(len, 3);
+     /// ```
+diff --git a/src/buf/vec_deque.rs b/src/buf/vec_deque.rs
+index 195e689..263167e 100644
+--- a/src/buf/vec_deque.rs
++++ b/src/buf/vec_deque.rs
+@@ -7,7 +7,7 @@ impl Buf for VecDeque<u8> {
+         self.len()
+     }
+ 
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         let (s1, s2) = self.as_slices();
+         if s1.is_empty() {
+             s2
+diff --git a/src/bytes.rs b/src/bytes.rs
+index 867f86b..0e10a95 100644
+--- a/src/bytes.rs
++++ b/src/bytes.rs
+@@ -530,7 +530,7 @@ impl Buf for Bytes {
+     }
+ 
+     #[inline]
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         self.as_slice()
+     }
+ 
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+index c3abadf..61c0460 100644
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -445,7 +445,7 @@ impl BytesMut {
+             let additional = new_len - len;
+             self.reserve(additional);
+             unsafe {
+-                let dst = self.bytes_mut().as_mut_ptr();
++                let dst = self.chunk_mut().as_mut_ptr();
+                 ptr::write_bytes(dst, value, additional);
+                 self.set_len(new_len);
+             }
+@@ -944,7 +944,7 @@ impl Buf for BytesMut {
+     }
+ 
+     #[inline]
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         self.as_slice()
+     }
+ 
+@@ -985,7 +985,7 @@ unsafe impl BufMut for BytesMut {
+     }
+ 
+     #[inline]
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
+         if self.capacity() == self.len() {
+             self.reserve(64);
+         }
+@@ -1000,7 +1000,7 @@ unsafe impl BufMut for BytesMut {
+         Self: Sized,
+     {
+         while src.has_remaining() {
+-            let s = src.bytes();
++            let s = src.chunk();
+             let l = s.len();
+             self.extend_from_slice(s);
+             src.advance(l);
+2026-04-17 08:34:51,622 - INFO - Eval script for tokio-rs__bytes-450 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-450/eval.sh; copying to container...
+2026-04-17 08:35:03,898 - INFO - Test runtime: 12.14 seconds
+2026-04-17 08:35:03,899 - INFO - Test output for tokio-rs__bytes-450 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-450/test_output.txt
+2026-04-17 08:35:03,951 - INFO - Git diff after:
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 8b99832..a911122 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -11,6 +11,7 @@ on:
+ env:
+   RUSTFLAGS: -Dwarnings
+   RUST_BACKTRACE: 1
++  nightly: nightly-2020-12-17
+ 
+ defaults:
+   run:
+@@ -120,7 +121,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v2
+       - name: Install Rust
+-        run: rustup update nightly && rustup default nightly
++        run: rustup update $nightly && rustup default $nightly
+       - name: Install rust-src
+         run: rustup component add rust-src
+       - name: ASAN / TSAN
+diff --git a/benches/buf.rs b/benches/buf.rs
+index 4b5d286..6dc8516 100644
+--- a/benches/buf.rs
++++ b/benches/buf.rs
+@@ -53,7 +53,7 @@ impl Buf for TestBuf {
+         assert!(self.pos <= self.buf.len());
+         self.next_readlen();
+     }
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         if self.readlen == 0 {
+             Default::default()
+         } else {
+@@ -87,8 +87,8 @@ impl Buf for TestBufC {
+         self.inner.advance(cnt)
+     }
+     #[inline(never)]
+-    fn bytes(&self) -> &[u8] {
+-        self.inner.bytes()
++    fn chunk(&self) -> &[u8] {
++        self.inner.chunk()
+     }
+ }
+ 
+diff --git a/src/buf/buf_impl.rs b/src/buf/buf_impl.rs
+index 3c596f1..16ad8a7 100644
+--- a/src/buf/buf_impl.rs
++++ b/src/buf/buf_impl.rs
+@@ -16,7 +16,7 @@ macro_rules! buf_get_impl {
+         // this Option<ret> trick is to avoid keeping a borrow on self
+         // when advance() is called (mut borrow) and to call bytes() only once
+         let ret = $this
+-            .bytes()
++            .chunk()
+             .get(..SIZE)
+             .map(|src| unsafe { $typ::$conv(*(src as *const _ as *const [_; SIZE])) });
+ 
+@@ -78,7 +78,7 @@ pub trait Buf {
+     /// the buffer.
+     ///
+     /// This value is greater than or equal to the length of the slice returned
+-    /// by `bytes`.
++    /// by `chunk()`.
+     ///
+     /// # Examples
+     ///
+@@ -115,31 +115,31 @@ pub trait Buf {
+     ///
+     /// let mut buf = &b"hello world"[..];
+     ///
+-    /// assert_eq!(buf.bytes(), &b"hello world"[..]);
++    /// assert_eq!(buf.chunk(), &b"hello world"[..]);
+     ///
+     /// buf.advance(6);
+     ///
+-    /// assert_eq!(buf.bytes(), &b"world"[..]);
++    /// assert_eq!(buf.chunk(), &b"world"[..]);
+     /// ```
+     ///
+     /// # Implementer notes
+     ///
+     /// This function should never panic. Once the end of the buffer is reached,
+-    /// i.e., `Buf::remaining` returns 0, calls to `bytes` should return an
++    /// i.e., `Buf::remaining` returns 0, calls to `chunk()` should return an
+     /// empty slice.
+-    fn bytes(&self) -> &[u8];
++    fn chunk(&self) -> &[u8];
+ 
+     /// Fills `dst` with potentially multiple slices starting at `self`'s
+     /// current position.
+     ///
+-    /// If the `Buf` is backed by disjoint slices of bytes, `bytes_vectored` enables
++    /// If the `Buf` is backed by disjoint slices of bytes, `chunk_vectored` enables
+     /// fetching more than one slice at once. `dst` is a slice of `IoSlice`
+     /// references, enabling the slice to be directly used with [`writev`]
+     /// without any further conversion. The sum of the lengths of all the
+     /// buffers in `dst` will be less than or equal to `Buf::remaining()`.
+     ///
+     /// The entries in `dst` will be overwritten, but the data **contained** by
+-    /// the slices **will not** be modified. If `bytes_vectored` does not fill every
++    /// the slices **will not** be modified. If `chunk_vectored` does not fill every
+     /// entry in `dst`, then `dst` is guaranteed to contain all remaining slices
+     /// in `self.
+     ///
+@@ -149,7 +149,7 @@ pub trait Buf {
+     /// # Implementer notes
+     ///
+     /// This function should never panic. Once the end of the buffer is reached,
+-    /// i.e., `Buf::remaining` returns 0, calls to `bytes_vectored` must return 0
++    /// i.e., `Buf::remaining` returns 0, calls to `chunk_vectored` must return 0
+     /// without mutating `dst`.
+     ///
+     /// Implementations should also take care to properly handle being called
+@@ -157,13 +157,13 @@ pub trait Buf {
+     ///
+     /// [`writev`]: http://man7.org/linux/man-pages/man2/readv.2.html
+     #[cfg(feature = "std")]
+-    fn bytes_vectored<'a>(&'a self, dst: &mut [IoSlice<'a>]) -> usize {
++    fn chunks_vectored<'a>(&'a self, dst: &mut [IoSlice<'a>]) -> usize {
+         if dst.is_empty() {
+             return 0;
+         }
+ 
+         if self.has_remaining() {
+-            dst[0] = IoSlice::new(self.bytes());
++            dst[0] = IoSlice::new(self.chunk());
+             1
+         } else {
+             0
+@@ -172,7 +172,7 @@ pub trait Buf {
+ 
+     /// Advance the internal cursor of the Buf
+     ///
+-    /// The next call to `bytes` will return a slice starting `cnt` bytes
++    /// The next call to `chunk()` will return a slice starting `cnt` bytes
+     /// further into the underlying buffer.
+     ///
+     /// # Examples
+@@ -182,11 +182,11 @@ pub trait Buf {
+     ///
+     /// let mut buf = &b"hello world"[..];
+     ///
+-    /// assert_eq!(buf.bytes(), &b"hello world"[..]);
++    /// assert_eq!(buf.chunk(), &b"hello world"[..]);
+     ///
+     /// buf.advance(6);
+     ///
+-    /// assert_eq!(buf.bytes(), &b"world"[..]);
++    /// assert_eq!(buf.chunk(), &b"world"[..]);
+     /// ```
+     ///
+     /// # Panics
+@@ -253,7 +253,7 @@ pub trait Buf {
+             let cnt;
+ 
+             unsafe {
+-                let src = self.bytes();
++                let src = self.chunk();
+                 cnt = cmp::min(src.len(), dst.len() - off);
+ 
+                 ptr::copy_nonoverlapping(src.as_ptr(), dst[off..].as_mut_ptr(), cnt);
+@@ -283,7 +283,7 @@ pub trait Buf {
+     /// This function panics if there is no more remaining data in `self`.
+     fn get_u8(&mut self) -> u8 {
+         assert!(self.remaining() >= 1);
+-        let ret = self.bytes()[0];
++        let ret = self.chunk()[0];
+         self.advance(1);
+         ret
+     }
+@@ -306,7 +306,7 @@ pub trait Buf {
+     /// This function panics if there is no more remaining data in `self`.
+     fn get_i8(&mut self) -> i8 {
+         assert!(self.remaining() >= 1);
+-        let ret = self.bytes()[0] as i8;
++        let ret = self.chunk()[0] as i8;
+         self.advance(1);
+         ret
+     }
+@@ -861,7 +861,7 @@ pub trait Buf {
+     /// let mut chain = b"hello "[..].chain(&b"world"[..]);
+     ///
+     /// let full = chain.copy_to_bytes(11);
+-    /// assert_eq!(full.bytes(), b"hello world");
++    /// assert_eq!(full.chunk(), b"hello world");
+     /// ```
+     fn chain<U: Buf>(self, next: U) -> Chain<Self, U>
+     where
+@@ -908,13 +908,13 @@ macro_rules! deref_forward_buf {
+             (**self).remaining()
+         }
+ 
+-        fn bytes(&self) -> &[u8] {
+-            (**self).bytes()
++        fn chunk(&self) -> &[u8] {
++            (**self).chunk()
+         }
+ 
+         #[cfg(feature = "std")]
+-        fn bytes_vectored<'b>(&'b self, dst: &mut [IoSlice<'b>]) -> usize {
+-            (**self).bytes_vectored(dst)
++        fn chunks_vectored<'b>(&'b self, dst: &mut [IoSlice<'b>]) -> usize {
++            (**self).chunks_vectored(dst)
+         }
+ 
+         fn advance(&mut self, cnt: usize) {
+@@ -1022,7 +1022,7 @@ impl Buf for &[u8] {
+     }
+ 
+     #[inline]
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         self
+     }
+ 
+@@ -1045,7 +1045,7 @@ impl<T: AsRef<[u8]>> Buf for std::io::Cursor<T> {
+         len - pos as usize
+     }
+ 
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         let len = self.get_ref().as_ref().len();
+         let pos = self.position();
+ 
+diff --git a/src/buf/buf_mut.rs b/src/buf/buf_mut.rs
+index fb3623d..16e3ffa 100644
+--- a/src/buf/buf_mut.rs
++++ b/src/buf/buf_mut.rs
+@@ -31,7 +31,7 @@ pub unsafe trait BufMut {
+     /// position until the end of the buffer is reached.
+     ///
+     /// This value is greater than or equal to the length of the slice returned
+-    /// by `bytes_mut`.
++    /// by `chunk_mut()`.
+     ///
+     /// # Examples
+     ///
+@@ -56,7 +56,7 @@ pub unsafe trait BufMut {
+ 
+     /// Advance the internal cursor of the BufMut
+     ///
+-    /// The next call to `bytes_mut` will return a slice starting `cnt` bytes
++    /// The next call to `chunk_mut` will return a slice starting `cnt` bytes
+     /// further into the underlying buffer.
+     ///
+     /// This function is unsafe because there is no guarantee that the bytes
+@@ -70,11 +70,11 @@ pub unsafe trait BufMut {
+     /// let mut buf = Vec::with_capacity(16);
+     ///
+     /// // Write some data
+-    /// buf.bytes_mut()[0..2].copy_from_slice(b"he");
++    /// buf.chunk_mut()[0..2].copy_from_slice(b"he");
+     /// unsafe { buf.advance_mut(2) };
+     ///
+     /// // write more bytes
+-    /// buf.bytes_mut()[0..3].copy_from_slice(b"llo");
++    /// buf.chunk_mut()[0..3].copy_from_slice(b"llo");
+     ///
+     /// unsafe { buf.advance_mut(3); }
+     ///
+@@ -135,14 +135,14 @@ pub unsafe trait BufMut {
+     ///
+     /// unsafe {
+     ///     // MaybeUninit::as_mut_ptr
+-    ///     buf.bytes_mut()[0..].as_mut_ptr().write(b'h');
+-    ///     buf.bytes_mut()[1..].as_mut_ptr().write(b'e');
++    ///     buf.chunk_mut()[0..].as_mut_ptr().write(b'h');
++    ///     buf.chunk_mut()[1..].as_mut_ptr().write(b'e');
+     ///
+     ///     buf.advance_mut(2);
+     ///
+-    ///     buf.bytes_mut()[0..].as_mut_ptr().write(b'l');
+-    ///     buf.bytes_mut()[1..].as_mut_ptr().write(b'l');
+-    ///     buf.bytes_mut()[2..].as_mut_ptr().write(b'o');
++    ///     buf.chunk_mut()[0..].as_mut_ptr().write(b'l');
++    ///     buf.chunk_mut()[1..].as_mut_ptr().write(b'l');
++    ///     buf.chunk_mut()[2..].as_mut_ptr().write(b'o');
+     ///
+     ///     buf.advance_mut(3);
+     /// }
+@@ -153,12 +153,12 @@ pub unsafe trait BufMut {
+     ///
+     /// # Implementer notes
+     ///
+-    /// This function should never panic. `bytes_mut` should return an empty
+-    /// slice **if and only if** `remaining_mut` returns 0. In other words,
+-    /// `bytes_mut` returning an empty slice implies that `remaining_mut` will
+-    /// return 0 and `remaining_mut` returning 0 implies that `bytes_mut` will
++    /// This function should never panic. `chunk_mut` should return an empty
++    /// slice **if and only if** `remaining_mut()` returns 0. In other words,
++    /// `chunk_mut()` returning an empty slice implies that `remaining_mut()` will
++    /// return 0 and `remaining_mut()` returning 0 implies that `chunk_mut()` will
+     /// return an empty slice.
+-    fn bytes_mut(&mut self) -> &mut UninitSlice;
++    fn chunk_mut(&mut self) -> &mut UninitSlice;
+ 
+     /// Transfer bytes into `self` from `src` and advance the cursor by the
+     /// number of bytes written.
+@@ -190,8 +190,8 @@ pub unsafe trait BufMut {
+             let l;
+ 
+             unsafe {
+-                let s = src.bytes();
+-                let d = self.bytes_mut();
++                let s = src.chunk();
++                let d = self.chunk_mut();
+                 l = cmp::min(s.len(), d.len());
+ 
+                 ptr::copy_nonoverlapping(s.as_ptr(), d.as_mut_ptr() as *mut u8, l);
+@@ -237,7 +237,7 @@ pub unsafe trait BufMut {
+             let cnt;
+ 
+             unsafe {
+-                let dst = self.bytes_mut();
++                let dst = self.chunk_mut();
+                 cnt = cmp::min(dst.len(), src.len() - off);
+ 
+                 ptr::copy_nonoverlapping(src[off..].as_ptr(), dst.as_mut_ptr() as *mut u8, cnt);
+@@ -913,8 +913,8 @@ macro_rules! deref_forward_bufmut {
+             (**self).remaining_mut()
+         }
+ 
+-        fn bytes_mut(&mut self) -> &mut UninitSlice {
+-            (**self).bytes_mut()
++        fn chunk_mut(&mut self) -> &mut UninitSlice {
++            (**self).chunk_mut()
+         }
+ 
+         unsafe fn advance_mut(&mut self, cnt: usize) {
+@@ -998,7 +998,7 @@ unsafe impl BufMut for &mut [u8] {
+     }
+ 
+     #[inline]
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
+         // UninitSlice is repr(transparent), so safe to transmute
+         unsafe { &mut *(*self as *mut [u8] as *mut _) }
+     }
+@@ -1033,7 +1033,7 @@ unsafe impl BufMut for Vec<u8> {
+     }
+ 
+     #[inline]
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
+         if self.capacity() == self.len() {
+             self.reserve(64); // Grow the vec
+         }
+@@ -1060,7 +1060,7 @@ unsafe impl BufMut for Vec<u8> {
+ 
+             // a block to contain the src.bytes() borrow
+             {
+-                let s = src.bytes();
++                let s = src.chunk();
+                 l = s.len();
+                 self.extend_from_slice(s);
+             }
+diff --git a/src/buf/chain.rs b/src/buf/chain.rs
+index c21fd35..d68bc2d 100644
+--- a/src/buf/chain.rs
++++ b/src/buf/chain.rs
+@@ -138,11 +138,11 @@ where
+         self.a.remaining() + self.b.remaining()
+     }
+ 
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         if self.a.has_remaining() {
+-            self.a.bytes()
++            self.a.chunk()
+         } else {
+-            self.b.bytes()
++            self.b.chunk()
+         }
+     }
+ 
+@@ -165,9 +165,9 @@ where
+     }
+ 
+     #[cfg(feature = "std")]
+-    fn bytes_vectored<'a>(&'a self, dst: &mut [IoSlice<'a>]) -> usize {
+-        let mut n = self.a.bytes_vectored(dst);
+-        n += self.b.bytes_vectored(&mut dst[n..]);
++    fn chunks_vectored<'a>(&'a self, dst: &mut [IoSlice<'a>]) -> usize {
++        let mut n = self.a.chunks_vectored(dst);
++        n += self.b.chunks_vectored(&mut dst[n..]);
+         n
+     }
+ }
+@@ -181,11 +181,11 @@ where
+         self.a.remaining_mut() + self.b.remaining_mut()
+     }
+ 
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
+         if self.a.has_remaining_mut() {
+-            self.a.bytes_mut()
++            self.a.chunk_mut()
+         } else {
+-            self.b.bytes_mut()
++            self.b.chunk_mut()
+         }
+     }
+ 
+diff --git a/src/buf/iter.rs b/src/buf/iter.rs
+index 16a2c55..8914a40 100644
+--- a/src/buf/iter.rs
++++ b/src/buf/iter.rs
+@@ -117,7 +117,7 @@ impl<T: Buf> Iterator for IntoIter<T> {
+             return None;
+         }
+ 
+-        let b = self.inner.bytes()[0];
++        let b = self.inner.chunk()[0];
+         self.inner.advance(1);
+ 
+         Some(b)
+diff --git a/src/buf/limit.rs b/src/buf/limit.rs
+index 5cbbbfe..b422be5 100644
+--- a/src/buf/limit.rs
++++ b/src/buf/limit.rs
+@@ -61,8 +61,8 @@ unsafe impl<T: BufMut> BufMut for Limit<T> {
+         cmp::min(self.inner.remaining_mut(), self.limit)
+     }
+ 
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
+-        let bytes = self.inner.bytes_mut();
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
++        let bytes = self.inner.chunk_mut();
+         let end = cmp::min(bytes.len(), self.limit);
+         &mut bytes[..end]
+     }
+diff --git a/src/buf/reader.rs b/src/buf/reader.rs
+index 135db41..f2b4d98 100644
+--- a/src/buf/reader.rs
++++ b/src/buf/reader.rs
+@@ -73,7 +73,7 @@ impl<B: Buf + Sized> io::Read for Reader<B> {
+ 
+ impl<B: Buf + Sized> io::BufRead for Reader<B> {
+     fn fill_buf(&mut self) -> io::Result<&[u8]> {
+-        Ok(self.buf.bytes())
++        Ok(self.buf.chunk())
+     }
+     fn consume(&mut self, amt: usize) {
+         self.buf.advance(amt)
+diff --git a/src/buf/take.rs b/src/buf/take.rs
+index 57b9f45..1747f6e 100644
+--- a/src/buf/take.rs
++++ b/src/buf/take.rs
+@@ -134,8 +134,8 @@ impl<T: Buf> Buf for Take<T> {
+         cmp::min(self.inner.remaining(), self.limit)
+     }
+ 
+-    fn bytes(&self) -> &[u8] {
+-        let bytes = self.inner.bytes();
++    fn chunk(&self) -> &[u8] {
++        let bytes = self.inner.chunk();
+         &bytes[..cmp::min(bytes.len(), self.limit)]
+     }
+ 
+diff --git a/src/buf/uninit_slice.rs b/src/buf/uninit_slice.rs
+index 32ebde4..73f4e89 100644
+--- a/src/buf/uninit_slice.rs
++++ b/src/buf/uninit_slice.rs
+@@ -6,7 +6,7 @@ use core::ops::{
+ 
+ /// Uninitialized byte slice.
+ ///
+-/// Returned by `BufMut::bytes_mut()`, the referenced byte slice may be
++/// Returned by `BufMut::chunk_mut()`, the referenced byte slice may be
+ /// uninitialized. The wrapper provides safe access without introducing
+ /// undefined behavior.
+ ///
+@@ -114,7 +114,7 @@ impl UninitSlice {
+     ///
+     /// let mut data = [0, 1, 2];
+     /// let mut slice = &mut data[..];
+-    /// let ptr = BufMut::bytes_mut(&mut slice).as_mut_ptr();
++    /// let ptr = BufMut::chunk_mut(&mut slice).as_mut_ptr();
+     /// ```
+     pub fn as_mut_ptr(&mut self) -> *mut u8 {
+         self.0.as_mut_ptr() as *mut _
+@@ -129,7 +129,7 @@ impl UninitSlice {
+     ///
+     /// let mut data = [0, 1, 2];
+     /// let mut slice = &mut data[..];
+-    /// let len = BufMut::bytes_mut(&mut slice).len();
++    /// let len = BufMut::chunk_mut(&mut slice).len();
+     ///
+     /// assert_eq!(len, 3);
+     /// ```
+diff --git a/src/buf/vec_deque.rs b/src/buf/vec_deque.rs
+index 195e689..263167e 100644
+--- a/src/buf/vec_deque.rs
++++ b/src/buf/vec_deque.rs
+@@ -7,7 +7,7 @@ impl Buf for VecDeque<u8> {
+         self.len()
+     }
+ 
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         let (s1, s2) = self.as_slices();
+         if s1.is_empty() {
+             s2
+diff --git a/src/bytes.rs b/src/bytes.rs
+index 867f86b..0e10a95 100644
+--- a/src/bytes.rs
++++ b/src/bytes.rs
+@@ -530,7 +530,7 @@ impl Buf for Bytes {
+     }
+ 
+     #[inline]
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         self.as_slice()
+     }
+ 
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+index c3abadf..61c0460 100644
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -445,7 +445,7 @@ impl BytesMut {
+             let additional = new_len - len;
+             self.reserve(additional);
+             unsafe {
+-                let dst = self.bytes_mut().as_mut_ptr();
++                let dst = self.chunk_mut().as_mut_ptr();
+                 ptr::write_bytes(dst, value, additional);
+                 self.set_len(new_len);
+             }
+@@ -944,7 +944,7 @@ impl Buf for BytesMut {
+     }
+ 
+     #[inline]
+-    fn bytes(&self) -> &[u8] {
++    fn chunk(&self) -> &[u8] {
+         self.as_slice()
+     }
+ 
+@@ -985,7 +985,7 @@ unsafe impl BufMut for BytesMut {
+     }
+ 
+     #[inline]
+-    fn bytes_mut(&mut self) -> &mut UninitSlice {
++    fn chunk_mut(&mut self) -> &mut UninitSlice {
+         if self.capacity() == self.len() {
+             self.reserve(64);
+         }
+@@ -1000,7 +1000,7 @@ unsafe impl BufMut for BytesMut {
+         Self: Sized,
+     {
+         while src.has_remaining() {
+-            let s = src.bytes();
++            let s = src.chunk();
+             let l = s.len();
+             self.extend_from_slice(s);
+             src.advance(l);
+2026-04-17 08:35:03,951 - INFO - Grading answer for tokio-rs__bytes-450...
+2026-04-17 08:35:03,952 - INFO - report: {'tokio-rs__bytes-450': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['copy_to_bytes_less', 'test_bufs_vec', 'test_deref_buf_forwards', 'test_get_u16', 'test_get_u8', 'test_get_u16_buffer_underflow', 'copy_to_bytes_overflow', 'test_vec_deque', 'test_fresh_cursor_vec', 'test_mut_slice', 'write_byte_panics_if_out_of_bounds', 'test_put_u16', 'copy_from_slice_panics_if_different_length_2', 'test_clone', 'copy_from_slice_panics_if_different_length_1', 'test_vec_advance_mut', 'test_deref_bufmut_forwards', 'test_put_u8', 'test_vec_as_mut_buf', 'advance_bytes_mut', 'advance_vec', 'bytes_buf_mut_reuse_when_fully_consumed', 'advance_static', 'bytes_mut_unsplit_basic', 'bytes_mut_unsplit_empty_self', 'bytes_mut_unsplit_two_split_offs', 'empty_slice_ref_not_an_empty_subset', 'bytes_mut_unsplit_empty_other', 'bytes_buf_mut_advance', 'bytes_reserve_overflow', 'bytes_mut_unsplit_arc_non_contiguous', 'advance_past_len', 'bytes_mut_unsplit_arc_different', 'extend_from_slice_mut', 'extend_mut', 'extend_mut_without_size_hint', 'fmt', 'fmt_write', 'fns_defined_for_bytes_mut', 'freeze_after_advance', 'freeze_after_advance_arc', 'freeze_after_split_off', 'freeze_after_split_to', 'freeze_after_truncate', 'freeze_after_truncate_arc', 'bytes_with_capacity_but_empty', 'from_iter_no_size_hint', 'freeze_clone_shared', 'freeze_clone_unique', 'from_slice', 'index', 'from_static', 'len', 'partial_eq_bytesmut', 'reserve_growth', 'reserve_allocates_at_least_original_capacity', 'reserve_in_arc_nonunique_does_not_overallocate', 'reserve_in_arc_unique_doubles', 'reserve_vec_recycling', 'slice_oob_1', 'slice_oob_2', 'slice_ref_catches_not_a_subset', 'reserve_in_arc_unique_does_not_overallocate', 'reserve_convert', 'split_off_uninitialized', 'slice_ref_empty', 'slice_ref_empty_subslice', 'slice_ref_not_an_empty_subset', 'slice', 'slice_ref_works', 'split_off_oob', 'split_to_1', 'split_to_2', 'split_off', 'split_to_oob_mut', 'split_off_to_at_gt_len', 'split_off_to_loop', 'split_to_uninitialized', 'test_bounds', 'test_layout', 'truncate', 'split_to_oob', 'reserve_max_original_capacity_value', 'stress', 'sanity_check_odd_allocator', 'test_bytes_clone_drop', 'test_bytes_from_vec_drop', 'test_bytes_advance', 'test_bytes_truncate_and_advance', 'test_bytes_truncate', 'iterating_two_bufs', 'vectored_read', 'writing_chained', 'collect_two_bufs', 'iter_len', 'empty_iter_len', 'buf_read', 'test_ser_de', 'test_ser_de_empty', 'long_take', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::copy_to_bytes (line 807)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i32_le (line 460)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::chain (line 858)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_int (line 680)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u16_le (line 340)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f64 (line 763)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::remaining (line 85)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f32 (line 721)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::copy_to_slice (line 233)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::advance (line 180)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f32_le (line 742)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i128_le (line 620)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i16_le (line 380)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::chain_mut (line 889)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u64 (line 480)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i64_le (line 540)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u128_le (line 592)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f64 (line 793)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::into_inner (line 117)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_uint (line 640)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i16 (line 360)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::has_remaining (line 211)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i16 (line 350)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i32 (line 438)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u128 (line 560)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u64_le (line 504)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf (line 62)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i128 (line 600)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u16 (line 306)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u8 (line 274)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u128_le (line 580)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u32 (line 394)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::last_mut (line 98)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_int_le (line 724)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_int_le (line 700)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut (line 20)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u8 (line 260)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::advance_mut (line 67)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::has_remaining_mut (line 104)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u32 (line 400)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i32 (line 440)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::writer (line 861)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::last_ref (line 82)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u16 (line 320)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u32_le (line 420)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_uint (line 658)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i8 (line 297)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::first_mut (line 63)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::limit (line 836)', 'src/buf/iter.rs - buf::iter::IntoIter<T>::new (line 35)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f64_le (line 784)', 'src/buf/chain.rs - buf::chain::Chain (line 18)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i64_le (line 548)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i8 (line 283)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u64 (line 482)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u64_le (line 500)', 'src/buf/iter.rs - buf::iter::IntoIter<T>::get_mut (line 95)', 'src/buf/iter.rs - buf::iter::IntoIter (line 11)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u16_le (line 328)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f32_le (line 770)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f32 (line 747)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i128 (line 614)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i128_le (line 636)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u32_le (line 416)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i16_le (line 372)', 'src/bytes.rs - bytes::_split_off_must_use (line 1096)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_uint_le (line 660)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i32_le (line 460)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::take (line 830)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i64 (line 520)', 'src/buf/buf_impl.rs - buf::buf_impl::Buf::reader (line 882)', 'src/buf/writer.rs - buf::writer::Writer<B>::get_mut (line 43)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i64 (line 526)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_int (line 702)', 'src/buf/writer.rs - buf::writer::Writer<B>::get_ref (line 26)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_uint_le (line 680)', 'src/buf/iter.rs - buf::iter::IntoIter<T>::into_inner (line 54)', 'src/buf/uninit_slice.rs - buf::uninit_slice::UninitSlice::as_mut_ptr (line 112)', 'src/bytes.rs - bytes::Bytes::new (line 116)', 'src/buf/uninit_slice.rs - buf::uninit_slice::UninitSlice::from_raw_parts_mut (line 34)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_slice (line 212)', 'src/bytes.rs - bytes::Bytes::is_empty (line 190)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put (line 168)', 'src/buf/take.rs - buf::take::Take<T>::get_mut (line 66)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::remaining_mut (line 38)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::first_ref (line 47)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f64_le (line 816)', 'src/bytes_mut.rs - bytes_mut::_split_off_must_use (line 1528)', 'src/bytes.rs - bytes::Bytes::clear (line 465)', 'src/buf/iter.rs - buf::iter::IntoIter<T>::get_ref (line 75)', 'src/buf/uninit_slice.rs - buf::uninit_slice::UninitSlice::write_byte (line 57)', 'src/bytes.rs - bytes::Bytes::from_static (line 144)', 'src/buf/take.rs - buf::take::Take<T>::limit (line 90)', 'src/bytes.rs - bytes::Bytes (line 31)', 'src/buf/uninit_slice.rs - buf::uninit_slice::UninitSlice::copy_from_slice (line 83)', 'src/buf/take.rs - buf::take::Take<T>::into_inner (line 24)', 'src/bytes_mut.rs - bytes_mut::_split_must_use (line 1538)', 'src/bytes.rs - bytes::Bytes::split_off (line 338)', 'src/bytes_mut.rs - bytes_mut::_split_to_must_use (line 1518)', 'src/buf/take.rs - buf::take::Take<T>::get_ref (line 49)', 'src/bytes_mut.rs - bytes_mut::BytesMut::extend_from_slice (line 673)', 'src/bytes.rs - bytes::Bytes::len (line 175)', 'src/bytes_mut.rs - bytes_mut::BytesMut::capacity (line 203)', 'src/bytes.rs - bytes::_split_to_must_use (line 1086)', 'src/bytes.rs - bytes::Bytes::split_to (line 387)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u128 (line 570)', 'src/buf/reader.rs - buf::reader::Reader<B>::get_ref (line 26)', 'src/buf/uninit_slice.rs - buf::uninit_slice::UninitSlice::len (line 127)', 'src/bytes.rs - bytes::Bytes::slice (line 215)', 'src/buf/take.rs - buf::take::Take<T>::set_limit (line 112)', 'src/bytes_mut.rs - bytes_mut::BytesMut::new (line 152)', 'src/bytes.rs - bytes::Bytes::slice_ref (line 281)', 'src/buf/reader.rs - buf::reader::Reader<B>::into_inner (line 48)', 'src/buf/writer.rs - buf::writer::Writer<B>::into_inner (line 60)', 'src/bytes_mut.rs - bytes_mut::BytesMut::reserve (line 505)', 'src/bytes_mut.rs - bytes_mut::BytesMut::truncate (line 388)', 'src/bytes_mut.rs - bytes_mut::BytesMut::set_len (line 465)', 'src/bytes_mut.rs - bytes_mut::BytesMut::resize (line 428)', 'src/bytes_mut.rs - bytes_mut::BytesMut::len (line 173)', 'src/bytes.rs - bytes::Bytes::truncate (line 436)', 'src/bytes_mut.rs - bytes_mut::BytesMut (line 40)', 'src/bytes_mut.rs - bytes_mut::BytesMut::split_off (line 271)', 'src/bytes_mut.rs - bytes_mut::BytesMut::with_capacity (line 128)', 'src/bytes_mut.rs - bytes_mut::BytesMut::split_to (line 344)', 'src/bytes_mut.rs - bytes_mut::BytesMut::is_empty (line 188)', 'src/bytes_mut.rs - bytes_mut::BytesMut::reserve (line 515)', 'src/bytes_mut.rs - bytes_mut::BytesMut::split (line 315)', 'src/bytes_mut.rs - bytes_mut::BytesMut::clear (line 409)', 'src/bytes_mut.rs - bytes_mut::BytesMut::unsplit (line 709)', 'src/lib.rs - (line 33)', 'src/bytes_mut.rs - bytes_mut::BytesMut::freeze (line 222)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for tokio-rs__bytes-450: resolved: True
+2026-04-17 08:35:03,952 - INFO - Attempting to stop container rustb.eval.tokio-rs__bytes-450.gold_run1...
+2026-04-17 08:36:32,565 - INFO - Attempting to remove container rustb.eval.tokio-rs__bytes-450.gold_run1...
+2026-04-17 08:36:32,591 - INFO - Container rustb.eval.tokio-rs__bytes-450.gold_run1 removed.
+2026-04-17 08:36:32,591 - INFO - Attempting to remove image rustbench/tokio-rs__bytes:pr-450...
+2026-04-17 08:36:34,960 - INFO - Image rustbench/tokio-rs__bytes:pr-450 removed.

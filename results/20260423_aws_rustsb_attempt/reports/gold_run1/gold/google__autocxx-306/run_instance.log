@@ -1,0 +1,615 @@
+2026-04-17 06:59:07,743 - INFO - Environment image rustb.env.x86_64.google_autocxx:latest found for google__autocxx-306
+Building instance image rustbench/google__autocxx:pr-306 for google__autocxx-306
+2026-04-17 07:10:11,115 - INFO - Creating container for google__autocxx-306...
+2026-04-17 07:10:11,395 - INFO - Container for google__autocxx-306 created: 7ffa6a61a0f2c8646e76d68099f49a4e709054776e97e5726b4fce61ca7288b6
+2026-04-17 07:10:11,597 - INFO - Container for google__autocxx-306 started: 7ffa6a61a0f2c8646e76d68099f49a4e709054776e97e5726b4fce61ca7288b6
+2026-04-17 07:10:11,597 - INFO - Intermediate patch for google__autocxx-306 written to logs/run_evaluation/gold_run1/gold/google__autocxx-306/patch.diff, now applying to container...
+2026-04-17 07:10:11,840 - INFO - >>>>> Applied Patch:
+Checking patch demo/build.rs...
+Checking patch engine/src/builder.rs...
+Checking patch engine/src/builder.rs...
+Checking patch engine/src/builder.rs...
+Checking patch engine/src/builder.rs...
+Checking patch engine/src/builder.rs...
+Checking patch engine/src/builder.rs...
+Checking patch engine/src/lib.rs...
+Checking patch engine/src/lib.rs...
+Checking patch engine/src/lib.rs...
+Checking patch engine/src/lib.rs...
+Checking patch engine/src/parse_file.rs...
+Checking patch engine/src/parse_file.rs...
+Checking patch gen/build/src/lib.rs...
+Checking patch gen/build/src/lib.rs...
+Checking patch gen/build/src/lib.rs...
+Checking patch gen/build/src/lib.rs...
+Checking patch gen/cmd/src/main.rs...
+Checking patch gen/cmd/src/main.rs...
+Checking patch tools/reduce/src/main.rs...
+Checking patch tools/reduce/src/main.rs...
+Checking patch tools/reduce/src/main.rs...
+Checking patch tools/reduce/src/main.rs...
+Applied patch demo/build.rs cleanly.
+Applied patch engine/src/builder.rs cleanly.
+Applied patch engine/src/builder.rs cleanly.
+Applied patch engine/src/builder.rs cleanly.
+Applied patch engine/src/builder.rs cleanly.
+Applied patch engine/src/builder.rs cleanly.
+Applied patch engine/src/builder.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/parse_file.rs cleanly.
+Applied patch engine/src/parse_file.rs cleanly.
+Applied patch gen/build/src/lib.rs cleanly.
+Applied patch gen/build/src/lib.rs cleanly.
+Applied patch gen/build/src/lib.rs cleanly.
+Applied patch gen/build/src/lib.rs cleanly.
+Applied patch gen/cmd/src/main.rs cleanly.
+Applied patch gen/cmd/src/main.rs cleanly.
+Applied patch tools/reduce/src/main.rs cleanly.
+Applied patch tools/reduce/src/main.rs cleanly.
+Applied patch tools/reduce/src/main.rs cleanly.
+Applied patch tools/reduce/src/main.rs cleanly.
+
+2026-04-17 07:10:11,918 - INFO - Git diff before:
+diff --git a/demo/build.rs b/demo/build.rs
+index 25071c60..d93f4b7b 100644
+--- a/demo/build.rs
++++ b/demo/build.rs
+@@ -17,7 +17,8 @@ fn main() {
+     // C++ codegen and the macro codegen appears to be run from different
+     // working directories.
+     let path = std::path::PathBuf::from("src").canonicalize().unwrap();
+-    let mut b = autocxx_build::build("src/main.rs", &[&path]).unwrap();
++    let defs: Vec<String> = Vec::new();
++    let mut b = autocxx_build::build("src/main.rs", &[&path], &defs).unwrap();
+     b.flag_if_supported("-std=c++14").compile("autocxx-demo");
+ 
+     println!("cargo:rerun-if-changed=src/main.rs");
+diff --git a/engine/src/builder.rs b/engine/src/builder.rs
+index c8fa9666..f9ece3ce 100644
+--- a/engine/src/builder.rs
++++ b/engine/src/builder.rs
+@@ -65,6 +65,7 @@ pub type BuilderResult = Result<BuilderSuccess, BuilderError>;
+ pub fn build<P1, I, T>(
+     rs_file: P1,
+     autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
+     dependency_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+ ) -> BuilderResult
+ where
+@@ -72,7 +73,13 @@ where
+     I: IntoIterator<Item = T>,
+     T: AsRef<OsStr>,
+ {
+-    build_to_custom_directory(rs_file, autocxx_incs, None, dependency_recorder)
++    build_to_custom_directory(
++        rs_file,
++        autocxx_incs,
++        definitions,
++        None,
++        dependency_recorder,
++    )
+ }
+ 
+ /// Builds successfully, or exits the process displaying a suitable
+@@ -80,6 +87,7 @@ where
+ pub fn expect_build<P1, I, T>(
+     rs_file: P1,
+     autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
+     dependency_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+ ) -> BuilderSuccess
+ where
+@@ -87,7 +95,7 @@ where
+     I: IntoIterator<Item = T>,
+     T: AsRef<OsStr>,
+ {
+-    build(rs_file, autocxx_incs, dependency_recorder).unwrap_or_else(|err| {
++    build(rs_file, autocxx_incs, definitions, dependency_recorder).unwrap_or_else(|err| {
+         let _ = writeln!(io::stderr(), "\n\nautocxx error: {}\n\n", report(err));
+         process::exit(1);
+     })
+@@ -102,6 +110,7 @@ fn report(err: BuilderError) -> String {
+ pub(crate) fn build_to_custom_directory<P1, I, T>(
+     rs_file: P1,
+     autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
+     custom_gendir: Option<PathBuf>,
+     dependency_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+ ) -> BuilderResult
+@@ -134,7 +143,7 @@ where
+ 
+     let mut parsed_file = crate::parse_file(rs_file).map_err(BuilderError::ParseError)?;
+     parsed_file
+-        .resolve_all(autocxx_inc, dependency_recorder)
++        .resolve_all(autocxx_inc, definitions, dependency_recorder)
+         .map_err(BuilderError::ParseError)?;
+     build_with_existing_parsed_file(parsed_file, cxxdir, incdir, rsdir)
+ }
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+index 7ca78440..52ef163b 100644
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -272,7 +272,11 @@ impl IncludeCppEngine {
+         )
+     }
+ 
+-    fn make_bindgen_builder(&self, inc_dirs: &[PathBuf]) -> bindgen::Builder {
++    fn make_bindgen_builder(
++        &self,
++        inc_dirs: &[PathBuf],
++        definitions: &[impl AsRef<str>],
++    ) -> bindgen::Builder {
+         let mut builder = bindgen::builder()
+             .clang_args(&["-x", "c++", "-std=c++14", "-DBINDGEN"])
+             .derive_copy(false)
+@@ -294,6 +298,7 @@ impl IncludeCppEngine {
+                 i.to_str().expect("Non-UTF8 content in include path")
+             )
+         }));
++        builder = builder.clang_args(definitions.iter().map(|d| format!("-D{}", d.as_ref())));
+ 
+         // 3. Passes allowlist and other options to the bindgen::Builder equivalent
+         //    to --output-style=cxx --allowlist=<as passed in>
+@@ -364,6 +369,7 @@ impl IncludeCppEngine {
+     pub fn generate(
+         &mut self,
+         inc_dirs: Vec<PathBuf>,
++        definitions: &[impl AsRef<str>],
+         dep_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+     ) -> Result<()> {
+         // If we are in parse only mode, do nothing. This is used for
+@@ -379,7 +385,7 @@ impl IncludeCppEngine {
+             return Err(Error::NoGenerationRequested);
+         }
+ 
+-        let mut builder = self.make_bindgen_builder(&inc_dirs);
++        let mut builder = self.make_bindgen_builder(&inc_dirs, &definitions);
+         if let Some(dep_recorder) = dep_recorder {
+             builder = builder.parse_callbacks(Box::new(AutocxxParseCallbacks(dep_recorder)));
+         }
+diff --git a/engine/src/parse_file.rs b/engine/src/parse_file.rs
+index f4d3947d..fbe4242a 100644
+--- a/engine/src/parse_file.rs
++++ b/engine/src/parse_file.rs
+@@ -116,6 +116,7 @@ impl ParsedFile {
+     pub fn resolve_all(
+         &mut self,
+         autocxx_inc: Vec<PathBuf>,
++        definitions: &[impl AsRef<str>],
+         dep_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+     ) -> Result<(), ParseError> {
+         let inner_dep_recorder: Option<Rc<dyn RebuildDependencyRecorder>> =
+@@ -128,8 +129,9 @@ impl ParsedFile {
+                     inner_dep_recorder.clone(),
+                 ))),
+             };
++            let defs: Vec<String> = definitions.iter().map(|d| d.as_ref().to_string()).collect();
+             include_cpp
+-                .generate(autocxx_inc.clone(), dep_recorder)
++                .generate(autocxx_inc.clone(), &defs, dep_recorder)
+                 .map_err(ParseError::AutocxxCodegenError)?
+         }
+         Ok(())
+diff --git a/gen/build/src/lib.rs b/gen/build/src/lib.rs
+index efac1387..82b3f1ba 100644
+--- a/gen/build/src/lib.rs
++++ b/gen/build/src/lib.rs
+@@ -23,7 +23,11 @@ use std::{ffi::OsStr, path::Path};
+ /// more from a build.rs file.
+ /// You need to provide the Rust file path and the iterator of paths
+ /// which should be used as include directories.
+-pub fn build<P1, I, T>(rs_file: P1, autocxx_incs: I) -> Result<BuilderBuild, BuilderError>
++pub fn build<P1, I, T>(
++    rs_file: P1,
++    autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
++) -> Result<BuilderBuild, BuilderError>
+ where
+     P1: AsRef<Path>,
+     I: IntoIterator<Item = T>,
+@@ -33,6 +37,7 @@ where
+     engine_build(
+         rs_file,
+         autocxx_incs,
++        definitions,
+         Some(Box::new(CargoRebuildDependencyRecorder)),
+     )
+     .map(|r| r.0)
+@@ -40,7 +45,11 @@ where
+ 
+ /// Builds successfully, or exits the process displaying a suitable
+ /// message.
+-pub fn expect_build<P1, I, T>(rs_file: P1, autocxx_incs: I) -> BuilderBuild
++pub fn expect_build<P1, I, T>(
++    rs_file: P1,
++    autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
++) -> BuilderBuild
+ where
+     P1: AsRef<Path>,
+     I: IntoIterator<Item = T>,
+@@ -50,6 +59,7 @@ where
+     engine_expect_build(
+         rs_file,
+         autocxx_incs,
++        definitions,
+         Some(Box::new(CargoRebuildDependencyRecorder)),
+     )
+     .0
+diff --git a/gen/cmd/src/main.rs b/gen/cmd/src/main.rs
+index f392ac25..16a1cf25 100644
+--- a/gen/cmd/src/main.rs
++++ b/gen/cmd/src/main.rs
+@@ -103,6 +103,16 @@ fn main() {
+                 .help("include path")
+                 .takes_value(true),
+         )
++        .arg(
++            Arg::with_name("define")
++                .short("D")
++                .long("define")
++                .multiple(true)
++                .number_of_values(1)
++                .value_name("DEFINITION")
++                .help("preprocessor macro definition")
++                .takes_value(true),
++        )
+         .arg(
+             Arg::with_name("cpp-extension")
+                 .long("cpp-extension")
+@@ -160,11 +170,12 @@ fn main() {
+         .unwrap_or_default()
+         .map(PathBuf::from)
+         .collect();
++    let definitions: Vec<_> = matches.values_of("define").unwrap_or_default().collect();
+     // In future, we should provide an option to write a .d file here
+     // by passing a callback into the dep_recorder parameter here.
+     // https://github.com/google/autocxx/issues/56
+     parsed_file
+-        .resolve_all(incs, None)
++        .resolve_all(incs, &definitions, None)
+         .expect("Unable to resolve macro");
+     let outdir: PathBuf = matches.value_of_os("outdir").unwrap().into();
+     let desired_number = matches
+diff --git a/tools/reduce/src/main.rs b/tools/reduce/src/main.rs
+index c733c144..07a8acde 100644
+--- a/tools/reduce/src/main.rs
++++ b/tools/reduce/src/main.rs
+@@ -51,6 +51,16 @@ fn main() {
+                 .help("include path")
+                 .takes_value(true),
+         )
++        .arg(
++            Arg::with_name("define")
++                .short("D")
++                .long("define")
++                .multiple(true)
++                .number_of_values(1)
++                .value_name("DEFINE")
++                .help("macro definition")
++                .takes_value(true),
++        )
+         .arg(
+             Arg::with_name("header")
+                 .short("h")
+@@ -128,11 +138,12 @@ fn do_run(matches: ArgMatches, tmp_dir: &TempDir) -> Result<(), std::io::Error>
+         .unwrap_or_default()
+         .map(PathBuf::from)
+         .collect();
++    let defs: Vec<_> = matches.values_of("define").unwrap_or_default().collect();
+     let headers: Vec<_> = matches.values_of("header").unwrap_or_default().collect();
+     let listing_path = tmp_dir.path().join("listing.h");
+     create_concatenated_header(&headers, &listing_path)?;
+     let concat_path = tmp_dir.path().join("concat.h");
+-    preprocess(&listing_path, &concat_path, &incs)?;
++    preprocess(&listing_path, &concat_path, &incs, &defs)?;
+     let rs_path = tmp_dir.path().join("input.rs");
+     let directives: Vec<_> = std::iter::once("#include \"concat.h\"\n".to_string())
+         .chain(
+@@ -250,6 +261,7 @@ fn preprocess(
+     listing_path: &Path,
+     preprocess_path: &Path,
+     incs: &[PathBuf],
++    defs: &[&str],
+ ) -> Result<(), std::io::Error> {
+     announce_progress("Preprocessing");
+     let mut cmd = Command::new("clang++");
+@@ -257,6 +269,9 @@ fn preprocess(
+     for inc in incs {
+         cmd.arg(format!("-I{}", inc.to_str().unwrap()));
+     }
++    for def in defs {
++        cmd.arg(format!("-D{}", def));
++    }
+     cmd.arg(listing_path.to_str().unwrap());
+     let output = cmd.output().expect("failed to preprocess").stdout;
+     let output = std::str::from_utf8(&output).unwrap();
+2026-04-17 07:10:11,919 - INFO - Eval script for google__autocxx-306 written to logs/run_evaluation/gold_run1/gold/google__autocxx-306/eval.sh; copying to container...
+2026-04-17 07:11:58,018 - INFO - Test runtime: 105.96 seconds
+2026-04-17 07:11:58,018 - INFO - Test output for google__autocxx-306 written to logs/run_evaluation/gold_run1/gold/google__autocxx-306/test_output.txt
+2026-04-17 07:11:58,191 - INFO - Git diff after:
+diff --git a/demo/build.rs b/demo/build.rs
+index 25071c60..d93f4b7b 100644
+--- a/demo/build.rs
++++ b/demo/build.rs
+@@ -17,7 +17,8 @@ fn main() {
+     // C++ codegen and the macro codegen appears to be run from different
+     // working directories.
+     let path = std::path::PathBuf::from("src").canonicalize().unwrap();
+-    let mut b = autocxx_build::build("src/main.rs", &[&path]).unwrap();
++    let defs: Vec<String> = Vec::new();
++    let mut b = autocxx_build::build("src/main.rs", &[&path], &defs).unwrap();
+     b.flag_if_supported("-std=c++14").compile("autocxx-demo");
+ 
+     println!("cargo:rerun-if-changed=src/main.rs");
+diff --git a/engine/src/builder.rs b/engine/src/builder.rs
+index c8fa9666..f9ece3ce 100644
+--- a/engine/src/builder.rs
++++ b/engine/src/builder.rs
+@@ -65,6 +65,7 @@ pub type BuilderResult = Result<BuilderSuccess, BuilderError>;
+ pub fn build<P1, I, T>(
+     rs_file: P1,
+     autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
+     dependency_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+ ) -> BuilderResult
+ where
+@@ -72,7 +73,13 @@ where
+     I: IntoIterator<Item = T>,
+     T: AsRef<OsStr>,
+ {
+-    build_to_custom_directory(rs_file, autocxx_incs, None, dependency_recorder)
++    build_to_custom_directory(
++        rs_file,
++        autocxx_incs,
++        definitions,
++        None,
++        dependency_recorder,
++    )
+ }
+ 
+ /// Builds successfully, or exits the process displaying a suitable
+@@ -80,6 +87,7 @@ where
+ pub fn expect_build<P1, I, T>(
+     rs_file: P1,
+     autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
+     dependency_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+ ) -> BuilderSuccess
+ where
+@@ -87,7 +95,7 @@ where
+     I: IntoIterator<Item = T>,
+     T: AsRef<OsStr>,
+ {
+-    build(rs_file, autocxx_incs, dependency_recorder).unwrap_or_else(|err| {
++    build(rs_file, autocxx_incs, definitions, dependency_recorder).unwrap_or_else(|err| {
+         let _ = writeln!(io::stderr(), "\n\nautocxx error: {}\n\n", report(err));
+         process::exit(1);
+     })
+@@ -102,6 +110,7 @@ fn report(err: BuilderError) -> String {
+ pub(crate) fn build_to_custom_directory<P1, I, T>(
+     rs_file: P1,
+     autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
+     custom_gendir: Option<PathBuf>,
+     dependency_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+ ) -> BuilderResult
+@@ -134,7 +143,7 @@ where
+ 
+     let mut parsed_file = crate::parse_file(rs_file).map_err(BuilderError::ParseError)?;
+     parsed_file
+-        .resolve_all(autocxx_inc, dependency_recorder)
++        .resolve_all(autocxx_inc, definitions, dependency_recorder)
+         .map_err(BuilderError::ParseError)?;
+     build_with_existing_parsed_file(parsed_file, cxxdir, incdir, rsdir)
+ }
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+index 7ca78440..52ef163b 100644
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -272,7 +272,11 @@ impl IncludeCppEngine {
+         )
+     }
+ 
+-    fn make_bindgen_builder(&self, inc_dirs: &[PathBuf]) -> bindgen::Builder {
++    fn make_bindgen_builder(
++        &self,
++        inc_dirs: &[PathBuf],
++        definitions: &[impl AsRef<str>],
++    ) -> bindgen::Builder {
+         let mut builder = bindgen::builder()
+             .clang_args(&["-x", "c++", "-std=c++14", "-DBINDGEN"])
+             .derive_copy(false)
+@@ -294,6 +298,7 @@ impl IncludeCppEngine {
+                 i.to_str().expect("Non-UTF8 content in include path")
+             )
+         }));
++        builder = builder.clang_args(definitions.iter().map(|d| format!("-D{}", d.as_ref())));
+ 
+         // 3. Passes allowlist and other options to the bindgen::Builder equivalent
+         //    to --output-style=cxx --allowlist=<as passed in>
+@@ -364,6 +369,7 @@ impl IncludeCppEngine {
+     pub fn generate(
+         &mut self,
+         inc_dirs: Vec<PathBuf>,
++        definitions: &[impl AsRef<str>],
+         dep_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+     ) -> Result<()> {
+         // If we are in parse only mode, do nothing. This is used for
+@@ -379,7 +385,7 @@ impl IncludeCppEngine {
+             return Err(Error::NoGenerationRequested);
+         }
+ 
+-        let mut builder = self.make_bindgen_builder(&inc_dirs);
++        let mut builder = self.make_bindgen_builder(&inc_dirs, &definitions);
+         if let Some(dep_recorder) = dep_recorder {
+             builder = builder.parse_callbacks(Box::new(AutocxxParseCallbacks(dep_recorder)));
+         }
+diff --git a/engine/src/parse_file.rs b/engine/src/parse_file.rs
+index f4d3947d..fbe4242a 100644
+--- a/engine/src/parse_file.rs
++++ b/engine/src/parse_file.rs
+@@ -116,6 +116,7 @@ impl ParsedFile {
+     pub fn resolve_all(
+         &mut self,
+         autocxx_inc: Vec<PathBuf>,
++        definitions: &[impl AsRef<str>],
+         dep_recorder: Option<Box<dyn RebuildDependencyRecorder>>,
+     ) -> Result<(), ParseError> {
+         let inner_dep_recorder: Option<Rc<dyn RebuildDependencyRecorder>> =
+@@ -128,8 +129,9 @@ impl ParsedFile {
+                     inner_dep_recorder.clone(),
+                 ))),
+             };
++            let defs: Vec<String> = definitions.iter().map(|d| d.as_ref().to_string()).collect();
+             include_cpp
+-                .generate(autocxx_inc.clone(), dep_recorder)
++                .generate(autocxx_inc.clone(), &defs, dep_recorder)
+                 .map_err(ParseError::AutocxxCodegenError)?
+         }
+         Ok(())
+diff --git a/gen/build/src/lib.rs b/gen/build/src/lib.rs
+index efac1387..82b3f1ba 100644
+--- a/gen/build/src/lib.rs
++++ b/gen/build/src/lib.rs
+@@ -23,7 +23,11 @@ use std::{ffi::OsStr, path::Path};
+ /// more from a build.rs file.
+ /// You need to provide the Rust file path and the iterator of paths
+ /// which should be used as include directories.
+-pub fn build<P1, I, T>(rs_file: P1, autocxx_incs: I) -> Result<BuilderBuild, BuilderError>
++pub fn build<P1, I, T>(
++    rs_file: P1,
++    autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
++) -> Result<BuilderBuild, BuilderError>
+ where
+     P1: AsRef<Path>,
+     I: IntoIterator<Item = T>,
+@@ -33,6 +37,7 @@ where
+     engine_build(
+         rs_file,
+         autocxx_incs,
++        definitions,
+         Some(Box::new(CargoRebuildDependencyRecorder)),
+     )
+     .map(|r| r.0)
+@@ -40,7 +45,11 @@ where
+ 
+ /// Builds successfully, or exits the process displaying a suitable
+ /// message.
+-pub fn expect_build<P1, I, T>(rs_file: P1, autocxx_incs: I) -> BuilderBuild
++pub fn expect_build<P1, I, T>(
++    rs_file: P1,
++    autocxx_incs: I,
++    definitions: &[impl AsRef<str>],
++) -> BuilderBuild
+ where
+     P1: AsRef<Path>,
+     I: IntoIterator<Item = T>,
+@@ -50,6 +59,7 @@ where
+     engine_expect_build(
+         rs_file,
+         autocxx_incs,
++        definitions,
+         Some(Box::new(CargoRebuildDependencyRecorder)),
+     )
+     .0
+diff --git a/gen/cmd/src/main.rs b/gen/cmd/src/main.rs
+index f392ac25..16a1cf25 100644
+--- a/gen/cmd/src/main.rs
++++ b/gen/cmd/src/main.rs
+@@ -103,6 +103,16 @@ fn main() {
+                 .help("include path")
+                 .takes_value(true),
+         )
++        .arg(
++            Arg::with_name("define")
++                .short("D")
++                .long("define")
++                .multiple(true)
++                .number_of_values(1)
++                .value_name("DEFINITION")
++                .help("preprocessor macro definition")
++                .takes_value(true),
++        )
+         .arg(
+             Arg::with_name("cpp-extension")
+                 .long("cpp-extension")
+@@ -160,11 +170,12 @@ fn main() {
+         .unwrap_or_default()
+         .map(PathBuf::from)
+         .collect();
++    let definitions: Vec<_> = matches.values_of("define").unwrap_or_default().collect();
+     // In future, we should provide an option to write a .d file here
+     // by passing a callback into the dep_recorder parameter here.
+     // https://github.com/google/autocxx/issues/56
+     parsed_file
+-        .resolve_all(incs, None)
++        .resolve_all(incs, &definitions, None)
+         .expect("Unable to resolve macro");
+     let outdir: PathBuf = matches.value_of_os("outdir").unwrap().into();
+     let desired_number = matches
+diff --git a/tools/reduce/src/main.rs b/tools/reduce/src/main.rs
+index c733c144..07a8acde 100644
+--- a/tools/reduce/src/main.rs
++++ b/tools/reduce/src/main.rs
+@@ -51,6 +51,16 @@ fn main() {
+                 .help("include path")
+                 .takes_value(true),
+         )
++        .arg(
++            Arg::with_name("define")
++                .short("D")
++                .long("define")
++                .multiple(true)
++                .number_of_values(1)
++                .value_name("DEFINE")
++                .help("macro definition")
++                .takes_value(true),
++        )
+         .arg(
+             Arg::with_name("header")
+                 .short("h")
+@@ -128,11 +138,12 @@ fn do_run(matches: ArgMatches, tmp_dir: &TempDir) -> Result<(), std::io::Error>
+         .unwrap_or_default()
+         .map(PathBuf::from)
+         .collect();
++    let defs: Vec<_> = matches.values_of("define").unwrap_or_default().collect();
+     let headers: Vec<_> = matches.values_of("header").unwrap_or_default().collect();
+     let listing_path = tmp_dir.path().join("listing.h");
+     create_concatenated_header(&headers, &listing_path)?;
+     let concat_path = tmp_dir.path().join("concat.h");
+-    preprocess(&listing_path, &concat_path, &incs)?;
++    preprocess(&listing_path, &concat_path, &incs, &defs)?;
+     let rs_path = tmp_dir.path().join("input.rs");
+     let directives: Vec<_> = std::iter::once("#include \"concat.h\"\n".to_string())
+         .chain(
+@@ -250,6 +261,7 @@ fn preprocess(
+     listing_path: &Path,
+     preprocess_path: &Path,
+     incs: &[PathBuf],
++    defs: &[&str],
+ ) -> Result<(), std::io::Error> {
+     announce_progress("Preprocessing");
+     let mut cmd = Command::new("clang++");
+@@ -257,6 +269,9 @@ fn preprocess(
+     for inc in incs {
+         cmd.arg(format!("-I{}", inc.to_str().unwrap()));
+     }
++    for def in defs {
++        cmd.arg(format!("-D{}", def));
++    }
+     cmd.arg(listing_path.to_str().unwrap());
+     let output = cmd.output().expect("failed to preprocess").stdout;
+     let output = std::str::from_utf8(&output).unwrap();
+2026-04-17 07:11:58,191 - INFO - Grading answer for google__autocxx-306...
+2026-04-17 07:11:58,193 - INFO - report: {'google__autocxx-306': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['conversion::analysis::fun::overload_tracker::tests::test_by_function', 'conversion::analysis::fun::overload_tracker::tests::test_by_method', 'conversion::analysis::fun::rust_name_tracker::tests::test', 'conversion::analysis::fun::bridge_name_tracker::tests::test', 'conversion::codegen_rs::namespace_organizer::tests::test_ns_entries_sort', 'conversion::analysis::pod::byvalue_checker::tests::test_primitive_by_itself', 'conversion::analysis::pod::byvalue_checker::tests::test_with_cxxstring', 'conversion::analysis::pod::byvalue_checker::tests::test_primitives', 'conversion::analysis::pod::byvalue_checker::tests::test_with_up', 'conversion::analysis::pod::byvalue_checker::tests::test_nested_primitives', 'integration_tests::test_negative_rs_nonsense', 'types::tests::test_ints'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for google__autocxx-306: resolved: True
+2026-04-17 07:11:58,193 - INFO - Attempting to stop container rustb.eval.google__autocxx-306.gold_run1...
+2026-04-17 07:13:48,266 - INFO - Attempting to remove container rustb.eval.google__autocxx-306.gold_run1...
+2026-04-17 07:13:48,320 - INFO - Container rustb.eval.google__autocxx-306.gold_run1 removed.
+2026-04-17 07:13:48,320 - INFO - Attempting to remove image rustbench/google__autocxx:pr-306...
+2026-04-17 07:13:49,604 - INFO - Image rustbench/google__autocxx:pr-306 removed.

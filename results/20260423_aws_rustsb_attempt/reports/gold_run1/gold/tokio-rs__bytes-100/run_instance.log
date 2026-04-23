@@ -1,0 +1,51 @@
+2026-04-17 08:12:36,880 - INFO - Environment image rustb.env.x86_64.tokio-rs_bytes:latest found for tokio-rs__bytes-100
+Building instance image rustbench/tokio-rs__bytes:pr-100 for tokio-rs__bytes-100
+2026-04-17 08:17:28,975 - INFO - Creating container for tokio-rs__bytes-100...
+2026-04-17 08:17:29,297 - INFO - Container for tokio-rs__bytes-100 created: 302c06b94345b74f117645288afdbfee2773bb99daef6eb1d117b1a581ff9ac5
+2026-04-17 08:17:29,431 - INFO - Container for tokio-rs__bytes-100 started: 302c06b94345b74f117645288afdbfee2773bb99daef6eb1d117b1a581ff9ac5
+2026-04-17 08:17:29,431 - INFO - Intermediate patch for tokio-rs__bytes-100 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-100/patch.diff, now applying to container...
+2026-04-17 08:17:29,640 - INFO - >>>>> Applied Patch:
+Checking patch src/bytes.rs...
+Applied patch src/bytes.rs cleanly.
+
+2026-04-17 08:17:29,699 - INFO - Git diff before:
+diff --git a/src/bytes.rs b/src/bytes.rs
+index 789fded..20af871 100644
+--- a/src/bytes.rs
++++ b/src/bytes.rs
+@@ -1890,8 +1890,8 @@ impl Inner {
+     #[inline]
+     fn is_shared(&mut self) -> bool {
+         match self.kind() {
+-            KIND_INLINE | KIND_ARC => true,
+-            _ => false,
++            KIND_VEC => false,
++            _ => true,
+         }
+     }
+2026-04-17 08:17:29,699 - INFO - Eval script for tokio-rs__bytes-100 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-100/eval.sh; copying to container...
+2026-04-17 08:18:50,508 - INFO - Test runtime: 80.65 seconds
+2026-04-17 08:18:50,509 - INFO - Test output for tokio-rs__bytes-100 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-100/test_output.txt
+2026-04-17 08:18:50,656 - INFO - Git diff after:
+diff --git a/src/bytes.rs b/src/bytes.rs
+index 789fded..20af871 100644
+--- a/src/bytes.rs
++++ b/src/bytes.rs
+@@ -1890,8 +1890,8 @@ impl Inner {
+     #[inline]
+     fn is_shared(&mut self) -> bool {
+         match self.kind() {
+-            KIND_INLINE | KIND_ARC => true,
+-            _ => false,
++            KIND_VEC => false,
++            _ => true,
+         }
+     }
+2026-04-17 08:18:50,656 - INFO - Grading answer for tokio-rs__bytes-100...
+2026-04-17 08:18:50,657 - INFO - report: {'tokio-rs__bytes-100': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['from_static'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_fresh_cursor_vec', 'test_bufs_vec', 'test_get_u8', 'test_get_u16', 'test_get_u16_buffer_underflow', 'test_clone', 'test_put_u16', 'test_vec_as_mut_buf', 'test_put_u8', 'test_bufs_vec_mut', 'inline_storage', 'reserve_allocates_at_least_original_capacity', 'fmt', 'len', 'split_off', 'split_off_uninitialized', 'split_to_oob_mut', 'slice_oob_1', 'reserve_convert', 'from_slice', 'split_to_2', 'split_off_to_at_gt_len', 'slice', 'extend', 'index', 'slice_oob_2', 'reserve_growth', 'test_bounds', 'split_to_1', 'split_off_oob', 'fns_defined_for_bytes_mut', 'split_to_uninitialized', 'split_to_oob', 'split_off_to_loop', 'reserve_max_original_capacity_value', 'stress', 'collect_two_bufs', 'iterating_two_bufs', 'writing_chained', 'vectored_read', 'collect_to_bytes', 'collect_to_bytes_mut', 'collect_to_vec', 'bytes::Bytes::is_empty_0', 'buf::buf::Buf::get_f32_0', 'buf::buf::Buf::get_f64_0', 'buf::buf::Buf::advance_0', 'buf::buf::Buf::get_u16_0', 'buf::buf::Buf::remaining_0', 'buf::buf_mut::BufMut::put_f32_0', 'buf::buf::Buf::bytes_0', 'buf::buf_mut::BufMut::advance_mut_0', 'buf::buf::Buf_0', 'bytes::Bytes::slice_to_0', 'buf::take::Take<T>::get_ref_0', 'buf::into_buf::IntoBuf_0', 'buf::from_buf::FromBuf::from_buf_0', 'buf::buf::Buf::get_i8_0', 'buf::buf_mut::BufMut::remaining_mut_0', 'buf::buf::Buf::get_i64_0', 'buf::writer::Writer<B>::get_mut_0', 'buf::buf_mut::BufMut::has_remaining_mut_0', 'buf::from_buf::FromBuf_2', 'buf::buf_mut::BufMut::put_i64_0', 'buf::buf::Buf::iter_0', 'buf::buf::Buf::get_u64_0', 'buf::buf::Buf::has_remaining_0', 'buf::buf::Buf::chain_0', 'buf::writer::Writer<B>::into_inner_0', 'buf::buf::Buf::get_uint_0', 'buf::chain::Chain<T, U>::new_0', 'buf::buf::Buf::reader_0', '_0', 'buf::buf::Buf::get_i32_0', 'buf::iter::Iter<T>::get_ref_0', 'buf::buf_mut::BufMut::bytes_mut_0', 'buf::buf::Buf::get_u32_0', 'buf::chain::Chain<T, U>::last_ref_0', 'buf::buf_mut::BufMut::put_slice_0', 'bytes::Bytes::len_0', 'buf::buf_mut::BufMut::put_u64_0', 'buf::iter::Iter<T>::get_mut_0', 'buf::buf::Buf::get_u8_0', 'buf::buf_mut::BufMut::put_u16_0', 'bytes::Bytes::slice_from_0', 'bytes::Bytes::split_off_0', 'buf::chain::Chain<T, U>::first_ref_0', 'buf::buf::Buf::copy_to_slice_0', 'buf::buf_mut::BufMut::put_i32_0', 'buf::from_buf::FromBuf_1', 'bytes::Bytes::new_0', 'bytes::Bytes::slice_0', 'bytes::Bytes::from_static_0', 'buf::buf_mut::BufMut::put_u8_0', 'buf::buf::Buf::get_i16_0', 'buf::iter::Iter<T>::into_inner_0', 'buf::from_buf::FromBuf_0', 'buf::buf::Buf::by_ref_0', 'buf::buf_mut::BufMut::put_i8_0', 'buf::writer::Writer<B>::get_ref_0', 'buf::buf_mut::BufMut::put_uint_0', 'buf::iter::Iter_0', 'buf::buf::Buf::get_int_0', 'buf::buf_mut::BufMut::put_u32_0', 'buf::into_buf::IntoBuf::into_buf_0', 'buf::reader::Reader<B>::get_ref_0', 'buf::buf_mut::BufMut::put_i16_0', 'buf::chain::Chain<T, U>::into_inner_0', 'buf::chain::Chain_0', 'buf::reader::Reader<B>::get_mut_0', 'bytes::BytesMut::capacity_0', 'bytes::Bytes::split_to_0', 'bytes::Bytes::try_mut_0', 'bytes::BytesMut::clear_0', 'buf::chain::Chain<T, U>::last_mut_0', 'buf::buf_mut::BufMut::by_ref_0', 'buf::take::Take<T>::get_mut_0', 'buf::buf_mut::BufMut::put_int_0', 'buf::buf_mut::BufMut::put_f64_0', 'buf::buf::Buf::collect_0', 'buf::take::Take<T>::limit_0', 'buf::take::Take<T>::set_limit_0', 'bytes::BytesMut::reserve_0', 'buf::chain::Chain<T, U>::first_mut_0', 'buf::buf_mut::BufMut_0', 'buf::buf_mut::BufMut::writer_0', 'buf::buf_mut::BufMut::put_0', 'bytes::BytesMut::len_0', 'buf::take::Take<T>::into_inner_0', 'bytes::BytesMut::is_empty_0', 'buf::buf::Buf::take_0', 'buf::reader::Reader<B>::into_inner_0', 'bytes::BytesMut::truncate_0', 'bytes::BytesMut::set_len_0', 'bytes::BytesMut::split_off_0', 'bytes::BytesMut::reserve_1', 'bytes::Bytes_0', 'bytes::BytesMut::split_to_0', 'bytes::BytesMut_0', 'bytes::BytesMut::take_0', 'bytes::BytesMut::freeze_0', 'bytes::BytesMut::with_capacity_0'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for tokio-rs__bytes-100: resolved: True
+2026-04-17 08:18:50,657 - INFO - Attempting to stop container rustb.eval.tokio-rs__bytes-100.gold_run1...
+2026-04-17 08:19:15,784 - INFO - Attempting to remove container rustb.eval.tokio-rs__bytes-100.gold_run1...
+2026-04-17 08:19:15,807 - INFO - Container rustb.eval.tokio-rs__bytes-100.gold_run1 removed.
+2026-04-17 08:19:15,807 - INFO - Attempting to remove image rustbench/tokio-rs__bytes:pr-100...
+2026-04-17 08:19:16,174 - INFO - Image rustbench/tokio-rs__bytes:pr-100 removed.

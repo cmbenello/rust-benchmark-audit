@@ -1,0 +1,445 @@
+2026-04-17 03:19:37,553 - INFO - Environment image rustb.env.x86_64.cargo-generate_cargo-generate:latest found for cargo-generate__cargo-generate-511
+Building instance image rustbench/cargo-generate__cargo-generate:pr-511 for cargo-generate__cargo-generate-511
+2026-04-17 03:19:37,555 - INFO - Image rustbench/cargo-generate__cargo-generate:pr-511 already exists, skipping build.
+2026-04-17 03:19:37,555 - INFO - Creating container for cargo-generate__cargo-generate-511...
+2026-04-17 03:19:37,610 - INFO - Container for cargo-generate__cargo-generate-511 created: a7e6e8cc1310dd73c426cae7de7e0e969bcd52cc8ce020d235e594d11c33b849
+2026-04-17 03:19:37,743 - INFO - Container for cargo-generate__cargo-generate-511 started: a7e6e8cc1310dd73c426cae7de7e0e969bcd52cc8ce020d235e594d11c33b849
+2026-04-17 03:19:37,743 - INFO - Intermediate patch for cargo-generate__cargo-generate-511 written to logs/run_evaluation/gold_run1/gold/cargo-generate__cargo-generate-511/patch.diff, now applying to container...
+2026-04-17 03:19:37,939 - INFO - >>>>> Applied Patch:
+/tmp/patch.diff:37: trailing whitespace.
+# is the same as 
+/tmp/patch.diff:39: trailing whitespace.
+# is the same as 
+/tmp/patch.diff:49: trailing whitespace.
+# or for github.com 
+Checking patch Cargo.lock...
+Checking patch Cargo.lock...
+Checking patch README.md...
+Checking patch README.md...
+Checking patch README.md...
+Checking patch README.md...
+Checking patch README.md...
+Checking patch src/git.rs...
+Checking patch src/git.rs...
+Checking patch src/git.rs...
+Checking patch src/lib.rs...
+Applied patch Cargo.lock cleanly.
+Applied patch Cargo.lock cleanly.
+Applied patch README.md cleanly.
+Applied patch README.md cleanly.
+Applied patch README.md cleanly.
+Applied patch README.md cleanly.
+Applied patch README.md cleanly.
+Applied patch src/git.rs cleanly.
+Applied patch src/git.rs cleanly.
+Applied patch src/git.rs cleanly.
+Applied patch src/lib.rs cleanly.
+warning: 3 lines add whitespace errors.
+
+2026-04-17 03:19:37,995 - INFO - Git diff before:
+diff --git a/Cargo.lock b/Cargo.lock
+index 07e0ba6..d186da5 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -130,6 +130,7 @@ version = "0.11.1"
+ dependencies = [
+  "anyhow",
+  "assert_cmd",
++ "cargo-husky",
+  "console",
+  "dialoguer",
+  "dirs",
+@@ -161,6 +162,12 @@ dependencies = [
+  "walkdir",
+ ]
+ 
++[[package]]
++name = "cargo-husky"
++version = "1.5.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "7b02b629252fe8ef6460461409564e2c21d0c8e77e0944f3d189ff06c4e932ad"
++
+ [[package]]
+ name = "cc"
+ version = "1.0.72"
+diff --git a/README.md b/README.md
+index c53f374..51bfe6e 100644
+--- a/README.md
++++ b/README.md
+@@ -61,13 +61,29 @@ Standard usage is to pass a `--git` flag to `cargo generate` or short `cargo gen
+ > :warning: NOTE: `cargo gen` requires a [cargo alias configuration](#cargo-gen---alias)
+ 
+ ```sh
+-cargo generate --git https://github.com/githubusername/mytemplate.git
++cargo generate username-on-github/mytemplate
++# is the same as 
++cargo generate gh:username-on-github/mytemplate
++# is the same as 
++cargo generate --git https://github.com/username-on-github/mytemplate.git
+ ```
+ 
++If you have your templates not GitHub then you can leverage the lazy abbreviation prefixes:
++```sh
++# for gitlab.com
++cargo generate gl:username-on-gitlab/mytemplate
++# or for bitbucket.org
++cargo generate bb:username-on-bitbucket/mytemplate
++# or for github.com 
++cargo generate gh:username-on-github/mytemplate
++```
++
++Both will expand to the `https` urls of the repo with the suffix `.git` in the URL.
++
+ You can also pass the name of your project to the tool using the `--name` or `-n` flag:
+ 
+ ```sh
+-cargo generate --git https://github.com/githubusername/mytemplate.git --name myproject
++cargo generate --git https://github.com/username-on-github/mytemplate.git --name myproject
+ ```
+ 
+ #### Templates in subfolders
+@@ -75,7 +91,7 @@ cargo generate --git https://github.com/githubusername/mytemplate.git --name myp
+ If the git repository contains multiple templates, the specific subfolder in the git repository may be specified like this:
+ 
+ ```sh
+-cargo generate --git https://github.com/githubusername/mytemplate.git <relative-template-path>
++cargo generate --git https://github.com/username-on-github/mytemplate.git <relative-template-path>
+ ```
+ 
+ > :warning: NOTE: The specified `relative-template-path` will be used as the actual template root, whether or not this is actually true!
+@@ -87,7 +103,7 @@ cargo generate --git https://github.com/githubusername/mytemplate.git <relative-
+ If the user wants to generate a template straight into the current folder, without creating a subfolder for the contents and without attempting to initialize a `.git` repo or similar, the `--init` flag can be used.
+ 
+ ```sh
+-cargo generate --init --git https://github.com/githubusername/mytemplate.git
++cargo generate --init --git https://github.com/username-on-github/mytemplate.git
+ ```
+ 
+ > :warning: NOTE: `cargo-generate` will not allow any existing files to be overwritten and will fail to generate any files should there be any conflicts.
+@@ -97,7 +113,7 @@ cargo generate --init --git https://github.com/githubusername/mytemplate.git
+ You can generate a project using a local template via the `--path` flag:
+ 
+ ```sh
+-git clone https://github.com/githubusername/mytemplate.git $HOME/mytemplate # Clone any template
++git clone https://github.com/username-on-github/mytemplate.git $HOME/mytemplate # Clone any template
+ cargo generate --path $HOME/mytemplate # Use it locally
+ ```
+ 
+@@ -386,7 +402,7 @@ Default values may be specified in the config file (specified with the `--config
+ placeholder1 = "default value"
+ 
+ [favorites.my_favorite]
+-git = "https://github.com/githubusername/mytemplate.git"
++git = "https://github.com/username-on-github/mytemplate.git"
+ 
+ [favorites.my_favorite.values]
+ placeholder1 = "default value overriding the default"
+diff --git a/src/git.rs b/src/git.rs
+index e40d88f..b20c155 100644
+--- a/src/git.rs
++++ b/src/git.rs
+@@ -9,7 +9,7 @@ use git2::ErrorCode;
+ use git2::{Cred, FetchOptions, ProxyOptions, RemoteCallbacks, Repository, RepositoryInitOptions};
+ use remove_dir_all::remove_dir_all;
+ use std::borrow::Cow;
+-use std::ops::{Add, Deref, Sub};
++use std::ops::{Add, Sub};
+ use std::path::{Path, PathBuf};
+ use std::thread::sleep;
+ use std::time::Duration;
+@@ -42,27 +42,25 @@ pub struct GitConfig<'a> {
+ impl<'a> GitConfig<'a> {
+     /// Creates a new `GitConfig` by parsing `git` as a URL or a local path.
+     pub fn new(
+-        git: Cow<'a, str>,
++        git: impl AsRef<str>,
+         branch: Option<String>,
+         identity: Option<PathBuf>,
+     ) -> Result<Self> {
+-        let (remote, kind) = match determine_repo_kind(git.as_ref()) {
+-            RepoKind::Invalid => anyhow::bail!("Invalid git remote '{}'", &git),
++        let git = git.as_ref();
++        let (remote, kind) = match determine_repo_kind(git) {
++            RepoKind::Invalid => anyhow::bail!("Invalid git remote '{}'", git),
+             RepoKind::LocalFolder => {
+-                let full_path = canonicalize_path(git.deref().as_ref())?;
++                let full_path = canonicalize_path(Path::new(git))?;
+                 if !full_path.exists() {
+-                    anyhow::bail!("The given git remote {:?} does not exist.", &git,);
++                    anyhow::bail!("The given git remote {:?} does not exist.", git);
+                 }
+-                (
+-                    full_path.display().to_string().into(),
+-                    RepoKind::LocalFolder,
+-                )
++                (full_path.display().to_string(), RepoKind::LocalFolder)
+             }
+-            k => (git, k),
++            k => (git.to_string(), k),
+         };
+ 
+         Ok(GitConfig {
+-            remote,
++            remote: Cow::from(remote),
+             kind,
+             identity,
+             branch: branch
+@@ -76,17 +74,28 @@ impl<'a> GitConfig<'a> {
+     ///
+     /// [hub]: https://github.com/github/hub
+     pub fn new_abbr(
+-        git: Cow<'a, str>,
++        git: impl AsRef<str>,
+         branch: Option<String>,
+         identity: Option<PathBuf>,
+     ) -> Result<Self> {
+-        Self::new(git.clone(), branch.clone(), identity.clone()).or_else(|_| {
+-            let full_remote = format!("https://github.com/{}.git", &git);
+-            Self::new(full_remote.into(), branch, identity)
++        let full_remote = abbreviated_git_url_to_full_remote(&git);
++        Self::new(full_remote, branch.clone(), identity.clone()).or_else(|_| {
++            let full_remote = abbreviated_git_url_to_full_remote(format!("gh:{}", git.as_ref()));
++            Self::new(full_remote, branch, identity)
+         })
+     }
+ }
+ 
++fn abbreviated_git_url_to_full_remote(git: impl AsRef<str>) -> String {
++    let git = git.as_ref();
++    match &git[..3] {
++        "gl:" => format!("https://gitlab.com/{}.git", &git[3..]),
++        "bb:" => format!("https://bitbucket.org/{}.git", &git[3..]),
++        "gh:" => format!("https://github.com/{}.git", &git[3..]),
++        _ => git.to_owned(),
++    }
++}
++
+ pub fn create(project_dir: &Path, args: GitConfig) -> Result<String> {
+     let branch = git_clone_all(project_dir, args)?;
+     remove_history(project_dir, None)?;
+diff --git a/src/lib.rs b/src/lib.rs
+index f6a553c..53b320b 100755
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -279,11 +279,8 @@ fn clone_git_template_into_temp(args: &Args) -> Result<(TempDir, String)> {
+         .clone()
+         .with_context(|| "Missing option git, path or a favorite")?;
+ 
+-    let git_config = GitConfig::new_abbr(
+-        remote.into(),
+-        args.branch.to_owned(),
+-        args.ssh_identity.clone(),
+-    )?;
++    let git_config =
++        GitConfig::new_abbr(remote, args.branch.to_owned(), args.ssh_identity.clone())?;
+ 
+     let branch = git::create(git_clone_dir.path(), git_config).map_err(|e| {
+         anyhow!(
+2026-04-17 03:19:37,995 - INFO - Eval script for cargo-generate__cargo-generate-511 written to logs/run_evaluation/gold_run1/gold/cargo-generate__cargo-generate-511/eval.sh; copying to container...
+2026-04-17 03:20:55,437 - INFO - Test runtime: 77.29 seconds
+2026-04-17 03:20:55,437 - INFO - Test output for cargo-generate__cargo-generate-511 written to logs/run_evaluation/gold_run1/gold/cargo-generate__cargo-generate-511/test_output.txt
+2026-04-17 03:20:55,493 - INFO - Git diff after:
+diff --git a/Cargo.lock b/Cargo.lock
+index 07e0ba6..d186da5 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -130,6 +130,7 @@ version = "0.11.1"
+ dependencies = [
+  "anyhow",
+  "assert_cmd",
++ "cargo-husky",
+  "console",
+  "dialoguer",
+  "dirs",
+@@ -161,6 +162,12 @@ dependencies = [
+  "walkdir",
+ ]
+ 
++[[package]]
++name = "cargo-husky"
++version = "1.5.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "7b02b629252fe8ef6460461409564e2c21d0c8e77e0944f3d189ff06c4e932ad"
++
+ [[package]]
+ name = "cc"
+ version = "1.0.72"
+diff --git a/README.md b/README.md
+index c53f374..51bfe6e 100644
+--- a/README.md
++++ b/README.md
+@@ -61,13 +61,29 @@ Standard usage is to pass a `--git` flag to `cargo generate` or short `cargo gen
+ > :warning: NOTE: `cargo gen` requires a [cargo alias configuration](#cargo-gen---alias)
+ 
+ ```sh
+-cargo generate --git https://github.com/githubusername/mytemplate.git
++cargo generate username-on-github/mytemplate
++# is the same as 
++cargo generate gh:username-on-github/mytemplate
++# is the same as 
++cargo generate --git https://github.com/username-on-github/mytemplate.git
+ ```
+ 
++If you have your templates not GitHub then you can leverage the lazy abbreviation prefixes:
++```sh
++# for gitlab.com
++cargo generate gl:username-on-gitlab/mytemplate
++# or for bitbucket.org
++cargo generate bb:username-on-bitbucket/mytemplate
++# or for github.com 
++cargo generate gh:username-on-github/mytemplate
++```
++
++Both will expand to the `https` urls of the repo with the suffix `.git` in the URL.
++
+ You can also pass the name of your project to the tool using the `--name` or `-n` flag:
+ 
+ ```sh
+-cargo generate --git https://github.com/githubusername/mytemplate.git --name myproject
++cargo generate --git https://github.com/username-on-github/mytemplate.git --name myproject
+ ```
+ 
+ #### Templates in subfolders
+@@ -75,7 +91,7 @@ cargo generate --git https://github.com/githubusername/mytemplate.git --name myp
+ If the git repository contains multiple templates, the specific subfolder in the git repository may be specified like this:
+ 
+ ```sh
+-cargo generate --git https://github.com/githubusername/mytemplate.git <relative-template-path>
++cargo generate --git https://github.com/username-on-github/mytemplate.git <relative-template-path>
+ ```
+ 
+ > :warning: NOTE: The specified `relative-template-path` will be used as the actual template root, whether or not this is actually true!
+@@ -87,7 +103,7 @@ cargo generate --git https://github.com/githubusername/mytemplate.git <relative-
+ If the user wants to generate a template straight into the current folder, without creating a subfolder for the contents and without attempting to initialize a `.git` repo or similar, the `--init` flag can be used.
+ 
+ ```sh
+-cargo generate --init --git https://github.com/githubusername/mytemplate.git
++cargo generate --init --git https://github.com/username-on-github/mytemplate.git
+ ```
+ 
+ > :warning: NOTE: `cargo-generate` will not allow any existing files to be overwritten and will fail to generate any files should there be any conflicts.
+@@ -97,7 +113,7 @@ cargo generate --init --git https://github.com/githubusername/mytemplate.git
+ You can generate a project using a local template via the `--path` flag:
+ 
+ ```sh
+-git clone https://github.com/githubusername/mytemplate.git $HOME/mytemplate # Clone any template
++git clone https://github.com/username-on-github/mytemplate.git $HOME/mytemplate # Clone any template
+ cargo generate --path $HOME/mytemplate # Use it locally
+ ```
+ 
+@@ -386,7 +402,7 @@ Default values may be specified in the config file (specified with the `--config
+ placeholder1 = "default value"
+ 
+ [favorites.my_favorite]
+-git = "https://github.com/githubusername/mytemplate.git"
++git = "https://github.com/username-on-github/mytemplate.git"
+ 
+ [favorites.my_favorite.values]
+ placeholder1 = "default value overriding the default"
+diff --git a/src/git.rs b/src/git.rs
+index e40d88f..b20c155 100644
+--- a/src/git.rs
++++ b/src/git.rs
+@@ -9,7 +9,7 @@ use git2::ErrorCode;
+ use git2::{Cred, FetchOptions, ProxyOptions, RemoteCallbacks, Repository, RepositoryInitOptions};
+ use remove_dir_all::remove_dir_all;
+ use std::borrow::Cow;
+-use std::ops::{Add, Deref, Sub};
++use std::ops::{Add, Sub};
+ use std::path::{Path, PathBuf};
+ use std::thread::sleep;
+ use std::time::Duration;
+@@ -42,27 +42,25 @@ pub struct GitConfig<'a> {
+ impl<'a> GitConfig<'a> {
+     /// Creates a new `GitConfig` by parsing `git` as a URL or a local path.
+     pub fn new(
+-        git: Cow<'a, str>,
++        git: impl AsRef<str>,
+         branch: Option<String>,
+         identity: Option<PathBuf>,
+     ) -> Result<Self> {
+-        let (remote, kind) = match determine_repo_kind(git.as_ref()) {
+-            RepoKind::Invalid => anyhow::bail!("Invalid git remote '{}'", &git),
++        let git = git.as_ref();
++        let (remote, kind) = match determine_repo_kind(git) {
++            RepoKind::Invalid => anyhow::bail!("Invalid git remote '{}'", git),
+             RepoKind::LocalFolder => {
+-                let full_path = canonicalize_path(git.deref().as_ref())?;
++                let full_path = canonicalize_path(Path::new(git))?;
+                 if !full_path.exists() {
+-                    anyhow::bail!("The given git remote {:?} does not exist.", &git,);
++                    anyhow::bail!("The given git remote {:?} does not exist.", git);
+                 }
+-                (
+-                    full_path.display().to_string().into(),
+-                    RepoKind::LocalFolder,
+-                )
++                (full_path.display().to_string(), RepoKind::LocalFolder)
+             }
+-            k => (git, k),
++            k => (git.to_string(), k),
+         };
+ 
+         Ok(GitConfig {
+-            remote,
++            remote: Cow::from(remote),
+             kind,
+             identity,
+             branch: branch
+@@ -76,17 +74,28 @@ impl<'a> GitConfig<'a> {
+     ///
+     /// [hub]: https://github.com/github/hub
+     pub fn new_abbr(
+-        git: Cow<'a, str>,
++        git: impl AsRef<str>,
+         branch: Option<String>,
+         identity: Option<PathBuf>,
+     ) -> Result<Self> {
+-        Self::new(git.clone(), branch.clone(), identity.clone()).or_else(|_| {
+-            let full_remote = format!("https://github.com/{}.git", &git);
+-            Self::new(full_remote.into(), branch, identity)
++        let full_remote = abbreviated_git_url_to_full_remote(&git);
++        Self::new(full_remote, branch.clone(), identity.clone()).or_else(|_| {
++            let full_remote = abbreviated_git_url_to_full_remote(format!("gh:{}", git.as_ref()));
++            Self::new(full_remote, branch, identity)
+         })
+     }
+ }
+ 
++fn abbreviated_git_url_to_full_remote(git: impl AsRef<str>) -> String {
++    let git = git.as_ref();
++    match &git[..3] {
++        "gl:" => format!("https://gitlab.com/{}.git", &git[3..]),
++        "bb:" => format!("https://bitbucket.org/{}.git", &git[3..]),
++        "gh:" => format!("https://github.com/{}.git", &git[3..]),
++        _ => git.to_owned(),
++    }
++}
++
+ pub fn create(project_dir: &Path, args: GitConfig) -> Result<String> {
+     let branch = git_clone_all(project_dir, args)?;
+     remove_history(project_dir, None)?;
+diff --git a/src/lib.rs b/src/lib.rs
+index f6a553c..53b320b 100755
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -279,11 +279,8 @@ fn clone_git_template_into_temp(args: &Args) -> Result<(TempDir, String)> {
+         .clone()
+         .with_context(|| "Missing option git, path or a favorite")?;
+ 
+-    let git_config = GitConfig::new_abbr(
+-        remote.into(),
+-        args.branch.to_owned(),
+-        args.ssh_identity.clone(),
+-    )?;
++    let git_config =
++        GitConfig::new_abbr(remote, args.branch.to_owned(), args.ssh_identity.clone())?;
+ 
+     let branch = git::create(git_clone_dir.path(), git_config).map_err(|e| {
+         anyhow!(
+2026-04-17 03:20:55,493 - INFO - Grading answer for cargo-generate__cargo-generate-511...
+2026-04-17 03:20:55,495 - INFO - report: {'cargo-generate__cargo-generate-511': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['config::tests::config_try_from_handles_empty', 'config::tests::config_try_from_errors_on_invalid_keys', 'config::tests::config_try_from_handles_placeholders', 'git::should_canonicalize', 'git::tests::should_determine_repo_kind', 'git::tests::should_not_fail_for_ssh_remote_urls', 'git::should_pretty_path', 'git::tests::should_support_a_local_absolute_path', 'git::tests::should_support_a_local_relative_path', 'git::tests::should_fail_for_non_existing_local_path - should panic', 'git::tests::should_support_abbreviated_repository_short_urls_like', 'git::tests::should_test_happy_path', 'project_variables::tests::block_invalid_key_names', 'config::tests::test_deserializes_config', 'project_variables::tests::boolean_cant_have_choices', 'project_variables::tests::bools_cant_have_regex', 'config::tests::locate_configs_returns_empty_upon_failure', 'project_variables::tests::choices_array_cant_have_anything_but_strings', 'project_variables::tests::choices_cant_be_an_empty_array', 'project_variables::tests::choices_is_array_string_no_regex_is_fine', 'config::tests::locate_configs_can_locate_paths_with_cargo_generate', 'project_variables::tests::choices_is_not_array_string_is_error', 'project_variables::tests::default_for_bool_only_accepts_bool', 'project_variables::tests::default_for_boolean_is_fine', 'project_variables::tests::default_for_string_is_on_choices', 'project_variables::tests::default_for_string_only_accepts_strings', 'project_variables::tests::default_for_string_isnt_on_choices', 'project_variables::tests::default_for_string_with_no_choices_and_no_regex', 'project_variables::tests::empty_default_is_fine', 'project_variables::tests::choices_is_array_string_that_doesnt_match_regex_is_error', 'project_variables::tests::empty_type_is_string', 'project_variables::tests::choices_is_array_string_that_all_match_regex_is_good', 'project_variables::tests::no_choices_boolean', 'project_variables::tests::invalid_regex_is_err', 'project_variables::tests::no_regex_is_ok', 'project_variables::tests::no_choices_for_type_string', 'project_variables::tests::only_tables_as_placeholder_values', 'project_variables::tests::prompt_as_string_is_ok', 'project_variables::tests::default_for_string_is_on_choices_and_matches_regex', 'project_variables::tests::prompt_cant_be_empty', 'project_variables::tests::prompt_must_be_string', 'project_variables::tests::default_for_string_with_no_choices_and_matching_regex', 'filenames::tests::should_prevent_exploitation', 'project_variables::tests::type_must_be_string_type', 'project_variables::tests::type_must_either_be_string_or_bool', 'filenames::tests::should_prevent_invalid_filenames', 'project_variables::tests::default_for_string_with_no_choices_and_regex_doesnt_match', 'filenames::tests::should_do_happy_path', 'project_variables::tests::strings_can_have_regex', 'template_variables::test::names_may_contain_digits', 'template_variables::test::names_may_contain_dash', 'template_variables::test::spaces_are_not_allowed_in_names', 'tests::auto_locate_template_returns_base_when_no_cargo_generate_is_found', 'tests::auto_locate_template_returns_path_when_single_cargo_generate_is_found', 'template_variables::test::names_may_contain_underscore', 'template_variables::test::spaces_around_assignment_is_ok', 'tests::auto_locate_template_prompts_when_multiple_cargo_generate_is_found', 'template_variables::test::names_must_start_with_word_char', 'hooks::variable_mod::tests::test_rhai_set'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for cargo-generate__cargo-generate-511: resolved: True
+2026-04-17 03:20:55,495 - INFO - Attempting to stop container rustb.eval.cargo-generate__cargo-generate-511.gold_run1...
+2026-04-17 03:21:11,939 - INFO - Attempting to remove container rustb.eval.cargo-generate__cargo-generate-511.gold_run1...
+2026-04-17 03:21:12,186 - INFO - Container rustb.eval.cargo-generate__cargo-generate-511.gold_run1 removed.

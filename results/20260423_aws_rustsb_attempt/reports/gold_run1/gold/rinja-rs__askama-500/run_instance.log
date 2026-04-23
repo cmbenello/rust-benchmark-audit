@@ -1,0 +1,57 @@
+2026-04-17 09:34:30,364 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-500
+Building instance image rustbench/rinja-rs__askama:pr-500 for rinja-rs__askama-500
+2026-04-17 09:46:08,765 - INFO - Creating container for rinja-rs__askama-500...
+2026-04-17 09:46:08,850 - INFO - Container for rinja-rs__askama-500 created: ce0ef3a6d365a34f21c700b5dc9d7e375fcd7d725daf159ae89bd914330cae17
+2026-04-17 09:46:09,075 - INFO - Container for rinja-rs__askama-500 started: ce0ef3a6d365a34f21c700b5dc9d7e375fcd7d725daf159ae89bd914330cae17
+2026-04-17 09:46:09,075 - INFO - Intermediate patch for rinja-rs__askama-500 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-500/patch.diff, now applying to container...
+2026-04-17 09:46:09,439 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/generator.rs...
+Applied patch askama_shared/src/generator.rs cleanly.
+
+2026-04-17 09:46:09,536 - INFO - Git diff before:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index b0489ec..0ce7df3 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -658,6 +658,12 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+                 ", _loop_item) in ::askama::helpers::TemplateLoop::new(((&{}).into_iter())) {{",
+                 expr_code
+             )),
++            // If accessing a field then it most likely needs to be
++            // borrowed, to prevent an attempt of moving.
++            Expr::Attr(..) => buf.writeln(&format!(
++                ", _loop_item) in ::askama::helpers::TemplateLoop::new(((&{}).into_iter())) {{",
++                expr_code
++            )),
+             // Otherwise, we borrow `iter` assuming that it implements `IntoIterator`.
+             _ => buf.writeln(&format!(
+                 ", _loop_item) in ::askama::helpers::TemplateLoop::new(({}).into_iter()) {{",
+2026-04-17 09:46:09,536 - INFO - Eval script for rinja-rs__askama-500 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-500/eval.sh; copying to container...
+2026-04-17 09:46:47,704 - INFO - Test runtime: 37.96 seconds
+2026-04-17 09:46:47,704 - INFO - Test output for rinja-rs__askama-500 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-500/test_output.txt
+2026-04-17 09:46:47,758 - INFO - Git diff after:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index b0489ec..0ce7df3 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -658,6 +658,12 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+                 ", _loop_item) in ::askama::helpers::TemplateLoop::new(((&{}).into_iter())) {{",
+                 expr_code
+             )),
++            // If accessing a field then it most likely needs to be
++            // borrowed, to prevent an attempt of moving.
++            Expr::Attr(..) => buf.writeln(&format!(
++                ", _loop_item) in ::askama::helpers::TemplateLoop::new(((&{}).into_iter())) {{",
++                expr_code
++            )),
+             // Otherwise, we borrow `iter` assuming that it implements `IntoIterator`.
+             _ => buf.writeln(&format!(
+                 ", _loop_item) in ::askama::helpers::TemplateLoop::new(({}).into_iter()) {{",
+2026-04-17 09:46:47,758 - INFO - Grading answer for rinja-rs__askama-500...
+2026-04-17 09:46:47,758 - INFO - report: {'rinja-rs__askama-500': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_for', 'test_for_array', 'test_for_method_call', 'test_for_index', 'test_for_range', 'test_for_path_call', 'test_for_zip_ranges', 'test_nested_for', 'test_precedence_for'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-500: resolved: True
+2026-04-17 09:46:47,758 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-500.gold_run1...
+2026-04-17 09:48:13,186 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-500.gold_run1...
+2026-04-17 09:48:13,262 - INFO - Container rustb.eval.rinja-rs__askama-500.gold_run1 removed.
+2026-04-17 09:48:13,262 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-500...
+2026-04-17 09:48:14,083 - INFO - Image rustbench/rinja-rs__askama:pr-500 removed.

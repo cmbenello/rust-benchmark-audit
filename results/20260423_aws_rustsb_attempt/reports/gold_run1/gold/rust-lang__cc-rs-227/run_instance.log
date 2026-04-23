@@ -1,0 +1,97 @@
+2026-04-17 03:24:04,466 - INFO - Environment image rustb.env.x86_64.rust-lang_cc-rs:latest found for rust-lang__cc-rs-227
+Building instance image rustbench/rust-lang__cc-rs:pr-227 for rust-lang__cc-rs-227
+2026-04-17 03:27:49,992 - INFO - Creating container for rust-lang__cc-rs-227...
+2026-04-17 03:27:51,505 - INFO - Container for rust-lang__cc-rs-227 created: c45f5bedcb496c41c6f004c0029e468615f9f9da15dcbabd9ceae69b79a85048
+2026-04-17 03:27:51,654 - INFO - Container for rust-lang__cc-rs-227 started: c45f5bedcb496c41c6f004c0029e468615f9f9da15dcbabd9ceae69b79a85048
+2026-04-17 03:27:51,654 - INFO - Intermediate patch for rust-lang__cc-rs-227 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-227/patch.diff, now applying to container...
+2026-04-17 03:27:51,882 - INFO - >>>>> Applied Patch:
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+
+2026-04-17 03:27:51,943 - INFO - Git diff before:
+diff --git a/src/lib.rs b/src/lib.rs
+index 9af1793..e3424ca 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -240,8 +240,8 @@ impl Config {
+     ///             .define("BAZ", None)
+     ///             .compile("foo");
+     /// ```
+-    pub fn define(&mut self, var: &str, val: Option<&str>) -> &mut Config {
+-        self.definitions.push((var.to_string(), val.map(|s| s.to_string())));
++    pub fn define<'a, V: Into<Option<&'a str>>>(&mut self, var: &str, val: V) -> &mut Config {
++        self.definitions.push((var.to_string(), val.into().map(|s| s.to_string())));
+         self
+     }
+ 
+@@ -385,8 +385,8 @@ impl Config {
+     /// otherwise cargo will link against the specified library.
+     ///
+     /// The given library name must not contain the `lib` prefix.
+-    pub fn cpp_link_stdlib(&mut self, cpp_link_stdlib: Option<&str>) -> &mut Config {
+-        self.cpp_link_stdlib = Some(cpp_link_stdlib.map(|s| s.into()));
++    pub fn cpp_link_stdlib<'a, V: Into<Option<&'a str>>>(&mut self, cpp_link_stdlib: V) -> &mut Config {
++        self.cpp_link_stdlib = Some(cpp_link_stdlib.into().map(|s| s.into()));
+         self
+     }
+ 
+@@ -410,7 +410,8 @@ impl Config {
+     /// be used, otherwise `-stdlib` is added to the compile invocation.
+     ///
+     /// The given library name must not contain the `lib` prefix.
+-    pub fn cpp_set_stdlib(&mut self, cpp_set_stdlib: Option<&str>) -> &mut Config {
++    pub fn cpp_set_stdlib<'a, V: Into<Option<&'a str>>>(&mut self, cpp_set_stdlib: V) -> &mut Config {
++        let cpp_set_stdlib = cpp_set_stdlib.into();
+         self.cpp_set_stdlib = cpp_set_stdlib.map(|s| s.into());
+         self.cpp_link_stdlib(cpp_set_stdlib);
+         self
+2026-04-17 03:27:51,943 - INFO - Eval script for rust-lang__cc-rs-227 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-227/eval.sh; copying to container...
+2026-04-17 03:28:13,294 - INFO - Test runtime: 21.18 seconds
+2026-04-17 03:28:13,294 - INFO - Test output for rust-lang__cc-rs-227 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-227/test_output.txt
+2026-04-17 03:28:13,540 - INFO - Git diff after:
+diff --git a/src/lib.rs b/src/lib.rs
+index 9af1793..e3424ca 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -240,8 +240,8 @@ impl Config {
+     ///             .define("BAZ", None)
+     ///             .compile("foo");
+     /// ```
+-    pub fn define(&mut self, var: &str, val: Option<&str>) -> &mut Config {
+-        self.definitions.push((var.to_string(), val.map(|s| s.to_string())));
++    pub fn define<'a, V: Into<Option<&'a str>>>(&mut self, var: &str, val: V) -> &mut Config {
++        self.definitions.push((var.to_string(), val.into().map(|s| s.to_string())));
+         self
+     }
+ 
+@@ -385,8 +385,8 @@ impl Config {
+     /// otherwise cargo will link against the specified library.
+     ///
+     /// The given library name must not contain the `lib` prefix.
+-    pub fn cpp_link_stdlib(&mut self, cpp_link_stdlib: Option<&str>) -> &mut Config {
+-        self.cpp_link_stdlib = Some(cpp_link_stdlib.map(|s| s.into()));
++    pub fn cpp_link_stdlib<'a, V: Into<Option<&'a str>>>(&mut self, cpp_link_stdlib: V) -> &mut Config {
++        self.cpp_link_stdlib = Some(cpp_link_stdlib.into().map(|s| s.into()));
+         self
+     }
+ 
+@@ -410,7 +410,8 @@ impl Config {
+     /// be used, otherwise `-stdlib` is added to the compile invocation.
+     ///
+     /// The given library name must not contain the `lib` prefix.
+-    pub fn cpp_set_stdlib(&mut self, cpp_set_stdlib: Option<&str>) -> &mut Config {
++    pub fn cpp_set_stdlib<'a, V: Into<Option<&'a str>>>(&mut self, cpp_set_stdlib: V) -> &mut Config {
++        let cpp_set_stdlib = cpp_set_stdlib.into();
+         self.cpp_set_stdlib = cpp_set_stdlib.map(|s| s.into());
+         self.cpp_link_stdlib(cpp_set_stdlib);
+         self
+2026-04-17 03:28:13,540 - INFO - Grading answer for rust-lang__cc-rs-227...
+2026-04-17 03:28:13,540 - INFO - report: {'rust-lang__cc-rs-227': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['asm_here', 'foo_here', 'bar_here', 'baz_here', 'opt_linkage', 'main', 'msvc_opt_level_0', 'msvc_static_crt', 'msvc_debug', 'msvc_define', 'msvc_include', 'gnu_include', 'msvc_no_static_crt', 'gnu_shared', 'gnu_opt_level_s', 'gnu_opt_level_1', 'gnu_smoke', 'msvc_smoke', 'gnu_set_stdlib', 'gnu_debug', 'gnu_static', 'gnu_compile_assembly', 'gnu_define', 'gnu_x86_64', 'gnu_i686', 'gnu_x86_64_no_pic', 'gnu_flag_if_supported', 'gnu_i686_pic', 'src/lib.rs - compile_library (line 166)', 'src/lib.rs - Config::include (line 216)', 'src/lib.rs - Config::flag (line 258)', 'src/lib.rs - Config::static_flag (line 340)', 'src/lib.rs - Config::define (line 236)', 'src/lib.rs - Config::shared_flag (line 321)', 'src/lib.rs -  (line 29)', 'src/lib.rs - Config::flag_if_supported (line 299)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rust-lang__cc-rs-227: resolved: True
+2026-04-17 03:28:13,540 - INFO - Attempting to stop container rustb.eval.rust-lang__cc-rs-227.gold_run1...
+2026-04-17 03:28:30,479 - INFO - Attempting to remove container rustb.eval.rust-lang__cc-rs-227.gold_run1...
+2026-04-17 03:28:30,499 - INFO - Container rustb.eval.rust-lang__cc-rs-227.gold_run1 removed.

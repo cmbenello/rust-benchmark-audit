@@ -1,0 +1,69 @@
+2026-04-17 09:14:39,190 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-359
+Building instance image rustbench/rinja-rs__askama:pr-359 for rinja-rs__askama-359
+2026-04-17 09:21:34,071 - INFO - Creating container for rinja-rs__askama-359...
+2026-04-17 09:21:34,118 - INFO - Container for rinja-rs__askama-359 created: da3aedc36aadaa75e01cce20907287f8a09a59d98243cc864bc2d3ac5f2ac5fb
+2026-04-17 09:21:34,256 - INFO - Container for rinja-rs__askama-359 started: da3aedc36aadaa75e01cce20907287f8a09a59d98243cc864bc2d3ac5f2ac5fb
+2026-04-17 09:21:34,256 - INFO - Intermediate patch for rinja-rs__askama-359 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-359/patch.diff, now applying to container...
+2026-04-17 09:21:34,467 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/filters/mod.rs...
+Checking patch askama_shared/src/filters/mod.rs...
+Applied patch askama_shared/src/filters/mod.rs cleanly.
+Applied patch askama_shared/src/filters/mod.rs cleanly.
+
+2026-04-17 09:21:34,530 - INFO - Git diff before:
+diff --git a/askama_shared/src/filters/mod.rs b/askama_shared/src/filters/mod.rs
+index f203348..bf1bcfd 100644
+--- a/askama_shared/src/filters/mod.rs
++++ b/askama_shared/src/filters/mod.rs
+@@ -249,7 +249,7 @@ pub fn indent(s: &dyn fmt::Display, width: &usize) -> Result<String> {
+ 
+ #[cfg(feature = "num-traits")]
+ /// Casts number to f64
+-pub fn into_f64<T>(number: T) -> Result<f64>
++pub fn into_f64<T>(number: &T) -> Result<f64>
+ where
+     T: NumCast,
+ {
+@@ -258,7 +258,7 @@ where
+ 
+ #[cfg(feature = "num-traits")]
+ /// Casts number to isize
+-pub fn into_isize<T>(number: T) -> Result<isize>
++pub fn into_isize<T>(number: &T) -> Result<isize>
+ where
+     T: NumCast,
+ {
+2026-04-17 09:21:34,530 - INFO - Eval script for rinja-rs__askama-359 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-359/eval.sh; copying to container...
+2026-04-17 09:22:18,637 - INFO - Test runtime: 43.96 seconds
+2026-04-17 09:22:18,637 - INFO - Test output for rinja-rs__askama-359 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-359/test_output.txt
+2026-04-17 09:22:18,683 - INFO - Git diff after:
+diff --git a/askama_shared/src/filters/mod.rs b/askama_shared/src/filters/mod.rs
+index f203348..bf1bcfd 100644
+--- a/askama_shared/src/filters/mod.rs
++++ b/askama_shared/src/filters/mod.rs
+@@ -249,7 +249,7 @@ pub fn indent(s: &dyn fmt::Display, width: &usize) -> Result<String> {
+ 
+ #[cfg(feature = "num-traits")]
+ /// Casts number to f64
+-pub fn into_f64<T>(number: T) -> Result<f64>
++pub fn into_f64<T>(number: &T) -> Result<f64>
+ where
+     T: NumCast,
+ {
+@@ -258,7 +258,7 @@ where
+ 
+ #[cfg(feature = "num-traits")]
+ /// Casts number to isize
+-pub fn into_isize<T>(number: T) -> Result<isize>
++pub fn into_isize<T>(number: &T) -> Result<isize>
+ where
+     T: NumCast,
+ {
+2026-04-17 09:22:18,683 - INFO - Grading answer for rinja-rs__askama-359...
+2026-04-17 09:22:18,684 - INFO - report: {'rinja-rs__askama-359': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['filters::tests::test_abs', 'filters::tests::test_filesizeformat', 'filters::tests::test_center', 'filters::tests::test_capitalize', 'filters::json::tests::test_json', 'filters::tests::test_into_f64', 'filters::tests::test_indent', 'filters::tests::test_into_isize', 'filters::tests::test_lower', 'filters::tests::test_join', 'filters::tests::test_linebreaksbr', 'filters::tests::test_linebreaks', 'filters::tests::test_trim', 'filters::tests::test_truncate', 'filters::tests::test_upper', 'filters::tests::test_wordcount', 'filters::tests::test_urlencoding', 'filters::yaml::tests::test_yaml', 'parser::tests::change_delimiters_parse_filter', 'parser::tests::test_invalid_block', 'parser::tests::test_ws_splitter', 'parser::tests::test_parse_filter', 'tests::find_absolute', 'tests::add_syntax_two', 'tests::duplicated_syntax_name_on_list', 'tests::add_syntax', 'tests::find_relative', 'tests::find_relative_nonexistent', 'tests::find_relative_sub', 'tests::is_not_exist_default_syntax', 'tests::get_source', 'tests::escape_modes', 'tests::test_default_config', 'tests::use_default_at_syntax_name', 'parser::tests::test_parse_path_call', 'tests::test_config_dirs', 'parser::tests::test_parse_var_call', 'filter_fmt', 'filter_escape', 'filter_format', 'test_filter_let_filter', 'test_join', 'test_filter_truncate', 'test_my_filter', 'test_nested_filter_ref', 'test_vec_join'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-359: resolved: True
+2026-04-17 09:22:18,684 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-359.gold_run1...
+2026-04-17 09:22:38,366 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-359.gold_run1...
+2026-04-17 09:22:38,416 - INFO - Container rustb.eval.rinja-rs__askama-359.gold_run1 removed.
+2026-04-17 09:22:38,416 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-359...
+2026-04-17 09:22:39,335 - INFO - Image rustbench/rinja-rs__askama:pr-359 removed.

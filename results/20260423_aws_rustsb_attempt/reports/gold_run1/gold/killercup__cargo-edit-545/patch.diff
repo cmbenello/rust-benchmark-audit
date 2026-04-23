@@ -1,0 +1,162 @@
+diff --git a/src/bin/add/args.rs b/src/bin/add/args.rs
+--- a/src/bin/add/args.rs
++++ b/src/bin/add/args.rs
+@@ -307,7 +307,10 @@ impl Args {
+     }
+ 
+     /// Build dependencies from arguments
+-    pub fn parse_dependencies(&self) -> Result<Vec<Dependency>> {
++    pub fn parse_dependencies(
++        &self,
++        requested_features: Option<Vec<String>>,
++    ) -> Result<Vec<Dependency>> {
+         let workspace_members = workspace_members(self.manifest_path.as_deref())?;
+ 
+         if self.crates.len() > 1
+diff --git a/src/bin/add/args.rs b/src/bin/add/args.rs
+--- a/src/bin/add/args.rs
++++ b/src/bin/add/args.rs
+@@ -331,7 +334,7 @@ impl Args {
+                     .map(|x| {
+                         let mut x = x
+                             .set_optional(self.optional)
+-                            .set_features(self.features.clone())
++                            .set_features(requested_features.to_owned())
+                             .set_default_features(!self.no_default_features);
+                         if let Some(ref rename) = self.rename {
+                             x = x.set_rename(rename);
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -18,12 +18,12 @@ use crate::args::{Args, Command};
+ use cargo_edit::{
+     find, manifest_from_pkgid, registry_url, update_registry_index, Dependency, LocalManifest,
+ };
+-use std::borrow::Cow;
+ use std::io::Write;
+ use std::path::Path;
+ use std::process;
++use std::{borrow::Cow, collections::BTreeSet};
+ use structopt::StructOpt;
+-use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
++use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
+ use toml_edit::Item as TomlItem;
+ 
+ mod args;
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -125,6 +125,22 @@ fn is_sorted(mut it: impl Iterator<Item = impl PartialOrd>) -> bool {
+     true
+ }
+ 
++fn unrecognized_features_message(message: &str) -> Result<()> {
++    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
++    let mut buffer = bufwtr.buffer();
++    buffer
++        .set_color(ColorSpec::new().set_fg(Some(Color::Yellow)).set_bold(true))
++        .chain_err(|| "Failed to set output colour")?;
++    writeln!(&mut buffer, "{}", message)
++        .chain_err(|| "Failed to write unrecognized features message")?;
++    buffer
++        .set_color(&ColorSpec::new())
++        .chain_err(|| "Failed to clear output colour")?;
++    bufwtr
++        .print(&buffer)
++        .chain_err(|| "Failed to print unrecognized features message")
++}
++
+ fn handle_add(args: &Args) -> Result<()> {
+     let manifest_path = if let Some(ref pkgid) = args.pkgid {
+         let pkg = manifest_from_pkgid(args.manifest_path.as_deref(), pkgid)?;
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -141,7 +157,37 @@ fn handle_add(args: &Args) -> Result<()> {
+         )?;
+         update_registry_index(&url, args.quiet)?;
+     }
+-    let deps = &args.parse_dependencies()?;
++    let requested_features: Option<BTreeSet<&str>> = args.features.as_ref().map(|v| {
++        v.iter()
++            .map(|s| s.split(' '))
++            .flatten()
++            .filter(|s| !s.is_empty())
++            .collect()
++    });
++
++    let deps = &args.parse_dependencies(
++        requested_features
++            .as_ref()
++            .map(|s| s.iter().map(|s| s.to_string()).collect()),
++    )?;
++
++    if let Some(req_feats) = requested_features {
++        assert!(deps.len() == 1);
++        let available_features = deps[0]
++            .available_features
++            .iter()
++            .map(|s| s.as_ref())
++            .collect::<BTreeSet<&str>>();
++
++        let unknown_features: Vec<&&str> = req_feats.difference(&available_features).collect();
++
++        if !unknown_features.is_empty() {
++            unrecognized_features_message(&format!(
++                "Unrecognized features: {:?}",
++                unknown_features
++            ))?;
++        };
++    };
+ 
+     let was_sorted = manifest
+         .get_table(&args.get_section())
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -141,13 +141,13 @@ fn deprecated_message(message: &str) -> Result<()> {
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true))
+         .chain_err(|| "Failed to set output colour")?;
+-    writeln!(&mut buffer, "{}", message).chain_err(|| "Failed to write dry run message")?;
++    writeln!(&mut buffer, "{}", message).chain_err(|| "Failed to write deprecated message")?;
+     buffer
+         .set_color(&ColorSpec::new())
+         .chain_err(|| "Failed to clear output colour")?;
+     bufwtr
+         .print(&buffer)
+-        .chain_err(|| "Failed to print dry run message")
++        .chain_err(|| "Failed to print deprecated message")
+ }
+ 
+ fn dry_run_message() -> Result<()> {
+diff --git a/src/dependency.rs b/src/dependency.rs
+--- a/src/dependency.rs
++++ b/src/dependency.rs
+@@ -90,13 +90,7 @@ impl Dependency {
+     }
+     /// Set features as an array of string (does some basic parsing)
+     pub fn set_features(mut self, features: Option<Vec<String>>) -> Dependency {
+-        self.features = features.map(|f| {
+-            f.iter()
+-                .map(|x| x.split(' ').map(String::from))
+-                .flatten()
+-                .filter(|s| !s.is_empty())
+-                .collect::<Vec<String>>()
+-        });
++        self.features = features;
+         self
+     }
+ 
+diff --git a/src/manifest.rs b/src/manifest.rs
+--- a/src/manifest.rs
++++ b/src/manifest.rs
+@@ -104,7 +104,7 @@ impl Manifest {
+                 toml_edit::Item::Table(t) => Ok(t
+                     .get_values()
+                     .iter()
+-                    .map(|(keys, _val)| keys.iter().map(|k| k.to_string()))
++                    .map(|(keys, _val)| keys.iter().map(|&k| k.get().trim().to_owned()))
+                     .flatten()
+                     .collect()),
+                 _ => Err(ErrorKind::InvalidCargoConfig.into()),

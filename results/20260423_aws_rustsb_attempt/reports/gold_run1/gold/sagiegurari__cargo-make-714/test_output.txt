@@ -1,0 +1,1902 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch Makefile.toml...
+Checking patch examples/workspace-inherit/Cargo.toml...
+Checking patch examples/workspace2/Cargo.toml...
+Checking patch src/lib/environment/crateinfo.rs...
+Checking patch src/lib/environment/crateinfo_test.rs...
+Checking patch src/lib/environment/crateinfo_test.rs...
+Checking patch src/lib/test/mod.rs...
+Checking patch src/lib/test/mod.rs...
+Checking patch src/lib/test/mod.rs...
+Checking patch src/lib/test/workspace-inherit/Cargo.toml...
+Checking patch src/lib/test/workspace-inherit/member1/Cargo.toml...
+Checking patch src/lib/test/workspace-inherit/member1/src/main.rs...
+Checking patch src/lib/test/workspace1/Cargo.toml...
+Checking patch src/lib/test/workspace1/member1/Cargo.toml...
+Checking patch src/lib/test/workspace1/member1/src/lib.rs...
+Checking patch src/lib/test/workspace1/member2/Cargo.toml...
+Checking patch src/lib/test/workspace1/member2/src/lib.rs...
+Checking patch src/lib/test/workspace1/target/.rustc_info.json...
+Checking patch src/lib/test/workspace2/Cargo.lock => dev/null...
+Applied patch Makefile.toml cleanly.
+Applied patch examples/workspace-inherit/Cargo.toml cleanly.
+Applied patch examples/workspace2/Cargo.toml cleanly.
+Applied patch src/lib/environment/crateinfo.rs cleanly.
+Applied patch src/lib/environment/crateinfo_test.rs cleanly.
+Applied patch src/lib/environment/crateinfo_test.rs cleanly.
+Applied patch src/lib/test/mod.rs cleanly.
+Applied patch src/lib/test/mod.rs cleanly.
+Applied patch src/lib/test/mod.rs cleanly.
+Applied patch src/lib/test/workspace-inherit/Cargo.toml cleanly.
+Applied patch src/lib/test/workspace-inherit/member1/Cargo.toml cleanly.
+Applied patch src/lib/test/workspace-inherit/member1/src/main.rs cleanly.
+Applied patch src/lib/test/workspace1/Cargo.toml cleanly.
+Applied patch src/lib/test/workspace1/member1/Cargo.toml cleanly.
+Applied patch src/lib/test/workspace1/member1/src/lib.rs cleanly.
+Applied patch src/lib/test/workspace1/member2/Cargo.toml cleanly.
+Applied patch src/lib/test/workspace1/member2/src/lib.rs cleanly.
+Applied patch src/lib/test/workspace1/target/.rustc_info.json cleanly.
+Applied patch src/lib/test/workspace2/Cargo.lock => dev/null cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded cc v1.0.73 (registry `lts-repo-at-64697899a5`)
+  Downloaded colored v2.0.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded num-integer v0.1.45 (registry `lts-repo-at-64697899a5`)
+  Downloaded openssl-probe v0.1.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded lenient_semver_version_builder v0.4.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded serde v1.0.145 (registry `lts-repo-at-64697899a5`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded aho-corasick v0.7.19 (registry `lts-repo-at-64697899a5`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-64697899a5`)
+  Downloaded time v0.1.44 (registry `lts-repo-at-64697899a5`)
+  Downloaded thread_local v1.1.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded num_cpus v1.13.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded which v4.3.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded rand_chacha v0.3.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded dirs-next v2.0.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded uname v0.1.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded wildmatch v2.1.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded untrusted v0.7.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded tinyvec_macros v0.1.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded thiserror-impl v1.0.36 (registry `lts-repo-at-64697899a5`)
+  Downloaded openssl-macros v0.1.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded dirs-sys-next v0.1.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded either v1.8.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded fnv v1.0.7 (registry `lts-repo-at-64697899a5`)
+  Downloaded encoding_index_tests v0.1.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded fixedbitset v0.4.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded pkg-config v0.3.25 (registry `lts-repo-at-64697899a5`)
+  Downloaded form_urlencoded v1.1.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded atty v0.2.14 (registry `lts-repo-at-64697899a5`)
+  Downloaded globset v0.4.9 (registry `lts-repo-at-64697899a5`)
+  Downloaded quote v1.0.21 (registry `lts-repo-at-64697899a5`)
+  Downloaded iana-time-zone v0.1.50 (registry `lts-repo-at-64697899a5`)
+  Downloaded crypto-common v0.1.6 (registry `lts-repo-at-64697899a5`)
+  Downloaded whoami v1.2.3 (registry `lts-repo-at-64697899a5`)
+  Downloaded serde_ignored v0.1.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded lenient_semver_parser v0.4.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded ryu v1.0.11 (registry `lts-repo-at-64697899a5`)
+  Downloaded openssl-sys v0.9.76 (registry `lts-repo-at-64697899a5`)
+  Downloaded ignore v0.4.18 (registry `lts-repo-at-64697899a5`)
+  Downloaded indexmap v1.9.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded cpufeatures v0.2.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded spin v0.5.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded home v0.5.3 (registry `lts-repo-at-64697899a5`)
+  Downloaded lazy-regex-proc_macros v2.3.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded ctrlc v3.2.3 (registry `lts-repo-at-64697899a5`)
+  Downloaded heck v0.4.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded generic-array v0.14.6 (registry `lts-repo-at-64697899a5`)
+  Downloaded sha2 v0.10.6 (registry `lts-repo-at-64697899a5`)
+  Downloaded foreign-types v0.3.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded nix v0.25.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded encoding-index-singlebyte v1.20141219.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded walkdir v2.3.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded rand_core v0.6.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded hashbrown v0.12.3 (registry `lts-repo-at-64697899a5`)
+  Downloaded serde_json v1.0.85 (registry `lts-repo-at-64697899a5`)
+  Downloaded sct v0.7.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded once_cell v1.15.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded fs_extra v1.2.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded thiserror v1.0.36 (registry `lts-repo-at-64697899a5`)
+  Downloaded cargo-platform v0.1.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded semver v1.0.14 (registry `lts-repo-at-64697899a5`)
+  Downloaded digest v0.10.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded encoding-index-korean v1.20141219.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded meval v0.2.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded native-tls v0.2.10 (registry `lts-repo-at-64697899a5`)
+  Downloaded block-buffer v0.10.3 (registry `lts-repo-at-64697899a5`)
+  Downloaded itoa v1.0.3 (registry `lts-repo-at-64697899a5`)
+  Downloaded rustls v0.20.6 (registry `lts-repo-at-64697899a5`)
+  Downloaded url v2.3.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded crossbeam-utils v0.8.11 (registry `lts-repo-at-64697899a5`)
+  Downloaded ppv-lite86 v0.2.16 (registry `lts-repo-at-64697899a5`)
+  Downloaded log v0.4.17 (registry `lts-repo-at-64697899a5`)
+  Downloaded idna v0.3.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded fern v0.6.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded cargo_metadata v0.15.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded getrandom v0.2.7 (registry `lts-repo-at-64697899a5`)
+  Downloaded typenum v1.15.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded nom v1.2.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded crc32fast v1.3.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded glob v0.3.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded unicode-bidi v0.3.8 (registry `lts-repo-at-64697899a5`)
+  Downloaded adler v1.0.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded percent-encoding v2.2.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded unicode-ident v1.0.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded foreign-types-shared v0.1.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded proc-macro2 v1.0.44 (registry `lts-repo-at-64697899a5`)
+  Downloaded camino v1.1.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded suppaftp v4.4.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded miniz_oxide v0.5.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded serde_derive v1.0.145 (registry `lts-repo-at-64697899a5`)
+  Downloaded libc v0.2.133 (registry `lts-repo-at-64697899a5`)
+  Downloaded bytes v1.2.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded java-properties v1.4.1 (registry `lts-repo-at-64697899a5`)
+  Downloaded webpki v0.22.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded num-traits v0.2.15 (registry `lts-repo-at-64697899a5`)
+  Downloaded tinyvec v1.6.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded lazy-regex v2.3.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded flate2 v1.0.24 (registry `lts-repo-at-64697899a5`)
+  Downloaded memchr v2.5.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded toml v0.5.9 (registry `lts-repo-at-64697899a5`)
+  Downloaded base64 v0.13.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded rand v0.8.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded http v0.2.8 (registry `lts-repo-at-64697899a5`)
+  Downloaded encoding-index-japanese v1.20141219.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded encoding v0.2.33 (registry `lts-repo-at-64697899a5`)
+  Downloaded encoding-index-tradchinese v1.20141219.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded unicode-normalization v0.1.22 (registry `lts-repo-at-64697899a5`)
+  Downloaded encoding-index-simpchinese v1.20141219.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded git_info v0.1.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded ring v0.16.20 (registry `lts-repo-at-64697899a5`)
+  Downloaded petgraph v0.6.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded chrono v0.4.22 (registry `lts-repo-at-64697899a5`)
+  Downloaded webpki-roots v0.22.5 (registry `lts-repo-at-64697899a5`)
+  Downloaded regex v1.6.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded syn v1.0.101 (registry `lts-repo-at-64697899a5`)
+  Downloaded openssl v0.10.42 (registry `lts-repo-at-64697899a5`)
+  Downloaded regex-syntax v0.6.27 (registry `lts-repo-at-64697899a5`)
+  Downloaded bstr v0.2.17 (registry `lts-repo-at-64697899a5`)
+  Downloaded lenient_semver v0.4.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded cliparser v0.1.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded fsio v0.4.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded run_script v0.10.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded rust_info v0.3.2 (registry `lts-repo-at-64697899a5`)
+  Downloaded duckscriptsdk v0.8.14 (registry `lts-repo-at-64697899a5`)
+  Downloaded envmnt v0.10.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded duckscript v0.7.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded attohttpc v0.20.0 (registry `lts-repo-at-64697899a5`)
+  Downloaded shell2batch v0.4.4 (registry `lts-repo-at-64697899a5`)
+  Downloaded ci_info v0.14.6 (registry `lts-repo-at-64697899a5`)
+   Compiling libc v0.2.133
+   Compiling proc-macro2 v1.0.44
+   Compiling unicode-ident v1.0.4
+   Compiling quote v1.0.21
+   Compiling syn v1.0.101
+   Compiling cfg-if v1.0.0
+   Compiling autocfg v1.1.0
+   Compiling serde_derive v1.0.145
+   Compiling serde v1.0.145
+   Compiling cc v1.0.73
+   Compiling once_cell v1.15.0
+   Compiling memchr v2.5.0
+   Compiling log v0.4.17
+   Compiling regex-syntax v0.6.27
+   Compiling pkg-config v0.3.25
+   Compiling typenum v1.15.0
+   Compiling version_check v0.9.4
+   Compiling ppv-lite86 v0.2.16
+   Compiling encoding_index_tests v0.1.4
+   Compiling spin v0.5.2
+   Compiling untrusted v0.7.1
+   Compiling semver v1.0.14
+   Compiling tinyvec_macros v0.1.0
+   Compiling fnv v1.0.7
+   Compiling bitflags v1.3.2
+   Compiling foreign-types-shared v0.1.1
+   Compiling crc32fast v1.3.2
+   Compiling itoa v1.0.3
+   Compiling openssl v0.10.42
+   Compiling native-tls v0.2.10
+   Compiling percent-encoding v2.2.0
+   Compiling unicode-bidi v0.3.8
+   Compiling lazy_static v1.4.0
+   Compiling thiserror v1.0.36
+   Compiling crossbeam-utils v0.8.11
+   Compiling serde_json v1.0.85
+   Compiling adler v1.0.2
+   Compiling rustls v0.20.6
+   Compiling hashbrown v0.12.3
+   Compiling same-file v1.0.6
+   Compiling camino v1.1.1
+   Compiling ryu v1.0.11
+   Compiling bytes v1.2.1
+   Compiling openssl-probe v0.1.5
+   Compiling iana-time-zone v0.1.50
+   Compiling either v1.8.0
+   Compiling nom v1.2.4
+   Compiling cpufeatures v0.2.5
+   Compiling wildmatch v2.1.1
+   Compiling heck v0.4.0
+   Compiling fs_extra v1.2.0
+   Compiling whoami v1.2.3
+   Compiling fixedbitset v0.4.2
+   Compiling home v0.5.3
+   Compiling base64 v0.13.0
+   Compiling glob v0.3.0
+   Compiling cliparser v0.1.2
+   Compiling rust_info v0.3.2
+   Compiling git_info v0.1.2
+   Compiling tinyvec v1.6.0
+   Compiling encoding-index-korean v1.20141219.5
+   Compiling encoding-index-tradchinese v1.20141219.5
+   Compiling encoding-index-singlebyte v1.20141219.5
+   Compiling encoding-index-simpchinese v1.20141219.5
+   Compiling encoding-index-japanese v1.20141219.5
+   Compiling foreign-types v0.3.2
+   Compiling miniz_oxide v0.5.4
+   Compiling thread_local v1.1.4
+   Compiling form_urlencoded v1.1.0
+   Compiling walkdir v2.3.2
+   Compiling generic-array v0.14.6
+   Compiling num-traits v0.2.15
+   Compiling indexmap v1.9.1
+   Compiling num-integer v0.1.45
+   Compiling meval v0.2.0
+   Compiling http v0.2.8
+   Compiling encoding v0.2.33
+   Compiling ring v0.16.20
+   Compiling openssl-sys v0.9.76
+   Compiling fern v0.6.1
+   Compiling unicode-normalization v0.1.22
+   Compiling flate2 v1.0.24
+   Compiling aho-corasick v0.7.19
+   Compiling bstr v0.2.17
+   Compiling idna v0.3.0
+   Compiling url v2.3.1
+   Compiling regex v1.6.0
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.3
+   Compiling digest v0.10.5
+   Compiling sha2 v0.10.6
+   Compiling getrandom v0.2.7
+   Compiling time v0.1.44
+   Compiling atty v0.2.14
+   Compiling num_cpus v1.13.1
+   Compiling which v4.3.0
+   Compiling dirs-sys-next v0.1.2
+   Compiling nix v0.25.0
+   Compiling uname v0.1.1
+   Compiling colored v2.0.0
+   Compiling dirs-next v2.0.0
+   Compiling rand_core v0.6.4
+   Compiling rand_chacha v0.3.1
+   Compiling chrono v0.4.22
+   Compiling rand v0.8.5
+   Compiling globset v0.4.9
+   Compiling java-properties v1.4.1
+   Compiling shell2batch v0.4.4
+   Compiling ignore v0.4.18
+   Compiling ctrlc v3.2.3
+   Compiling fsio v0.4.0
+   Compiling duckscript v0.7.4
+   Compiling run_script v0.10.0
+   Compiling webpki v0.22.0
+   Compiling sct v0.7.0
+   Compiling webpki-roots v0.22.5
+   Compiling openssl-macros v0.1.0
+   Compiling thiserror-impl v1.0.36
+   Compiling lazy-regex-proc_macros v2.3.0
+   Compiling lazy-regex v2.3.0
+   Compiling suppaftp v4.4.0
+   Compiling attohttpc v0.20.0
+   Compiling cargo-platform v0.1.2
+   Compiling serde_ignored v0.1.5
+   Compiling toml v0.5.9
+   Compiling lenient_semver_version_builder v0.4.2
+   Compiling lenient_semver_parser v0.4.2
+   Compiling envmnt v0.10.4
+   Compiling petgraph v0.6.2
+   Compiling lenient_semver v0.4.2
+   Compiling ci_info v0.14.6
+   Compiling cargo_metadata v0.15.0
+   Compiling duckscriptsdk v0.8.14
+   Compiling cargo-make v0.36.0 (/workspace)
+    Finished test [unoptimized + debuginfo] target(s) in 32.40s
+     Running unittests src/lib/mod.rs (target/debug/deps/cli-82b33340f5eb1262)
+
+running 1079 tests
+test cache::cache_test::load_with_cargo_home ... ignored
+test cache::cache_test::load_without_cargo_home ... ignored
+test cli::cli_test::list_empty_task ... ignored
+test cli::cli_test::print_empty_task ... ignored
+test cli::cli_test::run_cwd_go_to_project_root_child_dir ... ignored
+test cli::cli_test::run_cwd_go_to_project_root_current_dir ... ignored
+test cli::cli_test::run_cwd_task_not_found ... ignored
+test cli::cli_test::run_cwd_with_file ... ignored
+[cargo-make] INFO - cargo make 0.36.0
+test cli::cli_test::run_diff_steps ... ignored
+test cli::cli_test::run_empty_task ... ignored
+test cli::cli_test::run_file_and_task ... ignored
+test cli::cli_test::run_file_not_go_to_project_root ... ignored
+test cli::cli_test::run_log_level_override ... ignored
+test cli::cli_test::run_makefile_not_found ... ignored
+test cli::cli_test::run_no_task_args ... ignored
+test cli::cli_test::run_print_only ... ignored
+test cli::cli_test::run_protected_flow_example ... ignored
+test cli::cli_test::run_set_env_both ... ignored
+test cli::cli_test::run_set_env_values ... ignored
+test cli::cli_test::run_set_env_via_file ... ignored
+test cli::cli_test::run_set_task_args ... ignored
+test cli::cli_test::run_valid ... ignored
+test cli::cli_test::run_with_global_config ... ignored
+test cache::cache_test::load_from_path_not_exists ... ok
+test cache::cache_test::load_from_path_exists ... ok
+test cli::cli_test::run_bad_subcommand - should panic ... ok
+test cli_commands::list_steps::list_steps_test::run_empty ... ok
+test cli_commands::list_steps::list_steps_test::run_all_private ... ok
+test cli_commands::print_steps::print_steps_test::get_format_type_default ... ok
+test cli_commands::print_steps::print_steps_test::get_format_type_short_description ... ok
+test cli_commands::list_steps::list_steps_test::run_all_public ... ok
+test cli_commands::list_steps::list_steps_test::run_all_public_markdown ... ok
+test cli_commands::list_steps::list_steps_test::run_all_public_markdown_single_page ... ok
+test cli_commands::list_steps::list_steps_test::run_all_public_markdown_sub_section ... ok
+test cli_commands::list_steps::list_steps_test::run_category_public ... ok
+test cli_commands::print_steps::print_steps_test::get_format_type_unknown ... ok
+test cli_commands::list_steps::list_steps_test::run_mixed ... ok
+test cli_commands::list_steps::list_steps_test::run_write_to_file ... ok
+test cli_commands::print_steps::print_steps_test::print_default_valid ... ok
+test cli_commands::print_steps::print_steps_test::print_short_description_valid ... ok
+test cli_parser::cli_parser_test::parse_args_allow_private ... ok
+test cli_parser::cli_parser_test::parse_args_cargo_make ... ok
+test cli_parser::cli_parser_test::parse_args_cwd ... ok
+test cli_parser::cli_parser_test::parse_args_diff_steps ... ok
+test cli_commands::print_steps::print_steps_test::print_task_not_found_but_skipped ... ok
+test cli_parser::cli_parser_test::parse_args_disable_check_for_updates ... ok
+test cli_parser::cli_parser_test::parse_args_help_long - should panic ... ok
+test cli_parser::cli_parser_test::parse_args_experimental ... ok
+test cli_parser::cli_parser_test::parse_args_help_short - should panic ... ok
+test cli_parser::cli_parser_test::parse_args_makers ... ok
+test cli_parser::cli_parser_test::parse_args_list_all_steps ... ok
+test cli_parser::cli_parser_test::parse_args_no_workspace ... ok
+test cli_parser::cli_parser_test::parse_args_quiet ... ok
+test cli_parser::cli_parser_test::parse_args_list_category_steps ... ok
+test cli_parser::cli_parser_test::parse_args_env_file ... ok
+test cli_parser::cli_parser_test::parse_args_time_summary ... ok
+test cli_parser::cli_parser_test::parse_args_version_long - should panic ... ok
+[cargo-make] INFO - Execute Command: "echo" "test"
+test cli_parser::cli_parser_test::parse_args_output_format ... ok
+[cargo-make] INFO - Execute Command: "badbadbad"
+test cli_parser::cli_parser_test::parse_args_profile ... ok
+[cargo-make] INFO - Execute Command: "badbadbad"
+test cli_parser::cli_parser_test::parse_args_loglevel ... ok
+test cli_parser::cli_parser_test::parse_args_task ... ok
+test cli_parser::cli_parser_test::parse_args_skip_tasks ... ok
+test cli_parser::cli_parser_test::parse_args_env ... ok
+test command::command_test::is_silent_for_level_info ... ok
+test command::command_test::is_silent_for_level_other ... ok
+test command::command_test::is_silent_for_level_verbose ... ok
+test cli_parser::cli_parser_test::parse_args_skip_init_end_tasks ... ok
+test cli_parser::cli_parser_test::parse_args_print_steps ... ok
+test cli_parser::cli_parser_test::parse_args_task_cmd ... ok
+test command::command_test::run_no_command ... ok
+test cli_parser::cli_parser_test::parse_args_makefile ... ok
+test command::command_test::is_silent_for_level_error ... ok
+test cli_parser::cli_parser_test::parse_args_version_short - should panic ... ok
+test command::command_test::should_print_commands_for_level_error ... ok
+test command::command_test::should_print_commands_for_level_verbose ... ok
+test command::command_test::should_print_commands_for_level_info ... ok
+test command::command_test::validate_exit_code_zero ... ok
+test command::command_test::validate_exit_code_not_zero - should panic ... ok
+test command::command_test::validate_exit_code_unable_to_fetch - should panic ... ok
+test condition::condition_test::validate_condition_for_step_invalid_env_contains_not_contains ... ignored
+test condition::condition_test::validate_condition_for_step_invalid_env_contains_not_found ... ignored
+test condition::condition_test::validate_condition_for_step_invalid_env_not_equal ... ignored
+test condition::condition_test::validate_condition_for_step_invalid_env_not_found ... ignored
+test command::command_test::should_print_commands_for_level_other ... ok
+test condition::condition_test::validate_condition_for_step_invalid_env_not_set ... ignored
+test condition::condition_test::validate_condition_for_step_invalid_env_set ... ignored
+test condition::condition_test::validate_condition_for_step_valid_env ... ignored
+test condition::condition_test::validate_condition_for_step_valid_env_contains ... ignored
+test condition::condition_test::validate_condition_for_step_valid_env_contains_same ... ignored
+test command::command_test::run_command_error - should panic ... ok
+test cli_parser::cli_parser_test::parse_args_verbose ... ok
+test cli_parser::cli_parser_test::parse_args_output_file ... ok
+test condition::condition_test::validate_channel_invalid ... ok
+test condition::condition_test::validate_criteria_empty ... ok
+test condition::condition_test::validate_channel_valid ... ok
+test condition::condition_test::validate_criteria_invalid_channel ... ok
+test command::command_test::get_exit_code_error - should panic ... ok
+test condition::condition_test::validate_condition_for_step_invalid_script_valid ... ok
+test condition::condition_test::validate_criteria_invalid_file_exists ... ok
+test command::command_test::run_command_error_ignore_errors ... ok
+test cli_parser::cli_parser_test::parse_args_no_color ... ok
+test condition::condition_test::validate_criteria_invalid_file_not_exists ... FAILED
+test condition::condition_test::validate_criteria_invalid_profile ... ignored
+test condition::condition_test::validate_criteria_valid_profile ... ignored
+test condition::condition_test::validate_env_bool_false_invalid ... ignored
+test condition::condition_test::validate_env_bool_false_invalid_partial_found ... ignored
+test condition::condition_test::validate_env_bool_false_invalid_partial_valid ... ignored
+test condition::condition_test::validate_env_bool_false_valid ... ignored
+test condition::condition_test::validate_criteria_invalid_platform ... ok
+test condition::condition_test::validate_env_bool_false_empty ... ok
+test condition::condition_test::validate_env_bool_true_invalid ... ignored
+test condition::condition_test::validate_env_bool_true_invalid_partial_found ... ignored
+test condition::condition_test::validate_env_bool_true_invalid_partial_valid ... ignored
+test condition::condition_test::validate_env_bool_true_valid ... ignored
+test condition::condition_test::validate_env_contains_invalid_not_equal ... ignored
+test condition::condition_test::validate_env_contains_invalid_not_found ... ignored
+test condition::condition_test::validate_env_contains_invalid_partial_found ... ignored
+test condition::condition_test::validate_env_contains_valid ... ignored
+test condition::condition_test::validate_env_contains_valid_same ... ignored
+test condition::condition_test::validate_env_bool_true_empty ... ok
+test condition::condition_test::validate_criteria_valid_file_not_exists ... ok
+test condition::condition_test::validate_criteria_valid_channel ... ok
+test condition::condition_test::validate_env_invalid_not_equal ... ignored
+test condition::condition_test::validate_criteria_valid_file_exists ... FAILED
+test condition::condition_test::validate_env_invalid_not_found ... ignored
+test condition::condition_test::validate_env_invalid_partial_found ... ignored
+test condition::condition_test::validate_env_not_set_invalid ... ignored
+test condition::condition_test::validate_env_not_set_invalid_partial_found ... ignored
+test condition::condition_test::validate_criteria_valid_platform ... ok
+test condition::condition_test::validate_env_not_set_valid ... ignored
+test condition::condition_test::validate_env_not_set_empty ... ok
+test condition::condition_test::validate_env_set_empty ... ok
+test condition::condition_test::validate_env_set_invalid_partial_found ... ignored
+test condition::condition_test::validate_env_empty ... ok
+test condition::condition_test::validate_env_set_invalid ... ok
+test condition::condition_test::validate_env_set_valid ... ignored
+test condition::condition_test::validate_env_valid ... ignored
+test condition::condition_test::validate_file_exists_invalid ... ok
+test condition::condition_test::validate_file_exists_partial_invalid ... ok
+test condition::condition_test::validate_file_exists_valid ... FAILED
+test condition::condition_test::validate_file_not_exists_invalid ... FAILED
+test condition::condition_test::validate_file_not_exists_partial_invalid ... FAILED
+test condition::condition_test::validate_platform_invalid ... ok
+test condition::condition_test::validate_file_not_exists_valid ... ok
+test condition::condition_test::validate_profile_invalid ... ignored
+test condition::condition_test::validate_profile_valid ... ignored
+test condition::condition_test::validate_platform_valid ... ok
+test condition::condition_test::validate_rust_version_condition_empty_condition ... ok
+test condition::condition_test::validate_rust_version_condition_all_enabled ... ok
+test condition::condition_test::validate_rust_version_condition_equal_not_same ... ok
+test condition::condition_test::validate_rust_version_condition_equal_not_same_and_partial ... ok
+test condition::condition_test::validate_rust_version_condition_equal_same ... ok
+test condition::condition_test::validate_rust_version_condition_equal_same_and_partial ... ok
+test condition::condition_test::validate_rust_version_condition_max_disabled_major ... ok
+test condition::condition_test::validate_rust_version_condition_max_disabled_major_and_partial ... ok
+test condition::condition_test::validate_rust_version_condition_max_disabled_minor ... ok
+test condition::condition_test::validate_rust_version_condition_max_disabled_patch ... ok
+test
+test condition::condition_test::validate_rust_version_condition_max_enabled ... ok
+test condition::condition_test::validate_rust_version_condition_max_enabled_and_partial ... ok
+test condition::condition_test::validate_rust_version_condition_max_same ... ok
+test condition::condition_test::validate_rust_version_condition_max_same_and_partial ... ok
+test condition::condition_test::validate_rust_version_condition_min_disabled_and_partial ... ok
+test condition::condition_test::validate_rust_version_condition_min_disabled_major ... ok
+test condition::condition_test::validate_rust_version_condition_min_disabled_major_and_partial ... ok
+test condition::condition_test::validate_rust_version_condition_min_disabled_minor ... ok
+test condition::condition_test::validate_rust_version_condition_min_disabled_patch ... ok
+test condition::condition_test::validate_rust_version_condition_min_enabled ... ok
+test condition::condition_test::validate_rust_version_condition_min_same ... ok
+test condition::condition_test::validate_rust_version_condition_min_same_and_partial ... ok
+test condition::condition_test::validate_rust_version_condition_no_rustinfo ... ok
+test command::command_test::run_command ... ok
+test condition::condition_test::validate_rust_version_no_condition ... ok
+test condition::condition_test::validate_script_empty ... ok
+test config::config_test::load_with_cargo_home ... ignored
+test config::config_test::load_without_cargo_home ... ignored
+test config::config_test::load_from_path_not_exists ... ok
+test descriptor::cargo_alias::cargo_alias_test::load_from_file_no_file ... ok
+test config::config_test::load_from_path_exists ... ok
+[cargo-make] WARN - Unable to parse cargo config file, data did not match any variant of untagged enum AliasValue for key `alias.bad` at line 2 column 1
+test descriptor::cargo_alias::cargo_alias_test::load_from_file_parse_error ... ok
+test descriptor::env::env_test::load_env_reorder ... ignored
+test descriptor::env::env_test::load_env_reorder_extend ... ignored
+test descriptor::env::env_test::merge_env_both_empty ... ok
+test descriptor::cargo_alias::cargo_alias_test::load_from_file_aliases_found ... ok
+[cargo-make] WARN - Found unknown key: tasks.?.empty.category2 in file: somefile
+test descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_invalid_validate - should panic ... ok
+test descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_invalid_no_validate ... ok
+test descriptor::descriptor_deserializer::descriptor_deserializer_test::load_external_config_warning ... ok
+test descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_base ... ok
+test descriptor::cargo_alias::cargo_alias_test::load_from_file_no_alias_data ... ok
+test descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_beta ... ok
+test descriptor::env::env_test::merge_env_both_skip_current_task_env ... ok
+test descriptor::env::env_test::merge_env_both_with_values ... ok
+test descriptor::env::env_test::merge_env_first_empty ... ok
+test descriptor::env::env_test::merge_env_both_with_sub_envs ... ok
+test descriptor::env::env_test::merge_env_reorder ... ok
+test descriptor::env::env_test::merge_env_reorder_path ... ok
+test descriptor::env::env_test::merge_env_cycle ... ok
+test descriptor::env::env_test::merge_env_reorder_list ... ok
+test descriptor::env::env_test::merge_env_reorder_conditional ... ok
+test descriptor::makefiles::mod_test::makefile_build_file_increment_file_exists_test ... ignored
+test descriptor::makefiles::mod_test::makefile_build_file_increment_no_file_test ... ignored
+test descriptor::makefiles::mod_test::makefile_build_file_increment_panic_invalid_data_test ... ignored
+test descriptor::env::env_test::merge_env_reorder_script_explicit ... ok
+test descriptor::env::env_test::merge_env_second_empty ... ok
+test descriptor::env::env_test::merge_env_reorder_internal ... ok
+test descriptor::env::env_test::merge_env_reorder_script ... ok
+test descriptor::makefiles::mod_test::makefile_copy_apidocs_test ... ok
+test descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_stable ... ok
+test descriptor::mod_test::check_makefile_min_version_bigger_min_version ... ok
+test descriptor::mod_test::check_makefile_min_version_empty ... ok
+test descriptor::mod_test::check_makefile_min_version_invalid_format ... ok
+test descriptor::mod_test::check_makefile_min_version_no_config ... ok
+test descriptor::makefiles::mod_test::makefile_ci_coverage_flow_test ... ok
+test descriptor::mod_test::check_makefile_min_version_no_min_version ... ok
+test descriptor::makefiles::mod_test::makefile_coverage_test ... ok
+test descriptor::mod_test::load_cargo_aliases_found ... ignored
+test descriptor::mod_test::check_makefile_min_version_smaller_min_version ... ok
+test descriptor::mod_test::check_makefile_min_version_same_min_version ... ok
+test descriptor::makefiles::mod_test::makefile_coverage_kcov_test ... FAILED
+test descriptor::mod_test::load_descriptor_extended_makefiles_list_exists ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_list_exists_optional ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_list_not_exists ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_options_exists ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_options_exists_not_optional ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_options_exists_optional ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_options_not_exists ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_options_not_exists_not_optional ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_options_not_exists_optional ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_path_exists ... ignored
+test descriptor::mod_test::load_descriptor_extended_makefiles_path_not_exists ... ignored
+test descriptor::mod_test::load_descriptors_load_workspace_makefile ... ignored
+test descriptor::mod_test::load_descriptors_load_workspace_makefile_no_exists ... ignored
+test descriptor::mod_test::load_descriptors_no_load_workspace_makefile ... ignored
+test descriptor::mod_test::load_env_and_plugins_extended_override ... ignored
+test descriptor::mod_test::load_env_override_and_plugins ... ignored
+test descriptor::mod_test::load_external_descriptor_extending_file ... ignored
+test descriptor::mod_test::load_external_descriptor_extending_file_sub_folder ... ignored
+test descriptor::mod_test::load_external_descriptor_min_version_broken_makefile_nopanic ... ok
+test descriptor::mod_test::load_external_descriptor_no_file ... ignored
+test descriptor::mod_test::load_external_descriptor_no_file_force - should panic ... ok
+test descriptor::mod_test::load_external_descriptor_set_env ... ignored
+test descriptor::mod_test::load_external_descriptor_simple_file ... ignored
+test descriptor::mod_test::load_external_descriptor_broken_makefile_panic - should panic ... ok
+test descriptor::mod_test::load_cargo_aliases_no_file ... ok
+test descriptor::mod_test::load_external_descriptor_extended_not_found_force - should panic ... ok
+test descriptor::makefiles::mod_test::makefile_build_file_increment_test ... ok
+test command::command_test::run_command_for_toolchain ... ok
+test descriptor::mod_test::load_internal_descriptors_no_stable ... ok
+test descriptor::makefiles::mod_test::makefile_audit_test ... FAILED
+test descriptor::mod_test::load_no_stable ... ignored
+test descriptor::mod_test::load_not_found - should panic ... ok
+test descriptor::mod_test::load_with_modify ... ignored
+test descriptor::mod_test::load_with_stable ... ignored
+test descriptor::mod_test::merge_tasks_both_empty ... ok
+test descriptor::mod_test::merge_tasks_both_with_values ... ok
+test descriptor::mod_test::merge_tasks_extend_task ... ok
+test descriptor::mod_test::merge_tasks_first_empty ... ok
+test descriptor::mod_test::merge_tasks_second_empty ... ok
+test descriptor::makefiles::mod_test::makefile_codecov_test ... ok
+test descriptor::makefiles::mod_test::makefile_outdated_test ... FAILED
+test descriptor::mod_test::run_load_script_no_config_section ... ok
+test descriptor::mod_test::run_load_script_no_load_script ... ok
+test condition::condition_test::validate_script_invalid ... ok
+test environment::crateinfo::crateinfo_test::add_members_workspace_empty_members_with_data ... ok
+test environment::crateinfo::crateinfo_test::add_members_workspace_new_members_with_data ... ok
+test environment::crateinfo::crateinfo_test::add_members_workspace_none_members_empty ... ok
+test environment::crateinfo::crateinfo_test::add_members_workspace_none_members_with_data ... ok
+test environment::crateinfo::crateinfo_test::add_members_workspace_with_data_members_with_data_no_duplicates ... ok
+test environment::crateinfo::crateinfo_test::add_members_workspace_with_data_members_with_data_with_duplicates ... ok
+test descriptor::mod_test::load_internal_descriptors_no_experimental ... ok
+test descriptor::mod_test::load_internal_descriptors_with_stable ... ok
+test descriptor::mod_test::load_internal_descriptors_modify_empty ... ok
+test environment::crateinfo::crateinfo_test::get_crate_target_dir ... ignored
+test environment::crateinfo::crateinfo_test::get_crate_target_triple ... ignored
+test environment::crateinfo::crateinfo_test::get_members_from_dependencies_empty ... ok
+test environment::crateinfo::crateinfo_test::expand_glob_members_empty ... ok
+test environment::crateinfo::crateinfo_test::get_members_from_dependencies_no_paths ... ok
+test environment::crateinfo::crateinfo_test::get_members_from_dependencies_none ... ok
+test environment::crateinfo::crateinfo_test::get_members_from_dependencies_no_workspace_paths ... ok
+test environment::crateinfo::crateinfo_test::expand_glob_members_found ... ok
+test descriptor::mod_test::load_internal_descriptors_modify_namespace ... ok
+test environment::crateinfo::crateinfo_test::get_members_from_dependencies_only_versions ... ok
+test environment::crateinfo::crateinfo_test::get_members_from_dependencies_workspace_paths ... ok
+test environment::crateinfo::crateinfo_test::load_workspace_members_no_members_with_package ... ok
+test environment::crateinfo::crateinfo_test::load_workspace_members_no_workspace ... ok
+test environment::crateinfo::crateinfo_test::normalize_members_empty_members ... ok
+test environment::crateinfo::crateinfo_test::load_workspace_members_mixed ... ok
+test environment::crateinfo::crateinfo_test::normalize_members_no_members ... ok
+test environment::crateinfo::crateinfo_test::normalize_members_no_glob ... ok
+test environment::crateinfo::crateinfo_test::normalize_members_mixed ... ok
+test environment::crateinfo::crateinfo_test::normalize_members_no_workspace ... ok
+test environment::crateinfo::crateinfo_test::remove_excludes_no_workspace ... ok
+test environment::crateinfo::crateinfo_test::remove_excludes_workspace_empty_members_with_excludes ... ok
+test environment::crateinfo::crateinfo_test::remove_excludes_workspace_no_members_with_excludes ... ok
+test environment::crateinfo::crateinfo_test::remove_excludes_workspace_with_members_empty_excludes ... ok
+test environment::crateinfo::crateinfo_test::remove_excludes_workspace_with_members_no_excludes ... ok
+test environment::mod_test::evaluate_and_set_env_complex ... ignored
+test environment::mod_test::evaluate_and_set_env_exists ... ignored
+test environment::crateinfo::crateinfo_test::remove_excludes_workspace_with_members_with_excludes ... ok
+test environment::mod_test::evaluate_and_set_env_not_exists ... ignored
+test environment::mod_test::evaluate_and_set_env_simple ... ignored
+test environment::mod_test::evaluate_and_set_env_none_with_default ... ok
+test descriptor::mod_test::load_internal_descriptors_modify_private ... ok
+test condition::condition_test::validate_condition_for_step_invalid_rust_version ... ok
+test descriptor::mod_test::load_internal_descriptors_with_experimental ... ok
+test condition::condition_test::validate_rust_version_with_invalid_condition ... ok
+test descriptor::mod_test::run_load_script_valid_load_script_duckscript ... ok
+test environment::mod_test::expand_env_empty ... ok
+test environment::mod_test::expand_env_with_env_vars ... ignored
+test environment::mod_test::expand_env_with_env_vars_and_empty_task_args ... ignored
+test environment::mod_test::expand_env_with_env_vars_and_task_args ... ignored
+test environment::mod_test::get_base_directory_name_valid ... FAILED
+test environment::mod_test::expand_env_no_env_vars ... ok
+test condition::condition_test::validate_rust_version_with_valid_condition ... ok
+test condition::condition_test::validate_condition_for_step_valid_rust_version ... ok
+test environment::mod_test::get_project_root_for_path_cwd ... ok
+test environment::mod_test::get_project_root_for_path_parent_path ... ok
+test environment::mod_test::initialize_env_all ... ignored
+test environment::mod_test::load_env_file_exists ... ignored
+test environment::mod_test::load_env_file_no_exists ... ignored
+test environment::mod_test::load_env_file_none ... ignored
+test environment::mod_test::load_env_file_with_base_directory_defaults_only_and_exists ... ignored
+test environment::mod_test::load_env_file_with_base_directory_not_defaults_and_exists ... ignored
+test environment::mod_test::set_current_task_meta_info_env_mixed ... ignored
+test environment::mod_test::get_project_root_for_path_sub_path ... ok
+test environment::mod_test::set_env_files_for_config_additional_profiles ... ignored
+test environment::mod_test::get_project_root_test ... ok
+test environment::mod_test::set_env_files_for_config_base_directory ... ignored
+test environment::mod_test::set_env_files_for_config_files ... ignored
+test environment::mod_test::set_env_files_for_config_profile ... ignored
+test environment::mod_test::set_env_files_for_config_profile_inverse ... ignored
+test environment::mod_test::set_env_for_bool_false ... ignored
+test environment::mod_test::set_env_for_bool_true ... ignored
+test environment::mod_test::set_env_for_conditional_value_condition_false ... ignored
+test environment::mod_test::set_env_for_conditional_value_condition_true ... ignored
+test environment::mod_test::set_env_for_conditional_value_no_condition ... ignored
+test environment::mod_test::set_env_for_config_conditional ... ignored
+test environment::mod_test::set_env_for_config_path_glob ... ignored
+test environment::mod_test::set_env_for_config_profile_override ... ignored
+test environment::mod_test::set_env_for_config_unset ... ignored
+test environment::mod_test::set_env_for_decode_info_expressions ... ignored
+test environment::mod_test::set_env_for_decode_info_strings_default ... ignored
+test environment::mod_test::set_env_for_decode_info_strings_default_none ... ignored
+test environment::mod_test::set_env_for_decode_info_strings_found ... ignored
+test environment::mod_test::set_env_for_path_glob_found ... ignored
+test environment::mod_test::set_env_for_profile_none_not_found ... ignored
+test environment::mod_test::set_env_for_profile_some_found ... ignored
+test environment::mod_test::set_env_for_config_list ... ok
+test environment::mod_test::set_env_for_profile_some_not_found ... ignored
+test environment::mod_test::set_env_for_list_empty ... ok
+test environment::mod_test::set_env_multi_line_script ... ignored
+test environment::mod_test::set_env_multi_types ... ignored
+test environment::mod_test::set_env_for_list_with_values ... ok
+test environment::mod_test::setup_cargo_home ... ignored
+test environment::mod_test::setup_cargo_home_overwrite ... ignored
+test environment::mod_test::setup_cwd_empty ... ignored
+test environment::mod_test::setup_env_cli_arguments ... ignored
+test environment::mod_test::setup_env_empty ... ignored
+test environment::mod_test::setup_env_for_ci_simple_check ... ignored
+test environment::mod_test::set_env_script_with_condition_false ... ok
+test environment::mod_test::setup_env_for_crate_load_toml_found ... ignored
+test environment::mod_test::setup_env_for_crate_load_toml_not_found_and_cwd ... ignored
+test environment::mod_test::setup_env_for_crate_workspace ... ignored
+test environment::mod_test::setup_env_for_git_repo_with_values ... ignored
+test environment::mod_test::setup_env_for_project_crate ... ignored
+test environment::mod_test::setup_env_for_project_workspace_no_main_crate ... ignored
+test environment::mod_test::setup_env_for_project_workspace_with_main_crate ... ignored
+test environment::mod_test::setup_env_for_rust_simple_check ... ignored
+test environment::mod_test::setup_env_script ... ignored
+test environment::mod_test::setup_env_skip_crate ... ignored
+test environment::mod_test::setup_env_skip_git ... ignored
+test environment::mod_test::setup_env_skip_rust ... ignored
+test environment::mod_test::setup_env_values ... ignored
+test execution_plan::execution_plan_test::create_noworkspace ... ignored
+test descriptor::makefiles::mod_test::makefile_do_on_members_test ... ok
+1
+test
+test condition::condition_test::validate_condition_for_step_valid_script_invalid ... ok
+test command::command_test::run_script_get_exit_code_cli_args_valid ... ok
+test condition::condition_test::validate_script_valid ... ok
+test command::command_test::run_script_get_exit_code_cli_args_error - should panic ... ok
+test command::command_test::run_script_get_exit_code_error_force ... ok
+test command::command_test::run_script_get_exit_code_error - should panic ... ok
+test command::command_test::run_script_get_exit_code_valid ... ok
+test condition::condition_test::validate_condition_for_step_both_valid ... ok
+test command::command_test::run_script_get_exit_code_custom_runner ... ok
+test execution_plan::execution_plan_test::create_task_extends_empty_env_bug_verification ... ignored
+[cargo-make] INFO - Printing diff...
+[cargo-make] INFO - Execute Command: "git" "--no-pager" "diff" "--no-index" "/tmp/fsio_im0L8wZSpQ.toml" "/tmp/fsio_rwA4kVdZ1y.toml"
+test descriptor::mod_test::run_load_script_valid_load_script ... ok
+[cargo-make] INFO - Done
+test descriptor::mod_test::run_load_script_invalid_load_script - should panic ... ok
+test execution_plan::execution_plan_test::create_workspace ... ignored
+test execution_plan::execution_plan_test::create_workspace_task_extend_workspace_makefile ... ignored
+test execution_plan::execution_plan_test::create_workspace_task_with_included_and_skipped_members ... ignored
+test execution_plan::execution_plan_test::create_workspace_task_with_included_members ... ignored
+test execution_plan::execution_plan_test::create_workspace_task_with_members ... ignored
+test execution_plan::execution_plan_test::create_workspace_task_with_members_and_arguments ... ignored
+test execution_plan::execution_plan_test::create_workspace_task_with_members_no_workspace_profile ... ignored
+test cli_commands::diff_steps::diff_steps_test::run_different_with_skip ... ok
+test execution_plan::execution_plan_test::create_workspace_task_no_members ... ok
+test execution_plan::execution_plan_test::get_normalized_task_simple ... ok
+test execution_plan::execution_plan_test::get_task_name_alias ... ok
+test execution_plan::execution_plan_test::get_normalized_task_multi_extend ... ok
+test execution_plan::execution_plan_test::get_task_name_no_alias ... ok
+test execution_plan::execution_plan_test::get_task_name_alias_circular - should panic ... ok
+test execution_plan::execution_plan_test::get_task_name_alias_self_referential - should panic ... ok
+test execution_plan::execution_plan_test::get_task_name_not_found ... ok
+test execution_plan::execution_plan_test::get_workspace_members_config_multiple ... ok
+test execution_plan::execution_plan_test::get_workspace_members_config_not_defined_or_empty ... ok
+test execution_plan::execution_plan_test::get_task_name_platform_alias ... ok
+test execution_plan::execution_plan_test::get_workspace_members_config_single ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_default_false_in_task_and_sub_flow ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_disabled_via_task ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_false_in_config ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_disabled_via_cli ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_task_not_defined ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_false_in_task_and_sub_flow ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_no_workspace ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_true_default ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_true_in_config ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_true_in_task ... ok
+test execution_plan::execution_plan_test::should_skip_workspace_member_empty ... ok
+test environment::mod_test::evaluate_env_value_single_line ... ok
+test environment::mod_test::evaluate_env_value_multi_line ... ok
+test environment::mod_test::evaluate_env_value_valid ... ok
+test execution_plan::execution_plan_test::is_workspace_flow_true_in_task_and_sub_flow ... ok
+test environment::mod_test::evaluate_env_value_multi_line_linux ... ok
+test environment::mod_test::evaluate_env_error - should panic ... ok
+test execution_plan::execution_plan_test::should_skip_workspace_member_found_glob ... ok
+test environment::mod_test::evaluate_env_value_empty ... ok
+test environment::mod_test::set_env_script_with_condition_true ... ok
+test execution_plan::execution_plan_test::should_skip_workspace_member_not_found_string ... ok
+test execution_plan::execution_plan_test::should_skip_workspace_member_found_string ... ok
+test execution_plan::execution_plan_test::should_skip_workspace_member_not_found_glob ... ok
+test functions::decode_func::decode_func_test::decode_invoke_empty - should panic ... ok
+test functions::decode_func::decode_func_test::decode_invoke_mappings_found_eval_output ... ok
+test functions::decode_func::decode_func_test::decode_invoke_mappings_found_with_default ... ok
+test functions::decode_func::decode_func_test::decode_invoke_mappings_found_no_default ... ok
+test functions::decode_func::decode_func_test::decode_invoke_mappings_not_found_use_default ... ok
+test functions::decode_func::decode_func_test::decode_invoke_mappings_not_found_use_source ... ok
+test functions::decode_func::decode_func_test::decode_invoke_only_default_eval_value ... ok
+test functions::decode_func::decode_func_test::decode_invoke_only_source_found_empty ... ok
+test functions::decode_func::decode_func_test::decode_invoke_only_default_empty ... ok
+test functions::decode_func::decode_func_test::decode_invoke_only_default_value ... ok
+test functions::decode_func::decode_func_test::decode_invoke_only_source_not_found ... ok
+test functions::decode_func::decode_func_test::decode_invoke_only_source_found_value ... ok
+test functions::getat_func::getat_func_test::getat_invoke_empty - should panic ... ok
+test functions::getat_func::getat_func_test::getat_invoke_exists_splitted_comma ... ok
+test functions::getat_func::getat_func_test::getat_invoke_exists_not_splitted ... ok
+test functions::getat_func::getat_func_test::getat_invoke_exists_splitted_middle ... ok
+test functions::getat_func::getat_func_test::getat_invoke_exists_splitted_out_of_bounds ... ok
+test functions::getat_func::getat_func_test::getat_invoke_invalid_getat_by_big - should panic ... ok
+test functions::getat_func::getat_func_test::getat_invoke_invalid_getat_by_empty - should panic ... ok
+test functions::getat_func::getat_func_test::getat_invoke_exists_splitted_space ... ok
+test functions::getat_func::getat_func_test::getat_invoke_not_exists ... ok
+test functions::getat_func::getat_func_test::getat_invoke_invalid_too_many_args - should panic ... ok
+test functions::mod_test::evaluate_and_run_no_function ... ok
+test functions::mod_test::evaluate_and_run_valid ... ok
+test functions::mod_test::get_function_argument_empty ... ok
+test functions::mod_test::get_function_argument_spaces ... ok
+test functions::mod_test::evaluate_and_run_unknown_function - should panic ... ok
+test functions::mod_test::get_function_argument_mixed ... ok
+test functions::mod_test::get_function_arguments_empty ... ok
+test functions::mod_test::get_function_arguments_missing_end ... ok
+test functions::mod_test::get_function_arguments_missing_start ... ok
+test functions::mod_test::get_function_argument_single_char ... ok
+test functions::mod_test::get_function_arguments_multiple_with_spaces ... ok
+test functions::mod_test::get_function_arguments_multiple ... ok
+test functions::mod_test::get_function_arguments_single ... ok
+test functions::mod_test::get_function_name_invalid ... ok
+test functions::mod_test::get_function_name_valid ... ok
+test functions::mod_test::modify_arguments_with_functions ... ok
+test functions::mod_test::run_function_decode ... ok
+test functions::mod_test::run_function_empty - should panic ... ok
+test functions::mod_test::run_function_getat ... ok
+test functions::mod_test::run_function_remove_empty ... ok
+test functions::mod_test::run_function_not_exists - should panic ... ok
+test functions::mod_test::run_function_trim ... ok
+test functions::mod_test::run_function_split ... ok
+test functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_exists_empty ... ok
+test functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_empty - should panic ... ok
+test functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_exists_with_value ... ok
+test functions::mod_test::run_with_functions ... ok
+test functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_invalid_too_many_args - should panic ... ok
+test functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_not_exists ... ok
+test functions::split_func::split_func_test::split_invoke_empty - should panic ... ok
+test functions::split_func::split_func_test::split_invoke_exists_not_splitted ... ok
+test functions::split_func::split_func_test::split_invoke_exists_splitted_comma ... ok
+test functions::split_func::split_func_test::split_invoke_exists_splitted_space ... ok
+test functions::split_func::split_func_test::split_invoke_invalid_split_by_big - should panic ... ok
+test functions::split_func::split_func_test::split_invoke_invalid_split_by_empty - should panic ... ok
+test functions::split_func::split_func_test::split_invoke_not_exists ... ok
+test functions::trim_func::trim_func_test::trim_invoke_all_spaces ... ok
+test functions::split_func::split_func_test::split_invoke_invalid_too_many_args - should panic ... ok
+test functions::trim_func::trim_func_test::trim_invoke_empty - should panic ... ok
+test functions::trim_func::trim_func_test::trim_invoke_exists_empty ... ok
+test functions::trim_func::trim_func_test::trim_invoke_invalid_too_many_args - should panic ... ok
+test functions::trim_func::trim_func_test::trim_invoke_exists_with_value ... ok
+test functions::trim_func::trim_func_test::trim_invoke_invalid_trim_type - should panic ... ok
+test functions::trim_func::trim_func_test::trim_invoke_not_exists ... ok
+test functions::trim_func::trim_func_test::trim_invoke_trim_end ... ok
+test functions::trim_func::trim_func_test::trim_invoke_partial_spaces ... ok
+test functions::trim_func::trim_func_test::trim_invoke_trim_start ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_empty_args ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_locked ... ignored
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_empty_args_force ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_no_args ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_no_version_locked ... ignored
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_no_args_force ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_with_args ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_with_args_force ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_with_install_command ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_without_crate_name_locked ... ignored
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_without_crate_name ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::install_crate_already_installed_min_version_equal ... ignored
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::install_crate_already_installed_min_version_smaller ... ignored
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::should_skip_crate_name_empty ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::should_skip_crate_name_none ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::should_skip_crate_name_false ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::should_skip_crate_name_git ... ok
+test installer::crate_installer::crate_installer_test::install_already_installed_crate_only_min_version_smaller ... FAILED
+test installer::crate_installer::crate_installer_test::install_already_installed_crate_only_min_version_equal ... FAILED
+test installer::crate_installer::crate_installer_test::install_already_installed_crate_only_version_equal ... FAILED
+[cargo-make] INFO - Execute Command: "cargo" "install" "--force" "bad_crate_name"
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::is_crate_installed_true ... ok
+[cargo-make] INFO - Execute Command: "cargo" "install" "--force" "cargo-make"
+[cargo-make] INFO - Execute Command: "cargo" "install" "cargo-make"
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::install_crate_already_installed_test ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::is_crate_installed_false ... ok
+test installer::crate_installer::crate_installer_test::invoke_rustup_install_none ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::is_crate_installed_with_toolchain_true ... ok
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::is_crate_installed_with_toolchain_false ... ok
+test installer::crate_installer::crate_installer_test::is_crate_only_info_with_rustup_component_name ... ok
+test installer::crate_installer::crate_installer_test::is_crate_only_info_without_rustup_component_name ... ok
+test installer::crate_version_check::crate_version_check_test::get_cargo_home_env ... ignored
+test installer::crate_version_check::crate_version_check_test::get_cargo_home_file ... ignored
+test installer::crate_version_check::crate_version_check_test::get_cargo_home_no_env ... ignored
+            BlockingBlockingBlocking   waiting for file lock on package cache
+waiting for file lock on package cachewaiting for file lock on package cache
+
+test installer::crate_installer::crate_installer_test::invoke_rustup_install_with_toolchain_none ... ok
+test installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_empty_info ... ok
+test installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_found_invalid_line ... ok
+[cargo-make] INFO - Execute Command: "rustfmt" "--version"
+test installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_found_invalid_version ... ok
+test installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_no_info ... ok
+test installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_not_found ... ok
+test installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_valid ... ok
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_equal ... ok
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_false_major ... ok
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_false_minor ... ok
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_false_patch ... ok
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_true_major ... ok
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_true_minor ... ok
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_true_patch ... ok
+[cargo-make] WARN - Unable to parse min version value: bad_version
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_invalid_version ... ok
+[cargo-make] WARN - Unable to read currently installed version for crate: cargo-make
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_newer_version ... FAILED
+[cargo-make] WARN - Unable to read currently installed version for crate: bad_crate
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_not_found ... ok
+[cargo-make] WARN - Unable to read currently installed version for crate: cargo-make
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_old_version ... ok
+test installer::crate_version_check::crate_version_check_test::is_min_version_valid_same_version ... FAILED
+test installer::crate_version_check::crate_version_check_test::is_version_valid_for_versions_equal ... ok
+test installer::crate_version_check::crate_version_check_test::is_version_valid_for_versions_false_major ... ok
+test installer::crate_version_check::crate_version_check_test::is_version_valid_for_versions_false_minor ... ok
+test installer::crate_version_check::crate_version_check_test::is_version_valid_for_versions_false_patch ... ok
+[cargo-make] WARN - Unable to parse version value: bad_version
+test installer::crate_version_check::crate_version_check_test::is_version_valid_invalid_version ... ok
+[cargo-make] WARN - Unable to read currently installed version for crate: cargo-make
+test installer::crate_version_check::crate_version_check_test::is_version_valid_newer_version ... FAILED
+[cargo-make] WARN - Unable to read currently installed version for crate: bad_crate
+test installer::crate_version_check::crate_version_check_test::is_version_valid_not_found ... ok
+[cargo-make] WARN - Unable to read currently installed version for crate: cargo-make
+test installer::crate_version_check::crate_version_check_test::is_version_valid_old_version ... FAILED
+test installer::crate_version_check::crate_version_check_test::is_version_valid_same_version ... FAILED
+test installer::crate_version_check::crate_version_check_test::load_crates_toml_file_not_found ... FAILED
+test installer::crate_version_check::crate_version_check_test::load_crates_toml_valid ... FAILED
+test installer::mod_test::get_cargo_plugin_info_from_command_empty_args ... ok
+test installer::mod_test::get_cargo_plugin_info_from_command_no_args ... ok
+test installer::mod_test::get_cargo_plugin_info_from_command_no_command ... ok
+test installer::mod_test::get_cargo_plugin_info_from_command_not_cargo_command ... ok
+test installer::mod_test::get_cargo_plugin_info_from_command_valid ... ok
+[cargo-make] INFO - Execute Command: "rustup" "run" "stable" "cargo" "install" "--force" "bad_crate_name"
+warning: `/workspace/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+test installer::mod_test::install_crate_already_installed ... ok
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+test installer::mod_test::install_crate_auto_detect_already_installed ... ok
+    Blocking waiting for file lock on package cache
+[cargo-make] INFO - Execute Command: "cargo" "install" "cargo-badbadbad"
+test installer::crate_installer::crate_installer_test::invoke_rustup_install_fail ... ok
+test installer::mod_test::install_crate_missing_cargo_command - should panic ... ok
+test installer::mod_test::install_disabled_bad_crate ... ok
+test installer::mod_test::install_empty ... ok
+test installer::mod_test::install_empty_args - should panic ... ok
+[cargo-make] INFO - Execute Command: "cargo" "install" "--force" "bad_crate_name"
+    Blocking waiting for file lock on package cache
+test installer::mod_test::install_enabled_crate_already_installed ... ok
+    Blocking waiting for file lock on package cache
+test installer::mod_test::install_rustup_via_crate_info ... ok
+test installer::mod_test::install_rustup_via_rustup_info ... ok
+test installer::mod_test::install_script_duckscript ... ok
+test installer::crate_installer::crate_installer_test::invoke_rustup_install_with_toolchain_fail ... ok
+[cargo-make] INFO - Execute Command: "rustup" "run" "stable" "cargo" "install" "--force" "bad_crate_name"
+warning: `/workspace/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+    Blocking waiting for file lock on package cache
+test installer::crate_version_check::crate_version_check_test::get_crate_version_for_rustup_component ... ok
+test installer::mod_test::install_script_error - should panic ... ok
+test installer::mod_test::install_script_error_ignore_errors ... ok
+test installer::rustup_component_installer::rustup_component_installer_test::install_test ... ok
+test installer::rustup_component_installer::rustup_component_installer_test::invoke_rustup_install_fail ... ok
+test installer::rustup_component_installer::rustup_component_installer_test::install_with_toolchain_test ... ok
+test installer::rustup_component_installer::rustup_component_installer_test::is_installed_false ... ok
+test installer::rustup_component_installer::rustup_component_installer_test::is_installed_non_zero ... ok
+test installer::mod_test::install_script_ok ... ok
+[cargo-make] WARN - #####################################################################
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #                  NEW CARGO-MAKE VERSION FOUND!!!                  #
+[cargo-make] WARN - #                 Current: 0.36.0, Latest: 0.37.24                  #
+[cargo-make] WARN - #    Run 'cargo install --force cargo-make' to get latest version   #
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #####################################################################
+test installer::rustup_component_installer::rustup_component_installer_test::is_installed_true ... ok
+test installer::rustup_component_installer::rustup_component_installer_test::is_installed_with_toolchain_false ... ok
+test installer::rustup_component_installer::rustup_component_installer_test::is_installed_with_toolchain_non_zero ... ok
+test installer::rustup_component_installer::rustup_component_installer_test::is_installed_with_toolchain_true ... ok
+test io::io_test::get_path_list_dirs ... ok
+test io::io_test::get_path_list_dirs_exclude_dirs ... ok
+test installer::rustup_component_installer::rustup_component_installer_test::invoke_rustup_install_with_toolchain_fail ... ok
+test io::io_test::get_path_list_dirs_with_wrong_include_file_type - should panic ... ok
+test io::io_test::get_path_list_dirs_without_gitignore ... ok
+test io::io_test::get_path_list_files ... ok
+test io::io_test::get_path_list_files_and_dirs ... ok
+test io::io_test::get_path_list_files_exclude_files ... ok
+test io::io_test::get_path_list_not_exists ... ok
+test io::io_test::write_text_file_read_and_delete ... ok
+test legacy::legacy_test::get_cargo_make_home_no_env ... ignored
+test legacy::legacy_test::get_cargo_make_home_with_env ... ignored
+test legacy::legacy_test::get_legacy_cargo_make_home_linux ... ok
+test legacy::legacy_test::migrate_from_directory_delete_legacy_directory ... ignored
+test legacy::legacy_test::migrate_from_directory_dir_exists_file_not_exists ... ignored
+test legacy::legacy_test::migrate_from_directory_not_exists ... ignored
+[cargo-make] WARN - [DEPRECATED] The attribute 'old' has been replaced with 'new'. Please update your makefile.
+test legacy::legacy_test::show_deprecated_attriute_warning_valid ... ok
+test logger::logger_test::create_error - should panic ... ok
+test logger::logger_test::get_formatted_log_level_debug_no_color ... ok
+test logger::logger_test::get_formatted_log_level_debug_with_color ... ok
+test logger::logger_test::get_formatted_log_level_error_no_color ... ok
+test logger::logger_test::get_formatted_log_level_error_with_color ... ok
+test logger::logger_test::get_formatted_log_level_info_no_color ... ok
+test logger::logger_test::get_formatted_log_level_info_with_color ... ok
+test logger::logger_test::get_formatted_log_level_warn_no_color ... ok
+test logger::logger_test::get_formatted_log_level_warn_with_color ... ok
+test logger::logger_test::get_formatted_name_no_color ... ok
+test logger::logger_test::get_formatted_name_with_color ... ok
+test logger::logger_test::get_level_error ... ok
+test logger::logger_test::get_level_info ... ok
+test logger::logger_test::get_level_other ... ok
+test logger::logger_test::get_level_verbose ... ok
+test logger::logger_test::get_name_for_filter_error ... ok
+test logger::logger_test::get_name_for_filter_info ... ok
+test logger::logger_test::get_name_for_filter_other ... ok
+test logger::logger_test::get_name_for_filter_verbose ... ok
+test logger::logger_test::get_name_for_filter_warn ... ok
+test logger::logger_test::get_name_for_level_error ... ok
+test logger::logger_test::get_name_for_level_info ... ok
+test logger::logger_test::get_name_for_level_other ... ok
+test logger::logger_test::get_name_for_level_verbose ... ok
+test logger::logger_test::get_name_for_level_warn ... ok
+test logger::logger_test::update_disable_color_env_var ... ignored
+test plugin::descriptor::descriptor_test::merge_aliases_base_only ... ok
+test plugin::descriptor::descriptor_test::merge_aliases_both_and_duplicates ... ok
+test plugin::descriptor::descriptor_test::merge_aliases_empty ... ok
+test plugin::descriptor::descriptor_test::merge_aliases_extended_only ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_config_base_none ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_config_both_provided ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_config_extended_none ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_config_impl_aliases_none ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_config_impl_base_aliases_none ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_config_impl_extended_aliases_none ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_config_impl_merge_all ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_config_none ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_map_base_only ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_map_both_and_duplicates ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_map_empty ... ok
+test plugin::descriptor::descriptor_test::merge_plugins_map_extended_only ... ok
+test plugin::runner::runner_test::get_plugin_found ... ok
+test plugin::runner::runner_test::get_plugin_found_with_alias ... ok
+test plugin::runner::runner_test::get_plugin_name_recursive_empty ... ok
+test plugin::runner::runner_test::get_plugin_name_recursive_endless_loop - should panic ... ok
+test plugin::runner::runner_test::get_plugin_name_recursive_found ... ok
+test plugin::runner::runner_test::get_plugin_name_recursive_not_found ... ok
+test plugin::runner::runner_test::get_plugin_no_plugins_config ... ok
+test plugin::runner::runner_test::get_plugin_not_found ... ok
+test plugin::runner::runner_test::run_task_invoked_valid ... ignored
+test plugin::runner::runner_test::run_task_invoked_with_error ... ignored
+test plugin::runner::runner_test::run_task_invoked_with_forced_plugin ... ok
+test plugin::runner::runner_test::run_task_no_plugin_value ... ok
+test plugin::runner::runner_test::run_task_with_no_plugin_config - should panic ... ok
+test plugin::runner::runner_test::run_task_with_plugin_disabled ... ok
+test plugin::runner::runner_test::run_task_with_plugin_not_found - should panic ... ok
+test plugin::sdk::cm_plugin_check_task_condition::cm_plugin_check_task_condition_test::run_valid ... ok
+test io::io_test::get_path_list_dirs_with_gitignore ... ok
+[cargo-make] INFO - Running Task: test
+test plugin::sdk::cm_plugin_run_custom_task::cm_plugin_run_custom_task_test::run_valid ... ok
+[cargo-make] INFO - Running Task: test
+test plugin::sdk::cm_plugin_run_task::cm_plugin_run_task_test::run_valid ... ok
+test plugin::types::types_test::plugins_new ... ok
+test profile::profile_test::get_defined ... ignored
+test profile::profile_test::get_not_defined ... ignored
+test profile::profile_test::normalize_additional_profiles_empty ... ok
+test profile::profile_test::normalize_additional_profiles_multiple ... ok
+test profile::profile_test::normalize_additional_profiles_single ... ok
+test profile::profile_test::normalize_profile_case_and_spaces ... ok
+test profile::profile_test::normalize_profile_mixed_case ... ok
+test profile::profile_test::normalize_profile_same ... ok
+test profile::profile_test::normalize_profile_spaces ... ok
+test profile::profile_test::set_additional_multiple ... ignored
+test profile::profile_test::set_empty ... ignored
+test profile::profile_test::set_mixed ... ignored
+test profile::profile_test::set_spaces ... ignored
+test proxy_task::proxy_task_test::create_proxy_task_allow_private ... ignored
+test proxy_task::proxy_task_test::create_proxy_task_cli_args ... ignored
+test proxy_task::proxy_task_test::create_proxy_task_no_makefile ... ignored
+test proxy_task::proxy_task_test::create_proxy_task_with_makefile ... ignored
+test proxy_task::proxy_task_test::create_proxy_task_with_makefile_argument ... ignored
+test recursion_level::recursion_level_test::recursion_level_changes ... ignored
+test runner::runner_test::create_fork_step_valid ... ok
+test runner::runner_test::create_watch_step_valid ... ok
+test runner::runner_test::create_watch_task_name_valid ... ignored
+test runner::runner_test::create_watch_task_with_makefile ... ignored
+test runner::runner_test::create_watch_task_with_makefile_and_all_object_options ... ignored
+test runner::runner_test::create_watch_task_with_makefile_and_all_object_options_and_cli_args ... ignored
+test runner::runner_test::create_watch_task_with_makefile_and_bool_options ... ignored
+test runner::runner_test::create_watch_task_with_makefile_and_empty_object_options ... ignored
+test runner::runner_test::create_watch_task_with_makefile_and_false_object_options ... ignored
+test runner::runner_test::create_watch_task_with_makefile_with_spaces_in_path ... ignored
+test runner::runner_test::get_sub_task_info_for_routing_info_condition_found ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_condition_found_multiple_tasks ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_condition_not_met ... ok
+test io::io_test::create_text_file_read_and_delete ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_empty ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_fork_false ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_fork_true ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_default ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_multiple_found ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_multiple ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_script_found ... ok
+test runner::runner_test::run_flow_allow_private ... ignored
+test runner::runner_test::run_flow_private ... ignored
+test runner::runner_test::run_flow_private_skipped ... ignored
+test runner::runner_test::run_flow_private_sub_task ... ignored
+test runner::runner_test::run_sub_task_and_report_for_details_multiple ... ignored
+test runner::runner_test::run_sub_task_and_report_for_details_single ... ignored
+test runner::runner_test::run_sub_task_and_report_for_name ... ignored
+test runner::runner_test::run_sub_task_and_report_for_name_not_found ... ignored
+test runner::runner_test::run_sub_task_and_report_routing_condition_not_met ... ignored
+test runner::runner_test::run_sub_task_and_report_routing_empty ... ignored
+test runner::runner_test::run_sub_task_and_report_routing_no_condition ... ignored
+test runner::runner_test::run_sub_task_and_report_routing_not_found ... ignored
+test runner::runner_test::run_sub_task_and_report_with_cleanup_task_but_no_fork ... ignored
+test runner::runner_test::run_task_bad_command_valid_script ... ignored
+test runner::runner_test::run_task_bad_run_task_valid_command ... ignored
+test runner::runner_test::run_task_bad_script ... ignored
+test runner::runner_test::run_task_command ... ignored
+test runner::runner_test::run_task_cwd_dir_exists ... ignored
+test runner::runner_test::run_task_cwd_env_expansion ... ignored
+test runner::runner_test::run_task_cwd_no_such_dir ... ignored
+test runner::runner_test::run_task_deprecated_flag ... ignored
+test runner::runner_test::run_task_deprecated_message ... ignored
+test runner::runner_test::run_task_invalid_task ... ignored
+test runner::runner_test::run_task_no_command_valid_script ... ignored
+test runner::runner_test::run_task_script_with_args_error ... ignored
+test runner::runner_test::run_task_script_with_args_valid ... ignored
+test runner::runner_test::run_task_set_env ... ignored
+test runner::runner_test::run_task_set_env_file ... ignored
+test runner::runner_test::run_task_valid_run_task ... ignored
+test runner::runner_test::should_watch_false_and_env_false ... ignored
+test runner::runner_test::should_watch_false_and_env_not_set ... ignored
+test runner::runner_test::should_watch_false_and_env_true ... ignored
+test runner::runner_test::should_watch_none_and_env_false ... ignored
+test runner::runner_test::should_watch_none_and_env_not_set ... ignored
+test runner::runner_test::should_watch_none_and_env_true ... ignored
+test runner::runner_test::should_watch_true_and_env_false ... ignored
+test runner::runner_test::should_watch_true_and_env_not_set ... ignored
+test runner::runner_test::should_watch_true_and_env_true ... ignored
+test scriptengine::duck_script::mod_test::cm_run_task_error - should panic ... ok
+test runner::runner_test::get_sub_task_info_for_routing_info_script_not_met ... ok
+    Updating crates.io index
+test scriptengine::duck_script::mod_test::execute_duckscript ... ok
+test scriptengine::duck_script::mod_test::execute_duckscript_cli_arguments ... ok
+test scriptengine::duck_script::mod_test::execute_duckscript_cli_arguments2 - should panic ... ok
+test scriptengine::duck_script::mod_test::execute_duckscript_crash - should panic ... ok
+test scriptengine::duck_script::mod_test::execute_duckscript_crash2 - should panic ... ok
+test scriptengine::duck_script::mod_test::execute_duckscript_error_no_validate ... ok
+test scriptengine::duck_script::mod_test::execute_duckscript_error_with_validate - should panic ... ok
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_8ZY8b9FRPz.sh"
+test scriptengine::generic_script::generic_script_test::execute_shell ... ok
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_6gMmR6ybCn.sh" "0"
+test scriptengine::generic_script::generic_script_test::execute_shell_cli_arguments ... ok
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_SGg6LKaoGI.sh" "1"
+test scriptengine::generic_script::generic_script_test::execute_shell_cli_arguments_error - should panic ... ok
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_89tVy55gro.sh"
+test scriptengine::generic_script::generic_script_test::execute_shell_empty_arguments ... ok
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_YkmxcKJVvE.sh"
+test scriptengine::generic_script::generic_script_test::execute_shell_error - should panic ... ok
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_ukADgO2SQi.sh"
+test scriptengine::generic_script::generic_script_test::execute_shell_error_no_validate ... ok
+test scriptengine::mod_test::get_engine_type_duckscript ... ok
+test scriptengine::mod_test::get_engine_type_duckscript_from_shebang ... ok
+test scriptengine::mod_test::get_engine_type_generic ... ok
+test scriptengine::mod_test::get_engine_type_no_runner ... ok
+test scriptengine::mod_test::get_engine_type_runner_no_extension ... ok
+test scriptengine::mod_test::get_engine_type_rust ... ok
+test scriptengine::mod_test::get_engine_type_rust_from_shebang ... ok
+test scriptengine::mod_test::get_engine_type_shebang ... ok
+test scriptengine::mod_test::get_engine_type_shell_to_batch ... ok
+test scriptengine::mod_test::get_engine_type_shell_to_batch_from_shebang ... ok
+test scriptengine::mod_test::get_script_text_file ... ok
+test scriptengine::mod_test::get_script_text_file_absolute ... ok
+test scriptengine::mod_test::get_script_text_file_relative ... ok
+test scriptengine::mod_test::get_script_text_script_content_sections ... ok
+test scriptengine::mod_test::get_script_text_script_content_sections_empty ... ok
+test scriptengine::mod_test::get_script_text_single_line ... ok
+test scriptengine::mod_test::get_script_text_vector ... ok
+test scriptengine::mod_test::invoke_duckscript_runner ... ok
+test scriptengine::mod_test::invoke_duckscript_runner_error - should panic ... ok
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_7tI19AkSbE.sh"
+test
+test scriptengine::mod_test::invoke_generic_runner ... ok
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_mRZgJAYinW.sh"
+test scriptengine::mod_test::invoke_generic_runner_error - should panic ... ok
+test
+test scriptengine::mod_test::invoke_no_runner ... ok
+test scriptengine::mod_test::invoke_no_script ... ok
+test scriptengine::mod_test::invoke_no_script_no_runner ... ok
+test
+test scriptengine::mod_test::invoke_os_runner ... ok
+[cargo-make] INFO - Execute Command: "cargo" "install" "--force" "--version" "0.7.0" "rust-script"
+    Blocking waiting for file lock on package cache
+test cli::cli_test::run_set_task_var_args has been running for over 60 seconds
+test cli_commands::diff_steps::diff_steps_test::run_different has been running for over 60 seconds
+test cli_commands::diff_steps::diff_steps_test::run_missing_task_in_first_config has been running for over 60 seconds
+test cli_commands::diff_steps::diff_steps_test::run_missing_task_in_second_config has been running for over 60 seconds
+test cli_commands::diff_steps::diff_steps_test::run_same has been running for over 60 seconds
+test cli_commands::print_steps::print_steps_test::print_default_format has been running for over 60 seconds
+test cli_commands::print_steps::print_steps_test::print_task_not_found has been running for over 60 seconds
+test environment::crateinfo::crateinfo_test::crate_info_load has been running for over 60 seconds
+test environment::crateinfo::crateinfo_test::load_from_inherit_from_workspace_toml has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_disabled_task_with_dependencies has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_platform_disabled has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_single has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_single_allow_private has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_single_disabled has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_single_private has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_with_dependencies has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_with_dependencies_and_skip_filter has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_with_dependencies_disabled has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_with_dependencies_sub_flow has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_with_foreign_dependencies_directory has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_with_foreign_dependencies_file_and_directory has been running for over 60 seconds
+test execution_plan::execution_plan_test::create_with_foreign_dependencies_filename has been running for over 60 seconds
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::install_crate_already_installed_cargo_make has been running for over 60 seconds
+test installer::crate_installer::crate_installer_test::install_already_installed_crate_only has been running for over 60 seconds
+test installer::crate_installer::crate_installer_test::install_test_test has been running for over 60 seconds
+test installer::crate_installer::crate_installer_test::install_test_with_toolchain_test has been running for over 60 seconds
+test installer::crate_installer::crate_installer_test::invoke_cargo_install_test has been running for over 60 seconds
+test installer::crate_installer::crate_installer_test::invoke_cargo_install_with_toolchain_test has been running for over 60 seconds
+test installer::mod_test::install_crate_auto_detect_unable_to_install has been running for over 60 seconds
+test plugin::sdk::cm_plugin_force_plugin_set::cm_plugin_force_plugin_set_test::force_plugin_set_and_clear_flow_test has been running for over 60 seconds
+test scriptengine::duck_script::mod_test::cm_run_task_valid has been running for over 60 seconds
+test scriptengine::mod_test::invoke_rust_runner has been running for over 60 seconds
+ Downloading crates ...
+  Downloaded cargo-make v0.37.24
+    Updating crates.io index
+  Installing cargo-make v0.37.24
+    Blocking waiting for file lock on package cache
+    Updating crates.io index
+  Installing cargo-make v0.37.24
+    Blocking waiting for file lock on package cache
+error: could not find `bad_crate_name` in registry `crates-io` with version `*`
+test installer::crate_installer::crate_installer_test::invoke_cargo_install_test ... ok
+[cargo-make] INFO - Execute Command: "cargo" "install" "--force" "--version" "0.7.0" "rust-script"
+    Blocking waiting for file lock on package cache
+    Updating crates.io index
+error: could not find `bad_crate_name` in registry `crates-io` with version `*`
+test installer::crate_installer::crate_installer_test::invoke_cargo_install_with_toolchain_test ... ok
+    Updating crates.io index
+test
+test scriptengine::mod_test::invoke_shell_to_batch_runner ... ok
+test scriptengine::mod_test::invoke_shell_to_batch_runner_error - should panic ... ok
+error: could not find `cargo-badbadbad` in registry `crates-io` with version `*`
+test installer::mod_test::install_crate_auto_detect_unable_to_install - should panic ... ok
+    Updating crates.io index
+test scriptengine::os_script::os_script_test::execute_shell ... ok
+test scriptengine::os_script::os_script_test::execute_shell_error - should panic ... ok
+test scriptengine::os_script::os_script_test::execute_shell_error_no_validate ... ok
+test scriptengine::rsscript::rsscript_test::execute_cargo_play_not_compile ... ignored
+test scriptengine::rsscript::rsscript_test::execute_cargo_play_runtime_panic ... ignored
+test scriptengine::rsscript::rsscript_test::execute_cargo_play_runtime_panic_no_validate ... ignored
+test scriptengine::rsscript::rsscript_test::execute_default_not_compile ... ignored
+test scriptengine::rsscript::rsscript_test::execute_default_runtime_panic ... ignored
+test scriptengine::rsscript::rsscript_test::execute_default_runtime_panic_no_validate ... ignored
+test scriptengine::rsscript::rsscript_test::execute_default_valid ... ignored
+test scriptengine::rsscript::rsscript_test::execute_rust_script_not_compile ... ignored
+test scriptengine::rsscript::rsscript_test::execute_rust_script_runtime_panic ... ignored
+test scriptengine::rsscript::rsscript_test::execute_rust_script_runtime_panic_no_validate ... ignored
+test scriptengine::rsscript::rsscript_test::execute_rust_script_valid ... ignored
+test scriptengine::rsscript::rsscript_test::get_script_runner_cargo_other ... ignored
+test scriptengine::rsscript::rsscript_test::get_script_runner_cargo_play ... ignored
+test scriptengine::rsscript::rsscript_test::get_script_runner_cargo_script ... ignored
+test scriptengine::rsscript::rsscript_test::get_script_runner_default ... ignored
+test scriptengine::rsscript::rsscript_test::get_script_runner_rust_script ... ignored
+error: could not find `bad_crate_name` in registry `crates-io` with version `*`
+test installer::crate_installer::crate_installer_test::install_test_test ... ok
+test scriptengine::script_utils::script_utils_test::create_script_file_text ... ok
+test scriptengine::os_script::os_script_test::execute_shell_with_runner ... ok
+test scriptengine::shebang_script::shebang_script_test::get_shebang_command_and_args ... ok
+test scriptengine::shebang_script::shebang_script_test::get_shebang_command_and_args_multi_line ... ok
+test scriptengine::shebang_script::shebang_script_test::get_shebang_empty_shebang_line ... ok
+test scriptengine::shebang_script::shebang_script_test::get_shebang_empty_vec ... ok
+test scriptengine::shebang_script::shebang_script_test::get_shebang_not_shebang_line ... ok
+test scriptengine::shebang_script::shebang_script_test::get_shebang_second_line ... ok
+test scriptengine::shebang_script::shebang_script_test::get_shebang_single_command ... ok
+test scriptengine::shebang_script::shebang_script_test::get_shebang_space_shebang_line ... ok
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_eWDZKbYf0l.sh" "1"
+[cargo-make] INFO - Execute Command: "sh" "/tmp/fsio_Qukpo0onUX.sh" "0"
+test scriptengine::shebang_script::shebang_script_test::execute_sh ... ok
+test scriptengine::shebang_script::shebang_script_test::execute_sh_error - should panic ... ok
+    Updating crates.io index
+test scriptengine::shell_to_batch::shell_to_batch_test::execute_error - should panic ... ok
+test storage::storage_test::get_storage_directory_no_env_no_os_dir ... ignored
+test storage::storage_test::get_storage_directory_no_env_with_os_dir_file_exists ... ignored
+test storage::storage_test::get_storage_directory_with_env ... ignored
+test toolchain::toolchain_test::get_cargo_binary_path_valid ... FAILED
+test toolchain::toolchain_test::remove_rust_env_vars_existed ... ignored
+test toolchain::toolchain_test::wrap_command_empty_args ... FAILED
+test
+test scriptengine::shell_to_batch::shell_to_batch_test::execute_error_no_validate ... ok
+test scriptengine::shell_to_batch::shell_to_batch_test::execute_valid ... ok
+test toolchain::toolchain_test::wrap_command_none_args ... FAILED
+test toolchain::toolchain_test::wrap_command_unreachable_version - should panic ... ok
+test toolchain::toolchain_test::wrap_command_with_args ... FAILED
+test types::types_test::cache_new ... ok
+test types::types_test::cli_args_new ... ok
+test types::types_test::config_apply_modify_empty ... ok
+test types::types_test::config_apply_modify_all ... ok
+test types::types_test::config_section_apply_config_empty_modify_empty ... ok
+test types::types_test::config_section_apply_config_empty_modify_namespace ... ok
+test types::types_test::config_section_apply_config_with_values_modify_empty ... ok
+test types::types_test::config_section_apply_config_with_values_modify_namespace ... ok
+test types::types_test::config_section_extend_all_values ... ok
+test types::types_test::config_section_extend_no_values ... ok
+test types::types_test::config_section_extend_some_values ... ok
+test types::types_test::config_section_get_get_load_script_all_defined ... ok
+test types::types_test::config_section_get_get_load_script_all_none ... ok
+test types::types_test::config_section_get_get_load_script_platform_none ... ok
+test types::types_test::config_section_get_get_load_script_platform_some ... ok
+test types::types_test::config_section_new ... ok
+test types::types_test::deprecation_info_partial_eq_diff_bool ... ok
+test types::types_test::deprecation_info_partial_eq_diff_message ... ok
+test types::types_test::deprecation_info_partial_eq_diff_type ... ok
+test types::types_test::deprecation_info_partial_eq_same_bool_false ... ok
+test types::types_test::deprecation_info_partial_eq_same_bool_true ... ok
+test types::types_test::deprecation_info_partial_eq_same_message ... ok
+test types::types_test::env_value_deserialize_bool_false ... ok
+test types::types_test::env_value_deserialize_bool_true ... ok
+test types::types_test::env_value_deserialize_conditional_env_value_no_condition ... ok
+test types::types_test::env_value_deserialize_conditional_env_value_with_condition ... ok
+test types::types_test::env_value_deserialize_list_empty ... ok
+test types::types_test::env_value_deserialize_decode ... ok
+test toolchain::toolchain_test::wrap_command_invalid_toolchain - should panic ... ok
+test types::types_test::env_value_deserialize_list_with_values ... ok
+test types::types_test::env_value_deserialize_string ... ok
+test types::types_test::env_value_deserialize_script ... ok
+test types::types_test::env_value_deserialize_profile ... ok
+test types::types_test::extend_script_value_both_none ... ok
+test types::types_test::extend_script_value_current_new_different_types ... ok
+test types::types_test::extend_script_value_current_none_new_text ... ok
+test types::types_test::env_value_deserialize_unset ... ok
+test types::types_test::extend_script_value_current_text_new_none ... ok
+test types::types_test::extend_script_value_current_text_new_text ... ok
+test types::types_test::extend_script_value_new_all_content_sections ... ok
+test types::types_test::extend_script_value_new_only_main_content_section ... ok
+test types::types_test::extend_script_value_new_only_post_content_section ... ok
+test types::types_test::external_config_new ... ok
+test types::types_test::extend_script_value_new_only_pre_content_section ... ok
+test types::types_test::flow_state_new ... ok
+test types::types_test::get_namespaced_task_name_empty ... ok
+test types::types_test::get_namespaced_task_name_with_value ... ok
+test types::types_test::global_config_new ... ok
+test types::types_test::install_cargo_plugin_info_eq_different_crate_name_type ... ok
+test types::types_test::install_cargo_plugin_info_eq_different_crate_name_value ... ok
+test types::types_test::install_cargo_plugin_info_eq_different_force_value ... ok
+test types::types_test::install_cargo_plugin_info_eq_different_install_command_type ... ok
+test types::types_test::install_cargo_plugin_info_eq_different_install_command_value ... ok
+test types::types_test::install_cargo_plugin_info_eq_different_min_version_value ... ok
+test types::types_test::install_cargo_plugin_info_eq_same_all ... ok
+test types::types_test::install_cargo_plugin_info_eq_same_no_crate_name ... ok
+test types::types_test::install_cargo_plugin_info_eq_same_no_force ... ok
+test types::types_test::install_cargo_plugin_info_eq_same_no_install_command ... ok
+test types::types_test::install_crate_eq_different_cargo_plugin_info ... ok
+test types::types_test::install_crate_eq_different_crate_info ... ok
+test types::types_test::install_crate_eq_different_enabled_value ... ok
+test types::types_test::install_crate_eq_different_rustup_component_info ... ok
+test types::types_test::install_crate_eq_different_value ... ok
+test types::types_test::install_crate_eq_same_cargo_plugin_info ... ok
+test types::types_test::install_crate_eq_same_crate_info ... ok
+test types::types_test::install_crate_eq_same_disabled_value ... ok
+test types::types_test::install_crate_eq_same_enabled_value ... ok
+test types::types_test::install_crate_eq_same_rustup_component_info ... ok
+test types::types_test::install_crate_eq_same_value ... ok
+test types::types_test::install_crate_info_deserialize_crate_and_install_command ... ok
+test types::types_test::install_crate_info_deserialize_array_test_arg ... ok
+test types::types_test::install_crate_info_deserialize_install_command ... ok
+test types::types_test::install_crate_info_deserialize_missing_test_arg - should panic ... ok
+test types::types_test::install_crate_info_deserialize_only_install_command ... ok
+test types::types_test::install_crate_info_eq_different_binary ... ok
+test types::types_test::install_crate_info_eq_different_component_type ... ok
+test types::types_test::install_crate_info_deserialize_string_test_arg ... ok
+test types::types_test::install_crate_info_eq_different_component_value ... ok
+test types::types_test::install_crate_info_eq_different_crate_name ... ok
+test types::types_test::install_crate_info_eq_different_force_type ... ok
+test types::types_test::install_crate_info_eq_different_force_value ... ok
+test types::types_test::install_crate_info_eq_different_install_command_type ... ok
+test types::types_test::install_crate_info_eq_different_install_command_value ... ok
+test types::types_test::install_crate_info_eq_different_min_version_type ... ok
+test types::types_test::install_crate_info_eq_different_test_arg ... ok
+test types::types_test::install_crate_info_eq_different_min_version_value ... ok
+test types::types_test::install_crate_info_eq_different_version_type ... ok
+test types::types_test::install_crate_info_eq_different_version_value ... ok
+test types::types_test::install_crate_info_eq_same_all ... ok
+test types::types_test::install_crate_info_eq_same_no_component ... ok
+test types::types_test::install_crate_info_eq_same_no_force ... ok
+test types::types_test::install_crate_info_eq_same_no_install_command ... ok
+test types::types_test::install_crate_info_eq_same_no_min_version ... ok
+test types::types_test::install_crate_info_eq_same_no_version ... ok
+test types::types_test::install_rustup_component_info_deserialize_missing_test_arg ... ok
+test types::types_test::install_rustup_component_info_deserialize_array_test_arg ... ok
+test types::types_test::install_rustup_component_info_deserialize_string_test_arg ... ok
+test types::types_test::install_rustup_component_info_eq_different_binary ... ok
+test types::types_test::install_rustup_component_info_eq_different_binary_type ... ok
+test types::types_test::install_rustup_component_info_eq_different_component ... ok
+test types::types_test::install_rustup_component_info_eq_different_test_arg ... ok
+test types::types_test::install_rustup_component_info_eq_different_test_arg_type ... ok
+test types::types_test::install_rustup_component_info_eq_same_all ... ok
+test types::types_test::install_rustup_component_info_eq_same_no_binary ... ok
+test types::types_test::install_rustup_component_info_eq_same_no_test_arg ... ok
+test types::types_test::task_apply_modify_empty ... ok
+test types::types_test::task_apply_modify_not_private ... ok
+test types::types_test::task_apply_modify_private ... ok
+test types::types_test::task_apply_no_run_task_modify_namespace ... ok
+test types::types_test::task_apply_run_task_details_multiple_modify_namespace ... ok
+test types::types_test::task_apply_run_task_details_single_modify_namespace ... ok
+test types::types_test::task_apply_run_task_name_modify_namespace ... ok
+test types::types_test::task_apply_run_task_routing_info_multiple_modify_namespace ... ok
+test types::types_test::task_apply_run_task_routing_info_single_modify_namespace ... ok
+test types::types_test::task_apply_task_empty_modify_empty ... ok
+test types::types_test::task_apply_task_empty_modify_namespace ... ok
+test types::types_test::task_apply_task_empty_modify_not_private ... ok
+test types::types_test::task_apply_task_empty_modify_private ... ok
+test types::types_test::task_extend_both_have_misc_data ... ok
+test types::types_test::task_extend_clear_with_no_data ... ok
+test types::types_test::task_extend_clear_with_all_data ... ok
+test types::types_test::task_get_alias_all_none ... ok
+test types::types_test::task_get_alias_common_defined ... ok
+test types::types_test::task_get_alias_platform_defined ... ok
+test types::types_test::task_extend_extended_have_all_fields ... ok
+test types::types_test::task_get_normalized_task_undefined ... ok
+test types::types_test::task_get_normalized_task_with_override_clear_false ... ok
+test types::types_test::task_get_normalized_task_with_override_clear_true ... ok
+test types::types_test::task_get_normalized_task_with_override_clear_false_partial_override ... ok
+test types::types_test::task_is_actionable_all_none ... ok
+test types::types_test::task_is_actionable_disabled ... ok
+test types::types_test::task_is_actionable_with_command ... ok
+test types::types_test::task_is_actionable_with_dependencies ... ok
+test types::types_test::task_get_normalized_task_with_override_no_clear ... ok
+test types::types_test::task_is_actionable_with_empty_dependencies ... ok
+test types::types_test::task_is_actionable_with_empty_env ... ok
+test types::types_test::task_is_actionable_with_empty_env_files ... ok
+test types::types_test::task_is_actionable_with_env ... ok
+test types::types_test::task_is_actionable_with_env_files ... ok
+test types::types_test::task_is_actionable_with_install_crate ... ok
+test types::types_test::task_is_actionable_with_install_script ... ok
+test types::types_test::task_is_actionable_with_run_task ... ok
+test types::types_test::task_is_actionable_with_script ... ok
+test types::types_test::task_is_actionable_with_watch_false ... ok
+test types::types_test::task_is_actionable_with_watch_options ... ok
+test types::types_test::task_is_actionable_with_watch_true ... ok
+test types::types_test::task_is_valid_all_none ... ok
+test types::types_test::task_is_valid_both_command_and_script ... ok
+test types::types_test::task_is_valid_both_run_task_and_command ... ok
+test types::types_test::task_is_valid_both_run_task_and_script ... ok
+test types::types_test::task_is_valid_only_command ... ok
+test types::types_test::task_is_valid_only_run_task ... ok
+test types::types_test::task_is_valid_only_script ... ok
+test types::types_test::task_new ... ok
+test types::types_test::task_should_ignore_errors_false ... ok
+test types::types_test::task_should_ignore_errors_false_force_true ... ok
+[cargo-make] WARN - [DEPRECATED] The attribute 'force' has been replaced with 'ignore_errors'. Please update your makefile.
+[cargo-make] WARN - [DEPRECATED] The attribute 'force' has been replaced with 'ignore_errors'. Please update your makefile.
+test types::types_test::task_should_ignore_errors_force_false ... ok
+test types::types_test::task_should_ignore_errors_none ... ok
+test types::types_test::task_should_ignore_errors_force_true ... ok
+test types::types_test::task_should_ignore_errors_true ... ok
+test types::types_test::unstable_feature_is_env_set_false ... ignored
+test types::types_test::unstable_feature_is_env_set_none ... ignored
+test types::types_test::unstable_feature_is_env_set_true ... ignored
+test types::types_test::unstable_feature_to_env_name ... ok
+test types::types_test::toolchain_specifier_deserialize_string ... ok
+test types::types_test::toolchain_specifier_deserialize_min_version ... ok
+test types::types_test::workspace_new ... ok
+test version::version_test::get_days_always ... ok
+test version::version_test::get_days_daily ... ok
+test version::version_test::get_days_monthly ... ok
+test version::version_test::get_days_none ... ok
+test version::version_test::get_days_unknown ... ok
+test version::version_test::get_days_weekly ... ok
+test version::version_test::get_now_as_seconds_valid ... ok
+test version::version_test::get_version_from_output_empty ... ok
+test version::version_test::get_version_from_output_few_args ... ok
+test version::version_test::get_version_from_output_found ... ok
+test version::version_test::has_amount_of_days_passed_false ... ok
+test version::version_test::has_amount_of_days_passed_false_by_second ... ok
+test version::version_test::has_amount_of_days_passed_from_last_check_false ... ok
+test version::version_test::has_amount_of_days_passed_from_last_check_false_by_second ... ok
+test version::version_test::has_amount_of_days_passed_from_last_check_true_by_day ... ok
+test version::version_test::has_amount_of_days_passed_from_last_check_true_by_second ... ok
+test version::version_test::has_amount_of_days_passed_from_last_check_zero_days ... ok
+test version::version_test::has_amount_of_days_passed_none ... ok
+test version::version_test::has_amount_of_days_passed_true_by_day ... ok
+test version::version_test::has_amount_of_days_passed_true_by_second ... ok
+test version::version_test::has_amount_of_days_passed_zero_days ... ok
+test version::version_test::is_newer_found_newer_major ... ok
+test version::version_test::is_newer_found_newer_minor ... ok
+test version::version_test::is_newer_found_newer_patch ... ok
+test version::version_test::is_newer_found_older_major_newer_minor ... ok
+test version::version_test::is_newer_found_older_major_newer_patch ... ok
+test version::version_test::is_newer_found_older_minor_newer_patch ... ok
+test version::version_test::is_newer_found_same ... ok
+test version::version_test::is_newer_same_allow_partial_no_patch ... ok
+test version::version_test::is_newer_same_allow_partial_no_patch_for_newer ... ok
+test version::version_test::is_newer_same_allow_partial_no_patch_for_older ... ok
+test version::version_test::is_newer_same_full_allow_partial ... ok
+test version::version_test::is_newer_same_full_no_partial ... ok
+test version::version_test::is_newer_same_no_partial_no_patch ... ok
+test version::version_test::is_newer_same_no_partial_no_patch_for_newer ... ok
+test version::version_test::is_newer_same_no_partial_no_patch_for_older ... ok
+test version::version_test::is_same_equal_allow_partial_no_patch_for_older ... ok
+[cargo-make] WARN - #####################################################################
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #                                                                   #
+test version::version_test::should_check_for_args_cli_disabled ... ok
+test version::version_test::should_check_for_args_disabled_via_env ... ignored
+[cargo-make] WARN - #                  NEW CARGO-MAKE VERSION FOUND!!!                  #
+[cargo-make] WARN - #                    Current: 0.36.0, Latest: 1                     #
+[cargo-make] WARN - #    Run 'cargo install --force cargo-make' to get latest version   #
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #####################################################################
+test version::version_test::print_notification_simple ... ok
+test version::version_test::should_check_for_args_in_ci ... ok
+test version::version_test::should_check_overdue_always ... ignored
+test version::version_test::should_check_overdue_none ... ignored
+test version::version_test::should_check_overdue_weekly_last_6_days ... ignored
+test version::version_test::should_check_overdue_weekly_last_8_days ... ignored
+test version::version_test::should_check_overdue_weekly_last_now ... ignored
+test version::version_test::should_check_for_args_true ... ok
+test cli_commands::diff_steps::diff_steps_test::run_missing_task_in_first_config - should panic ... ok
+error: could not find `bad_crate_name` in registry `crates-io` with version `*`
+test installer::crate_installer::crate_installer_test::install_test_with_toolchain_test ... ok
+ Downloading crates ...
+test cli_commands::print_steps::print_steps_test::print_default_format ... ok
+  Downloaded rust-script v0.7.0
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+test cli_commands::print_steps::print_steps_test::print_task_not_found - should panic ... ok
+test environment::crateinfo::crateinfo_test::crate_info_load ... ok
+test execution_plan::execution_plan_test::create_disabled_task_with_dependencies ... ok
+test execution_plan::execution_plan_test::create_platform_disabled ... ok
+test execution_plan::execution_plan_test::create_single ... ok
+test execution_plan::execution_plan_test::create_single_allow_private ... ok
+test execution_plan::execution_plan_test::create_single_disabled ... ok
+test execution_plan::execution_plan_test::create_single_private - should panic ... ok
+test execution_plan::execution_plan_test::create_with_foreign_dependencies_directory ... ok
+[cargo-make] WARN - #####################################################################
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #                  NEW CARGO-MAKE VERSION FOUND!!!                  #
+[cargo-make] WARN - #                 Current: 0.36.0, Latest: 0.37.24                  #
+[cargo-make] WARN - #    Run 'cargo install --force cargo-make' to get latest version   #
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #                                                                   #
+[cargo-make] WARN - #####################################################################
+test version::version_test::check_full ... ok
+test execution_plan::execution_plan_test::create_with_dependencies_sub_flow ... ok
+test execution_plan::execution_plan_test::create_with_dependencies ... ok
+test execution_plan::execution_plan_test::create_with_dependencies_disabled ... ok
+test environment::crateinfo::crateinfo_test::load_from_inherit_from_workspace_toml ... ok
+test execution_plan::execution_plan_test::create_with_foreign_dependencies_file_and_directory ... ok
+test execution_plan::execution_plan_test::create_with_dependencies_and_skip_filter ... ok
+test execution_plan::execution_plan_test::create_with_foreign_dependencies_filename ... ok
+    Updating crates.io index
+ Downloading crates ...
+  Installing rust-script v0.7.0
+  Downloaded adler2 v2.0.1
+    Blocking waiting for file lock on package cache
+  Downloaded autocfg v1.5.0
+  Downloaded bitflags v2.11.1
+  Downloaded attohttpc v0.28.5
+  Downloaded rand_chacha v0.3.1
+  Downloaded duckscriptsdk v0.11.1
+  Downloaded percent-encoding v2.3.2
+  Downloaded futures-io v0.3.32
+  Downloaded duckscript v0.10.0
+  Downloaded crossbeam-deque v0.8.6
+  Downloaded num_cpus v1.17.0
+  Downloaded lenient_semver_parser v0.4.2
+  Downloaded equivalent v1.0.2
+  Downloaded colored v2.2.0
+  Downloaded block-buffer v0.10.4
+  Downloaded home v0.5.12
+ Downloading crates ...
+error: failed to compile `cargo-make v0.37.24`, intermediate artifacts can be found at `/tmp/cargo-installjH0Gdo`
+
+Caused by:
+  failed to download `home v0.5.12`
+
+Caused by:
+  unable to get packages from source
+
+Caused by:
+  failed to parse manifest at `/root/.cargo/registry/src/github.com-1ecc6299db9ec823/home-0.5.12/Cargo.toml`
+
+Caused by:
+  failed to parse the `edition` key
+
+Caused by:
+  this version of Cargo is older than the `2024` edition, and only supports `2015`, `2018`, and `2021` editions.
+    Updating crates.io index
+test installer::cargo_plugin_installer::cargo_plugin_installer_test::install_crate_already_installed_cargo_make ... FAILED
+error: failed to compile `cargo-make v0.37.24`, intermediate artifacts can be found at `/tmp/cargo-installXY82H5`
+
+Caused by:
+  failed to parse manifest at `/root/.cargo/registry/src/github.com-1ecc6299db9ec823/home-0.5.12/Cargo.toml`
+
+Caused by:
+  failed to parse the `edition` key
+
+Caused by:
+  this version of Cargo is older than the `2024` edition, and only supports `2015`, `2018`, and `2021` editions.
+test installer::crate_installer::crate_installer_test::install_already_installed_crate_only ... ok
+  Installing rust-script v0.7.0
+    Blocking waiting for file lock on package cache
+[cargo-make] INFO - Running Task: force_4
+test plugin::sdk::cm_plugin_force_plugin_set::cm_plugin_force_plugin_set_test::force_plugin_set_and_clear_flow_test ... ok
+[cargo-make] INFO - Running Task: increment
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+[cargo-make] INFO - Printing diff...
+[cargo-make] INFO - Execute Command: "git" "--no-pager" "diff" "--no-index" "/tmp/fsio_MgV5FF0Hen.toml" "/tmp/fsio_KKkjqTpYUp.toml"
+[cargo-make] INFO - Done
+test cli_commands::diff_steps::diff_steps_test::run_same ... ok
+test cli_commands::diff_steps::diff_steps_test::run_missing_task_in_second_config - should panic ... ok
+ Downloading crates ...
+  Downloaded ansi_term v0.12.1
+[cargo-make] INFO - Printing diff...
+[cargo-make] INFO - Execute Command: "git" "--no-pager" "diff" "--no-index" "/tmp/fsio_pj5vaUK4Ss.toml" "/tmp/fsio_1VQI9sjWiG.toml"
+diff --git a/tmp/fsio_pj5vaUK4Ss.toml b/tmp/fsio_1VQI9sjWiG.toml
+index beeeb153..ceff00b2 100644
+--- a/tmp/fsio_pj5vaUK4Ss.toml
++++ b/tmp/fsio_1VQI9sjWiG.toml
+@@ -3,9 +3,7 @@
+         name: "test",
+         config: Task {
+             clear: None,
+-            description: Some(
+-                "test",
+-            ),
++            description: None,
+             category: None,
+             disabled: None,
+             private: None,
+[cargo-make] INFO - Done
+test cli_commands::diff_steps::diff_steps_test::run_different ... ok
+  Downloaded block-buffer v0.9.0
+  Downloaded atty v0.2.14
+  Downloaded cfg-if v1.0.4
+  Downloaded bitflags v1.3.2
+  Downloaded env_logger v0.8.4
+  Downloaded aho-corasick v1.1.4
+  Downloaded version_check v0.9.5
+  Downloaded lazy_static v1.5.0
+  Downloaded dirs v3.0.2
+  Downloaded opaque-debug v0.3.1
+  Downloaded strsim v0.8.0
+  Downloaded pathdiff v0.2.3
+  Downloaded open v1.7.1
+  Downloaded vec_map v0.8.2
+  Downloaded sha-1 v0.9.8
+  Downloaded digest v0.9.0
+  Downloaded termcolor v1.4.1
+  Downloaded either v1.15.0
+  Downloaded humantime v2.3.0
+  Downloaded cpufeatures v0.2.17
+  Downloaded textwrap v0.11.0
+  Downloaded zmij v1.0.21
+  Downloaded dirs-sys v0.3.7
+  Downloaded generic-array v0.14.9
+  Downloaded unicase v2.9.0
+  Downloaded itoa v1.0.18
+  Downloaded crossbeam-utils v0.8.21
+  Downloaded unicode-ident v1.0.24
+  Downloaded getopts v0.2.24
+  Downloaded quote v1.0.45
+  Downloaded proc-macro2 v1.0.106
+  Downloaded serde_core v1.0.228
+  Downloaded log v0.4.29
+  Downloaded typenum v1.19.0
+  Downloaded toml v0.5.11
+  Downloaded serde v1.0.228
+  Downloaded memchr v2.8.0
+  Downloaded serde_derive v1.0.228
+  Downloaded crossbeam-channel v0.5.15
+  Downloaded itertools v0.9.0
+  Downloaded pulldown-cmark v0.8.0
+  Downloaded regex v1.12.3
+  Downloaded serde_json v1.0.149
+  Downloaded clap v2.34.0
+  Downloaded unicode-width v0.1.14
+  Downloaded unicode-width v0.2.2
+  Downloaded syn v2.0.117
+  Downloaded regex-syntax v0.8.10
+  Downloaded regex-automata v0.4.14
+  Downloaded libc v0.2.185
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+error: failed to compile `rust-script v0.7.0`, intermediate artifacts can be found at `/tmp/cargo-installLIAEA7`
+
+Caused by:
+  package `zmij v1.0.21` cannot be built because it requires rustc 1.71 or newer, while the currently active rustc version is 1.64.0
+error: failed to compile `rust-script v0.7.0`, intermediate artifacts can be found at `/tmp/cargo-install62IT7j`
+
+Caused by:
+  package `serde_json v1.0.149` cannot be built because it requires rustc 1.68 or newer, while the currently active rustc version is 1.64.0
+[cargo-make] INFO - Execute Command: "rust-script" "/tmp/fsio_O5hblMA3l5.rs"
+test scriptengine::mod_test::invoke_rust_runner_error - should panic ... ok
+[cargo-make] INFO - Execute Command: "rust-script" "/tmp/fsio_44L4ycHAFa.rs"
+test scriptengine::mod_test::invoke_rust_runner ... FAILED
+[cargo-make] INFO - Running Task: increment
+[cargo-make] INFO - Running Task: increment
+test scriptengine::duck_script::mod_test::cm_run_task_valid ... ok
+[cargo-make] INFO - Project: cargo-make
+[cargo-make] INFO - Build File: Makefile.toml
+[cargo-make] INFO - Task: empty
+[cargo-make] INFO - Profile: development
+[cargo-make] INFO - Running Task: legacy-migration
+[cargo-make] INFO - Build Done in 736.71 seconds.
+test cli::cli_test::run_set_task_var_args ... ok
+
+failures:
+
+---- condition::condition_test::validate_criteria_invalid_file_not_exists stdout ----
+thread 'condition::condition_test::validate_criteria_invalid_file_not_exists' panicked at 'assertion failed: !enabled', src/lib/condition_test.rs:1808:5
+
+---- condition::condition_test::validate_criteria_valid_file_exists stdout ----
+thread 'condition::condition_test::validate_criteria_valid_file_exists' panicked at 'assertion failed: enabled', src/lib/condition_test.rs:1655:5
+
+---- condition::condition_test::validate_file_exists_valid stdout ----
+thread 'condition::condition_test::validate_file_exists_valid' panicked at 'assertion failed: enabled', src/lib/condition_test.rs:1070:5
+
+---- condition::condition_test::validate_file_not_exists_invalid stdout ----
+thread 'condition::condition_test::validate_file_not_exists_invalid' panicked at 'assertion failed: !enabled', src/lib/condition_test.rs:1197:5
+
+---- condition::condition_test::validate_file_not_exists_partial_invalid stdout ----
+thread 'condition::condition_test::validate_file_not_exists_partial_invalid' panicked at 'assertion failed: !enabled', src/lib/condition_test.rs:1172:5
+
+---- descriptor::makefiles::mod_test::makefile_coverage_kcov_test stdout ----
+Unable to setup logger.
+thread 'descriptor::makefiles::mod_test::makefile_coverage_kcov_test' panicked at 'assertion failed: `(left == right)`
+  left: `true`,
+ right: `false`', src/lib/descriptor/makefiles/mod_test.rs:67:9
+
+---- descriptor::makefiles::mod_test::makefile_audit_test stdout ----
+thread 'descriptor::makefiles::mod_test::makefile_audit_test' panicked at 'assertion failed: `(left == right)`
+  left: `true`,
+ right: `false`', src/lib/descriptor/makefiles/mod_test.rs:67:9
+
+---- descriptor::makefiles::mod_test::makefile_outdated_test stdout ----
+thread 'descriptor::makefiles::mod_test::makefile_outdated_test' panicked at 'assertion failed: `(left == right)`
+  left: `true`,
+ right: `false`', src/lib/descriptor/makefiles/mod_test.rs:67:9
+
+---- environment::mod_test::get_base_directory_name_valid stdout ----
+thread 'environment::mod_test::get_base_directory_name_valid' panicked at 'assertion failed: `(left == right)`
+  left: `"workspace"`,
+ right: `"cargo-make"`', src/lib/environment/mod_test.rs:1812:5
+
+---- installer::crate_installer::crate_installer_test::install_already_installed_crate_only_min_version_smaller stdout ----
+thread 'installer::crate_installer::crate_installer_test::install_already_installed_crate_only_min_version_smaller' panicked at 'called `Option::unwrap()` on a `None` value', src/lib/installer/crate_installer_test.rs:207:82
+
+---- installer::crate_installer::crate_installer_test::install_already_installed_crate_only_min_version_equal stdout ----
+thread 'installer::crate_installer::crate_installer_test::install_already_installed_crate_only_min_version_equal' panicked at 'called `Option::unwrap()` on a `None` value', src/lib/installer/crate_installer_test.rs:181:78
+
+---- installer::crate_installer::crate_installer_test::install_already_installed_crate_only_version_equal stdout ----
+thread 'installer::crate_installer::crate_installer_test::install_already_installed_crate_only_version_equal' panicked at 'called `Option::unwrap()` on a `None` value', src/lib/installer/crate_installer_test.rs:241:78
+
+---- installer::crate_version_check::crate_version_check_test::is_min_version_valid_newer_version stdout ----
+thread 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_newer_version' panicked at 'assertion failed: !valid', src/lib/installer/crate_version_check_test.rs:239:5
+
+---- installer::crate_version_check::crate_version_check_test::is_min_version_valid_same_version stdout ----
+thread 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_same_version' panicked at 'called `Option::unwrap()` on a `None` value', src/lib/installer/crate_version_check_test.rs:244:57
+
+---- installer::crate_version_check::crate_version_check_test::is_version_valid_newer_version stdout ----
+thread 'installer::crate_version_check::crate_version_check_test::is_version_valid_newer_version' panicked at 'assertion failed: !valid', src/lib/installer/crate_version_check_test.rs:322:5
+
+---- installer::crate_version_check::crate_version_check_test::is_version_valid_old_version stdout ----
+thread 'installer::crate_version_check::crate_version_check_test::is_version_valid_old_version' panicked at 'assertion failed: !valid', src/lib/installer/crate_version_check_test.rs:315:5
+
+---- installer::crate_version_check::crate_version_check_test::is_version_valid_same_version stdout ----
+thread 'installer::crate_version_check::crate_version_check_test::is_version_valid_same_version' panicked at 'called `Option::unwrap()` on a `None` value', src/lib/installer/crate_version_check_test.rs:327:57
+
+---- installer::crate_version_check::crate_version_check_test::load_crates_toml_file_not_found stdout ----
+thread 'installer::crate_version_check::crate_version_check_test::load_crates_toml_file_not_found' panicked at 'called `Result::unwrap()` on an `Err` value: NotPresent', /root/.cargo/registry/src/-2affef09e7932d8e/envmnt-0.10.4/src/environment.rs:53:19
+
+---- installer::crate_version_check::crate_version_check_test::load_crates_toml_valid stdout ----
+thread 'installer::crate_version_check::crate_version_check_test::load_crates_toml_valid' panicked at 'called `Result::unwrap()` on an `Err` value: NotPresent', /root/.cargo/registry/src/-2affef09e7932d8e/envmnt-0.10.4/src/environment.rs:53:19
+
+---- toolchain::toolchain_test::get_cargo_binary_path_valid stdout ----
+thread 'toolchain::toolchain_test::get_cargo_binary_path_valid' panicked at 'called `Result::unwrap()` on an `Err` value: NotPresent', /root/.cargo/registry/src/-2affef09e7932d8e/envmnt-0.10.4/src/environment.rs:53:19
+
+---- toolchain::toolchain_test::wrap_command_empty_args stdout ----
+thread 'toolchain::toolchain_test::wrap_command_empty_args' panicked at 'called `Result::unwrap()` on an `Err` value: NotPresent', /root/.cargo/registry/src/-2affef09e7932d8e/envmnt-0.10.4/src/environment.rs:53:19
+
+---- toolchain::toolchain_test::wrap_command_none_args stdout ----
+thread 'toolchain::toolchain_test::wrap_command_none_args' panicked at 'called `Result::unwrap()` on an `Err` value: NotPresent', /root/.cargo/registry/src/-2affef09e7932d8e/envmnt-0.10.4/src/environment.rs:53:19
+
+---- toolchain::toolchain_test::wrap_command_with_args stdout ----
+thread 'toolchain::toolchain_test::wrap_command_with_args' panicked at 'called `Result::unwrap()` on an `Err` value: NotPresent', /root/.cargo/registry/src/-2affef09e7932d8e/envmnt-0.10.4/src/environment.rs:53:19
+
+---- installer::cargo_plugin_installer::cargo_plugin_installer_test::install_crate_already_installed_cargo_make stdout ----
+thread 'installer::cargo_plugin_installer::cargo_plugin_installer_test::install_crate_already_installed_cargo_make' panicked at 'test error flow: Error while executing command, exit code: 101', src/lib/logger.rs:150:21
+
+---- scriptengine::mod_test::invoke_rust_runner stdout ----
+Unable to setup logger.
+Unable to setup logger.
+thread 'scriptengine::mod_test::invoke_rust_runner' panicked at 'test error flow: Unable to execute rust code.', src/lib/logger.rs:150:21
+
+
+failures:
+    condition::condition_test::validate_criteria_invalid_file_not_exists
+    condition::condition_test::validate_criteria_valid_file_exists
+    condition::condition_test::validate_file_exists_valid
+    condition::condition_test::validate_file_not_exists_invalid
+    condition::condition_test::validate_file_not_exists_partial_invalid
+    descriptor::makefiles::mod_test::makefile_audit_test
+    descriptor::makefiles::mod_test::makefile_coverage_kcov_test
+    descriptor::makefiles::mod_test::makefile_outdated_test
+    environment::mod_test::get_base_directory_name_valid
+    installer::cargo_plugin_installer::cargo_plugin_installer_test::install_crate_already_installed_cargo_make
+    installer::crate_installer::crate_installer_test::install_already_installed_crate_only_min_version_equal
+    installer::crate_installer::crate_installer_test::install_already_installed_crate_only_min_version_smaller
+    installer::crate_installer::crate_installer_test::install_already_installed_crate_only_version_equal
+    installer::crate_version_check::crate_version_check_test::is_min_version_valid_newer_version
+    installer::crate_version_check::crate_version_check_test::is_min_version_valid_same_version
+    installer::crate_version_check::crate_version_check_test::is_version_valid_newer_version
+    installer::crate_version_check::crate_version_check_test::is_version_valid_old_version
+    installer::crate_version_check::crate_version_check_test::is_version_valid_same_version
+    installer::crate_version_check::crate_version_check_test::load_crates_toml_file_not_found
+    installer::crate_version_check::crate_version_check_test::load_crates_toml_valid
+    scriptengine::mod_test::invoke_rust_runner
+    toolchain::toolchain_test::get_cargo_binary_path_valid
+    toolchain::toolchain_test::wrap_command_empty_args
+    toolchain::toolchain_test::wrap_command_none_args
+    toolchain::toolchain_test::wrap_command_with_args
+
+test result: FAILED. 793 passed; 25 failed; 261 ignored; 0 measured; 0 filtered out; finished in 736.71s
+
+     Running unittests src/main.rs (target/debug/deps/cargo_make-1f8f2d37896295ca)
+
+running 1 test
+test main_test::get_name_test ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/makers.rs (target/debug/deps/makers-84f192ea3a806505)
+
+running 1 test
+test makers_test::get_name_test ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests cli
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass '--lib'
++ cd src/lib/test/workspace1
++ cargo test --no-fail-fast --all-features
+   Compiling member2 v5.4.3 (/workspace/src/lib/test/workspace1/member2)
+   Compiling member1 v1.0.0 (/workspace/src/lib/test/workspace1/member1)
+    Finished test [unoptimized + debuginfo] target(s) in 0.36s
+     Running unittests src/lib.rs (target/debug/deps/member1-642562e0b3de3656)
+
+running 1 test
+test tests::it_works ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/member2-91a69d7a535a93ce)
+
+running 1 test
+test tests::it_works ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests member1
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests member2
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../../../../
++ cd src/lib/test/workspace1/member2
++ cargo test --no-fail-fast --all-features
+    Finished test [unoptimized + debuginfo] target(s) in 0.00s
+     Running unittests src/lib.rs (/workspace/src/lib/test/workspace1/target/debug/deps/member2-91a69d7a535a93ce)
+
+running 1 test
+test tests::it_works ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests member2
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../../../../../
++ git reset --hard 6f82c9ec41374598a4fda5dde232fda7a557865d
+HEAD is now at 6f82c9ec Merge pull request #713 from sagiegurari/dependabot/cargo/serde-1.0.145
++ git clean -fd
+Removing .cargo/
+Removing dev/
+Removing examples/workspace-inherit/
+Removing src/lib/test/workspace-inherit/
+Removing src/lib/test/workspace1/Cargo.lock
+Removing src/lib/test/workspace1/member1/Cargo.toml
+Removing src/lib/test/workspace1/member1/src/
+Removing src/lib/test/workspace1/member2/src/
+Removing src/lib/test/workspace1/target/

@@ -1,0 +1,229 @@
+2026-04-17 09:44:19,029 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-411
+Building instance image rustbench/rinja-rs__askama:pr-411 for rinja-rs__askama-411
+2026-04-17 09:51:54,831 - INFO - Creating container for rinja-rs__askama-411...
+2026-04-17 09:51:55,075 - INFO - Container for rinja-rs__askama-411 created: baef6e7057497677a5ed1071d472c3575e271807f745fff06430979c606a7622
+2026-04-17 09:51:55,248 - INFO - Container for rinja-rs__askama-411 started: baef6e7057497677a5ed1071d472c3575e271807f745fff06430979c606a7622
+2026-04-17 09:51:55,248 - INFO - Intermediate patch for rinja-rs__askama-411 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-411/patch.diff, now applying to container...
+2026-04-17 09:51:55,462 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/generator.rs...
+Checking patch book/src/template_syntax.md...
+Checking patch book/src/template_syntax.md...
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch book/src/template_syntax.md cleanly.
+Applied patch book/src/template_syntax.md cleanly.
+
+2026-04-17 09:51:55,516 - INFO - Git diff before:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index ab964e9..b5f98ec 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -876,16 +876,34 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+ 
+         match *var {
+             Target::Name(name) => {
+-                if !self.locals.contains(&name) {
++                let meta = self.locals.get(&name).cloned();
++
++                let shadowed = matches!(&meta, Some(meta) if meta.initialized);
++                if shadowed {
++                    // Need to flush the buffer if the variable is being shadowed,
++                    // to ensure the old variable is used.
++                    self.write_buf_writable(buf)?;
++                }
++                if shadowed || meta.is_none() {
+                     buf.write("let ");
+-                    self.locals.insert_with_default(name);
+                 }
+                 buf.write(name);
++
++                self.locals.insert(name, LocalMeta::initialized());
+             }
+             Target::Tuple(ref targets) => {
++                let shadowed = targets
++                    .iter()
++                    .any(|name| matches!(self.locals.get(&name), Some(meta) if meta.initialized));
++                if shadowed {
++                    // Need to flush the buffer if the variable is being shadowed,
++                    // to ensure the old variable is used.
++                    self.write_buf_writable(buf)?;
++                }
++
+                 buf.write("let (");
+                 for name in targets {
+-                    self.locals.insert_with_default(name);
++                    self.locals.insert(name, LocalMeta::initialized());
+                     buf.write(name);
+                     buf.write(",");
+                 }
+@@ -1576,14 +1594,25 @@ impl Buffer {
+     }
+ }
+ 
+-#[derive(Default)]
++#[derive(Clone, Default)]
+ struct LocalMeta {
+     refs: Option<String>,
++    initialized: bool,
+ }
+ 
+ impl LocalMeta {
++    fn initialized() -> Self {
++        Self {
++            refs: None,
++            initialized: true,
++        }
++    }
++
+     fn with_ref(refs: String) -> Self {
+-        Self { refs: Some(refs) }
++        Self {
++            refs: Some(refs),
++            initialized: true,
++        }
+     }
+ }
+ 
+diff --git a/book/src/template_syntax.md b/book/src/template_syntax.md
+index c3635eb..755d283 100644
+--- a/book/src/template_syntax.md
++++ b/book/src/template_syntax.md
+@@ -18,7 +18,7 @@ Assignments can't be imported by other templates.
+ 
+ Assignments use the `let` tag:
+ 
+-```text
++```jinja
+ {% let name = user.name %}
+ {% let len = name.len() %}
+ 
+@@ -31,6 +31,16 @@ Assignments use the `let` tag:
+ {{ val }}
+ ```
+ 
++Like Rust, Askama also supports shadowing variables.
++
++```jinja
++{% let foo = "bar" %}
++{{ foo }}
++
++{% let foo = "baz" %}
++{{ foo }}
++```
++
+ For compatibility with Jinja, `set` can be used in place of `let`.
+ 
+ ## Filters
+2026-04-17 09:51:55,516 - INFO - Eval script for rinja-rs__askama-411 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-411/eval.sh; copying to container...
+2026-04-17 09:53:21,357 - INFO - Test runtime: 85.72 seconds
+2026-04-17 09:53:21,358 - INFO - Test output for rinja-rs__askama-411 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-411/test_output.txt
+2026-04-17 09:53:21,600 - INFO - Git diff after:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index ab964e9..b5f98ec 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -876,16 +876,34 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+ 
+         match *var {
+             Target::Name(name) => {
+-                if !self.locals.contains(&name) {
++                let meta = self.locals.get(&name).cloned();
++
++                let shadowed = matches!(&meta, Some(meta) if meta.initialized);
++                if shadowed {
++                    // Need to flush the buffer if the variable is being shadowed,
++                    // to ensure the old variable is used.
++                    self.write_buf_writable(buf)?;
++                }
++                if shadowed || meta.is_none() {
+                     buf.write("let ");
+-                    self.locals.insert_with_default(name);
+                 }
+                 buf.write(name);
++
++                self.locals.insert(name, LocalMeta::initialized());
+             }
+             Target::Tuple(ref targets) => {
++                let shadowed = targets
++                    .iter()
++                    .any(|name| matches!(self.locals.get(&name), Some(meta) if meta.initialized));
++                if shadowed {
++                    // Need to flush the buffer if the variable is being shadowed,
++                    // to ensure the old variable is used.
++                    self.write_buf_writable(buf)?;
++                }
++
+                 buf.write("let (");
+                 for name in targets {
+-                    self.locals.insert_with_default(name);
++                    self.locals.insert(name, LocalMeta::initialized());
+                     buf.write(name);
+                     buf.write(",");
+                 }
+@@ -1576,14 +1594,25 @@ impl Buffer {
+     }
+ }
+ 
+-#[derive(Default)]
++#[derive(Clone, Default)]
+ struct LocalMeta {
+     refs: Option<String>,
++    initialized: bool,
+ }
+ 
+ impl LocalMeta {
++    fn initialized() -> Self {
++        Self {
++            refs: None,
++            initialized: true,
++        }
++    }
++
+     fn with_ref(refs: String) -> Self {
+-        Self { refs: Some(refs) }
++        Self {
++            refs: Some(refs),
++            initialized: true,
++        }
+     }
+ }
+ 
+diff --git a/book/src/template_syntax.md b/book/src/template_syntax.md
+index c3635eb..755d283 100644
+--- a/book/src/template_syntax.md
++++ b/book/src/template_syntax.md
+@@ -18,7 +18,7 @@ Assignments can't be imported by other templates.
+ 
+ Assignments use the `let` tag:
+ 
+-```text
++```jinja
+ {% let name = user.name %}
+ {% let len = name.len() %}
+ 
+@@ -31,6 +31,16 @@ Assignments use the `let` tag:
+ {{ val }}
+ ```
+ 
++Like Rust, Askama also supports shadowing variables.
++
++```jinja
++{% let foo = "bar" %}
++{{ foo }}
++
++{% let foo = "baz" %}
++{{ foo }}
++```
++
+ For compatibility with Jinja, `set` can be used in place of `let`.
+ 
+ ## Filters
+2026-04-17 09:53:21,600 - INFO - Grading answer for rinja-rs__askama-411...
+2026-04-17 09:53:21,601 - INFO - report: {'rinja-rs__askama-411': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_if_let', 'test_let', 'test_let_decl', 'test_self_iter', 'test_let_tuple'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-411: resolved: True
+2026-04-17 09:53:21,601 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-411.gold_run1...
+2026-04-17 09:54:22,850 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-411.gold_run1...
+2026-04-17 09:54:22,915 - INFO - Container rustb.eval.rinja-rs__askama-411.gold_run1 removed.
+2026-04-17 09:54:22,915 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-411...
+2026-04-17 09:54:23,736 - INFO - Image rustbench/rinja-rs__askama:pr-411 removed.

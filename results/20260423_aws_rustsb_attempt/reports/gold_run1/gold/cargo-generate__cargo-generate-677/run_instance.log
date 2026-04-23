@@ -1,0 +1,1035 @@
+2026-04-17 03:22:33,761 - INFO - Environment image rustb.env.x86_64.cargo-generate_cargo-generate:latest found for cargo-generate__cargo-generate-677
+Building instance image rustbench/cargo-generate__cargo-generate:pr-677 for cargo-generate__cargo-generate-677
+2026-04-17 03:34:09,848 - INFO - Creating container for cargo-generate__cargo-generate-677...
+2026-04-17 03:34:13,763 - INFO - Container for cargo-generate__cargo-generate-677 created: 0e15e195154125ca61a1e1aebb56717a9b4334695353bd4e5d6ef89ff1684ab0
+2026-04-17 03:34:13,929 - INFO - Container for cargo-generate__cargo-generate-677 started: 0e15e195154125ca61a1e1aebb56717a9b4334695353bd4e5d6ef89ff1684ab0
+2026-04-17 03:34:13,929 - INFO - Intermediate patch for cargo-generate__cargo-generate-677 written to logs/run_evaluation/gold_run1/gold/cargo-generate__cargo-generate-677/patch.diff, now applying to container...
+2026-04-17 03:34:14,132 - INFO - >>>>> Applied Patch:
+Checking patch CHANGELOG.md...
+Checking patch guide/src/favorites.md...
+Checking patch src/app_config.rs...
+Checking patch src/app_config.rs...
+Checking patch src/args.rs...
+Checking patch src/args.rs...
+Checking patch src/args.rs...
+Checking patch src/config.rs...
+Checking patch src/config.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/user_parsed_input.rs...
+Checking patch src/user_parsed_input.rs...
+Checking patch src/user_parsed_input.rs...
+Checking patch src/user_parsed_input.rs...
+Checking patch src/user_parsed_input.rs...
+Checking patch src/user_parsed_input.rs...
+Checking patch src/user_parsed_input.rs...
+Checking patch src/user_parsed_input.rs...
+Checking patch src/user_parsed_input.rs...
+Applied patch CHANGELOG.md cleanly.
+Applied patch guide/src/favorites.md cleanly.
+Applied patch src/app_config.rs cleanly.
+Applied patch src/app_config.rs cleanly.
+Applied patch src/args.rs cleanly.
+Applied patch src/args.rs cleanly.
+Applied patch src/args.rs cleanly.
+Applied patch src/config.rs cleanly.
+Applied patch src/config.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+
+2026-04-17 03:34:14,187 - INFO - Git diff before:
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 2cfdde7..02859f0 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,8 +1,8 @@
+ # Changelog
+ 
+ ## [Unreleased](https://github.com/cargo-generate/cargo-generate/compare/v0.15.2...HEAD)
+-
+ ### ✨ Features
++- [Set default VCS in the favorite or template config](https://github.com/cargo-generate/cargo-generate/issues/635)
+ - [Add case filters to `liquid` and functions to `Rhai`. Enables case changing functionallity from both `liquid` and `Rhai`](https://github.com/cargo-generate/cargo-generate/issues/638)
+ - [Add placeholder `{{is_init}}`. Enables templates to adust if they are expanded with the `--init` arg for `cargo-generate`](https://github.com/cargo-generate/cargo-generate/issues/649)
+ 
+diff --git a/Cargo.lock b/Cargo.lock
+index 4d8548f..085119a 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -202,9 +202,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap_lex"
+-version = "0.2.2"
++version = "0.2.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5538cd660450ebeb4234cfecf8f2284b844ffc4c50531e66d584ad5b91293613"
++checksum = "2850f2f5a82cbf437dd5af4d49848fbdfc27c157c3d010345776f952765261c5"
+ dependencies = [
+  "os_str_bytes",
+ ]
+@@ -226,9 +226,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "crossbeam-channel"
+-version = "0.5.4"
++version = "0.5.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5aaa7bd5fb665c6864b5f963dd9097905c54125909c7aa94c9e18507cdbe6c53"
++checksum = "4c02a4d71819009c192cf4872265391563fd6a84c81ff2c0f2a7026ca4c1d85c"
+ dependencies = [
+  "cfg-if",
+  "crossbeam-utils",
+@@ -247,26 +247,26 @@ dependencies = [
+ 
+ [[package]]
+ name = "crossbeam-epoch"
+-version = "0.9.8"
++version = "0.9.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1145cf131a2c6ba0615079ab6a638f7e1973ac9c2634fcbeaaad6114246efe8c"
++checksum = "07db9d94cbd326813772c968ccd25999e5f8ae22f4f8d1b11effa37ef6ce281d"
+ dependencies = [
+  "autocfg",
+  "cfg-if",
+  "crossbeam-utils",
+- "lazy_static",
+  "memoffset",
++ "once_cell",
+  "scopeguard",
+ ]
+ 
+ [[package]]
+ name = "crossbeam-utils"
+-version = "0.8.8"
++version = "0.8.10"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0bf124c720b7686e3c2663cf54062ab0f68a88af2fb6a030e87e30bf721fcb38"
++checksum = "7d82ee10ce34d7bc12c2122495e7593a9c41347ecdd64185af4ecf72cb1a7f83"
+ dependencies = [
+  "cfg-if",
+- "lazy_static",
++ "once_cell",
+ ]
+ 
+ [[package]]
+@@ -276,7 +276,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "3495912c9c1ccf2e18976439f4443f3fee0fd61f424ff99fde6a66b15ecb448f"
+ dependencies = [
+  "cfg-if",
+- "hashbrown 0.12.1",
++ "hashbrown",
+  "lock_api",
+  "parking_lot_core",
+ ]
+@@ -335,9 +335,9 @@ checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
+ 
+ [[package]]
+ name = "either"
+-version = "1.6.1"
++version = "1.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
++checksum = "3f107b87b6afc2a64fd13cac55fe06d6c8859f12d4b14cbcdd2c67d0976781be"
+ 
+ [[package]]
+ name = "encode_unicode"
+@@ -621,12 +621,6 @@ dependencies = [
+  "regex",
+ ]
+ 
+-[[package]]
+-name = "hashbrown"
+-version = "0.11.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
+-
+ [[package]]
+ name = "hashbrown"
+ version = "0.12.1"
+@@ -694,12 +688,12 @@ dependencies = [
+ 
+ [[package]]
+ name = "indexmap"
+-version = "1.8.2"
++version = "1.9.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e6012d540c5baa3589337a98ce73408de9b5a25ec9fc2c6fd6be8f0d39e0ca5a"
++checksum = "10a35a97730320ffe8e2d410b5d3b69279b98d2c14bdb8b70ea89ecf7888d41e"
+ dependencies = [
+  "autocfg",
+- "hashbrown 0.11.2",
++ "hashbrown",
+ ]
+ 
+ [[package]]
+@@ -985,9 +979,9 @@ checksum = "830b246a0e5f20af87141b25c173cd1b609bd7779a4617d6ec582abaf90870f3"
+ 
+ [[package]]
+ name = "once_cell"
+-version = "1.12.0"
++version = "1.13.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7709cef83f0c1f58f666e746a08b21e0085f7440fa6a29cc194d68aac97a4225"
++checksum = "18a6dbe30758c9f83eb00cbea4ac95966305f5a7772f3f42ebfc7fc7eddbd8e1"
+ 
+ [[package]]
+ name = "opaque-debug"
+@@ -1029,9 +1023,9 @@ checksum = "ff011a302c396a5197692431fc1948019154afc178baf7d8e37367442a4601cf"
+ 
+ [[package]]
+ name = "openssl-src"
+-version = "111.20.0+1.1.1o"
++version = "111.21.0+1.1.1p"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "92892c4f87d56e376e469ace79f1128fdaded07646ddf73aa0be4706ff712dec"
++checksum = "6d0a8313729211913936f1b95ca47a5fc7f2e04cd658c115388287f8a8361008"
+ dependencies = [
+  "cc",
+ ]
+@@ -1210,9 +1204,9 @@ checksum = "dbf0c48bc1d91375ae5c3cd81e3722dff1abcf81a30960240640d223f59fe0e5"
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.39"
++version = "1.0.40"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c54b25569025b7fc9651de43004ae593a75ad88543b17178aa5e1b9c4f15f56f"
++checksum = "dd96a1e8ed2596c337f8eae5f24924ec83f5ad5ab21ea8e455d3566c69fbcaf7"
+ dependencies = [
+  "unicode-ident",
+ ]
+@@ -1249,9 +1243,9 @@ checksum = "a993555f31e5a609f617c12db6250dedcac1b0a85076912c436e6fc9b2c8e6a3"
+ 
+ [[package]]
+ name = "quote"
+-version = "1.0.18"
++version = "1.0.20"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a1feb54ed693b93a84e14094943b84b7c4eae204c512b7ccb95ab0c66d278ad1"
++checksum = "3bcdf212e9776fbcb2d23ab029360416bb1706b1aea2d1a5ba002727cbcab804"
+ dependencies = [
+  "proc-macro2",
+ ]
+@@ -1464,9 +1458,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "smallvec"
+-version = "1.8.0"
++version = "1.9.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f2dd574626839106c320a323308629dcb1acfc96e32a8cba364ddc61ac23ee83"
++checksum = "2fd0db749597d91ff862fd1d55ea87f7855a744a8425a64695b6fca237d1dad1"
+ 
+ [[package]]
+ name = "smartstring"
+@@ -1487,9 +1481,9 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
+ 
+ [[package]]
+ name = "syn"
+-version = "1.0.96"
++version = "1.0.98"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0748dd251e24453cb8717f0354206b91557e4ec8703673a4b30208f2abaf1ebf"
++checksum = "c50aef8a904de4c23c788f104b7dddc7d6f79c647c7c8ce4cc8f73eb0ca773dd"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1563,9 +1557,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "time"
+-version = "0.3.9"
++version = "0.3.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c2702e08a7a860f005826c6815dcac101b19b5eb330c27fe4a5928fec1d20ddd"
++checksum = "72c91f41dcb2f096c05f0873d667dceec1087ce5bcf984ec8ffb19acddbb3217"
+ dependencies = [
+  "itoa",
+  "libc",
+@@ -1635,9 +1629,9 @@ checksum = "5bd2fe26506023ed7b5e1e315add59d6f584c621d037f9368fea9cfb988f368c"
+ 
+ [[package]]
+ name = "unicode-normalization"
+-version = "0.1.19"
++version = "0.1.21"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d54590932941a9e9266f0832deed84ebe1bf2e4c9e4a3554d393d18f5e854bf9"
++checksum = "854cbdc4f7bc6ae19c820d44abdc3277ac3e1b2b93db20a636825d9322fb60e6"
+ dependencies = [
+  "tinyvec",
+ ]
+@@ -1823,6 +1817,6 @@ checksum = "f4dd6dc7df2d84cf7b33822ed5b86318fb1781948e9663bacd047fc9dd52259d"
+ 
+ [[package]]
+ name = "zeroize"
+-version = "1.5.5"
++version = "1.5.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "94693807d016b2f2d2e14420eb3bfcca689311ff775dcf113d74ea624b7cdf07"
++checksum = "20b578acffd8516a6c3f2a1bdefc1ec37e547bb4e0fb8b6b01a4cafc886b4442"
+diff --git a/guide/src/favorites.md b/guide/src/favorites.md
+index eb432d7..0c1c3c2 100644
+--- a/guide/src/favorites.md
++++ b/guide/src/favorites.md
+@@ -13,6 +13,7 @@ description = "<optional description, visible with --list-favorites>"
+ git = "https://github.com/ashleygwilliams/wasm-pack-template"
+ branch = "<optional-branch>"
+ subfolder = "<optional-subfolder>"
++vcs = "<optional: None|Git>"
+ init = optional true|false
+ ```
+ 
+diff --git a/src/app_config.rs b/src/app_config.rs
+index 15a9727..0a085e3 100644
+--- a/src/app_config.rs
++++ b/src/app_config.rs
+@@ -7,7 +7,7 @@ use std::{
+     path::{Path, PathBuf},
+ };
+ 
+-use crate::info;
++use crate::{info, Vcs};
+ 
+ pub const CONFIG_FILE_NAME: &str = "cargo-generate.toml";
+ 
+@@ -33,6 +33,7 @@ pub struct FavoriteConfig {
+     pub subfolder: Option<String>,
+     pub path: Option<PathBuf>,
+     pub values: Option<HashMap<String, toml::Value>>,
++    pub vcs: Option<Vcs>,
+     pub init: Option<bool>,
+ }
+ 
+diff --git a/src/args.rs b/src/args.rs
+index cf024ba..40f7b8a 100644
+--- a/src/args.rs
++++ b/src/args.rs
+@@ -5,6 +5,7 @@ use std::{
+ 
+ use anyhow::{anyhow, Result};
+ use clap::{Args, Parser};
++use serde::Deserialize;
+ 
+ use crate::git;
+ 
+@@ -77,10 +78,10 @@ pub struct GenerateArgs {
+     pub config: Option<PathBuf>,
+ 
+     /// Specify the VCS used to initialize the generated template.
+-    #[clap(long, default_value = "git", value_parser)]
+-    pub vcs: Vcs,
++    #[clap(long, value_parser)]
++    pub vcs: Option<Vcs>,
+ 
+-    /// Populates a template variable `crate_type` with value `"lib"`
++    /// Populates template variable `crate_type` with value `"lib"`
+     #[clap(long, conflicts_with = "bin", action)]
+     pub lib: bool,
+ 
+@@ -199,7 +200,7 @@ impl TemplatePath {
+     }
+ }
+ 
+-#[derive(Debug, Parser, Clone, Copy)]
++#[derive(Debug, Parser, Clone, Copy, PartialEq, Eq, Deserialize)]
+ pub enum Vcs {
+     None,
+     Git,
+diff --git a/src/config.rs b/src/config.rs
+index 31b5111..0803018 100644
+--- a/src/config.rs
++++ b/src/config.rs
+@@ -6,6 +6,8 @@ use std::{collections::HashMap, fs};
+ use std::{convert::TryFrom, io::ErrorKind};
+ use walkdir::WalkDir;
+ 
++use crate::Vcs;
++
+ pub const CONFIG_FILE_NAME: &str = "cargo-generate.toml";
+ 
+ #[derive(Deserialize, Debug, PartialEq, Default, Clone)]
+@@ -28,6 +30,7 @@ pub struct TemplateConfig {
+     pub include: Option<Vec<String>>,
+     pub exclude: Option<Vec<String>>,
+     pub ignore: Option<Vec<String>>,
++    pub vcs: Option<Vcs>,
+     pub init: Option<bool>,
+ }
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+index cc0cd45..e5cffc0 100755
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -132,7 +132,7 @@ pub fn generate(mut args: GenerateArgs) -> Result<PathBuf> {
+         &project_dir,
+         &project_name,
+         &template_folder,
+-        template_config,
++        &template_config,
+         &args,
+     )?;
+ 
+@@ -145,10 +145,13 @@ pub fn generate(mut args: GenerateArgs) -> Result<PathBuf> {
+     );
+     copy_dir_all(&template_folder, &project_dir)?;
+ 
+-    if !args.vcs.is_none() && (!source_template.init() || args.force_git_init) {
++    let vcs = template_config
++        .template
++        .and_then(|t| t.vcs)
++        .unwrap_or_else(|| source_template.vcs());
++    if !vcs.is_none() && (!source_template.init || args.force_git_init) {
+         info!("{}", style("Initializing a fresh Git repository").bold());
+-        args.vcs
+-            .initialize(&project_dir, branch, args.force_git_init)?;
++        vcs.initialize(&project_dir, branch, args.force_git_init)?;
+     }
+ 
+     println!(
+@@ -415,7 +418,7 @@ fn expand_template(
+     project_dir: &Path,
+     project_name: &ProjectName,
+     template_dir: &Path,
+-    template_config: Config,
++    template_config: &Config,
+     args: &GenerateArgs,
+ ) -> Result<()> {
+     let template_values = source_template.template_values();
+@@ -428,7 +431,7 @@ fn expand_template(
+         source_template,
+     )?;
+     let liquid_object =
+-        project_variables::fill_project_variables(liquid_object, &template_config, |slot| {
++        project_variables::fill_project_variables(liquid_object, template_config, |slot| {
+             let provided_value = template_values.get(&slot.var_name).and_then(|v| v.as_str());
+             if provided_value.is_none() && args.silent {
+                 anyhow::bail!(ConversionError::MissingPlaceholderVariable {
+@@ -439,7 +442,7 @@ fn expand_template(
+         })?;
+     let liquid_object = add_missing_provided_values(liquid_object, template_values)?;
+     let (mut template_cfg, liquid_object) =
+-        merge_conditionals(&template_config, liquid_object, args)?;
++        merge_conditionals(template_config, liquid_object, args)?;
+ 
+     let all_hook_files = template_config.get_hook_files();
+ 
+@@ -448,7 +451,7 @@ fn expand_template(
+     execute_pre_hooks(
+         template_dir,
+         Rc::clone(&liquid_object),
+-        &template_config,
++        template_config,
+         args.allow_commands,
+         args.silent,
+     )?;
+@@ -471,7 +474,7 @@ fn expand_template(
+     execute_post_hooks(
+         template_dir,
+         Rc::clone(&liquid_object),
+-        &template_config,
++        template_config,
+         args.allow_commands,
+         args.silent,
+     )?;
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+index 00f2b5d..000a5ac 100644
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -8,7 +8,7 @@ use std::{
+ use console::style;
+ use regex::Regex;
+ 
+-use crate::{app_config::AppConfig, warn, GenerateArgs};
++use crate::{app_config::AppConfig, warn, GenerateArgs, Vcs};
+ 
+ // Contains parsed information from user.
+ #[derive(Debug)]
+@@ -22,6 +22,7 @@ pub struct UserParsedInput {
+     // 2. configuration file
+     // 3. cli arguments --define
+     template_values: HashMap<String, toml::Value>,
++    vcs: Vcs,
+     pub init: bool,
+     //TODO:
+     // 1. This structure should be used instead of args
+@@ -34,12 +35,14 @@ impl UserParsedInput {
+         template_location: impl Into<TemplateLocation>,
+         subfolder: Option<T>,
+         default_values: HashMap<String, toml::Value>,
++        vcs: Vcs,
+         init: bool,
+     ) -> Self {
+         Self {
+             template_location: template_location.into(),
+             subfolder: subfolder.map(|s| s.as_ref().to_owned()),
+             template_values: default_values,
++            vcs,
+             init,
+         }
+     }
+@@ -50,6 +53,8 @@ impl UserParsedInput {
+     /// This function assume that Args and AppConfig are verfied eariler and are logicly correct
+     /// For example if both `--git` and `--path` are set this function will panic
+     pub fn try_from_args_and_config(app_config: &AppConfig, args: &GenerateArgs) -> Self {
++        const DEFAULT_VCS: Vcs = Vcs::Git;
++
+         let mut default_values = app_config.values.clone().unwrap_or_default();
+         let ssh_identity = app_config
+             .defaults
+@@ -70,6 +75,7 @@ impl UserParsedInput {
+                 git_user_in,
+                 args.template_path.subfolder(),
+                 default_values,
++                args.vcs.unwrap_or(DEFAULT_VCS),
+                 args.init,
+             );
+         }
+@@ -80,6 +86,7 @@ impl UserParsedInput {
+                 path.as_ref(),
+                 args.template_path.subfolder(),
+                 default_values,
++                args.vcs.unwrap_or(DEFAULT_VCS),
+                 args.init,
+             );
+         }
+@@ -126,6 +133,8 @@ impl UserParsedInput {
+                     .map(|s| s.as_ref().to_owned())
+                     .or_else(|| fav_cfg.subfolder.clone()),
+                 default_values,
++                args.vcs
++                    .unwrap_or_else(|| fav_cfg.vcs.unwrap_or(DEFAULT_VCS)),
+                 args.init
+                     .then(|| true)
+                     .unwrap_or_else(|| fav_cfg.init.unwrap_or(false)),
+@@ -186,6 +195,7 @@ impl UserParsedInput {
+                 .subfolder()
+                 .map(|s| s.as_ref().to_owned()),
+             default_values,
++            args.vcs.unwrap_or(DEFAULT_VCS),
+             args.init,
+         )
+     }
+@@ -206,6 +216,10 @@ impl UserParsedInput {
+         &mut self.template_values
+     }
+ 
++    pub const fn vcs(&self) -> Vcs {
++        self.vcs
++    }
++
+     pub const fn init(&self) -> bool {
+         self.init
+     }
+2026-04-17 03:34:14,187 - INFO - Eval script for cargo-generate__cargo-generate-677 written to logs/run_evaluation/gold_run1/gold/cargo-generate__cargo-generate-677/eval.sh; copying to container...
+2026-04-17 03:36:20,508 - INFO - Test runtime: 126.17 seconds
+2026-04-17 03:36:20,508 - INFO - Test output for cargo-generate__cargo-generate-677 written to logs/run_evaluation/gold_run1/gold/cargo-generate__cargo-generate-677/test_output.txt
+2026-04-17 03:36:20,555 - INFO - Git diff after:
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 2cfdde7..02859f0 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,8 +1,8 @@
+ # Changelog
+ 
+ ## [Unreleased](https://github.com/cargo-generate/cargo-generate/compare/v0.15.2...HEAD)
+-
+ ### ✨ Features
++- [Set default VCS in the favorite or template config](https://github.com/cargo-generate/cargo-generate/issues/635)
+ - [Add case filters to `liquid` and functions to `Rhai`. Enables case changing functionallity from both `liquid` and `Rhai`](https://github.com/cargo-generate/cargo-generate/issues/638)
+ - [Add placeholder `{{is_init}}`. Enables templates to adust if they are expanded with the `--init` arg for `cargo-generate`](https://github.com/cargo-generate/cargo-generate/issues/649)
+ 
+diff --git a/Cargo.lock b/Cargo.lock
+index 4d8548f..085119a 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -202,9 +202,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap_lex"
+-version = "0.2.2"
++version = "0.2.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5538cd660450ebeb4234cfecf8f2284b844ffc4c50531e66d584ad5b91293613"
++checksum = "2850f2f5a82cbf437dd5af4d49848fbdfc27c157c3d010345776f952765261c5"
+ dependencies = [
+  "os_str_bytes",
+ ]
+@@ -226,9 +226,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "crossbeam-channel"
+-version = "0.5.4"
++version = "0.5.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5aaa7bd5fb665c6864b5f963dd9097905c54125909c7aa94c9e18507cdbe6c53"
++checksum = "4c02a4d71819009c192cf4872265391563fd6a84c81ff2c0f2a7026ca4c1d85c"
+ dependencies = [
+  "cfg-if",
+  "crossbeam-utils",
+@@ -247,26 +247,26 @@ dependencies = [
+ 
+ [[package]]
+ name = "crossbeam-epoch"
+-version = "0.9.8"
++version = "0.9.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1145cf131a2c6ba0615079ab6a638f7e1973ac9c2634fcbeaaad6114246efe8c"
++checksum = "07db9d94cbd326813772c968ccd25999e5f8ae22f4f8d1b11effa37ef6ce281d"
+ dependencies = [
+  "autocfg",
+  "cfg-if",
+  "crossbeam-utils",
+- "lazy_static",
+  "memoffset",
++ "once_cell",
+  "scopeguard",
+ ]
+ 
+ [[package]]
+ name = "crossbeam-utils"
+-version = "0.8.8"
++version = "0.8.10"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0bf124c720b7686e3c2663cf54062ab0f68a88af2fb6a030e87e30bf721fcb38"
++checksum = "7d82ee10ce34d7bc12c2122495e7593a9c41347ecdd64185af4ecf72cb1a7f83"
+ dependencies = [
+  "cfg-if",
+- "lazy_static",
++ "once_cell",
+ ]
+ 
+ [[package]]
+@@ -276,7 +276,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "3495912c9c1ccf2e18976439f4443f3fee0fd61f424ff99fde6a66b15ecb448f"
+ dependencies = [
+  "cfg-if",
+- "hashbrown 0.12.1",
++ "hashbrown",
+  "lock_api",
+  "parking_lot_core",
+ ]
+@@ -335,9 +335,9 @@ checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
+ 
+ [[package]]
+ name = "either"
+-version = "1.6.1"
++version = "1.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
++checksum = "3f107b87b6afc2a64fd13cac55fe06d6c8859f12d4b14cbcdd2c67d0976781be"
+ 
+ [[package]]
+ name = "encode_unicode"
+@@ -621,12 +621,6 @@ dependencies = [
+  "regex",
+ ]
+ 
+-[[package]]
+-name = "hashbrown"
+-version = "0.11.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
+-
+ [[package]]
+ name = "hashbrown"
+ version = "0.12.1"
+@@ -694,12 +688,12 @@ dependencies = [
+ 
+ [[package]]
+ name = "indexmap"
+-version = "1.8.2"
++version = "1.9.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e6012d540c5baa3589337a98ce73408de9b5a25ec9fc2c6fd6be8f0d39e0ca5a"
++checksum = "10a35a97730320ffe8e2d410b5d3b69279b98d2c14bdb8b70ea89ecf7888d41e"
+ dependencies = [
+  "autocfg",
+- "hashbrown 0.11.2",
++ "hashbrown",
+ ]
+ 
+ [[package]]
+@@ -985,9 +979,9 @@ checksum = "830b246a0e5f20af87141b25c173cd1b609bd7779a4617d6ec582abaf90870f3"
+ 
+ [[package]]
+ name = "once_cell"
+-version = "1.12.0"
++version = "1.13.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7709cef83f0c1f58f666e746a08b21e0085f7440fa6a29cc194d68aac97a4225"
++checksum = "18a6dbe30758c9f83eb00cbea4ac95966305f5a7772f3f42ebfc7fc7eddbd8e1"
+ 
+ [[package]]
+ name = "opaque-debug"
+@@ -1029,9 +1023,9 @@ checksum = "ff011a302c396a5197692431fc1948019154afc178baf7d8e37367442a4601cf"
+ 
+ [[package]]
+ name = "openssl-src"
+-version = "111.20.0+1.1.1o"
++version = "111.21.0+1.1.1p"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "92892c4f87d56e376e469ace79f1128fdaded07646ddf73aa0be4706ff712dec"
++checksum = "6d0a8313729211913936f1b95ca47a5fc7f2e04cd658c115388287f8a8361008"
+ dependencies = [
+  "cc",
+ ]
+@@ -1210,9 +1204,9 @@ checksum = "dbf0c48bc1d91375ae5c3cd81e3722dff1abcf81a30960240640d223f59fe0e5"
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.39"
++version = "1.0.40"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c54b25569025b7fc9651de43004ae593a75ad88543b17178aa5e1b9c4f15f56f"
++checksum = "dd96a1e8ed2596c337f8eae5f24924ec83f5ad5ab21ea8e455d3566c69fbcaf7"
+ dependencies = [
+  "unicode-ident",
+ ]
+@@ -1249,9 +1243,9 @@ checksum = "a993555f31e5a609f617c12db6250dedcac1b0a85076912c436e6fc9b2c8e6a3"
+ 
+ [[package]]
+ name = "quote"
+-version = "1.0.18"
++version = "1.0.20"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a1feb54ed693b93a84e14094943b84b7c4eae204c512b7ccb95ab0c66d278ad1"
++checksum = "3bcdf212e9776fbcb2d23ab029360416bb1706b1aea2d1a5ba002727cbcab804"
+ dependencies = [
+  "proc-macro2",
+ ]
+@@ -1464,9 +1458,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "smallvec"
+-version = "1.8.0"
++version = "1.9.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f2dd574626839106c320a323308629dcb1acfc96e32a8cba364ddc61ac23ee83"
++checksum = "2fd0db749597d91ff862fd1d55ea87f7855a744a8425a64695b6fca237d1dad1"
+ 
+ [[package]]
+ name = "smartstring"
+@@ -1487,9 +1481,9 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
+ 
+ [[package]]
+ name = "syn"
+-version = "1.0.96"
++version = "1.0.98"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0748dd251e24453cb8717f0354206b91557e4ec8703673a4b30208f2abaf1ebf"
++checksum = "c50aef8a904de4c23c788f104b7dddc7d6f79c647c7c8ce4cc8f73eb0ca773dd"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1563,9 +1557,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "time"
+-version = "0.3.9"
++version = "0.3.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c2702e08a7a860f005826c6815dcac101b19b5eb330c27fe4a5928fec1d20ddd"
++checksum = "72c91f41dcb2f096c05f0873d667dceec1087ce5bcf984ec8ffb19acddbb3217"
+ dependencies = [
+  "itoa",
+  "libc",
+@@ -1635,9 +1629,9 @@ checksum = "5bd2fe26506023ed7b5e1e315add59d6f584c621d037f9368fea9cfb988f368c"
+ 
+ [[package]]
+ name = "unicode-normalization"
+-version = "0.1.19"
++version = "0.1.21"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d54590932941a9e9266f0832deed84ebe1bf2e4c9e4a3554d393d18f5e854bf9"
++checksum = "854cbdc4f7bc6ae19c820d44abdc3277ac3e1b2b93db20a636825d9322fb60e6"
+ dependencies = [
+  "tinyvec",
+ ]
+@@ -1823,6 +1817,6 @@ checksum = "f4dd6dc7df2d84cf7b33822ed5b86318fb1781948e9663bacd047fc9dd52259d"
+ 
+ [[package]]
+ name = "zeroize"
+-version = "1.5.5"
++version = "1.5.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "94693807d016b2f2d2e14420eb3bfcca689311ff775dcf113d74ea624b7cdf07"
++checksum = "20b578acffd8516a6c3f2a1bdefc1ec37e547bb4e0fb8b6b01a4cafc886b4442"
+diff --git a/guide/src/favorites.md b/guide/src/favorites.md
+index eb432d7..0c1c3c2 100644
+--- a/guide/src/favorites.md
++++ b/guide/src/favorites.md
+@@ -13,6 +13,7 @@ description = "<optional description, visible with --list-favorites>"
+ git = "https://github.com/ashleygwilliams/wasm-pack-template"
+ branch = "<optional-branch>"
+ subfolder = "<optional-subfolder>"
++vcs = "<optional: None|Git>"
+ init = optional true|false
+ ```
+ 
+diff --git a/src/app_config.rs b/src/app_config.rs
+index 15a9727..0a085e3 100644
+--- a/src/app_config.rs
++++ b/src/app_config.rs
+@@ -7,7 +7,7 @@ use std::{
+     path::{Path, PathBuf},
+ };
+ 
+-use crate::info;
++use crate::{info, Vcs};
+ 
+ pub const CONFIG_FILE_NAME: &str = "cargo-generate.toml";
+ 
+@@ -33,6 +33,7 @@ pub struct FavoriteConfig {
+     pub subfolder: Option<String>,
+     pub path: Option<PathBuf>,
+     pub values: Option<HashMap<String, toml::Value>>,
++    pub vcs: Option<Vcs>,
+     pub init: Option<bool>,
+ }
+ 
+diff --git a/src/args.rs b/src/args.rs
+index cf024ba..40f7b8a 100644
+--- a/src/args.rs
++++ b/src/args.rs
+@@ -5,6 +5,7 @@ use std::{
+ 
+ use anyhow::{anyhow, Result};
+ use clap::{Args, Parser};
++use serde::Deserialize;
+ 
+ use crate::git;
+ 
+@@ -77,10 +78,10 @@ pub struct GenerateArgs {
+     pub config: Option<PathBuf>,
+ 
+     /// Specify the VCS used to initialize the generated template.
+-    #[clap(long, default_value = "git", value_parser)]
+-    pub vcs: Vcs,
++    #[clap(long, value_parser)]
++    pub vcs: Option<Vcs>,
+ 
+-    /// Populates a template variable `crate_type` with value `"lib"`
++    /// Populates template variable `crate_type` with value `"lib"`
+     #[clap(long, conflicts_with = "bin", action)]
+     pub lib: bool,
+ 
+@@ -199,7 +200,7 @@ impl TemplatePath {
+     }
+ }
+ 
+-#[derive(Debug, Parser, Clone, Copy)]
++#[derive(Debug, Parser, Clone, Copy, PartialEq, Eq, Deserialize)]
+ pub enum Vcs {
+     None,
+     Git,
+diff --git a/src/config.rs b/src/config.rs
+index 31b5111..0803018 100644
+--- a/src/config.rs
++++ b/src/config.rs
+@@ -6,6 +6,8 @@ use std::{collections::HashMap, fs};
+ use std::{convert::TryFrom, io::ErrorKind};
+ use walkdir::WalkDir;
+ 
++use crate::Vcs;
++
+ pub const CONFIG_FILE_NAME: &str = "cargo-generate.toml";
+ 
+ #[derive(Deserialize, Debug, PartialEq, Default, Clone)]
+@@ -28,6 +30,7 @@ pub struct TemplateConfig {
+     pub include: Option<Vec<String>>,
+     pub exclude: Option<Vec<String>>,
+     pub ignore: Option<Vec<String>>,
++    pub vcs: Option<Vcs>,
+     pub init: Option<bool>,
+ }
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+index cc0cd45..e5cffc0 100755
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -132,7 +132,7 @@ pub fn generate(mut args: GenerateArgs) -> Result<PathBuf> {
+         &project_dir,
+         &project_name,
+         &template_folder,
+-        template_config,
++        &template_config,
+         &args,
+     )?;
+ 
+@@ -145,10 +145,13 @@ pub fn generate(mut args: GenerateArgs) -> Result<PathBuf> {
+     );
+     copy_dir_all(&template_folder, &project_dir)?;
+ 
+-    if !args.vcs.is_none() && (!source_template.init() || args.force_git_init) {
++    let vcs = template_config
++        .template
++        .and_then(|t| t.vcs)
++        .unwrap_or_else(|| source_template.vcs());
++    if !vcs.is_none() && (!source_template.init || args.force_git_init) {
+         info!("{}", style("Initializing a fresh Git repository").bold());
+-        args.vcs
+-            .initialize(&project_dir, branch, args.force_git_init)?;
++        vcs.initialize(&project_dir, branch, args.force_git_init)?;
+     }
+ 
+     println!(
+@@ -415,7 +418,7 @@ fn expand_template(
+     project_dir: &Path,
+     project_name: &ProjectName,
+     template_dir: &Path,
+-    template_config: Config,
++    template_config: &Config,
+     args: &GenerateArgs,
+ ) -> Result<()> {
+     let template_values = source_template.template_values();
+@@ -428,7 +431,7 @@ fn expand_template(
+         source_template,
+     )?;
+     let liquid_object =
+-        project_variables::fill_project_variables(liquid_object, &template_config, |slot| {
++        project_variables::fill_project_variables(liquid_object, template_config, |slot| {
+             let provided_value = template_values.get(&slot.var_name).and_then(|v| v.as_str());
+             if provided_value.is_none() && args.silent {
+                 anyhow::bail!(ConversionError::MissingPlaceholderVariable {
+@@ -439,7 +442,7 @@ fn expand_template(
+         })?;
+     let liquid_object = add_missing_provided_values(liquid_object, template_values)?;
+     let (mut template_cfg, liquid_object) =
+-        merge_conditionals(&template_config, liquid_object, args)?;
++        merge_conditionals(template_config, liquid_object, args)?;
+ 
+     let all_hook_files = template_config.get_hook_files();
+ 
+@@ -448,7 +451,7 @@ fn expand_template(
+     execute_pre_hooks(
+         template_dir,
+         Rc::clone(&liquid_object),
+-        &template_config,
++        template_config,
+         args.allow_commands,
+         args.silent,
+     )?;
+@@ -471,7 +474,7 @@ fn expand_template(
+     execute_post_hooks(
+         template_dir,
+         Rc::clone(&liquid_object),
+-        &template_config,
++        template_config,
+         args.allow_commands,
+         args.silent,
+     )?;
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+index 00f2b5d..000a5ac 100644
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -8,7 +8,7 @@ use std::{
+ use console::style;
+ use regex::Regex;
+ 
+-use crate::{app_config::AppConfig, warn, GenerateArgs};
++use crate::{app_config::AppConfig, warn, GenerateArgs, Vcs};
+ 
+ // Contains parsed information from user.
+ #[derive(Debug)]
+@@ -22,6 +22,7 @@ pub struct UserParsedInput {
+     // 2. configuration file
+     // 3. cli arguments --define
+     template_values: HashMap<String, toml::Value>,
++    vcs: Vcs,
+     pub init: bool,
+     //TODO:
+     // 1. This structure should be used instead of args
+@@ -34,12 +35,14 @@ impl UserParsedInput {
+         template_location: impl Into<TemplateLocation>,
+         subfolder: Option<T>,
+         default_values: HashMap<String, toml::Value>,
++        vcs: Vcs,
+         init: bool,
+     ) -> Self {
+         Self {
+             template_location: template_location.into(),
+             subfolder: subfolder.map(|s| s.as_ref().to_owned()),
+             template_values: default_values,
++            vcs,
+             init,
+         }
+     }
+@@ -50,6 +53,8 @@ impl UserParsedInput {
+     /// This function assume that Args and AppConfig are verfied eariler and are logicly correct
+     /// For example if both `--git` and `--path` are set this function will panic
+     pub fn try_from_args_and_config(app_config: &AppConfig, args: &GenerateArgs) -> Self {
++        const DEFAULT_VCS: Vcs = Vcs::Git;
++
+         let mut default_values = app_config.values.clone().unwrap_or_default();
+         let ssh_identity = app_config
+             .defaults
+@@ -70,6 +75,7 @@ impl UserParsedInput {
+                 git_user_in,
+                 args.template_path.subfolder(),
+                 default_values,
++                args.vcs.unwrap_or(DEFAULT_VCS),
+                 args.init,
+             );
+         }
+@@ -80,6 +86,7 @@ impl UserParsedInput {
+                 path.as_ref(),
+                 args.template_path.subfolder(),
+                 default_values,
++                args.vcs.unwrap_or(DEFAULT_VCS),
+                 args.init,
+             );
+         }
+@@ -126,6 +133,8 @@ impl UserParsedInput {
+                     .map(|s| s.as_ref().to_owned())
+                     .or_else(|| fav_cfg.subfolder.clone()),
+                 default_values,
++                args.vcs
++                    .unwrap_or_else(|| fav_cfg.vcs.unwrap_or(DEFAULT_VCS)),
+                 args.init
+                     .then(|| true)
+                     .unwrap_or_else(|| fav_cfg.init.unwrap_or(false)),
+@@ -186,6 +195,7 @@ impl UserParsedInput {
+                 .subfolder()
+                 .map(|s| s.as_ref().to_owned()),
+             default_values,
++            args.vcs.unwrap_or(DEFAULT_VCS),
+             args.init,
+         )
+     }
+@@ -206,6 +216,10 @@ impl UserParsedInput {
+         &mut self.template_values
+     }
+ 
++    pub const fn vcs(&self) -> Vcs {
++        self.vcs
++    }
++
+     pub const fn init(&self) -> bool {
+         self.init
+     }
+2026-04-17 03:36:20,556 - INFO - Grading answer for cargo-generate__cargo-generate-677...
+2026-04-17 03:36:20,557 - INFO - report: {'cargo-generate__cargo-generate-677': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['config::tests::config_try_from_handles_empty', 'config::tests::config_try_from_errors_on_invalid_keys', 'config::tests::config_try_from_handles_placeholders', 'git::utils::should_canonicalize', 'project_variables::tests::boolean_cant_have_choices', 'project_variables::tests::block_invalid_key_names', 'project_variables::tests::bools_cant_have_regex', 'git::identity_path::tests::should_pretty_path', 'project_variables::tests::choices_array_cant_have_anything_but_strings', 'project_variables::tests::choices_cant_be_an_empty_array', 'config::tests::test_deserializes_config', 'project_variables::tests::choices_is_array_string_no_regex_is_fine', 'git::gitconfig::test::should_resolve_instead_url', 'config::tests::locate_configs_returns_empty_upon_failure', 'config::tests::locate_configs_can_locate_paths_with_cargo_generate', 'project_variables::tests::choices_is_not_array_string_is_error', 'project_variables::tests::default_for_bool_only_accepts_bool', 'project_variables::tests::default_for_boolean_is_fine', 'project_variables::tests::default_for_string_is_on_choices', 'project_variables::tests::default_for_string_isnt_on_choices', 'project_variables::tests::default_for_string_only_accepts_strings', 'project_variables::tests::default_for_string_with_no_choices_and_no_regex', 'project_variables::tests::choices_is_array_string_that_all_match_regex_is_good', 'project_variables::tests::empty_default_is_fine', 'project_variables::tests::empty_type_is_string', 'project_variables::tests::choices_is_array_string_that_doesnt_match_regex_is_error', 'project_variables::tests::no_choices_boolean', 'project_variables::tests::no_regex_is_ok', 'project_variables::tests::no_choices_for_type_string', 'project_variables::tests::invalid_regex_is_err', 'project_variables::tests::prompt_as_string_is_ok', 'project_variables::tests::only_tables_as_placeholder_values', 'project_variables::tests::prompt_cant_be_empty', 'project_variables::tests::prompt_must_be_string', 'project_variables::tests::default_for_string_is_on_choices_and_matches_regex', 'project_variables::tests::default_for_string_with_no_choices_and_matching_regex', 'project_variables::tests::default_for_string_with_no_choices_and_regex_doesnt_match', 'project_variables::tests::type_must_be_string_type', 'project_variables::tests::type_must_either_be_string_or_bool', 'project_variables::tests::strings_can_have_regex', 'filenames::tests::should_prevent_exploitation', 'filenames::tests::should_prevent_invalid_filenames', 'filenames::tests::should_do_happy_path', 'user_parsed_input::tests::should_support_bb_gl_gh_abbreviations', 'template_variables::test::names_may_contain_digits', 'tests::auto_locate_template_returns_base_when_no_cargo_generate_is_found', 'tests::auto_locate_template_prompts_when_multiple_cargo_generate_is_found', 'template_variables::test::names_may_contain_underscore', 'tests::auto_locate_template_returns_path_when_single_cargo_generate_is_found', 'template_variables::test::names_may_contain_dash', 'template_variables::test::spaces_are_not_allowed_in_names', 'template_variables::test::spaces_around_assignment_is_ok', 'user_parsed_input::tests::should_appreviation_org_repo_to_github', 'template_variables::test::names_must_start_with_word_char', 'hooks::variable_mod::tests::test_rhai_set', 'git::should_retrieve_an_instead_of_url', 'git::should_find_them_all', 'basics::error_message_for_invalid_repo_or_user'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for cargo-generate__cargo-generate-677: resolved: True
+2026-04-17 03:36:20,557 - INFO - Attempting to stop container rustb.eval.cargo-generate__cargo-generate-677.gold_run1...
+2026-04-17 03:36:59,959 - INFO - Attempting to remove container rustb.eval.cargo-generate__cargo-generate-677.gold_run1...
+2026-04-17 03:37:00,222 - INFO - Container rustb.eval.cargo-generate__cargo-generate-677.gold_run1 removed.

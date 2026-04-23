@@ -1,0 +1,263 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/expectations/both/cell.c...
+Checking patch tests/expectations/both/cell.compat.c...
+Checking patch tests/expectations/cell.c...
+Checking patch tests/expectations/cell.compat.c...
+Checking patch tests/expectations/cell.cpp...
+Checking patch tests/expectations/tag/cell.c...
+Checking patch tests/expectations/tag/cell.compat.c...
+Checking patch tests/rust/cell.rs...
+Applied patch tests/expectations/both/cell.c cleanly.
+Applied patch tests/expectations/both/cell.compat.c cleanly.
+Applied patch tests/expectations/cell.c cleanly.
+Applied patch tests/expectations/cell.compat.c cleanly.
+Applied patch tests/expectations/cell.cpp cleanly.
+Applied patch tests/expectations/tag/cell.c cleanly.
+Applied patch tests/expectations/tag/cell.compat.c cleanly.
+Applied patch tests/rust/cell.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded toml v0.5.6 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded serde_json v1.0.48 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded syn v1.0.16 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded tempfile v3.1.0 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded log v0.4.8 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded proc-macro2 v1.0.9 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded quote v1.0.3 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded serde v1.0.104 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded clap v2.33.0 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded ryu v1.0.2 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded cfg-if v0.1.10 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded libc v0.2.67 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded remove_dir_all v0.5.2 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded itoa v0.4.5 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded unicode-xid v0.2.0 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded rand v0.7.3 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded serde_derive v1.0.104 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded ansi_term v0.11.0 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded bitflags v1.2.1 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded textwrap v0.11.0 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded vec_map v0.8.1 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded unicode-width v0.1.7 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded strsim v0.8.0 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded rand_chacha v0.2.1 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded atty v0.2.14 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded getrandom v0.1.14 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded c2-chacha v0.2.3 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded rand_core v0.5.1 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+  Downloaded ppv-lite86 v0.2.6 (registry `/testbed/.cargo/lts-repo-at-ecee560f65`)
+   Compiling libc v0.2.67
+   Compiling proc-macro2 v1.0.9
+   Compiling unicode-xid v0.2.0
+   Compiling syn v1.0.16
+   Compiling getrandom v0.1.14
+   Compiling cfg-if v0.1.10
+   Compiling serde v1.0.104
+   Compiling ppv-lite86 v0.2.6
+   Compiling ryu v1.0.2
+   Compiling bitflags v1.2.1
+   Compiling log v0.4.8
+   Compiling unicode-width v0.1.7
+   Compiling cbindgen v0.13.1 (/workspace)
+   Compiling remove_dir_all v0.5.2
+   Compiling ansi_term v0.11.0
+   Compiling vec_map v0.8.1
+   Compiling strsim v0.8.0
+   Compiling itoa v0.4.5
+   Compiling textwrap v0.11.0
+   Compiling c2-chacha v0.2.3
+   Compiling quote v1.0.3
+   Compiling atty v0.2.14
+   Compiling clap v2.33.0
+   Compiling rand_core v0.5.1
+   Compiling rand_chacha v0.2.1
+   Compiling rand v0.7.3
+   Compiling tempfile v3.1.0
+   Compiling serde_derive v1.0.104
+   Compiling toml v0.5.6
+   Compiling serde_json v1.0.48
+    Finished test [unoptimized + debuginfo] target(s) in 35.53s
+     Running target/debug/deps/cbindgen-02c3e60d328fb013
+
+running 1 test
+test bindgen::mangle::generics ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/cbindgen-62a1a2110bf4f4a7
+
+running 1 test
+test bindgen::mangle::generics ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/tests-ce2848e60a6befbc
+
+running 94 tests
+test test_custom_header ... ok
+test test_assoc_const_conflict ... ok
+test test_const_conflict ... ok
+test test_char ... ok
+test test_array ... ok
+test test_constant_constexpr ... ok
+test test_const_transparent ... ok
+test test_docstyle_c99 ... ok
+test test_constant ... ok
+test test_cfg_2 ... ok
+test test_cell ... ok
+test test_bitflags ... ok
+test test_body ... ok
+test test_annotation ... ok
+test test_cfg ... ok
+test test_alias ... ok
+test test_cfg_field ... ok
+test test_enum_self ... ok
+test test_docstyle_auto ... ok
+test test_cdecl ... ok
+test test_assoc_constant ... ok
+test test_destructor_and_copy_ctor ... ok
+test test_dep_v2 ... ok
+test test_docstyle_doxy ... ok
+test test_documentation_attr ... ok
+test test_derive_eq ... ok
+test test_display_list ... ok
+test test_asserted_cast ... ok
+test test_documentation ... ok
+test test_expand ... FAILED
+test test_associated_in_body ... ok
+test test_expand_default_features ... FAILED
+test test_euclid ... ok
+test test_enum ... ok
+test test_expand_dep ... FAILED
+test test_include_guard ... ok
+test test_expand_dep_v2 ... FAILED
+test test_export_name ... ok
+test test_extern ... ok
+test test_extern_2 ... ok
+test test_expand_features ... FAILED
+test test_global_attr ... ok
+test test_function_sort_none ... ok
+test test_global_variable ... ok
+test test_fns ... ok
+test test_function_sort_name ... ok
+test test_expand_no_default_features ... FAILED
+test test_item_types ... ok
+test test_inner_mod ... ok
+test test_include_item ... ok
+test test_item_types_renamed ... ok
+test test_lifetime_arg ... ok
+test test_external_workspace_child ... ok
+test test_monomorph_2 ... ok
+test test_monomorph_3 ... ok
+test test_layout_aligned_opaque ... ok
+test test_monomorph_1 ... ok
+test test_layout_packed_opaque ... ok
+test test_must_use ... ok
+test test_no_includes ... ok
+test test_namespace_constant ... ok
+test test_namespaces_constant ... ok
+test test_layout ... ok
+test test_mod_attr ... ok
+test test_mod_path ... ok
+test test_nested_import ... ok
+test test_prefixed_struct_literal ... ok
+test test_prefix ... ok
+test test_nonnull ... ok
+test test_sentinel ... ok
+test test_renaming_overrides_prefixing ... ok
+test test_prefixed_struct_literal_deep ... ok
+test test_static ... ok
+test test_simplify_option_ptr ... ok
+test test_reserved ... ok
+test test_rename ... ok
+test test_std_lib ... ok
+test test_struct_self ... ok
+test test_struct ... ok
+test test_struct_literal_order ... ok
+test test_struct_literal ... ok
+test test_style_crash ... ok
+test test_typedef ... ok
+test test_va_list ... ok
+test test_union_self ... ok
+test test_using_namespaces ... ok
+test test_union ... ok
+test test_rename_crate ... ok
+test test_transparent ... ok
+test test_include_specific ... ok
+test test_transform_op ... ok
+test test_swift_name ... ok
+test test_include ... ok
+test test_workspace ... ok
+
+failures:
+
+---- test_expand stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--cpp-compat" "--style" "type" "-o" "/workspace/tests/expectations/expand.compat.c" "/workspace/tests/rust/expand"
+thread 'test_expand' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand.compat.c" with error: ERROR: Parsing crate `expand`: couldn't run `cargo rustc --pretty=expanded`: Compile("   Compiling expand v0.1.0 (/workspace/tests/rust/expand)\n     Running `rustc --crate-name expand src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --crate-type dylib --emit=dep-info,link -C debuginfo=2 -Z unstable-options --pretty=expanded -C metadata=02ba6709e2490094 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps`\nerror: the option `Z` is only accepted on the nightly compiler\n\nerror: could not compile `expand`.\n\nCaused by:\n  process didn\'t exit successfully: `rustc --crate-name expand src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --crate-type dylib --emit=dep-info,link -C debuginfo=2 -Z unstable-options --pretty=expanded -C metadata=02ba6709e2490094 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps` (exit code: 1)\n")
+ERROR: Couldn't generate bindings for /workspace/tests/rust/expand.
+', tests/tests.rs:57:5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+
+---- test_expand_default_features stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--cpp-compat" "--style" "type" "-o" "/workspace/tests/expectations/expand_default_features.compat.c" "/workspace/tests/rust/expand_default_features"
+thread 'test_expand_default_features' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand_default_features.compat.c" with error: ERROR: Parsing crate `expand`: couldn't run `cargo rustc --pretty=expanded`: Compile("    Blocking waiting for file lock on build directory\n   Compiling expand v0.1.0 (/workspace/tests/rust/expand_default_features)\n     Running `rustc --crate-name expand src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --crate-type dylib --emit=dep-info,link -C debuginfo=2 -Z unstable-options --pretty=expanded --cfg \'feature=\"default\"\' --cfg \'feature=\"extra_headers\"\' -C metadata=02ba6709e2490094 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps`\nerror: the option `Z` is only accepted on the nightly compiler\n\nerror: could not compile `expand`.\n\nCaused by:\n  process didn\'t exit successfully: `rustc --crate-name expand src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --crate-type dylib --emit=dep-info,link -C debuginfo=2 -Z unstable-options --pretty=expanded --cfg \'feature=\"default\"\' --cfg \'feature=\"extra_headers\"\' -C metadata=02ba6709e2490094 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps` (exit code: 1)\n")
+ERROR: Couldn't generate bindings for /workspace/tests/rust/expand_default_features.
+', tests/tests.rs:57:5
+
+---- test_expand_dep stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--cpp-compat" "--style" "type" "-o" "/workspace/tests/expectations/expand_dep.compat.c" "/workspace/tests/rust/expand_dep"
+thread 'test_expand_dep' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand_dep.compat.c" with error: ERROR: Parsing crate `expand-dep`: couldn't run `cargo rustc --pretty=expanded`: Compile("    Blocking waiting for file lock on build directory\n   Compiling dep v0.1.0 (/workspace/tests/rust/expand_dep/dep)\n     Running `rustc --edition=2018 --crate-name dep dep/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts --crate-type lib --emit=dep-info,metadata,link -C debuginfo=2 -C metadata=59b411c31ea3bc76 -C extra-filename=-59b411c31ea3bc76 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps`\n   Compiling expand-dep v0.1.0 (/workspace/tests/rust/expand_dep)\n     Running `rustc --edition=2018 --crate-name expand_dep src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --emit=dep-info,metadata,link -C debuginfo=2 -Z unstable-options --pretty=expanded -C metadata=139188cb9ddb84a6 -C extra-filename=-139188cb9ddb84a6 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps --extern dep=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps/libdep-59b411c31ea3bc76.rmeta`\nerror: the option `Z` is only accepted on the nightly compiler\n\nerror: could not compile `expand-dep`.\n\nCaused by:\n  process didn\'t exit successfully: `rustc --edition=2018 --crate-name expand_dep src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --emit=dep-info,metadata,link -C debuginfo=2 -Z unstable-options --pretty=expanded -C metadata=139188cb9ddb84a6 -C extra-filename=-139188cb9ddb84a6 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps --extern dep=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps/libdep-59b411c31ea3bc76.rmeta` (exit code: 1)\n")
+ERROR: Couldn't generate bindings for /workspace/tests/rust/expand_dep.
+', tests/tests.rs:57:5
+
+---- test_expand_dep_v2 stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--cpp-compat" "--style" "type" "-o" "/workspace/tests/expectations/expand_dep_v2.compat.c" "/workspace/tests/rust/expand_dep_v2"
+thread 'test_expand_dep_v2' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand_dep_v2.compat.c" with error: ERROR: Parsing crate `expand-dep`: couldn't run `cargo rustc --pretty=expanded`: Compile("    Blocking waiting for file lock on build directory\n   Compiling dep v0.1.0 (/workspace/tests/rust/expand_dep/dep)\n     Running `rustc --edition=2018 --crate-name dep /workspace/tests/rust/expand_dep/dep/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts --crate-type lib --emit=dep-info,metadata,link -C debuginfo=2 -C metadata=99119bd3c3f96bac -C extra-filename=-99119bd3c3f96bac --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps`\n   Compiling expand-dep v0.1.0 (/workspace/tests/rust/expand_dep)\n     Running `rustc --edition=2018 --crate-name expand_dep /workspace/tests/rust/expand_dep/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --emit=dep-info,metadata,link -C debuginfo=2 -Z unstable-options --pretty=expanded -C metadata=b2347bf4bcb4cc6e -C extra-filename=-b2347bf4bcb4cc6e --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps --extern dep=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps/libdep-99119bd3c3f96bac.rmeta`\nerror: the option `Z` is only accepted on the nightly compiler\n\nerror: could not compile `expand-dep`.\n\nCaused by:\n  process didn\'t exit successfully: `rustc --edition=2018 --crate-name expand_dep /workspace/tests/rust/expand_dep/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --emit=dep-info,metadata,link -C debuginfo=2 -Z unstable-options --pretty=expanded -C metadata=b2347bf4bcb4cc6e -C extra-filename=-b2347bf4bcb4cc6e --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps --extern dep=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps/libdep-99119bd3c3f96bac.rmeta` (exit code: 1)\n")
+ERROR: Couldn't generate bindings for /workspace/tests/rust/expand_dep_v2.
+', tests/tests.rs:57:5
+
+---- test_expand_features stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--cpp-compat" "--style" "type" "-o" "/workspace/tests/expectations/expand_features.compat.c" "/workspace/tests/rust/expand_features"
+thread 'test_expand_features' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand_features.compat.c" with error: ERROR: Parsing crate `expand`: couldn't run `cargo rustc --pretty=expanded`: Compile("    Blocking waiting for file lock on package cache\n    Blocking waiting for file lock on build directory\n   Compiling expand v0.1.0 (/workspace/tests/rust/expand_features)\n     Running `rustc --crate-name expand src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --crate-type dylib --emit=dep-info,link -C debuginfo=2 -Z unstable-options --pretty=expanded --cfg \'feature=\"cbindgen\"\' --cfg \'feature=\"default\"\' --cfg \'feature=\"extra_headers\"\' -C metadata=02ba6709e2490094 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps`\nerror: the option `Z` is only accepted on the nightly compiler\n\nerror: could not compile `expand`.\n\nCaused by:\n  process didn\'t exit successfully: `rustc --crate-name expand src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --crate-type dylib --emit=dep-info,link -C debuginfo=2 -Z unstable-options --pretty=expanded --cfg \'feature=\"cbindgen\"\' --cfg \'feature=\"default\"\' --cfg \'feature=\"extra_headers\"\' -C metadata=02ba6709e2490094 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps` (exit code: 1)\n")
+ERROR: Couldn't generate bindings for /workspace/tests/rust/expand_features.
+', tests/tests.rs:57:5
+
+---- test_expand_no_default_features stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--cpp-compat" "--style" "type" "-o" "/workspace/tests/expectations/expand_no_default_features.compat.c" "/workspace/tests/rust/expand_no_default_features"
+thread 'test_expand_no_default_features' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand_no_default_features.compat.c" with error: ERROR: Parsing crate `expand`: couldn't run `cargo rustc --pretty=expanded`: Compile("    Blocking waiting for file lock on build directory\n   Compiling expand v0.1.0 (/workspace/tests/rust/expand_no_default_features)\n     Running `rustc --crate-name expand src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --crate-type dylib --emit=dep-info,link -C debuginfo=2 -Z unstable-options --pretty=expanded -C metadata=02ba6709e2490094 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps`\nerror: the option `Z` is only accepted on the nightly compiler\n\nerror: could not compile `expand`.\n\nCaused by:\n  process didn\'t exit successfully: `rustc --crate-name expand src/lib.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type lib --crate-type dylib --emit=dep-info,link -C debuginfo=2 -Z unstable-options --pretty=expanded -C metadata=02ba6709e2490094 --out-dir /workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps -C incremental=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/incremental -L dependency=/workspace/target/debug/build/cbindgen-049d3f054ab2fe4f/out/expanded/debug/deps` (exit code: 1)\n")
+ERROR: Couldn't generate bindings for /workspace/tests/rust/expand_no_default_features.
+', tests/tests.rs:57:5
+
+
+failures:
+    test_expand
+    test_expand_default_features
+    test_expand_dep
+    test_expand_dep_v2
+    test_expand_features
+    test_expand_no_default_features
+
+test result: FAILED. 88 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests cbindgen
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--test tests'
++ git reset --hard 6654f99251769e9e037824d471f9f39e8d536b90
+HEAD is now at 6654f99 main: Provide a somewhat-useful error message for --verify changes.
++ git clean -fd
+Removing .cargo/
+Removing tests/expectations/both/cell.c
+Removing tests/expectations/both/cell.compat.c
+Removing tests/expectations/cell.c
+Removing tests/expectations/cell.compat.c
+Removing tests/expectations/cell.cpp
+Removing tests/expectations/tag/cell.c
+Removing tests/expectations/tag/cell.compat.c
+Removing tests/rust/cell.rs

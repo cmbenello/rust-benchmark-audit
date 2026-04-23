@@ -1,0 +1,82 @@
+diff --git a/derive/src/complex_object.rs b/derive/src/complex_object.rs
+--- a/derive/src/complex_object.rs
++++ b/derive/src/complex_object.rs
+@@ -18,7 +18,6 @@ pub fn generate(
+     let crate_name = get_crate_name(object_args.internal);
+     let (self_ty, _) = get_type_path_and_name(item_impl.self_ty.as_ref())?;
+     let generics = &item_impl.generics;
+-    let generics_params = &generics.params;
+     let where_clause = &item_impl.generics.where_clause;
+ 
+     let mut resolvers = Vec::new();
+diff --git a/derive/src/complex_object.rs b/derive/src/complex_object.rs
+--- a/derive/src/complex_object.rs
++++ b/derive/src/complex_object.rs
+@@ -29,6 +28,7 @@ pub fn generate(
+             let method_args: args::ObjectField =
+                 parse_graphql_attrs(&method.attrs)?.unwrap_or_default();
+             if method_args.skip {
++                remove_graphql_attrs(&mut method.attrs);
+                 continue;
+             }
+ 
+diff --git a/derive/src/complex_object.rs b/derive/src/complex_object.rs
+--- a/derive/src/complex_object.rs
++++ b/derive/src/complex_object.rs
+@@ -286,7 +286,7 @@ pub fn generate(
+ 
+         #[allow(clippy::all, clippy::pedantic)]
+         #[#crate_name::async_trait::async_trait]
+-        impl #generics #crate_name::ComplexObject for #self_ty#generics_params #where_clause {
++        impl #generics #crate_name::ComplexObject for #self_ty #where_clause {
+             fn fields(registry: &mut #crate_name::registry::Registry) -> ::std::vec::Vec<(::std::string::String, #crate_name::registry::MetaField)> {
+                 let mut fields = ::std::vec::Vec::new();
+                 #(#schema_fields)*
+diff --git a/derive/src/simple_object.rs b/derive/src/simple_object.rs
+--- a/derive/src/simple_object.rs
++++ b/derive/src/simple_object.rs
+@@ -235,13 +235,18 @@ pub fn generate(object_args: &args::SimpleObject) -> GeneratorResult<TokenStream
+             impl #impl_generics #ident #ty_generics #where_clause {
+                 #(#getters)*
+ 
+-                fn __internal_create_type_info(registry: &mut #crate_name::registry::Registry, name: &str) -> ::std::string::String where Self: #crate_name::OutputType {
++                fn __internal_create_type_info(
++                    registry: &mut #crate_name::registry::Registry,
++                    name: &str,
++                    complex_fields: #crate_name::indexmap::IndexMap<::std::string::String, #crate_name::registry::MetaField>,
++                ) -> ::std::string::String where Self: #crate_name::OutputType {
+                     registry.create_type::<Self, _>(|registry| #crate_name::registry::MetaType::Object {
+                         name: ::std::borrow::ToOwned::to_owned(name),
+                         description: #desc,
+                         fields: {
+                             let mut fields = #crate_name::indexmap::IndexMap::new();
+                             #(#schema_fields)*
++                            ::std::iter::Extend::extend(&mut fields, complex_fields.clone());
+                             fields
+                         },
+                         cache_control: #cache_control,
+diff --git a/derive/src/simple_object.rs b/derive/src/simple_object.rs
+--- a/derive/src/simple_object.rs
++++ b/derive/src/simple_object.rs
+@@ -271,7 +276,9 @@ pub fn generate(object_args: &args::SimpleObject) -> GeneratorResult<TokenStream
+                     }
+ 
+                     fn create_type_info(registry: &mut #crate_name::registry::Registry) -> ::std::string::String {
+-                        Self::__internal_create_type_info(registry, #gql_typename)
++                        let mut fields = #crate_name::indexmap::IndexMap::new();
++                        #concat_complex_fields
++                        Self::__internal_create_type_info(registry, #gql_typename, fields)
+                     }
+                 }
+ 
+diff --git a/derive/src/simple_object.rs b/derive/src/simple_object.rs
+--- a/derive/src/simple_object.rs
++++ b/derive/src/simple_object.rs
+@@ -279,6 +286,7 @@ pub fn generate(object_args: &args::SimpleObject) -> GeneratorResult<TokenStream
+                 #[#crate_name::async_trait::async_trait]
+                 impl #crate_name::resolver_utils::ContainerType for #concrete_type {
+                     async fn resolve_field(&self, ctx: &#crate_name::Context<'_>) -> #crate_name::ServerResult<::std::option::Option<#crate_name::Value>> {
++                        #complex_resolver
+                         self.__internal_resolve_field(ctx).await
+                     }
+                 }

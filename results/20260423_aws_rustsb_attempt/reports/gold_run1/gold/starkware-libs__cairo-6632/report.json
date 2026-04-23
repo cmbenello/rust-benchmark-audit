@@ -1,0 +1,60 @@
+{
+    "starkware-libs__cairo-6632": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "hover::hover::structs",
+                    "hover::hover::basic"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "lang::diagnostics::trigger::test::test_drop_receiver",
+                    "lang::diagnostics::trigger::test::test_sync",
+                    "lang::lsp::ls_proto_group::test::file_url",
+                    "project::project_manifest_path::project_manifest_path_test::discover_no_manifest",
+                    "project::project_manifest_path::project_manifest_path_test::discover_cairo_project_toml",
+                    "project::project_manifest_path::project_manifest_path_test::discover_scarb_toml",
+                    "project::project_manifest_path::project_manifest_path_test::discover_precedence",
+                    "lang::diagnostics::trigger::test::test_threaded",
+                    "support::cursor::test::test_cursors",
+                    "semantic_tokens::highlights_multiline_tokens",
+                    "hover::hover::missing_module",
+                    "macro_expand::macro_expand::simple_inline",
+                    "macro_expand::macro_expand::empty",
+                    "completions::completions::module_items",
+                    "macro_expand::macro_expand::derive",
+                    "hover::hover::partial",
+                    "code_actions::quick_fix::fill_struct_fields",
+                    "hover::hover::literals",
+                    "completions::completions::structs",
+                    "macro_expand::macro_expand::attribute",
+                    "analysis::test_reload",
+                    "goto::goto::struct_members",
+                    "workspace_configuration::relative_path_to_core",
+                    "analysis::cairo_projects",
+                    "code_actions::quick_fix::macro_expand",
+                    "hover::hover::starknet",
+                    "completions::completions::methods_text_edits",
+                    "code_actions::quick_fix::missing_trait",
+                    "crates/cairo-lang-language-server/src/lib.rs - (line 10) - compile",
+                    "crates/cairo-lang-language-server/src/lib.rs - (line 26) - compile"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

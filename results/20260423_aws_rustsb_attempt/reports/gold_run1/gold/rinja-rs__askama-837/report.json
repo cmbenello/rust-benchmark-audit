@@ -1,0 +1,62 @@
+{
+    "rinja-rs__askama-837": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "config::tests::find_absolute",
+                    "config::tests::find_relative",
+                    "config::tests::add_syntax",
+                    "config::tests::escape_modes",
+                    "config::tests::add_syntax_two",
+                    "config::tests::find_relative_sub",
+                    "config::tests::get_source",
+                    "config::tests::find_relative_nonexistent - should panic",
+                    "config::tests::illegal_delimiters",
+                    "config::tests::test_default_config",
+                    "config::tests::test_config_whitespace_error",
+                    "config::tests::longer_delimiters",
+                    "config::tests::test_config_dirs",
+                    "input::tests::test_double_ext",
+                    "input::tests::test_ext",
+                    "input::tests::test_only_jinja_ext",
+                    "input::tests::test_skip_jinja_ext",
+                    "config::tests::test_whitespace_parsing",
+                    "parser::tests::change_delimiters_parse_filter",
+                    "parser::tests::test_invalid_block - should panic",
+                    "parser::tests::test_missing_space_after_kw",
+                    "parser::tests::test_parse_comments",
+                    "parser::tests::test_parse_const",
+                    "parser::tests::test_associativity",
+                    "parser::tests::test_parse_numbers",
+                    "parser::tests::test_parse_filter",
+                    "parser::tests::test_parse_root_path",
+                    "parser::tests::test_parse_path_call",
+                    "parser::tests::test_ws_splitter",
+                    "parser::tests::test_parse_path",
+                    "parser::tests::test_odd_calls",
+                    "parser::tests::test_parse_var_call",
+                    "parser::tests::test_parse_var",
+                    "parser::tests::test_precedence",
+                    "parser::tests::test_parse_tuple"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

@@ -1,0 +1,363 @@
+diff --git a/aya/src/maps/array/array.rs b/aya/src/maps/array/array.rs
+--- a/aya/src/maps/array/array.rs
++++ b/aya/src/maps/array/array.rs
+@@ -1,4 +1,5 @@
+ use std::{
++    borrow::Borrow,
+     convert::{AsMut, AsRef},
+     marker::PhantomData,
+ };
+diff --git a/aya/src/maps/array/array.rs b/aya/src/maps/array/array.rs
+--- a/aya/src/maps/array/array.rs
++++ b/aya/src/maps/array/array.rs
+@@ -88,11 +89,11 @@ impl<T: AsMut<MapData>, V: Pod> Array<T, V> {
+     ///
+     /// Returns [`MapError::OutOfBounds`] if `index` is out of bounds, [`MapError::SyscallError`]
+     /// if `bpf_map_update_elem` fails.
+-    pub fn set(&mut self, index: u32, value: V, flags: u64) -> Result<(), MapError> {
++    pub fn set(&mut self, index: u32, value: impl Borrow<V>, flags: u64) -> Result<(), MapError> {
+         let data = self.inner.as_mut();
+         check_bounds(data, index)?;
+         let fd = data.fd_or_err()?;
+-        bpf_map_update_elem(fd, Some(&index), &value, flags).map_err(|(_, io_error)| {
++        bpf_map_update_elem(fd, Some(&index), value.borrow(), flags).map_err(|(_, io_error)| {
+             MapError::SyscallError {
+                 call: "bpf_map_update_elem".to_owned(),
+                 io_error,
+diff --git a/aya/src/maps/bloom_filter.rs b/aya/src/maps/bloom_filter.rs
+--- a/aya/src/maps/bloom_filter.rs
++++ b/aya/src/maps/bloom_filter.rs
+@@ -1,5 +1,5 @@
+ //! A Bloom Filter.
+-use std::{convert::AsRef, marker::PhantomData};
++use std::{borrow::Borrow, convert::AsRef, marker::PhantomData};
+ 
+ use crate::{
+     maps::{check_v_size, MapData, MapError},
+diff --git a/aya/src/maps/bloom_filter.rs b/aya/src/maps/bloom_filter.rs
+--- a/aya/src/maps/bloom_filter.rs
++++ b/aya/src/maps/bloom_filter.rs
+@@ -62,11 +62,13 @@ impl<T: AsRef<MapData>, V: Pod> BloomFilter<T, V> {
+     }
+ 
+     /// Inserts a value into the map.
+-    pub fn insert(&self, value: V, flags: u64) -> Result<(), MapError> {
++    pub fn insert(&self, value: impl Borrow<V>, flags: u64) -> Result<(), MapError> {
+         let fd = self.inner.as_ref().fd_or_err()?;
+-        bpf_map_push_elem(fd, &value, flags).map_err(|(_, io_error)| MapError::SyscallError {
+-            call: "bpf_map_push_elem".to_owned(),
+-            io_error,
++        bpf_map_push_elem(fd, value.borrow(), flags).map_err(|(_, io_error)| {
++            MapError::SyscallError {
++                call: "bpf_map_push_elem".to_owned(),
++                io_error,
++            }
+         })?;
+         Ok(())
+     }
+diff --git a/aya/src/maps/hash_map/hash_map.rs b/aya/src/maps/hash_map/hash_map.rs
+--- a/aya/src/maps/hash_map/hash_map.rs
++++ b/aya/src/maps/hash_map/hash_map.rs
+@@ -1,4 +1,5 @@
+ use std::{
++    borrow::Borrow,
+     convert::{AsMut, AsRef},
+     marker::PhantomData,
+ };
+diff --git a/aya/src/maps/hash_map/hash_map.rs b/aya/src/maps/hash_map/hash_map.rs
+--- a/aya/src/maps/hash_map/hash_map.rs
++++ b/aya/src/maps/hash_map/hash_map.rs
+@@ -78,8 +79,13 @@ impl<T: AsRef<MapData>, K: Pod, V: Pod> HashMap<T, K, V> {
+ 
+ impl<T: AsMut<MapData>, K: Pod, V: Pod> HashMap<T, K, V> {
+     /// Inserts a key-value pair into the map.
+-    pub fn insert(&mut self, key: K, value: V, flags: u64) -> Result<(), MapError> {
+-        hash_map::insert(self.inner.as_mut(), key, value, flags)
++    pub fn insert(
++        &mut self,
++        key: impl Borrow<K>,
++        value: impl Borrow<V>,
++        flags: u64,
++    ) -> Result<(), MapError> {
++        hash_map::insert(self.inner.as_mut(), key.borrow(), value.borrow(), flags)
+     }
+ 
+     /// Removes a key from the map.
+diff --git a/aya/src/maps/hash_map/mod.rs b/aya/src/maps/hash_map/mod.rs
+--- a/aya/src/maps/hash_map/mod.rs
++++ b/aya/src/maps/hash_map/mod.rs
+@@ -2,6 +2,7 @@
+ use crate::{
+     maps::MapError,
+     sys::{bpf_map_delete_elem, bpf_map_update_elem},
++    Pod,
+ };
+ 
+ #[allow(clippy::module_inception)]
+diff --git a/aya/src/maps/hash_map/mod.rs b/aya/src/maps/hash_map/mod.rs
+--- a/aya/src/maps/hash_map/mod.rs
++++ b/aya/src/maps/hash_map/mod.rs
+@@ -13,14 +14,14 @@ pub use per_cpu_hash_map::*;
+ 
+ use super::MapData;
+ 
+-pub(crate) fn insert<K, V>(
++pub(crate) fn insert<K: Pod, V: Pod>(
+     map: &mut MapData,
+-    key: K,
+-    value: V,
++    key: &K,
++    value: &V,
+     flags: u64,
+ ) -> Result<(), MapError> {
+     let fd = map.fd_or_err()?;
+-    bpf_map_update_elem(fd, Some(&key), &value, flags).map_err(|(_, io_error)| {
++    bpf_map_update_elem(fd, Some(key), value, flags).map_err(|(_, io_error)| {
+         MapError::SyscallError {
+             call: "bpf_map_update_elem".to_owned(),
+             io_error,
+diff --git a/aya/src/maps/hash_map/mod.rs b/aya/src/maps/hash_map/mod.rs
+--- a/aya/src/maps/hash_map/mod.rs
++++ b/aya/src/maps/hash_map/mod.rs
+@@ -30,7 +31,7 @@ pub(crate) fn insert<K, V>(
+     Ok(())
+ }
+ 
+-pub(crate) fn remove<K>(map: &mut MapData, key: &K) -> Result<(), MapError> {
++pub(crate) fn remove<K: Pod>(map: &mut MapData, key: &K) -> Result<(), MapError> {
+     let fd = map.fd_or_err()?;
+     bpf_map_delete_elem(fd, key)
+         .map(|_| ())
+diff --git a/aya/src/maps/hash_map/per_cpu_hash_map.rs b/aya/src/maps/hash_map/per_cpu_hash_map.rs
+--- a/aya/src/maps/hash_map/per_cpu_hash_map.rs
++++ b/aya/src/maps/hash_map/per_cpu_hash_map.rs
+@@ -1,5 +1,6 @@
+ //! Per-CPU hash map.
+ use std::{
++    borrow::Borrow,
+     convert::{AsMut, AsRef},
+     marker::PhantomData,
+ };
+diff --git a/aya/src/maps/hash_map/per_cpu_hash_map.rs b/aya/src/maps/hash_map/per_cpu_hash_map.rs
+--- a/aya/src/maps/hash_map/per_cpu_hash_map.rs
++++ b/aya/src/maps/hash_map/per_cpu_hash_map.rs
+@@ -115,14 +116,19 @@ impl<T: AsMut<MapData>, K: Pod, V: Pod> PerCpuHashMap<T, K, V> {
+     /// )?;
+     /// # Ok::<(), Error>(())
+     /// ```
+-    pub fn insert(&mut self, key: K, values: PerCpuValues<V>, flags: u64) -> Result<(), MapError> {
++    pub fn insert(
++        &mut self,
++        key: impl Borrow<K>,
++        values: PerCpuValues<V>,
++        flags: u64,
++    ) -> Result<(), MapError> {
+         let fd = self.inner.as_mut().fd_or_err()?;
+-        bpf_map_update_elem_per_cpu(fd, &key, &values, flags).map_err(|(_, io_error)| {
+-            MapError::SyscallError {
++        bpf_map_update_elem_per_cpu(fd, key.borrow(), &values, flags).map_err(
++            |(_, io_error)| MapError::SyscallError {
+                 call: "bpf_map_update_elem".to_owned(),
+                 io_error,
+-            }
+-        })?;
++            },
++        )?;
+ 
+         Ok(())
+     }
+diff --git a/aya/src/maps/lpm_trie.rs b/aya/src/maps/lpm_trie.rs
+--- a/aya/src/maps/lpm_trie.rs
++++ b/aya/src/maps/lpm_trie.rs
+@@ -1,5 +1,6 @@
+ //! A LPM Trie.
+ use std::{
++    borrow::Borrow,
+     convert::{AsMut, AsRef},
+     marker::PhantomData,
+     mem,
+diff --git a/aya/src/maps/lpm_trie.rs b/aya/src/maps/lpm_trie.rs
+--- a/aya/src/maps/lpm_trie.rs
++++ b/aya/src/maps/lpm_trie.rs
+@@ -128,9 +129,14 @@ impl<T: AsRef<MapData>, K: Pod, V: Pod> LpmTrie<T, K, V> {
+ 
+ impl<T: AsMut<MapData>, K: Pod, V: Pod> LpmTrie<T, K, V> {
+     /// Inserts a key value pair into the map.
+-    pub fn insert(&mut self, key: &Key<K>, value: V, flags: u64) -> Result<(), MapError> {
++    pub fn insert(
++        &mut self,
++        key: &Key<K>,
++        value: impl Borrow<V>,
++        flags: u64,
++    ) -> Result<(), MapError> {
+         let fd = self.inner.as_mut().fd_or_err()?;
+-        bpf_map_update_elem(fd, Some(key), &value, flags).map_err(|(_, io_error)| {
++        bpf_map_update_elem(fd, Some(key), value.borrow(), flags).map_err(|(_, io_error)| {
+             MapError::SyscallError {
+                 call: "bpf_map_update_elem".to_owned(),
+                 io_error,
+diff --git a/aya/src/maps/queue.rs b/aya/src/maps/queue.rs
+--- a/aya/src/maps/queue.rs
++++ b/aya/src/maps/queue.rs
+@@ -1,5 +1,6 @@
+ //! A FIFO queue.
+ use std::{
++    borrow::Borrow,
+     convert::{AsMut, AsRef},
+     marker::PhantomData,
+ };
+diff --git a/aya/src/maps/queue.rs b/aya/src/maps/queue.rs
+--- a/aya/src/maps/queue.rs
++++ b/aya/src/maps/queue.rs
+@@ -78,11 +79,13 @@ impl<T: AsMut<MapData>, V: Pod> Queue<T, V> {
+     /// # Errors
+     ///
+     /// [`MapError::SyscallError`] if `bpf_map_update_elem` fails.
+-    pub fn push(&mut self, value: V, flags: u64) -> Result<(), MapError> {
++    pub fn push(&mut self, value: impl Borrow<V>, flags: u64) -> Result<(), MapError> {
+         let fd = self.inner.as_mut().fd_or_err()?;
+-        bpf_map_push_elem(fd, &value, flags).map_err(|(_, io_error)| MapError::SyscallError {
+-            call: "bpf_map_push_elem".to_owned(),
+-            io_error,
++        bpf_map_push_elem(fd, value.borrow(), flags).map_err(|(_, io_error)| {
++            MapError::SyscallError {
++                call: "bpf_map_push_elem".to_owned(),
++                io_error,
++            }
+         })?;
+         Ok(())
+     }
+diff --git a/aya/src/maps/sock/sock_hash.rs b/aya/src/maps/sock/sock_hash.rs
+--- a/aya/src/maps/sock/sock_hash.rs
++++ b/aya/src/maps/sock/sock_hash.rs
+@@ -1,4 +1,5 @@
+ use std::{
++    borrow::Borrow,
+     convert::{AsMut, AsRef},
+     marker::PhantomData,
+     os::unix::io::{AsRawFd, RawFd},
+diff --git a/aya/src/maps/sock/sock_hash.rs b/aya/src/maps/sock/sock_hash.rs
+--- a/aya/src/maps/sock/sock_hash.rs
++++ b/aya/src/maps/sock/sock_hash.rs
+@@ -115,8 +116,13 @@ impl<T: AsRef<MapData>, K: Pod> SockHash<T, K> {
+ 
+ impl<T: AsMut<MapData>, K: Pod> SockHash<T, K> {
+     /// Inserts a socket under the given key.
+-    pub fn insert<I: AsRawFd>(&mut self, key: K, value: I, flags: u64) -> Result<(), MapError> {
+-        hash_map::insert(self.inner.as_mut(), key, value.as_raw_fd(), flags)
++    pub fn insert<I: AsRawFd>(
++        &mut self,
++        key: impl Borrow<K>,
++        value: I,
++        flags: u64,
++    ) -> Result<(), MapError> {
++        hash_map::insert(self.inner.as_mut(), key.borrow(), &value.as_raw_fd(), flags)
+     }
+ 
+     /// Removes a socket from the map.
+diff --git a/aya/src/maps/stack.rs b/aya/src/maps/stack.rs
+--- a/aya/src/maps/stack.rs
++++ b/aya/src/maps/stack.rs
+@@ -1,5 +1,6 @@
+ //! A LIFO stack.
+ use std::{
++    borrow::Borrow,
+     convert::{AsMut, AsRef},
+     marker::PhantomData,
+ };
+diff --git a/aya/src/maps/stack.rs b/aya/src/maps/stack.rs
+--- a/aya/src/maps/stack.rs
++++ b/aya/src/maps/stack.rs
+@@ -78,9 +79,9 @@ impl<T: AsMut<MapData>, V: Pod> Stack<T, V> {
+     /// # Errors
+     ///
+     /// [`MapError::SyscallError`] if `bpf_map_update_elem` fails.
+-    pub fn push(&mut self, value: V, flags: u64) -> Result<(), MapError> {
++    pub fn push(&mut self, value: impl Borrow<V>, flags: u64) -> Result<(), MapError> {
+         let fd = self.inner.as_mut().fd_or_err()?;
+-        bpf_map_update_elem(fd, None::<&u32>, &value, flags).map_err(|(_, io_error)| {
++        bpf_map_update_elem(fd, None::<&u32>, value.borrow(), flags).map_err(|(_, io_error)| {
+             MapError::SyscallError {
+                 call: "bpf_map_update_elem".to_owned(),
+                 io_error,
+diff --git a/aya/src/sys/bpf.rs b/aya/src/sys/bpf.rs
+--- a/aya/src/sys/bpf.rs
++++ b/aya/src/sys/bpf.rs
+@@ -232,7 +232,7 @@ pub(crate) fn bpf_map_lookup_elem_ptr<K: Pod, V>(
+     }
+ }
+ 
+-pub(crate) fn bpf_map_update_elem<K, V>(
++pub(crate) fn bpf_map_update_elem<K: Pod, V: Pod>(
+     fd: RawFd,
+     key: Option<&K>,
+     value: &V,
+diff --git a/aya/src/sys/bpf.rs b/aya/src/sys/bpf.rs
+--- a/aya/src/sys/bpf.rs
++++ b/aya/src/sys/bpf.rs
+@@ -251,7 +251,7 @@ pub(crate) fn bpf_map_update_elem<K, V>(
+     sys_bpf(bpf_cmd::BPF_MAP_UPDATE_ELEM, &attr)
+ }
+ 
+-pub(crate) fn bpf_map_push_elem<V>(fd: RawFd, value: &V, flags: u64) -> SysResult {
++pub(crate) fn bpf_map_push_elem<V: Pod>(fd: RawFd, value: &V, flags: u64) -> SysResult {
+     let mut attr = unsafe { mem::zeroed::<bpf_attr>() };
+ 
+     let u = unsafe { &mut attr.__bindgen_anon_2 };
+diff --git a/aya/src/sys/bpf.rs b/aya/src/sys/bpf.rs
+--- a/aya/src/sys/bpf.rs
++++ b/aya/src/sys/bpf.rs
+@@ -279,7 +279,7 @@ pub(crate) fn bpf_map_update_elem_ptr<K, V>(
+     sys_bpf(bpf_cmd::BPF_MAP_UPDATE_ELEM, &attr)
+ }
+ 
+-pub(crate) fn bpf_map_update_elem_per_cpu<K, V: Pod>(
++pub(crate) fn bpf_map_update_elem_per_cpu<K: Pod, V: Pod>(
+     fd: RawFd,
+     key: &K,
+     values: &PerCpuValues<V>,
+diff --git a/aya/src/sys/bpf.rs b/aya/src/sys/bpf.rs
+--- a/aya/src/sys/bpf.rs
++++ b/aya/src/sys/bpf.rs
+@@ -289,7 +289,7 @@ pub(crate) fn bpf_map_update_elem_per_cpu<K, V: Pod>(
+     bpf_map_update_elem_ptr(fd, key, mem.as_mut_ptr(), flags)
+ }
+ 
+-pub(crate) fn bpf_map_delete_elem<K>(fd: RawFd, key: &K) -> SysResult {
++pub(crate) fn bpf_map_delete_elem<K: Pod>(fd: RawFd, key: &K) -> SysResult {
+     let mut attr = unsafe { mem::zeroed::<bpf_attr>() };
+ 
+     let u = unsafe { &mut attr.__bindgen_anon_2 };
+diff --git a/aya/src/sys/bpf.rs b/aya/src/sys/bpf.rs
+--- a/aya/src/sys/bpf.rs
++++ b/aya/src/sys/bpf.rs
+@@ -299,7 +299,7 @@ pub(crate) fn bpf_map_delete_elem<K>(fd: RawFd, key: &K) -> SysResult {
+     sys_bpf(bpf_cmd::BPF_MAP_DELETE_ELEM, &attr)
+ }
+ 
+-pub(crate) fn bpf_map_get_next_key<K>(
++pub(crate) fn bpf_map_get_next_key<K: Pod>(
+     fd: RawFd,
+     key: Option<&K>,
+ ) -> Result<Option<K>, (c_long, io::Error)> {
+diff --git a/bpf/aya-bpf/src/maps/sock_hash.rs b/bpf/aya-bpf/src/maps/sock_hash.rs
+--- a/bpf/aya-bpf/src/maps/sock_hash.rs
++++ b/bpf/aya-bpf/src/maps/sock_hash.rs
+@@ -1,4 +1,4 @@
+-use core::{cell::UnsafeCell, marker::PhantomData, mem};
++use core::{borrow::Borrow, cell::UnsafeCell, marker::PhantomData, mem};
+ 
+ use aya_bpf_cty::c_void;
+ 
+diff --git a/bpf/aya-bpf/src/maps/sock_hash.rs b/bpf/aya-bpf/src/maps/sock_hash.rs
+--- a/bpf/aya-bpf/src/maps/sock_hash.rs
++++ b/bpf/aya-bpf/src/maps/sock_hash.rs
+@@ -89,7 +89,7 @@ impl<K> SockHash<K> {
+     pub fn redirect_sk_lookup(
+         &mut self,
+         ctx: &SkLookupContext,
+-        key: K,
++        key: impl Borrow<K>,
+         flags: u64,
+     ) -> Result<(), u32> {
+         unsafe {

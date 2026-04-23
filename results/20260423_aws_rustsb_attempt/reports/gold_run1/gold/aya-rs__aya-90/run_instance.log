@@ -1,0 +1,121 @@
+2026-04-17 02:36:53,629 - INFO - Environment image rustb.env.x86_64.aya-rs_aya:latest found for aya-rs__aya-90
+Building instance image rustbench/aya-rs__aya:pr-90 for aya-rs__aya-90
+2026-04-17 02:51:27,194 - INFO - Creating container for aya-rs__aya-90...
+2026-04-17 02:51:27,378 - INFO - Container for aya-rs__aya-90 created: 09f81402bb82077bafbcdeaa75ab7fa104c1f23f541bf09e2c3ef9aad7985e2b
+2026-04-17 02:51:27,597 - INFO - Container for aya-rs__aya-90 started: 09f81402bb82077bafbcdeaa75ab7fa104c1f23f541bf09e2c3ef9aad7985e2b
+2026-04-17 02:51:27,599 - INFO - Intermediate patch for aya-rs__aya-90 written to logs/run_evaluation/gold_20260417_023105/gold/aya-rs__aya-90/patch.diff, now applying to container...
+2026-04-17 02:51:27,845 - INFO - >>>>> Applied Patch:
+Checking patch aya/src/obj/mod.rs...
+Checking patch aya/src/obj/mod.rs...
+Checking patch aya/src/obj/mod.rs...
+Applied patch aya/src/obj/mod.rs cleanly.
+Applied patch aya/src/obj/mod.rs cleanly.
+Applied patch aya/src/obj/mod.rs cleanly.
+
+2026-04-17 02:51:27,914 - INFO - Git diff before:
+diff --git a/.cargo/config b/.cargo/config
+index 757fd081..1198a638 100644
+--- a/.cargo/config
++++ b/.cargo/config
+@@ -5,4 +5,10 @@ xtask = "run --package xtask --"
+ linker = "arm-linux-gnueabi-gcc"
+ 
+ [target.armv7-unknown-linux-gnueabihf]
+-linker = "arm-linux-gnueabihf-gcc"
+\ No newline at end of file
++linker = "arm-linux-gnueabihf-gcc"
++# delete this to restore to the default registry
++[source.crates-io]
++replace-with = 'lts-repo-at-5487ceacc7'
++
++[source.lts-repo-at-5487ceacc7] # 2021-11-04 (<date>)
++registry = 'file:///testbed/.cargo/lts-repo-at-5487ceacc7'
+diff --git a/aya/src/obj/mod.rs b/aya/src/obj/mod.rs
+index c4c76630..6cc6bafd 100644
+--- a/aya/src/obj/mod.rs
++++ b/aya/src/obj/mod.rs
+@@ -410,6 +410,7 @@ struct Section<'a> {
+     address: u64,
+     name: &'a str,
+     data: &'a [u8],
++    size: u64,
+     relocations: Vec<Relocation>,
+ }
+ 
+@@ -428,6 +429,7 @@ impl<'data, 'file, 'a> TryFrom<&'a ObjSection<'data, 'file>> for Section<'a> {
+             address: section.address(),
+             name: section.name().map_err(map_err)?,
+             data: section.data().map_err(map_err)?,
++            size: section.size(),
+             relocations: section
+                 .relocations()
+                 .map(|(offset, r)| {
+@@ -505,7 +507,9 @@ fn parse_map(section: &Section, name: &str) -> Result<Map, ParseError> {
+         let def = bpf_map_def {
+             map_type: BPF_MAP_TYPE_ARRAY as u32,
+             key_size: mem::size_of::<u32>() as u32,
+-            value_size: section.data.len() as u32,
++            // We need to use section.size here since
++            // .bss will always have data.len() == 0
++            value_size: section.size as u32,
+             max_entries: 1,
+             map_flags: 0, /* FIXME: set rodata readonly */
+             ..Default::default()
+2026-04-17 02:51:27,915 - INFO - Eval script for aya-rs__aya-90 written to logs/run_evaluation/gold_20260417_023105/gold/aya-rs__aya-90/eval.sh; copying to container...
+2026-04-17 02:53:06,390 - INFO - Test runtime: 98.33 seconds
+2026-04-17 02:53:06,390 - INFO - Test output for aya-rs__aya-90 written to logs/run_evaluation/gold_20260417_023105/gold/aya-rs__aya-90/test_output.txt
+2026-04-17 02:53:06,454 - INFO - Git diff after:
+diff --git a/.cargo/config b/.cargo/config
+index 757fd081..1198a638 100644
+--- a/.cargo/config
++++ b/.cargo/config
+@@ -5,4 +5,10 @@ xtask = "run --package xtask --"
+ linker = "arm-linux-gnueabi-gcc"
+ 
+ [target.armv7-unknown-linux-gnueabihf]
+-linker = "arm-linux-gnueabihf-gcc"
+\ No newline at end of file
++linker = "arm-linux-gnueabihf-gcc"
++# delete this to restore to the default registry
++[source.crates-io]
++replace-with = 'lts-repo-at-5487ceacc7'
++
++[source.lts-repo-at-5487ceacc7] # 2021-11-04 (<date>)
++registry = 'file:///testbed/.cargo/lts-repo-at-5487ceacc7'
+diff --git a/aya/src/obj/mod.rs b/aya/src/obj/mod.rs
+index c4c76630..6cc6bafd 100644
+--- a/aya/src/obj/mod.rs
++++ b/aya/src/obj/mod.rs
+@@ -410,6 +410,7 @@ struct Section<'a> {
+     address: u64,
+     name: &'a str,
+     data: &'a [u8],
++    size: u64,
+     relocations: Vec<Relocation>,
+ }
+ 
+@@ -428,6 +429,7 @@ impl<'data, 'file, 'a> TryFrom<&'a ObjSection<'data, 'file>> for Section<'a> {
+             address: section.address(),
+             name: section.name().map_err(map_err)?,
+             data: section.data().map_err(map_err)?,
++            size: section.size(),
+             relocations: section
+                 .relocations()
+                 .map(|(offset, r)| {
+@@ -505,7 +507,9 @@ fn parse_map(section: &Section, name: &str) -> Result<Map, ParseError> {
+         let def = bpf_map_def {
+             map_type: BPF_MAP_TYPE_ARRAY as u32,
+             key_size: mem::size_of::<u32>() as u32,
+-            value_size: section.data.len() as u32,
++            // We need to use section.size here since
++            // .bss will always have data.len() == 0
++            value_size: section.size as u32,
+             max_entries: 1,
+             map_flags: 0, /* FIXME: set rodata readonly */
+             ..Default::default()
+2026-04-17 02:53:06,454 - INFO - Grading answer for aya-rs__aya-90...
+2026-04-17 02:53:06,454 - INFO - report: {'aya-rs__aya-90': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['maps::hash_map::hash_map::tests::test_get_syscall_error', 'maps::hash_map::hash_map::tests::test_insert_ok', 'maps::hash_map::hash_map::tests::test_get_not_found', 'maps::hash_map::hash_map::tests::test_insert_syscall_error', 'maps::hash_map::hash_map::tests::test_iter', 'maps::hash_map::hash_map::tests::test_iter_key_deleted', 'maps::hash_map::hash_map::tests::test_iter_key_error', 'maps::hash_map::hash_map::tests::test_iter_value_error', 'maps::hash_map::hash_map::tests::test_keys', 'maps::hash_map::hash_map::tests::test_keys_empty', 'maps::hash_map::hash_map::tests::test_new_not_created', 'maps::hash_map::hash_map::tests::test_keys_error', 'maps::hash_map::hash_map::tests::test_new_ok', 'maps::hash_map::hash_map::tests::test_remove_ok', 'maps::hash_map::hash_map::tests::test_remove_syscall_error', 'maps::hash_map::hash_map::tests::test_try_from_ok', 'maps::hash_map::hash_map::tests::test_try_from_ok_lru', 'maps::hash_map::hash_map::tests::test_try_from_wrong_map', 'maps::hash_map::hash_map::tests::test_wrong_key_size', 'maps::hash_map::hash_map::tests::test_wrong_value_size', 'maps::perf::perf_buffer::tests::test_invalid_page_count', 'maps::perf::perf_buffer::tests::test_no_events', 'maps::perf::perf_buffer::tests::test_no_out_bufs', 'maps::perf::perf_buffer::tests::test_read_first_lost', 'maps::perf::perf_buffer::tests::test_read_first_sample', 'maps::perf::perf_buffer::tests::test_read_last_sample', 'maps::perf::perf_buffer::tests::test_read_many_with_many_reads', 'maps::tests::test_create', 'maps::perf::perf_buffer::tests::test_read_many_with_one_read', 'maps::perf::perf_buffer::tests::test_read_wrapping_value', 'maps::perf::perf_buffer::tests::test_read_wrapping_sample_size', 'maps::tests::test_create_failed', 'obj::btf::btf::tests::test_parse_header', 'obj::btf::types::tests::test_read_btf_type_array', 'obj::btf::types::tests::test_read_btf_type_const', 'obj::btf::types::tests::test_read_btf_type_enum', 'obj::btf::types::tests::test_read_btf_type_float', 'obj::btf::types::tests::test_read_btf_type_func', 'obj::btf::types::tests::test_read_btf_type_func_datasec', 'obj::btf::types::tests::test_read_btf_type_func_proto', 'obj::btf::types::tests::test_read_btf_type_func_var', 'obj::btf::types::tests::test_read_btf_type_fwd', 'obj::btf::types::tests::test_read_btf_type_int', 'obj::btf::types::tests::test_read_btf_type_ptr', 'obj::btf::types::tests::test_read_btf_type_restrict', 'obj::btf::types::tests::test_read_btf_type_struct', 'obj::btf::types::tests::test_read_btf_type_typedef', 'obj::btf::types::tests::test_read_btf_type_union', 'obj::btf::types::tests::test_read_btf_type_volatile', 'obj::tests::test_parse_generic_error', 'obj::tests::test_parse_license', 'obj::tests::test_parse_map', 'obj::tests::test_parse_map_data', 'obj::tests::test_parse_map_def', 'obj::tests::test_parse_map_def_error', 'obj::tests::test_parse_map_def_with_padding', 'obj::tests::test_parse_map_error', 'obj::tests::test_parse_map_short', 'obj::tests::test_parse_program', 'obj::tests::test_parse_program_error', 'obj::tests::test_parse_section_data', 'obj::tests::test_parse_section_btf_tracepoint', 'obj::tests::test_parse_section_kprobe', 'obj::tests::test_parse_section_map', 'obj::tests::test_parse_section_lsm', 'obj::tests::test_parse_section_raw_tp', 'obj::tests::test_parse_section_socket_filter', 'obj::tests::test_parse_section_trace_point', 'obj::tests::test_parse_section_uprobe', 'obj::tests::test_parse_section_xdp', 'obj::tests::test_parse_version', 'sys::netlink::tests::test_nested_attrs', 'sys::netlink::tests::test_nlattr_iterator_empty', 'sys::netlink::tests::test_nlattr_iterator_many', 'sys::netlink::tests::test_nlattr_iterator_nested', 'sys::netlink::tests::test_nlattr_iterator_one', 'util::tests::test_parse_kernel_symbols', 'util::tests::test_parse_online_cpus', 'src/bpf.rs - bpf::Bpf::program_mut (line 502) - compile', 'src/bpf.rs - bpf::BpfLoader::btf (line 122) - compile', 'src/maps/mod.rs - maps (line 17) - compile', 'src/maps/hash_map/hash_map.rs - maps::hash_map::hash_map::HashMap (line 22) - compile', 'src/bpf.rs - bpf::BpfLoader (line 87) - compile', 'src/maps/sock/sock_map.rs - maps::sock::sock_map::SockMap (line 31) - compile', 'src/maps/array/program_array.rs - maps::array::program_array::ProgramArray (line 28) - compile', 'src/programs/kprobe.rs - programs::kprobe::KProbe (line 28) - compile', 'src/bpf.rs - bpf::BpfLoader::load_file (line 161) - compile', 'src/maps/hash_map/per_cpu_hash_map.rs - maps::hash_map::per_cpu_hash_map::PerCpuHashMap (line 29) - compile', 'src/programs/sk_skb.rs - programs::sk_skb::SkSkb (line 30) - compile', 'src/programs/mod.rs - programs (line 16) - compile', 'src/bpf.rs - bpf::Bpf::programs (line 523) - compile', 'src/bpf.rs - bpf::Bpf::load (line 373) - compile', 'src/bpf.rs - bpf::Bpf::program (line 477) - compile', 'src/bpf.rs - bpf::Bpf::maps (line 441) - compile', 'src/bpf.rs - bpf::BpfLoader::load (line 179) - compile', 'src/bpf.rs - bpf::BpfLoader::map_pin_path (line 143) - compile', 'src/bpf.rs - bpf::Bpf::load_file (line 351) - compile', 'src/programs/xdp.rs - programs::xdp::Xdp (line 55) - compile', 'src/programs/cgroup_skb.rs - programs::cgroup_skb::CgroupSkb (line 28) - compile', 'src/programs/raw_trace_point.rs - programs::raw_trace_point::RawTracePoint (line 24) - compile', 'src/maps/queue.rs - maps::queue::Queue (line 23) - compile', 'src/programs/socket_filter.rs - programs::socket_filter::SocketFilter (line 35) - compile', 'src/maps/stack_trace.rs - maps::stack_trace::StackTraceMap (line 27) - compile', 'src/programs/sock_ops.rs - programs::sock_ops::SockOps (line 21) - compile', 'src/maps/array/array.rs - maps::array::array::Array (line 25) - compile', 'src/maps/stack.rs - maps::stack::Stack (line 23) - compile', 'src/maps/perf/perf_event_array.rs - maps::perf::perf_event_array::PerfEventArray (line 88) - compile', 'src/programs/tp_btf.rs - programs::tp_btf::BtfTracePoint (line 26) - compile', 'src/maps/mod.rs - maps::PerCpuValues (line 391) - compile', 'src/programs/tc.rs - programs::tc::SchedClassifier (line 42) - compile', 'src/maps/hash_map/per_cpu_hash_map.rs - maps::hash_map::per_cpu_hash_map::PerCpuHashMap<T, K, V>::insert (line 106) - compile', 'src/programs/lirc_mode2.rs - programs::lirc_mode2::LircMode2 (line 24) - compile', 'src/programs/perf_event.rs - programs::perf_event::PerfEvent (line 50) - compile', 'src/programs/trace_point.rs - programs::trace_point::TracePoint (line 31) - compile', 'src/maps/sock/sock_hash.rs - maps::sock::sock_hash::SockHash (line 32) - compile', 'src/maps/array/per_cpu_array.rs - maps::array::per_cpu_array::PerCpuArray (line 25) - compile', 'src/programs/sk_msg.rs - programs::sk_msg::SkMsg (line 20) - compile', 'src/maps/perf/async_perf_event_array.rs - maps::perf::async_perf_event_array::AsyncPerfEventArray (line 35) - compile', 'src/programs/lsm.rs - programs::lsm::Lsm (line 29) - compile'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for aya-rs__aya-90: resolved: True
+2026-04-17 02:53:06,454 - INFO - Attempting to stop container rustb.eval.aya-rs__aya-90.gold_20260417_023105...
+2026-04-17 02:54:01,793 - INFO - Attempting to remove container rustb.eval.aya-rs__aya-90.gold_20260417_023105...
+2026-04-17 02:54:01,908 - INFO - Container rustb.eval.aya-rs__aya-90.gold_20260417_023105 removed.

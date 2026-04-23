@@ -1,0 +1,108 @@
+diff --git a/crates/core/src/node.rs b/crates/core/src/node.rs
+--- a/crates/core/src/node.rs
++++ b/crates/core/src/node.rs
+@@ -19,21 +19,25 @@ pub struct Position {
+   row: usize,
+   /// zero-based BYTE offset instead of character offset
+   byte_column: usize,
++  /// byte offset of this position
++  byte_offset: usize,
+ }
+ 
+ impl Position {
+-  fn new(row: u32, byte_column: u32) -> Self {
++  fn new(row: u32, byte_column: u32, byte_offset: u32) -> Self {
+     Self {
+       row: row as usize,
+       byte_column: byte_column as usize,
++      byte_offset: byte_offset as usize,
+     }
+   }
+   pub fn row(&self) -> usize {
+     self.row
+   }
+   /// TODO: return unicode character offset
+-  pub fn column<D: Doc>(&self, _node: &Node<D>) -> usize {
+-    self.byte_column
++  pub fn column<D: Doc>(&self, node: &Node<D>) -> usize {
++    let source = node.root.doc.get_source();
++    source.get_char_column(self.byte_column, self.byte_offset)
+   }
+   /// Convert to tree-sitter's Point
+   pub fn ts_point(&self) -> tree_sitter::Point {
+diff --git a/crates/core/src/node.rs b/crates/core/src/node.rs
+--- a/crates/core/src/node.rs
++++ b/crates/core/src/node.rs
+@@ -218,13 +222,15 @@ impl<'r, D: Doc> Node<'r, D> {
+   /// Nodes' start position in terms of zero-based rows and columns.
+   pub fn start_pos(&self) -> Position {
+     let pos = self.inner.start_position();
+-    Position::new(pos.row(), pos.column())
++    let byte = self.inner.start_byte();
++    Position::new(pos.row(), pos.column(), byte)
+   }
+ 
+   /// Nodes' end position in terms of rows and columns.
+   pub fn end_pos(&self) -> Position {
+     let pos = self.inner.end_position();
+-    Position::new(pos.row(), pos.column())
++    let byte = self.inner.end_byte();
++    Position::new(pos.row(), pos.column(), byte)
+   }
+ 
+   pub fn text(&self) -> Cow<'r, str> {
+diff --git a/crates/core/src/node.rs b/crates/core/src/node.rs
+--- a/crates/core/src/node.rs
++++ b/crates/core/src/node.rs
+@@ -751,5 +756,12 @@ if (a) {
+     assert_eq!(node.start_pos().column(&node), 0);
+     assert_eq!(node.end_pos().row(), 0);
+     assert_eq!(node.end_pos().column(&node), 1);
++    let root = Tsx.ast_grep("\n  🦀🦀");
++    let root = root.root();
++    let node = root.find("$A").expect("should exist");
++    assert_eq!(node.start_pos().row(), 1);
++    assert_eq!(node.start_pos().column(&node), 2);
++    assert_eq!(node.end_pos().row(), 1);
++    assert_eq!(node.end_pos().column(&node), 4);
+   }
+ }
+diff --git a/crates/core/src/source.rs b/crates/core/src/source.rs
+--- a/crates/core/src/source.rs
++++ b/crates/core/src/source.rs
+@@ -146,6 +146,8 @@ pub trait Content: Sized {
+   /// Used for string replacement. We need this for
+   /// transformation.
+   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<str>;
++  /// Get the character column at the given position
++  fn get_char_column(&self, column: usize, offset: usize) -> usize;
+ }
+ 
+ impl Content for String {
+diff --git a/crates/napi/src/doc.rs b/crates/napi/src/doc.rs
+--- a/crates/napi/src/doc.rs
++++ b/crates/napi/src/doc.rs
+@@ -107,6 +107,10 @@ impl Content for Wrapper {
+     let s = String::from_utf16_lossy(bytes);
+     Cow::Owned(s)
+   }
++  fn get_char_column(&self, column: usize, _offset: usize) -> usize {
++    // utf-16 is 2 bytes per character, this is O(1) operation!
++    column / 2
++  }
+ }
+ 
+ fn pos_for_byte_offset(input: &[u16], byte_offset: usize) -> Point {
+diff --git a/crates/napi/src/sg_node.rs b/crates/napi/src/sg_node.rs
+--- a/crates/napi/src/sg_node.rs
++++ b/crates/napi/src/sg_node.rs
+@@ -43,8 +43,7 @@ impl SgNode {
+   fn to_pos(&self, pos: Position, offset: usize) -> Pos {
+     Pos {
+       line: pos.row() as u32,
+-      // TODO: remove the division by 2 hack
+-      column: pos.column(&self.inner) as u32 / 2,
++      column: pos.column(&self.inner) as u32,
+       index: offset as u32 / 2,
+     }
+   }

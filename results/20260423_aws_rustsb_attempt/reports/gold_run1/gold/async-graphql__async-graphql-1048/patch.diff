@@ -1,0 +1,24 @@
+diff --git a/src/registry/export_sdl.rs b/src/registry/export_sdl.rs
+--- a/src/registry/export_sdl.rs
++++ b/src/registry/export_sdl.rs
+@@ -367,7 +367,7 @@ impl Registry {
+                         write!(sdl, " @tag(name: \"{}\")", tag.replace('"', "\\\"")).ok();
+                     }
+                 }
+-                writeln!(sdl, "{{").ok();
++                writeln!(sdl, " {{").ok();
+ 
+                 let mut values = enum_values.values().collect::<Vec<_>>();
+                 if options.sorted_enum_values {
+diff --git a/src/registry/export_sdl.rs b/src/registry/export_sdl.rs
+--- a/src/registry/export_sdl.rs
++++ b/src/registry/export_sdl.rs
+@@ -418,7 +418,7 @@ impl Registry {
+                         write!(sdl, " @tag(name: \"{}\")", tag.replace('"', "\\\"")).ok();
+                     }
+                 }
+-                writeln!(sdl, "{{").ok();
++                writeln!(sdl, " {{").ok();
+ 
+                 let mut fields = input_fields.values().collect::<Vec<_>>();
+                 if options.sorted_fields {

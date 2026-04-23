@@ -1,0 +1,723 @@
+2026-04-17 07:33:44,498 - INFO - Environment image rustb.env.x86_64.axodotdev_cargo-dist:latest found for axodotdev__cargo-dist-367
+Building instance image rustbench/axodotdev__cargo-dist:pr-367 for axodotdev__cargo-dist-367
+2026-04-17 07:46:52,833 - INFO - Creating container for axodotdev__cargo-dist-367...
+2026-04-17 07:46:53,201 - INFO - Container for axodotdev__cargo-dist-367 created: 452ad3d5b81e82a332aed1e621e1accee364a44fb41126fb0545aad3f227ead8
+2026-04-17 07:46:53,723 - INFO - Container for axodotdev__cargo-dist-367 started: 452ad3d5b81e82a332aed1e621e1accee364a44fb41126fb0545aad3f227ead8
+2026-04-17 07:46:53,723 - INFO - Intermediate patch for axodotdev__cargo-dist-367 written to logs/run_evaluation/gold_run1/gold/axodotdev__cargo-dist-367/patch.diff, now applying to container...
+2026-04-17 07:46:54,471 - INFO - >>>>> Applied Patch:
+Checking patch book/src/config.md...
+Checking patch cargo-dist/src/backend/ci/github.rs...
+Checking patch cargo-dist/src/backend/ci/github.rs...
+Checking patch cargo-dist/src/backend/ci/github.rs...
+Checking patch cargo-dist/src/config.rs...
+Checking patch cargo-dist/src/config.rs...
+Checking patch cargo-dist/src/config.rs...
+Checking patch cargo-dist/src/config.rs...
+Checking patch cargo-dist/src/init.rs...
+Checking patch cargo-dist/src/init.rs...
+Checking patch cargo-dist/src/init.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/templates/ci/github_ci.yml.j2...
+Applied patch book/src/config.md cleanly.
+Applied patch cargo-dist/src/backend/ci/github.rs cleanly.
+Applied patch cargo-dist/src/backend/ci/github.rs cleanly.
+Applied patch cargo-dist/src/backend/ci/github.rs cleanly.
+Applied patch cargo-dist/src/config.rs cleanly.
+Applied patch cargo-dist/src/config.rs cleanly.
+Applied patch cargo-dist/src/config.rs cleanly.
+Applied patch cargo-dist/src/config.rs cleanly.
+Applied patch cargo-dist/src/init.rs cleanly.
+Applied patch cargo-dist/src/init.rs cleanly.
+Applied patch cargo-dist/src/init.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/templates/ci/github_ci.yml.j2 cleanly.
+
+2026-04-17 07:46:54,581 - INFO - Git diff before:
+diff --git a/Cargo.lock b/Cargo.lock
+index a934c41c..a1be3afb 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -188,9 +188,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "base64"
+-version = "0.21.2"
++version = "0.21.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "604178f6c5c21f02dc555784810edfb88d34ac2c73b2eae109655649ee73ce3d"
++checksum = "414dcefbc63d77c526a76b3afcf6fbb9b5e2791c19c3aa2297733208750c6e53"
+ 
+ [[package]]
+ name = "base64ct"
+@@ -1232,9 +1232,9 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+ 
+ [[package]]
+ name = "memo-map"
+-version = "0.3.1"
++version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "aec276c09560ce4447087aaefc19eb0c18d97e31bd05ebac38881c4723400c40"
++checksum = "374c335b2df19e62d4cb323103473cbc6510980253119180de862d89184f6a83"
+ 
+ [[package]]
+ name = "memoffset"
+@@ -1285,9 +1285,9 @@ checksum = "6877bb514081ee2a7ff5ef9de3281f14a4dd4bceac4c09388074a6b5df8a139a"
+ 
+ [[package]]
+ name = "minijinja"
+-version = "1.0.6"
++version = "1.0.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e436cdb19900a08197c6b874280d24f9289d127275eadc23623276e0f5ec97e9"
++checksum = "50c43c912b380856deeb78d826e3b77df13a90e69aef6223e3ad28c02d2ca857"
+ dependencies = [
+  "aho-corasick",
+  "memo-map",
+@@ -1516,9 +1516,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pin-project-lite"
+-version = "0.2.12"
++version = "0.2.13"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "12cc1b0bf1727a77a54b6654e7b5f1af8604923edc8b81885f8ec92f9e3f0a05"
++checksum = "8afb450f006bf6385ca15ef45d71d2288452bc3683ce2e2cacc0d18e4be60b58"
+ 
+ [[package]]
+ name = "pin-utils"
+@@ -1611,9 +1611,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex"
+-version = "1.9.3"
++version = "1.9.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "81bc1d4caf89fac26a70747fe603c130093b53c773888797a6329091246d651a"
++checksum = "12de2eff854e5fa4b1295edd650e227e9d8fb0c9e90b12e7f36d6a6811791a29"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -1623,9 +1623,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-automata"
+-version = "0.3.6"
++version = "0.3.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fed1ceff11a1dddaee50c9dc8e4938bd106e9d89ae372f192311e7da498e3b69"
++checksum = "49530408a136e16e5b486e883fbb6ba058e8e4e8ae6621a77b048b314336e629"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -1634,9 +1634,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-syntax"
+-version = "0.7.4"
++version = "0.7.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e5ea92a5b6195c6ef2a0295ea818b312502c6fc94dde986c5553242e18fd4ce2"
++checksum = "dbb5fb1acd8a1a18b3dd5be62d25485eb770e05afb408a9627d14d451bae12da"
+ 
+ [[package]]
+ name = "reqwest"
+@@ -1700,9 +1700,9 @@ checksum = "d626bb9dae77e28219937af045c257c28bfd3f69333c512553507f5f9798cb76"
+ 
+ [[package]]
+ name = "rustix"
+-version = "0.38.8"
++version = "0.38.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "19ed4fa021d81c8392ce04db050a3da9a60299050b7ae1cf482d862b54a7218f"
++checksum = "9bfe0f2582b4931a45d1fa608f8a8722e8b3c7ac54dd6d5f3b3212791fedef49"
+ dependencies = [
+  "bitflags 2.4.0",
+  "errno",
+@@ -1814,18 +1814,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.186"
++version = "1.0.188"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9f5db24220c009de9bd45e69fb2938f4b6d2df856aa9304ce377b3180f83b7c1"
++checksum = "cf9e0fcba69a370eed61bcf2b728575f726b50b55cba78064753d708ddc7549e"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.186"
++version = "1.0.188"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5ad697f7e0b65af4983a4ce8f56ed5b357e8d3c36651bf6a7e13639c17b8e670"
++checksum = "4eca7ac642d82aa35b60049a6eccb4be6be75e599bd2e9adb5f875a737654af2"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -2144,9 +2144,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "time"
+-version = "0.3.27"
++version = "0.3.28"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0bb39ee79a6d8de55f48f2293a830e040392f1c5f16e336bdd1788cd0aadce07"
++checksum = "17f6bb557fd245c28e6411aa56b6403c689ad95061f50e4be16c274e70a17e48"
+ dependencies = [
+  "deranged",
+  "serde",
+diff --git a/book/src/config.md b/book/src/config.md
+index c670f39c..0a80e256 100644
+--- a/book/src/config.md
++++ b/book/src/config.md
+@@ -305,6 +305,24 @@ Prior to 0.1.0 we didn't set the correct flags in our CI scripts to do this, but
+ This flag was introduced to allow you to restore the old behaviour if you prefer.
+ 
+ 
++### create-release
++
++> since 0.2.0
++
++Example: `create-release = false`
++
++**This can only be set globally**
++
++Whether we should create the Github Release for you in your Release CI.
++
++If true (default), cargo-dist will create a new Github Release and generate
++a title/body for it based on your changelog.
++
++If false, cargo-dist will assume a draft Github Release for the current git tag
++already exists with the title/body you want, and just upload artifacts to it.
++At the end of a successful publish it will undraft the Github Release.
++
++
+ ### install-path
+ 
+ > since 0.1.0
+diff --git a/cargo-dist/src/backend/ci/github.rs b/cargo-dist/src/backend/ci/github.rs
+index f329faa2..d323f46e 100644
+--- a/cargo-dist/src/backend/ci/github.rs
++++ b/cargo-dist/src/backend/ci/github.rs
+@@ -18,6 +18,7 @@ struct CiInfo {
+     install_dist_sh: String,
+     install_dist_ps1: String,
+     fail_fast: bool,
++    create_release: bool,
+     local_tasks: Vec<CiTask>,
+     global_task: Option<CiTask>,
+     tap: Option<String>,
+@@ -64,6 +65,7 @@ fn compute_ci_info(dist: &DistGraph) -> CiInfo {
+         .as_ref()
+         .unwrap_or(&self_dist_version);
+     let fail_fast = dist.fail_fast;
++    let create_release = dist.create_release;
+ 
+     // Figure out what builds we need to do
+     let mut needs_global_build = false;
+@@ -123,6 +125,7 @@ fn compute_ci_info(dist: &DistGraph) -> CiInfo {
+         install_dist_sh,
+         install_dist_ps1,
+         fail_fast,
++        create_release,
+         local_tasks,
+         global_task,
+         tap,
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+index d6d692d0..7edf6081 100644
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -228,6 +228,18 @@ pub struct DistMetadata {
+     #[serde(skip_serializing_if = "Option::is_none")]
+     #[serde(rename = "publish-jobs")]
+     pub publish_jobs: Option<Vec<PublishStyle>>,
++
++    /// Whether we should create the Github Release for you when you push a tag.
++    ///
++    /// If true (default), cargo-dist will create a new Github Release and generate
++    /// a title/body for it based on your changelog.
++    ///
++    /// If false, cargo-dist will assume a draft Github Release already exists
++    /// with the title/body you want. At the end of a successful publish it will
++    /// undraft the Github Release.
++    #[serde(skip_serializing_if = "Option::is_none")]
++    #[serde(rename = "create-release")]
++    pub create_release: Option<bool>,
+ }
+ 
+ impl DistMetadata {
+@@ -256,6 +268,7 @@ impl DistMetadata {
+             default_features: _,
+             all_features: _,
+             publish_jobs: _,
++            create_release: _,
+         } = self;
+         if let Some(include) = include {
+             for include in include {
+@@ -293,6 +306,7 @@ impl DistMetadata {
+             default_features,
+             all_features,
+             publish_jobs,
++            create_release,
+         } = self;
+ 
+         // Check for global settings on local packages
+@@ -314,6 +328,9 @@ impl DistMetadata {
+         if fail_fast.is_some() {
+             warn!("package.metadata.dist.fail-fast is set, but this is only accepted in workspace.metadata (value is being ignored): {}", package_manifest_path);
+         }
++        if create_release.is_some() {
++            warn!("package.metadata.dist.create-release is set, but this is only accepted in workspace.metadata (value is being ignored): {}", package_manifest_path);
++        }
+ 
+         // Merge non-global settings
+         if installers.is_none() {
+diff --git a/cargo-dist/src/init.rs b/cargo-dist/src/init.rs
+index 3018cdf6..2d1401c2 100644
+--- a/cargo-dist/src/init.rs
++++ b/cargo-dist/src/init.rs
+@@ -204,6 +204,7 @@ fn get_new_dist_metadata(
+             default_features: None,
+             all_features: None,
+             publish_jobs: None,
++            create_release: None,
+         }
+     };
+ 
+@@ -632,6 +633,7 @@ fn update_toml_metadata(
+         all_features,
+         default_features,
+         publish_jobs,
++        create_release,
+     } = &meta;
+ 
+     apply_optional_value(
+@@ -746,6 +748,13 @@ fn update_toml_metadata(
+         *fail_fast,
+     );
+ 
++    apply_optional_value(
++        table,
++        "create-release",
++        "# Whether cargo-dist should create a Github Release or use an existing draft\n",
++        *create_release,
++    );
++
+     apply_optional_value(
+         table,
+         "install-path",
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+index 5da51dcf..9d80a124 100644
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -149,6 +149,8 @@ pub struct DistGraph {
+     pub merge_tasks: bool,
+     /// Whether failing tasks should make us give up on all other tasks
+     pub fail_fast: bool,
++    /// Whether to creat a github release or edit an existing draft
++    pub create_release: bool,
+     /// The desired cargo-dist version for handling this project
+     pub desired_cargo_dist_version: Option<Version>,
+     /// The desired rust toolchain for handling this project
+@@ -628,6 +630,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             features,
+             default_features: no_default_features,
+             all_features,
++            create_release,
+         } = &workspace_metadata;
+ 
+         let desired_cargo_dist_version = cargo_dist_version.clone();
+@@ -637,6 +640,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         }
+         let merge_tasks = merge_tasks.unwrap_or(false);
+         let fail_fast = fail_fast.unwrap_or(false);
++        let create_release = create_release.unwrap_or(true);
+         let mut packages_with_mismatched_features = vec![];
+         // Compute/merge package configs
+         let mut package_metadata = vec![];
+@@ -684,6 +688,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+                 precise_builds,
+                 fail_fast,
+                 merge_tasks,
++                create_release,
+                 desired_cargo_dist_version,
+                 desired_rust_toolchain,
+                 tools,
+diff --git a/cargo-dist/templates/ci/github_ci.yml.j2 b/cargo-dist/templates/ci/github_ci.yml.j2
+index 5be9660b..be65bec8 100644
+--- a/cargo-dist/templates/ci/github_ci.yml.j2
++++ b/cargo-dist/templates/ci/github_ci.yml.j2
+@@ -69,12 +69,18 @@ jobs:
+           echo "dist plan ran successfully"
+           cat dist-manifest.json
+ 
++      {{%- if create_release %}}
++
+           # Create the Github Release™ based on what cargo-dist thinks it should be
+           ANNOUNCEMENT_TITLE=$(jq --raw-output ".announcement_title" dist-manifest.json)
+           IS_PRERELEASE=$(jq --raw-output ".announcement_is_prerelease" dist-manifest.json)
+           jq --raw-output ".announcement_github_body" dist-manifest.json > new_dist_announcement.md
+           gh release create ${{ github.ref_name }} --draft --prerelease="$IS_PRERELEASE" --title="$ANNOUNCEMENT_TITLE" --notes-file=new_dist_announcement.md
+           echo "created announcement!"
++      {{%- else %}}
++
++          # We're assuming a draft Github Release™ with the desired name/tag/body already exists
++      {{%- endif %}}
+ 
+           # Upload the manifest to the Github Release™
+           gh release upload ${{ github.ref_name }} dist-manifest.json
+2026-04-17 07:46:54,581 - INFO - Eval script for axodotdev__cargo-dist-367 written to logs/run_evaluation/gold_run1/gold/axodotdev__cargo-dist-367/eval.sh; copying to container...
+2026-04-17 07:48:57,008 - INFO - Test runtime: 122.30 seconds
+2026-04-17 07:48:57,008 - INFO - Test output for axodotdev__cargo-dist-367 written to logs/run_evaluation/gold_run1/gold/axodotdev__cargo-dist-367/test_output.txt
+2026-04-17 07:48:57,154 - INFO - Git diff after:
+diff --git a/Cargo.lock b/Cargo.lock
+index a934c41c..a1be3afb 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -188,9 +188,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "base64"
+-version = "0.21.2"
++version = "0.21.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "604178f6c5c21f02dc555784810edfb88d34ac2c73b2eae109655649ee73ce3d"
++checksum = "414dcefbc63d77c526a76b3afcf6fbb9b5e2791c19c3aa2297733208750c6e53"
+ 
+ [[package]]
+ name = "base64ct"
+@@ -1232,9 +1232,9 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+ 
+ [[package]]
+ name = "memo-map"
+-version = "0.3.1"
++version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "aec276c09560ce4447087aaefc19eb0c18d97e31bd05ebac38881c4723400c40"
++checksum = "374c335b2df19e62d4cb323103473cbc6510980253119180de862d89184f6a83"
+ 
+ [[package]]
+ name = "memoffset"
+@@ -1285,9 +1285,9 @@ checksum = "6877bb514081ee2a7ff5ef9de3281f14a4dd4bceac4c09388074a6b5df8a139a"
+ 
+ [[package]]
+ name = "minijinja"
+-version = "1.0.6"
++version = "1.0.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e436cdb19900a08197c6b874280d24f9289d127275eadc23623276e0f5ec97e9"
++checksum = "50c43c912b380856deeb78d826e3b77df13a90e69aef6223e3ad28c02d2ca857"
+ dependencies = [
+  "aho-corasick",
+  "memo-map",
+@@ -1516,9 +1516,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pin-project-lite"
+-version = "0.2.12"
++version = "0.2.13"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "12cc1b0bf1727a77a54b6654e7b5f1af8604923edc8b81885f8ec92f9e3f0a05"
++checksum = "8afb450f006bf6385ca15ef45d71d2288452bc3683ce2e2cacc0d18e4be60b58"
+ 
+ [[package]]
+ name = "pin-utils"
+@@ -1611,9 +1611,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex"
+-version = "1.9.3"
++version = "1.9.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "81bc1d4caf89fac26a70747fe603c130093b53c773888797a6329091246d651a"
++checksum = "12de2eff854e5fa4b1295edd650e227e9d8fb0c9e90b12e7f36d6a6811791a29"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -1623,9 +1623,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-automata"
+-version = "0.3.6"
++version = "0.3.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fed1ceff11a1dddaee50c9dc8e4938bd106e9d89ae372f192311e7da498e3b69"
++checksum = "49530408a136e16e5b486e883fbb6ba058e8e4e8ae6621a77b048b314336e629"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -1634,9 +1634,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-syntax"
+-version = "0.7.4"
++version = "0.7.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e5ea92a5b6195c6ef2a0295ea818b312502c6fc94dde986c5553242e18fd4ce2"
++checksum = "dbb5fb1acd8a1a18b3dd5be62d25485eb770e05afb408a9627d14d451bae12da"
+ 
+ [[package]]
+ name = "reqwest"
+@@ -1700,9 +1700,9 @@ checksum = "d626bb9dae77e28219937af045c257c28bfd3f69333c512553507f5f9798cb76"
+ 
+ [[package]]
+ name = "rustix"
+-version = "0.38.8"
++version = "0.38.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "19ed4fa021d81c8392ce04db050a3da9a60299050b7ae1cf482d862b54a7218f"
++checksum = "9bfe0f2582b4931a45d1fa608f8a8722e8b3c7ac54dd6d5f3b3212791fedef49"
+ dependencies = [
+  "bitflags 2.4.0",
+  "errno",
+@@ -1814,18 +1814,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.186"
++version = "1.0.188"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9f5db24220c009de9bd45e69fb2938f4b6d2df856aa9304ce377b3180f83b7c1"
++checksum = "cf9e0fcba69a370eed61bcf2b728575f726b50b55cba78064753d708ddc7549e"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.186"
++version = "1.0.188"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5ad697f7e0b65af4983a4ce8f56ed5b357e8d3c36651bf6a7e13639c17b8e670"
++checksum = "4eca7ac642d82aa35b60049a6eccb4be6be75e599bd2e9adb5f875a737654af2"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -2144,9 +2144,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "time"
+-version = "0.3.27"
++version = "0.3.28"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0bb39ee79a6d8de55f48f2293a830e040392f1c5f16e336bdd1788cd0aadce07"
++checksum = "17f6bb557fd245c28e6411aa56b6403c689ad95061f50e4be16c274e70a17e48"
+ dependencies = [
+  "deranged",
+  "serde",
+diff --git a/book/src/config.md b/book/src/config.md
+index c670f39c..0a80e256 100644
+--- a/book/src/config.md
++++ b/book/src/config.md
+@@ -305,6 +305,24 @@ Prior to 0.1.0 we didn't set the correct flags in our CI scripts to do this, but
+ This flag was introduced to allow you to restore the old behaviour if you prefer.
+ 
+ 
++### create-release
++
++> since 0.2.0
++
++Example: `create-release = false`
++
++**This can only be set globally**
++
++Whether we should create the Github Release for you in your Release CI.
++
++If true (default), cargo-dist will create a new Github Release and generate
++a title/body for it based on your changelog.
++
++If false, cargo-dist will assume a draft Github Release for the current git tag
++already exists with the title/body you want, and just upload artifacts to it.
++At the end of a successful publish it will undraft the Github Release.
++
++
+ ### install-path
+ 
+ > since 0.1.0
+diff --git a/cargo-dist/src/backend/ci/github.rs b/cargo-dist/src/backend/ci/github.rs
+index f329faa2..d323f46e 100644
+--- a/cargo-dist/src/backend/ci/github.rs
++++ b/cargo-dist/src/backend/ci/github.rs
+@@ -18,6 +18,7 @@ struct CiInfo {
+     install_dist_sh: String,
+     install_dist_ps1: String,
+     fail_fast: bool,
++    create_release: bool,
+     local_tasks: Vec<CiTask>,
+     global_task: Option<CiTask>,
+     tap: Option<String>,
+@@ -64,6 +65,7 @@ fn compute_ci_info(dist: &DistGraph) -> CiInfo {
+         .as_ref()
+         .unwrap_or(&self_dist_version);
+     let fail_fast = dist.fail_fast;
++    let create_release = dist.create_release;
+ 
+     // Figure out what builds we need to do
+     let mut needs_global_build = false;
+@@ -123,6 +125,7 @@ fn compute_ci_info(dist: &DistGraph) -> CiInfo {
+         install_dist_sh,
+         install_dist_ps1,
+         fail_fast,
++        create_release,
+         local_tasks,
+         global_task,
+         tap,
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+index d6d692d0..7edf6081 100644
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -228,6 +228,18 @@ pub struct DistMetadata {
+     #[serde(skip_serializing_if = "Option::is_none")]
+     #[serde(rename = "publish-jobs")]
+     pub publish_jobs: Option<Vec<PublishStyle>>,
++
++    /// Whether we should create the Github Release for you when you push a tag.
++    ///
++    /// If true (default), cargo-dist will create a new Github Release and generate
++    /// a title/body for it based on your changelog.
++    ///
++    /// If false, cargo-dist will assume a draft Github Release already exists
++    /// with the title/body you want. At the end of a successful publish it will
++    /// undraft the Github Release.
++    #[serde(skip_serializing_if = "Option::is_none")]
++    #[serde(rename = "create-release")]
++    pub create_release: Option<bool>,
+ }
+ 
+ impl DistMetadata {
+@@ -256,6 +268,7 @@ impl DistMetadata {
+             default_features: _,
+             all_features: _,
+             publish_jobs: _,
++            create_release: _,
+         } = self;
+         if let Some(include) = include {
+             for include in include {
+@@ -293,6 +306,7 @@ impl DistMetadata {
+             default_features,
+             all_features,
+             publish_jobs,
++            create_release,
+         } = self;
+ 
+         // Check for global settings on local packages
+@@ -314,6 +328,9 @@ impl DistMetadata {
+         if fail_fast.is_some() {
+             warn!("package.metadata.dist.fail-fast is set, but this is only accepted in workspace.metadata (value is being ignored): {}", package_manifest_path);
+         }
++        if create_release.is_some() {
++            warn!("package.metadata.dist.create-release is set, but this is only accepted in workspace.metadata (value is being ignored): {}", package_manifest_path);
++        }
+ 
+         // Merge non-global settings
+         if installers.is_none() {
+diff --git a/cargo-dist/src/init.rs b/cargo-dist/src/init.rs
+index 3018cdf6..2d1401c2 100644
+--- a/cargo-dist/src/init.rs
++++ b/cargo-dist/src/init.rs
+@@ -204,6 +204,7 @@ fn get_new_dist_metadata(
+             default_features: None,
+             all_features: None,
+             publish_jobs: None,
++            create_release: None,
+         }
+     };
+ 
+@@ -632,6 +633,7 @@ fn update_toml_metadata(
+         all_features,
+         default_features,
+         publish_jobs,
++        create_release,
+     } = &meta;
+ 
+     apply_optional_value(
+@@ -746,6 +748,13 @@ fn update_toml_metadata(
+         *fail_fast,
+     );
+ 
++    apply_optional_value(
++        table,
++        "create-release",
++        "# Whether cargo-dist should create a Github Release or use an existing draft\n",
++        *create_release,
++    );
++
+     apply_optional_value(
+         table,
+         "install-path",
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+index 5da51dcf..9d80a124 100644
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -149,6 +149,8 @@ pub struct DistGraph {
+     pub merge_tasks: bool,
+     /// Whether failing tasks should make us give up on all other tasks
+     pub fail_fast: bool,
++    /// Whether to creat a github release or edit an existing draft
++    pub create_release: bool,
+     /// The desired cargo-dist version for handling this project
+     pub desired_cargo_dist_version: Option<Version>,
+     /// The desired rust toolchain for handling this project
+@@ -628,6 +630,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             features,
+             default_features: no_default_features,
+             all_features,
++            create_release,
+         } = &workspace_metadata;
+ 
+         let desired_cargo_dist_version = cargo_dist_version.clone();
+@@ -637,6 +640,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         }
+         let merge_tasks = merge_tasks.unwrap_or(false);
+         let fail_fast = fail_fast.unwrap_or(false);
++        let create_release = create_release.unwrap_or(true);
+         let mut packages_with_mismatched_features = vec![];
+         // Compute/merge package configs
+         let mut package_metadata = vec![];
+@@ -684,6 +688,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+                 precise_builds,
+                 fail_fast,
+                 merge_tasks,
++                create_release,
+                 desired_cargo_dist_version,
+                 desired_rust_toolchain,
+                 tools,
+diff --git a/cargo-dist/templates/ci/github_ci.yml.j2 b/cargo-dist/templates/ci/github_ci.yml.j2
+index 5be9660b..be65bec8 100644
+--- a/cargo-dist/templates/ci/github_ci.yml.j2
++++ b/cargo-dist/templates/ci/github_ci.yml.j2
+@@ -69,12 +69,18 @@ jobs:
+           echo "dist plan ran successfully"
+           cat dist-manifest.json
+ 
++      {{%- if create_release %}}
++
+           # Create the Github Release™ based on what cargo-dist thinks it should be
+           ANNOUNCEMENT_TITLE=$(jq --raw-output ".announcement_title" dist-manifest.json)
+           IS_PRERELEASE=$(jq --raw-output ".announcement_is_prerelease" dist-manifest.json)
+           jq --raw-output ".announcement_github_body" dist-manifest.json > new_dist_announcement.md
+           gh release create ${{ github.ref_name }} --draft --prerelease="$IS_PRERELEASE" --title="$ANNOUNCEMENT_TITLE" --notes-file=new_dist_announcement.md
+           echo "created announcement!"
++      {{%- else %}}
++
++          # We're assuming a draft Github Release™ with the desired name/tag/body already exists
++      {{%- endif %}}
+ 
+           # Upload the manifest to the Github Release™
+           gh release upload ${{ github.ref_name }} dist-manifest.json
+2026-04-17 07:48:57,189 - INFO - Grading answer for axodotdev__cargo-dist-367...
+2026-04-17 07:48:57,190 - INFO - report: {'axodotdev__cargo-dist-367': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['axolotlsay_edit_existing'], 'failure': []}, 'PASS_TO_PASS': {'success': ['akaikatana_repo_with_dot_git', 'axolotlsay_basic', 'akaikatana_basic', 'axolotlsay_no_homebrew_publish', 'install_path_cargo_home', 'env_path_invalid - should panic', 'install_path_env_no_subdir', 'install_path_env_subdir', 'install_path_env_subdir_space', 'install_path_env_subdir_space_deeper', 'install_path_home_subdir_deeper', 'install_path_home_subdir_min', 'install_path_home_subdir_space', 'install_path_home_subdir_space_deeper', 'install_path_invalid - should panic'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for axodotdev__cargo-dist-367: resolved: True
+2026-04-17 07:48:57,190 - INFO - Attempting to stop container rustb.eval.axodotdev__cargo-dist-367.gold_run1...
+2026-04-17 07:49:44,835 - INFO - Attempting to remove container rustb.eval.axodotdev__cargo-dist-367.gold_run1...
+2026-04-17 07:49:45,389 - INFO - Container rustb.eval.axodotdev__cargo-dist-367.gold_run1 removed.
+2026-04-17 07:49:45,389 - INFO - Attempting to remove image rustbench/axodotdev__cargo-dist:pr-367...
+2026-04-17 07:49:47,027 - INFO - Image rustbench/axodotdev__cargo-dist:pr-367 removed.

@@ -1,0 +1,24 @@
+2026-04-17 06:20:27,110 - INFO - Environment image rustb.env.x86_64.sharkdp_bat:latest found for sharkdp__bat-1556
+Building instance image rustbench/sharkdp__bat:pr-1556 for sharkdp__bat-1556
+2026-04-17 06:28:47,569 - INFO - Traceback (most recent call last):
+  File "/home/ubuntu/Rust-bench/swebench/harness/docker_build.py", line 144, in build_image
+    raise docker.errors.BuildError(
+docker.errors.BuildError: The command '/bin/sh -c /bin/bash /root/setup_repo.sh' returned a non-zero code: 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Rust-bench/swebench/harness/run_evaluation.py", line 106, in run_instance
+    container = build_container(test_spec, client, run_id, logger, rm_image, force_rebuild,build_image_only=build_image_only)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/Rust-bench/swebench/harness/docker_build.py", line 530, in build_container
+    build_instance_image(test_spec, client, logger, nocache, build_dir)
+  File "/home/ubuntu/Rust-bench/swebench/harness/docker_build.py", line 488, in build_instance_image
+    build_image(
+  File "/home/ubuntu/Rust-bench/swebench/harness/docker_build.py", line 150, in build_image
+    raise BuildImageError(image_name, str(e), logger) from e
+swebench.harness.docker_build.BuildImageError: Error building image rustbench/sharkdp__bat:pr-1556: The command '/bin/sh -c /bin/bash /root/setup_repo.sh' returned a non-zero code: 1
+Check (logs/build_images/instances/rustbench/sharkdp__bat__pr-1556/build_image.log) for more information.
+
+2026-04-17 06:28:47,569 - INFO - Attempting to remove image rustbench/sharkdp__bat:pr-1556...
+2026-04-17 06:28:47,570 - INFO - Image rustbench/sharkdp__bat:pr-1556 not found, removing has no effect.

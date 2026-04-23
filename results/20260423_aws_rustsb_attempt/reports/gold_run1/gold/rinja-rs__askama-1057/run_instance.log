@@ -1,0 +1,2 @@
+2026-04-17 09:48:14,086 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-1057
+Building instance image rustbench/rinja-rs__askama:pr-1057 for rinja-rs__askama-1057

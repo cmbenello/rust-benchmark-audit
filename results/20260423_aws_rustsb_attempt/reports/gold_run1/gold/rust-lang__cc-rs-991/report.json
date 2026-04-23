@@ -1,0 +1,97 @@
+{
+    "rust-lang__cc-rs-991": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "clang_android"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "test_android_clang_compiler_uses_target_arg_internally",
+                    "main",
+                    "gnu_no_warnings_if_cflags",
+                    "gnu_no_warnings_if_cxxflags",
+                    "msvc_include",
+                    "msvc_debug",
+                    "msvc_opt_level_0",
+                    "msvc_no_static_crt",
+                    "msvc_no_dash_dash",
+                    "msvc_smoke",
+                    "msvc_define",
+                    "gnu_x86_64_no_plt",
+                    "msvc_static_crt",
+                    "msvc_std_c",
+                    "gnu_include",
+                    "gnu_extra_warnings1",
+                    "gnu_std_c",
+                    "gnu_warnings",
+                    "gnu_warnings_overridable",
+                    "gnu_debug_fp_auto",
+                    "gnu_define",
+                    "gnu_warnings_into_errors",
+                    "gnu_set_stdlib",
+                    "gnu_opt_level_1",
+                    "gnu_smoke",
+                    "gnu_extra_warnings0",
+                    "gnu_static",
+                    "gnu_debug_fp",
+                    "gnu_compile_assembly",
+                    "gnu_opt_level_s",
+                    "gnu_shared",
+                    "gnu_no_dash_dash",
+                    "gnu_flag_if_supported_cpp",
+                    "gnu_x86_64_no_pic",
+                    "gnu_debug_nofp",
+                    "gnu_x86_64",
+                    "gnu_apple_darwin",
+                    "gnu_debug",
+                    "gnu_i686",
+                    "gnu_i686_pic",
+                    "gnu_flag_if_supported",
+                    "compile_intermediates",
+                    "src/lib.rs - Build::flag (line 496) - compile",
+                    "src/lib.rs - (line 48) - compile",
+                    "src/lib.rs - Build::ar_flag (line 529) - compile",
+                    "src/lib.rs - Build::extra_warnings (line 903) - compile",
+                    "src/lib.rs - Build::flag_if_supported (line 657) - compile",
+                    "src/lib.rs - Build::warnings (line 881) - compile",
+                    "src/lib.rs - (line 20) - compile",
+                    "src/lib.rs - (line 195) - compile",
+                    "src/lib.rs - (line 161) - compile",
+                    "src/lib.rs - Build::define (line 473) - compile",
+                    "src/lib.rs - Build::cpp_link_stdlib (line 934) - compile",
+                    "src/lib.rs - (line 175) - compile",
+                    "src/lib.rs - Build::target (line 999) - compile",
+                    "src/lib.rs - Build::std (line 835) - compile",
+                    "src/lib.rs - Build::warnings_into_errors (line 860) - compile",
+                    "src/lib.rs - Build::asm_flag (line 548) - compile",
+                    "src/lib.rs - Build::cpp_set_stdlib (line 976) - compile",
+                    "src/lib.rs - Build::includes (line 444) - compile",
+                    "src/lib.rs - Build::compile (line 1353) - compile",
+                    "src/lib.rs - Build::expand (line 1672) - compile",
+                    "src/lib.rs - Build::host (line 1017) - compile",
+                    "src/lib.rs - Build::shared_flag (line 705) - compile",
+                    "src/lib.rs - Build::try_flags_from_environment (line 684) - compile",
+                    "src/lib.rs - Build::static_flag (line 723) - compile",
+                    "src/lib.rs - Build::include (line 424) - compile",
+                    "src/lib.rs - Build::remove_flag (line 513)"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

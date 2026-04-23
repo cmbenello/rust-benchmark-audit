@@ -1,0 +1,53 @@
+2026-04-17 03:36:59,019 - INFO - Environment image rustb.env.x86_64.rust-lang_cc-rs:latest found for rust-lang__cc-rs-991
+Building instance image rustbench/rust-lang__cc-rs:pr-991 for rust-lang__cc-rs-991
+2026-04-17 03:50:02,920 - INFO - Creating container for rust-lang__cc-rs-991...
+2026-04-17 03:50:03,104 - INFO - Container for rust-lang__cc-rs-991 created: 1979b36cdd81528b29f4f6f4a544e85cf43807589ce7ae0fb6ee6d7b7a59fd37
+2026-04-17 03:50:03,275 - INFO - Container for rust-lang__cc-rs-991 started: 1979b36cdd81528b29f4f6f4a544e85cf43807589ce7ae0fb6ee6d7b7a59fd37
+2026-04-17 03:50:03,275 - INFO - Intermediate patch for rust-lang__cc-rs-991 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-991/patch.diff, now applying to container...
+2026-04-17 03:50:03,505 - INFO - >>>>> Applied Patch:
+Checking patch src/lib.rs...
+Applied patch src/lib.rs cleanly.
+
+2026-04-17 03:50:03,638 - INFO - Git diff before:
+diff --git a/src/lib.rs b/src/lib.rs
+index 6999d14..0238961 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -1894,7 +1894,10 @@ impl Build {
+         // Target flags
+         match cmd.family {
+             ToolFamily::Clang => {
+-                if !(target.contains("android") && cmd.has_internal_target_arg) {
++                if !cmd.has_internal_target_arg
++                    && !(target.contains("android")
++                        && android_clang_compiler_uses_target_arg_internally(&cmd.path))
++                {
+                     if target.contains("darwin") {
+                         if let Some(arch) =
+                             map_darwin_target_from_rust_to_compiler_architecture(target)
+2026-04-17 03:50:03,638 - INFO - Eval script for rust-lang__cc-rs-991 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-991/eval.sh; copying to container...
+2026-04-17 03:51:38,383 - INFO - Test runtime: 94.56 seconds
+2026-04-17 03:51:38,384 - INFO - Test output for rust-lang__cc-rs-991 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-991/test_output.txt
+2026-04-17 03:51:38,596 - INFO - Git diff after:
+diff --git a/src/lib.rs b/src/lib.rs
+index 6999d14..0238961 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -1894,7 +1894,10 @@ impl Build {
+         // Target flags
+         match cmd.family {
+             ToolFamily::Clang => {
+-                if !(target.contains("android") && cmd.has_internal_target_arg) {
++                if !cmd.has_internal_target_arg
++                    && !(target.contains("android")
++                        && android_clang_compiler_uses_target_arg_internally(&cmd.path))
++                {
+                     if target.contains("darwin") {
+                         if let Some(arch) =
+                             map_darwin_target_from_rust_to_compiler_architecture(target)
+2026-04-17 03:51:38,596 - INFO - Grading answer for rust-lang__cc-rs-991...
+2026-04-17 03:51:38,597 - INFO - report: {'rust-lang__cc-rs-991': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['clang_android'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_android_clang_compiler_uses_target_arg_internally', 'main', 'gnu_no_warnings_if_cflags', 'gnu_no_warnings_if_cxxflags', 'msvc_include', 'msvc_debug', 'msvc_opt_level_0', 'msvc_no_static_crt', 'msvc_no_dash_dash', 'msvc_smoke', 'msvc_define', 'gnu_x86_64_no_plt', 'msvc_static_crt', 'msvc_std_c', 'gnu_include', 'gnu_extra_warnings1', 'gnu_std_c', 'gnu_warnings', 'gnu_warnings_overridable', 'gnu_debug_fp_auto', 'gnu_define', 'gnu_warnings_into_errors', 'gnu_set_stdlib', 'gnu_opt_level_1', 'gnu_smoke', 'gnu_extra_warnings0', 'gnu_static', 'gnu_debug_fp', 'gnu_compile_assembly', 'gnu_opt_level_s', 'gnu_shared', 'gnu_no_dash_dash', 'gnu_flag_if_supported_cpp', 'gnu_x86_64_no_pic', 'gnu_debug_nofp', 'gnu_x86_64', 'gnu_apple_darwin', 'gnu_debug', 'gnu_i686', 'gnu_i686_pic', 'gnu_flag_if_supported', 'compile_intermediates', 'src/lib.rs - Build::flag (line 496) - compile', 'src/lib.rs - (line 48) - compile', 'src/lib.rs - Build::ar_flag (line 529) - compile', 'src/lib.rs - Build::extra_warnings (line 903) - compile', 'src/lib.rs - Build::flag_if_supported (line 657) - compile', 'src/lib.rs - Build::warnings (line 881) - compile', 'src/lib.rs - (line 20) - compile', 'src/lib.rs - (line 195) - compile', 'src/lib.rs - (line 161) - compile', 'src/lib.rs - Build::define (line 473) - compile', 'src/lib.rs - Build::cpp_link_stdlib (line 934) - compile', 'src/lib.rs - (line 175) - compile', 'src/lib.rs - Build::target (line 999) - compile', 'src/lib.rs - Build::std (line 835) - compile', 'src/lib.rs - Build::warnings_into_errors (line 860) - compile', 'src/lib.rs - Build::asm_flag (line 548) - compile', 'src/lib.rs - Build::cpp_set_stdlib (line 976) - compile', 'src/lib.rs - Build::includes (line 444) - compile', 'src/lib.rs - Build::compile (line 1353) - compile', 'src/lib.rs - Build::expand (line 1672) - compile', 'src/lib.rs - Build::host (line 1017) - compile', 'src/lib.rs - Build::shared_flag (line 705) - compile', 'src/lib.rs - Build::try_flags_from_environment (line 684) - compile', 'src/lib.rs - Build::static_flag (line 723) - compile', 'src/lib.rs - Build::include (line 424) - compile', 'src/lib.rs - Build::remove_flag (line 513)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rust-lang__cc-rs-991: resolved: True
+2026-04-17 03:51:38,598 - INFO - Attempting to stop container rustb.eval.rust-lang__cc-rs-991.gold_run1...
+2026-04-17 03:51:57,505 - INFO - Attempting to remove container rustb.eval.rust-lang__cc-rs-991.gold_run1...
+2026-04-17 03:51:57,556 - INFO - Container rustb.eval.rust-lang__cc-rs-991.gold_run1 removed.

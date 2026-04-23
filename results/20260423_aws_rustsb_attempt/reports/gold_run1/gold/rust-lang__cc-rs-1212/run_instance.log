@@ -1,0 +1,45 @@
+2026-04-17 03:24:02,738 - INFO - Environment image rustb.env.x86_64.rust-lang_cc-rs:latest found for rust-lang__cc-rs-1212
+Building instance image rustbench/rust-lang__cc-rs:pr-1212 for rust-lang__cc-rs-1212
+2026-04-17 03:41:35,440 - INFO - Creating container for rust-lang__cc-rs-1212...
+2026-04-17 03:41:35,557 - INFO - Container for rust-lang__cc-rs-1212 created: d5a9f9cbf9e9844322a11ff6d8379d64b3bf337a8c4fa334b9eea9f6a690b233
+2026-04-17 03:41:35,822 - INFO - Container for rust-lang__cc-rs-1212 started: d5a9f9cbf9e9844322a11ff6d8379d64b3bf337a8c4fa334b9eea9f6a690b233
+2026-04-17 03:41:35,822 - INFO - Intermediate patch for rust-lang__cc-rs-1212 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-1212/patch.diff, now applying to container...
+2026-04-17 03:41:36,093 - INFO - >>>>> Applied Patch:
+Checking patch src/lib.rs...
+Applied patch src/lib.rs cleanly.
+
+2026-04-17 03:41:36,197 - INFO - Git diff before:
+diff --git a/src/lib.rs b/src/lib.rs
+index e963828..2a7e3a1 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -1983,6 +1983,7 @@ impl Build {
+                 if self.pic.unwrap_or(
+                     !target.contains("windows")
+                         && !target.contains("-none-")
++                        && !target.ends_with("-none")
+                         && !target.contains("uefi"),
+                 ) {
+                     cmd.push_cc_arg("-fPIC".into());
+2026-04-17 03:41:36,197 - INFO - Eval script for rust-lang__cc-rs-1212 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-1212/eval.sh; copying to container...
+2026-04-17 03:42:46,819 - INFO - Test runtime: 70.39 seconds
+2026-04-17 03:42:46,819 - INFO - Test output for rust-lang__cc-rs-1212 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-1212/test_output.txt
+2026-04-17 03:42:46,873 - INFO - Git diff after:
+diff --git a/src/lib.rs b/src/lib.rs
+index e963828..2a7e3a1 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -1983,6 +1983,7 @@ impl Build {
+                 if self.pic.unwrap_or(
+                     !target.contains("windows")
+                         && !target.contains("-none-")
++                        && !target.ends_with("-none")
+                         && !target.contains("uefi"),
+                 ) {
+                     cmd.push_cc_arg("-fPIC".into());
+2026-04-17 03:42:46,873 - INFO - Grading answer for rust-lang__cc-rs-1212...
+2026-04-17 03:42:46,874 - INFO - report: {'rust-lang__cc-rs-1212': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['gnu_aarch64_none_no_pic'], 'failure': []}, 'PASS_TO_PASS': {'success': ['tests::test_android_clang_compiler_uses_target_arg_internally', 'main', 'gnu_no_warnings_if_cflags', 'gnu_test_parse_shell_escaped_flags', 'gnu_no_warnings_if_cxxflags', 'msvc_no_dash_dash', 'msvc_debug', 'clang_android', 'msvc_smoke', 'msvc_static_crt', 'msvc_std_c', 'msvc_opt_level_0', 'msvc_no_static_crt', 'msvc_include', 'msvc_define', 'gnu_include', 'gnu_no_dash_dash', 'gnu_shared', 'gnu_set_stdlib', 'gnu_compile_assembly', 'gnu_static', 'gnu_opt_level_s', 'gnu_warnings_overridable', 'gnu_x86_64_no_plt', 'gnu_opt_level_1', 'gnu_warnings', 'gnu_define', 'gnu_std_c', 'gnu_smoke', 'gnu_debug_fp', 'gnu_extra_warnings0', 'gnu_debug_fp_auto', 'gnu_extra_warnings1', 'gnu_warnings_into_errors', 'gnu_flag_if_supported_cpp', 'gnu_x86_64_no_pic', 'gnu_x86_64', 'gnu_i686_pic', 'gnu_apple_darwin', 'gnu_debug_nofp', 'gnu_i686', 'gnu_debug', 'compile_intermediates', 'gnu_flag_if_supported', 'src/lib.rs - (line 45) - compile', 'src/lib.rs - (line 20) - compile', 'src/lib.rs - (line 161) - compile', 'src/lib.rs - Build::expand (line 1798) - compile', 'src/lib.rs - Build::ar_flag (line 560) - compile', 'src/lib.rs - Build::static_flag (line 788) - compile', 'src/lib.rs - (line 191) - compile', 'src/lib.rs - Build::flag_if_supported (line 718) - compile', 'src/lib.rs - Build::asm_flag (line 579) - compile', 'src/lib.rs - Build::extra_warnings (line 980) - compile', 'src/lib.rs - (line 173) - compile', 'src/lib.rs - Build::include (line 443) - compile', 'src/lib.rs - Build::shared_flag (line 770) - compile', 'src/lib.rs - Build::target (line 1076) - compile', 'src/lib.rs - Build::warnings (line 958) - compile', 'src/lib.rs - Build::compile (line 1469) - compile', 'src/lib.rs - Build::define (line 492) - compile', 'src/lib.rs - Build::flag (line 527) - compile', 'src/lib.rs - Build::warnings_into_errors (line 937) - compile', 'src/lib.rs - Build::includes (line 463) - compile', 'src/lib.rs - Build::host (line 1094) - compile', 'src/lib.rs - Build::cpp_set_stdlib (line 1053) - compile', 'src/lib.rs - Build::cpp_link_stdlib (line 1011) - compile', 'src/lib.rs - Build::std (line 912) - compile', 'src/lib.rs - Build::try_flags_from_environment (line 745) - compile', 'src/lib.rs - Build::remove_flag (line 544)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rust-lang__cc-rs-1212: resolved: True
+2026-04-17 03:42:46,874 - INFO - Attempting to stop container rustb.eval.rust-lang__cc-rs-1212.gold_run1...
+2026-04-17 03:43:28,719 - INFO - Attempting to remove container rustb.eval.rust-lang__cc-rs-1212.gold_run1...
+2026-04-17 03:43:28,802 - INFO - Container rustb.eval.rust-lang__cc-rs-1212.gold_run1 removed.

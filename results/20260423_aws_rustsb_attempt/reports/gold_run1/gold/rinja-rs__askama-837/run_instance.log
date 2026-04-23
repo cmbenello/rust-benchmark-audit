@@ -1,0 +1,279 @@
+2026-04-17 09:16:38,597 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-837
+Building instance image rustbench/rinja-rs__askama:pr-837 for rinja-rs__askama-837
+2026-04-17 09:31:28,568 - INFO - Creating container for rinja-rs__askama-837...
+2026-04-17 09:31:28,814 - INFO - Container for rinja-rs__askama-837 created: abcaa235d8dde0b2281fc30bcf9973adc11240a22a5611283229705408ea0958
+2026-04-17 09:31:29,230 - INFO - Container for rinja-rs__askama-837 started: abcaa235d8dde0b2281fc30bcf9973adc11240a22a5611283229705408ea0958
+2026-04-17 09:31:29,230 - INFO - Intermediate patch for rinja-rs__askama-837 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-837/patch.diff, now applying to container...
+2026-04-17 09:31:29,777 - INFO - >>>>> Applied Patch:
+Checking patch askama_derive/src/generator.rs...
+Checking patch askama_derive/src/generator.rs...
+Checking patch askama_derive/src/parser/expr.rs...
+Checking patch askama_derive/src/parser/expr.rs...
+Checking patch askama_derive/src/parser/expr.rs...
+Checking patch askama_derive/src/parser/expr.rs...
+Checking patch askama_derive/src/parser/expr.rs...
+Checking patch askama_derive/src/parser/expr.rs...
+Applied patch askama_derive/src/generator.rs cleanly.
+Applied patch askama_derive/src/generator.rs cleanly.
+Applied patch askama_derive/src/parser/expr.rs cleanly.
+Applied patch askama_derive/src/parser/expr.rs cleanly.
+Applied patch askama_derive/src/parser/expr.rs cleanly.
+Applied patch askama_derive/src/parser/expr.rs cleanly.
+Applied patch askama_derive/src/parser/expr.rs cleanly.
+Applied patch askama_derive/src/parser/expr.rs cleanly.
+
+2026-04-17 09:31:29,865 - INFO - Git diff before:
+diff --git a/askama_derive/src/generator.rs b/askama_derive/src/generator.rs
+index d9ddfc8..f990330 100644
+--- a/askama_derive/src/generator.rs
++++ b/askama_derive/src/generator.rs
+@@ -1373,7 +1373,7 @@ impl<'a> Generator<'a> {
+             }
+             Expr::Group(ref inner) => self.visit_group(buf, inner)?,
+             Expr::Call(ref obj, ref args) => self.visit_call(buf, obj, args)?,
+-            Expr::RustMacro(name, args) => self.visit_rust_macro(buf, name, args),
++            Expr::RustMacro(ref path, args) => self.visit_rust_macro(buf, path, args),
+             Expr::Try(ref expr) => self.visit_try(buf, expr.as_ref())?,
+             Expr::Tuple(ref exprs) => self.visit_tuple(buf, exprs)?,
+         })
+@@ -1390,8 +1390,8 @@ impl<'a> Generator<'a> {
+         Ok(DisplayWrap::Unwrapped)
+     }
+ 
+-    fn visit_rust_macro(&mut self, buf: &mut Buffer, name: &str, args: &str) -> DisplayWrap {
+-        buf.write(name);
++    fn visit_rust_macro(&mut self, buf: &mut Buffer, path: &[&str], args: &str) -> DisplayWrap {
++        self.visit_path(buf, path);
+         buf.write("!(");
+         buf.write(args);
+         buf.write(")");
+diff --git a/askama_derive/src/parser/expr.rs b/askama_derive/src/parser/expr.rs
+index fabaa34..1d4ea89 100644
+--- a/askama_derive/src/parser/expr.rs
++++ b/askama_derive/src/parser/expr.rs
+@@ -4,9 +4,10 @@ use nom::branch::alt;
+ use nom::bytes::complete::{tag, take_till};
+ use nom::character::complete::char;
+ use nom::combinator::{cut, map, not, opt, peek, recognize};
++use nom::error::ErrorKind;
+ use nom::multi::{fold_many0, many0, separated_list0, separated_list1};
+ use nom::sequence::{delimited, pair, preceded, terminated, tuple};
+-use nom::IResult;
++use nom::{error_position, IResult};
+ 
+ use super::{
+     bool_lit, char_lit, identifier, nested_parenthesis, not_ws, num_lit, path, str_lit, ws,
+@@ -30,7 +31,7 @@ pub(crate) enum Expr<'a> {
+     Group(Box<Expr<'a>>),
+     Tuple(Vec<Expr<'a>>),
+     Call(Box<Expr<'a>>, Vec<Expr<'a>>),
+-    RustMacro(&'a str, &'a str),
++    RustMacro(Vec<&'a str>, &'a str),
+     Try(Box<Expr<'a>>),
+ }
+ 
+@@ -183,7 +184,6 @@ fn expr_single(i: &str) -> IResult<&str, Expr<'_>> {
+         expr_str_lit,
+         expr_char_lit,
+         expr_path,
+-        expr_rust_macro,
+         expr_array_lit,
+         expr_var,
+         expr_group,
+@@ -194,6 +194,8 @@ enum Suffix<'a> {
+     Attr(&'a str),
+     Index(Expr<'a>),
+     Call(Vec<Expr<'a>>),
++    // The value is the arguments of the macro call.
++    MacroCall(&'a str),
+     Try,
+ }
+ 
+@@ -218,6 +220,16 @@ fn expr_call(i: &str) -> IResult<&str, Suffix<'_>> {
+     map(arguments, Suffix::Call)(i)
+ }
+ 
++fn expr_macro(i: &str) -> IResult<&str, Suffix<'_>> {
++    preceded(
++        pair(ws(char('!')), char('(')),
++        cut(terminated(
++            map(recognize(nested_parenthesis), Suffix::MacroCall),
++            char(')'),
++        )),
++    )(i)
++}
++
+ fn expr_try(i: &str) -> IResult<&str, Suffix<'_>> {
+     map(preceded(take_till(not_ws), char('?')), |_| Suffix::Try)(i)
+ }
+@@ -256,28 +268,26 @@ fn expr_prefix(i: &str) -> IResult<&str, Expr<'_>> {
+ fn expr_suffix(i: &str) -> IResult<&str, Expr<'_>> {
+     let (mut i, mut expr) = expr_single(i)?;
+     loop {
+-        let (j, suffix) = opt(alt((expr_attr, expr_index, expr_call, expr_try)))(i)?;
+-        i = j;
++        let (j, suffix) = opt(alt((
++            expr_attr, expr_index, expr_call, expr_try, expr_macro,
++        )))(i)?;
+         match suffix {
+             Some(Suffix::Attr(attr)) => expr = Expr::Attr(expr.into(), attr),
+             Some(Suffix::Index(index)) => expr = Expr::Index(expr.into(), index.into()),
+             Some(Suffix::Call(args)) => expr = Expr::Call(expr.into(), args),
+             Some(Suffix::Try) => expr = Expr::Try(expr.into()),
++            Some(Suffix::MacroCall(args)) => match expr {
++                Expr::Path(path) => expr = Expr::RustMacro(path, args),
++                Expr::Var(name) => expr = Expr::RustMacro(vec![name], args),
++                _ => return Err(nom::Err::Failure(error_position!(i, ErrorKind::Tag))),
++            },
+             None => break,
+         }
++        i = j;
+     }
+     Ok((i, expr))
+ }
+ 
+-fn macro_arguments(i: &str) -> IResult<&str, &str> {
+-    delimited(char('('), recognize(nested_parenthesis), char(')'))(i)
+-}
+-
+-fn expr_rust_macro(i: &str) -> IResult<&str, Expr<'_>> {
+-    let (i, (mname, _, args)) = tuple((identifier, char('!'), macro_arguments))(i)?;
+-    Ok((i, Expr::RustMacro(mname, args)))
+-}
+-
+ macro_rules! expr_prec_layer {
+     ( $name:ident, $inner:ident, $op:expr ) => {
+         fn $name(i: &str) -> IResult<&str, Expr<'_>> {
+2026-04-17 09:31:29,865 - INFO - Eval script for rinja-rs__askama-837 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-837/eval.sh; copying to container...
+2026-04-17 09:32:41,800 - INFO - Test runtime: 71.79 seconds
+2026-04-17 09:32:41,800 - INFO - Test output for rinja-rs__askama-837 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-837/test_output.txt
+2026-04-17 09:32:41,845 - INFO - Git diff after:
+diff --git a/askama_derive/src/generator.rs b/askama_derive/src/generator.rs
+index d9ddfc8..f990330 100644
+--- a/askama_derive/src/generator.rs
++++ b/askama_derive/src/generator.rs
+@@ -1373,7 +1373,7 @@ impl<'a> Generator<'a> {
+             }
+             Expr::Group(ref inner) => self.visit_group(buf, inner)?,
+             Expr::Call(ref obj, ref args) => self.visit_call(buf, obj, args)?,
+-            Expr::RustMacro(name, args) => self.visit_rust_macro(buf, name, args),
++            Expr::RustMacro(ref path, args) => self.visit_rust_macro(buf, path, args),
+             Expr::Try(ref expr) => self.visit_try(buf, expr.as_ref())?,
+             Expr::Tuple(ref exprs) => self.visit_tuple(buf, exprs)?,
+         })
+@@ -1390,8 +1390,8 @@ impl<'a> Generator<'a> {
+         Ok(DisplayWrap::Unwrapped)
+     }
+ 
+-    fn visit_rust_macro(&mut self, buf: &mut Buffer, name: &str, args: &str) -> DisplayWrap {
+-        buf.write(name);
++    fn visit_rust_macro(&mut self, buf: &mut Buffer, path: &[&str], args: &str) -> DisplayWrap {
++        self.visit_path(buf, path);
+         buf.write("!(");
+         buf.write(args);
+         buf.write(")");
+diff --git a/askama_derive/src/parser/expr.rs b/askama_derive/src/parser/expr.rs
+index fabaa34..1d4ea89 100644
+--- a/askama_derive/src/parser/expr.rs
++++ b/askama_derive/src/parser/expr.rs
+@@ -4,9 +4,10 @@ use nom::branch::alt;
+ use nom::bytes::complete::{tag, take_till};
+ use nom::character::complete::char;
+ use nom::combinator::{cut, map, not, opt, peek, recognize};
++use nom::error::ErrorKind;
+ use nom::multi::{fold_many0, many0, separated_list0, separated_list1};
+ use nom::sequence::{delimited, pair, preceded, terminated, tuple};
+-use nom::IResult;
++use nom::{error_position, IResult};
+ 
+ use super::{
+     bool_lit, char_lit, identifier, nested_parenthesis, not_ws, num_lit, path, str_lit, ws,
+@@ -30,7 +31,7 @@ pub(crate) enum Expr<'a> {
+     Group(Box<Expr<'a>>),
+     Tuple(Vec<Expr<'a>>),
+     Call(Box<Expr<'a>>, Vec<Expr<'a>>),
+-    RustMacro(&'a str, &'a str),
++    RustMacro(Vec<&'a str>, &'a str),
+     Try(Box<Expr<'a>>),
+ }
+ 
+@@ -183,7 +184,6 @@ fn expr_single(i: &str) -> IResult<&str, Expr<'_>> {
+         expr_str_lit,
+         expr_char_lit,
+         expr_path,
+-        expr_rust_macro,
+         expr_array_lit,
+         expr_var,
+         expr_group,
+@@ -194,6 +194,8 @@ enum Suffix<'a> {
+     Attr(&'a str),
+     Index(Expr<'a>),
+     Call(Vec<Expr<'a>>),
++    // The value is the arguments of the macro call.
++    MacroCall(&'a str),
+     Try,
+ }
+ 
+@@ -218,6 +220,16 @@ fn expr_call(i: &str) -> IResult<&str, Suffix<'_>> {
+     map(arguments, Suffix::Call)(i)
+ }
+ 
++fn expr_macro(i: &str) -> IResult<&str, Suffix<'_>> {
++    preceded(
++        pair(ws(char('!')), char('(')),
++        cut(terminated(
++            map(recognize(nested_parenthesis), Suffix::MacroCall),
++            char(')'),
++        )),
++    )(i)
++}
++
+ fn expr_try(i: &str) -> IResult<&str, Suffix<'_>> {
+     map(preceded(take_till(not_ws), char('?')), |_| Suffix::Try)(i)
+ }
+@@ -256,28 +268,26 @@ fn expr_prefix(i: &str) -> IResult<&str, Expr<'_>> {
+ fn expr_suffix(i: &str) -> IResult<&str, Expr<'_>> {
+     let (mut i, mut expr) = expr_single(i)?;
+     loop {
+-        let (j, suffix) = opt(alt((expr_attr, expr_index, expr_call, expr_try)))(i)?;
+-        i = j;
++        let (j, suffix) = opt(alt((
++            expr_attr, expr_index, expr_call, expr_try, expr_macro,
++        )))(i)?;
+         match suffix {
+             Some(Suffix::Attr(attr)) => expr = Expr::Attr(expr.into(), attr),
+             Some(Suffix::Index(index)) => expr = Expr::Index(expr.into(), index.into()),
+             Some(Suffix::Call(args)) => expr = Expr::Call(expr.into(), args),
+             Some(Suffix::Try) => expr = Expr::Try(expr.into()),
++            Some(Suffix::MacroCall(args)) => match expr {
++                Expr::Path(path) => expr = Expr::RustMacro(path, args),
++                Expr::Var(name) => expr = Expr::RustMacro(vec![name], args),
++                _ => return Err(nom::Err::Failure(error_position!(i, ErrorKind::Tag))),
++            },
+             None => break,
+         }
++        i = j;
+     }
+     Ok((i, expr))
+ }
+ 
+-fn macro_arguments(i: &str) -> IResult<&str, &str> {
+-    delimited(char('('), recognize(nested_parenthesis), char(')'))(i)
+-}
+-
+-fn expr_rust_macro(i: &str) -> IResult<&str, Expr<'_>> {
+-    let (i, (mname, _, args)) = tuple((identifier, char('!'), macro_arguments))(i)?;
+-    Ok((i, Expr::RustMacro(mname, args)))
+-}
+-
+ macro_rules! expr_prec_layer {
+     ( $name:ident, $inner:ident, $op:expr ) => {
+         fn $name(i: &str) -> IResult<&str, Expr<'_>> {
+2026-04-17 09:32:41,845 - INFO - Grading answer for rinja-rs__askama-837...
+2026-04-17 09:32:41,846 - INFO - report: {'rinja-rs__askama-837': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['config::tests::find_absolute', 'config::tests::find_relative', 'config::tests::add_syntax', 'config::tests::escape_modes', 'config::tests::add_syntax_two', 'config::tests::find_relative_sub', 'config::tests::get_source', 'config::tests::find_relative_nonexistent - should panic', 'config::tests::illegal_delimiters', 'config::tests::test_default_config', 'config::tests::test_config_whitespace_error', 'config::tests::longer_delimiters', 'config::tests::test_config_dirs', 'input::tests::test_double_ext', 'input::tests::test_ext', 'input::tests::test_only_jinja_ext', 'input::tests::test_skip_jinja_ext', 'config::tests::test_whitespace_parsing', 'parser::tests::change_delimiters_parse_filter', 'parser::tests::test_invalid_block - should panic', 'parser::tests::test_missing_space_after_kw', 'parser::tests::test_parse_comments', 'parser::tests::test_parse_const', 'parser::tests::test_associativity', 'parser::tests::test_parse_numbers', 'parser::tests::test_parse_filter', 'parser::tests::test_parse_root_path', 'parser::tests::test_parse_path_call', 'parser::tests::test_ws_splitter', 'parser::tests::test_parse_path', 'parser::tests::test_odd_calls', 'parser::tests::test_parse_var_call', 'parser::tests::test_parse_var', 'parser::tests::test_precedence', 'parser::tests::test_parse_tuple'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-837: resolved: True
+2026-04-17 09:32:41,846 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-837.gold_run1...
+2026-04-17 09:34:22,603 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-837.gold_run1...
+2026-04-17 09:34:22,690 - INFO - Container rustb.eval.rinja-rs__askama-837.gold_run1 removed.
+2026-04-17 09:34:22,690 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-837...
+2026-04-17 09:34:30,355 - INFO - Image rustbench/rinja-rs__askama:pr-837 removed.

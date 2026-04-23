@@ -1,0 +1,118 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/test.rs...
+Applied patch tests/test.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded pin-utils v0.1.0 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded itoa v1.0.4 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded quote v1.0.21 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded futures-macro v0.3.25 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded futures v0.3.25 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded futures-sink v0.3.25 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded futures-core v0.3.25 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded futures-io v0.3.25 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded futures-task v0.3.25 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded rustversion v1.0.9 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded once_cell v1.16.0 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded glob v0.3.0 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded tracing-attributes v0.1.23 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded slab v0.4.7 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded termcolor v1.1.3 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded futures-channel v0.3.25 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded dissimilar v1.0.4 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded tracing-core v0.1.30 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded pin-project-lite v0.2.9 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded proc-macro2 v1.0.47 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded ryu v1.0.11 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded futures-executor v0.3.25 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded unicode-ident v1.0.5 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded serde_derive v1.0.148 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded toml v0.5.9 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded serde v1.0.148 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded memchr v2.5.0 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded tracing v0.1.37 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded serde_json v1.0.89 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded trybuild v1.0.72 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded syn v1.0.104 (registry `lts-repo-at-d9a6b7dd55`)
+  Downloaded futures-util v0.3.25 (registry `lts-repo-at-d9a6b7dd55`)
+   Compiling proc-macro2 v1.0.47
+   Compiling unicode-ident v1.0.5
+   Compiling quote v1.0.21
+   Compiling syn v1.0.104
+   Compiling futures-core v0.3.25
+   Compiling autocfg v1.1.0
+   Compiling memchr v2.5.0
+   Compiling futures-channel v0.3.25
+   Compiling serde v1.0.148
+   Compiling futures-task v0.3.25
+   Compiling futures-sink v0.3.25
+   Compiling pin-project-lite v0.2.9
+   Compiling futures-util v0.3.25
+   Compiling once_cell v1.16.0
+   Compiling pin-utils v0.1.0
+   Compiling futures-io v0.3.25
+   Compiling serde_json v1.0.89
+   Compiling serde_derive v1.0.148
+   Compiling ryu v1.0.11
+   Compiling rustversion v1.0.9
+   Compiling trybuild v1.0.72
+   Compiling async-trait v0.1.58 (/workspace)
+   Compiling itoa v1.0.4
+   Compiling glob v0.3.0
+   Compiling termcolor v1.1.3
+   Compiling cfg-if v1.0.0
+   Compiling dissimilar v1.0.4
+   Compiling tracing-core v0.1.30
+   Compiling slab v0.4.7
+   Compiling toml v0.5.9
+   Compiling futures-macro v0.3.25
+   Compiling tracing-attributes v0.1.23
+   Compiling tracing v0.1.37
+   Compiling futures-executor v0.3.25
+   Compiling futures v0.3.25
+    Finished test [unoptimized + debuginfo] target(s) in 16.56s
+     Running unittests src/lib.rs (target/debug/deps/async_trait-eed32b4113ed3930)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/compiletest.rs (target/debug/deps/compiletest-950a5f0311dd62cd)
+
+running 1 test
+test ui ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/test.rs (target/debug/deps/test-52037a57b5d84d0c)
+
+running 3 tests
+test drop_order::test_drop_order ... ok
+test issue199::test ... ok
+test issue45::tracing ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests async-trait
+
+running 8 tests
+test src/lib.rs - (line 165) - compile fail ... ok
+test src/lib.rs - (line 15) - compile fail ... ok
+test src/lib.rs - (line 265) ... ok
+test src/lib.rs - (line 126) ... ok
+test src/lib.rs - (line 186) ... ok
+test src/lib.rs - (line 211) ... ok
+test src/lib.rs - (line 286) ... ok
+test src/lib.rs - (line 47) ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
++ git reset --hard 9ed6489ee0cedf31fef8a06a1dcd1f18b4afdd39
+HEAD is now at 9ed6489 Format with rustfmt 1.5.1-nightly
++ git clean -fd
+Removing .cargo/

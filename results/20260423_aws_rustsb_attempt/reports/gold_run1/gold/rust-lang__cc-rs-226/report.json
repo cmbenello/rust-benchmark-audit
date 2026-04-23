@@ -1,0 +1,58 @@
+{
+    "rust-lang__cc-rs-226": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "asm_here",
+                    "bar_here",
+                    "baz_here",
+                    "foo_here",
+                    "opt_linkage",
+                    "main",
+                    "msvc_smoke",
+                    "msvc_static_crt",
+                    "gnu_opt_level_s",
+                    "msvc_no_static_crt",
+                    "msvc_include",
+                    "gnu_static",
+                    "msvc_debug",
+                    "gnu_smoke",
+                    "msvc_opt_level_0",
+                    "msvc_define",
+                    "gnu_warnings_into_errors",
+                    "gnu_shared",
+                    "gnu_define",
+                    "gnu_include",
+                    "gnu_warnings",
+                    "gnu_opt_level_1",
+                    "gnu_debug",
+                    "gnu_compile_assembly",
+                    "gnu_set_stdlib",
+                    "gnu_flag_if_supported",
+                    "gnu_i686_pic",
+                    "gnu_x86_64_no_pic",
+                    "gnu_i686",
+                    "gnu_x86_64",
+                    "src/lib.rs -  (line 29)"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

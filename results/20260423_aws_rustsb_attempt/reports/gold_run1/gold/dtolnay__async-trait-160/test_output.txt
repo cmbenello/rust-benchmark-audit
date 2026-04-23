@@ -1,0 +1,91 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/test.rs...
+Applied patch tests/test.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded quote v1.0.9 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded syn v1.0.69 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded unicode-xid v0.2.1 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded rustversion v1.0.4 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded cfg-if v1.0.0 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded itoa v0.4.7 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded termcolor v1.1.2 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded pin-project-lite v0.2.6 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded serde_derive v1.0.125 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded tracing v0.1.25 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded serde_json v1.0.64 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded proc-macro2 v1.0.26 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded tracing-core v0.1.17 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded tracing-attributes v0.1.15 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded toml v0.5.8 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded dissimilar v1.0.2 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded serde v1.0.125 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+  Downloaded trybuild v1.0.42 (registry `/testbed/.cargo/lts-repo-at-e97f9cb0de`)
+   Compiling proc-macro2 v1.0.26
+   Compiling unicode-xid v0.2.1
+   Compiling syn v1.0.69
+   Compiling serde_derive v1.0.125
+   Compiling serde v1.0.125
+   Compiling ryu v1.0.5
+   Compiling serde_json v1.0.64
+   Compiling lazy_static v1.4.0
+   Compiling trybuild v1.0.42
+   Compiling itoa v0.4.7
+   Compiling rustversion v1.0.4
+   Compiling async-trait v0.1.48 (/workspace)
+   Compiling pin-project-lite v0.2.6
+   Compiling glob v0.3.0
+   Compiling termcolor v1.1.2
+   Compiling cfg-if v1.0.0
+   Compiling dissimilar v1.0.2
+   Compiling tracing-core v0.1.17
+   Compiling quote v1.0.9
+   Compiling tracing-attributes v0.1.15
+   Compiling tracing v0.1.25
+   Compiling toml v0.5.8
+    Finished test [unoptimized + debuginfo] target(s) in 18.44s
+     Running target/debug/deps/async_trait-2f006d3a0f437c6f
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running target/debug/deps/compiletest-c791edd3d493c547
+
+running 1 test
+test ui ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running target/debug/deps/test-9fbb1bccd34981d2
+
+running 2 tests
+test drop_order::test_drop_order ... ok
+test issue45::tracing ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests async-trait
+
+running 8 tests
+test src/lib.rs - (line 15) ... ok
+test src/lib.rs - (line 165) ... ok
+test src/lib.rs - (line 126) ... ok
+test src/lib.rs - (line 186) ... ok
+test src/lib.rs - (line 286) ... ok
+test src/lib.rs - (line 47) ... ok
+test src/lib.rs - (line 265) ... ok
+test src/lib.rs - (line 211) ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
++ git reset --hard 6bff4e0c5935b30b4d5af42bb06d9972866c752d
+HEAD is now at 6bff4e0 Add to 'async' keyword on crates.io
++ git clean -fd
+Removing .cargo/

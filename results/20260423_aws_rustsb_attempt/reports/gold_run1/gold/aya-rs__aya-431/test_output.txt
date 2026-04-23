@@ -1,0 +1,339 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch aya/src/maps/hash_map/hash_map.rs...
+Applied patch aya/src/maps/hash_map/hash_map.rs cleanly.
++ cd aya
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded num_cpus v1.15.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded quote v1.0.23 (registry `lts-repo-at-daafe0abea`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded thiserror v1.0.38 (registry `lts-repo-at-daafe0abea`)
+  Downloaded futures-lite v1.12.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded tokio-macros v1.8.2 (registry `lts-repo-at-daafe0abea`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded waker-fn v1.1.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded thiserror-impl v1.0.38 (registry `lts-repo-at-daafe0abea`)
+  Downloaded bytes v1.4.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded futures-core v0.3.26 (registry `lts-repo-at-daafe0abea`)
+  Downloaded async-io v1.12.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded parking_lot_core v0.9.7 (registry `lts-repo-at-daafe0abea`)
+  Downloaded lock_api v0.4.9 (registry `lts-repo-at-daafe0abea`)
+  Downloaded tokio v1.25.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded crossbeam-utils v0.8.14 (registry `lts-repo-at-daafe0abea`)
+  Downloaded socket2 v0.4.7 (registry `lts-repo-at-daafe0abea`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-daafe0abea`)
+  Downloaded parking v2.0.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded smallvec v1.10.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded concurrent-queue v2.1.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded unicode-ident v1.0.6 (registry `lts-repo-at-daafe0abea`)
+  Downloaded libc v0.2.139 (registry `lts-repo-at-daafe0abea`)
+  Downloaded futures-util v0.3.26 (registry `lts-repo-at-daafe0abea`)
+  Downloaded parking_lot v0.12.1 (registry `lts-repo-at-daafe0abea`)
+  Downloaded pin-utils v0.1.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded proc-macro2 v1.0.51 (registry `lts-repo-at-daafe0abea`)
+  Downloaded mio v0.8.6 (registry `lts-repo-at-daafe0abea`)
+  Downloaded syn v1.0.107 (registry `lts-repo-at-daafe0abea`)
+  Downloaded pin-project-lite v0.2.9 (registry `lts-repo-at-daafe0abea`)
+  Downloaded log v0.4.17 (registry `lts-repo-at-daafe0abea`)
+  Downloaded scopeguard v1.1.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded polling v2.5.2 (registry `lts-repo-at-daafe0abea`)
+  Downloaded slab v0.4.8 (registry `lts-repo-at-daafe0abea`)
+  Downloaded object v0.29.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded futures-task v0.3.26 (registry `lts-repo-at-daafe0abea`)
+  Downloaded matches v0.1.10 (registry `lts-repo-at-daafe0abea`)
+  Downloaded memchr v2.5.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded futures v0.3.26 (registry `lts-repo-at-daafe0abea`)
+  Downloaded futures-sink v0.3.26 (registry `lts-repo-at-daafe0abea`)
+  Downloaded event-listener v2.5.3 (registry `lts-repo-at-daafe0abea`)
+  Downloaded fastrand v1.9.0 (registry `lts-repo-at-daafe0abea`)
+  Downloaded futures-channel v0.3.26 (registry `lts-repo-at-daafe0abea`)
+  Downloaded futures-io v0.3.26 (registry `lts-repo-at-daafe0abea`)
+  Downloaded async-lock v2.6.0 (registry `lts-repo-at-daafe0abea`)
+   Compiling autocfg v1.1.0
+   Compiling libc v0.2.139
+   Compiling cfg-if v1.0.0
+   Compiling memchr v2.5.0
+   Compiling proc-macro2 v1.0.51
+   Compiling futures-core v0.3.26
+   Compiling quote v1.0.23
+   Compiling unicode-ident v1.0.6
+   Compiling pin-project-lite v0.2.9
+   Compiling log v0.4.17
+   Compiling syn v1.0.107
+   Compiling futures-io v0.3.26
+   Compiling crossbeam-utils v0.8.14
+   Compiling futures-channel v0.3.26
+   Compiling fastrand v1.9.0
+   Compiling parking v2.0.0
+   Compiling parking_lot_core v0.9.7
+   Compiling futures-task v0.3.26
+   Compiling waker-fn v1.1.0
+   Compiling futures-util v0.3.26
+   Compiling event-listener v2.5.3
+   Compiling smallvec v1.10.0
+   Compiling scopeguard v1.1.0
+   Compiling futures-sink v0.3.26
+   Compiling thiserror v1.0.38
+   Compiling pin-utils v0.1.0
+   Compiling bytes v1.4.0
+   Compiling lazy_static v1.4.0
+   Compiling bitflags v1.3.2
+   Compiling matches v0.1.10
+   Compiling slab v0.4.8
+   Compiling polling v2.5.2
+   Compiling lock_api v0.4.9
+   Compiling async-io v1.12.0
+   Compiling tokio v1.25.0
+   Compiling concurrent-queue v2.1.0
+   Compiling futures-lite v1.12.0
+   Compiling object v0.29.0
+   Compiling socket2 v0.4.7
+   Compiling mio v0.8.6
+   Compiling num_cpus v1.15.0
+   Compiling parking_lot v0.12.1
+   Compiling async-lock v2.6.0
+   Compiling futures v0.3.26
+   Compiling thiserror-impl v1.0.38
+   Compiling tokio-macros v1.8.2
+   Compiling aya v0.11.0 (/workspace/aya)
+    Finished test [unoptimized + debuginfo] target(s) in 13.65s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/aya-109b86e48665250b)
+
+running 144 tests
+test maps::bloom_filter::tests::test_contains_not_found ... ok
+test maps::bloom_filter::tests::test_contains_syscall_error ... ok
+test maps::bloom_filter::tests::test_insert_ok ... ok
+test maps::bloom_filter::tests::test_insert_syscall_error ... ok
+test maps::bloom_filter::tests::test_new_not_created ... ok
+test maps::bloom_filter::tests::test_new_ok ... ok
+test maps::bloom_filter::tests::test_try_from_ok ... ok
+test maps::bloom_filter::tests::test_try_from_wrong_map ... ok
+test maps::bloom_filter::tests::test_wrong_value_size ... ok
+test maps::hash_map::hash_map::tests::test_get_not_found ... ok
+test maps::hash_map::hash_map::tests::test_get_syscall_error ... ok
+test maps::hash_map::hash_map::tests::test_insert_boxed_ok ... ok
+test maps::hash_map::hash_map::tests::test_insert_ok ... ok
+test maps::hash_map::hash_map::tests::test_insert_syscall_error ... ok
+test maps::hash_map::hash_map::tests::test_iter ... ok
+test maps::hash_map::hash_map::tests::test_iter_key_deleted ... ok
+test maps::hash_map::hash_map::tests::test_iter_key_error ... ok
+test maps::hash_map::hash_map::tests::test_iter_value_error ... ok
+test maps::hash_map::hash_map::tests::test_keys ... ok
+test maps::hash_map::hash_map::tests::test_keys_empty ... ok
+test maps::hash_map::hash_map::tests::test_keys_error ... ok
+test maps::hash_map::hash_map::tests::test_new_not_created ... ok
+test maps::hash_map::hash_map::tests::test_new_ok ... ok
+test maps::hash_map::hash_map::tests::test_remove_ok ... ok
+test maps::hash_map::hash_map::tests::test_remove_syscall_error ... ok
+test maps::hash_map::hash_map::tests::test_try_from_ok ... ok
+test maps::hash_map::hash_map::tests::test_try_from_ok_lru ... ok
+test maps::hash_map::hash_map::tests::test_try_from_wrong_map ... ok
+test maps::hash_map::hash_map::tests::test_try_from_wrong_map_values ... ok
+test maps::hash_map::hash_map::tests::test_wrong_key_size ... ok
+test maps::hash_map::hash_map::tests::test_wrong_value_size ... ok
+test maps::lpm_trie::tests::test_get_not_found ... ok
+test maps::lpm_trie::tests::test_get_syscall_error ... ok
+test maps::lpm_trie::tests::test_insert_ok ... ok
+test maps::lpm_trie::tests::test_insert_syscall_error ... ok
+test maps::lpm_trie::tests::test_new_not_created ... ok
+test maps::lpm_trie::tests::test_new_ok ... ok
+test maps::lpm_trie::tests::test_remove_ok ... ok
+test maps::lpm_trie::tests::test_remove_syscall_error ... ok
+test maps::lpm_trie::tests::test_try_from_ok ... ok
+test maps::lpm_trie::tests::test_try_from_wrong_map ... ok
+test maps::lpm_trie::tests::test_wrong_key_size ... ok
+test maps::lpm_trie::tests::test_wrong_value_size ... ok
+test maps::perf::perf_buffer::tests::test_invalid_page_count ... ok
+test maps::perf::perf_buffer::tests::test_no_events ... ok
+test maps::perf::perf_buffer::tests::test_no_out_bufs ... ok
+test maps::perf::perf_buffer::tests::test_read_first_lost ... ok
+test maps::perf::perf_buffer::tests::test_read_first_sample ... ok
+test maps::perf::perf_buffer::tests::test_read_last_sample ... ok
+test maps::perf::perf_buffer::tests::test_read_many_with_many_reads ... ok
+test maps::perf::perf_buffer::tests::test_read_many_with_one_read ... ok
+test maps::perf::perf_buffer::tests::test_read_wrapping_sample_size ... ok
+test maps::perf::perf_buffer::tests::test_read_wrapping_value ... ok
+test maps::tests::test_create ... ok
+test maps::tests::test_create_failed ... ok
+test obj::btf::btf::tests::test_fixup_func_proto ... ok
+test obj::btf::btf::tests::test_fixup_datasec ... ok
+test obj::btf::btf::tests::test_fixup_ptr ... ok
+test obj::btf::btf::tests::test_parse_header ... ok
+test obj::btf::btf::tests::test_parse_btf ... ok
+test obj::btf::btf::tests::test_sanitize_decl_tag ... ok
+test obj::btf::btf::tests::test_sanitize_datasec ... ok
+test obj::btf::btf::tests::test_sanitize_float ... ok
+test obj::btf::btf::tests::test_sanitize_func_and_proto ... ok
+test obj::btf::btf::tests::test_sanitize_func_global ... ok
+test obj::btf::btf::tests::test_sanitize_type_tag ... ok
+test obj::btf::btf::tests::test_sanitize_var ... ok
+test obj::btf::btf::tests::test_write_btf ... ok
+test obj::btf::types::tests::test_read_btf_type_array ... ok
+test obj::btf::types::tests::test_read_btf_type_const ... ok
+test obj::btf::types::tests::test_read_btf_type_enum ... ok
+test obj::btf::types::tests::test_read_btf_type_float ... ok
+test obj::btf::types::tests::test_read_btf_type_func ... ok
+test obj::btf::types::tests::test_read_btf_type_func_datasec ... ok
+test obj::btf::types::tests::test_read_btf_type_func_proto ... ok
+test obj::btf::types::tests::test_read_btf_type_func_var ... ok
+test obj::btf::types::tests::test_read_btf_type_fwd ... ok
+test obj::btf::types::tests::test_read_btf_type_int ... ok
+test obj::btf::types::tests::test_read_btf_type_ptr ... ok
+test obj::btf::types::tests::test_read_btf_type_restrict ... ok
+test obj::btf::types::tests::test_read_btf_type_struct ... ok
+test obj::btf::types::tests::test_read_btf_type_typedef ... ok
+test obj::btf::types::tests::test_read_btf_type_union ... ok
+test obj::btf::types::tests::test_read_btf_type_volatile ... ok
+test obj::btf::types::tests::test_types_are_compatible ... ok
+test obj::btf::types::tests::test_write_btf_func_proto ... ok
+test obj::btf::types::tests::test_write_btf_long_unsigned_int ... ok
+test obj::btf::types::tests::test_write_btf_signed_short_int ... ok
+test obj::btf::types::tests::test_write_btf_uchar ... ok
+test obj::relocation::test::test_multiple_btf_map_relocation ... ok
+test obj::relocation::test::test_multiple_legacy_map_relocation ... ok
+test obj::relocation::test::test_single_btf_map_relocation ... ok
+test obj::relocation::test::test_single_legacy_map_relocation ... ok
+test obj::tests::test_parse_generic_error ... ok
+test obj::tests::test_parse_btf_map_section ... ok
+test obj::tests::test_parse_license ... ok
+test obj::tests::test_parse_map ... ok
+test obj::tests::test_parse_map_data ... ok
+test obj::tests::test_parse_map_def ... ok
+test obj::tests::test_parse_map_def_error ... ok
+test obj::tests::test_parse_map_def_with_padding ... ok
+test obj::tests::test_parse_map_error ... ok
+test obj::tests::test_parse_map_short ... ok
+test obj::tests::test_parse_program ... ok
+test obj::tests::test_parse_program_error ... ok
+test obj::tests::test_parse_section_cgroup_skb_ingress_named ... ok
+test obj::tests::test_parse_section_btf_tracepoint ... ok
+test obj::tests::test_parse_section_cgroup_skb_ingress_unnamed ... ok
+test obj::tests::test_parse_section_cgroup_skb_no_direction_unamed ... ok
+test obj::tests::test_parse_section_cgroup_skb_no_direction_named ... ok
+test obj::tests::test_parse_section_data ... ok
+test obj::tests::test_parse_section_fentry ... ok
+test obj::tests::test_parse_section_kprobe ... ok
+test obj::tests::test_parse_section_fexit ... ok
+test obj::tests::test_parse_section_lsm ... ok
+test obj::tests::test_parse_section_multiple_maps ... ok
+test obj::tests::test_parse_section_map ... ok
+test obj::tests::test_parse_section_skskb_named ... ok
+test obj::tests::test_parse_section_raw_tp ... ok
+test obj::tests::test_parse_section_sock_addr_named ... ok
+test obj::tests::test_parse_section_skskb_unnamed ... ok
+test obj::tests::test_parse_section_socket_filter ... ok
+test obj::tests::test_parse_section_sock_addr_unnamed ... ok
+test obj::tests::test_parse_section_sockopt_named ... ok
+test obj::tests::test_parse_section_sockopt_unnamed ... ok
+test obj::tests::test_parse_section_trace_point ... ok
+test obj::tests::test_parse_section_uprobe ... ok
+test obj::tests::test_parse_section_xdp ... ok
+test obj::tests::test_parse_version ... ok
+test obj::tests::test_patch_map_data ... ok
+test programs::links::tests::test_already_attached ... ok
+test programs::links::tests::test_drop_detach ... ok
+test programs::links::tests::test_link_map ... ok
+test programs::links::tests::test_not_attached ... ok
+test programs::links::tests::test_owned_detach ... ok
+test sys::netlink::tests::test_nested_attrs ... ok
+test sys::netlink::tests::test_nlattr_iterator_empty ... ok
+test sys::netlink::tests::test_nlattr_iterator_many ... ok
+test sys::netlink::tests::test_nlattr_iterator_nested ... ok
+test programs::links::tests::test_pin ... ok
+test sys::netlink::tests::test_nlattr_iterator_one ... ok
+test util::tests::test_parse_kernel_symbols ... ok
+test util::tests::test_parse_online_cpus ... ok
+test obj::btf::btf::tests::test_read_btf_from_sys_fs ... FAILED
+
+failures:
+
+---- obj::btf::btf::tests::test_read_btf_from_sys_fs stdout ----
+thread 'obj::btf::btf::tests::test_read_btf_from_sys_fs' panicked at 'called `Result::unwrap()` on an `Err` value: InvalidTypeKind { kind: 19 }', aya/src/obj/btf/btf.rs:1400:85
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    obj::btf::btf::tests::test_read_btf_from_sys_fs
+
+test result: FAILED. 143 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--lib`
+   Doc-tests aya
+
+running 62 tests
+test src/bpf.rs - bpf::BpfLoader<'a>::set_global (line 284) - compile ... ok
+test src/bpf.rs - bpf::Bpf::load (line 724) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::extension (line 349) - compile ... ok
+test src/maps/bloom_filter.rs - maps::bloom_filter::BloomFilter (line 18) - compile ... ok
+test src/maps/hash_map/per_cpu_hash_map.rs - maps::hash_map::per_cpu_hash_map::PerCpuHashMap (line 28) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::map_pin_path (line 267) - compile ... ok
+test src/bpf.rs - bpf::Bpf::program (line 804) - compile ... ok
+test src/bpf.rs - bpf::Bpf::load_file (line 702) - compile ... ok
+test src/maps/lpm_trie.rs - maps::lpm_trie::Key<K>::new (line 80) - compile ... ok
+test src/bpf.rs - bpf::Bpf::programs (line 837) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::load (line 403) - compile ... ok
+test src/bpf.rs - bpf::Bpf::maps (line 780) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader (line 176) - compile ... ok
+test src/maps/array/array.rs - maps::array::array::Array (line 23) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::btf (line 245) - compile ... ok
+test src/maps/lpm_trie.rs - maps::lpm_trie::Key (line 60) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::set_global (line 304) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::set_global (line 290) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::load_file (line 385) - compile ... ok
+test src/bpf.rs - bpf::Bpf::programs_mut (line 855) - compile ... ok
+test src/maps/mod.rs - maps (line 20) - compile ... ok
+test src/maps/mod.rs - maps::PerCpuValues (line 791) - compile ... ok
+test src/maps/array/per_cpu_array.rs - maps::array::per_cpu_array::PerCpuArray (line 22) - compile ... ok
+test src/bpf.rs - bpf::Bpf::program_mut (line 821) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::set_max_entries (line 327) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::verifier_log_level (line 367) - compile ... ok
+test src/maps/hash_map/per_cpu_hash_map.rs - maps::hash_map::per_cpu_hash_map::PerCpuHashMap<T,K,V>::insert (line 95) - compile ... ok
+test src/maps/hash_map/hash_map.rs - maps::hash_map::hash_map::HashMap (line 21) - compile ... ok
+test src/maps/array/program_array.rs - maps::array::program_array::ProgramArray (line 25) - compile ... ok
+test src/maps/perf/perf_event_array.rs - maps::perf::perf_event_array::PerfEventArray (line 84) - compile ... ok
+test src/util.rs - util::include_bytes_aligned (line 117) ... ignored
+test src/maps/sock/sock_map.rs - maps::sock::sock_map::SockMap (line 28) - compile ... ok
+test src/maps/queue.rs - maps::queue::Queue (line 21) - compile ... ok
+test src/programs/sk_skb.rs - programs::sk_skb::SkSkb (line 39) - compile ... ok
+test src/programs/cgroup_skb.rs - programs::cgroup_skb::CgroupSkb (line 32) - compile ... ok
+test src/programs/kprobe.rs - programs::kprobe::KProbe (line 29) - compile ... ok
+test src/programs/cgroup_sock.rs - programs::cgroup_sock::CgroupSock (line 31) - compile ... ok
+test src/maps/stack_trace.rs - maps::stack_trace::StackTraceMap (line 24) - compile ... ok
+test src/maps/perf/async_perf_event_array.rs - maps::perf::async_perf_event_array::AsyncPerfEventArray (line 34) - compile ... ok
+test src/programs/cgroup_sysctl.rs - programs::cgroup_sysctl::CgroupSysctl (line 26) - compile ... ok
+test src/maps/stack.rs - maps::stack::Stack (line 21) - compile ... ok
+test src/programs/cgroup_sock_addr.rs - programs::cgroup_sock_addr::CgroupSockAddr (line 32) - compile ... ok
+test src/programs/fentry.rs - programs::fentry::FEntry (line 26) - compile ... ok
+test src/programs/xdp.rs - programs::xdp::Xdp (line 66) - compile ... ok
+test src/programs/cgroup_sockopt.rs - programs::cgroup_sockopt::CgroupSockopt (line 29) - compile ... ok
+test src/programs/sk_msg.rs - programs::sk_msg::SkMsg (line 27) - compile ... ok
+test src/programs/raw_trace_point.rs - programs::raw_trace_point::RawTracePoint (line 26) - compile ... ok
+test src/programs/lirc_mode2.rs - programs::lirc_mode2::LircMode2 (line 25) - compile ... ok
+test src/maps/lpm_trie.rs - maps::lpm_trie::LpmTrie (line 23) - compile ... ok
+test src/programs/sk_lookup.rs - programs::sk_lookup::SkLookup (line 25) - compile ... ok
+test src/programs/extension.rs - programs::extension::Extension (line 36) - compile ... ok
+test src/maps/sock/sock_hash.rs - maps::sock::sock_hash::SockHash (line 31) - compile ... ok
+test src/programs/lsm.rs - programs::lsm::Lsm (line 27) - compile ... ok
+test src/programs/tp_btf.rs - programs::tp_btf::BtfTracePoint (line 24) - compile ... ok
+test src/programs/fexit.rs - programs::fexit::FExit (line 26) - compile ... ok
+test src/programs/mod.rs - programs (line 16) - compile ... ok
+test src/programs/trace_point.rs - programs::trace_point::TracePoint (line 41) - compile ... ok
+test src/programs/tc.rs - programs::tc::SchedClassifier (line 45) - compile ... ok
+test src/programs/sock_ops.rs - programs::sock_ops::SockOps (line 25) - compile ... ok
+test src/programs/perf_event.rs - programs::perf_event::PerfEvent (line 87) - compile ... ok
+test src/programs/socket_filter.rs - programs::socket_filter::SocketFilter (line 37) - compile ... ok
+test src/programs/links.rs - programs::links::FdLink::pin (line 104) - compile ... ok
+
+test result: ok. 61 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+error: 1 target failed:
+    `--lib`
++ cd ../
++ git reset --hard 82773f46c8cff830b36b8b4f57100952eb6ec8d2
+HEAD is now at 82773f46 Make the integration tests handle errors internally.
++ git clean -fd
+Removing .cargo/lts-repo-at-daafe0abea/

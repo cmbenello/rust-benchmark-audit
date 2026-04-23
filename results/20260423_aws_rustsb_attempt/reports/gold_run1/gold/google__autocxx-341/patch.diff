@@ -1,0 +1,130 @@
+diff --git a/engine/src/conversion/analysis/fun/mod.rs b/engine/src/conversion/analysis/fun/mod.rs
+--- a/engine/src/conversion/analysis/fun/mod.rs
++++ b/engine/src/conversion/analysis/fun/mod.rs
+@@ -639,7 +639,7 @@ impl<'a> FnAnalyzer<'a> {
+                             }) => match elem.as_ref() {
+                                 Type::Path(typ) => {
+                                     let mut this_type = TypeName::from_type_path(typ);
+-                                    if this_type.is_cvoid() && pp.ident.to_string() == "this" {
++                                    if this_type.is_cvoid() && pp.ident == "this" {
+                                         is_virtual = true;
+                                         this_type = virtual_this.ok_or_else(|| {
+                                             ConvertError::VirtualThisType(
+diff --git a/engine/src/conversion/codegen_rs/fun_codegen.rs b/engine/src/conversion/codegen_rs/fun_codegen.rs
+--- a/engine/src/conversion/codegen_rs/fun_codegen.rs
++++ b/engine/src/conversion/codegen_rs/fun_codegen.rs
+@@ -192,12 +192,12 @@ fn generate_function_impl(
+     rust_name: &str,
+     ret_type: &ReturnType,
+     unsafety: &Option<Unsafe>,
+-) -> Item {
++) -> Box<Item> {
+     let (wrapper_params, arg_list) = generate_arg_lists(param_details, false);
+     let rust_name = make_ident(&rust_name);
+-    Item::Fn(parse_quote! {
++    Box::new(Item::Fn(parse_quote! {
+         pub #unsafety fn #rust_name ( #wrapper_params ) #ret_type {
+             cxxbridge::#rust_name ( #(#arg_list),* )
+         }
+-    })
++    }))
+ }
+diff --git a/engine/src/conversion/codegen_rs/mod.rs b/engine/src/conversion/codegen_rs/mod.rs
+--- a/engine/src/conversion/codegen_rs/mod.rs
++++ b/engine/src/conversion/codegen_rs/mod.rs
+@@ -57,7 +57,7 @@ enum Use {
+     /// 'use' directive points to bindgen
+     UsedFromBindgen,
+     /// Some kind of custom item
+-    Custom(Item),
++    Custom(Box<Item>),
+ }
+ 
+ fn get_string_items() -> Vec<Item> {
+diff --git a/engine/src/conversion/codegen_rs/mod.rs b/engine/src/conversion/codegen_rs/mod.rs
+--- a/engine/src/conversion/codegen_rs/mod.rs
++++ b/engine/src/conversion/codegen_rs/mod.rs
+@@ -255,7 +255,7 @@ impl<'a> RsCodeGenerator<'a> {
+                 ))),
+                 Use::UsedFromBindgen => output_items.push(Self::generate_bindgen_use_stmt(ns, id)),
+                 Use::Unused => {}
+-                Use::Custom(item) => output_items.push(item.clone()),
++                Use::Custom(item) => output_items.push(*item.clone()),
+             };
+         }
+         for (child_name, child_ns_entries) in ns_entries.children() {
+diff --git a/engine/src/conversion/parse/parse_foreign_mod.rs b/engine/src/conversion/parse/parse_foreign_mod.rs
+--- a/engine/src/conversion/parse/parse_foreign_mod.rs
++++ b/engine/src/conversion/parse/parse_foreign_mod.rs
+@@ -19,7 +19,7 @@ use crate::{
+     types::{Namespace, TypeName},
+ };
+ use std::collections::{HashMap, HashSet};
+-use syn::{ForeignItem, Ident, ImplItem, ItemImpl, Type};
++use syn::{Block, Expr, ExprCall, ForeignItem, Ident, ImplItem, ItemImpl, Stmt, Type};
+ 
+ /// Parses a given bindgen-generated 'mod' into suitable
+ /// [Api]s. In bindgen output, a given mod concerns
+diff --git a/engine/src/conversion/parse/parse_foreign_mod.rs b/engine/src/conversion/parse/parse_foreign_mod.rs
+--- a/engine/src/conversion/parse/parse_foreign_mod.rs
++++ b/engine/src/conversion/parse/parse_foreign_mod.rs
+@@ -97,7 +97,10 @@ impl ParseForeignMod {
+                 let effective_fun_name = if itm.sig.ident == "new" {
+                     ty_id.clone()
+                 } else {
+-                    itm.sig.ident
++                    match get_called_function(&itm.block) {
++                        Some(id) => id.clone(),
++                        None => itm.sig.ident,
++                    }
+                 };
+                 self.method_receivers.insert(
+                     effective_fun_name,
+diff --git a/engine/src/known_types.rs b/engine/src/known_types.rs
+--- a/engine/src/known_types.rs
++++ b/engine/src/known_types.rs
+@@ -199,9 +199,11 @@ impl TypeDatabase {
+     /// which we need to wrap.
+     pub(crate) fn is_ctype(&self, ty: &TypeName) -> bool {
+         self.get(ty)
+-            .map(|td| match td.behavior {
+-                Behavior::CVariableLengthByValue | Behavior::CVoid => true,
+-                _ => false,
++            .map(|td| {
++                matches!(
++                    td.behavior,
++                    Behavior::CVariableLengthByValue | Behavior::CVoid
++                )
+             })
+             .unwrap_or(false)
+     }
+diff --git a/engine/src/known_types.rs b/engine/src/known_types.rs
+--- a/engine/src/known_types.rs
++++ b/engine/src/known_types.rs
+@@ -211,9 +213,11 @@ impl TypeDatabase {
+     /// type.
+     pub(crate) fn is_cxx_acceptable_generic(&self, ty: &TypeName) -> bool {
+         self.get(ty)
+-            .map(|x| match x.behavior {
+-                Behavior::CxxContainerByValueSafe | Behavior::CxxContainerNotByValueSafe => true,
+-                _ => false,
++            .map(|x| {
++                matches!(
++                    x.behavior,
++                    Behavior::CxxContainerByValueSafe | Behavior::CxxContainerNotByValueSafe
++                )
+             })
+             .unwrap_or(false)
+     }
+diff --git a/engine/src/known_types.rs b/engine/src/known_types.rs
+--- a/engine/src/known_types.rs
++++ b/engine/src/known_types.rs
+@@ -339,7 +343,7 @@ fn create_type_database() -> TypeDatabase {
+         "autocxx::c_void",
+         "void",
+         Behavior::CVoid,
+-        Some(format!("std::os::raw::c_void")),
++        Some("std::os::raw::c_void".into()),
+     );
+     by_rs_name.insert(TypeName::new_from_user_input(&td.rs_name), td);
+ 

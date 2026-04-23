@@ -1,0 +1,284 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch src/bindgen/cargo/cargo_metadata.rs...
+Checking patch tests/expectations/both/rename-crate.c...
+Checking patch tests/expectations/both/rename-crate.c...
+Checking patch tests/expectations/rename-crate.c...
+Checking patch tests/expectations/rename-crate.c...
+Checking patch tests/expectations/rename-crate.cpp...
+Checking patch tests/expectations/rename-crate.cpp...
+Checking patch tests/expectations/tag/rename-crate.c...
+Checking patch tests/expectations/tag/rename-crate.c...
+Checking patch tests/rust/rename-crate/Cargo.lock...
+Checking patch tests/rust/rename-crate/cbindgen.toml...
+Checking patch tests/rust/rename-crate/no-extern/Cargo.lock...
+<stdin>:237: new blank line at EOF.
++
+Checking patch tests/rust/rename-crate/no-extern/Cargo.toml...
+Checking patch tests/rust/rename-crate/no-extern/src/lib.rs...
+Checking patch tests/rust/rename-crate/old-dep/Cargo.lock...
+<stdin>:276: new blank line at EOF.
++
+Checking patch tests/rust/rename-crate/old-dep/Cargo.toml...
+Checking patch tests/rust/rename-crate/old-dep/src/lib.rs...
+Checking patch tests/rust/rename-crate/src/lib.rs...
+Checking patch tests/rust/rename-crate/src/lib.rs...
+Applied patch src/bindgen/cargo/cargo_metadata.rs cleanly.
+Applied patch tests/expectations/both/rename-crate.c cleanly.
+Applied patch tests/expectations/both/rename-crate.c cleanly.
+Applied patch tests/expectations/rename-crate.c cleanly.
+Applied patch tests/expectations/rename-crate.c cleanly.
+Applied patch tests/expectations/rename-crate.cpp cleanly.
+Applied patch tests/expectations/rename-crate.cpp cleanly.
+Applied patch tests/expectations/tag/rename-crate.c cleanly.
+Applied patch tests/expectations/tag/rename-crate.c cleanly.
+Applied patch tests/rust/rename-crate/Cargo.lock cleanly.
+Applied patch tests/rust/rename-crate/cbindgen.toml cleanly.
+Applied patch tests/rust/rename-crate/no-extern/Cargo.lock cleanly.
+Applied patch tests/rust/rename-crate/no-extern/Cargo.toml cleanly.
+Applied patch tests/rust/rename-crate/no-extern/src/lib.rs cleanly.
+Applied patch tests/rust/rename-crate/old-dep/Cargo.lock cleanly.
+Applied patch tests/rust/rename-crate/old-dep/Cargo.toml cleanly.
+Applied patch tests/rust/rename-crate/old-dep/src/lib.rs cleanly.
+Applied patch tests/rust/rename-crate/src/lib.rs cleanly.
+Applied patch tests/rust/rename-crate/src/lib.rs cleanly.
+warning: 2 lines add whitespace errors.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded log v0.4.6 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded serde_json v1.0.39 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded quote v0.6.12 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded toml v0.4.10 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded proc-macro2 v0.4.29 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded serde_derive v1.0.90 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded tempfile v3.0.7 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded serde v1.0.90 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded clap v2.33.0 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded syn v0.15.33 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded libc v0.2.53 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded cfg-if v0.1.7 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded remove_dir_all v0.5.1 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded vec_map v0.8.1 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded bitflags v1.0.5 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded unicode-width v0.1.5 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded strsim v0.8.0 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded unicode-xid v0.1.0 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded ansi_term v0.11.0 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded itoa v0.4.4 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded ryu v0.2.8 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand v0.6.5 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded textwrap v0.11.0 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded atty v0.2.11 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand_core v0.4.0 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand_jitter v0.1.3 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand_hc v0.1.0 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded autocfg v0.1.2 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand_pcg v0.1.2 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand_xorshift v0.1.1 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand_chacha v0.1.1 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand_os v0.1.3 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand_isaac v0.1.1 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+  Downloaded rand_core v0.3.1 (registry `/testbed/.cargo/lts-repo-at-e7b41c3e39`)
+   Compiling proc-macro2 v0.4.29
+   Compiling unicode-xid v0.1.0
+   Compiling syn v0.15.33
+   Compiling libc v0.2.53
+   Compiling autocfg v0.1.2
+   Compiling rand_core v0.4.0
+   Compiling serde v1.0.90
+   Compiling bitflags v1.0.5
+   Compiling ryu v0.2.8
+   Compiling unicode-width v0.1.5
+   Compiling strsim v0.8.0
+   Compiling remove_dir_all v0.5.1
+   Compiling cfg-if v0.1.7
+   Compiling cbindgen v0.8.4 (/workspace)
+   Compiling ansi_term v0.11.0
+   Compiling itoa v0.4.4
+   Compiling vec_map v0.8.1
+   Compiling log v0.4.6
+   Compiling textwrap v0.11.0
+   Compiling rand_core v0.3.1
+   Compiling rand_jitter v0.1.3
+   Compiling rand_hc v0.1.0
+   Compiling rand_xorshift v0.1.1
+   Compiling rand_isaac v0.1.1
+   Compiling rand_chacha v0.1.1
+   Compiling rand_pcg v0.1.2
+   Compiling rand v0.6.5
+   Compiling rand_os v0.1.3
+   Compiling atty v0.2.11
+   Compiling clap v2.33.0
+   Compiling quote v0.6.12
+   Compiling tempfile v3.0.7
+   Compiling serde_derive v1.0.90
+   Compiling toml v0.4.10
+   Compiling serde_json v1.0.39
+    Finished dev [unoptimized + debuginfo] target(s) in 40.70s
+     Running target/debug/deps/cbindgen-96644dee457f7a9b
+
+running 1 test
+test bindgen::mangle::generics ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/cbindgen-d4bcda5812108cde
+
+running 1 test
+test bindgen::mangle::generics ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/tests-c8940888110461fc
+
+running 69 tests
+test test_expand_default_features ... FAILED
+test test_expand ... FAILED
+test test_expand_features ... FAILED
+test test_expand_no_default_features ... FAILED
+test test_docstyle_doxy ... ok
+test test_global_attr ... ok
+test test_const_conflict ... ok
+test test_cfg ... ok
+test test_assoc_constant ... ok
+test test_docstyle_c99 ... ok
+test test_cfg_2 ... ok
+test test_docstyle_auto ... ok
+test test_cfg_field ... ok
+test test_extern_2 ... ok
+test test_alias ... ok
+test test_associated_in_body ... ok
+test test_annotation ... ok
+test test_assoc_const_conflict ... ok
+test test_extern ... ok
+test test_enum ... ok
+test test_fns ... ok
+test test_body ... ok
+test test_euclid ... ok
+test test_include_item ... ok
+test test_display_list ... ok
+test test_constant ... ok
+test test_array ... ok
+test test_const_transparent ... ok
+test test_external_workspace_child ... ok
+test test_cdecl ... ok
+test test_bitflags ... ok
+test test_inner_mod ... ok
+test test_derive_eq ... ok
+test test_asserted_cast ... ok
+test test_include ... ok
+test test_include_specific ... ok
+test test_nested_import ... ok
+test test_monomorph_1 ... ok
+test test_must_use ... ok
+test test_item_types_renamed ... ok
+test test_renaming_overrides_prefixing ... ok
+test test_no_includes ... ok
+test test_lifetime_arg ... ok
+test test_style_crash ... ok
+test test_simplify_option_ptr ... ok
+test test_nonnull ... ok
+test test_reserved ... ok
+test test_prefixed_struct_literal_deep ... ok
+test test_prefix ... ok
+test test_mod_attr ... ok
+test test_static ... ok
+test test_item_types ... ok
+test test_prefixed_struct_literal ... ok
+test test_mod_path ... ok
+test test_struct_literal ... ok
+test test_struct ... ok
+test test_std_lib ... ok
+test test_monomorph_3 ... ok
+test test_rename ... ok
+test test_namespaces_constant ... ok
+test test_namespace_constant ... ok
+test test_monomorph_2 ... ok
+test test_transparent ... ok
+test test_typedef ... ok
+test test_union ... ok
+test test_va_list ... ok
+test test_transform_op ... ok
+test test_rename_crate ... ok
+test test_workspace ... ok
+
+failures:
+
+---- test_expand_default_features stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--style" "type" "-o" "/workspace/tests/expectations/expand_default_features.c" "/workspace/tests/rust/expand_default_features"
+thread 'test_expand_default_features' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand_default_features.c"', tests/tests.rs:54:5
+note: Run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+
+---- test_expand stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--style" "type" "-o" "/workspace/tests/expectations/expand.c" "/workspace/tests/rust/expand"
+thread 'test_expand' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand.c"', tests/tests.rs:54:5
+
+---- test_expand_features stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--style" "type" "-o" "/workspace/tests/expectations/expand_features.c" "/workspace/tests/rust/expand_features"
+thread 'test_expand_features' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand_features.c"', tests/tests.rs:54:5
+
+---- test_expand_no_default_features stdout ----
+Running: "/workspace/target/debug/cbindgen" "--lang" "c" "--style" "type" "-o" "/workspace/tests/expectations/expand_no_default_features.c" "/workspace/tests/rust/expand_no_default_features"
+thread 'test_expand_no_default_features' panicked at 'cbindgen failed: "/workspace/tests/expectations/expand_no_default_features.c"', tests/tests.rs:54:5
+
+
+failures:
+    test_expand
+    test_expand_default_features
+    test_expand_features
+    test_expand_no_default_features
+
+test result: FAILED. 65 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests cbindgen
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--test tests'
++ cd tests/rust/rename-crate/old-dep
++ cargo test --no-fail-fast --all-features
+   Compiling no-extern v0.1.0 (/workspace/tests/rust/rename-crate/no-extern)
+   Compiling old-dep-name v0.1.0 (/workspace/tests/rust/rename-crate/old-dep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.30s
+     Running target/debug/deps/old_dep_name-2e01629b54e35e75
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests old-dep-name
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ cd ../../../../
++ cd tests/rust/rename-crate
++ cargo test --no-fail-fast --all-features
+   Compiling no-extern v0.1.0 (/workspace/tests/rust/rename-crate/no-extern)
+   Compiling dependency v0.1.0 (/workspace/tests/rust/rename-crate/dependency)
+   Compiling old-dep-name v0.1.0 (/workspace/tests/rust/rename-crate/old-dep)
+   Compiling rename-crate v0.1.0 (/workspace/tests/rust/rename-crate)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.36s
+     Running target/debug/deps/rename_crate-9789e5e0d2615642
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests rename-crate
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ cd ../../../
++ git reset --hard 46aed0802ae6b3e766dfb3f36680221c29f9d2fc
+HEAD is now at 46aed08 Release 0.8.4
++ git clean -fd
+Removing .cargo/
+Removing tests/rust/rename-crate/no-extern/

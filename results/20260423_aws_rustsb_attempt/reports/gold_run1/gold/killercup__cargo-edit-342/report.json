@@ -1,0 +1,64 @@
+{
+    "killercup__cargo-edit-342": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "fetch::get_latest_version_from_json_test",
+                    "fetch::get_latest_unstable_or_stable_version_from_json",
+                    "fetch::get_no_latest_version_from_json_when_all_are_yanked",
+                    "fetch::get_latest_stable_version_from_json",
+                    "fetch::test_summary_raw_path",
+                    "manifest::tests::remove_dependency_no_section",
+                    "fetch::test_gen_fuzzy_crate_names",
+                    "manifest::tests::add_remove_dependency",
+                    "manifest::tests::remove_dependency_non_existent",
+                    "registry::test_short_name",
+                    "manifest::tests::update_wrong_dependency",
+                    "manifest::tests::update_dependency",
+                    "args::tests::test_dependency_parsing",
+                    "args::tests::test_path_as_arg_parsing",
+                    "adds_dependency_with_upgrade_bad",
+                    "git_flag_and_inline_version_are_mutually_exclusive",
+                    "fails_to_add_multiple_optional_dev_dependencies",
+                    "git_and_version_flags_are_mutually_exclusive",
+                    "git_and_path_are_mutually_exclusive",
+                    "unknown_flags",
+                    "no_argument",
+                    "fails_to_add_optional_dev_dependency",
+                    "fails_to_add_dependency_with_empty_target",
+                    "fails_to_add_inexistent_local_source_without_flag",
+                    "adds_multiple_dependencies_with_conflicts_option",
+                    "fails_to_add_inexistent_git_source_without_flag",
+                    "invalid_dependency",
+                    "invalid_dependency_in_section",
+                    "rm_prints_messages_for_multiple",
+                    "rm_prints_message",
+                    "remove_section_after_removed_last_dependency",
+                    "remove_multiple_existing_dependencies_from_specific_section",
+                    "remove_multiple_existing_dependencies",
+                    "remove_existing_dependency",
+                    "invalid_section",
+                    "remove_existing_dependency_from_specific_section",
+                    "invalid_manifest"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

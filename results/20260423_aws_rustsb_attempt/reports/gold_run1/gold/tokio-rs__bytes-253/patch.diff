@@ -1,0 +1,12 @@
+diff --git a/src/bytes.rs b/src/bytes.rs
+--- a/src/bytes.rs
++++ b/src/bytes.rs
+@@ -1265,6 +1265,8 @@ impl BytesMut {
+     ///
+     /// Panics if `at > len`.
+     pub fn split_to(&mut self, at: usize) -> BytesMut {
++        assert!(at <= self.len());
++
+         BytesMut {
+             inner: self.inner.split_to(at),
+         }

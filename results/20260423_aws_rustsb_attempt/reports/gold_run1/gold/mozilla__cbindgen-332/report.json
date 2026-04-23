@@ -1,0 +1,93 @@
+{
+    "mozilla__cbindgen-332": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "bindgen::mangle::generics",
+                    "test_no_includes",
+                    "test_docstyle_doxy",
+                    "test_inner_mod",
+                    "test_global_attr",
+                    "test_union",
+                    "test_nonnull",
+                    "test_lifetime_arg",
+                    "test_typedef",
+                    "test_prefixed_struct_literal",
+                    "test_item_types",
+                    "test_docstyle_auto",
+                    "test_cfg_field",
+                    "test_assoc_const_conflict",
+                    "test_style_crash",
+                    "test_extern_2",
+                    "test_static",
+                    "test_std_lib",
+                    "test_namespaces_constant",
+                    "test_extern",
+                    "test_reserved",
+                    "test_array",
+                    "test_docstyle_c99",
+                    "test_fns",
+                    "test_nested_import",
+                    "test_assoc_constant",
+                    "test_include_specific",
+                    "test_monomorph_2",
+                    "test_va_list",
+                    "test_prefix",
+                    "test_alias",
+                    "test_cfg",
+                    "test_renaming_overrides_prefixing",
+                    "test_constant",
+                    "test_const_transparent",
+                    "test_associated_in_body",
+                    "test_const_conflict",
+                    "test_display_list",
+                    "test_transparent",
+                    "test_item_types_renamed",
+                    "test_namespace_constant",
+                    "test_simplify_option_ptr",
+                    "test_cdecl",
+                    "test_asserted_cast",
+                    "test_must_use",
+                    "test_include_item",
+                    "test_bitflags",
+                    "test_struct",
+                    "test_prefixed_struct_literal_deep",
+                    "test_monomorph_1",
+                    "test_monomorph_3",
+                    "test_body",
+                    "test_rename",
+                    "test_struct_literal",
+                    "test_annotation",
+                    "test_cfg_2",
+                    "test_euclid",
+                    "test_external_workspace_child",
+                    "test_workspace",
+                    "test_enum",
+                    "test_transform_op",
+                    "test_mod_attr",
+                    "test_mod_path",
+                    "test_derive_eq",
+                    "test_rename_crate",
+                    "test_include"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

@@ -1,0 +1,169 @@
+2026-04-17 06:45:43,572 - INFO - Environment image rustb.env.x86_64.dtolnay_async-trait:latest found for dtolnay__async-trait-223
+Building instance image rustbench/dtolnay__async-trait:pr-223 for dtolnay__async-trait-223
+2026-04-17 06:59:12,727 - INFO - Creating container for dtolnay__async-trait-223...
+2026-04-17 06:59:12,921 - INFO - Container for dtolnay__async-trait-223 created: 64c09c7a9eac16d78a05500335b124fbcce02e72d5dc117cfc1df8c1b5091a50
+2026-04-17 06:59:13,142 - INFO - Container for dtolnay__async-trait-223 started: 64c09c7a9eac16d78a05500335b124fbcce02e72d5dc117cfc1df8c1b5091a50
+2026-04-17 06:59:13,142 - INFO - Intermediate patch for dtolnay__async-trait-223 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-223/patch.diff, now applying to container...
+2026-04-17 06:59:13,316 - INFO - >>>>> Applied Patch:
+Checking patch src/expand.rs...
+Checking patch src/expand.rs...
+Applied patch src/expand.rs cleanly.
+Applied patch src/expand.rs cleanly.
+
+2026-04-17 06:59:13,362 - INFO - Git diff before:
+diff --git a/src/expand.rs b/src/expand.rs
+index fbf9aba..53918cb 100644
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -9,9 +9,9 @@ use std::mem;
+ use syn::punctuated::Punctuated;
+ use syn::visit_mut::{self, VisitMut};
+ use syn::{
+-    parse_quote, parse_quote_spanned, Attribute, Block, FnArg, GenericParam, Generics, Ident,
+-    ImplItem, Lifetime, LifetimeDef, Pat, PatIdent, Receiver, ReturnType, Signature, Stmt, Token,
+-    TraitItem, Type, TypePath, WhereClause,
++    parse_quote, parse_quote_spanned, Attribute, Block, FnArg, GenericArgument, GenericParam,
++    Generics, Ident, ImplItem, Lifetime, LifetimeDef, Pat, PatIdent, PathArguments, Receiver,
++    ReturnType, Signature, Stmt, Token, TraitItem, Type, TypePath, WhereClause,
+ };
+ 
+ impl ToTokens for Item {
+@@ -229,23 +229,46 @@ fn transform_sig(
+         .push(parse_quote_spanned!(default_span=> 'async_trait));
+ 
+     if has_self {
+-        let bounds = match sig.inputs.iter().next() {
++        let bounds: &[InferredBound] = match sig.inputs.iter().next() {
+             Some(FnArg::Receiver(Receiver {
+                 reference: Some(_),
+                 mutability: None,
+                 ..
+-            })) => [InferredBound::Sync],
++            })) => &[InferredBound::Sync],
+             Some(FnArg::Typed(arg))
+-                if match (arg.pat.as_ref(), arg.ty.as_ref()) {
+-                    (Pat::Ident(pat), Type::Reference(ty)) => {
+-                        pat.ident == "self" && ty.mutability.is_none()
+-                    }
++                if match arg.pat.as_ref() {
++                    Pat::Ident(pat) => pat.ident == "self",
+                     _ => false,
+                 } =>
+             {
+-                [InferredBound::Sync]
++                match arg.ty.as_ref() {
++                    // self: &Self
++                    Type::Reference(ty) if ty.mutability.is_none() => &[InferredBound::Sync],
++                    // self: Arc<Self>
++                    Type::Path(ty)
++                        if {
++                            let segment = ty.path.segments.last().unwrap();
++                            segment.ident == "Arc"
++                                && match &segment.arguments {
++                                    PathArguments::AngleBracketed(arguments) => {
++                                        arguments.args.len() == 1
++                                            && match &arguments.args[0] {
++                                                GenericArgument::Type(Type::Path(arg)) => {
++                                                    arg.path.is_ident("Self")
++                                                }
++                                                _ => false,
++                                            }
++                                    }
++                                    _ => false,
++                                }
++                        } =>
++                    {
++                        &[InferredBound::Sync, InferredBound::Send]
++                    }
++                    _ => &[InferredBound::Send],
++                }
+             }
+-            _ => [InferredBound::Send],
++            _ => &[InferredBound::Send],
+         };
+ 
+         let bounds = bounds.iter().filter_map(|bound| {
+2026-04-17 06:59:13,362 - INFO - Eval script for dtolnay__async-trait-223 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-223/eval.sh; copying to container...
+2026-04-17 07:00:08,568 - INFO - Test runtime: 55.03 seconds
+2026-04-17 07:00:08,568 - INFO - Test output for dtolnay__async-trait-223 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-223/test_output.txt
+2026-04-17 07:00:08,610 - INFO - Git diff after:
+diff --git a/src/expand.rs b/src/expand.rs
+index fbf9aba..53918cb 100644
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -9,9 +9,9 @@ use std::mem;
+ use syn::punctuated::Punctuated;
+ use syn::visit_mut::{self, VisitMut};
+ use syn::{
+-    parse_quote, parse_quote_spanned, Attribute, Block, FnArg, GenericParam, Generics, Ident,
+-    ImplItem, Lifetime, LifetimeDef, Pat, PatIdent, Receiver, ReturnType, Signature, Stmt, Token,
+-    TraitItem, Type, TypePath, WhereClause,
++    parse_quote, parse_quote_spanned, Attribute, Block, FnArg, GenericArgument, GenericParam,
++    Generics, Ident, ImplItem, Lifetime, LifetimeDef, Pat, PatIdent, PathArguments, Receiver,
++    ReturnType, Signature, Stmt, Token, TraitItem, Type, TypePath, WhereClause,
+ };
+ 
+ impl ToTokens for Item {
+@@ -229,23 +229,46 @@ fn transform_sig(
+         .push(parse_quote_spanned!(default_span=> 'async_trait));
+ 
+     if has_self {
+-        let bounds = match sig.inputs.iter().next() {
++        let bounds: &[InferredBound] = match sig.inputs.iter().next() {
+             Some(FnArg::Receiver(Receiver {
+                 reference: Some(_),
+                 mutability: None,
+                 ..
+-            })) => [InferredBound::Sync],
++            })) => &[InferredBound::Sync],
+             Some(FnArg::Typed(arg))
+-                if match (arg.pat.as_ref(), arg.ty.as_ref()) {
+-                    (Pat::Ident(pat), Type::Reference(ty)) => {
+-                        pat.ident == "self" && ty.mutability.is_none()
+-                    }
++                if match arg.pat.as_ref() {
++                    Pat::Ident(pat) => pat.ident == "self",
+                     _ => false,
+                 } =>
+             {
+-                [InferredBound::Sync]
++                match arg.ty.as_ref() {
++                    // self: &Self
++                    Type::Reference(ty) if ty.mutability.is_none() => &[InferredBound::Sync],
++                    // self: Arc<Self>
++                    Type::Path(ty)
++                        if {
++                            let segment = ty.path.segments.last().unwrap();
++                            segment.ident == "Arc"
++                                && match &segment.arguments {
++                                    PathArguments::AngleBracketed(arguments) => {
++                                        arguments.args.len() == 1
++                                            && match &arguments.args[0] {
++                                                GenericArgument::Type(Type::Path(arg)) => {
++                                                    arg.path.is_ident("Self")
++                                                }
++                                                _ => false,
++                                            }
++                                    }
++                                    _ => false,
++                                }
++                        } =>
++                    {
++                        &[InferredBound::Sync, InferredBound::Send]
++                    }
++                    _ => &[InferredBound::Send],
++                }
+             }
+-            _ => [InferredBound::Send],
++            _ => &[InferredBound::Send],
+         };
+ 
+         let bounds = bounds.iter().filter_map(|bound| {
+2026-04-17 07:00:08,610 - INFO - Grading answer for dtolnay__async-trait-223...
+2026-04-17 07:00:08,610 - INFO - report: {'dtolnay__async-trait-223': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['drop_order::test_drop_order', 'issue199::test', 'issue45::tracing', 'src/lib.rs - (line 165) - compile fail', 'src/lib.rs - (line 15) - compile fail', 'src/lib.rs - (line 126)', 'src/lib.rs - (line 286)', 'src/lib.rs - (line 265)', 'src/lib.rs - (line 186)', 'src/lib.rs - (line 47)', 'src/lib.rs - (line 211)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for dtolnay__async-trait-223: resolved: True
+2026-04-17 07:00:08,610 - INFO - Attempting to stop container rustb.eval.dtolnay__async-trait-223.gold_run1...
+2026-04-17 07:01:36,469 - INFO - Attempting to remove container rustb.eval.dtolnay__async-trait-223.gold_run1...
+2026-04-17 07:01:38,615 - INFO - Container rustb.eval.dtolnay__async-trait-223.gold_run1 removed.
+2026-04-17 07:01:38,616 - INFO - Attempting to remove image rustbench/dtolnay__async-trait:pr-223...
+2026-04-17 07:01:39,819 - INFO - Image rustbench/dtolnay__async-trait:pr-223 removed.

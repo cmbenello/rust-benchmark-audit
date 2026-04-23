@@ -1,0 +1,290 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -18,7 +18,7 @@
+   If a selected template doesn't have a `cargo-generate.toml` file, but a parent one exists, any configured sub-templates will be ignored.
+   
+   Further implication is that sub-templates no longer needs to have a `cargo-generate.toml` file.
+-- [Test for file existence from rhai scripts](https://github.com/cargo-generate/cargo-generate/pull/690).
++- [Test for file existance from rhai scripts](https://github.com/cargo-generate/cargo-generate/pull/690).
+   Adds the `file::exists(path: &str)` method for use from hook scripts.
+ - Conditionals and placeholders now supported in multiple levels.
+   If a template sets up more placeholders conditionally, those placeholders are now checked/asked
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -26,6 +26,7 @@
+ - [Set default VCS in the favorite or template config](https://github.com/cargo-generate/cargo-generate/issues/635)
+ - [Add case filters to `liquid` and functions to `Rhai`. Enables case changing functionality from both `liquid` and `Rhai`](https://github.com/cargo-generate/cargo-generate/issues/638)
+ - [Add placeholder `{{is_init}}`. Enables templates to adust if they are expanded with the `--init` arg for `cargo-generate`](https://github.com/cargo-generate/cargo-generate/issues/649)
++- [Add option to overwrite files in existing project](https://github.com/cargo-generate/cargo-generate/issues/569)
+ 
+ ### Contributors
+ - [taurr](https://github.com/taurr)
+diff --git a/guide/src/favorites.md b/guide/src/favorites.md
+--- a/guide/src/favorites.md
++++ b/guide/src/favorites.md
+@@ -15,6 +15,7 @@ branch = "<optional-branch>"
+ subfolder = "<optional-subfolder>"
+ vcs = "<optional: None|Git>"
+ init = optional true|false
++overwrite = optional true|false
+ ```
+ 
+ Values may be overridden using the CLI arguments of the same names (e.g. `--subfolder` for the `subfolder` value).
+diff --git a/guide/src/favorites.md b/guide/src/favorites.md
+--- a/guide/src/favorites.md
++++ b/guide/src/favorites.md
+@@ -22,6 +23,8 @@ Values may be overridden using the CLI arguments of the same names (e.g. `--subf
+ **Note:** Specifying `init = true` has the effect of forcing the template to exhibit behaviour as if `--init` is specified on the
+ commandline, as there is no counter-option!
+ 
++**Note:** Specifying `overwrite = true` has the effect of allowing the template to always overwrite files as there is no counter-option!
++
+ When favorites are available, they can be generated simply by invoking:
+ 
+ ```cli
+diff --git a/src/app_config.rs b/src/app_config.rs
+--- a/src/app_config.rs
++++ b/src/app_config.rs
+@@ -35,6 +35,7 @@ pub struct FavoriteConfig {
+     pub values: Option<HashMap<String, toml::Value>>,
+     pub vcs: Option<Vcs>,
+     pub init: Option<bool>,
++    pub overwrite: Option<bool>,
+ }
+ 
+ #[derive(Deserialize, Default)]
+diff --git a/src/args.rs b/src/args.rs
+--- a/src/args.rs
++++ b/src/args.rs
+@@ -114,6 +114,10 @@ pub struct GenerateArgs {
+     /// Use at your own risk and be sure to review the template code beforehand.
+     #[clap(short, long, action)]
+     pub allow_commands: bool,
++
++    /// Allow the template to overwrite existing files in the destination.
++    #[clap(short, long, action)]
++    pub overwrite: bool,
+ }
+ 
+ #[derive(Debug, Clone, Args)]
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -154,7 +154,7 @@ fn internal_generate(mut args: GenerateArgs) -> Result<PathBuf> {
+         style(project_dir.display()).bold().yellow(),
+         style("...").bold()
+     );
+-    copy_dir_all(&template_dir, &project_dir)?;
++    copy_dir_all(&template_dir, &project_dir, user_parsed_input.overwrite())?;
+ 
+     let vcs = config
+         .template
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -353,14 +353,18 @@ fn resolve_project_name(args: &GenerateArgs) -> Result<ProjectName> {
+ 
+ fn copy_path_template_into_temp(src_path: &Path) -> Result<TempDir> {
+     let path_clone_dir = tempfile::tempdir()?;
+-    copy_dir_all(src_path, path_clone_dir.path())?;
++    copy_dir_all(src_path, path_clone_dir.path(), false)?;
+     git::remove_history(path_clone_dir.path())?;
+ 
+     Ok(path_clone_dir)
+ }
+ 
+-pub(crate) fn copy_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> Result<()> {
+-    fn check_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> Result<()> {
++pub(crate) fn copy_dir_all(
++    src: impl AsRef<Path>,
++    dst: impl AsRef<Path>,
++    overwrite: bool,
++) -> Result<()> {
++    fn check_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>, overwrite: bool) -> Result<()> {
+         if !dst.as_ref().exists() {
+             return Ok(());
+         }
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -372,18 +376,29 @@ pub(crate) fn copy_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> Resu
+ 
+             if entry_type.is_dir() {
+                 let dst_path = dst.as_ref().join(filename);
+-                check_dir_all(src_entry.path(), dst_path)?;
++                check_dir_all(src_entry.path(), dst_path, overwrite)?;
+             } else if entry_type.is_file() {
+                 let filename = filename.strip_suffix(".liquid").unwrap_or(&filename);
+                 let dst_path = dst.as_ref().join(filename);
+-                if dst_path.exists() {
+-                    bail!(
+-                        "{} {} {}",
+-                        crate::emoji::WARN,
+-                        style("File already exists:").bold().red(),
+-                        style(dst_path.display()).bold().red(),
+-                    )
+-                }
++                match (dst_path.exists(), overwrite) {
++                    (true, false) => {
++                        bail!(
++                            "{} {} {}",
++                            crate::emoji::WARN,
++                            style("File already exists:").bold().red(),
++                            style(dst_path.display()).bold().red(),
++                        )
++                    }
++                    (true, true) => {
++                        eprintln!(
++                            "{} {} {}",
++                            emoji::WARN,
++                            style("Overwriting file:").bold().red(),
++                            style(dst_path.display()).bold().red(),
++                        );
++                    }
++                    _ => {}
++                };
+             } else {
+                 bail!(
+                     "{} {}",
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -394,7 +409,7 @@ pub(crate) fn copy_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> Resu
+         }
+         Ok(())
+     }
+-    fn copy_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> Result<()> {
++    fn copy_all(src: impl AsRef<Path>, dst: impl AsRef<Path>, overwrite: bool) -> Result<()> {
+         fs::create_dir_all(&dst)?;
+         let git_file_name: OsString = ".git".into();
+         for src_entry in fs::read_dir(src)? {
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -406,18 +421,21 @@ pub(crate) fn copy_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> Resu
+                 if git_file_name == src_entry.file_name() {
+                     continue;
+                 }
+-                copy_dir_all(src_entry.path(), dst_path)?;
++                copy_dir_all(src_entry.path(), dst_path, overwrite)?;
+             } else if entry_type.is_file() {
+                 let filename = filename.strip_suffix(".liquid").unwrap_or(&filename);
+                 let dst_path = dst.as_ref().join(filename);
++                if dst_path.exists() && overwrite {
++                    fs::remove_file(&dst_path)?;
++                }
+                 fs::copy(src_entry.path(), dst_path)?;
+             }
+         }
+         Ok(())
+     }
+ 
+-    check_dir_all(&src, &dst)?;
+-    copy_all(src, dst)
++    check_dir_all(&src, &dst, overwrite)?;
++    copy_all(src, dst, overwrite)
+ }
+ 
+ fn locate_template_file(
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -24,6 +24,7 @@ pub struct UserParsedInput {
+     template_values: HashMap<String, toml::Value>,
+     vcs: Vcs,
+     pub init: bool,
++    overwrite: bool,
+     //TODO:
+     // 1. This structure should be used instead of args
+     // 2. This struct can contains internaly args and app_config to not confuse
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -37,6 +38,7 @@ impl UserParsedInput {
+         default_values: HashMap<String, toml::Value>,
+         vcs: Vcs,
+         init: bool,
++        overwrite: bool,
+     ) -> Self {
+         Self {
+             template_location: template_location.into(),
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -44,6 +46,7 @@ impl UserParsedInput {
+             template_values: default_values,
+             vcs,
+             init,
++            overwrite,
+         }
+     }
+ 
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -77,6 +80,7 @@ impl UserParsedInput {
+                 default_values,
+                 args.vcs.unwrap_or(DEFAULT_VCS),
+                 args.init,
++                args.overwrite,
+             );
+         }
+ 
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -88,6 +92,7 @@ impl UserParsedInput {
+                 default_values,
+                 args.vcs.unwrap_or(DEFAULT_VCS),
+                 args.init,
++                args.overwrite,
+             );
+         }
+ 
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -133,11 +138,12 @@ impl UserParsedInput {
+                     .map(|s| s.as_ref().to_owned())
+                     .or_else(|| fav_cfg.subfolder.clone()),
+                 default_values,
+-                args.vcs
+-                    .unwrap_or_else(|| fav_cfg.vcs.unwrap_or(DEFAULT_VCS)),
+-                args.init
++                args.vcs.or(fav_cfg.vcs).unwrap_or(DEFAULT_VCS),
++                args.init.then(|| true).or(fav_cfg.init).unwrap_or_default(),
++                args.overwrite
+                     .then(|| true)
+-                    .unwrap_or_else(|| fav_cfg.init.unwrap_or(false)),
++                    .or(fav_cfg.overwrite)
++                    .unwrap_or_default(),
+             );
+         }
+ 
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -197,6 +203,7 @@ impl UserParsedInput {
+             default_values,
+             args.vcs.unwrap_or(DEFAULT_VCS),
+             args.init,
++            args.overwrite,
+         )
+     }
+ 
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -223,6 +230,10 @@ impl UserParsedInput {
+     pub const fn init(&self) -> bool {
+         self.init
+     }
++
++    pub const fn overwrite(&self) -> bool {
++        self.overwrite
++    }
+ }
+ 
+ // favorite can be in form with abbrevation what means that input is git repositoru

@@ -1,0 +1,423 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch src/format/parse.rs...
+Checking patch src/format/strftime.rs...
+Applied patch src/format/parse.rs cleanly.
+Applied patch src/format/strftime.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading serde v1.0.70 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading bincode v0.8.0 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading serde_json v1.0.22 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading rustc-serialize v0.3.24 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading serde_derive v1.0.70 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading num-integer v0.1.39 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading num-iter v0.1.37 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading num-traits v0.2.5 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading time v0.1.40 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading byteorder v1.2.3 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading num-traits v0.1.43 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading itoa v0.4.2 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading dtoa v0.4.3 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading proc-macro2 v0.4.6 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading syn v0.14.4 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading quote v0.6.3 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading unicode-xid v0.1.0 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+ Downloading libc v0.2.42 (registry `file:///testbed/.cargo/lts-repo-at-ab852920ce`)
+   Compiling num-traits v0.2.5
+   Compiling unicode-xid v0.1.0
+   Compiling serde v1.0.70
+   Compiling num-integer v0.1.39
+   Compiling num-iter v0.1.37
+   Compiling libc v0.2.42
+   Compiling byteorder v1.2.3
+   Compiling dtoa v0.4.3
+   Compiling itoa v0.4.2
+   Compiling rustc-serialize v0.3.24
+   Compiling proc-macro2 v0.4.6
+   Compiling time v0.1.40
+   Compiling quote v0.6.3
+   Compiling syn v0.14.4
+   Compiling num-traits v0.1.43
+   Compiling serde_derive v1.0.70
+   Compiling bincode v0.8.0
+   Compiling serde_json v1.0.22
+   Compiling chrono v0.4.2 (file:///workspace)
+warning: use of deprecated item 'naive::datetime::rustc_serialize::TsSeconds': RustcSerialize will be removed before chrono 1.0, use Serde instead
+  |
+  = note: #[warn(deprecated)] on by default
+
+warning: use of deprecated item 'naive::datetime::rustc_serialize::TsSeconds::0': RustcSerialize will be removed before chrono 1.0, use Serde instead
+    --> src/naive/datetime.rs:1590:26
+     |
+1590 |     pub struct TsSeconds(NaiveDateTime);
+     |                          ^^^^^^^^^^^^^^
+
+warning: use of deprecated item 'naive::datetime::rustc_serialize::TsSeconds': RustcSerialize will be removed before chrono 1.0, use Serde instead
+    --> src/naive/datetime.rs:1554:33
+     |
+1554 |     where F: Fn(&str) -> Result<rustc_serialize::TsSeconds, E>, E: ::std::fmt::Debug
+     |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: #[warn(deprecated)] on by default
+
+warning: use of deprecated item 'naive::datetime::rustc_serialize::TsSeconds': RustcSerialize will be removed before chrono 1.0, use Serde instead
+
+warning: use of deprecated item 'naive::datetime::rustc_serialize::TsSeconds::0': RustcSerialize will be removed before chrono 1.0, use Serde instead
+    --> src/naive/datetime.rs:1590:26
+     |
+1590 |     pub struct TsSeconds(NaiveDateTime);
+     |                          ^^^^^^^^^^^^^^
+
+    Finished dev [unoptimized + debuginfo] target(s) in 19.86s
+     Running target/debug/deps/chrono-0a854a7f305e9e75
+
+running 116 tests
+test datetime::rustc_serialize::test_encodable ... ok
+test datetime::serde::test_serde_bincode ... ok
+test datetime::rustc_serialize::test_decodable_timestamps ... ok
+test datetime::serde::test_serde_serialize ... ok
+test datetime::tests::test_datetime_date_and_time ... ok
+test datetime::rustc_serialize::test_decodable ... ok
+test datetime::serde::test_serde_deserialize ... ok
+test datetime::tests::test_datetime_is_copy ... ok
+test datetime::tests::test_datetime_format_with_local ... ok
+test datetime::tests::test_datetime_from_str ... ok
+test datetime::tests::test_datetime_parse_from_str ... ok
+test datetime::tests::test_datetime_with_timezone ... ok
+test datetime::tests::test_datetime_rfc2822_and_rfc3339 ... ok
+test datetime::tests::test_subsecond_part ... ok
+test div::tests::test_mod_floor ... ok
+test div::tests::test_div_mod_floor ... ok
+test datetime::tests::test_datetime_is_send ... ok
+test datetime::tests::test_datetime_offset ... ok
+test datetime::tests::test_from_system_time ... ok
+test datetime::tests::test_rfc3339_opts ... ok
+test format::parse::parse_rfc850 ... ok
+test datetime::tests::test_rfc3339_opts_nonexhaustive ... ok
+test format::parsed::tests::test_parsed_set_fields ... ok
+test format::parsed::tests::test_parsed_to_datetime ... ok
+test format::parse::test_rfc2822 ... ok
+test format::parsed::tests::test_parsed_to_naive_time ... ok
+test format::parsed::tests::test_parsed_to_datetime_with_timezone ... ok
+test format::parse::test_rfc3339 ... ok
+test format::parsed::tests::test_parsed_to_naive_datetime_with_offset ... ok
+test naive::date::rustc_serialize::test_encodable ... ok
+test naive::date::serde::test_serde_bincode ... ok
+test format::strftime::test_strftime_items ... ok
+test naive::date::test_date_bounds ... ok
+test naive::date::serde::test_serde_serialize ... ok
+test format::parsed::tests::test_parsed_to_naive_date ... ok
+test naive::date::tests::test_date_add ... ok
+test naive::date::rustc_serialize::test_decodable ... ok
+test naive::date::serde::test_serde_deserialize ... ok
+test naive::date::tests::test_date_fields ... ok
+test naive::date::tests::test_date_addassignment ... ok
+test naive::date::tests::test_date_fmt ... ok
+test format::parse::test_parse ... ok
+test format::strftime::test_strftime_docs ... ok
+test naive::date::tests::test_date_from_isoywd ... ok
+test naive::date::tests::test_date_format ... ok
+test naive::date::tests::test_date_from_ymd ... ok
+test naive::date::tests::test_date_from_yo ... ok
+test naive::date::tests::test_date_from_str ... ok
+test naive::date::tests::test_date_pred ... ok
+test naive::date::tests::test_date_sub ... ok
+test naive::date::tests::test_date_parse_from_str ... ok
+test naive::date::tests::test_date_subassignment ... ok
+test naive::date::tests::test_date_succ ... ok
+test naive::date::tests::test_date_weekday ... ok
+test naive::date::tests::test_date_with_fields ... ok
+test naive::datetime::rustc_serialize::test_decodable_timestamps ... ok
+test naive::datetime::rustc_serialize::test_encodable ... ok
+test naive::datetime::serde::test_serde_bincode ... ok
+test naive::datetime::serde::test_serde_serialize ... ok
+test naive::datetime::tests::test_datetime_add ... ok
+test naive::datetime::tests::test_datetime_add_sub_invariant ... ok
+test naive::datetime::tests::test_datetime_addassignment ... ok
+test naive::datetime::tests::test_datetime_from_timestamp ... ok
+test naive::datetime::serde::test_serde_deserialize ... ok
+test naive::datetime::tests::test_datetime_format ... ok
+test naive::datetime::tests::test_datetime_sub ... ok
+test naive::datetime::tests::test_datetime_from_str ... ok
+test naive::datetime::tests::test_datetime_subassignment ... ok
+test naive::datetime::tests::test_datetime_timestamp ... ok
+test naive::datetime::rustc_serialize::test_decodable ... ok
+test naive::datetime::tests::test_datetime_parse_from_str ... ok
+test naive::internals::tests::test_of_isoweekdate_raw ... ok
+test naive::internals::tests::test_mdf_fields ... ok
+test naive::internals::tests::test_year_flags_ndays_from_year ... ok
+test naive::internals::tests::test_year_flags_nisoweeks ... ok
+test naive::internals::tests::test_of_fields ... ok
+test naive::isoweek::tests::test_iso_week_extremes ... ok
+test naive::time::rustc_serialize::test_encodable ... ok
+test naive::internals::tests::test_of_weekday ... ok
+test naive::time::serde::test_serde_bincode ... ok
+test naive::time::serde::test_serde_serialize ... ok
+test naive::time::tests::test_time_add ... ok
+test naive::time::tests::test_time_addassignment ... ok
+test naive::time::rustc_serialize::test_decodable ... ok
+test naive::time::tests::test_time_fmt ... ok
+test naive::time::serde::test_serde_deserialize ... ok
+test naive::time::tests::test_time_from_hms_micro ... ok
+test naive::time::tests::test_date_from_str ... ok
+test naive::time::tests::test_time_from_hms_milli ... ok
+test naive::internals::tests::test_of ... ok
+test naive::time::tests::test_time_hms ... ok
+test naive::internals::tests::test_mdf_to_of ... ok
+test naive::time::tests::test_time_overflowing_add ... ok
+test naive::time::tests::test_time_format ... ok
+test naive::time::tests::test_time_parse_from_str ... ok
+test naive::time::tests::test_time_subassignment ... ok
+test naive::internals::tests::test_of_to_mdf_to_of ... ok
+test naive::internals::tests::test_mdf_to_of_to_mdf ... ok
+test naive::time::tests::test_time_sub ... ok
+test offset::fixed::tests::test_date_extreme_offset ... ok
+test offset::local::tests::test_leap_second ... ok
+test naive::internals::tests::test_of_to_mdf ... ok
+test round::tests::test_round_leap_nanos ... ok
+test offset::local::tests::test_local_date_sanity_check ... ok
+test round::tests::test_trunc ... ok
+test round::tests::test_trunc_leap_nanos ... ok
+test round::tests::test_round ... ok
+test weekday_serde::test_serde_deserialize ... ok
+test weekday_serde::test_serde_serialize ... ok
+test naive::internals::tests::test_of_with_fields ... ok
+test naive::date::tests::test_date_from_num_days_from_ce ... ok
+test naive::date::tests::test_date_num_days_from_ce ... ok
+test naive::internals::tests::test_mdf_with_fields ... ok
+test naive::internals::tests::test_mdf_valid ... ok
+test naive::date::tests::test_date_from_isoywd_and_iso_week ... ok
+test test_readme_doomsday ... ok
+
+test result: ok. 116 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests chrono
+
+running 218 tests
+test src/lib.rs -  (line 59) ... ok
+test src/lib.rs -  (line 52) ... ok
+test src/lib.rs -  (line 122) ... ok
+test src/datetime.rs - datetime::DateTime<Tz>::from_utc (line 69) ... ok
+test src/format/mod.rs - format::Weekday (line 590) ... ok
+test src/format/mod.rs - format::Weekday (line 574) ... ok
+test src/datetime.rs - datetime::DateTime<FixedOffset>::parse_from_str (line 279) ... ok
+test src/format/mod.rs - format::Weekday (line 583) ... ok
+test src/datetime.rs - datetime::DateTime<Tz>::timestamp_nanos (line 135) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::and_hms (line 486) ... ok
+test src/naive/date.rs - naive::date::NaiveDate (line 1355) ... ok
+test src/datetime.rs - datetime::DateTime<Tz>::timestamp_millis (line 111) ... ok
+test src/naive/date.rs - naive::date::NaiveDate (line 1466) ... ok
+test src/naive/date.rs - naive::date::NaiveDate (line 1476) ... ok
+test src/naive/date.rs - naive::date::NaiveDate (line 1441) ... ok
+test src/naive/date.rs - naive::date::NaiveDate (line 1431) ... ok
+test src/naive/date.rs - naive::date::NaiveDate (line 1490) ... ok
+test src/naive/date.rs - naive::date::NaiveDate (line 1399) ... ok
+test src/lib.rs -  (line 261) ... ok
+test src/lib.rs -  (line 134) ... ok
+test src/naive/date.rs - naive::date::NaiveDate (line 1313) ... ok
+test src/datetime.rs - datetime::serde::ts_seconds::serialize (line 921) ... ok
+test src/lib.rs -  (line 302) ... ok
+test src/lib.rs -  (line 323) ... ok
+test src/datetime.rs - datetime::serde::ts_nanoseconds::deserialize (line 1044) ... ok
+test src/datetime.rs - datetime::DateTime<Tz>::to_rfc3339_opts (line 315) ... ok
+test src/lib.rs -  (line 168) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::and_hms_nano_opt (line 660) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::and_hms_micro_opt (line 609) ... ok
+test src/datetime.rs - datetime::serde::ts_seconds::deserialize (line 887) ... ok
+test src/datetime.rs - datetime::serde::ts_nanoseconds::serialize (line 1078) ... ok
+test src/lib.rs -  (line 220) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::and_hms_milli_opt (line 558) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::and_hms_opt (line 510) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::and_hms_micro (line 584) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::and_hms_milli (line 533) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::and_hms_nano (line 635) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::day (line 1019) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::checked_sub_signed (line 826) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::and_time (line 462) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::day0 (line 1059) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_ymd_opt (line 172) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_isoywd_opt (line 271) ... ok
+test src/datetime.rs - datetime::serde::ts_seconds (line 844) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::day (line 1030) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_isoywd (line 246) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_isoywd_opt (line 288) ... ok
+test src/datetime.rs - datetime::serde::ts_nanoseconds (line 1001) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::checked_add_signed (line 790) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_num_days_from_ce (line 360) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_yo_opt (line 220) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::format (line 951) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::format (line 941) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_num_days_from_ce (line 340) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_ymd (line 148) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::month (line 985) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::month0 (line 1002) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_yo (line 196) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::format_with_items (line 912) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 447) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::format_with_items (line 900) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 438) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::ordinal (line 1076) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::from_num_days_from_ce_opt (line 388) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::ordinal0 (line 1115) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 416) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 429) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::ordinal (line 1087) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::succ (line 716) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::pred_opt (line 771) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::pred (line 753) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::succ_opt (line 734) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::signed_duration_since (line 864) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::weekday (line 1130) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::with_month (line 1186) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::with_ordinal (line 1262) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::with_day (line 1224) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::with_month0 (line 1205) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::with_day0 (line 1243) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::with_ordinal0 (line 1286) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::with_year (line 1163) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::with_year (line 1152) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 31) ... ok
+test src/naive/date.rs - naive::date::NaiveDate::year (line 968) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1180) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1278) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1206) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 42) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1433) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1343) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1252) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1417) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1323) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1386) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1377) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1408) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::date (line 217) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::day (line 734) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_add_signed (line 422) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_add_signed (line 394) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::day0 (line 753) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_add_signed (line 434) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_sub_signed (line 508) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_sub_signed (line 480) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::from_timestamp_opt (line 122) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_sub_signed (line 520) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::minute (line 1012) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::hour (line 995) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::format (line 658) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::month (line 696) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::month0 (line 715) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::nanosecond (line 1049) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::format (line 648) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::ordinal (line 772) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::new (line 63) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 200) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::from_timestamp (line 94) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::ordinal0 (line 791) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 165) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::format_with_items (line 607) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 176) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 152) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp (line 250) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::format_with_items (line 619) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::time (line 232) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::second (line 1029) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 186) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::signed_duration_since (line 562) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_subsec_millis (line 327) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_millis (line 278) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::signed_duration_since (line 583) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_subsec_micros (line 348) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_subsec_nanos (line 369) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_day0 (line 919) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_nanos (line 305) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_month (line 854) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_day (line 898) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_hour (line 1069) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::weekday (line 808) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_minute (line 1091) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_month0 (line 876) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_second (line 1115) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_ordinal (line 940) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_ordinal0 (line 968) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::year (line 677) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_year (line 833) ... ok
+test src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_nanosecond (line 1140) ... ok
+test src/naive/isoweek.rs - naive::isoweek::IsoWeek (line 123) ... ok
+test src/naive/isoweek.rs - naive::isoweek::IsoWeek::week (line 78) ... ok
+test src/naive/isoweek.rs - naive::isoweek::IsoWeek::week0 (line 95) ... ok
+test src/naive/isoweek.rs - naive::isoweek::IsoWeek (line 113) ... ok
+test src/naive/isoweek.rs - naive::isoweek::IsoWeek::year (line 51) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1022) ... ok
+test src/naive/isoweek.rs - naive::isoweek::IsoWeek::year (line 61) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1035) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1095) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1002) ... ok
+test src/naive/datetime.rs - naive::datetime::serde::ts_seconds::deserialize (line 1742) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1077) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1107) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1151) ... ok
+test src/naive/datetime.rs - naive::datetime::serde::ts_seconds::serialize (line 1778) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1173) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1283) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_hms_milli_opt (line 261) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 147) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1220) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1209) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1259) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_hms_micro_opt (line 312) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 1270) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_hms (line 190) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 60) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_hms_micro (line 289) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_hms_nano_opt (line 363) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_hms_opt (line 213) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::format (line 748) ... ok
+test src/naive/time.rs - naive::time::NaiveTime (line 161) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_hms_milli (line 238) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_hms_nano (line 340) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::format_with_items (line 719) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::format (line 759) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_num_seconds_from_midnight_opt (line 415) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::from_num_seconds_from_midnight (line 392) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::format_with_items (line 707) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::nanosecond (line 842) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::hour (line 784) ... ok
+test src/naive/datetime.rs - naive::datetime::serde::ts_seconds (line 1699) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::overflowing_add_signed (line 506) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 462) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::minute (line 799) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::num_seconds_from_midnight (line 964) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::overflowing_sub_signed (line 592) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 451) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 488) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 438) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::with_hour (line 870) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::second (line 814) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 472) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::with_minute (line 890) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::with_nanosecond (line 948) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::signed_duration_since (line 655) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::signed_duration_since (line 625) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::with_second (line 912) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::with_nanosecond (line 934) ... ok
+test src/offset/local.rs - offset::local::Local (line 74) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::nanosecond (line 853) ... ok
+test src/naive/time.rs - naive::time::NaiveTime::second (line 825) ... ok
+test src/offset/mod.rs - offset::TimeZone::timestamp (line 291) ... ok
+test src/offset/mod.rs - offset::TimeZone::isoywd (line 257) ... ok
+test src/offset/mod.rs - offset::TimeZone::ymd (line 180) ... ok
+test src/round.rs - round::SubsecRound::round_subsecs (line 20) ... ok
+test src/offset/fixed.rs - offset::fixed::FixedOffset::east (line 35) ... ok
+test src/offset/utc.rs - offset::utc::Utc (line 24) ... ok
+test src/offset/mod.rs - offset::TimeZone::yo (line 222) ... ok
+test src/offset/fixed.rs - offset::fixed::FixedOffset::west (line 65) ... ok
+test src/offset/mod.rs - offset::TimeZone::ymd_opt (line 199) ... ok
+test src/round.rs - round::SubsecRound::trunc_subsecs (line 32) ... ok
+
+test result: ok. 218 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ git reset --hard 9276929c58d9e8434a57676967e34c1b58e31fca
+HEAD is now at 9276929 Merge pull request #247 from HarkonenBade/nanosecond-ts
++ git clean -fd
+Removing .cargo/

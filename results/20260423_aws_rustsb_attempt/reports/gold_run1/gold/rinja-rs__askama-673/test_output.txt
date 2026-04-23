@@ -1,0 +1,318 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch askama_shared/src/lib.rs...
+Checking patch askama_shared/src/parser.rs...
+Checking patch askama_shared/src/parser.rs...
+Checking patch askama_shared/src/parser.rs...
+Checking patch testing/test_minimize.toml...
+Checking patch testing/tests/whitespace.rs...
+Applied patch askama_shared/src/lib.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch testing/test_minimize.toml cleanly.
+Applied patch testing/tests/whitespace.rs cleanly.
++ cd askama_shared
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded indexmap v1.8.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded xdg v2.4.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded mime v0.3.16 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded hashbrown v0.11.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded unicode-xid v0.2.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded dirs-sys v0.3.7 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded pest_generator v2.1.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded digest v0.8.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded generic-array v0.12.4 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded dirs v4.0.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded entities v1.0.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded mime_guess v2.0.4 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded opaque-debug v0.2.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded quote v1.0.18 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded unicase v2.6.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded serde_yaml v0.8.23 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded serde v1.0.136 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded unicode_categories v0.1.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded toml v0.5.9 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded syn v1.0.91 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded regex-syntax v0.6.25 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded pest_derive v2.1.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded percent-encoding v2.1.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded maplit v1.0.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded itoa v1.0.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded humansize v1.1.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded libc v0.2.124 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded pest_meta v2.1.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded sha-1 v0.8.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded shell-words v1.1.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded serde_derive v1.0.136 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded minimal-lexical v0.2.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded ucd-trie v0.1.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded proc-macro2 v1.0.37 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded typed-arena v1.7.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded pest v2.1.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded memchr v2.4.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded ryu v1.0.9 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded block-padding v0.1.5 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded byte-tools v0.3.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded unchecked-index v0.2.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded twoway v0.2.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded fake-simd v0.1.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded block-buffer v0.7.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded typenum v1.15.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded byteorder v1.4.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded linked-hash-map v0.5.4 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded yaml-rust v0.4.5 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded num-traits v0.2.14 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded comrak v0.12.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded regex v1.5.5 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded serde_json v1.0.79 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded nom v7.1.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded aho-corasick v0.7.18 (registry `lts-repo-at-9f0d4a947b`)
+   Compiling proc-macro2 v1.0.37
+   Compiling unicode-xid v0.2.2
+   Compiling syn v1.0.91
+   Compiling memchr v2.4.1
+   Compiling autocfg v1.1.0
+   Compiling libc v0.2.124
+   Compiling version_check v0.9.4
+   Compiling serde_derive v1.0.136
+   Compiling ucd-trie v0.1.3
+   Compiling serde v1.0.136
+   Compiling maplit v1.0.2
+   Compiling hashbrown v0.11.2
+   Compiling unchecked-index v0.2.2
+   Compiling serde_json v1.0.79
+   Compiling ryu v1.0.9
+   Compiling regex-syntax v0.6.25
+   Compiling linked-hash-map v0.5.4
+   Compiling unicode_categories v0.1.1
+   Compiling entities v1.0.1
+   Compiling lazy_static v1.4.0
+   Compiling itoa v1.0.1
+   Compiling shell-words v1.1.0
+   Compiling minimal-lexical v0.2.1
+   Compiling typed-arena v1.7.0
+   Compiling mime v0.3.16
+   Compiling askama_escape v0.10.3 (/workspace/askama_escape)
+   Compiling percent-encoding v2.1.0
+   Compiling humansize v1.1.1
+   Compiling yaml-rust v0.4.5
+   Compiling pest v2.1.3
+   Compiling indexmap v1.8.1
+   Compiling num-traits v0.2.14
+   Compiling unicase v2.6.0
+   Compiling pest_meta v2.1.3
+   Compiling mime_guess v2.0.4
+   Compiling quote v1.0.18
+   Compiling aho-corasick v0.7.18
+   Compiling twoway v0.2.2
+   Compiling nom v7.1.1
+   Compiling dirs-sys v0.3.7
+   Compiling dirs v4.0.0
+   Compiling xdg v2.4.1
+   Compiling regex v1.5.5
+   Compiling pest_generator v2.1.3
+   Compiling pest_derive v2.1.0
+   Compiling comrak v0.12.1
+   Compiling toml v0.5.9
+   Compiling serde_yaml v0.8.23
+   Compiling askama_shared v0.13.0 (/workspace/askama_shared)
+    Finished test [unoptimized + debuginfo] target(s) in 23.21s
+     Running unittests (/workspace/target/debug/deps/askama_shared-2fda4902344c4625)
+
+running 54 tests
+test filters::tests::test_abs ... ok
+test filters::json::tests::test_json ... ok
+test filters::tests::test_capitalize ... ok
+test filters::tests::test_center ... ok
+test filters::tests::test_filesizeformat ... ok
+test filters::tests::test_indent ... ok
+test filters::tests::test_into_f64 ... ok
+test filters::tests::test_into_isize ... ok
+test filters::tests::test_join ... ok
+test filters::tests::test_linebreaks ... ok
+test filters::tests::test_linebreaksbr ... ok
+test filters::tests::test_lower ... ok
+test filters::tests::test_paragraphbreaks ... ok
+test filters::tests::test_trim ... ok
+test filters::tests::test_truncate ... ok
+test filters::tests::test_upper ... ok
+test filters::tests::test_wordcount ... ok
+test filters::tests::test_urlencoding ... ok
+test input::tests::test_double_ext ... ok
+test filters::yaml::tests::test_yaml ... FAILED
+test input::tests::test_ext ... ok
+test input::tests::test_only_jinja_ext ... ok
+test input::tests::test_skip_jinja_ext ... ok
+test parser::tests::change_delimiters_parse_filter ... ok
+test parser::tests::test_invalid_block - should panic ... ok
+test parser::tests::test_parse_const ... ok
+test parser::tests::test_parse_comments ... ok
+test parser::tests::test_parse_numbers ... ok
+test parser::tests::test_parse_filter ... ok
+test parser::tests::test_associativity ... ok
+test parser::tests::test_ws_splitter ... ok
+test parser::tests::test_parse_path ... ok
+test parser::tests::test_odd_calls ... ok
+test parser::tests::test_parse_root_path ... ok
+test parser::tests::test_parse_path_call ... ok
+test tests::dyn_template ... ok
+test parser::tests::test_parse_var ... ok
+test tests::duplicated_syntax_name_on_list - should panic ... ok
+test parser::tests::test_parse_var_call ... ok
+test tests::add_syntax_two ... ok
+test tests::add_syntax ... ok
+test tests::escape_modes ... ok
+test tests::use_default_at_syntax_name - should panic ... ok
+test tests::find_relative_nonexistent - should panic ... ok
+test parser::tests::test_precedence ... ok
+test tests::find_relative_sub ... ok
+test tests::get_source ... ok
+test tests::test_config_dirs ... ok
+test tests::find_absolute ... ok
+test tests::find_relative ... ok
+test tests::test_whitespace_parsing ... ok
+test tests::test_default_config ... ok
+test tests::is_not_exist_default_syntax - should panic ... ok
+test parser::tests::test_parse_tuple ... ok
+
+failures:
+
+---- filters::yaml::tests::test_yaml stdout ----
+thread 'filters::yaml::tests::test_yaml' panicked at 'assertion failed: `(left == right)`
+  left: `"---\ntrue\n"`,
+ right: `"---\ntrue"`', askama_shared/src/filters/yaml.rs:25:9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    filters::yaml::tests::test_yaml
+
+test result: FAILED. 53 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests askama_shared
+
+running 2 tests
+test src/filters/mod.rs - filters::fmt (line 171) ... ignored
+test src/filters/mod.rs - filters::format (line 185) ... ignored
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass '--lib'
++ cd ../
++ cd testing
++ cargo test --no-fail-fast --all-features --test whitespace
+ Downloading crates ...
+  Downloaded crossbeam-deque v0.8.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded oorandom v11.1.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded crossbeam-utils v0.8.8 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded memoffset v0.6.5 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded plotters-svg v0.3.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded plotters-backend v0.3.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded tinytemplate v1.2.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded once_cell v1.10.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded csv-core v0.1.10 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded regex-automata v0.1.10 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded rayon-core v1.9.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded itertools v0.10.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded criterion v0.3.5 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded crossbeam-channel v0.5.4 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded csv v1.1.6 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded semver v1.0.7 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded cast v0.2.7 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded rustc_version v0.4.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded atty v0.2.14 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded num_cpus v1.13.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded scopeguard v1.1.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded textwrap v0.11.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded termcolor v1.1.3 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded trybuild v1.0.60 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded half v1.8.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded glob v0.3.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded crossbeam-epoch v0.9.8 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded walkdir v2.3.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded serde_cbor v0.11.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded rayon v1.5.2 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded clap v2.34.0 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded bstr v0.2.17 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded itoa v0.4.8 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded unicode-width v0.1.9 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded criterion-plot v0.4.4 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded either v1.6.1 (registry `lts-repo-at-9f0d4a947b`)
+  Downloaded plotters v0.3.1 (registry `lts-repo-at-9f0d4a947b`)
+   Compiling syn v1.0.91
+   Compiling semver v1.0.7
+   Compiling crossbeam-utils v0.8.8
+   Compiling cfg-if v1.0.0
+   Compiling rayon-core v1.9.2
+   Compiling scopeguard v1.1.0
+   Compiling either v1.6.1
+   Compiling regex-automata v0.1.10
+   Compiling unicode-width v0.1.9
+   Compiling plotters-backend v0.3.2
+   Compiling bitflags v1.3.2
+   Compiling trybuild v1.0.60
+   Compiling itoa v0.4.8
+   Compiling same-file v1.0.6
+   Compiling half v1.8.2
+   Compiling once_cell v1.10.0
+   Compiling glob v0.3.0
+   Compiling oorandom v11.1.3
+   Compiling termcolor v1.1.3
+   Compiling memoffset v0.6.5
+   Compiling crossbeam-epoch v0.9.8
+   Compiling rayon v1.5.2
+   Compiling num_cpus v1.13.1
+   Compiling csv-core v0.1.10
+   Compiling atty v0.2.14
+   Compiling textwrap v0.11.0
+   Compiling walkdir v2.3.2
+   Compiling itertools v0.10.3
+   Compiling clap v2.34.0
+   Compiling plotters-svg v0.3.1
+   Compiling plotters v0.3.1
+   Compiling rustc_version v0.4.0
+   Compiling crossbeam-channel v0.5.4
+   Compiling cast v0.2.7
+   Compiling crossbeam-deque v0.8.1
+   Compiling criterion-plot v0.4.4
+   Compiling pest_generator v2.1.3
+   Compiling serde_derive v1.0.136
+   Compiling pest_derive v2.1.0
+   Compiling comrak v0.12.1
+   Compiling serde v1.0.136
+   Compiling serde_json v1.0.79
+   Compiling toml v0.5.9
+   Compiling bstr v0.2.17
+   Compiling serde_cbor v0.11.2
+   Compiling csv v1.1.6
+   Compiling tinytemplate v1.2.1
+   Compiling askama_shared v0.13.0 (/workspace/askama_shared)
+   Compiling criterion v0.3.5
+   Compiling askama_derive v0.12.0 (/workspace/askama_derive)
+   Compiling askama v0.11.2 (/workspace/askama)
+   Compiling askama_testing v0.1.0 (/workspace/testing)
+    Finished test [unoptimized + debuginfo] target(s) in 14.97s
+     Running tests/whitespace.rs (/workspace/target/debug/deps/whitespace-fcc0f5808ac3f457)
+
+running 2 tests
+test test_minimize_whitespace ... ok
+test test_extra_whitespace ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../
++ git reset --hard 358f7cd07dc42ba4189d2661461ff0b43a27c304
+HEAD is now at 358f7cd Update `whitespace` documentation
++ git clean -fd
+Removing .cargo/
+Removing testing/test_minimize.toml

@@ -1,0 +1,264 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+<stdin>:664: trailing whitespace.
+fn add_t<caret>wo(x: u32) -> u32 { 
+<stdin>:666: trailing whitespace.
+  x + 2 
+<stdin>:715: trailing whitespace.
+fn add_t<caret>wo(x: u32) -> u32 { 
+<stdin>:718: trailing whitespace.
+fn <sel>add_two</sel>(x: u32) -> u32 { 
+Checking patch Cargo.lock...
+Checking patch crates/cairo-lang-doc/Cargo.toml...
+Checking patch crates/cairo-lang-doc/src/db.rs...
+Checking patch crates/cairo-lang-doc/src/lib.rs...
+Checking patch crates/cairo-lang-doc/src/tests/mod.rs...
+Checking patch crates/cairo-lang-doc/src/tests/test-data/basic.txt...
+Checking patch crates/cairo-lang-doc/src/tests/test-data/submodule.txt...
+Checking patch crates/cairo-lang-doc/src/tests/test.rs...
+Checking patch crates/cairo-lang-doc/src/tests/test_utils.rs...
+Checking patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt...
+Checking patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt...
+Checking patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt...
+Checking patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt...
+Checking patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt...
+Checking patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt...
+Applied patch Cargo.lock cleanly.
+Applied patch crates/cairo-lang-doc/Cargo.toml cleanly.
+Applied patch crates/cairo-lang-doc/src/db.rs cleanly.
+Applied patch crates/cairo-lang-doc/src/lib.rs cleanly.
+Applied patch crates/cairo-lang-doc/src/tests/mod.rs cleanly.
+Applied patch crates/cairo-lang-doc/src/tests/test-data/basic.txt cleanly.
+Applied patch crates/cairo-lang-doc/src/tests/test-data/submodule.txt cleanly.
+Applied patch crates/cairo-lang-doc/src/tests/test.rs cleanly.
+Applied patch crates/cairo-lang-doc/src/tests/test_utils.rs cleanly.
+Applied patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt cleanly.
+Applied patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt cleanly.
+Applied patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt cleanly.
+Applied patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt cleanly.
+Applied patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt cleanly.
+Applied patch crates/cairo-lang-language-server/tests/test_data/hover/basic.txt cleanly.
+warning: 4 lines add whitespace errors.
++ cd crates/cairo-lang-doc
++ cargo test --no-fail-fast --all-features
+warning: `/workspace/.cargo/config` is deprecated in favor of `config.toml`
+note: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+note: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+ Downloading crates ...
+  Downloaded anstyle-query v1.1.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded anstyle-parse v0.2.5 (registry `lts-repo-at-a141a27e75`)
+  Downloaded anstyle v1.0.8 (registry `lts-repo-at-a141a27e75`)
+  Downloaded anyhow v1.0.87 (registry `lts-repo-at-a141a27e75`)
+  Downloaded test-log-macros v0.2.16 (registry `lts-repo-at-a141a27e75`)
+  Downloaded ahash v0.8.11 (registry `lts-repo-at-a141a27e75`)
+  Downloaded anstream v0.6.15 (registry `lts-repo-at-a141a27e75`)
+  Downloaded indent v0.1.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded quote v1.0.37 (registry `lts-repo-at-a141a27e75`)
+  Downloaded path-clean v1.0.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded pin-project-lite v0.2.14 (registry `lts-repo-at-a141a27e75`)
+  Downloaded thiserror-impl v1.0.63 (registry `lts-repo-at-a141a27e75`)
+  Downloaded version_check v0.9.5 (registry `lts-repo-at-a141a27e75`)
+  Downloaded utf8parse v0.2.2 (registry `lts-repo-at-a141a27e75`)
+  Downloaded test-log v0.2.16 (registry `lts-repo-at-a141a27e75`)
+  Downloaded matchers v0.1.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded smol_str v0.2.2 (registry `lts-repo-at-a141a27e75`)
+  Downloaded xshell-macros v0.2.6 (registry `lts-repo-at-a141a27e75`)
+  Downloaded lazy_static v1.5.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded thread_local v1.1.8 (registry `lts-repo-at-a141a27e75`)
+  Downloaded walkdir v2.5.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded rust-analyzer-salsa-macros v0.17.0-pre.6 (registry `lts-repo-at-a141a27e75`)
+  Downloaded relative-path v1.9.3 (registry `lts-repo-at-a141a27e75`)
+  Downloaded overload v0.1.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded yansi v0.5.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded xshell v0.2.6 (registry `lts-repo-at-a141a27e75`)
+  Downloaded tracing-core v0.1.32 (registry `lts-repo-at-a141a27e75`)
+  Downloaded serde_derive v1.0.210 (registry `lts-repo-at-a141a27e75`)
+  Downloaded tracing v0.1.40 (registry `lts-repo-at-a141a27e75`)
+  Downloaded regex-automata v0.1.10 (registry `lts-repo-at-a141a27e75`)
+  Downloaded zerocopy v0.7.35 (registry `lts-repo-at-a141a27e75`)
+  Downloaded aho-corasick v1.1.3 (registry `lts-repo-at-a141a27e75`)
+  Downloaded hashbrown v0.14.5 (registry `lts-repo-at-a141a27e75`)
+  Downloaded tracing-subscriber v0.3.18 (registry `lts-repo-at-a141a27e75`)
+  Downloaded num-bigint v0.4.6 (registry `lts-repo-at-a141a27e75`)
+  Downloaded regex v1.10.6 (registry `lts-repo-at-a141a27e75`)
+  Downloaded itertools v0.12.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded indexmap v2.5.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded regex-syntax v0.6.29 (registry `lts-repo-at-a141a27e75`)
+  Downloaded syn v2.0.77 (registry `lts-repo-at-a141a27e75`)
+  Downloaded memchr v2.7.4 (registry `lts-repo-at-a141a27e75`)
+  Downloaded serde v1.0.210 (registry `lts-repo-at-a141a27e75`)
+  Downloaded regex-syntax v0.8.4 (registry `lts-repo-at-a141a27e75`)
+  Downloaded pretty_assertions v1.4.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded num-traits v0.2.19 (registry `lts-repo-at-a141a27e75`)
+  Downloaded bstr v1.10.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded ignore v0.4.23 (registry `lts-repo-at-a141a27e75`)
+  Downloaded sharded-slab v0.1.7 (registry `lts-repo-at-a141a27e75`)
+  Downloaded parking_lot v0.12.3 (registry `lts-repo-at-a141a27e75`)
+  Downloaded env_logger v0.11.5 (registry `lts-repo-at-a141a27e75`)
+  Downloaded rust-analyzer-salsa v0.17.0-pre.6 (registry `lts-repo-at-a141a27e75`)
+  Downloaded diffy v0.3.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded crossbeam-utils v0.8.20 (registry `lts-repo-at-a141a27e75`)
+  Downloaded crossbeam-epoch v0.9.18 (registry `lts-repo-at-a141a27e75`)
+  Downloaded unicode-ident v1.0.12 (registry `lts-repo-at-a141a27e75`)
+  Downloaded triomphe v0.1.13 (registry `lts-repo-at-a141a27e75`)
+  Downloaded smallvec v1.13.2 (registry `lts-repo-at-a141a27e75`)
+  Downloaded regex-automata v0.4.7 (registry `lts-repo-at-a141a27e75`)
+  Downloaded proc-macro2 v1.0.86 (registry `lts-repo-at-a141a27e75`)
+  Downloaded libc v0.2.158 (registry `lts-repo-at-a141a27e75`)
+  Downloaded genco v0.17.9 (registry `lts-repo-at-a141a27e75`)
+  Downloaded diff v0.1.13 (registry `lts-repo-at-a141a27e75`)
+  Downloaded crossbeam-deque v0.8.5 (registry `lts-repo-at-a141a27e75`)
+  Downloaded unescaper v0.1.5 (registry `lts-repo-at-a141a27e75`)
+  Downloaded tracing-log v0.2.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded tracing-attributes v0.1.27 (registry `lts-repo-at-a141a27e75`)
+  Downloaded thiserror v1.0.63 (registry `lts-repo-at-a141a27e75`)
+  Downloaded semver v1.0.23 (registry `lts-repo-at-a141a27e75`)
+  Downloaded once_cell v1.19.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded nu-ansi-term v0.46.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded log v0.4.22 (registry `lts-repo-at-a141a27e75`)
+  Downloaded id-arena v2.2.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded either v1.13.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded colorchoice v1.0.2 (registry `lts-repo-at-a141a27e75`)
+  Downloaded autocfg v1.3.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded stable_deref_trait v1.2.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded parking_lot_core v0.9.10 (registry `lts-repo-at-a141a27e75`)
+  Downloaded num-integer v0.1.46 (registry `lts-repo-at-a141a27e75`)
+  Downloaded is_terminal_polyfill v1.70.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded indoc v2.0.5 (registry `lts-repo-at-a141a27e75`)
+  Downloaded heck v0.4.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded equivalent v1.0.1 (registry `lts-repo-at-a141a27e75`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-a141a27e75`)
+  Downloaded rustc-hash v1.1.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded oorandom v11.1.4 (registry `lts-repo-at-a141a27e75`)
+  Downloaded genco-macros v0.17.9 (registry `lts-repo-at-a141a27e75`)
+  Downloaded lock_api v0.4.12 (registry `lts-repo-at-a141a27e75`)
+  Downloaded globset v0.4.15 (registry `lts-repo-at-a141a27e75`)
+  Downloaded colored v2.1.0 (registry `lts-repo-at-a141a27e75`)
+  Downloaded allocator-api2 v0.2.18 (registry `lts-repo-at-a141a27e75`)
+  Downloaded env_filter v0.1.2 (registry `lts-repo-at-a141a27e75`)
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.3.0
+   Compiling cfg-if v1.0.0
+   Compiling version_check v0.9.5
+   Compiling zerocopy v0.7.35
+   Compiling serde v1.0.210
+   Compiling allocator-api2 v0.2.18
+   Compiling once_cell v1.19.0
+   Compiling equivalent v1.0.1
+   Compiling libc v0.2.158
+   Compiling smallvec v1.13.2
+   Compiling parking_lot_core v0.9.10
+   Compiling either v1.13.0
+   Compiling scopeguard v1.2.0
+   Compiling heck v0.4.1
+   Compiling stable_deref_trait v1.2.0
+   Compiling semver v1.0.23
+   Compiling pin-project-lite v0.2.14
+   Compiling thiserror v1.0.63
+   Compiling oorandom v11.1.4
+   Compiling genco-macros v0.17.9
+   Compiling rustc-hash v1.1.0
+   Compiling path-clean v1.0.1
+   Compiling xshell-macros v0.2.6
+   Compiling relative-path v1.9.3
+   Compiling crossbeam-utils v0.8.20
+   Compiling memchr v2.7.4
+   Compiling lazy_static v1.5.0
+   Compiling log v0.4.22
+   Compiling regex-syntax v0.8.4
+   Compiling anyhow v1.0.87
+   Compiling colored v2.1.0
+   Compiling overload v0.1.1
+   Compiling same-file v1.0.6
+   Compiling utf8parse v0.2.2
+   Compiling anstyle-query v1.1.1
+   Compiling nu-ansi-term v0.46.0
+   Compiling itertools v0.12.1
+   Compiling tracing-core v0.1.32
+   Compiling walkdir v2.5.0
+   Compiling anstyle-parse v0.2.5
+   Compiling anstyle v1.0.8
+   Compiling colorchoice v1.0.2
+   Compiling is_terminal_polyfill v1.70.1
+   Compiling env_filter v0.1.2
+   Compiling indent v0.1.1
+   Compiling diff v0.1.13
+   Compiling diffy v0.3.0
+   Compiling yansi v0.5.1
+   Compiling indoc v2.0.5
+   Compiling id-arena v2.2.1
+   Compiling ahash v0.8.11
+   Compiling anstream v0.6.15
+   Compiling num-traits v0.2.19
+   Compiling lock_api v0.4.12
+   Compiling pretty_assertions v1.4.0
+   Compiling aho-corasick v1.1.3
+   Compiling bstr v1.10.0
+   Compiling env_logger v0.11.5
+   Compiling xshell v0.2.6
+   Compiling crossbeam-epoch v0.9.18
+   Compiling regex-automata v0.4.7
+   Compiling quote v1.0.37
+   Compiling crossbeam-deque v0.8.5
+   Compiling parking_lot v0.12.3
+   Compiling syn v2.0.77
+   Compiling num-integer v0.1.46
+   Compiling num-bigint v0.4.6
+   Compiling hashbrown v0.14.5
+   Compiling globset v0.4.15
+   Compiling indexmap v2.5.0
+   Compiling ignore v0.4.23
+   Compiling cairo-lang-utils v2.8.2 (/workspace/crates/cairo-lang-utils)
+   Compiling cairo-lang-debug v2.8.2 (/workspace/crates/cairo-lang-debug)
+   Compiling serde_derive v1.0.210
+   Compiling tracing-attributes v0.1.27
+   Compiling rust-analyzer-salsa-macros v0.17.0-pre.6
+   Compiling thiserror-impl v1.0.63
+   Compiling test-log-macros v0.2.16
+   Compiling cairo-lang-proc-macros v2.8.2 (/workspace/crates/cairo-lang-proc-macros)
+   Compiling test-log v0.2.16
+   Compiling genco v0.17.9
+   Compiling unescaper v0.1.5
+   Compiling tracing v0.1.40
+   Compiling cairo-lang-syntax-codegen v2.8.2 (/workspace/crates/cairo-lang-syntax-codegen)
+   Compiling triomphe v0.1.13
+   Compiling smol_str v0.2.2
+   Compiling rust-analyzer-salsa v0.17.0-pre.6
+   Compiling cairo-lang-filesystem v2.8.2 (/workspace/crates/cairo-lang-filesystem)
+   Compiling cairo-lang-syntax v2.8.2 (/workspace/crates/cairo-lang-syntax)
+   Compiling cairo-lang-diagnostics v2.8.2 (/workspace/crates/cairo-lang-diagnostics)
+   Compiling cairo-lang-parser v2.8.2 (/workspace/crates/cairo-lang-parser)
+   Compiling cairo-lang-defs v2.8.2 (/workspace/crates/cairo-lang-defs)
+   Compiling cairo-lang-formatter v2.8.2 (/workspace/crates/cairo-lang-formatter)
+   Compiling cairo-lang-test-utils v2.8.2 (/workspace/crates/cairo-lang-test-utils)
+   Compiling cairo-lang-plugins v2.8.2 (/workspace/crates/cairo-lang-plugins)
+   Compiling cairo-lang-doc v2.8.2 (/workspace/crates/cairo-lang-doc)
+   Compiling cairo-lang-semantic v2.8.2 (/workspace/crates/cairo-lang-semantic)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 49.05s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/cairo_lang_doc-da422a84246858c3)
+
+running 3 tests
+test markdown::test::fenced_code_blocks ... ok
+test tests::test::item_documentation::submodule ... ok
+test tests::test::item_documentation::basic ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.91s
+
+   Doc-tests cairo_lang_doc
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../../
++ git reset --hard d22835b5494e976dbff7b967f3027cc04a7a04a6
+HEAD is now at d22835b54 Passing around `ConstValueId` instead of `ConstValue`. (#6368)
++ git clean -fd
+Removing .cargo/
+Removing crates/cairo-lang-doc/src/tests/

@@ -1,0 +1,184 @@
+diff --git a/cargo-dist/src/backend/ci/github.rs b/cargo-dist/src/backend/ci/github.rs
+--- a/cargo-dist/src/backend/ci/github.rs
++++ b/cargo-dist/src/backend/ci/github.rs
+@@ -38,6 +38,8 @@ pub struct GithubCiInfo {
+     pub tap: Option<String>,
+     /// publish jobs
+     pub publish_jobs: Vec<String>,
++    /// user-specified publish jobs
++    pub user_publish_jobs: Vec<String>,
+     /// whether to create the release or assume an existing one
+     pub create_release: bool,
+     /// \[unstable\] whether to add ssl.com windows binary signing
+diff --git a/cargo-dist/src/backend/ci/github.rs b/cargo-dist/src/backend/ci/github.rs
+--- a/cargo-dist/src/backend/ci/github.rs
++++ b/cargo-dist/src/backend/ci/github.rs
+@@ -94,6 +96,7 @@ impl GithubCiInfo {
+ 
+         let tap = dist.tap.clone();
+         let publish_jobs = dist.publish_jobs.iter().map(|j| j.to_string()).collect();
++        let user_publish_jobs = dist.user_publish_jobs.clone();
+ 
+         // Figure out what Local Artifact tasks we need
+         let local_runs = if dist.merge_tasks {
+diff --git a/cargo-dist/src/backend/ci/github.rs b/cargo-dist/src/backend/ci/github.rs
+--- a/cargo-dist/src/backend/ci/github.rs
++++ b/cargo-dist/src/backend/ci/github.rs
+@@ -123,6 +126,7 @@ impl GithubCiInfo {
+             fail_fast,
+             tap,
+             publish_jobs,
++            user_publish_jobs,
+             artifacts_matrix: GithubMatrix { include: tasks },
+             pr_run_mode,
+             global_task,
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -523,19 +523,48 @@ impl std::fmt::Display for InstallerStyle {
+ }
+ 
+ /// The publish jobs we should run
+-#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
++#[derive(Clone, Debug, Serialize, PartialEq, Eq)]
+ pub enum PublishStyle {
+     /// Publish a Homebrew formula to a tap repository
+     #[serde(rename = "homebrew")]
+     Homebrew,
++    /// User-supplied value
++    User(String),
++}
++
++impl std::str::FromStr for PublishStyle {
++    type Err = DistError;
++    fn from_str(s: &str) -> DistResult<Self> {
++        if let Some(slug) = s.strip_prefix("./") {
++            Ok(Self::User(slug.to_owned()))
++        } else if s == "homebrew" {
++            Ok(Self::Homebrew)
++        } else {
++            Err(DistError::UnrecognizedStyle {
++                style: s.to_owned(),
++            })
++        }
++    }
++}
++
++impl<'de> serde::Deserialize<'de> for PublishStyle {
++    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
++    where
++        D: serde::Deserializer<'de>,
++    {
++        use serde::de::Error;
++
++        let path = String::deserialize(deserializer)?;
++        path.parse().map_err(|e| D::Error::custom(format!("{e}")))
++    }
+ }
+ 
+ impl std::fmt::Display for PublishStyle {
+     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+-        let string = match self {
+-            PublishStyle::Homebrew => "homebrew",
+-        };
+-        string.fmt(f)
++        match self {
++            PublishStyle::Homebrew => write!(f, "homebrew"),
++            PublishStyle::User(s) => write!(f, "./{s}"),
++        }
+     }
+ }
+ 
+diff --git a/cargo-dist/src/errors.rs b/cargo-dist/src/errors.rs
+--- a/cargo-dist/src/errors.rs
++++ b/cargo-dist/src/errors.rs
+@@ -229,6 +229,13 @@ pub enum DistError {
+         /// The missing keys
+         keys: &'static [&'static str],
+     },
++    /// unrecognized style
++    #[error("{style} is not a recognized value")]
++    #[diagnostic(help("Jobs that do not come with cargo-dist should be prefixed with ./"))]
++    UnrecognizedStyle {
++        /// Name of the msi
++        style: String,
++    },
+ }
+ 
+ impl From<minijinja::Error> for DistError {
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -201,6 +201,8 @@ pub struct DistGraph {
+     pub ci: CiInfo,
+     /// List of publish jobs to run
+     pub publish_jobs: Vec<PublishStyle>,
++    /// Extra user-specified publish jobs to run
++    pub user_publish_jobs: Vec<String>,
+     /// Whether to publish prerelease builds to package managers
+     pub publish_prereleases: bool,
+     /// A GitHub repo to publish the Homebrew formula to
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -705,7 +707,27 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         };
+ 
+         let templates = Templates::new()?;
+-        let publish_jobs = workspace_metadata.publish_jobs.clone().unwrap_or(vec![]);
++        let publish_jobs: Vec<PublishStyle>;
++        let user_publish_jobs: Vec<PublishStyle>;
++        (publish_jobs, user_publish_jobs) = workspace_metadata
++            .publish_jobs
++            .clone()
++            .unwrap_or(vec![])
++            .into_iter()
++            .partition(|s| !matches!(s, PublishStyle::User(_)));
++        let user_publish_jobs = user_publish_jobs
++            .into_iter()
++            // Remove the ./ suffix for later; we only have user jobs at this
++            // point so we no longer need to distinguish
++            .map(|s| {
++                let string = s.to_string();
++                if let Some(stripped) = string.strip_prefix("./") {
++                    stripped.to_owned()
++                } else {
++                    string
++                }
++            })
++            .collect();
+         let publish_prereleases = publish_prereleases.unwrap_or(false);
+ 
+         let allow_dirty = if allow_all_dirty {
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -745,6 +767,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+                 pr_run_mode: workspace_metadata.pr_run_mode.unwrap_or_default(),
+                 tap: workspace_metadata.tap.clone(),
+                 publish_jobs,
++                user_publish_jobs,
+                 publish_prereleases,
+                 allow_dirty,
+             },
+diff --git a/cargo-dist/templates/ci/github_ci.yml.j2 b/cargo-dist/templates/ci/github_ci.yml.j2
+--- a/cargo-dist/templates/ci/github_ci.yml.j2
++++ b/cargo-dist/templates/ci/github_ci.yml.j2
+@@ -290,6 +290,17 @@ jobs:
+ 
+ {{%- endif %}}
+ 
++{{%- for job in user_publish_jobs %}}
++
++  custom-{{{ job|safe }}}:
++    needs: [plan, should-publish]
++    if: ${{ !fromJson(needs.plan.outputs.val).announcement_is_prerelease || fromJson(needs.plan.outputs.val).publish_prereleases }}
++    uses: ./.github/workflows/{{{ job|safe }}}.yml
++    with:
++      plan: ${{ needs.plan.outputs.val }}
++    secrets: inherit
++{{%- endfor %}}
++
+   # Create a Github Release with all the results once everything is done,
+   publish-release:
+     needs: [plan, should-publish]

@@ -1,0 +1,1256 @@
+2026-04-17 06:59:07,749 - INFO - Environment image rustb.env.x86_64.sagiegurari_cargo-make:latest found for sagiegurari__cargo-make-714
+Building instance image rustbench/sagiegurari__cargo-make:pr-714 for sagiegurari__cargo-make-714
+2026-04-17 07:13:50,087 - INFO - Creating container for sagiegurari__cargo-make-714...
+2026-04-17 07:13:50,176 - INFO - Container for sagiegurari__cargo-make-714 created: bf4251e53218252cdadc54dd33a34ffffd5dc8aafc1677b2b3b559622b308c71
+2026-04-17 07:13:50,323 - INFO - Container for sagiegurari__cargo-make-714 started: bf4251e53218252cdadc54dd33a34ffffd5dc8aafc1677b2b3b559622b308c71
+2026-04-17 07:13:50,324 - INFO - Intermediate patch for sagiegurari__cargo-make-714 written to logs/run_evaluation/gold_run1/gold/sagiegurari__cargo-make-714/patch.diff, now applying to container...
+2026-04-17 07:13:50,552 - INFO - >>>>> Applied Patch:
+Checking patch .gitignore...
+Checking patch CHANGELOG.md...
+Checking patch Cargo.toml...
+Checking patch examples/workspace-inherit/Makefile.toml...
+Checking patch examples/workspace-inherit/member1/Cargo.toml...
+Checking patch examples/workspace-inherit/member1/Makefile.toml...
+Checking patch examples/workspace-inherit/member1/src/main.rs...
+Checking patch examples/workspace/Cargo.lock => dev/null...
+Checking patch examples/workspace/target/.rustc_info.json...
+Checking patch src/lib/environment/crateinfo.rs...
+Hunk #1 succeeded at 183 (offset -50 lines).
+Checking patch src/lib/runner.rs...
+Checking patch src/lib/types.rs...
+Checking patch src/lib/types.rs...
+Applied patch .gitignore cleanly.
+Applied patch CHANGELOG.md cleanly.
+Applied patch Cargo.toml cleanly.
+Applied patch examples/workspace-inherit/Makefile.toml cleanly.
+Applied patch examples/workspace-inherit/member1/Cargo.toml cleanly.
+Applied patch examples/workspace-inherit/member1/Makefile.toml cleanly.
+Applied patch examples/workspace-inherit/member1/src/main.rs cleanly.
+Applied patch examples/workspace/Cargo.lock => dev/null cleanly.
+Applied patch examples/workspace/target/.rustc_info.json cleanly.
+Applied patch src/lib/environment/crateinfo.rs cleanly.
+Applied patch src/lib/runner.rs cleanly.
+Applied patch src/lib/types.rs cleanly.
+Applied patch src/lib/types.rs cleanly.
+
+2026-04-17 07:13:50,767 - INFO - Git diff before:
+diff --git a/.gitignore b/.gitignore
+index 4cb3417a..121d15f6 100755
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,3 +8,5 @@ dump.rdb
+ /rs*.sh
+ /docs/_site
+ /core
++/src/**/Cargo.lock
++/examples/**/Cargo.lock
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 5d9ef72d..93903323 100755
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,5 +1,11 @@
+ ## CHANGELOG
+ 
++### v0.36.1
++
++* Enhancement: Support inherited package info #712
++* Enhancement: Added shell completion files in included crate #565
++* Enhancement: Add skipping task message for all actionable tasks that fail condition #708
++
+ ### v0.36.0 (2022-08-30)
+ 
+ * \[**backward compatibility break**\] Enhancement: Environment variables now support the default syntax: ${name:default}
+diff --git a/Cargo.lock b/Cargo.lock
+index 0b865a70..689ba0fd 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -10,18 +10,18 @@ checksum = "f26201604c87b1e01bd3d98f8d5d9a8fcbb815e8cedb41ffccbeb4bf593a35fe"
+ 
+ [[package]]
+ name = "aho-corasick"
+-version = "0.7.18"
++version = "0.7.19"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1e37cfd5e7657ada45f742d6e99ca5788580b5c529dc78faf11ece6dc702656f"
++checksum = "b4f55bd91a0978cbfd91c457a164bab8b4001c833b7f323132c0a4e1922dd44e"
+ dependencies = [
+  "memchr",
+ ]
+ 
+ [[package]]
+ name = "android_system_properties"
+-version = "0.1.4"
++version = "0.1.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d7ed72e1635e121ca3e79420540282af22da58be50de153d36f81ddc6b83aa9e"
++checksum = "819e7219dbd41043ac279b19830f2efc897156490d7fd6ea916720117ee66311"
+ dependencies = [
+  "libc",
+ ]
+@@ -84,9 +84,9 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
+ 
+ [[package]]
+ name = "block-buffer"
+-version = "0.10.2"
++version = "0.10.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0bf7fe51849ea569fd452f37822f606a5cabb684dc918707a0193fd4664ff324"
++checksum = "69cce20737498f97b993470a6e536b8523f0af7892a4f928cceb1ac5e52ebe7e"
+ dependencies = [
+  "generic-array",
+ ]
+@@ -251,9 +251,9 @@ checksum = "5827cebf4670468b8772dd191856768aedcb1b0278a04f989f7766351917b9dc"
+ 
+ [[package]]
+ name = "cpufeatures"
+-version = "0.2.4"
++version = "0.2.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dc948ebb96241bb40ab73effeb80d9f93afaad49359d159a5e61be51619fe813"
++checksum = "28d997bd5e24a5928dd43e46dc529867e207907fe0b239c3477d924f7f2ca320"
+ dependencies = [
+  "libc",
+ ]
+@@ -299,9 +299,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "digest"
+-version = "0.10.3"
++version = "0.10.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f2fb860ca6fafa5552fb6d0e816a69c8e49f0908bf524e30a90d97c85892d506"
++checksum = "adfbc57365a37acbd2ebf2b64d7e69bb766e2fea813521ed536f5d0520dcf86c"
+ dependencies = [
+  "block-buffer",
+  "crypto-common",
+@@ -511,11 +511,10 @@ checksum = "00b0228411908ca8685dba7fc2cdd70ec9990a6e753e89b6ac91a84c40fbaf4b"
+ 
+ [[package]]
+ name = "form_urlencoded"
+-version = "1.0.1"
++version = "1.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5fc25a87fa4fd2094bffb06925852034d90a17f0d1e05197d4956d3555752191"
++checksum = "a9c384f161156f5260c24a097c56119f9be8c798586aecc13afbcbe7b7e26bf8"
+ dependencies = [
+- "matches",
+  "percent-encoding",
+ ]
+ 
+@@ -624,9 +623,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "iana-time-zone"
+-version = "0.1.46"
++version = "0.1.50"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ad2bfd338099682614d3ee3fe0cd72e0b6a41ca6a87f6a74a3bd593c91650501"
++checksum = "fd911b35d940d2bd0bea0f9100068e5b97b51a1cbe13d13382f132e0365257a0"
+ dependencies = [
+  "android_system_properties",
+  "core-foundation-sys",
+@@ -637,11 +636,10 @@ dependencies = [
+ 
+ [[package]]
+ name = "idna"
+-version = "0.2.3"
++version = "0.3.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "418a0a6fab821475f634efe3ccc45c013f742efe03d853e8d3355d5cb850ecf8"
++checksum = "e14ddfc70884202db2244c223200c204c2bda1bc6e0998d11b5e024d657209e6"
+ dependencies = [
+- "matches",
+  "unicode-bidi",
+  "unicode-normalization",
+ ]
+@@ -703,9 +701,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "js-sys"
+-version = "0.3.59"
++version = "0.3.60"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "258451ab10b34f8af53416d1fdab72c22e805f0c92a1136d59470ec0b11138b2"
++checksum = "49409df3e3bf0856b916e2ceaca09ee28e6871cf7d9ce97a692cacfdb2a25a47"
+ dependencies = [
+  "wasm-bindgen",
+ ]
+@@ -770,9 +768,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.132"
++version = "0.2.133"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8371e4e5341c3a96db127eb2465ac681ced4c433e01dd0e938adbef26ba93ba5"
++checksum = "c0f80d65747a3e43d1596c7c5492d95d5edddaabd45a7fcdb02b95f644164966"
+ 
+ [[package]]
+ name = "log"
+@@ -783,12 +781,6 @@ dependencies = [
+  "cfg-if",
+ ]
+ 
+-[[package]]
+-name = "matches"
+-version = "0.1.9"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a3e378b66a060d48947b590737b30a1be76706c8dd7b8ba0f2fe3989c68a853f"
+-
+ [[package]]
+ name = "memchr"
+ version = "2.5.0"
+@@ -807,9 +799,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "miniz_oxide"
+-version = "0.5.3"
++version = "0.5.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6f5c75688da582b8ffc1f1799e9db273f32133c49e048f614d22ec3256773ccc"
++checksum = "96590ba8f175222643a85693f33d26e9c8a015f599c216509b1a6894af675d34"
+ dependencies = [
+  "adler",
+ ]
+@@ -887,9 +879,9 @@ checksum = "e82dad04139b71a90c080c8463fe0dc7902db5192d939bd0950f074d014339e1"
+ 
+ [[package]]
+ name = "openssl"
+-version = "0.10.41"
++version = "0.10.42"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "618febf65336490dfcf20b73f885f5651a0c89c64c2d4a8c3662585a70bf5bd0"
++checksum = "12fc0523e3bd51a692c8850d075d74dc062ccf251c0110668cbd921917118a13"
+ dependencies = [
+  "bitflags",
+  "cfg-if",
+@@ -919,9 +911,9 @@ checksum = "ff011a302c396a5197692431fc1948019154afc178baf7d8e37367442a4601cf"
+ 
+ [[package]]
+ name = "openssl-sys"
+-version = "0.9.75"
++version = "0.9.76"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e5f9bd0c2710541a3cda73d6f9ac4f1b240de4ae261065d309dbe73d9dceb42f"
++checksum = "5230151e44c0f05157effb743e8d517472843121cf9243e8b81393edb5acd9ce"
+ dependencies = [
+  "autocfg",
+  "cc",
+@@ -932,9 +924,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "percent-encoding"
+-version = "2.1.0"
++version = "2.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d4fd5641d01c8f18a23da7b6fe29298ff4b55afcccdf78973b24cf3175fee32e"
++checksum = "478c572c3d73181ff3c2539045f6eb99e5491218eae919370993b890cdbdd98e"
+ 
+ [[package]]
+ name = "petgraph"
+@@ -960,9 +952,9 @@ checksum = "eb9f9e6e233e5c4a35559a617bf40a4ec447db2e84c20b55a6f83167b7e57872"
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.43"
++version = "1.0.44"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0a2ca2c61bc9f3d74d2886294ab7b9853abd9c1ad903a3ac7815c58989bb7bab"
++checksum = "7bd7356a8122b6c4a24a82b278680c73357984ca2fc79a0f9fa6dea7dced7c58"
+ dependencies = [
+  "unicode-ident",
+ ]
+@@ -999,9 +991,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "rand_core"
+-version = "0.6.3"
++version = "0.6.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d34f1408f55294453790c48b2f1ebbb1c5b4b7563eb1f418bcfcfdbb06ebb4e7"
++checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
+ dependencies = [
+  "getrandom",
+ ]
+@@ -1203,9 +1195,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "sha2"
+-version = "0.10.2"
++version = "0.10.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "55deaec60f81eefe3cce0dc50bda92d6d8e88f2a27df7c5033b42afeb1ed2676"
++checksum = "82e6b795fe2e3b1e845bafcb27aa35405c4d47cdfc92af5fc8d3002f76cebdc0"
+ dependencies = [
+  "cfg-if",
+  "cpufeatures",
+@@ -1241,9 +1233,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "syn"
+-version = "1.0.99"
++version = "1.0.101"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "58dbef6ec655055e20b86b15a8cc6d439cca19b667537ac6a1369572d151ab13"
++checksum = "e90cde112c4b9690b8cbe810cba9ddd8bc1d7472e2cae317b69e9438c1cba7d2"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1266,18 +1258,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "thiserror"
+-version = "1.0.32"
++version = "1.0.36"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f5f6586b7f764adc0231f4c79be7b920e766bb2f3e51b3661cdb263828f19994"
++checksum = "0a99cb8c4b9a8ef0e7907cd3b617cc8dc04d571c4e73c8ae403d80ac160bb122"
+ dependencies = [
+  "thiserror-impl",
+ ]
+ 
+ [[package]]
+ name = "thiserror-impl"
+-version = "1.0.32"
++version = "1.0.36"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "12bafc5b54507e0149cdf1b145a5d80ab80a90bcd9275df43d4fff68460f6c21"
++checksum = "3a891860d3c8d66fec8e73ddb3765f90082374dbaaa833407b904a94f1a7eb43"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1351,15 +1343,15 @@ checksum = "099b7128301d285f79ddd55b9a83d5e6b9e97c92e0ea0daebee7263e932de992"
+ 
+ [[package]]
+ name = "unicode-ident"
+-version = "1.0.3"
++version = "1.0.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c4f5b37a154999a8f3f98cc23a628d850e154479cd94decf3414696e12e31aaf"
++checksum = "dcc811dc4066ac62f84f11307873c4850cb653bfa9b1719cee2bd2204a4bc5dd"
+ 
+ [[package]]
+ name = "unicode-normalization"
+-version = "0.1.21"
++version = "0.1.22"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "854cbdc4f7bc6ae19c820d44abdc3277ac3e1b2b93db20a636825d9322fb60e6"
++checksum = "5c5713f0fc4b5db668a2ac63cdb7bb4469d8c9fed047b1d0292cc7b0ce2ba921"
+ dependencies = [
+  "tinyvec",
+ ]
+@@ -1372,13 +1364,12 @@ checksum = "a156c684c91ea7d62626509bce3cb4e1d9ed5c4d978f7b4352658f96a4c26b4a"
+ 
+ [[package]]
+ name = "url"
+-version = "2.2.2"
++version = "2.3.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a507c383b2d33b5fc35d1861e77e6b383d158b2da5e14fe51b83dfedf6fd578c"
++checksum = "0d68c799ae75762b8c3fe375feb6600ef5602c883c5d21eb51c09f22b83c4643"
+ dependencies = [
+  "form_urlencoded",
+  "idna",
+- "matches",
+  "percent-encoding",
+ ]
+ 
+@@ -1419,9 +1410,9 @@ checksum = "9c8d87e72b64a3b4db28d11ce29237c246188f4f51057d65a7eab63b7987e423"
+ 
+ [[package]]
+ name = "wasm-bindgen"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fc7652e3f6c4706c8d9cd54832c4a4ccb9b5336e2c3bd154d5cccfbf1c1f5f7d"
++checksum = "eaf9f5aceeec8be17c128b2e93e031fb8a4d469bb9c4ae2d7dc1888b26887268"
+ dependencies = [
+  "cfg-if",
+  "wasm-bindgen-macro",
+@@ -1429,9 +1420,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-backend"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "662cd44805586bd52971b9586b1df85cdbbd9112e4ef4d8f41559c334dc6ac3f"
++checksum = "4c8ffb332579b0557b52d268b91feab8df3615f265d5270fec2a8c95b17c1142"
+ dependencies = [
+  "bumpalo",
+  "log",
+@@ -1444,9 +1435,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b260f13d3012071dfb1512849c033b1925038373aea48ced3012c09df952c602"
++checksum = "052be0f94026e6cbc75cdefc9bae13fd6052cdcaf532fa6c45e7ae33a1e6c810"
+ dependencies = [
+  "quote",
+  "wasm-bindgen-macro-support",
+@@ -1454,9 +1445,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro-support"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5be8e654bdd9b79216c2929ab90721aa82faf65c48cdf08bdc4e7f51357b80da"
++checksum = "07bc0c051dc5f23e307b13285f9d75df86bfdf816c5721e573dec1f9b8aa193c"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1467,15 +1458,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-shared"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6598dd0bd3c7d51095ff6531a5b23e02acdc81804e30d8f07afb77b7215a140a"
++checksum = "1c38c045535d93ec4f0b4defec448e4291638ee608530863b1e2ba115d4fff7f"
+ 
+ [[package]]
+ name = "web-sys"
+-version = "0.3.59"
++version = "0.3.60"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ed055ab27f941423197eb86b2035720b1a3ce40504df082cac2ecc6ed73335a1"
++checksum = "bcda906d8be16e728fd5adc5b729afad4e444e106ab28cd1c7256e54fa61510f"
+ dependencies = [
+  "js-sys",
+  "wasm-bindgen",
+@@ -1493,30 +1484,31 @@ dependencies = [
+ 
+ [[package]]
+ name = "webpki-roots"
+-version = "0.22.4"
++version = "0.22.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f1c760f0d366a6c24a02ed7816e23e691f5d92291f94d15e836006fd11b04daf"
++checksum = "368bfe657969fb01238bb756d351dcade285e0f6fcbd36dcb23359a5169975be"
+ dependencies = [
+  "webpki",
+ ]
+ 
+ [[package]]
+ name = "which"
+-version = "4.2.5"
++version = "4.3.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5c4fb54e6113b6a8772ee41c3404fb0301ac79604489467e0a9ce1f3e97c24ae"
++checksum = "1c831fbbee9e129a8cf93e7747a82da9d95ba8e16621cae60ec2cdc849bacb7b"
+ dependencies = [
+  "either",
+- "lazy_static",
+  "libc",
++ "once_cell",
+ ]
+ 
+ [[package]]
+ name = "whoami"
+-version = "1.2.1"
++version = "1.2.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "524b58fa5a20a2fb3014dd6358b70e6579692a56ef6fce928834e488f42f65e8"
++checksum = "d6631b6a2fd59b1841b622e8f1a7ad241ef0a46f2d580464ce8140ac94cbd571"
+ dependencies = [
++ "bumpalo",
+  "wasm-bindgen",
+  "web-sys",
+ ]
+diff --git a/Cargo.toml b/Cargo.toml
+index 39e62c7d..5311f385 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -28,6 +28,7 @@ include = [
+   "/README.md",
+   "/CHANGELOG.md",
+   "/Makefile.toml",
++  "/extra/shell/*",
+ ]
+ 
+ [lib]
+diff --git a/examples/workspace/Cargo.lock b/examples/workspace/Cargo.lock
+deleted file mode 100644
+index 0a4477ae..00000000
+--- a/examples/workspace/Cargo.lock
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# This file is automatically @generated by Cargo.
+-# It is not intended for manual editing.
+-version = 3
+-
+-[[package]]
+-name = "member1"
+-version = "1.0.0"
+-
+-[[package]]
+-name = "member2"
+-version = "1.0.0"
+diff --git a/examples/workspace/target/.rustc_info.json b/examples/workspace/target/.rustc_info.json
+index f64cb315..61900873 100644
+--- a/examples/workspace/target/.rustc_info.json
++++ b/examples/workspace/target/.rustc_info.json
+@@ -1 +1 @@
+-{"rustc_fingerprint":13269373382889448516,"outputs":{"17352200149025509210":["___\nlib___.rlib\nlib___.so\nlib___.so\nlib___.a\nlib___.so\n/home/pi/workspace/home/.rustup/toolchains/nightly-armv7-unknown-linux-gnueabihf\ndebug_assertions\nproc_macro\ntarget_arch=\"arm\"\ntarget_endian=\"little\"\ntarget_env=\"gnu\"\ntarget_family=\"unix\"\ntarget_feature=\"aclass\"\ntarget_feature=\"dsp\"\ntarget_feature=\"v5te\"\ntarget_feature=\"v6\"\ntarget_feature=\"v6k\"\ntarget_feature=\"v6t2\"\ntarget_feature=\"v7\"\ntarget_feature=\"vfp2\"\ntarget_has_atomic=\"16\"\ntarget_has_atomic=\"32\"\ntarget_has_atomic=\"64\"\ntarget_has_atomic=\"8\"\ntarget_has_atomic=\"ptr\"\ntarget_has_atomic_equal_alignment=\"16\"\ntarget_has_atomic_equal_alignment=\"32\"\ntarget_has_atomic_equal_alignment=\"64\"\ntarget_has_atomic_equal_alignment=\"8\"\ntarget_has_atomic_equal_alignment=\"ptr\"\ntarget_has_atomic_load_store=\"16\"\ntarget_has_atomic_load_store=\"32\"\ntarget_has_atomic_load_store=\"64\"\ntarget_has_atomic_load_store=\"8\"\ntarget_has_atomic_load_store=\"ptr\"\ntarget_os=\"linux\"\ntarget_pointer_width=\"32\"\ntarget_thread_local\ntarget_vendor=\"unknown\"\nunix\n",""],"16538190320964532705":["rustc 1.49.0-nightly (4f7612ac1 2020-10-31)\nbinary: rustc\ncommit-hash: 4f7612ac1499258025077f1fd05d2f429f9accfb\ncommit-date: 2020-10-31\nhost: armv7-unknown-linux-gnueabihf\nrelease: 1.49.0-nightly\n",""]},"successes":{}}
+\ No newline at end of file
++{"rustc_fingerprint":12441936045838259762,"outputs":{"15872395580024362796":{"success":true,"status":"","code":0,"stdout":"rustc 1.65.0-nightly (ce36e8825 2022-08-28)\nbinary: rustc\ncommit-hash: ce36e88256f09078519f8bc6b21e4dc88f88f523\ncommit-date: 2022-08-28\nhost: armv7-unknown-linux-gnueabihf\nrelease: 1.65.0-nightly\nLLVM version: 15.0.0\n","stderr":""},"12791339521227362961":{"success":true,"status":"","code":0,"stdout":"___\nlib___.rlib\nlib___.so\nlib___.so\nlib___.a\nlib___.so\n","stderr":""},"16870772668069704980":{"success":true,"status":"","code":0,"stdout":"___\nlib___.rlib\nlib___.so\nlib___.so\nlib___.a\nlib___.so\n/home/pi/workspace/home/.rustup/toolchains/nightly-armv7-unknown-linux-gnueabihf\ndebug_assertions\npanic=\"unwind\"\nproc_macro\ntarget_abi=\"eabihf\"\ntarget_arch=\"arm\"\ntarget_endian=\"little\"\ntarget_env=\"gnu\"\ntarget_family=\"unix\"\ntarget_feature=\"aclass\"\ntarget_feature=\"dsp\"\ntarget_feature=\"llvm14-builtins-abi\"\ntarget_feature=\"thumb2\"\ntarget_feature=\"v5te\"\ntarget_feature=\"v6\"\ntarget_feature=\"v6k\"\ntarget_feature=\"v6t2\"\ntarget_feature=\"v7\"\ntarget_feature=\"vfp2\"\ntarget_has_atomic=\"16\"\ntarget_has_atomic=\"32\"\ntarget_has_atomic=\"64\"\ntarget_has_atomic=\"8\"\ntarget_has_atomic=\"ptr\"\ntarget_has_atomic_equal_alignment=\"16\"\ntarget_has_atomic_equal_alignment=\"32\"\ntarget_has_atomic_equal_alignment=\"64\"\ntarget_has_atomic_equal_alignment=\"8\"\ntarget_has_atomic_equal_alignment=\"ptr\"\ntarget_has_atomic_load_store=\"16\"\ntarget_has_atomic_load_store=\"32\"\ntarget_has_atomic_load_store=\"64\"\ntarget_has_atomic_load_store=\"8\"\ntarget_has_atomic_load_store=\"ptr\"\ntarget_os=\"linux\"\ntarget_pointer_width=\"32\"\ntarget_thread_local\ntarget_vendor=\"unknown\"\nunix\n","stderr":""}},"successes":{}}
+\ No newline at end of file
+diff --git a/src/lib/environment/crateinfo.rs b/src/lib/environment/crateinfo.rs
+index f05ea304..83bb7712 100755
+--- a/src/lib/environment/crateinfo.rs
++++ b/src/lib/environment/crateinfo.rs
+@@ -183,58 +183,58 @@ pub(crate) fn load() -> CrateInfo {
+ 
+ pub(crate) fn load_from(file_path: PathBuf) -> CrateInfo {
+     if file_path.exists() {
+-        debug!("Reading file: {:#?}", &file_path);
+-        let crate_info_string = match fsio::file::read_text_file(&file_path) {
+-            Ok(content) => content,
+-            Err(error) => panic!("Unable to open Cargo.toml, error: {}", error),
+-        };
+-
+-        let mut crate_info: CrateInfo = match toml::from_str(&crate_info_string) {
+-            Ok(value) => value,
+-            Err(error) => panic!("Unable to parse Cargo.toml, {}", error),
+-        };
++        match MetadataCommand::new().manifest_path(&file_path).exec() {
++            Ok(metadata) => {
++                debug!("Cargo metadata: {:#?}", &metadata);
++                let mut crate_info = convert_metadata_to_crate_info(&metadata);
++
++                debug!("Reading file: {:#?}", &file_path);
++                let crate_info_string = match fsio::file::read_text_file(&file_path) {
++                    Ok(content) => content,
++                    Err(error) => panic!("Unable to open Cargo.toml, error: {}", error),
++                };
++
++                let crate_info_deserialized: CrateInfoMinimal =
++                    match toml::from_str(&crate_info_string) {
++                        Ok(value) => value,
++                        Err(error) => {
++                            warn!("Unable to parse Cargo.toml, {}", error);
++                            CrateInfoMinimal::new()
++                        }
++                    };
++                crate_info.workspace = crate_info_deserialized.workspace;
++                crate_info.dependencies = crate_info_deserialized.dependencies;
+ 
+-        load_workspace_members(&mut crate_info);
++                load_workspace_members(&mut crate_info);
+ 
+-        debug!("Loaded Cargo.toml: {:#?}", &crate_info);
++                debug!("Loaded Cargo.toml: {:#?}", &crate_info);
+ 
+-        crate_info
++                crate_info
++            }
++            Err(error) => panic!("Unable to parse Cargo.toml, {}", error),
++        }
+     } else {
+         CrateInfo::new()
+     }
+ }
+ 
+-#[derive(Debug, Deserialize)]
+-struct CargoConfig {
+-    build: Option<CargoConfigBuild>,
+-}
++fn convert_metadata_to_crate_info(metadata: &Metadata) -> CrateInfo {
++    let mut crate_info = CrateInfo::new();
+ 
+-#[derive(Debug, Deserialize)]
+-#[serde(rename_all = "kebab-case")]
+-struct CargoConfigBuild {
+-    target: Option<RustTarget>,
+-}
+-
+-#[derive(Debug, Deserialize)]
+-#[serde(from = "PathBuf")]
+-struct RustTarget(PathBuf);
++    if let Some(root_package) = metadata.root_package() {
++        let mut package_info = PackageInfo::new();
++        package_info.name = Some(root_package.name.clone());
++        package_info.version = Some(root_package.version.to_string());
++        package_info.description = root_package.description.clone();
++        package_info.license = root_package.license.clone();
++        package_info.documentation = root_package.documentation.clone();
++        package_info.homepage = root_package.homepage.clone();
++        package_info.repository = root_package.repository.clone();
+ 
+-impl RustTarget {
+-    fn name(&self) -> &str {
+-        self.0.file_stem().unwrap().to_str().unwrap()
++        crate_info.package = Some(package_info);
+     }
+-}
+ 
+-impl From<PathBuf> for RustTarget {
+-    fn from(buf: PathBuf) -> Self {
+-        Self(buf)
+-    }
+-}
+-
+-impl AsRef<OsStr> for RustTarget {
+-    fn as_ref(&self) -> &OsStr {
+-        self.0.as_ref()
+-    }
++    crate_info
+ }
+ 
+ fn get_cargo_config(home: Option<PathBuf>) -> Option<CargoConfig> {
+diff --git a/src/lib/runner.rs b/src/lib/runner.rs
+index dbdd9677..a0438ddc 100755
+--- a/src/lib/runner.rs
++++ b/src/lib/runner.rs
+@@ -443,7 +443,7 @@ pub(crate) fn run_task_with_options(
+                 None => "".to_string(),
+             };
+ 
+-            if logger::should_reduce_output(&flow_info) && step.config.script.is_none() {
++            if logger::should_reduce_output(&flow_info) && !step.config.is_actionable() {
+                 debug!("Skipping Task: {} {}", &step.name, &fail_message);
+             } else {
+                 info!("Skipping Task: {} {}", &step.name, &fail_message);
+diff --git a/src/lib/types.rs b/src/lib/types.rs
+index 4614a5db..034f4996 100755
+--- a/src/lib/types.rs
++++ b/src/lib/types.rs
+@@ -227,7 +227,7 @@ impl Workspace {
+     }
+ }
+ 
+-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
++#[derive(Debug, Clone, Default)]
+ /// Holds crate package information loaded from the Cargo.toml file package section.
+ pub struct PackageInfo {
+     /// name
+@@ -270,7 +270,7 @@ pub enum CrateDependency {
+     Info(CrateDependencyInfo),
+ }
+ 
+-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
++#[derive(Debug, Clone, Default)]
+ /// Holds crate information loaded from the Cargo.toml file.
+ pub struct CrateInfo {
+     /// package info
+2026-04-17 07:13:50,767 - INFO - Eval script for sagiegurari__cargo-make-714 written to logs/run_evaluation/gold_run1/gold/sagiegurari__cargo-make-714/eval.sh; copying to container...
+2026-04-17 07:27:43,953 - INFO - Test runtime: 833.07 seconds
+2026-04-17 07:27:43,954 - INFO - Test output for sagiegurari__cargo-make-714 written to logs/run_evaluation/gold_run1/gold/sagiegurari__cargo-make-714/test_output.txt
+2026-04-17 07:27:44,014 - INFO - Git diff after:
+diff --git a/.gitignore b/.gitignore
+index 4cb3417a..121d15f6 100755
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,3 +8,5 @@ dump.rdb
+ /rs*.sh
+ /docs/_site
+ /core
++/src/**/Cargo.lock
++/examples/**/Cargo.lock
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 5d9ef72d..93903323 100755
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,5 +1,11 @@
+ ## CHANGELOG
+ 
++### v0.36.1
++
++* Enhancement: Support inherited package info #712
++* Enhancement: Added shell completion files in included crate #565
++* Enhancement: Add skipping task message for all actionable tasks that fail condition #708
++
+ ### v0.36.0 (2022-08-30)
+ 
+ * \[**backward compatibility break**\] Enhancement: Environment variables now support the default syntax: ${name:default}
+diff --git a/Cargo.lock b/Cargo.lock
+index 0b865a70..689ba0fd 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -10,18 +10,18 @@ checksum = "f26201604c87b1e01bd3d98f8d5d9a8fcbb815e8cedb41ffccbeb4bf593a35fe"
+ 
+ [[package]]
+ name = "aho-corasick"
+-version = "0.7.18"
++version = "0.7.19"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1e37cfd5e7657ada45f742d6e99ca5788580b5c529dc78faf11ece6dc702656f"
++checksum = "b4f55bd91a0978cbfd91c457a164bab8b4001c833b7f323132c0a4e1922dd44e"
+ dependencies = [
+  "memchr",
+ ]
+ 
+ [[package]]
+ name = "android_system_properties"
+-version = "0.1.4"
++version = "0.1.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d7ed72e1635e121ca3e79420540282af22da58be50de153d36f81ddc6b83aa9e"
++checksum = "819e7219dbd41043ac279b19830f2efc897156490d7fd6ea916720117ee66311"
+ dependencies = [
+  "libc",
+ ]
+@@ -84,9 +84,9 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
+ 
+ [[package]]
+ name = "block-buffer"
+-version = "0.10.2"
++version = "0.10.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0bf7fe51849ea569fd452f37822f606a5cabb684dc918707a0193fd4664ff324"
++checksum = "69cce20737498f97b993470a6e536b8523f0af7892a4f928cceb1ac5e52ebe7e"
+ dependencies = [
+  "generic-array",
+ ]
+@@ -251,9 +251,9 @@ checksum = "5827cebf4670468b8772dd191856768aedcb1b0278a04f989f7766351917b9dc"
+ 
+ [[package]]
+ name = "cpufeatures"
+-version = "0.2.4"
++version = "0.2.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dc948ebb96241bb40ab73effeb80d9f93afaad49359d159a5e61be51619fe813"
++checksum = "28d997bd5e24a5928dd43e46dc529867e207907fe0b239c3477d924f7f2ca320"
+ dependencies = [
+  "libc",
+ ]
+@@ -299,9 +299,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "digest"
+-version = "0.10.3"
++version = "0.10.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f2fb860ca6fafa5552fb6d0e816a69c8e49f0908bf524e30a90d97c85892d506"
++checksum = "adfbc57365a37acbd2ebf2b64d7e69bb766e2fea813521ed536f5d0520dcf86c"
+ dependencies = [
+  "block-buffer",
+  "crypto-common",
+@@ -511,11 +511,10 @@ checksum = "00b0228411908ca8685dba7fc2cdd70ec9990a6e753e89b6ac91a84c40fbaf4b"
+ 
+ [[package]]
+ name = "form_urlencoded"
+-version = "1.0.1"
++version = "1.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5fc25a87fa4fd2094bffb06925852034d90a17f0d1e05197d4956d3555752191"
++checksum = "a9c384f161156f5260c24a097c56119f9be8c798586aecc13afbcbe7b7e26bf8"
+ dependencies = [
+- "matches",
+  "percent-encoding",
+ ]
+ 
+@@ -624,9 +623,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "iana-time-zone"
+-version = "0.1.46"
++version = "0.1.50"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ad2bfd338099682614d3ee3fe0cd72e0b6a41ca6a87f6a74a3bd593c91650501"
++checksum = "fd911b35d940d2bd0bea0f9100068e5b97b51a1cbe13d13382f132e0365257a0"
+ dependencies = [
+  "android_system_properties",
+  "core-foundation-sys",
+@@ -637,11 +636,10 @@ dependencies = [
+ 
+ [[package]]
+ name = "idna"
+-version = "0.2.3"
++version = "0.3.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "418a0a6fab821475f634efe3ccc45c013f742efe03d853e8d3355d5cb850ecf8"
++checksum = "e14ddfc70884202db2244c223200c204c2bda1bc6e0998d11b5e024d657209e6"
+ dependencies = [
+- "matches",
+  "unicode-bidi",
+  "unicode-normalization",
+ ]
+@@ -703,9 +701,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "js-sys"
+-version = "0.3.59"
++version = "0.3.60"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "258451ab10b34f8af53416d1fdab72c22e805f0c92a1136d59470ec0b11138b2"
++checksum = "49409df3e3bf0856b916e2ceaca09ee28e6871cf7d9ce97a692cacfdb2a25a47"
+ dependencies = [
+  "wasm-bindgen",
+ ]
+@@ -770,9 +768,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.132"
++version = "0.2.133"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8371e4e5341c3a96db127eb2465ac681ced4c433e01dd0e938adbef26ba93ba5"
++checksum = "c0f80d65747a3e43d1596c7c5492d95d5edddaabd45a7fcdb02b95f644164966"
+ 
+ [[package]]
+ name = "log"
+@@ -783,12 +781,6 @@ dependencies = [
+  "cfg-if",
+ ]
+ 
+-[[package]]
+-name = "matches"
+-version = "0.1.9"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a3e378b66a060d48947b590737b30a1be76706c8dd7b8ba0f2fe3989c68a853f"
+-
+ [[package]]
+ name = "memchr"
+ version = "2.5.0"
+@@ -807,9 +799,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "miniz_oxide"
+-version = "0.5.3"
++version = "0.5.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6f5c75688da582b8ffc1f1799e9db273f32133c49e048f614d22ec3256773ccc"
++checksum = "96590ba8f175222643a85693f33d26e9c8a015f599c216509b1a6894af675d34"
+ dependencies = [
+  "adler",
+ ]
+@@ -887,9 +879,9 @@ checksum = "e82dad04139b71a90c080c8463fe0dc7902db5192d939bd0950f074d014339e1"
+ 
+ [[package]]
+ name = "openssl"
+-version = "0.10.41"
++version = "0.10.42"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "618febf65336490dfcf20b73f885f5651a0c89c64c2d4a8c3662585a70bf5bd0"
++checksum = "12fc0523e3bd51a692c8850d075d74dc062ccf251c0110668cbd921917118a13"
+ dependencies = [
+  "bitflags",
+  "cfg-if",
+@@ -919,9 +911,9 @@ checksum = "ff011a302c396a5197692431fc1948019154afc178baf7d8e37367442a4601cf"
+ 
+ [[package]]
+ name = "openssl-sys"
+-version = "0.9.75"
++version = "0.9.76"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e5f9bd0c2710541a3cda73d6f9ac4f1b240de4ae261065d309dbe73d9dceb42f"
++checksum = "5230151e44c0f05157effb743e8d517472843121cf9243e8b81393edb5acd9ce"
+ dependencies = [
+  "autocfg",
+  "cc",
+@@ -932,9 +924,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "percent-encoding"
+-version = "2.1.0"
++version = "2.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d4fd5641d01c8f18a23da7b6fe29298ff4b55afcccdf78973b24cf3175fee32e"
++checksum = "478c572c3d73181ff3c2539045f6eb99e5491218eae919370993b890cdbdd98e"
+ 
+ [[package]]
+ name = "petgraph"
+@@ -960,9 +952,9 @@ checksum = "eb9f9e6e233e5c4a35559a617bf40a4ec447db2e84c20b55a6f83167b7e57872"
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.43"
++version = "1.0.44"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0a2ca2c61bc9f3d74d2886294ab7b9853abd9c1ad903a3ac7815c58989bb7bab"
++checksum = "7bd7356a8122b6c4a24a82b278680c73357984ca2fc79a0f9fa6dea7dced7c58"
+ dependencies = [
+  "unicode-ident",
+ ]
+@@ -999,9 +991,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "rand_core"
+-version = "0.6.3"
++version = "0.6.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d34f1408f55294453790c48b2f1ebbb1c5b4b7563eb1f418bcfcfdbb06ebb4e7"
++checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
+ dependencies = [
+  "getrandom",
+ ]
+@@ -1203,9 +1195,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "sha2"
+-version = "0.10.2"
++version = "0.10.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "55deaec60f81eefe3cce0dc50bda92d6d8e88f2a27df7c5033b42afeb1ed2676"
++checksum = "82e6b795fe2e3b1e845bafcb27aa35405c4d47cdfc92af5fc8d3002f76cebdc0"
+ dependencies = [
+  "cfg-if",
+  "cpufeatures",
+@@ -1241,9 +1233,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "syn"
+-version = "1.0.99"
++version = "1.0.101"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "58dbef6ec655055e20b86b15a8cc6d439cca19b667537ac6a1369572d151ab13"
++checksum = "e90cde112c4b9690b8cbe810cba9ddd8bc1d7472e2cae317b69e9438c1cba7d2"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1266,18 +1258,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "thiserror"
+-version = "1.0.32"
++version = "1.0.36"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f5f6586b7f764adc0231f4c79be7b920e766bb2f3e51b3661cdb263828f19994"
++checksum = "0a99cb8c4b9a8ef0e7907cd3b617cc8dc04d571c4e73c8ae403d80ac160bb122"
+ dependencies = [
+  "thiserror-impl",
+ ]
+ 
+ [[package]]
+ name = "thiserror-impl"
+-version = "1.0.32"
++version = "1.0.36"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "12bafc5b54507e0149cdf1b145a5d80ab80a90bcd9275df43d4fff68460f6c21"
++checksum = "3a891860d3c8d66fec8e73ddb3765f90082374dbaaa833407b904a94f1a7eb43"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1351,15 +1343,15 @@ checksum = "099b7128301d285f79ddd55b9a83d5e6b9e97c92e0ea0daebee7263e932de992"
+ 
+ [[package]]
+ name = "unicode-ident"
+-version = "1.0.3"
++version = "1.0.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c4f5b37a154999a8f3f98cc23a628d850e154479cd94decf3414696e12e31aaf"
++checksum = "dcc811dc4066ac62f84f11307873c4850cb653bfa9b1719cee2bd2204a4bc5dd"
+ 
+ [[package]]
+ name = "unicode-normalization"
+-version = "0.1.21"
++version = "0.1.22"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "854cbdc4f7bc6ae19c820d44abdc3277ac3e1b2b93db20a636825d9322fb60e6"
++checksum = "5c5713f0fc4b5db668a2ac63cdb7bb4469d8c9fed047b1d0292cc7b0ce2ba921"
+ dependencies = [
+  "tinyvec",
+ ]
+@@ -1372,13 +1364,12 @@ checksum = "a156c684c91ea7d62626509bce3cb4e1d9ed5c4d978f7b4352658f96a4c26b4a"
+ 
+ [[package]]
+ name = "url"
+-version = "2.2.2"
++version = "2.3.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a507c383b2d33b5fc35d1861e77e6b383d158b2da5e14fe51b83dfedf6fd578c"
++checksum = "0d68c799ae75762b8c3fe375feb6600ef5602c883c5d21eb51c09f22b83c4643"
+ dependencies = [
+  "form_urlencoded",
+  "idna",
+- "matches",
+  "percent-encoding",
+ ]
+ 
+@@ -1419,9 +1410,9 @@ checksum = "9c8d87e72b64a3b4db28d11ce29237c246188f4f51057d65a7eab63b7987e423"
+ 
+ [[package]]
+ name = "wasm-bindgen"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fc7652e3f6c4706c8d9cd54832c4a4ccb9b5336e2c3bd154d5cccfbf1c1f5f7d"
++checksum = "eaf9f5aceeec8be17c128b2e93e031fb8a4d469bb9c4ae2d7dc1888b26887268"
+ dependencies = [
+  "cfg-if",
+  "wasm-bindgen-macro",
+@@ -1429,9 +1420,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-backend"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "662cd44805586bd52971b9586b1df85cdbbd9112e4ef4d8f41559c334dc6ac3f"
++checksum = "4c8ffb332579b0557b52d268b91feab8df3615f265d5270fec2a8c95b17c1142"
+ dependencies = [
+  "bumpalo",
+  "log",
+@@ -1444,9 +1435,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b260f13d3012071dfb1512849c033b1925038373aea48ced3012c09df952c602"
++checksum = "052be0f94026e6cbc75cdefc9bae13fd6052cdcaf532fa6c45e7ae33a1e6c810"
+ dependencies = [
+  "quote",
+  "wasm-bindgen-macro-support",
+@@ -1454,9 +1445,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro-support"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5be8e654bdd9b79216c2929ab90721aa82faf65c48cdf08bdc4e7f51357b80da"
++checksum = "07bc0c051dc5f23e307b13285f9d75df86bfdf816c5721e573dec1f9b8aa193c"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1467,15 +1458,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-shared"
+-version = "0.2.82"
++version = "0.2.83"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6598dd0bd3c7d51095ff6531a5b23e02acdc81804e30d8f07afb77b7215a140a"
++checksum = "1c38c045535d93ec4f0b4defec448e4291638ee608530863b1e2ba115d4fff7f"
+ 
+ [[package]]
+ name = "web-sys"
+-version = "0.3.59"
++version = "0.3.60"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ed055ab27f941423197eb86b2035720b1a3ce40504df082cac2ecc6ed73335a1"
++checksum = "bcda906d8be16e728fd5adc5b729afad4e444e106ab28cd1c7256e54fa61510f"
+ dependencies = [
+  "js-sys",
+  "wasm-bindgen",
+@@ -1493,30 +1484,31 @@ dependencies = [
+ 
+ [[package]]
+ name = "webpki-roots"
+-version = "0.22.4"
++version = "0.22.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f1c760f0d366a6c24a02ed7816e23e691f5d92291f94d15e836006fd11b04daf"
++checksum = "368bfe657969fb01238bb756d351dcade285e0f6fcbd36dcb23359a5169975be"
+ dependencies = [
+  "webpki",
+ ]
+ 
+ [[package]]
+ name = "which"
+-version = "4.2.5"
++version = "4.3.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5c4fb54e6113b6a8772ee41c3404fb0301ac79604489467e0a9ce1f3e97c24ae"
++checksum = "1c831fbbee9e129a8cf93e7747a82da9d95ba8e16621cae60ec2cdc849bacb7b"
+ dependencies = [
+  "either",
+- "lazy_static",
+  "libc",
++ "once_cell",
+ ]
+ 
+ [[package]]
+ name = "whoami"
+-version = "1.2.1"
++version = "1.2.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "524b58fa5a20a2fb3014dd6358b70e6579692a56ef6fce928834e488f42f65e8"
++checksum = "d6631b6a2fd59b1841b622e8f1a7ad241ef0a46f2d580464ce8140ac94cbd571"
+ dependencies = [
++ "bumpalo",
+  "wasm-bindgen",
+  "web-sys",
+ ]
+diff --git a/Cargo.toml b/Cargo.toml
+index 39e62c7d..5311f385 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -28,6 +28,7 @@ include = [
+   "/README.md",
+   "/CHANGELOG.md",
+   "/Makefile.toml",
++  "/extra/shell/*",
+ ]
+ 
+ [lib]
+diff --git a/examples/workspace/Cargo.lock b/examples/workspace/Cargo.lock
+deleted file mode 100644
+index 0a4477ae..00000000
+--- a/examples/workspace/Cargo.lock
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# This file is automatically @generated by Cargo.
+-# It is not intended for manual editing.
+-version = 3
+-
+-[[package]]
+-name = "member1"
+-version = "1.0.0"
+-
+-[[package]]
+-name = "member2"
+-version = "1.0.0"
+diff --git a/examples/workspace/target/.rustc_info.json b/examples/workspace/target/.rustc_info.json
+index f64cb315..61900873 100644
+--- a/examples/workspace/target/.rustc_info.json
++++ b/examples/workspace/target/.rustc_info.json
+@@ -1 +1 @@
+-{"rustc_fingerprint":13269373382889448516,"outputs":{"17352200149025509210":["___\nlib___.rlib\nlib___.so\nlib___.so\nlib___.a\nlib___.so\n/home/pi/workspace/home/.rustup/toolchains/nightly-armv7-unknown-linux-gnueabihf\ndebug_assertions\nproc_macro\ntarget_arch=\"arm\"\ntarget_endian=\"little\"\ntarget_env=\"gnu\"\ntarget_family=\"unix\"\ntarget_feature=\"aclass\"\ntarget_feature=\"dsp\"\ntarget_feature=\"v5te\"\ntarget_feature=\"v6\"\ntarget_feature=\"v6k\"\ntarget_feature=\"v6t2\"\ntarget_feature=\"v7\"\ntarget_feature=\"vfp2\"\ntarget_has_atomic=\"16\"\ntarget_has_atomic=\"32\"\ntarget_has_atomic=\"64\"\ntarget_has_atomic=\"8\"\ntarget_has_atomic=\"ptr\"\ntarget_has_atomic_equal_alignment=\"16\"\ntarget_has_atomic_equal_alignment=\"32\"\ntarget_has_atomic_equal_alignment=\"64\"\ntarget_has_atomic_equal_alignment=\"8\"\ntarget_has_atomic_equal_alignment=\"ptr\"\ntarget_has_atomic_load_store=\"16\"\ntarget_has_atomic_load_store=\"32\"\ntarget_has_atomic_load_store=\"64\"\ntarget_has_atomic_load_store=\"8\"\ntarget_has_atomic_load_store=\"ptr\"\ntarget_os=\"linux\"\ntarget_pointer_width=\"32\"\ntarget_thread_local\ntarget_vendor=\"unknown\"\nunix\n",""],"16538190320964532705":["rustc 1.49.0-nightly (4f7612ac1 2020-10-31)\nbinary: rustc\ncommit-hash: 4f7612ac1499258025077f1fd05d2f429f9accfb\ncommit-date: 2020-10-31\nhost: armv7-unknown-linux-gnueabihf\nrelease: 1.49.0-nightly\n",""]},"successes":{}}
+\ No newline at end of file
++{"rustc_fingerprint":12441936045838259762,"outputs":{"15872395580024362796":{"success":true,"status":"","code":0,"stdout":"rustc 1.65.0-nightly (ce36e8825 2022-08-28)\nbinary: rustc\ncommit-hash: ce36e88256f09078519f8bc6b21e4dc88f88f523\ncommit-date: 2022-08-28\nhost: armv7-unknown-linux-gnueabihf\nrelease: 1.65.0-nightly\nLLVM version: 15.0.0\n","stderr":""},"12791339521227362961":{"success":true,"status":"","code":0,"stdout":"___\nlib___.rlib\nlib___.so\nlib___.so\nlib___.a\nlib___.so\n","stderr":""},"16870772668069704980":{"success":true,"status":"","code":0,"stdout":"___\nlib___.rlib\nlib___.so\nlib___.so\nlib___.a\nlib___.so\n/home/pi/workspace/home/.rustup/toolchains/nightly-armv7-unknown-linux-gnueabihf\ndebug_assertions\npanic=\"unwind\"\nproc_macro\ntarget_abi=\"eabihf\"\ntarget_arch=\"arm\"\ntarget_endian=\"little\"\ntarget_env=\"gnu\"\ntarget_family=\"unix\"\ntarget_feature=\"aclass\"\ntarget_feature=\"dsp\"\ntarget_feature=\"llvm14-builtins-abi\"\ntarget_feature=\"thumb2\"\ntarget_feature=\"v5te\"\ntarget_feature=\"v6\"\ntarget_feature=\"v6k\"\ntarget_feature=\"v6t2\"\ntarget_feature=\"v7\"\ntarget_feature=\"vfp2\"\ntarget_has_atomic=\"16\"\ntarget_has_atomic=\"32\"\ntarget_has_atomic=\"64\"\ntarget_has_atomic=\"8\"\ntarget_has_atomic=\"ptr\"\ntarget_has_atomic_equal_alignment=\"16\"\ntarget_has_atomic_equal_alignment=\"32\"\ntarget_has_atomic_equal_alignment=\"64\"\ntarget_has_atomic_equal_alignment=\"8\"\ntarget_has_atomic_equal_alignment=\"ptr\"\ntarget_has_atomic_load_store=\"16\"\ntarget_has_atomic_load_store=\"32\"\ntarget_has_atomic_load_store=\"64\"\ntarget_has_atomic_load_store=\"8\"\ntarget_has_atomic_load_store=\"ptr\"\ntarget_os=\"linux\"\ntarget_pointer_width=\"32\"\ntarget_thread_local\ntarget_vendor=\"unknown\"\nunix\n","stderr":""}},"successes":{}}
+\ No newline at end of file
+diff --git a/src/lib/environment/crateinfo.rs b/src/lib/environment/crateinfo.rs
+index f05ea304..83bb7712 100755
+--- a/src/lib/environment/crateinfo.rs
++++ b/src/lib/environment/crateinfo.rs
+@@ -183,58 +183,58 @@ pub(crate) fn load() -> CrateInfo {
+ 
+ pub(crate) fn load_from(file_path: PathBuf) -> CrateInfo {
+     if file_path.exists() {
+-        debug!("Reading file: {:#?}", &file_path);
+-        let crate_info_string = match fsio::file::read_text_file(&file_path) {
+-            Ok(content) => content,
+-            Err(error) => panic!("Unable to open Cargo.toml, error: {}", error),
+-        };
+-
+-        let mut crate_info: CrateInfo = match toml::from_str(&crate_info_string) {
+-            Ok(value) => value,
+-            Err(error) => panic!("Unable to parse Cargo.toml, {}", error),
+-        };
++        match MetadataCommand::new().manifest_path(&file_path).exec() {
++            Ok(metadata) => {
++                debug!("Cargo metadata: {:#?}", &metadata);
++                let mut crate_info = convert_metadata_to_crate_info(&metadata);
++
++                debug!("Reading file: {:#?}", &file_path);
++                let crate_info_string = match fsio::file::read_text_file(&file_path) {
++                    Ok(content) => content,
++                    Err(error) => panic!("Unable to open Cargo.toml, error: {}", error),
++                };
++
++                let crate_info_deserialized: CrateInfoMinimal =
++                    match toml::from_str(&crate_info_string) {
++                        Ok(value) => value,
++                        Err(error) => {
++                            warn!("Unable to parse Cargo.toml, {}", error);
++                            CrateInfoMinimal::new()
++                        }
++                    };
++                crate_info.workspace = crate_info_deserialized.workspace;
++                crate_info.dependencies = crate_info_deserialized.dependencies;
+ 
+-        load_workspace_members(&mut crate_info);
++                load_workspace_members(&mut crate_info);
+ 
+-        debug!("Loaded Cargo.toml: {:#?}", &crate_info);
++                debug!("Loaded Cargo.toml: {:#?}", &crate_info);
+ 
+-        crate_info
++                crate_info
++            }
++            Err(error) => panic!("Unable to parse Cargo.toml, {}", error),
++        }
+     } else {
+         CrateInfo::new()
+     }
+ }
+ 
+-#[derive(Debug, Deserialize)]
+-struct CargoConfig {
+-    build: Option<CargoConfigBuild>,
+-}
++fn convert_metadata_to_crate_info(metadata: &Metadata) -> CrateInfo {
++    let mut crate_info = CrateInfo::new();
+ 
+-#[derive(Debug, Deserialize)]
+-#[serde(rename_all = "kebab-case")]
+-struct CargoConfigBuild {
+-    target: Option<RustTarget>,
+-}
+-
+-#[derive(Debug, Deserialize)]
+-#[serde(from = "PathBuf")]
+-struct RustTarget(PathBuf);
++    if let Some(root_package) = metadata.root_package() {
++        let mut package_info = PackageInfo::new();
++        package_info.name = Some(root_package.name.clone());
++        package_info.version = Some(root_package.version.to_string());
++        package_info.description = root_package.description.clone();
++        package_info.license = root_package.license.clone();
++        package_info.documentation = root_package.documentation.clone();
++        package_info.homepage = root_package.homepage.clone();
++        package_info.repository = root_package.repository.clone();
+ 
+-impl RustTarget {
+-    fn name(&self) -> &str {
+-        self.0.file_stem().unwrap().to_str().unwrap()
++        crate_info.package = Some(package_info);
+     }
+-}
+ 
+-impl From<PathBuf> for RustTarget {
+-    fn from(buf: PathBuf) -> Self {
+-        Self(buf)
+-    }
+-}
+-
+-impl AsRef<OsStr> for RustTarget {
+-    fn as_ref(&self) -> &OsStr {
+-        self.0.as_ref()
+-    }
++    crate_info
+ }
+ 
+ fn get_cargo_config(home: Option<PathBuf>) -> Option<CargoConfig> {
+diff --git a/src/lib/runner.rs b/src/lib/runner.rs
+index dbdd9677..a0438ddc 100755
+--- a/src/lib/runner.rs
++++ b/src/lib/runner.rs
+@@ -443,7 +443,7 @@ pub(crate) fn run_task_with_options(
+                 None => "".to_string(),
+             };
+ 
+-            if logger::should_reduce_output(&flow_info) && step.config.script.is_none() {
++            if logger::should_reduce_output(&flow_info) && !step.config.is_actionable() {
+                 debug!("Skipping Task: {} {}", &step.name, &fail_message);
+             } else {
+                 info!("Skipping Task: {} {}", &step.name, &fail_message);
+diff --git a/src/lib/types.rs b/src/lib/types.rs
+index 4614a5db..034f4996 100755
+--- a/src/lib/types.rs
++++ b/src/lib/types.rs
+@@ -227,7 +227,7 @@ impl Workspace {
+     }
+ }
+ 
+-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
++#[derive(Debug, Clone, Default)]
+ /// Holds crate package information loaded from the Cargo.toml file package section.
+ pub struct PackageInfo {
+     /// name
+@@ -270,7 +270,7 @@ pub enum CrateDependency {
+     Info(CrateDependencyInfo),
+ }
+ 
+-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
++#[derive(Debug, Clone, Default)]
+ /// Holds crate information loaded from the Cargo.toml file.
+ pub struct CrateInfo {
+     /// package info
+2026-04-17 07:27:44,015 - INFO - Grading answer for sagiegurari__cargo-make-714...
+2026-04-17 07:27:44,020 - INFO - report: {'sagiegurari__cargo-make-714': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['cache::cache_test::load_from_path_not_exists', 'cache::cache_test::load_from_path_exists', 'cli::cli_test::run_bad_subcommand - should panic', 'cli_commands::list_steps::list_steps_test::run_empty', 'cli_commands::list_steps::list_steps_test::run_all_private', 'cli_commands::print_steps::print_steps_test::get_format_type_default', 'cli_commands::list_steps::list_steps_test::run_all_public', 'cli_commands::list_steps::list_steps_test::run_all_public_markdown', 'cli_commands::print_steps::print_steps_test::get_format_type_short_description', 'cli_commands::print_steps::print_steps_test::get_format_type_unknown', 'cli_commands::list_steps::list_steps_test::run_all_public_markdown_single_page', 'cli_commands::print_steps::print_steps_test::print_default_valid', 'cli_commands::list_steps::list_steps_test::run_all_public_markdown_sub_section', 'cli_commands::print_steps::print_steps_test::print_short_description_valid', 'cli_commands::list_steps::list_steps_test::run_category_public', 'cli_commands::list_steps::list_steps_test::run_mixed', 'cli_parser::cli_parser_test::parse_args_allow_private', 'cli_commands::list_steps::list_steps_test::run_write_to_file', 'cli_parser::cli_parser_test::parse_args_cwd', 'cli_parser::cli_parser_test::parse_args_cargo_make', 'cli_parser::cli_parser_test::parse_args_diff_steps', 'cli_commands::print_steps::print_steps_test::print_task_not_found_but_skipped', 'cli_parser::cli_parser_test::parse_args_disable_check_for_updates', 'cli_parser::cli_parser_test::parse_args_help_short - should panic', 'cli_parser::cli_parser_test::parse_args_help_long - should panic', 'cli_parser::cli_parser_test::parse_args_list_all_steps', 'cli_parser::cli_parser_test::parse_args_experimental', 'cli_parser::cli_parser_test::parse_args_no_color', 'cli_parser::cli_parser_test::parse_args_list_category_steps', 'cli_parser::cli_parser_test::parse_args_loglevel', 'cli_parser::cli_parser_test::parse_args_no_workspace', 'cli_parser::cli_parser_test::parse_args_makefile', 'cli_parser::cli_parser_test::parse_args_makers', 'cli_parser::cli_parser_test::parse_args_output_file', 'cli_parser::cli_parser_test::parse_args_env', 'cli_parser::cli_parser_test::parse_args_output_format', 'cli_parser::cli_parser_test::parse_args_skip_init_end_tasks', 'cli_parser::cli_parser_test::parse_args_env_file', 'cli_parser::cli_parser_test::parse_args_quiet', 'cli_commands::diff_steps::diff_steps_test::run_different_with_skip', 'cli_parser::cli_parser_test::parse_args_version_long - should panic', 'cli_parser::cli_parser_test::parse_args_profile', 'cli_parser::cli_parser_test::parse_args_time_summary', 'cli_parser::cli_parser_test::parse_args_verbose', 'cli_parser::cli_parser_test::parse_args_print_steps', 'cli_parser::cli_parser_test::parse_args_skip_tasks', 'command::command_test::is_silent_for_level_error', 'command::command_test::is_silent_for_level_info', 'command::command_test::is_silent_for_level_other', 'command::command_test::is_silent_for_level_verbose', 'command::command_test::get_exit_code_error - should panic', 'cli_parser::cli_parser_test::parse_args_task_cmd', 'cli_parser::cli_parser_test::parse_args_version_short - should panic', 'command::command_test::run_no_command', 'command::command_test::run_command_error - should panic', 'command::command_test::should_print_commands_for_level_error', 'command::command_test::should_print_commands_for_level_info', 'command::command_test::should_print_commands_for_level_other', 'command::command_test::run_command_error_ignore_errors', 'command::command_test::should_print_commands_for_level_verbose', 'cli_parser::cli_parser_test::parse_args_task', 'command::command_test::validate_exit_code_unable_to_fetch - should panic', 'command::command_test::run_command', 'command::command_test::validate_exit_code_zero', 'command::command_test::validate_exit_code_not_zero - should panic', 'condition::condition_test::validate_channel_invalid', 'condition::condition_test::validate_channel_valid', 'condition::condition_test::validate_condition_for_step_invalid_script_valid', 'condition::condition_test::validate_criteria_invalid_channel', 'condition::condition_test::validate_env_bool_false_empty', 'condition::condition_test::validate_env_bool_true_empty', 'command::command_test::run_script_get_exit_code_error - should panic', 'command::command_test::run_script_get_exit_code_error_force', 'command::command_test::run_script_get_exit_code_cli_args_valid', 'command::command_test::run_script_get_exit_code_cli_args_error - should panic', 'condition::condition_test::validate_criteria_valid_channel', 'condition::condition_test::validate_criteria_invalid_platform', 'condition::condition_test::validate_criteria_valid_platform', 'condition::condition_test::validate_criteria_empty', 'condition::condition_test::validate_criteria_valid_file_not_exists', 'condition::condition_test::validate_env_empty', 'condition::condition_test::validate_criteria_invalid_file_exists', 'condition::condition_test::validate_env_not_set_empty', 'command::command_test::run_script_get_exit_code_custom_runner', 'command::command_test::run_script_get_exit_code_valid', 'condition::condition_test::validate_env_set_empty', 'condition::condition_test::validate_env_set_invalid', 'condition::condition_test::validate_file_exists_invalid', 'condition::condition_test::validate_file_exists_partial_invalid', 'condition::condition_test::validate_file_not_exists_valid', 'condition::condition_test::validate_platform_invalid', 'condition::condition_test::validate_platform_valid', 'condition::condition_test::validate_rust_version_condition_empty_condition', 'condition::condition_test::validate_rust_version_condition_all_enabled', 'condition::condition_test::validate_rust_version_condition_equal_same', 'condition::condition_test::validate_rust_version_condition_equal_not_same_and_partial', 'condition::condition_test::validate_rust_version_condition_equal_not_same', 'condition::condition_test::validate_rust_version_condition_max_disabled_major', 'condition::condition_test::validate_rust_version_condition_max_disabled_major_and_partial', 'condition::condition_test::validate_rust_version_condition_max_disabled_minor', 'condition::condition_test::validate_rust_version_condition_equal_same_and_partial', 'condition::condition_test::validate_rust_version_condition_max_disabled_patch', 'condition::condition_test::validate_rust_version_condition_max_enabled', 'condition::condition_test::validate_rust_version_condition_max_enabled_and_partial', 'condition::condition_test::validate_rust_version_condition_max_same', 'condition::condition_test::validate_rust_version_condition_max_same_and_partial', 'condition::condition_test::validate_rust_version_condition_min_disabled_and_partial', 'condition::condition_test::validate_rust_version_condition_min_disabled_major', 'condition::condition_test::validate_rust_version_condition_min_disabled_major_and_partial', 'condition::condition_test::validate_rust_version_condition_min_disabled_minor', 'condition::condition_test::validate_rust_version_condition_min_disabled_patch', 'condition::condition_test::validate_rust_version_condition_min_enabled', 'condition::condition_test::validate_rust_version_condition_min_same', 'condition::condition_test::validate_rust_version_condition_min_same_and_partial', 'condition::condition_test::validate_rust_version_condition_no_rustinfo', 'condition::condition_test::validate_rust_version_no_condition', 'condition::condition_test::validate_script_empty', 'config::config_test::load_from_path_not_exists', 'config::config_test::load_from_path_exists', 'condition::condition_test::validate_condition_for_step_valid_script_invalid', 'descriptor::cargo_alias::cargo_alias_test::load_from_file_no_file', 'descriptor::cargo_alias::cargo_alias_test::load_from_file_parse_error', 'descriptor::env::env_test::merge_env_both_empty', 'descriptor::cargo_alias::cargo_alias_test::load_from_file_aliases_found', 'descriptor::env::env_test::merge_env_first_empty', 'condition::condition_test::validate_script_invalid', 'descriptor::env::env_test::merge_env_both_with_values', 'descriptor::env::env_test::merge_env_both_skip_current_task_env', 'descriptor::mod_test::check_makefile_min_version_empty', 'descriptor::mod_test::check_makefile_min_version_no_min_version', 'descriptor::mod_test::check_makefile_min_version_bigger_min_version', 'descriptor::env::env_test::merge_env_both_with_sub_envs', 'descriptor::mod_test::check_makefile_min_version_smaller_min_version', 'descriptor::env::env_test::merge_env_second_empty', 'descriptor::env::env_test::merge_env_reorder_script_explicit', 'descriptor::mod_test::check_makefile_min_version_invalid_format', 'descriptor::mod_test::check_makefile_min_version_no_config', 'descriptor::mod_test::check_makefile_min_version_same_min_version', 'descriptor::cargo_alias::cargo_alias_test::load_from_file_no_alias_data', 'descriptor::env::env_test::merge_env_cycle', 'descriptor::env::env_test::merge_env_reorder_internal', 'descriptor::mod_test::load_external_descriptor_no_file_force - should panic', 'environment::crateinfo::crateinfo_test::add_members_workspace_none_members_empty', 'descriptor::env::env_test::merge_env_reorder_list', 'descriptor::env::env_test::merge_env_reorder', 'environment::crateinfo::crateinfo_test::add_members_workspace_none_members_with_data', 'descriptor::mod_test::run_load_script_no_config_section', 'environment::crateinfo::crateinfo_test::add_members_workspace_with_data_members_with_data_no_duplicates', 'environment::crateinfo::crateinfo_test::add_members_workspace_with_data_members_with_data_with_duplicates', 'environment::crateinfo::crateinfo_test::get_members_from_dependencies_none', 'environment::crateinfo::crateinfo_test::add_members_workspace_empty_members_with_data', 'environment::crateinfo::crateinfo_test::add_members_workspace_new_members_with_data', 'descriptor::mod_test::load_external_descriptor_min_version_broken_makefile_nopanic', 'environment::crateinfo::crateinfo_test::get_members_from_dependencies_empty', 'descriptor::mod_test::run_load_script_no_load_script', 'environment::crateinfo::crateinfo_test::get_members_from_dependencies_only_versions', 'environment::crateinfo::crateinfo_test::get_members_from_dependencies_no_paths', 'descriptor::env::env_test::merge_env_reorder_conditional', 'environment::crateinfo::crateinfo_test::get_members_from_dependencies_workspace_paths', 'environment::crateinfo::crateinfo_test::get_members_from_dependencies_no_workspace_paths', 'descriptor::env::env_test::merge_env_reorder_path', 'environment::crateinfo::crateinfo_test::load_workspace_members_no_members_with_package', 'environment::crateinfo::crateinfo_test::normalize_members_empty_members', 'descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_invalid_no_validate', 'descriptor::mod_test::merge_tasks_both_empty', 'environment::crateinfo::crateinfo_test::load_workspace_members_mixed', 'environment::crateinfo::crateinfo_test::expand_glob_members_empty', 'environment::crateinfo::crateinfo_test::normalize_members_no_members', 'environment::crateinfo::crateinfo_test::load_workspace_members_no_workspace', 'environment::crateinfo::crateinfo_test::normalize_members_no_workspace', 'environment::crateinfo::crateinfo_test::normalize_members_no_glob', 'descriptor::descriptor_deserializer::descriptor_deserializer_test::load_external_config_warning', 'environment::crateinfo::crateinfo_test::remove_excludes_no_workspace', 'environment::crateinfo::crateinfo_test::expand_glob_members_found', 'environment::crateinfo::crateinfo_test::normalize_members_mixed', 'environment::crateinfo::crateinfo_test::remove_excludes_workspace_with_members_no_excludes', 'environment::crateinfo::crateinfo_test::remove_excludes_workspace_no_members_with_excludes', 'environment::crateinfo::crateinfo_test::remove_excludes_workspace_with_members_empty_excludes', 'environment::crateinfo::crateinfo_test::remove_excludes_workspace_with_members_with_excludes', 'environment::crateinfo::crateinfo_test::remove_excludes_workspace_empty_members_with_excludes', 'environment::mod_test::evaluate_and_set_env_none_with_default', 'environment::mod_test::get_project_root_for_path_cwd', 'environment::mod_test::get_project_root_for_path_parent_path', 'environment::mod_test::get_project_root_for_path_sub_path', 'environment::mod_test::get_project_root_test', 'descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_invalid_validate - should panic', 'environment::mod_test::expand_env_empty', 'descriptor::mod_test::run_load_script_invalid_load_script - should panic', 'environment::mod_test::set_env_for_list_empty', 'environment::mod_test::set_env_for_config_list', 'descriptor::mod_test::run_load_script_valid_load_script', 'environment::mod_test::set_env_script_with_condition_false', 'environment::mod_test::set_env_for_list_with_values', 'descriptor::mod_test::merge_tasks_first_empty', 'environment::mod_test::expand_env_no_env_vars', 'execution_plan::execution_plan_test::get_workspace_members_config_multiple', 'execution_plan::execution_plan_test::get_task_name_not_found', 'execution_plan::execution_plan_test::get_workspace_members_config_not_defined_or_empty', 'execution_plan::execution_plan_test::create_workspace_task_no_members', 'environment::mod_test::evaluate_env_error - should panic', 'execution_plan::execution_plan_test::get_workspace_members_config_single', 'environment::mod_test::evaluate_env_value_single_line', 'environment::mod_test::evaluate_env_value_empty', 'descriptor::mod_test::merge_tasks_second_empty', 'execution_plan::execution_plan_test::is_workspace_flow_task_not_defined', 'environment::mod_test::evaluate_env_value_multi_line_linux', 'execution_plan::execution_plan_test::should_skip_workspace_member_empty', 'descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_base', 'environment::mod_test::evaluate_env_value_valid', 'descriptor::mod_test::merge_tasks_both_with_values', 'environment::mod_test::evaluate_env_value_multi_line', 'execution_plan::execution_plan_test::should_skip_workspace_member_not_found_glob', 'execution_plan::execution_plan_test::should_skip_workspace_member_not_found_string', 'execution_plan::execution_plan_test::should_skip_workspace_member_found_string', 'functions::decode_func::decode_func_test::decode_invoke_mappings_found_eval_output', 'functions::decode_func::decode_func_test::decode_invoke_empty - should panic', 'execution_plan::execution_plan_test::should_skip_workspace_member_found_glob', 'descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_beta', 'descriptor::mod_test::load_external_descriptor_broken_makefile_panic - should panic', 'functions::decode_func::decode_func_test::decode_invoke_mappings_not_found_use_default', 'functions::decode_func::decode_func_test::decode_invoke_mappings_found_with_default', 'functions::decode_func::decode_func_test::decode_invoke_mappings_found_no_default', 'execution_plan::execution_plan_test::get_task_name_alias', 'execution_plan::execution_plan_test::get_task_name_alias_self_referential - should panic', 'functions::getat_func::getat_func_test::getat_invoke_empty - should panic', 'descriptor::mod_test::merge_tasks_extend_task', 'execution_plan::execution_plan_test::is_workspace_flow_false_in_task_and_sub_flow', 'execution_plan::execution_plan_test::get_task_name_no_alias', 'environment::mod_test::set_env_script_with_condition_true', 'execution_plan::execution_plan_test::get_task_name_platform_alias', 'execution_plan::execution_plan_test::is_workspace_flow_disabled_via_cli', 'execution_plan::execution_plan_test::is_workspace_flow_default_false_in_task_and_sub_flow', 'execution_plan::execution_plan_test::is_workspace_flow_false_in_config', 'functions::decode_func::decode_func_test::decode_invoke_only_source_found_empty', 'functions::decode_func::decode_func_test::decode_invoke_only_default_empty', 'execution_plan::execution_plan_test::is_workspace_flow_no_workspace', 'functions::decode_func::decode_func_test::decode_invoke_only_source_not_found', 'functions::decode_func::decode_func_test::decode_invoke_only_default_eval_value', 'functions::getat_func::getat_func_test::getat_invoke_exists_not_splitted', 'functions::decode_func::decode_func_test::decode_invoke_only_source_found_value', 'functions::decode_func::decode_func_test::decode_invoke_only_default_value', 'functions::decode_func::decode_func_test::decode_invoke_mappings_not_found_use_source', 'functions::getat_func::getat_func_test::getat_invoke_exists_splitted_comma', 'execution_plan::execution_plan_test::is_workspace_flow_true_in_task_and_sub_flow', 'functions::getat_func::getat_func_test::getat_invoke_exists_splitted_space', 'functions::getat_func::getat_func_test::getat_invoke_exists_splitted_middle', 'functions::getat_func::getat_func_test::getat_invoke_invalid_too_many_args - should panic', 'functions::getat_func::getat_func_test::getat_invoke_exists_splitted_out_of_bounds', 'functions::getat_func::getat_func_test::getat_invoke_not_exists', 'functions::mod_test::evaluate_and_run_no_function', 'functions::getat_func::getat_func_test::getat_invoke_invalid_getat_by_empty - should panic', 'functions::mod_test::evaluate_and_run_unknown_function - should panic', 'functions::mod_test::get_function_argument_empty', 'condition::condition_test::validate_condition_for_step_both_valid', 'functions::mod_test::get_function_arguments_empty', 'functions::mod_test::get_function_argument_single_char', 'functions::mod_test::get_function_argument_spaces', 'functions::mod_test::get_function_arguments_multiple_with_spaces', 'functions::mod_test::get_function_arguments_missing_start', 'functions::mod_test::get_function_name_valid', 'functions::mod_test::get_function_argument_mixed', 'functions::mod_test::run_function_decode', 'functions::mod_test::evaluate_and_run_valid', 'functions::mod_test::get_function_arguments_multiple', 'functions::mod_test::run_function_empty - should panic', 'functions::getat_func::getat_func_test::getat_invoke_invalid_getat_by_big - should panic', 'execution_plan::execution_plan_test::get_normalized_task_simple', 'functions::mod_test::get_function_arguments_missing_end', 'functions::mod_test::run_function_remove_empty', 'functions::mod_test::get_function_name_invalid', 'functions::mod_test::run_function_split', 'functions::mod_test::run_function_trim', 'functions::mod_test::modify_arguments_with_functions', 'functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_exists_empty', 'execution_plan::execution_plan_test::is_workspace_flow_true_default', 'functions::mod_test::get_function_arguments_single', 'functions::mod_test::run_function_not_exists - should panic', 'functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_not_exists', 'functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_empty - should panic', 'descriptor::mod_test::load_cargo_aliases_no_file', 'functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_invalid_too_many_args - should panic', 'descriptor::mod_test::load_external_descriptor_extended_not_found_force - should panic', 'functions::split_func::split_func_test::split_invoke_empty - should panic', 'functions::split_func::split_func_test::split_invoke_invalid_split_by_empty - should panic', 'functions::trim_func::trim_func_test::trim_invoke_empty - should panic', 'execution_plan::execution_plan_test::get_task_name_alias_circular - should panic', 'execution_plan::execution_plan_test::is_workspace_flow_disabled_via_task', 'execution_plan::execution_plan_test::is_workspace_flow_true_in_task', 'functions::split_func::split_func_test::split_invoke_not_exists', 'functions::split_func::split_func_test::split_invoke_exists_splitted_comma', 'functions::trim_func::trim_func_test::trim_invoke_exists_with_value', 'functions::trim_func::trim_func_test::trim_invoke_all_spaces', 'functions::remove_empty_func::remove_empty_func_test::remove_empty_invoke_exists_with_value', 'execution_plan::execution_plan_test::is_workspace_flow_true_in_config', 'functions::trim_func::trim_func_test::trim_invoke_exists_empty', 'functions::mod_test::run_function_getat', 'functions::split_func::split_func_test::split_invoke_exists_not_splitted', 'functions::split_func::split_func_test::split_invoke_exists_splitted_space', 'functions::mod_test::run_with_functions', 'functions::split_func::split_func_test::split_invoke_invalid_split_by_big - should panic', 'functions::split_func::split_func_test::split_invoke_invalid_too_many_args - should panic', 'functions::trim_func::trim_func_test::trim_invoke_invalid_too_many_args - should panic', 'functions::trim_func::trim_func_test::trim_invoke_invalid_trim_type - should panic', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_empty_args', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_empty_args_force', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_no_args', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_no_args_force', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_with_args', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_with_args_force', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_with_install_command', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::get_install_crate_args_without_crate_name', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::should_skip_crate_name_empty', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::should_skip_crate_name_false', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::should_skip_crate_name_none', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::should_skip_crate_name_git', 'functions::trim_func::trim_func_test::trim_invoke_not_exists', 'functions::trim_func::trim_func_test::trim_invoke_partial_spaces', 'installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_empty_info', 'installer::crate_installer::crate_installer_test::invoke_rustup_install_none', 'installer::crate_installer::crate_installer_test::is_crate_only_info_with_rustup_component_name', 'installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_found_invalid_line', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_false_minor', 'functions::trim_func::trim_func_test::trim_invoke_trim_end', 'functions::trim_func::trim_func_test::trim_invoke_trim_start', 'installer::crate_installer::crate_installer_test::is_crate_only_info_without_rustup_component_name', 'installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_no_info', 'installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_found_invalid_version', 'installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_not_found', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_equal', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_false_major', 'installer::crate_version_check::crate_version_check_test::get_crate_version_from_info_valid', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_false_patch', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_true_major', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_true_minor', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_for_versions_true_patch', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_invalid_version', 'installer::crate_version_check::crate_version_check_test::is_version_valid_for_versions_equal', 'installer::crate_version_check::crate_version_check_test::is_version_valid_for_versions_false_major', 'installer::crate_version_check::crate_version_check_test::is_version_valid_for_versions_false_minor', 'installer::crate_version_check::crate_version_check_test::is_version_valid_for_versions_false_patch', 'installer::crate_version_check::crate_version_check_test::is_version_valid_invalid_version', 'descriptor::mod_test::load_internal_descriptors_no_stable', 'execution_plan::execution_plan_test::get_normalized_task_multi_extend', 'installer::mod_test::get_cargo_plugin_info_from_command_no_command', 'installer::mod_test::get_cargo_plugin_info_from_command_empty_args', 'installer::mod_test::get_cargo_plugin_info_from_command_not_cargo_command', 'installer::mod_test::get_cargo_plugin_info_from_command_valid', 'descriptor::mod_test::load_not_found - should panic', 'installer::mod_test::install_crate_missing_cargo_command - should panic', 'installer::mod_test::get_cargo_plugin_info_from_command_no_args', 'installer::mod_test::install_disabled_bad_crate', 'installer::mod_test::install_empty', 'installer::mod_test::install_empty_args - should panic', 'descriptor::mod_test::run_load_script_valid_load_script_duckscript', 'installer::mod_test::install_script_duckscript', 'descriptor::env::env_test::merge_env_reorder_script', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_old_version', 'installer::crate_version_check::crate_version_check_test::is_min_version_valid_not_found', 'installer::mod_test::install_script_ok', 'io::io_test::get_path_list_dirs', 'installer::rustup_component_installer::rustup_component_installer_test::is_installed_false', 'installer::mod_test::install_script_error_ignore_errors', 'installer::mod_test::install_script_error - should panic', 'io::io_test::get_path_list_dirs_exclude_dirs', 'io::io_test::get_path_list_dirs_with_wrong_include_file_type - should panic', 'io::io_test::get_path_list_dirs_without_gitignore', 'io::io_test::create_text_file_read_and_delete', 'installer::rustup_component_installer::rustup_component_installer_test::is_installed_non_zero', 'io::io_test::get_path_list_files', 'io::io_test::get_path_list_not_exists', 'io::io_test::get_path_list_files_exclude_files', 'io::io_test::get_path_list_files_and_dirs', 'legacy::legacy_test::get_legacy_cargo_make_home_linux', 'legacy::legacy_test::show_deprecated_attriute_warning_valid', 'logger::logger_test::get_formatted_log_level_debug_no_color', 'logger::logger_test::get_formatted_log_level_debug_with_color', 'logger::logger_test::create_error - should panic', 'io::io_test::write_text_file_read_and_delete', 'logger::logger_test::get_formatted_log_level_error_with_color', 'logger::logger_test::get_formatted_log_level_error_no_color', 'logger::logger_test::get_formatted_log_level_info_with_color', 'logger::logger_test::get_formatted_log_level_warn_no_color', 'logger::logger_test::get_formatted_log_level_warn_with_color', 'logger::logger_test::get_formatted_log_level_info_no_color', 'logger::logger_test::get_formatted_name_with_color', 'logger::logger_test::get_formatted_name_no_color', 'logger::logger_test::get_level_other', 'logger::logger_test::get_level_info', 'logger::logger_test::get_level_error', 'logger::logger_test::get_name_for_filter_info', 'logger::logger_test::get_name_for_filter_error', 'logger::logger_test::get_level_verbose', 'logger::logger_test::get_name_for_filter_warn', 'logger::logger_test::get_name_for_filter_other', 'logger::logger_test::get_name_for_filter_verbose', 'logger::logger_test::get_name_for_level_error', 'logger::logger_test::get_name_for_level_verbose', 'logger::logger_test::get_name_for_level_other', 'plugin::descriptor::descriptor_test::merge_aliases_base_only', 'logger::logger_test::get_name_for_level_info', 'logger::logger_test::get_name_for_level_warn', 'plugin::descriptor::descriptor_test::merge_aliases_empty', 'plugin::descriptor::descriptor_test::merge_aliases_both_and_duplicates', 'plugin::descriptor::descriptor_test::merge_aliases_extended_only', 'plugin::descriptor::descriptor_test::merge_plugins_config_impl_aliases_none', 'plugin::descriptor::descriptor_test::merge_plugins_config_extended_none', 'plugin::descriptor::descriptor_test::merge_plugins_config_both_provided', 'plugin::descriptor::descriptor_test::merge_plugins_config_base_none', 'plugin::descriptor::descriptor_test::merge_plugins_config_impl_extended_aliases_none', 'plugin::descriptor::descriptor_test::merge_plugins_config_impl_base_aliases_none', 'plugin::descriptor::descriptor_test::merge_plugins_config_none', 'plugin::descriptor::descriptor_test::merge_plugins_config_impl_merge_all', 'plugin::descriptor::descriptor_test::merge_plugins_map_base_only', 'plugin::descriptor::descriptor_test::merge_plugins_map_both_and_duplicates', 'plugin::descriptor::descriptor_test::merge_plugins_map_empty', 'plugin::descriptor::descriptor_test::merge_plugins_map_extended_only', 'plugin::runner::runner_test::get_plugin_name_recursive_empty', 'plugin::runner::runner_test::get_plugin_found_with_alias', 'plugin::runner::runner_test::get_plugin_name_recursive_endless_loop - should panic', 'plugin::runner::runner_test::get_plugin_name_recursive_not_found', 'plugin::runner::runner_test::get_plugin_no_plugins_config', 'plugin::runner::runner_test::get_plugin_name_recursive_found', 'plugin::runner::runner_test::get_plugin_found', 'plugin::runner::runner_test::get_plugin_not_found', 'plugin::runner::runner_test::run_task_with_no_plugin_config - should panic', 'plugin::runner::runner_test::run_task_with_plugin_not_found - should panic', 'plugin::runner::runner_test::run_task_no_plugin_value', 'plugin::runner::runner_test::run_task_with_plugin_disabled', 'condition::condition_test::validate_script_valid', 'plugin::types::types_test::plugins_new', 'profile::profile_test::normalize_additional_profiles_empty', 'profile::profile_test::normalize_additional_profiles_multiple', 'profile::profile_test::normalize_additional_profiles_single', 'profile::profile_test::normalize_profile_case_and_spaces', 'profile::profile_test::normalize_profile_mixed_case', 'profile::profile_test::normalize_profile_same', 'profile::profile_test::normalize_profile_spaces', 'runner::runner_test::create_watch_step_valid', 'runner::runner_test::get_sub_task_info_for_routing_info_condition_not_met', 'runner::runner_test::get_sub_task_info_for_routing_info_empty', 'plugin::runner::runner_test::run_task_invoked_with_forced_plugin', 'descriptor::descriptor_deserializer::descriptor_deserializer_test::load_config_stable', 'installer::crate_version_check::crate_version_check_test::is_version_valid_not_found', 'runner::runner_test::get_sub_task_info_for_routing_info_script_found', 'runner::runner_test::get_sub_task_info_for_routing_info_script_not_met', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::is_crate_installed_false', 'descriptor::mod_test::load_internal_descriptors_with_stable', 'scriptengine::duck_script::mod_test::execute_duckscript_cli_arguments', 'installer::rustup_component_installer::rustup_component_installer_test::is_installed_true', 'plugin::sdk::cm_plugin_check_task_condition::cm_plugin_check_task_condition_test::run_valid', 'scriptengine::duck_script::mod_test::execute_duckscript', 'installer::mod_test::install_rustup_via_crate_info', 'scriptengine::generic_script::generic_script_test::execute_shell', 'descriptor::makefiles::mod_test::makefile_ci_coverage_flow_test', 'descriptor::mod_test::load_internal_descriptors_modify_namespace', 'scriptengine::generic_script::generic_script_test::execute_shell_cli_arguments', 'scriptengine::mod_test::get_engine_type_duckscript_from_shebang', 'scriptengine::duck_script::mod_test::execute_duckscript_error_with_validate - should panic', 'scriptengine::mod_test::get_engine_type_duckscript', 'scriptengine::mod_test::get_engine_type_generic', 'scriptengine::duck_script::mod_test::cm_run_task_error - should panic', 'scriptengine::generic_script::generic_script_test::execute_shell_cli_arguments_error - should panic', 'scriptengine::generic_script::generic_script_test::execute_shell_empty_arguments', 'scriptengine::mod_test::get_engine_type_no_runner', 'scriptengine::mod_test::get_engine_type_rust', 'scriptengine::mod_test::get_engine_type_shell_to_batch_from_shebang', 'scriptengine::mod_test::get_engine_type_shebang', 'scriptengine::mod_test::get_engine_type_rust_from_shebang', 'scriptengine::mod_test::get_engine_type_runner_no_extension', 'scriptengine::mod_test::get_engine_type_shell_to_batch', 'scriptengine::duck_script::mod_test::execute_duckscript_crash2 - should panic', 'scriptengine::mod_test::get_script_text_script_content_sections', 'scriptengine::mod_test::get_script_text_vector', 'scriptengine::mod_test::get_script_text_script_content_sections_empty', 'scriptengine::mod_test::get_script_text_single_line', 'scriptengine::duck_script::mod_test::execute_duckscript_cli_arguments2 - should panic', 'scriptengine::mod_test::invoke_no_script', 'scriptengine::mod_test::invoke_no_script_no_runner', 'installer::mod_test::install_crate_already_installed', 'descriptor::mod_test::load_internal_descriptors_no_experimental', 'scriptengine::generic_script::generic_script_test::execute_shell_error_no_validate', 'descriptor::makefiles::mod_test::makefile_copy_apidocs_test', 'installer::mod_test::install_crate_auto_detect_already_installed', 'scriptengine::mod_test::invoke_no_runner', 'scriptengine::mod_test::invoke_shell_to_batch_runner', 'plugin::sdk::cm_plugin_run_task::cm_plugin_run_task_test::run_valid', 'scriptengine::duck_script::mod_test::execute_duckscript_error_no_validate', 'scriptengine::mod_test::invoke_generic_runner', 'scriptengine::shebang_script::shebang_script_test::get_shebang_command_and_args_multi_line', 'scriptengine::os_script::os_script_test::execute_shell', 'scriptengine::mod_test::invoke_os_runner', 'scriptengine::script_utils::script_utils_test::create_script_file_text', 'scriptengine::mod_test::invoke_generic_runner_error - should panic', 'scriptengine::mod_test::invoke_shell_to_batch_runner_error - should panic', 'scriptengine::os_script::os_script_test::execute_shell_error - should panic', 'scriptengine::shebang_script::shebang_script_test::get_shebang_empty_shebang_line', 'scriptengine::shebang_script::shebang_script_test::get_shebang_command_and_args', 'scriptengine::shebang_script::shebang_script_test::get_shebang_not_shebang_line', 'scriptengine::shebang_script::shebang_script_test::get_shebang_empty_vec', 'installer::mod_test::install_rustup_via_rustup_info', 'descriptor::makefiles::mod_test::makefile_coverage_test', 'scriptengine::os_script::os_script_test::execute_shell_error_no_validate', 'scriptengine::shebang_script::shebang_script_test::get_shebang_second_line', 'scriptengine::os_script::os_script_test::execute_shell_with_runner', 'scriptengine::shebang_script::shebang_script_test::get_shebang_space_shebang_line', 'scriptengine::shebang_script::shebang_script_test::get_shebang_single_command', 'scriptengine::shebang_script::shebang_script_test::execute_sh_error - should panic', 'scriptengine::shebang_script::shebang_script_test::execute_sh', 'types::types_test::config_section_apply_config_empty_modify_namespace', 'types::types_test::cache_new', 'types::types_test::cli_args_new', 'types::types_test::config_section_apply_config_with_values_modify_empty', 'types::types_test::config_section_apply_config_empty_modify_empty', 'types::types_test::config_section_apply_config_with_values_modify_namespace', 'types::types_test::config_section_extend_no_values', 'types::types_test::config_section_extend_all_values', 'types::types_test::config_section_extend_some_values', 'types::types_test::config_section_get_get_load_script_all_defined', 'types::types_test::config_section_get_get_load_script_platform_none', 'types::types_test::config_section_get_get_load_script_all_none', 'types::types_test::deprecation_info_partial_eq_diff_bool', 'types::types_test::config_section_get_get_load_script_platform_some', 'types::types_test::config_section_new', 'types::types_test::deprecation_info_partial_eq_diff_type', 'toolchain::toolchain_test::wrap_command_unreachable_version - should panic', 'scriptengine::shell_to_batch::shell_to_batch_test::execute_error_no_validate', 'types::types_test::deprecation_info_partial_eq_same_bool_false', 'types::types_test::deprecation_info_partial_eq_same_bool_true', 'types::types_test::deprecation_info_partial_eq_same_message', 'descriptor::mod_test::load_internal_descriptors_with_experimental', 'scriptengine::shell_to_batch::shell_to_batch_test::execute_error - should panic', 'types::types_test::deprecation_info_partial_eq_diff_message', 'scriptengine::shell_to_batch::shell_to_batch_test::execute_valid', 'io::io_test::get_path_list_dirs_with_gitignore', 'types::types_test::config_apply_modify_empty', 'types::types_test::config_apply_modify_all', 'types::types_test::extend_script_value_both_none', 'types::types_test::extend_script_value_current_new_different_types', 'descriptor::mod_test::load_internal_descriptors_modify_empty', 'types::types_test::env_value_deserialize_bool_true', 'types::types_test::extend_script_value_current_text_new_none', 'types::types_test::env_value_deserialize_bool_false', 'types::types_test::extend_script_value_current_text_new_text', 'types::types_test::env_value_deserialize_list_with_values', 'types::types_test::extend_script_value_current_none_new_text', 'plugin::sdk::cm_plugin_run_custom_task::cm_plugin_run_custom_task_test::run_valid', 'types::types_test::env_value_deserialize_conditional_env_value_no_condition', 'types::types_test::extend_script_value_new_only_post_content_section', 'types::types_test::extend_script_value_new_only_main_content_section', 'types::types_test::get_namespaced_task_name_empty', 'types::types_test::extend_script_value_new_all_content_sections', 'types::types_test::extend_script_value_new_only_pre_content_section', 'types::types_test::external_config_new', 'types::types_test::get_namespaced_task_name_with_value', 'types::types_test::flow_state_new', 'types::types_test::env_value_deserialize_string', 'types::types_test::env_value_deserialize_conditional_env_value_with_condition', 'types::types_test::global_config_new', 'types::types_test::install_cargo_plugin_info_eq_different_crate_name_type', 'types::types_test::install_cargo_plugin_info_eq_different_crate_name_value', 'types::types_test::env_value_deserialize_list_empty', 'types::types_test::install_cargo_plugin_info_eq_different_install_command_type', 'types::types_test::env_value_deserialize_unset', 'types::types_test::env_value_deserialize_decode', 'types::types_test::install_cargo_plugin_info_eq_different_min_version_value', 'types::types_test::install_cargo_plugin_info_eq_different_force_value', 'types::types_test::install_cargo_plugin_info_eq_same_no_force', 'types::types_test::install_cargo_plugin_info_eq_different_install_command_value', 'types::types_test::install_cargo_plugin_info_eq_same_no_install_command', 'types::types_test::install_cargo_plugin_info_eq_same_all', 'types::types_test::install_cargo_plugin_info_eq_same_no_crate_name', 'types::types_test::install_crate_eq_different_cargo_plugin_info', 'types::types_test::env_value_deserialize_script', 'types::types_test::install_crate_eq_different_rustup_component_info', 'types::types_test::env_value_deserialize_profile', 'types::types_test::install_crate_eq_different_crate_info', 'types::types_test::install_crate_eq_different_enabled_value', 'types::types_test::install_crate_eq_same_cargo_plugin_info', 'types::types_test::install_crate_eq_different_value', 'types::types_test::install_crate_eq_same_disabled_value', 'types::types_test::install_crate_eq_same_enabled_value', 'types::types_test::install_crate_eq_same_value', 'types::types_test::install_crate_eq_same_rustup_component_info', 'types::types_test::install_crate_eq_same_crate_info', 'types::types_test::install_crate_info_deserialize_crate_and_install_command', 'types::types_test::install_crate_info_deserialize_missing_test_arg - should panic', 'types::types_test::install_crate_info_deserialize_install_command', 'types::types_test::install_crate_info_deserialize_array_test_arg', 'types::types_test::install_crate_info_eq_different_binary', 'types::types_test::install_crate_info_deserialize_only_install_command', 'types::types_test::install_crate_info_eq_different_component_type', 'types::types_test::install_crate_info_eq_different_component_value', 'types::types_test::install_crate_info_eq_different_crate_name', 'types::types_test::install_crate_info_deserialize_string_test_arg', 'types::types_test::install_crate_info_eq_different_force_type', 'types::types_test::install_crate_info_eq_different_force_value', 'types::types_test::install_crate_info_eq_different_install_command_value', 'types::types_test::install_crate_info_eq_different_install_command_type', 'types::types_test::install_crate_info_eq_different_min_version_type', 'types::types_test::install_crate_info_eq_different_min_version_value', 'types::types_test::install_crate_info_eq_different_test_arg', 'types::types_test::install_crate_info_eq_different_version_type', 'installer::mod_test::install_enabled_crate_already_installed', 'types::types_test::install_crate_info_eq_same_no_install_command', 'types::types_test::install_crate_info_eq_same_no_min_version', 'types::types_test::install_crate_info_eq_different_version_value', 'types::types_test::install_crate_info_eq_same_all', 'types::types_test::install_crate_info_eq_same_no_force', 'types::types_test::install_crate_info_eq_same_no_component', 'types::types_test::install_crate_info_eq_same_no_version', 'types::types_test::install_rustup_component_info_deserialize_missing_test_arg', 'types::types_test::install_rustup_component_info_deserialize_array_test_arg', 'types::types_test::install_rustup_component_info_eq_different_binary', 'types::types_test::install_rustup_component_info_eq_different_component', 'descriptor::mod_test::load_internal_descriptors_modify_private', 'types::types_test::install_rustup_component_info_eq_different_test_arg_type', 'types::types_test::install_rustup_component_info_eq_different_binary_type', 'types::types_test::install_rustup_component_info_eq_same_all', 'types::types_test::install_rustup_component_info_eq_different_test_arg', 'types::types_test::install_rustup_component_info_eq_same_no_binary', 'types::types_test::install_rustup_component_info_eq_same_no_test_arg', 'types::types_test::install_rustup_component_info_deserialize_string_test_arg', 'types::types_test::task_apply_modify_not_private', 'types::types_test::task_apply_modify_empty', 'types::types_test::task_apply_modify_private', 'types::types_test::task_apply_run_task_details_single_modify_namespace', 'types::types_test::task_apply_run_task_details_multiple_modify_namespace', 'types::types_test::task_apply_no_run_task_modify_namespace', 'types::types_test::task_apply_run_task_name_modify_namespace', 'types::types_test::task_apply_task_empty_modify_empty', 'types::types_test::task_apply_run_task_routing_info_multiple_modify_namespace', 'types::types_test::task_apply_task_empty_modify_namespace', 'descriptor::makefiles::mod_test::makefile_build_file_increment_test', 'types::types_test::task_apply_run_task_routing_info_single_modify_namespace', 'types::types_test::task_apply_task_empty_modify_private', 'types::types_test::task_is_actionable_all_none', 'types::types_test::task_is_actionable_disabled', 'types::types_test::task_get_alias_all_none', 'types::types_test::task_get_alias_common_defined', 'types::types_test::task_apply_task_empty_modify_not_private', 'types::types_test::task_get_alias_platform_defined', 'types::types_test::task_is_actionable_with_empty_dependencies', 'types::types_test::task_is_actionable_with_command', 'types::types_test::task_is_actionable_with_empty_env', 'types::types_test::task_is_actionable_with_empty_env_files', 'types::types_test::task_is_actionable_with_env', 'types::types_test::task_is_actionable_with_env_files', 'types::types_test::task_get_normalized_task_undefined', 'types::types_test::task_is_actionable_with_install_script', 'types::types_test::task_is_actionable_with_dependencies', 'types::types_test::task_is_actionable_with_script', 'types::types_test::task_is_actionable_with_install_crate', 'types::types_test::task_is_actionable_with_run_task', 'types::types_test::task_is_actionable_with_watch_options', 'command::command_test::run_command_for_toolchain', 'types::types_test::task_get_normalized_task_with_override_clear_true', 'types::types_test::task_is_actionable_with_watch_true', 'types::types_test::task_extend_both_have_misc_data', 'types::types_test::task_is_actionable_with_watch_false', 'types::types_test::task_is_valid_all_none', 'types::types_test::task_is_valid_both_command_and_script', 'types::types_test::task_get_normalized_task_with_override_no_clear', 'types::types_test::task_is_valid_both_run_task_and_command', 'types::types_test::task_get_normalized_task_with_override_clear_false', 'types::types_test::task_is_valid_both_run_task_and_script', 'types::types_test::task_should_ignore_errors_force_false', 'types::types_test::task_should_ignore_errors_none', 'types::types_test::task_is_valid_only_run_task', 'types::types_test::task_is_valid_only_script', 'types::types_test::task_new', 'types::types_test::task_should_ignore_errors_false', 'types::types_test::task_extend_clear_with_no_data', 'types::types_test::task_extend_extended_have_all_fields', 'types::types_test::task_get_normalized_task_with_override_clear_false_partial_override', 'types::types_test::task_should_ignore_errors_false_force_true', 'types::types_test::task_should_ignore_errors_force_true', 'types::types_test::task_should_ignore_errors_true', 'types::types_test::task_extend_clear_with_all_data', 'types::types_test::toolchain_specifier_deserialize_min_version', 'toolchain::toolchain_test::wrap_command_invalid_toolchain - should panic', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::install_crate_already_installed_test', 'types::types_test::unstable_feature_to_env_name', 'types::types_test::toolchain_specifier_deserialize_string', 'types::types_test::workspace_new', 'version::version_test::get_days_always', 'version::version_test::get_days_monthly', 'version::version_test::get_days_none', 'version::version_test::get_days_daily', 'version::version_test::get_days_unknown', 'version::version_test::get_days_weekly', 'version::version_test::get_now_as_seconds_valid', 'version::version_test::get_version_from_output_empty', 'version::version_test::get_version_from_output_few_args', 'version::version_test::get_version_from_output_found', 'version::version_test::has_amount_of_days_passed_false', 'version::version_test::has_amount_of_days_passed_false_by_second', 'version::version_test::has_amount_of_days_passed_from_last_check_false', 'version::version_test::has_amount_of_days_passed_from_last_check_false_by_second', 'version::version_test::has_amount_of_days_passed_from_last_check_true_by_day', 'version::version_test::has_amount_of_days_passed_from_last_check_true_by_second', 'version::version_test::has_amount_of_days_passed_from_last_check_zero_days', 'version::version_test::has_amount_of_days_passed_none', 'version::version_test::has_amount_of_days_passed_true_by_day', 'version::version_test::has_amount_of_days_passed_true_by_second', 'version::version_test::has_amount_of_days_passed_zero_days', 'version::version_test::is_newer_found_newer_major', 'version::version_test::is_newer_found_newer_minor', 'version::version_test::is_newer_found_newer_patch', 'version::version_test::is_newer_found_older_major_newer_minor', 'version::version_test::is_newer_found_older_major_newer_patch', 'version::version_test::is_newer_found_older_minor_newer_patch', 'version::version_test::is_newer_found_same', 'version::version_test::is_newer_same_allow_partial_no_patch', 'version::version_test::is_newer_same_allow_partial_no_patch_for_newer', 'version::version_test::is_newer_same_allow_partial_no_patch_for_older', 'version::version_test::is_newer_same_full_allow_partial', 'version::version_test::is_newer_same_full_no_partial', 'version::version_test::is_newer_same_no_partial_no_patch', 'version::version_test::is_newer_same_no_partial_no_patch_for_newer', 'version::version_test::is_newer_same_no_partial_no_patch_for_older', 'version::version_test::is_same_equal_allow_partial_no_patch_for_older', 'version::version_test::should_check_for_args_cli_disabled', 'version::version_test::print_notification_simple', 'version::version_test::should_check_for_args_in_ci', 'version::version_test::should_check_for_args_true', 'descriptor::makefiles::mod_test::makefile_codecov_test', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::is_crate_installed_true', 'descriptor::makefiles::mod_test::makefile_do_on_members_test', 'installer::rustup_component_installer::rustup_component_installer_test::is_installed_with_toolchain_true', 'installer::rustup_component_installer::rustup_component_installer_test::is_installed_with_toolchain_false', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::is_crate_installed_with_toolchain_true', 'installer::rustup_component_installer::rustup_component_installer_test::install_test', 'installer::crate_installer::crate_installer_test::invoke_rustup_install_with_toolchain_none', 'installer::cargo_plugin_installer::cargo_plugin_installer_test::is_crate_installed_with_toolchain_false', 'installer::rustup_component_installer::rustup_component_installer_test::is_installed_with_toolchain_non_zero', 'installer::rustup_component_installer::rustup_component_installer_test::invoke_rustup_install_fail', 'scriptengine::mod_test::invoke_duckscript_runner_error - should panic', 'scriptengine::mod_test::invoke_duckscript_runner', 'condition::condition_test::validate_condition_for_step_invalid_rust_version', 'installer::crate_installer::crate_installer_test::invoke_rustup_install_fail', 'condition::condition_test::validate_rust_version_with_valid_condition', 'condition::condition_test::validate_condition_for_step_valid_rust_version', 'condition::condition_test::validate_rust_version_with_invalid_condition', 'installer::crate_version_check::crate_version_check_test::get_crate_version_for_rustup_component', 'installer::rustup_component_installer::rustup_component_installer_test::invoke_rustup_install_with_toolchain_fail', 'installer::crate_installer::crate_installer_test::invoke_rustup_install_with_toolchain_fail', 'installer::rustup_component_installer::rustup_component_installer_test::install_with_toolchain_test', 'installer::crate_installer::crate_installer_test::invoke_cargo_install_test', 'installer::mod_test::install_crate_auto_detect_unable_to_install - should panic', 'version::version_test::check_full', 'installer::crate_installer::crate_installer_test::invoke_cargo_install_with_toolchain_test', 'installer::crate_installer::crate_installer_test::install_test_test', 'installer::crate_installer::crate_installer_test::install_test_with_toolchain_test', 'cli_commands::diff_steps::diff_steps_test::run_missing_task_in_first_config - should panic', 'cli_commands::print_steps::print_steps_test::print_task_not_found - should panic', 'cli_commands::print_steps::print_steps_test::print_default_format', 'environment::crateinfo::crateinfo_test::crate_info_load', 'execution_plan::execution_plan_test::create_single_private - should panic', 'execution_plan::execution_plan_test::create_single_allow_private', 'execution_plan::execution_plan_test::create_with_dependencies_disabled', 'execution_plan::execution_plan_test::create_single', 'execution_plan::execution_plan_test::create_platform_disabled', 'execution_plan::execution_plan_test::create_with_dependencies_sub_flow', 'execution_plan::execution_plan_test::create_with_foreign_dependencies_filename', 'execution_plan::execution_plan_test::create_with_dependencies_and_skip_filter', 'execution_plan::execution_plan_test::create_single_disabled', 'execution_plan::execution_plan_test::create_with_dependencies', 'execution_plan::execution_plan_test::create_with_foreign_dependencies_file_and_directory', 'plugin::sdk::cm_plugin_force_plugin_set::cm_plugin_force_plugin_set_test::force_plugin_set_and_clear_flow_test', 'execution_plan::execution_plan_test::create_with_foreign_dependencies_directory', 'execution_plan::execution_plan_test::create_disabled_task_with_dependencies', 'installer::crate_installer::crate_installer_test::install_already_installed_crate_only', 'cli_commands::diff_steps::diff_steps_test::run_different', 'cli_commands::diff_steps::diff_steps_test::run_missing_task_in_second_config - should panic', 'cli_commands::diff_steps::diff_steps_test::run_same', 'scriptengine::mod_test::invoke_rust_runner_error - should panic', 'scriptengine::duck_script::mod_test::cm_run_task_valid', 'cli::cli_test::run_set_task_var_args', 'main_test::get_name_test', 'makers_test::get_name_test'], 'failure': []}, 'PASS_TO_PASS': {'success': ['tests::it_works'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sagiegurari__cargo-make-714: resolved: True
+2026-04-17 07:27:44,021 - INFO - Attempting to stop container rustb.eval.sagiegurari__cargo-make-714.gold_run1...
+2026-04-17 07:28:01,356 - INFO - Attempting to remove container rustb.eval.sagiegurari__cargo-make-714.gold_run1...
+2026-04-17 07:28:02,224 - INFO - Container rustb.eval.sagiegurari__cargo-make-714.gold_run1 removed.
+2026-04-17 07:28:02,224 - INFO - Attempting to remove image rustbench/sagiegurari__cargo-make:pr-714...
+2026-04-17 07:28:03,282 - INFO - Image rustbench/sagiegurari__cargo-make:pr-714 removed.

@@ -1,0 +1,467 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ chmod -R 755 /workspace
++ git apply -v -
+Checking patch tests/test.rs...
+Applied patch tests/test.rs cleanly.
++ git status
+On branch master
+Your branch is behind 'origin/master' by 490 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .github/workflows/ci.yml
+	modified:   .gitignore
+	modified:   Cargo.toml
+	modified:   LICENSE-APACHE
+	modified:   LICENSE-MIT
+	modified:   README.md
+	modified:   src/args.rs
+	modified:   src/expand.rs
+	modified:   src/lib.rs
+	modified:   src/lifetime.rs
+	modified:   src/parse.rs
+	modified:   src/receiver.rs
+	modified:   tests/compiletest.rs
+	modified:   tests/executor/mod.rs
+	modified:   tests/test.rs
+	modified:   tests/ui/bare-trait-object.rs
+	modified:   tests/ui/bare-trait-object.stderr
+	modified:   tests/ui/delimiter-span.rs
+	modified:   tests/ui/delimiter-span.stderr
+	modified:   tests/ui/missing-body.rs
+	modified:   tests/ui/missing-body.stderr
+	modified:   tests/ui/must-use.rs
+	modified:   tests/ui/must-use.stderr
+	modified:   tests/ui/send-not-implemented.rs
+	modified:   tests/ui/send-not-implemented.stderr
+	modified:   tests/ui/unsupported-self.rs
+	modified:   tests/ui/unsupported-self.stderr
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.cargo/
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+old mode 100644
+new mode 100755
+diff --git a/.gitignore b/.gitignore
+old mode 100644
+new mode 100755
+diff --git a/Cargo.toml b/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/LICENSE-APACHE b/LICENSE-APACHE
+old mode 100644
+new mode 100755
+diff --git a/LICENSE-MIT b/LICENSE-MIT
+old mode 100644
+new mode 100755
+diff --git a/README.md b/README.md
+old mode 100644
+new mode 100755
+diff --git a/src/args.rs b/src/args.rs
+old mode 100644
+new mode 100755
+diff --git a/src/expand.rs b/src/expand.rs
+old mode 100644
+new mode 100755
+diff --git a/src/lib.rs b/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/src/lifetime.rs b/src/lifetime.rs
+old mode 100644
+new mode 100755
+diff --git a/src/parse.rs b/src/parse.rs
+old mode 100644
+new mode 100755
+diff --git a/src/receiver.rs b/src/receiver.rs
+old mode 100644
+new mode 100755
+index 1a36e7a..b08e73a
+--- a/src/receiver.rs
++++ b/src/receiver.rs
+@@ -1,4 +1,5 @@
+ use proc_macro2::{Group, TokenStream, TokenTree};
++use quote::quote;
+ use std::iter::FromIterator;
+ use std::mem;
+ use syn::punctuated::Punctuated;
+@@ -153,6 +154,55 @@ impl ReplaceReceiver {
+             *path = parse_quote!(::core::marker::PhantomData::<#error>);
+         }
+     }
++
++    fn visit_token_stream(&self, tokens: &mut TokenStream) -> bool {
++        let mut out = Vec::new();
++        let mut modified = false;
++        let mut iter = tokens.clone().into_iter().peekable();
++        while let Some(tt) = iter.next() {
++            match tt {
++                TokenTree::Ident(mut ident) => {
++                    modified |= prepend_underscore_to_self(&mut ident);
++                    if ident == "Self" {
++                        modified = true;
++                        if self.as_trait.is_none() {
++                            let ident = Ident::new("AsyncTrait", ident.span());
++                            out.push(TokenTree::Ident(ident));
++                        } else {
++                            let self_ty = &self.with;
++                            match iter.peek() {
++                                Some(TokenTree::Punct(p)) if p.as_char() == ':' => {
++                                    let next = iter.next().unwrap();
++                                    match iter.peek() {
++                                        Some(TokenTree::Punct(p)) if p.as_char() == ':' => {
++                                            out.extend(quote!(<#self_ty>))
++                                        }
++                                        _ => out.extend(quote!(#self_ty)),
++                                    }
++                                    out.push(next);
++                                }
++                                _ => out.extend(quote!(#self_ty)),
++                            }
++                        }
++                    } else {
++                        out.push(TokenTree::Ident(ident));
++                    }
++                }
++                TokenTree::Group(group) => {
++                    let mut content = group.stream();
++                    modified |= self.visit_token_stream(&mut content);
++                    let mut new = Group::new(group.delimiter(), content);
++                    new.set_span(group.span());
++                    out.push(TokenTree::Group(new));
++                }
++                other => out.push(other),
++            }
++        }
++        if modified {
++            *tokens = TokenStream::from_iter(out);
++        }
++        modified
++    }
+ }
+ 
+ impl VisitMut for ReplaceReceiver {
+@@ -226,7 +276,7 @@ impl VisitMut for ReplaceReceiver {
+         // `fn`, then `self` is more likely to refer to something other than the
+         // outer function's self argument.
+         if !contains_fn(i.tokens.clone()) {
+-            fold_token_stream(&mut i.tokens);
++            self.visit_token_stream(&mut i.tokens);
+         }
+     }
+ }
+@@ -239,32 +289,6 @@ fn contains_fn(tokens: TokenStream) -> bool {
+     })
+ }
+ 
+-fn fold_token_stream(tokens: &mut TokenStream) -> bool {
+-    let mut out = Vec::new();
+-    let mut modified = false;
+-    for tt in tokens.clone() {
+-        match tt {
+-            TokenTree::Ident(mut ident) => {
+-                modified |= prepend_underscore_to_self(&mut ident);
+-                modified |= replace_self_from_outer_function(&mut ident);
+-                out.push(TokenTree::Ident(ident));
+-            }
+-            TokenTree::Group(group) => {
+-                let mut content = group.stream();
+-                modified |= fold_token_stream(&mut content);
+-                let mut new = Group::new(group.delimiter(), content);
+-                new.set_span(group.span());
+-                out.push(TokenTree::Group(new));
+-            }
+-            other => out.push(other),
+-        }
+-    }
+-    if modified {
+-        *tokens = TokenStream::from_iter(out);
+-    }
+-    modified
+-}
+-
+ fn prepend_underscore_to_self(ident: &mut Ident) -> bool {
+     let modified = ident == "self";
+     if modified {
+@@ -272,11 +296,3 @@ fn prepend_underscore_to_self(ident: &mut Ident) -> bool {
+     }
+     modified
+ }
+-
+-fn replace_self_from_outer_function(ident: &mut Ident) -> bool {
+-    let modified = ident == "Self";
+-    if modified {
+-        *ident = Ident::new("AsyncTrait", ident.span());
+-    }
+-    modified
+-}
+diff --git a/tests/compiletest.rs b/tests/compiletest.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/executor/mod.rs b/tests/executor/mod.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/test.rs b/tests/test.rs
+old mode 100644
+new mode 100755
+index 3a42629..4bca199
+--- a/tests/test.rs
++++ b/tests/test.rs
+@@ -785,3 +785,85 @@ pub mod issue89 {
+         async fn f(&self) {}
+     }
+ }
++
++// https://github.com/dtolnay/async-trait/issues/92
++pub mod issue92 {
++    use async_trait::async_trait;
++
++    macro_rules! mac {
++        ($($tt:tt)*) => {
++            $($tt)*
++        };
++    }
++
++    pub struct Struct<T> {
++        _x: T,
++    }
++
++    impl<T> Struct<T> {
++        const ASSOCIATED1: &'static str = "1";
++        async fn associated1() {}
++    }
++
++    #[async_trait]
++    pub trait Trait
++    where
++        mac!(Self): Send,
++    {
++        const ASSOCIATED2: &'static str;
++        type Associated2;
++
++        #[allow(path_statements)]
++        async fn associated2(&self) {
++            // trait items
++            mac!(let _: Self::Associated2;);
++            mac!(let _: <Self>::Associated2;);
++            mac!(let _: <Self as Trait>::Associated2;);
++            mac!(Self::ASSOCIATED2;);
++            mac!(<Self>::ASSOCIATED2;);
++            mac!(<Self as Trait>::ASSOCIATED2;);
++            mac!(let _ = Self::associated2(self););
++            mac!(let _ = <Self>::associated2(self););
++            mac!(let _ = <Self as Trait>::associated2(self););
++        }
++    }
++
++    #[async_trait]
++    impl<T: Send + Sync> Trait for Struct<T>
++    where
++        mac!(Self): Send,
++    {
++        const ASSOCIATED2: &'static str = "2";
++        type Associated2 = ();
++
++        #[allow(path_statements)]
++        async fn associated2(&self) {
++            // inherent items
++            mac!(Self::ASSOCIATED1;);
++            mac!(<Self>::ASSOCIATED1;);
++            mac!(let _ = Self::associated1(););
++            mac!(let _ = <Self>::associated1(););
++
++            // trait items
++            mac!(let _: <Self as Trait>::Associated2;);
++            mac!(Self::ASSOCIATED2;);
++            mac!(<Self>::ASSOCIATED2;);
++            mac!(<Self as Trait>::ASSOCIATED2;);
++            mac!(let _ = Self::associated2(self););
++            mac!(let _ = <Self>::associated2(self););
++            mac!(let _ = <Self as Trait>::associated2(self););
++        }
++    }
++
++    pub struct Unit;
++
++    #[async_trait]
++    impl Trait for Unit {
++        const ASSOCIATED2: &'static str = "2";
++        type Associated2 = ();
++
++        async fn associated2(&self) {
++            mac!(let Self: Self = *self;);
++        }
++    }
++}
+diff --git a/tests/ui/bare-trait-object.rs b/tests/ui/bare-trait-object.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/bare-trait-object.stderr b/tests/ui/bare-trait-object.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/delimiter-span.rs b/tests/ui/delimiter-span.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/delimiter-span.stderr b/tests/ui/delimiter-span.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/missing-body.rs b/tests/ui/missing-body.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/missing-body.stderr b/tests/ui/missing-body.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/must-use.rs b/tests/ui/must-use.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/must-use.stderr b/tests/ui/must-use.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/send-not-implemented.rs b/tests/ui/send-not-implemented.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/send-not-implemented.stderr b/tests/ui/send-not-implemented.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/unsupported-self.rs b/tests/ui/unsupported-self.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/unsupported-self.stderr b/tests/ui/unsupported-self.stderr
+old mode 100644
+new mode 100755
++ cargo test --no-fail-fast
+ Downloading crates ...
+  Downloaded rustversion v1.0.2 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded trybuild v1.0.28 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded tracing-futures v0.2.4 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded proc-macro2 v1.0.18 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded tracing-attributes v0.1.8 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded quote v1.0.6 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded tracing v0.1.14 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded syn v1.0.30 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded termcolor v1.1.0 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded unicode-xid v0.2.0 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded pin-project v0.4.17 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded toml v0.5.6 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded dissimilar v1.0.1 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded serde v1.0.111 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded serde_json v1.0.53 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded cfg-if v0.1.10 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded tracing-core v0.1.10 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded itoa v0.4.5 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded serde_derive v1.0.111 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+  Downloaded pin-project-internal v0.4.17 (registry `/testbed/.cargo/lts-repo-at-4e6e9b249a`)
+   Compiling proc-macro2 v1.0.18
+   Compiling unicode-xid v0.2.0
+   Compiling syn v1.0.30
+   Compiling serde v1.0.111
+   Compiling ryu v1.0.5
+   Compiling lazy_static v1.4.0
+   Compiling itoa v0.4.5
+   Compiling cfg-if v0.1.10
+   Compiling rustversion v1.0.2
+   Compiling glob v0.3.0
+   Compiling termcolor v1.1.0
+   Compiling dissimilar v1.0.1
+   Compiling tracing-core v0.1.10
+   Compiling quote v1.0.6
+   Compiling serde_derive v1.0.111
+   Compiling tracing-attributes v0.1.8
+   Compiling pin-project-internal v0.4.17
+   Compiling async-trait v0.1.31 (/workspace)
+   Compiling tracing v0.1.14
+   Compiling pin-project v0.4.17
+   Compiling tracing-futures v0.2.4
+   Compiling toml v0.5.6
+   Compiling serde_json v1.0.53
+   Compiling trybuild v1.0.28
+    Finished test [unoptimized + debuginfo] target(s) in 26.02s
+     Running target/debug/deps/async_trait-4b3a4f18214475bf
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/compiletest-21cbdd1147e02de9
+
+running 1 test
+test ui ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test-23bc5471c06cc9e7
+
+running 1 test
+test issue45::tracing ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests async-trait
+
+running 8 tests
+test src/lib.rs -  (line 15) ... ok
+test src/lib.rs -  (line 165) ... ok
+test src/lib.rs -  (line 126) ... ok
+test src/lib.rs -  (line 186) ... ok
+test src/lib.rs -  (line 286) ... ok
+test src/lib.rs -  (line 265) ... ok
+test src/lib.rs -  (line 211) ... ok
+test src/lib.rs -  (line 47) ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ git status
+On branch master
+Your branch is behind 'origin/master' by 490 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .github/workflows/ci.yml
+	modified:   .gitignore
+	modified:   Cargo.toml
+	modified:   LICENSE-APACHE
+	modified:   LICENSE-MIT
+	modified:   README.md
+	modified:   src/args.rs
+	modified:   src/expand.rs
+	modified:   src/lib.rs
+	modified:   src/lifetime.rs
+	modified:   src/parse.rs
+	modified:   src/receiver.rs
+	modified:   tests/compiletest.rs
+	modified:   tests/executor/mod.rs
+	modified:   tests/test.rs
+	modified:   tests/ui/bare-trait-object.rs
+	modified:   tests/ui/bare-trait-object.stderr
+	modified:   tests/ui/delimiter-span.rs
+	modified:   tests/ui/delimiter-span.stderr
+	modified:   tests/ui/missing-body.rs
+	modified:   tests/ui/missing-body.stderr
+	modified:   tests/ui/must-use.rs
+	modified:   tests/ui/must-use.stderr
+	modified:   tests/ui/send-not-implemented.rs
+	modified:   tests/ui/send-not-implemented.stderr
+	modified:   tests/ui/unsupported-self.rs
+	modified:   tests/ui/unsupported-self.stderr
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.cargo/
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git reset --hard bee997398ff951b505f251b237dd08eeddd8e9c7
+HEAD is now at bee9973 Merge pull request #98 from taiki-e/dead-code
++ git clean -fd
+Removing .cargo/

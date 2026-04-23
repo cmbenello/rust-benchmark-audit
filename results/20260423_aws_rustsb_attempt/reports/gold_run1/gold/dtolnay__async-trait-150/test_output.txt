@@ -1,0 +1,97 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/test.rs...
+Applied patch tests/test.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded tracing-core v0.1.17 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded termcolor v1.1.2 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded serde_derive v1.0.124 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded unicode-xid v0.2.1 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded tracing-futures v0.2.5 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded serde_json v1.0.64 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded itoa v0.4.7 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded tracing-attributes v0.1.13 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded dissimilar v1.0.2 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded cfg-if v1.0.0 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded pin-project v1.0.5 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded trybuild v1.0.41 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded toml v0.5.8 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded proc-macro2 v1.0.24 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded tracing v0.1.25 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded syn v1.0.62 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded rustversion v1.0.4 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded serde v1.0.124 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded pin-project-internal v1.0.5 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded pin-project-lite v0.2.6 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+  Downloaded quote v1.0.9 (registry `/testbed/.cargo/lts-repo-at-28880462a8`)
+   Compiling proc-macro2 v1.0.24
+   Compiling unicode-xid v0.2.1
+   Compiling syn v1.0.62
+   Compiling serde_derive v1.0.124
+   Compiling serde v1.0.124
+   Compiling ryu v1.0.5
+   Compiling lazy_static v1.4.0
+   Compiling serde_json v1.0.64
+   Compiling trybuild v1.0.41
+   Compiling pin-project-lite v0.2.6
+   Compiling async-trait v0.1.45 (/workspace)
+   Compiling itoa v0.4.7
+   Compiling cfg-if v1.0.0
+   Compiling rustversion v1.0.4
+   Compiling glob v0.3.0
+   Compiling dissimilar v1.0.2
+   Compiling termcolor v1.1.2
+   Compiling tracing-core v0.1.17
+   Compiling quote v1.0.9
+   Compiling tracing-attributes v0.1.13
+   Compiling pin-project-internal v1.0.5
+   Compiling tracing v0.1.25
+   Compiling pin-project v1.0.5
+   Compiling tracing-futures v0.2.5
+   Compiling toml v0.5.8
+    Finished test [unoptimized + debuginfo] target(s) in 18.86s
+     Running target/debug/deps/async_trait-3fc6400b85b204d2
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running target/debug/deps/compiletest-e03c8e03a1af87f8
+
+running 1 test
+test ui ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running target/debug/deps/test-446a6658eeb1e28a
+
+running 2 tests
+test drop_order::test_drop_order ... ok
+test issue45::tracing ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests async-trait
+
+running 8 tests
+test src/lib.rs - (line 15) ... ok
+test src/lib.rs - (line 165) ... ok
+test src/lib.rs - (line 126) ... ok
+test src/lib.rs - (line 286) ... ok
+test src/lib.rs - (line 186) ... ok
+test src/lib.rs - (line 47) ... ok
+test src/lib.rs - (line 265) ... ok
+test src/lib.rs - (line 211) ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
++ git reset --hard 2c4cde7ce826c77fe08a8f67d6fdc47b023adf0f
+HEAD is now at 2c4cde7 Release 0.1.45
++ git clean -fd
+Removing .cargo/

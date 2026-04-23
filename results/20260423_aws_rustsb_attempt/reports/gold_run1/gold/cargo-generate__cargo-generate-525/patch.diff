@@ -1,0 +1,126 @@
+diff --git a/src/app_config.rs b/src/app_config.rs
+--- a/src/app_config.rs
++++ b/src/app_config.rs
+@@ -7,7 +7,7 @@ use std::{
+     path::{Path, PathBuf},
+ };
+ 
+-use crate::emoji;
++use crate::info;
+ 
+ pub const CONFIG_FILE_NAME: &str = "cargo-generate.toml";
+ 
+diff --git a/src/app_config.rs b/src/app_config.rs
+--- a/src/app_config.rs
++++ b/src/app_config.rs
+@@ -34,9 +34,8 @@ impl AppConfig {
+             Ok(if cfg.trim().is_empty() {
+                 Self::default()
+             } else {
+-                println!(
+-                    "{} {} {}",
+-                    emoji::INFO,
++                info!(
++                    "{} {}",
+                     style("Using application config:").bold(),
+                     style(path.display()).underlined()
+                 );
+diff --git a/src/args.rs b/src/args.rs
+--- a/src/args.rs
++++ b/src/args.rs
+@@ -121,6 +121,10 @@ pub struct Args {
+     /// Generate the template directly into the current dir. No subfolder will be created and no vcs is initialized.
+     #[structopt(long)]
+     pub init: bool,
++
++    /// Will enforce a fresh git init on the generated project
++    #[structopt(long)]
++    pub force_git_init: bool,
+ }
+ 
+ #[derive(Debug, StructOpt, Clone, Copy)]
+diff --git a/src/args.rs b/src/args.rs
+--- a/src/args.rs
++++ b/src/args.rs
+@@ -142,13 +146,10 @@ impl FromStr for Vcs {
+ }
+ 
+ impl Vcs {
+-    pub fn initialize(&self, project_dir: &Path, branch: String) -> Result<()> {
++    pub fn initialize(&self, project_dir: &Path, branch: String, force: bool) -> Result<()> {
+         match self {
+-            Self::None => {}
+-            Self::Git => {
+-                git::init(project_dir, &branch)?;
+-            }
+-        };
+-        Ok(())
++            Self::None => Ok(()),
++            Self::Git => git::init(project_dir, &branch, force).map(|_| ()),
++        }
+     }
+ }
+diff --git a/src/git.rs b/src/git.rs
+--- a/src/git.rs
++++ b/src/git.rs
+@@ -305,13 +305,24 @@ pub fn remove_history(project_dir: &Path, attempt: Option<u8>) -> Result<()> {
+     Ok(())
+ }
+ 
+-pub fn init(project_dir: &Path, branch: &str) -> Result<Repository> {
+-    Repository::discover(project_dir).or_else(|_| {
++pub fn init(project_dir: &Path, branch: &str, force: bool) -> Result<Repository> {
++    fn just_init(project_dir: &Path, branch: &str) -> Result<Repository> {
+         let mut opts = RepositoryInitOptions::new();
+         opts.bare(false);
+         opts.initial_head(branch);
+         Repository::init_opts(project_dir, &opts).context("Couldn't init new repository")
+-    })
++    }
++
++    match Repository::discover(project_dir) {
++        Ok(repo) => {
++            if force {
++                Repository::open(project_dir).or_else(|_| just_init(project_dir, branch))
++            } else {
++                Ok(repo)
++            }
++        }
++        Err(_) => just_init(project_dir, branch),
++    }
+ }
+ 
+ /// determines what kind of repository we got
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -115,8 +115,10 @@ pub fn generate(mut args: Args) -> Result<()> {
+     );
+     copy_dir_all(&template_folder, &project_dir)?;
+ 
+-    if !args.init {
+-        args.vcs.initialize(&project_dir, branch)?;
++    if !args.init || args.force_git_init {
++        info!("{}", style("Initializing a fresh Git repository").bold());
++        args.vcs
++            .initialize(&project_dir, branch, args.force_git_init)?;
+     }
+ 
+     println!(
+diff --git a/src/log.rs b/src/log.rs
+--- a/src/log.rs
++++ b/src/log.rs
+@@ -7,3 +7,13 @@ macro_rules! warn {
+         );
+     })
+ }
++
++#[macro_export]
++macro_rules! info {
++    ($($arg:tt)*) => ({
++        println!("{} {}",
++            $crate::emoji::INFO,
++            format!($($arg)*)
++        );
++    })
++}

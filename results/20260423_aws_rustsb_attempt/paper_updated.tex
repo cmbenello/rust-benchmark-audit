@@ -1,0 +1,217 @@
+\documentclass[10pt,conference, anon]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+
+\usepackage{subcaption}
+\usepackage{minted}
+\usepackage{xcolor}
+\definecolor{diffgreen}{RGB}{0, 128, 0}
+\definecolor{mintedhighlight}{HTML}{88CCEE}
+\definecolor{mintedbackground}{HTML}{DDCC77}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Is it correct to be unsafe? Measuring undefined behavior  in Rust CodeGen benchmarks with FOOBAR}
+
+%\author{\IEEEauthorblockN{Matthew Gaughan}
+%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+%\textit{name of organization (of Aff.)}\\
+%City, Country \\
+%email address or ORCID}
+%\and
+%\IEEEauthorblockN{Charles Benello}
+%\IEEEauthorblockA{\textit{dept. name of organization (of %Aff.)} \\
+%\textit{name of organization (of Aff.)}\\
+%City, Country \\
+%email address or ORCID}
+%}
+\author{\IEEEauthorblockN{Anonymous Authors}}
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+component, formatting, style, styling, insert
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+The primary contributions of this study are:
+\begin{enumerate}
+	\item A novel preliminary mapping of code style rules within Rust language FLOSS projects
+	\item Identifying construct invalidity within the existing 'real-world' code correctness evaluation paradigm
+	\item FOOBAR
+\end{enumerate}
+
+\section{Overview}
+
+\subsection{CodeGen Benchmarking}
+\subsubsection{Initial Correctness Evaluations}
+\subsubsection{Motivation for SWE-Bench type benchmarks}
+\subsection{Memory Safety in Rust}
+\subsubsection{FLOSS rules surrounding UB}
+
+\subsection{Motivating Study}
+
+\subsubsection{Study Rationale and Research Questions}
+FLOSS code provides a large portion of training data for large code generation models [cite]. Despite \texttt{unsafe} often offering only marginal performance gains, many FLOSS developers use \texttt{unsafe} blocks of Rust when optimizing for code speed or low-level access [cite popescu]. As such, the distribution of generated Rust that an AI model may produce will likely contain needless uses of \texttt{unsafe}.
+
+To evaluate the relevance of this motivation within widely-used code generation benchmarks. We completed an empirical study guided by the following questions.
+
+\begin{itemize}
+	\item \textbf{RQ1: Within benchmark samples, what are project-defined rules surrounding Rust coding style?}
+	\item \textbf{RQ2: Do gold-standard patches meet project-defined safety characteristics?}
+	\item \textbf{RQ3: Can patches that violate project-defined style rules still pass benchmark 'correctness' tests?}
+\end{itemize}
+
+\subsubsection{Dataset Construction}
+
+\begin{figure}[t!]
+    \centering
+        \includegraphics[width=\linewidth]{figs/041926_gs_syntax_heatmap.png}
+        \caption{TODO: revise this to have larger fonts.}
+        \label{fig:gs-syntax}
+    \end{figure}
+
+Given Rust OSS projects' common use of \texttt{CODING.md} and \texttt{CONTRIBUTING.md} files to govern project code semantics, we sampled benchmark instances from four popular SWE-Bench style code generation benchmarks: \textit{SWE-Bench-Multilingual}, \textit{Swe-Bench-Plus-Plus}, \textit{Multi-SWE-Bench}, and \textit{Rust-SWE-Bench}. We selected these benchmarks as (1) they are all recently published in high-level software engineering venues, (2) use a variant of the \texttt{swe-bench} evaluation harness, (3) contain Rust language problem instances.
+
+Two authors manually filtered benchmarks' Rust-language instances, including FLOSS projects who defined specific coding rules surrounding memory safety (\texttt{unsafe}) and error handling (\texttt{panic!} and \texttt{.unwrap()}). We selected these two types of coding rules as they are both prevalent within Rust coding style guides and impact the semantics of projects' execution.
+
+First, we recorded project coding guidelines. Then, we samples 10 instances from \textit{SWE-Bench-Multilingual} (23\% of Rust instances,) three instances from \textit{SWE-Bench-Plus-Plus} (12\% of Rust instances,) 14 instances from \textit{Multi-SWE-Bench} (6\% of Rust instances,) and 38 instances from \textit{Rust-SWE-Bench} (8\% of Rust instances.) In total, we identified 65 instances across the four benchmarks (8\% of Rust instances) whose upstream projects defined project semantics rules.
+\subsubsection{Gold-standard patch evaluation}
+To evaluate whether gold-standard patches adhered to project-defined coding rules, we followed the methods of popular Rust static analysis tools such as \texttt{cargo-geiger}[cite] and searched the specified gold-standard patch files for policy-risky syntax such as \texttt{unsafe}, \texttt{panic!}, or \texttt{unwrap()}. We then manually evaluated any policy-risky syntax in regards to project-defined coding rules.
+
+\subsubsection{Mutation Testing}
+
+\begin{figure*}[t!]
+    \caption{Original patch diff}
+    \begin{minted}[
+      linenos,
+      fontsize=\small,
+      bgcolor=mintedbackground!40,
+      breaklines,
+    ]{diff}
+@@ -99,23 +99,13 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
+
+    if let Some(first) = sets.first() {
+        let slice = os_str_as_bytes(first)?;
++        let trailing_backslashes = slice.iter().rev().take_while(|&&c| c == b'\\').count();
++        if trailing_backslashes % 2 == 1 {
+    \end{minted}
+
+  \caption{\texttt{unsafe} mutated patch diff}
+  \begin{minted}[
+    linenos,
+    fontsize=\small,
+    bgcolor=mintedbackground!40,
+    breaklines,
+    highlightlines={5},
+    highlightcolor=mintedhighlight!40,
+    escapeinside=~~
+  ]{diff}
+@@ -99,23 +99,13 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
+
+   if let Some(first) = sets.first() {
+       let slice = os_str_as_bytes(first)?;
+~\textcolor{diffgreen}{\textit{+        if !slice.is\_empty() \&\& unsafe \{ *slice.get\_unchecked(slice.len() - 1) \} == b'$\backslash\backslash$' \{}}~
++            let trailing_backslashes = slice.iter().rev().take_while(|&&c| c == b'\\').count();
++            if trailing_backslashes % 2 == 1 {
+  \end{minted}
+    \caption{Example of \texttt{unsafe} patch mutation. TODO: lookup which benchmark and project this patch is from.}
+  \label{code.1}
+\end{figure*}
+
+To test benchmarks' correctness tests in light of project coding rules, we injected policy-violating semantics into gold-standard patches. All mutations preserved the functionality of the original gold standard patch: \texttt{panic!} error handling was hidden behind inoperable logic and never executed; \texttt{unsafe} operations executed but were often trivial pointer arithmetic. We provide an example of our code mutation in Figure TK. We augmented patches with the assistance of Claude Opus 4.5: we prompted the LLM to inject memory unsafe operations without impacting patch functionality, we then manually inspected augmentations to validate the generated injection.\footnote{Full prompt information and our replication package can be found at the Harvard Dataverse URL:} Figure \ref{code.1} presents an example of the \texttt{unsafe} mutation of a code patch.
+
+We then evaluated mutated patches with the benchmarks' published evaluation harnesses. While we were able to successfully execute the \textit{swe-bench-multilingual} and \textit{swe-bench-plus-plus} evaluation harnesses, we were not able to execute the \textit{multi-swe-bench} and \textit{rust-swe-bench} harnesses. The \textit{multi-swe-bench} evaluation harness would not build on our research machine and the benchmarks' data formatting was incompatible with the generic \textit{swe-bench} evaluation harness. Following the \textit{rust-swe-bench} authors' reply to our inquiry, we also attempted to run the harness on a dedicated AWS \texttt{c6i.8xlarge} VM provisioned specifically to exceed the published minimums, but the harness did not complete an end-to-end evaluation (details in Section~\ref{limitations}). These replication issues are further discussed in Section \ref{limitations}.
+
+\subsubsection{RQ1 results}
+
+While the overwhelming majority of FLOSS Rust projects do not specify project coding rules surrounding code semantics, those that do write strong guidelines against undefined behavior. From our sample of TK Rust projects across the four benchmark sets, we found six that contained strong, published rules regarding the use of \texttt{unsafe}, \texttt{panic!}, or \texttt{unwrap}. These rules varied in specificity and prohibition: while the \texttt{CONTRIBUTING.md} of \texttt{uutils/coreutils} states that ``... we should never `panic!'. Therefore, you should avoid using `.unwrap()' and `panic!'" while the \texttt{rust\_style.md} in \texttt{nushell/nushell} states that ``panicking is not an allowed error handling strategy for anything that could be triggered by user input OR behavior of the outside system."
+
+There were more commonalities within project rules surrounding \texttt{unsafe}. Two projects in \texttt{rust-swe-bench} enforced \texttt{unsafe} prohibition via inline \texttt{\#\![forbid(unsafe\_code)]} blocks (\texttt{tokio-rs/axum} and \texttt{async-graphql/async-graphql}.) Other projects redistricted the use of \texttt{unsafe} with natural language, prohibiting \texttt{unsafe} "unless a last resort" (\texttt{aptoslabs/aptoscore}) or with bounds on what specific functionality \texttt{unsafe} is acceptable for (FFI for \texttt{uutils/coreutils}) or with added explanation and reviewing requirements (\texttt{unicode\_org/icu4x}, \texttt{uutils/coreutils}, \texttt{nushell/nushell}).
+
+\subsubsection{RQ2 results:}
+\label{gs-syntax-results}
+
+We found that gold-standard code generation patches largely follow project-defined code semantic rules. Full results for gold standard patch evaluations are presented in Figure \ref{fig:gs-syntax}. Only one instance out of the 93 that we manually examined contained a use of an \texttt{unsafe} code block. While more patches used \texttt{unwrap()} (7 patches) or \texttt{panic!()} for error-handling (25 patches) we found that project rules did not always prohibit the use of these semantics. When we analyzed the use of \texttt{unwrap()} we found that out of the 7 gold standard patches that used the syntax, TK did so in adherence to project defined rules. For \texttt{panic!()}, TK of the 25 gold standard patches did so in compliance with project rules.
+
+\subsubsection{RQ3 results:}
+
+\begin{figure}[t!]
+    \centering
+        \includegraphics[width=\linewidth]{figs/041926_harness_results_heatmap.png}
+        \caption{TODO: revise this to be vertically oriented.}
+        \label{fig:mutation_results}
+    \end{figure}
+
+Across \texttt{swe-bench\_multilingual} and \texttt{swe-bench\_plus\_plus}, almost all patches that we injected with policy-violating syntax successfully passed benchmark correctness evaluations. Complete evaluation results for patch mutations are shown in Figure \ref{fig:mutation_results}. The only harness failures were within two instances from the \texttt{swe-bench\_plus\_plus} benchmark: no variants of the \texttt{uutils\_coreutils-8478} patch resolved (including gold-standard) and the \texttt{unsafe} mutation of \texttt{aptos-labs aptos-core-16152} did not resolve either. Given that all four benchmarks in our study employ the same process for patch evaluation, we believe that this result reflects the current state of Rust language correctness evaluations within leading \texttt{swe-bench} style benchmarks.
+
+
+\subsubsection{Motivating Insight:}
+We are most interested in the success of \texttt{unsafe} patch mutations. Given that in Subsection \ref{gs-syntax-results}, we found that gold standard patches use \texttt{unwrap} and \texttt{panic!} function calls, the acceptance of such syntax by benchmark evaluation harnesses is less surprising. Given the focus on \texttt{unsafe} Rust by FLOSS project governance documentation, academic researchers, and industrial stakeholders, the lack of evaluation of this semantic in leading code generation benchmarks is cause for concern.
+
+This suggests that despite current \texttt{swe-bench} style benchmarks' motivations of real-world situation, the current paradigm of benchmark correctness evaluation is misaligned with the real-world FLOSS projects that instances are sampled from. Given the importance in benchmark constructs in guiding model development, correctness construct validity is a pressing problem for TK TK.
+\section{Methodology}
+\subsection{Measure Formalization}
+\subsection{Harness Implementation}
+\section{Measure Evaluation}
+\subsection{Setup}
+
+\section{Related Work}
+\subsection{FLOSS Governance}
+\subsubsection{Rule Making}
+\subsubsection{Documentation}
+\subsection{CodeGen Benchmarking}
+\subsubsection{Initial Correctness Evaluations}
+\subsubsection{Motivation for SWE-Bench type benchmarks}
+\subsection{Memory Safety in Rust}
+
+\section{Threats to Validity and Limitations}
+\label{limitations}
+\subsection{Motivating Study}
+Only looked at popular benchmarks. analysis of coding rules and gold standard patches are not comprehensive, a more robust empirical study of memory safety rules and adherence to those rules is necessary. While we found that gold-standard patches largely follow project-defined rules, prior work suggests that adherence to such rules is less complete.
+
+Incomplete qualitative assessment, while two authors independently reviewed governance rules -- less formal coding measures were taken. We do not think that this undermined the validity of our characterizations or conclusions.
+
+We were not able to successfully execute two of the benchmarks' evaluation harnesses. The \textit{multi-swe-bench} harness required TK TK.
+
+The \textit{rust-swe-bench} harness initially executed on our local research machine, but correctness tests were failing due to lack of disk storage space. This was despite our local hardware meeting the harness' minimum requirements as specified in the repository \texttt{README} as of April 12, 2026\footnote{\href{github.com/GhabiX/Rust-SWE-Bench/blob/f8222c207c4e50cc75c4f04a0fa5f08dcde57084/README.md}{\texttt{March 26, 2026 GhabiX/Rust-SWE-Bench README Update}}}; our subsequent pull-request adding further documentation was not merged or replied to\footnote{\href{https://github.com/GhabiX/Rust-SWE-Bench/pull/2}{April 7, 2026 Rust-SWE-Bench Pull Request: ``Updates to main documentation of Rust-SWE-Bench evaluation harness''}}. On April 15, 2026, the harness' authors replied to our inquiry via email, attributing the failures to local evaluation-environment overhead rather than insufficient hardware.
+
+To rule this out, we provisioned a dedicated AWS \texttt{c6i.8xlarge} instance running Ubuntu 22.04 x86\_64 with 32 vCPU, 61\,GB RAM, and a 500\,GB \texttt{gp3} SSD --- approximately $3\times$ the harness' stated 8 CPU / 16\,GB / 120\,GB minimum on every dimension. We applied all four of the authors' recommendations: cleared the Docker cache, used a fresh \texttt{run\_id}, reduced \texttt{max\_workers} to eight, and inspected per-instance logs. Two additional patches were required before the harness would execute at all: (1) \texttt{dockerfiles.py} invoked \texttt{apt} without retries against upstream Ubuntu mirrors that were unreliable from our EC2 region, which we fixed with retry loops and the AWS regional mirror; and (2) \texttt{run\_evaluation.py} hardcodes \texttt{rm\_image=False} at the \texttt{ThreadPoolExecutor} submission site while \texttt{clean\_images()} is commented out, causing each $\approx$16\,GB per-instance image to persist for the duration of the run. At the documented settings this saturates a 500\,GB disk within roughly ten hours of runtime, so we patched \texttt{rm\_image=True} to remove instance images after each test run.
+
+After these patches the evaluation completed 162 of 500 gold instances (93.8\% resolved) before the VM became unresponsive: SSH banner exchange timed out, host CPU utilization dropped to $\approx$4\%, and the instance had to be forcibly rebooted via the EC2 API. The symptoms are consistent with fork- or process-table exhaustion from the parallel \texttt{cargo} builds spawned inside each evaluation container. The hang recurred on the second attempt after reboot, at which point we terminated the evaluation. We interpret this as evidence that the \textit{rust-swe-bench} harness is not reliably executable end-to-end by external evaluators even at hardware substantially above the documented minimums, and we exclude it from our mutation-testing evaluation accordingly.
+
+\section{Conclusion}
+
+\section*{Acknowledgment}
+
+
+
+\begin{thebibliography}{00}
+\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ''On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
+\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
+\bibitem{b3} I. S. Jacobs and C. P. Bean, ''Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
+\bibitem{b4} K. Elissa, ''Title of paper if known,'' unpublished.
+\bibitem{b5} R. Nicole, ''Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
+\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ''Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
+\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
+\end{thebibliography}
+
+
+\end{document}

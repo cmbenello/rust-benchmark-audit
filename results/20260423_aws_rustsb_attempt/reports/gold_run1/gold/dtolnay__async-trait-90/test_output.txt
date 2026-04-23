@@ -1,0 +1,85 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/test.rs...
+Checking patch tests/ui/bare-trait-object.rs...
+Checking patch tests/ui/bare-trait-object.stderr...
+Applied patch tests/test.rs cleanly.
+Applied patch tests/ui/bare-trait-object.rs cleanly.
+Applied patch tests/ui/bare-trait-object.stderr cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded quote v1.0.3 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded rustversion v1.0.2 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded proc-macro2 v1.0.10 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded syn v1.0.17 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded unicode-xid v0.2.0 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded trybuild v1.0.24 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded serde_json v1.0.51 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded serde v1.0.106 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded toml v0.5.6 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded termcolor v1.1.0 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded dissimilar v1.0.1 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded itoa v0.4.5 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded ryu v1.0.3 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+  Downloaded serde_derive v1.0.106 (registry `/testbed/.cargo/lts-repo-at-ce8ac1c94c`)
+   Compiling proc-macro2 v1.0.10
+   Compiling unicode-xid v0.2.0
+   Compiling syn v1.0.17
+   Compiling serde v1.0.106
+   Compiling ryu v1.0.3
+   Compiling rustversion v1.0.2
+   Compiling itoa v0.4.5
+   Compiling lazy_static v1.4.0
+   Compiling termcolor v1.1.0
+   Compiling dissimilar v1.0.1
+   Compiling glob v0.3.0
+   Compiling quote v1.0.3
+   Compiling serde_derive v1.0.106
+   Compiling async-trait v0.1.29 (/workspace)
+   Compiling serde_json v1.0.51
+   Compiling toml v0.5.6
+   Compiling trybuild v1.0.24
+    Finished test [unoptimized + debuginfo] target(s) in 25.96s
+     Running target/debug/deps/async_trait-f85ed6d5b971aaf0
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/compiletest-de123b1ca5943793
+
+running 1 test
+test ui ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test-f0fc7ca454ead5a4
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests async-trait
+
+running 8 tests
+test src/lib.rs -  (line 10) ... ok
+test src/lib.rs -  (line 160) ... ok
+test src/lib.rs -  (line 121) ... ok
+test src/lib.rs -  (line 281) ... ok
+test src/lib.rs -  (line 206) ... ok
+test src/lib.rs -  (line 42) ... ok
+test src/lib.rs -  (line 181) ... ok
+test src/lib.rs -  (line 260) ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ git reset --hard 05c24928d08c46ee1a916b1dff7f6dd389b21c94
+HEAD is now at 05c2492 Delete support_old_nightly alternative implementation
++ git clean -fd
+Removing .cargo/
+Removing tests/ui/bare-trait-object.rs
+Removing tests/ui/bare-trait-object.stderr

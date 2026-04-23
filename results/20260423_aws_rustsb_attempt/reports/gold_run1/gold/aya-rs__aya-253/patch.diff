@@ -1,0 +1,907 @@
+diff --git a/aya/src/programs/cgroup_skb.rs b/aya/src/programs/cgroup_skb.rs
+--- a/aya/src/programs/cgroup_skb.rs
++++ b/aya/src/programs/cgroup_skb.rs
+@@ -9,7 +9,8 @@ use crate::{
+         bpf_prog_type::BPF_PROG_TYPE_CGROUP_SKB,
+     },
+     programs::{
+-        define_link_wrapper, load_program, FdLink, Link, ProgAttachLink, ProgramData, ProgramError,
++        define_link_wrapper, load_program, FdLink, Link, OwnedLink, ProgAttachLink, ProgramData,
++        ProgramError,
+     },
+     sys::{bpf_link_create, bpf_prog_attach, kernel_version},
+ };
+diff --git a/aya/src/programs/cgroup_skb.rs b/aya/src/programs/cgroup_skb.rs
+--- a/aya/src/programs/cgroup_skb.rs
++++ b/aya/src/programs/cgroup_skb.rs
+@@ -116,6 +117,17 @@ impl CgroupSkb {
+         }
+     }
+ 
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: CgroupSkbLinkId,
++    ) -> Result<OwnedLink<CgroupSkbLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
++
+     /// Detaches the program.
+     ///
+     /// See [CgroupSkb::attach].
+diff --git a/aya/src/programs/cgroup_skb.rs b/aya/src/programs/cgroup_skb.rs
+--- a/aya/src/programs/cgroup_skb.rs
++++ b/aya/src/programs/cgroup_skb.rs
+@@ -155,6 +167,7 @@ impl Link for CgroupSkbLinkInner {
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [CgroupSkb] programs.
+     CgroupSkbLink,
+     /// The type returned by [CgroupSkb::attach]. Can be passed to [CgroupSkb::detach].
+     CgroupSkbLinkId,
+diff --git a/aya/src/programs/extension.rs b/aya/src/programs/extension.rs
+--- a/aya/src/programs/extension.rs
++++ b/aya/src/programs/extension.rs
+@@ -6,7 +6,9 @@ use object::Endianness;
+ use crate::{
+     generated::{bpf_attach_type::BPF_CGROUP_INET_INGRESS, bpf_prog_type::BPF_PROG_TYPE_EXT},
+     obj::btf::BtfKind,
+-    programs::{define_link_wrapper, load_program, FdLink, FdLinkId, ProgramData, ProgramError},
++    programs::{
++        define_link_wrapper, load_program, FdLink, FdLinkId, OwnedLink, ProgramData, ProgramError,
++    },
+     sys::{self, bpf_link_create},
+     Btf,
+ };
+diff --git a/aya/src/programs/extension.rs b/aya/src/programs/extension.rs
+--- a/aya/src/programs/extension.rs
++++ b/aya/src/programs/extension.rs
+@@ -146,9 +148,21 @@ impl Extension {
+     pub fn detach(&mut self, link_id: ExtensionLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: ExtensionLinkId,
++    ) -> Result<OwnedLink<ExtensionLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [Extension] programs.
+     ExtensionLink,
+     /// The type returned by [Extension::attach]. Can be passed to [Extension::detach].
+     ExtensionLinkId,
+diff --git a/aya/src/programs/fentry.rs b/aya/src/programs/fentry.rs
+--- a/aya/src/programs/fentry.rs
++++ b/aya/src/programs/fentry.rs
+@@ -5,7 +5,7 @@ use crate::{
+     obj::btf::{Btf, BtfKind},
+     programs::{
+         define_link_wrapper, load_program, utils::attach_raw_tracepoint, FdLink, FdLinkId,
+-        ProgramData, ProgramError,
++        OwnedLink, ProgramData, ProgramError,
+     },
+ };
+ 
+diff --git a/aya/src/programs/fentry.rs b/aya/src/programs/fentry.rs
+--- a/aya/src/programs/fentry.rs
++++ b/aya/src/programs/fentry.rs
+@@ -75,9 +75,21 @@ impl FEntry {
+     pub fn detach(&mut self, link_id: FEntryLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: FEntryLinkId,
++    ) -> Result<OwnedLink<FEntryLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [FEntry] programs.
+     FEntryLink,
+     /// The type returned by [FEntry::attach]. Can be passed to [FEntry::detach].
+     FEntryLinkId,
+diff --git a/aya/src/programs/fexit.rs b/aya/src/programs/fexit.rs
+--- a/aya/src/programs/fexit.rs
++++ b/aya/src/programs/fexit.rs
+@@ -5,7 +5,7 @@ use crate::{
+     obj::btf::{Btf, BtfKind},
+     programs::{
+         define_link_wrapper, load_program, utils::attach_raw_tracepoint, FdLink, FdLinkId,
+-        ProgramData, ProgramError,
++        OwnedLink, ProgramData, ProgramError,
+     },
+ };
+ 
+diff --git a/aya/src/programs/fexit.rs b/aya/src/programs/fexit.rs
+--- a/aya/src/programs/fexit.rs
++++ b/aya/src/programs/fexit.rs
+@@ -75,9 +75,21 @@ impl FExit {
+     pub fn detach(&mut self, link_id: FExitLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: FExitLinkId,
++    ) -> Result<OwnedLink<FExitLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [FExit] programs.
+     FExitLink,
+     /// The type returned by [FExit::attach]. Can be passed to [FExit::detach].
+     FExitLinkId,
+diff --git a/aya/src/programs/kprobe.rs b/aya/src/programs/kprobe.rs
+--- a/aya/src/programs/kprobe.rs
++++ b/aya/src/programs/kprobe.rs
+@@ -8,7 +8,7 @@ use crate::{
+         define_link_wrapper, load_program,
+         perf_attach::{PerfLink, PerfLinkId},
+         probe::{attach, ProbeKind},
+-        ProgramData, ProgramError,
++        OwnedLink, ProgramData, ProgramError,
+     },
+ };
+ 
+diff --git a/aya/src/programs/kprobe.rs b/aya/src/programs/kprobe.rs
+--- a/aya/src/programs/kprobe.rs
++++ b/aya/src/programs/kprobe.rs
+@@ -76,9 +76,21 @@ impl KProbe {
+     pub fn detach(&mut self, link_id: KProbeLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: KProbeLinkId,
++    ) -> Result<OwnedLink<KProbeLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [KProbe] programs.
+     KProbeLink,
+     /// The type returned by [KProbe::attach]. Can be passed to [KProbe::detach].
+     KProbeLinkId,
+diff --git a/aya/src/programs/links.rs b/aya/src/programs/links.rs
+--- a/aya/src/programs/links.rs
++++ b/aya/src/programs/links.rs
+@@ -1,19 +1,53 @@
+ use libc::{close, dup};
++
+ use std::{
++    borrow::Borrow,
+     collections::{hash_map::Entry, HashMap},
++    ops::Deref,
+     os::unix::prelude::RawFd,
+ };
+ 
+ use crate::{generated::bpf_attach_type, programs::ProgramError, sys::bpf_prog_detach};
+ 
+-pub(crate) trait Link: std::fmt::Debug + 'static {
++/// A Link
++pub trait Link: std::fmt::Debug + 'static {
++    /// Unique Id
+     type Id: std::fmt::Debug + std::hash::Hash + Eq + PartialEq;
+ 
++    /// Returns the link id
+     fn id(&self) -> Self::Id;
+ 
++    /// Detaches the Link
+     fn detach(self) -> Result<(), ProgramError>;
+ }
+ 
++/// An owned link that automatically detaches the inner link when dropped.
++pub struct OwnedLink<T: Link> {
++    inner: Option<T>,
++}
++
++impl<T: Link> OwnedLink<T> {
++    pub(crate) fn new(inner: T) -> Self {
++        Self { inner: Some(inner) }
++    }
++}
++
++impl<T: Link> Deref for OwnedLink<T> {
++    type Target = T;
++
++    fn deref(&self) -> &Self::Target {
++        self.inner.borrow().as_ref().unwrap()
++    }
++}
++
++impl<T: Link> Drop for OwnedLink<T> {
++    fn drop(&mut self) {
++        if let Some(link) = self.inner.take() {
++            link.detach().unwrap();
++        }
++    }
++}
++
+ #[derive(Debug)]
+ pub(crate) struct LinkMap<T: Link> {
+     links: HashMap<T::Id, T>,
+diff --git a/aya/src/programs/links.rs b/aya/src/programs/links.rs
+--- a/aya/src/programs/links.rs
++++ b/aya/src/programs/links.rs
+@@ -43,6 +77,10 @@ impl<T: Link> LinkMap<T> {
+             .ok_or(ProgramError::NotAttached)?
+             .detach()
+     }
++
++    pub(crate) fn forget(&mut self, link_id: T::Id) -> Result<T, ProgramError> {
++        self.links.remove(&link_id).ok_or(ProgramError::NotAttached)
++    }
+ }
+ 
+ impl<T: Link> Drop for LinkMap<T> {
+diff --git a/aya/src/programs/links.rs b/aya/src/programs/links.rs
+--- a/aya/src/programs/links.rs
++++ b/aya/src/programs/links.rs
+@@ -58,7 +96,7 @@ pub(crate) struct FdLinkId(pub(crate) RawFd);
+ 
+ #[derive(Debug)]
+ pub(crate) struct FdLink {
+-    fd: RawFd,
++    pub(crate) fd: RawFd,
+ }
+ 
+ impl FdLink {
+diff --git a/aya/src/programs/links.rs b/aya/src/programs/links.rs
+--- a/aya/src/programs/links.rs
++++ b/aya/src/programs/links.rs
+@@ -119,13 +157,14 @@ impl Link for ProgAttachLink {
+ }
+ 
+ macro_rules! define_link_wrapper {
+-    ($wrapper:ident, #[$doc:meta] $wrapper_id:ident, $base:ident, $base_id:ident) => {
+-        #[$doc]
++    (#[$doc1:meta] $wrapper:ident, #[$doc2:meta] $wrapper_id:ident, $base:ident, $base_id:ident) => {
++        #[$doc2]
+         #[derive(Debug, Hash, Eq, PartialEq)]
+         pub struct $wrapper_id($base_id);
+ 
++        #[$doc1]
+         #[derive(Debug)]
+-        pub(crate) struct $wrapper($base);
++        pub struct $wrapper($base);
+ 
+         impl crate::programs::Link for $wrapper {
+             type Id = $wrapper_id;
+diff --git a/aya/src/programs/lirc_mode2.rs b/aya/src/programs/lirc_mode2.rs
+--- a/aya/src/programs/lirc_mode2.rs
++++ b/aya/src/programs/lirc_mode2.rs
+@@ -2,7 +2,7 @@ use std::os::unix::prelude::{AsRawFd, RawFd};
+ 
+ use crate::{
+     generated::{bpf_attach_type::BPF_LIRC_MODE2, bpf_prog_type::BPF_PROG_TYPE_LIRC_MODE2},
+-    programs::{load_program, query, Link, ProgramData, ProgramError, ProgramInfo},
++    programs::{load_program, query, Link, OwnedLink, ProgramData, ProgramError, ProgramInfo},
+     sys::{bpf_obj_get_info_by_fd, bpf_prog_attach, bpf_prog_detach, bpf_prog_get_fd_by_id},
+ };
+ 
+diff --git a/aya/src/programs/lirc_mode2.rs b/aya/src/programs/lirc_mode2.rs
+--- a/aya/src/programs/lirc_mode2.rs
++++ b/aya/src/programs/lirc_mode2.rs
+@@ -81,6 +81,17 @@ impl LircMode2 {
+         self.data.links.remove(link_id)
+     }
+ 
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: LircLinkId,
++    ) -> Result<OwnedLink<LircLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
++
+     /// Queries the lirc device for attached programs.
+     pub fn query<T: AsRawFd>(target_fd: T) -> Result<Vec<LircLink>, ProgramError> {
+         let prog_ids = query(target_fd.as_raw_fd(), BPF_LIRC_MODE2, 0, &mut None)?;
+diff --git a/aya/src/programs/lirc_mode2.rs b/aya/src/programs/lirc_mode2.rs
+--- a/aya/src/programs/lirc_mode2.rs
++++ b/aya/src/programs/lirc_mode2.rs
+@@ -108,6 +119,7 @@ impl LircMode2 {
+ pub struct LircLinkId(RawFd, RawFd);
+ 
+ #[derive(Debug)]
++/// An LircMode2 Link
+ pub struct LircLink {
+     prog_fd: RawFd,
+     target_fd: RawFd,
+diff --git a/aya/src/programs/lirc_mode2.rs b/aya/src/programs/lirc_mode2.rs
+--- a/aya/src/programs/lirc_mode2.rs
++++ b/aya/src/programs/lirc_mode2.rs
+@@ -121,6 +133,7 @@ impl LircLink {
+         }
+     }
+ 
++    /// Get ProgramInfo from this link
+     pub fn info(&self) -> Result<ProgramInfo, ProgramError> {
+         match bpf_obj_get_info_by_fd(self.prog_fd) {
+             Ok(info) => Ok(ProgramInfo(info)),
+diff --git a/aya/src/programs/lsm.rs b/aya/src/programs/lsm.rs
+--- a/aya/src/programs/lsm.rs
++++ b/aya/src/programs/lsm.rs
+@@ -4,7 +4,7 @@ use crate::{
+     obj::btf::{Btf, BtfKind},
+     programs::{
+         define_link_wrapper, load_program, utils::attach_raw_tracepoint, FdLink, FdLinkId,
+-        ProgramData, ProgramError,
++        OwnedLink, ProgramData, ProgramError,
+     },
+ };
+ 
+diff --git a/aya/src/programs/lsm.rs b/aya/src/programs/lsm.rs
+--- a/aya/src/programs/lsm.rs
++++ b/aya/src/programs/lsm.rs
+@@ -80,9 +80,18 @@ impl Lsm {
+     pub fn detach(&mut self, link_id: LsmLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(&mut self, link_id: LsmLinkId) -> Result<OwnedLink<LsmLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [Lsm] programs.
+     LsmLink,
+     /// The type returned by [Lsm::attach]. Can be passed to [Lsm::detach].
+     LsmLinkId,
+diff --git a/aya/src/programs/mod.rs b/aya/src/programs/mod.rs
+--- a/aya/src/programs/mod.rs
++++ b/aya/src/programs/mod.rs
+@@ -69,26 +69,27 @@ use std::{
+ };
+ use thiserror::Error;
+ 
+-pub use cgroup_skb::{CgroupSkb, CgroupSkbAttachType, CgroupSkbLinkId};
+-pub use extension::{Extension, ExtensionError, ExtensionLinkId};
+-pub use fentry::{FEntry, FEntryLinkId};
+-pub use fexit::{FExit, FExitLinkId};
+-pub use kprobe::{KProbe, KProbeError, KProbeLinkId};
++pub use cgroup_skb::{CgroupSkb, CgroupSkbAttachType};
++pub use extension::{Extension, ExtensionError};
++pub use fentry::FEntry;
++pub use fexit::FExit;
++pub use kprobe::{KProbe, KProbeError};
+ use links::*;
+-pub use lirc_mode2::{LircLinkId, LircMode2};
+-pub use lsm::{Lsm, LsmLinkId};
++pub use links::{Link, OwnedLink};
++pub use lirc_mode2::LircMode2;
++pub use lsm::Lsm;
+ use perf_attach::*;
+ pub use perf_event::{PerfEvent, PerfEventScope, PerfTypeId, SamplePolicy};
+ pub use probe::ProbeKind;
+-pub use raw_trace_point::{RawTracePoint, RawTracePointLinkId};
+-pub use sk_msg::{SkMsg, SkMsgLinkId};
+-pub use sk_skb::{SkSkb, SkSkbKind, SkSkbLinkId};
+-pub use sock_ops::{SockOps, SockOpsLinkId};
+-pub use socket_filter::{SocketFilter, SocketFilterError, SocketFilterLinkId};
+-pub use tc::{SchedClassifier, SchedClassifierLinkId, TcAttachType, TcError};
+-pub use tp_btf::{BtfTracePoint, BtfTracePointLinkId};
+-pub use trace_point::{TracePoint, TracePointError, TracePointLinkId};
+-pub use uprobe::{UProbe, UProbeError, UProbeLinkId};
++pub use raw_trace_point::RawTracePoint;
++pub use sk_msg::SkMsg;
++pub use sk_skb::{SkSkb, SkSkbKind};
++pub use sock_ops::SockOps;
++pub use socket_filter::{SocketFilter, SocketFilterError};
++pub use tc::{SchedClassifier, TcAttachType, TcError};
++pub use tp_btf::BtfTracePoint;
++pub use trace_point::{TracePoint, TracePointError};
++pub use uprobe::{UProbe, UProbeError};
+ pub use xdp::{Xdp, XdpError, XdpFlags};
+ 
+ use crate::{
+diff --git a/aya/src/programs/mod.rs b/aya/src/programs/mod.rs
+--- a/aya/src/programs/mod.rs
++++ b/aya/src/programs/mod.rs
+@@ -355,6 +356,10 @@ impl<T: Link> ProgramData<T> {
+         })?;
+         Ok(())
+     }
++
++    pub(crate) fn forget_link(&mut self, link_id: T::Id) -> Result<T, ProgramError> {
++        self.links.forget(link_id)
++    }
+ }
+ 
+ fn load_program<T: Link>(
+diff --git a/aya/src/programs/perf_attach.rs b/aya/src/programs/perf_attach.rs
+--- a/aya/src/programs/perf_attach.rs
++++ b/aya/src/programs/perf_attach.rs
+@@ -11,7 +11,7 @@ use crate::{
+ pub struct PerfLinkId(RawFd);
+ 
+ #[derive(Debug)]
+-pub(crate) struct PerfLink {
++pub struct PerfLink {
+     perf_fd: RawFd,
+     probe_kind: Option<ProbeKind>,
+     event_alias: Option<String>,
+diff --git a/aya/src/programs/perf_event.rs b/aya/src/programs/perf_event.rs
+--- a/aya/src/programs/perf_event.rs
++++ b/aya/src/programs/perf_event.rs
+@@ -14,7 +14,7 @@ use crate::{
+     programs::{
+         load_program, perf_attach,
+         perf_attach::{PerfLink, PerfLinkId},
+-        ProgramData, ProgramError,
++        OwnedLink, ProgramData, ProgramError,
+     },
+     sys::perf_event_open,
+ };
+diff --git a/aya/src/programs/perf_event.rs b/aya/src/programs/perf_event.rs
+--- a/aya/src/programs/perf_event.rs
++++ b/aya/src/programs/perf_event.rs
+@@ -177,4 +177,15 @@ impl PerfEvent {
+     pub fn detach(&mut self, link_id: PerfLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: PerfLinkId,
++    ) -> Result<OwnedLink<PerfLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+diff --git a/aya/src/programs/raw_trace_point.rs b/aya/src/programs/raw_trace_point.rs
+--- a/aya/src/programs/raw_trace_point.rs
++++ b/aya/src/programs/raw_trace_point.rs
+@@ -5,7 +5,7 @@ use crate::{
+     generated::bpf_prog_type::BPF_PROG_TYPE_RAW_TRACEPOINT,
+     programs::{
+         define_link_wrapper, load_program, utils::attach_raw_tracepoint, FdLink, FdLinkId,
+-        ProgramData, ProgramError,
++        OwnedLink, ProgramData, ProgramError,
+     },
+ };
+ 
+diff --git a/aya/src/programs/raw_trace_point.rs b/aya/src/programs/raw_trace_point.rs
+--- a/aya/src/programs/raw_trace_point.rs
++++ b/aya/src/programs/raw_trace_point.rs
+@@ -59,9 +59,21 @@ impl RawTracePoint {
+     pub fn detach(&mut self, link_id: RawTracePointLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: RawTracePointLinkId,
++    ) -> Result<OwnedLink<RawTracePointLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [RawTracePoint] programs.
+     RawTracePointLink,
+     /// The type returned by [RawTracePoint::attach]. Can be passed to [RawTracePoint::detach].
+     RawTracePointLinkId,
+diff --git a/aya/src/programs/sk_msg.rs b/aya/src/programs/sk_msg.rs
+--- a/aya/src/programs/sk_msg.rs
++++ b/aya/src/programs/sk_msg.rs
+@@ -2,8 +2,8 @@ use crate::{
+     generated::{bpf_attach_type::BPF_SK_MSG_VERDICT, bpf_prog_type::BPF_PROG_TYPE_SK_MSG},
+     maps::sock::SocketMap,
+     programs::{
+-        define_link_wrapper, load_program, ProgAttachLink, ProgAttachLinkId, ProgramData,
+-        ProgramError,
++        define_link_wrapper, load_program, OwnedLink, ProgAttachLink, ProgAttachLinkId,
++        ProgramData, ProgramError,
+     },
+     sys::bpf_prog_attach,
+ };
+diff --git a/aya/src/programs/sk_msg.rs b/aya/src/programs/sk_msg.rs
+--- a/aya/src/programs/sk_msg.rs
++++ b/aya/src/programs/sk_msg.rs
+@@ -94,9 +94,21 @@ impl SkMsg {
+     pub fn detach(&mut self, link_id: SkMsgLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: SkMsgLinkId,
++    ) -> Result<OwnedLink<SkMsgLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [SkMsg] programs.
+     SkMsgLink,
+     /// The type returned by [SkMsg::attach]. Can be passed to [SkMsg::detach].
+     SkMsgLinkId,
+diff --git a/aya/src/programs/sk_skb.rs b/aya/src/programs/sk_skb.rs
+--- a/aya/src/programs/sk_skb.rs
++++ b/aya/src/programs/sk_skb.rs
+@@ -5,8 +5,8 @@ use crate::{
+     },
+     maps::sock::SocketMap,
+     programs::{
+-        define_link_wrapper, load_program, ProgAttachLink, ProgAttachLinkId, ProgramData,
+-        ProgramError,
++        define_link_wrapper, load_program, OwnedLink, ProgAttachLink, ProgAttachLinkId,
++        ProgramData, ProgramError,
+     },
+     sys::bpf_prog_attach,
+ };
+diff --git a/aya/src/programs/sk_skb.rs b/aya/src/programs/sk_skb.rs
+--- a/aya/src/programs/sk_skb.rs
++++ b/aya/src/programs/sk_skb.rs
+@@ -89,9 +89,21 @@ impl SkSkb {
+     pub fn detach(&mut self, link_id: SkSkbLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: SkSkbLinkId,
++    ) -> Result<OwnedLink<SkSkbLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [SkSkb] programs.
+     SkSkbLink,
+     /// The type returned by [SkSkb::attach]. Can be passed to [SkSkb::detach].
+     SkSkbLinkId,
+diff --git a/aya/src/programs/sock_ops.rs b/aya/src/programs/sock_ops.rs
+--- a/aya/src/programs/sock_ops.rs
++++ b/aya/src/programs/sock_ops.rs
+@@ -3,8 +3,8 @@ use std::os::unix::io::AsRawFd;
+ use crate::{
+     generated::{bpf_attach_type::BPF_CGROUP_SOCK_OPS, bpf_prog_type::BPF_PROG_TYPE_SOCK_OPS},
+     programs::{
+-        define_link_wrapper, load_program, ProgAttachLink, ProgAttachLinkId, ProgramData,
+-        ProgramError,
++        define_link_wrapper, load_program, OwnedLink, ProgAttachLink, ProgAttachLinkId,
++        ProgramData, ProgramError,
+     },
+     sys::bpf_prog_attach,
+ };
+diff --git a/aya/src/programs/sock_ops.rs b/aya/src/programs/sock_ops.rs
+--- a/aya/src/programs/sock_ops.rs
++++ b/aya/src/programs/sock_ops.rs
+@@ -81,9 +81,21 @@ impl SockOps {
+     pub fn detach(&mut self, link_id: SockOpsLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: SockOpsLinkId,
++    ) -> Result<OwnedLink<SockOpsLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [SockOps] programs.
+     SockOpsLink,
+     /// The type returned by [SockOps::attach]. Can be passed to [SockOps::detach].
+     SockOpsLinkId,
+diff --git a/aya/src/programs/socket_filter.rs b/aya/src/programs/socket_filter.rs
+--- a/aya/src/programs/socket_filter.rs
++++ b/aya/src/programs/socket_filter.rs
+@@ -7,7 +7,7 @@ use thiserror::Error;
+ 
+ use crate::{
+     generated::{bpf_prog_type::BPF_PROG_TYPE_SOCKET_FILTER, SO_ATTACH_BPF, SO_DETACH_BPF},
+-    programs::{load_program, Link, ProgramData, ProgramError},
++    programs::{load_program, Link, OwnedLink, ProgramData, ProgramError},
+ };
+ 
+ /// The type returned when attaching a [`SocketFilter`] fails.
+diff --git a/aya/src/programs/socket_filter.rs b/aya/src/programs/socket_filter.rs
+--- a/aya/src/programs/socket_filter.rs
++++ b/aya/src/programs/socket_filter.rs
+@@ -101,14 +101,26 @@ impl SocketFilter {
+     pub fn detach(&mut self, link_id: SocketFilterLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: SocketFilterLinkId,
++    ) -> Result<OwnedLink<SocketFilterLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ /// The type returned by [SocketFilter::attach]. Can be passed to [SocketFilter::detach].
+ #[derive(Debug, Hash, Eq, PartialEq)]
+ pub struct SocketFilterLinkId(RawFd, RawFd);
+ 
++/// A SocketFilter Link
+ #[derive(Debug)]
+-pub(crate) struct SocketFilterLink {
++pub struct SocketFilterLink {
+     socket: RawFd,
+     prog_fd: RawFd,
+ }
+diff --git a/aya/src/programs/tc.rs b/aya/src/programs/tc.rs
+--- a/aya/src/programs/tc.rs
++++ b/aya/src/programs/tc.rs
+@@ -10,7 +10,7 @@ use crate::{
+     generated::{
+         bpf_prog_type::BPF_PROG_TYPE_SCHED_CLS, TC_H_CLSACT, TC_H_MIN_EGRESS, TC_H_MIN_INGRESS,
+     },
+-    programs::{define_link_wrapper, load_program, Link, ProgramData, ProgramError},
++    programs::{define_link_wrapper, load_program, Link, OwnedLink, ProgramData, ProgramError},
+     sys::{
+         netlink_find_filter_with_name, netlink_qdisc_add_clsact, netlink_qdisc_attach,
+         netlink_qdisc_detach,
+diff --git a/aya/src/programs/tc.rs b/aya/src/programs/tc.rs
+--- a/aya/src/programs/tc.rs
++++ b/aya/src/programs/tc.rs
+@@ -141,6 +141,17 @@ impl SchedClassifier {
+     pub fn detach(&mut self, link_id: SchedClassifierLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: SchedClassifierLinkId,
++    ) -> Result<OwnedLink<SchedClassifierLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ #[derive(Debug, Hash, Eq, PartialEq)]
+diff --git a/aya/src/programs/tc.rs b/aya/src/programs/tc.rs
+--- a/aya/src/programs/tc.rs
++++ b/aya/src/programs/tc.rs
+@@ -168,6 +179,7 @@ impl Link for TcLink {
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [SchedClassifier] programs.
+     SchedClassifierLink,
+     /// The type returned by [SchedClassifier::attach]. Can be passed to [SchedClassifier::detach].
+     SchedClassifierLinkId,
+diff --git a/aya/src/programs/tp_btf.rs b/aya/src/programs/tp_btf.rs
+--- a/aya/src/programs/tp_btf.rs
++++ b/aya/src/programs/tp_btf.rs
+@@ -4,7 +4,7 @@ use crate::{
+     obj::btf::{Btf, BtfKind},
+     programs::{
+         define_link_wrapper, load_program, utils::attach_raw_tracepoint, FdLink, FdLinkId,
+-        ProgramData, ProgramError,
++        OwnedLink, ProgramData, ProgramError,
+     },
+ };
+ 
+diff --git a/aya/src/programs/tp_btf.rs b/aya/src/programs/tp_btf.rs
+--- a/aya/src/programs/tp_btf.rs
++++ b/aya/src/programs/tp_btf.rs
+@@ -78,9 +78,21 @@ impl BtfTracePoint {
+     pub fn detach(&mut self, link_id: BtfTracePointLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: BtfTracePointLinkId,
++    ) -> Result<OwnedLink<BtfTracePointLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [BtfTracePoint] programs.
+     BtfTracePointLink,
+     /// The type returned by [BtfTracePoint::attach]. Can be passed to [BtfTracePoint::detach].
+     BtfTracePointLinkId,
+diff --git a/aya/src/programs/trace_point.rs b/aya/src/programs/trace_point.rs
+--- a/aya/src/programs/trace_point.rs
++++ b/aya/src/programs/trace_point.rs
+@@ -6,7 +6,7 @@ use crate::{
+     programs::{
+         define_link_wrapper, load_program,
+         perf_attach::{perf_attach, PerfLink, PerfLinkId},
+-        ProgramData, ProgramError,
++        OwnedLink, ProgramData, ProgramError,
+     },
+     sys::perf_event_open_trace_point,
+ };
+diff --git a/aya/src/programs/trace_point.rs b/aya/src/programs/trace_point.rs
+--- a/aya/src/programs/trace_point.rs
++++ b/aya/src/programs/trace_point.rs
+@@ -94,9 +94,21 @@ impl TracePoint {
+     pub fn detach(&mut self, link_id: TracePointLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: TracePointLinkId,
++    ) -> Result<OwnedLink<TracePointLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [TracePoint] programs.
+     TracePointLink,
+     /// The type returned by [TracePoint::attach]. Can be passed to [TracePoint::detach].
+     TracePointLinkId,
+diff --git a/aya/src/programs/uprobe.rs b/aya/src/programs/uprobe.rs
+--- a/aya/src/programs/uprobe.rs
++++ b/aya/src/programs/uprobe.rs
+@@ -19,7 +19,7 @@ use crate::{
+         define_link_wrapper, load_program,
+         perf_attach::{PerfLink, PerfLinkId},
+         probe::{attach, ProbeKind},
+-        ProgramData, ProgramError,
++        OwnedLink, ProgramData, ProgramError,
+     },
+ };
+ 
+diff --git a/aya/src/programs/uprobe.rs b/aya/src/programs/uprobe.rs
+--- a/aya/src/programs/uprobe.rs
++++ b/aya/src/programs/uprobe.rs
+@@ -128,9 +128,21 @@ impl UProbe {
+     pub fn detach(&mut self, link_id: UProbeLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(
++        &mut self,
++        link_id: UProbeLinkId,
++    ) -> Result<OwnedLink<UProbeLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [UProbe] programs.
+     UProbeLink,
+     /// The type returned by [UProbe::attach]. Can be passed to [UProbe::detach].
+     UProbeLinkId,
+diff --git a/aya/src/programs/xdp.rs b/aya/src/programs/xdp.rs
+--- a/aya/src/programs/xdp.rs
++++ b/aya/src/programs/xdp.rs
+@@ -10,7 +10,9 @@ use crate::{
+         XDP_FLAGS_DRV_MODE, XDP_FLAGS_HW_MODE, XDP_FLAGS_REPLACE, XDP_FLAGS_SKB_MODE,
+         XDP_FLAGS_UPDATE_IF_NOEXIST,
+     },
+-    programs::{define_link_wrapper, load_program, FdLink, Link, ProgramData, ProgramError},
++    programs::{
++        define_link_wrapper, load_program, FdLink, Link, OwnedLink, ProgramData, ProgramError,
++    },
+     sys::{bpf_link_create, kernel_version, netlink_set_xdp_fd},
+ };
+ 
+diff --git a/aya/src/programs/xdp.rs b/aya/src/programs/xdp.rs
+--- a/aya/src/programs/xdp.rs
++++ b/aya/src/programs/xdp.rs
+@@ -130,6 +132,14 @@ impl Xdp {
+     pub fn detach(&mut self, link_id: XdpLinkId) -> Result<(), ProgramError> {
+         self.data.links.remove(link_id)
+     }
++
++    /// Takes ownership of the link referenced by the provided link_id.
++    ///
++    /// The link will be detached on `Drop` and the caller is now responsible
++    /// for managing its lifetime.
++    pub fn forget_link(&mut self, link_id: XdpLinkId) -> Result<OwnedLink<XdpLink>, ProgramError> {
++        Ok(OwnedLink::new(self.data.forget_link(link_id)?))
++    }
+ }
+ 
+ #[derive(Debug)]
+diff --git a/aya/src/programs/xdp.rs b/aya/src/programs/xdp.rs
+--- a/aya/src/programs/xdp.rs
++++ b/aya/src/programs/xdp.rs
+@@ -159,13 +169,13 @@ impl Link for NlLink {
+ }
+ 
+ #[derive(Debug, Hash, Eq, PartialEq)]
+-enum XdpLinkIdInner {
++pub(crate) enum XdpLinkIdInner {
+     FdLinkId(<FdLink as Link>::Id),
+     NlLinkId(<NlLink as Link>::Id),
+ }
+ 
+ #[derive(Debug)]
+-enum XdpLinkInner {
++pub(crate) enum XdpLinkInner {
+     FdLink(FdLink),
+     NlLink(NlLink),
+ }
+diff --git a/aya/src/programs/xdp.rs b/aya/src/programs/xdp.rs
+--- a/aya/src/programs/xdp.rs
++++ b/aya/src/programs/xdp.rs
+@@ -189,6 +199,7 @@ impl Link for XdpLinkInner {
+ }
+ 
+ define_link_wrapper!(
++    /// The link used by [Xdp] programs.
+     XdpLink,
+     /// The type returned by [Xdp::attach]. Can be passed to [Xdp::detach].
+     XdpLinkId,

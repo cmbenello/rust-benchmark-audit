@@ -1,0 +1,75 @@
+{
+    "killercup__cargo-edit-572": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "dependency::tests::paths_with_forward_slashes_are_left_as_is",
+                    "dependency::tests::to_toml_dep_with_git_source",
+                    "dependency::tests::to_toml_dep_from_alt_registry",
+                    "dependency::tests::to_toml_complex_dep",
+                    "dependency::tests::to_toml_dep_with_path_source",
+                    "dependency::tests::to_toml_dep_without_default_features",
+                    "dependency::tests::to_toml_optional_dep",
+                    "dependency::tests::to_toml_simple_dep",
+                    "dependency::tests::to_toml_renamed_dep",
+                    "dependency::tests::to_toml_simple_dep_with_version",
+                    "fetch::get_latest_stable_version",
+                    "fetch::get_latest_unstable_or_stable_version",
+                    "fetch::get_latest_version_with_yanked",
+                    "fetch::get_no_latest_version_from_json_when_all_are_yanked",
+                    "manifest::tests::old_incompatible_with_invalid",
+                    "fetch::test_gen_fuzzy_crate_names",
+                    "manifest::tests::old_incompatible_with_missing_new_version",
+                    "manifest::tests::add_remove_dependency",
+                    "manifest::tests::old_version_is_compatible",
+                    "manifest::tests::remove_dependency_no_section",
+                    "manifest::tests::remove_dependency_non_existent",
+                    "manifest::tests::update_dependency",
+                    "version::test::increment::alpha",
+                    "manifest::tests::update_wrong_dependency",
+                    "version::test::increment::beta",
+                    "version::test::increment::metadata",
+                    "version::test::increment::rc",
+                    "version::test::upgrade_requirement::caret_major",
+                    "version::test::upgrade_requirement::caret_patch",
+                    "version::test::upgrade_requirement::equal_major",
+                    "version::test::upgrade_requirement::caret_minor",
+                    "version::test::upgrade_requirement::equal_minor",
+                    "version::test::upgrade_requirement::equal_patch",
+                    "version::test::upgrade_requirement::tilde_major",
+                    "version::test::upgrade_requirement::tilde_minor",
+                    "version::test::upgrade_requirement::wildcard_major",
+                    "version::test::upgrade_requirement::tilde_patch",
+                    "version::test::upgrade_requirement::wildcard_minor",
+                    "version::test::upgrade_requirement::wildcard_patch",
+                    "manifest::tests::set_package_version_overrides",
+                    "args::tests::verify_app",
+                    "args::tests::test_dependency_parsing",
+                    "args::tests::test_path_as_arg_parsing",
+                    "verify_app",
+                    "args::verify_app",
+                    "cli_tests",
+                    "invalid_manifest",
+                    "src/manifest.rs - manifest::LocalManifest::remove_from_table (line 317)"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

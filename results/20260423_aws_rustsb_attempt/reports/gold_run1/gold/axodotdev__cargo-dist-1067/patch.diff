@@ -1,0 +1,172 @@
+diff --git a/Cargo.lock b/Cargo.lock
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -308,6 +308,15 @@ version = "2.5.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "cf4b9d6a944f767f8e5e0db018570623c85f3d925ac718db4e06d0187adb21c1"
+ 
++[[package]]
++name = "blake2"
++version = "0.10.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "46502ad458c9a52b69d4d4d32775c788b7a1b85e8bc9d482d92250fc0e3f8efe"
++dependencies = [
++ "digest",
++]
++
+ [[package]]
+ name = "block-buffer"
+ version = "0.10.4"
+diff --git a/Cargo.lock b/Cargo.lock
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -381,6 +390,7 @@ dependencies = [
+  "axoproject",
+  "axotag",
+  "axoupdater",
++ "blake2",
+  "camino",
+  "cargo-dist-schema",
+  "cargo-wix",
+diff --git a/Cargo.lock b/Cargo.lock
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -406,6 +416,7 @@ dependencies = [
+  "serde",
+  "serde_json",
+  "sha2",
++ "sha3",
+  "similar",
+  "tar",
+  "temp-dir",
+diff --git a/Cargo.lock b/Cargo.lock
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -1431,6 +1442,15 @@ dependencies = [
+  "wasm-bindgen",
+ ]
+ 
++[[package]]
++name = "keccak"
++version = "0.1.5"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ecc2af9a1119c51f12a14607e783cb977bde58bc069ff0c3da1095e635d70654"
++dependencies = [
++ "cpufeatures",
++]
++
+ [[package]]
+ name = "lazy_static"
+ version = "1.4.0"
+diff --git a/Cargo.lock b/Cargo.lock
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -2305,6 +2325,16 @@ dependencies = [
+  "digest",
+ ]
+ 
++[[package]]
++name = "sha3"
++version = "0.10.8"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "75872d278a8f37ef87fa0ddbda7802605cb18344497949862c0d4dcb291eba60"
++dependencies = [
++ "digest",
++ "keccak",
++]
++
+ [[package]]
+ name = "sharded-slab"
+ version = "0.1.7"
+diff --git a/book/src/reference/config.md b/book/src/reference/config.md
+--- a/book/src/reference/config.md
++++ b/book/src/reference/config.md
+@@ -204,9 +204,13 @@ Specifies how to checksum [archives][]. Supported values:
+ 
+ * "sha256" (default) - generate a .sha256 file for each archive
+ * "sha512" - generate a .sha512 file for each archive
++* "sha3-256" - generate a .sha3-256 file for each archive
++* "sha3-512" - generate a .sha3-512 file for each archive
++* "blake2s" - generate a .blake2s file for each archive
++* "blake2b" - generate a .blake2b file for each archive
+ * "false" - do not generate any checksums
+ 
+-The hashes should match the result that sha256sum and sha512sum generate, and the file should be readable by those sorts of commands.
++The hashes should match the result that sha256sum, sha512sum, etc. generate, and the file should be readable by those sorts of commands.
+ 
+ Future work is planned to [support more robust signed checksums][issue-sigstore].
+ 
+diff --git a/cargo-dist/Cargo.toml b/cargo-dist/Cargo.toml
+--- a/cargo-dist/Cargo.toml
++++ b/cargo-dist/Cargo.toml
+@@ -64,6 +64,8 @@ goblin = "0.8.2"
+ similar = "2.5.0"
+ tokio = { version = "1.37.0", features = ["full"] }
+ temp-dir = "0.1.13"
++sha3 = "0.10.8"
++blake2 = "0.10.6"
+ 
+ [dev-dependencies]
+ homedir = "0.2.1"
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -1203,6 +1203,14 @@ pub enum ChecksumStyle {
+     Sha256,
+     /// sha512sum (using the sha2 crate)
+     Sha512,
++    /// sha3-256sum (using the sha3 crate)
++    Sha3_256,
++    /// sha3-512sum (using the sha3 crate)
++    Sha3_512,
++    /// b2sum (using the blake2 crate)
++    Blake2s,
++    /// b2sum (using the blake2 crate)
++    Blake2b,
+     /// Do not checksum
+     False,
+ }
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -1213,6 +1221,10 @@ impl ChecksumStyle {
+         match self {
+             ChecksumStyle::Sha256 => "sha256",
+             ChecksumStyle::Sha512 => "sha512",
++            ChecksumStyle::Sha3_256 => "sha3-256",
++            ChecksumStyle::Sha3_512 => "sha3-512",
++            ChecksumStyle::Blake2s => "blake2s",
++            ChecksumStyle::Blake2b => "blake2b",
+             ChecksumStyle::False => "false",
+         }
+     }
+diff --git a/cargo-dist/src/lib.rs b/cargo-dist/src/lib.rs
+--- a/cargo-dist/src/lib.rs
++++ b/cargo-dist/src/lib.rs
+@@ -396,6 +396,26 @@ fn generate_checksum(checksum: &ChecksumStyle, src_path: &Utf8Path) -> DistResul
+             hasher.update(&file_bytes);
+             hasher.finalize().as_slice().to_owned()
+         }
++        ChecksumStyle::Sha3_256 => {
++            let mut hasher = sha3::Sha3_256::new();
++            hasher.update(&file_bytes);
++            hasher.finalize().as_slice().to_owned()
++        }
++        ChecksumStyle::Sha3_512 => {
++            let mut hasher = sha3::Sha3_512::new();
++            hasher.update(&file_bytes);
++            hasher.finalize().as_slice().to_owned()
++        }
++        ChecksumStyle::Blake2s => {
++            let mut hasher = blake2::Blake2s256::new();
++            hasher.update(&file_bytes);
++            hasher.finalize().as_slice().to_owned()
++        }
++        ChecksumStyle::Blake2b => {
++            let mut hasher = blake2::Blake2b512::new();
++            hasher.update(&file_bytes);
++            hasher.finalize().as_slice().to_owned()
++        }
+         ChecksumStyle::False => {
+             unreachable!()
+         }

@@ -1,0 +1,4112 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch Cargo.toml...
+Checking patch src/template_variables/project_dir.rs...
+Checking patch src/template_variables/project_name.rs...
+Checking patch src/user_parsed_input.rs...
+Checking patch tests/integration/basics.rs...
+Checking patch tests/integration/basics.rs...
+Checking patch tests/integration/helpers/project_builder.rs...
+Checking patch tests/integration/helpers/project_builder.rs...
+Checking patch tests/integration/helpers/project_builder.rs...
+Checking patch tests/integration/hooks_and_rhai.rs...
+Applied patch Cargo.toml cleanly.
+Applied patch src/template_variables/project_dir.rs cleanly.
+Applied patch src/template_variables/project_name.rs cleanly.
+Applied patch src/user_parsed_input.rs cleanly.
+Applied patch tests/integration/basics.rs cleanly.
+Applied patch tests/integration/basics.rs cleanly.
+Applied patch tests/integration/helpers/project_builder.rs cleanly.
+Applied patch tests/integration/helpers/project_builder.rs cleanly.
+Applied patch tests/integration/helpers/project_builder.rs cleanly.
+Applied patch tests/integration/hooks_and_rhai.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded anstyle v1.0.6 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded anstyle-query v1.0.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded ahash v0.8.11 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded anyhow v1.0.81 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded names v0.14.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded number_prefix v0.4.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded num-conv v0.1.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded itoa v1.0.11 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded humantime v2.1.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded sanitize-filename v0.5.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded path-dedot v3.1.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-trace v0.1.8 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded shell-words v1.1.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded memchr v2.7.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded wait-timeout v0.2.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded walkdir v2.5.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded libz-sys v1.1.16 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded zeroize v1.7.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded openssl v0.10.64 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded zerocopy v0.7.32 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded winnow v0.6.5 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded vcpkg v0.2.15 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded url v2.5.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded openssl-src v300.2.3+3.2.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded unicode-width v0.1.11 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded unicode-segmentation v1.11.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded unicode-normalization v0.1.23 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded unicode-ident v1.0.12 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded unicode-bidi v0.3.15 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded ucd-trie v0.1.6 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded typenum v1.17.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded toml_edit v0.22.9 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded toml v0.8.12 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded tinyvec_macros v0.1.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded tinyvec v1.6.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded time-macros v0.2.17 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded time v0.3.34 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded thin-vec v0.2.13 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded tempfile v3.10.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded syn v2.0.58 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded static_assertions v1.1.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded smallvec v1.13.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded serde_derive v1.0.197 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded serde v1.0.197 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded semver v1.0.22 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded rustix v0.38.32 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded rhai_codegen v2.0.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded rhai v1.17.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded remove_dir_all v0.8.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded regex-syntax v0.8.3 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded regex-automata v0.4.6 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded regex v1.10.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded rand v0.8.5 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded quote v1.0.35 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded prodash v28.0.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded proc-macro2 v1.0.79 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded predicates v3.1.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded portable-atomic v1.6.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded pkg-config v0.3.30 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded pest_meta v2.7.9 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded pest_generator v2.7.9 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded pest_derive v2.7.9 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded pest v2.7.9 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded parking_lot_core v0.9.9 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded parking_lot v0.12.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded openssl-sys v0.9.102 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded openssl-probe v0.1.5 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded once_cell v1.19.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded nix v0.26.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded tiny-keccak v2.0.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded thiserror v1.0.58 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded termtree v0.4.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded smartstring v1.0.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded sha2 v0.10.8 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded rand_core v0.6.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded ppv-lite86 v0.2.17 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded paste v1.0.14 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded libgit2-sys v0.16.2+1.7.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded utf8parse v0.2.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded unicode-bom v2.0.3 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded toml_datetime v0.6.5 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded time-core v0.1.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded thiserror-impl v1.0.58 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded terminal-prompt v0.2.3 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded sha1_smol v1.0.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded serde_spanned v0.6.5 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded rand_chacha v0.3.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded predicates-tree v1.0.9 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded predicates-core v1.0.6 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded powerfmt v0.2.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded percent-encoding v2.3.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded path-absolutize v3.1.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded linux-raw-sys v0.4.13 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded libssh2-sys v0.3.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded libc v0.2.153 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded idna v0.5.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded hashbrown v0.14.3 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded git2 v0.18.3 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded crossbeam-utils v0.8.19 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded clap_builder v4.5.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded clap v4.5.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded cc v1.0.92 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded bstr v1.9.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded bitflags v2.5.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded assert_cmd v2.0.14 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded log v0.4.21 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded lock_api v0.4.11 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded liquid-lib v0.26.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded liquid-core v0.26.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded kstring v2.0.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded jobserver v0.1.28 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded itertools v0.10.5 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded indicatif v0.17.8 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded ignore v0.4.22 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded globset v0.4.14 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-validate v0.8.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-ref v0.43.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-object v0.42.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-lock v13.1.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-hash v0.14.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-glob v0.16.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-features v0.38.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-actor v0.31.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded form_urlencoded v1.2.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded env_filter v0.1.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded either v1.10.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded dirs v5.0.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded digest v0.10.7 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded cvt v0.1.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded crunchy v0.2.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded crossbeam-epoch v0.9.18 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded option-ext v0.2.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded memmap2 v0.9.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-utils v0.1.11 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded crossbeam-deque v0.8.5 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded cpufeatures v0.2.12 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded const-random v0.1.18 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded clap_derive v4.5.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded autocfg v1.2.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded equivalent v1.0.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded doc-comment v0.3.3 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded dirs-sys v0.4.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded difflib v0.4.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded openssl-macros v0.1.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded liquid v0.26.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded home v0.5.9 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded foreign-types v0.3.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded errno v0.3.8 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded dialoguer v0.11.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded num-traits v0.2.18 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded indexmap v2.2.6 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-sec v0.10.6 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-path v0.10.7 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-fs v0.10.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-date v0.8.5 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-config-value v0.14.6 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded getrandom v0.2.14 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded generic-array v0.14.7 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded fs_at v0.1.10 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded foreign-types-shared v0.1.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded float-cmp v0.9.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded crypto-common v0.1.6 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded auth-git2 v0.5.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded fs-err v2.11.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded indoc v2.0.5 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded heck v0.5.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-tempfile v13.1.1 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded faster-hex v0.9.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded env_logger v0.11.3 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded deranged v0.3.11 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded const-random-macro v0.1.16 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded console v0.15.8 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded clap_lex v0.7.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded block-buffer v0.10.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded normpath v1.2.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded normalize-line-endings v0.3.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded liquid-derive v0.26.4 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded gix-config v0.36.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded colorchoice v1.0.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded num_threads v0.1.7 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded fastrand v2.0.2 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded anymap2 v0.13.0 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded anstyle-parse v0.2.3 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded anstream v0.6.13 (registry `lts-repo-at-09ba3c0d65`)
+  Downloaded aho-corasick v1.1.3 (registry `lts-repo-at-09ba3c0d65`)
+   Compiling libc v0.2.153
+   Compiling proc-macro2 v1.0.79
+   Compiling unicode-ident v1.0.12
+   Compiling memchr v2.7.2
+   Compiling thiserror v1.0.58
+   Compiling autocfg v1.2.0
+   Compiling cfg-if v1.0.0
+   Compiling regex-syntax v0.8.3
+   Compiling once_cell v1.19.0
+   Compiling pkg-config v0.3.30
+   Compiling tinyvec_macros v0.1.1
+   Compiling bitflags v2.5.0
+   Compiling vcpkg v0.2.15
+   Compiling fastrand v2.0.2
+   Compiling serde v1.0.197
+   Compiling gix-trace v0.1.8
+   Compiling time-core v0.1.2
+   Compiling num-conv v0.1.0
+   Compiling same-file v1.0.6
+   Compiling powerfmt v0.2.0
+   Compiling itoa v1.0.11
+   Compiling num_threads v0.1.7
+   Compiling faster-hex v0.9.0
+   Compiling sha1_smol v1.0.0
+   Compiling smallvec v1.13.2
+   Compiling prodash v28.0.0
+   Compiling rustix v0.38.32
+   Compiling ucd-trie v0.1.6
+   Compiling crunchy v0.2.2
+   Compiling version_check v0.9.4
+   Compiling linux-raw-sys v0.4.13
+   Compiling tinyvec v1.6.0
+   Compiling parking_lot_core v0.9.9
+   Compiling walkdir v2.5.0
+   Compiling percent-encoding v2.3.1
+   Compiling tiny-keccak v2.0.2
+   Compiling deranged v0.3.11
+   Compiling time-macros v0.2.17
+   Compiling anstyle v1.0.6
+   Compiling scopeguard v1.2.0
+   Compiling log v0.4.21
+   Compiling static_assertions v1.1.0
+   Compiling crossbeam-utils v0.8.19
+   Compiling home v0.5.9
+   Compiling lazy_static v1.4.0
+   Compiling unicode-bidi v0.3.15
+   Compiling either v1.10.0
+   Compiling doc-comment v0.3.3
+   Compiling form_urlencoded v1.2.1
+   Compiling equivalent v1.0.1
+   Compiling bitflags v1.3.2
+   Compiling portable-atomic v1.6.0
+   Compiling hashbrown v0.14.3
+   Compiling ahash v0.8.11
+   Compiling anymap2 v0.13.0
+   Compiling unicode-width v0.1.11
+   Compiling utf8parse v0.2.1
+   Compiling ppv-lite86 v0.2.17
+   Compiling num-traits v0.2.18
+   Compiling lock_api v0.4.11
+   Compiling aho-corasick v1.1.3
+   Compiling winnow v0.6.5
+   Compiling itertools v0.10.5
+   Compiling smartstring v1.0.1
+   Compiling option-ext v0.2.0
+   Compiling anstyle-parse v0.2.3
+   Compiling fs-err v2.11.0
+   Compiling cvt v0.1.2
+   Compiling names v0.14.0
+   Compiling clap_lex v0.7.0
+   Compiling anstyle-query v1.0.2
+   Compiling openssl-probe v0.1.5
+   Compiling paste v1.0.14
+   Compiling openssl v0.10.64
+   Compiling unicode-segmentation v1.11.0
+   Compiling semver v1.0.22
+   Compiling colorchoice v1.0.0
+   Compiling heck v0.5.0
+   Compiling foreign-types-shared v0.1.1
+   Compiling zerocopy v0.7.32
+   Compiling anyhow v1.0.81
+   Compiling anstream v0.6.13
+   Compiling foreign-types v0.3.2
+   Compiling clap_builder v4.5.2
+   Compiling path-dedot v3.1.1
+   Compiling normpath v1.2.0
+   Compiling number_prefix v0.4.0
+   Compiling predicates-core v1.0.6
+   Compiling unicode-normalization v0.1.23
+   Compiling quote v1.0.35
+   Compiling humantime v2.1.0
+   Compiling zeroize v1.7.0
+   Compiling unicode-bom v2.0.3
+   Compiling shell-words v1.1.0
+   Compiling thin-vec v0.2.13
+   Compiling crossbeam-epoch v0.9.18
+   Compiling path-absolutize v3.1.1
+   Compiling assert_cmd v2.0.14
+   Compiling normalize-line-endings v0.3.0
+   Compiling termtree v0.4.1
+   Compiling difflib v0.4.0
+   Compiling indoc v2.0.5
+   Compiling predicates-tree v1.0.9
+   Compiling syn v2.0.58
+   Compiling float-cmp v0.9.0
+   Compiling gix-utils v0.1.11
+   Compiling idna v0.5.0
+   Compiling crossbeam-deque v0.8.5
+   Compiling jobserver v0.1.28
+   Compiling getrandom v0.2.14
+   Compiling const-random-macro v0.1.16
+   Compiling cc v1.0.92
+   Compiling url v2.5.0
+   Compiling const-random v0.1.18
+   Compiling regex-automata v0.4.6
+   Compiling time v0.3.34
+   Compiling memmap2 v0.9.4
+   Compiling dirs-sys v0.4.1
+   Compiling console v0.15.8
+   Compiling nix v0.26.4
+   Compiling terminal-prompt v0.2.3
+   Compiling gix-sec v0.10.6
+   Compiling wait-timeout v0.2.0
+   Compiling dirs v5.0.1
+   Compiling parking_lot v0.12.1
+   Compiling rand_core v0.6.4
+   Compiling rand_chacha v0.3.1
+   Compiling tempfile v3.10.1
+   Compiling indicatif v0.17.8
+   Compiling openssl-src v300.2.3+3.2.1
+   Compiling rand v0.8.5
+   Compiling fs_at v0.1.10
+   Compiling remove_dir_all v0.8.2
+   Compiling openssl-sys v0.9.102
+   Compiling libz-sys v1.1.16
+   Compiling libssh2-sys v0.3.0
+   Compiling libgit2-sys v0.16.2+1.7.2
+   Compiling bstr v1.9.1
+   Compiling regex v1.10.4
+   Compiling env_filter v0.1.0
+   Compiling sanitize-filename v0.5.0
+   Compiling predicates v3.1.0
+   Compiling globset v0.4.14
+   Compiling env_logger v0.11.3
+   Compiling thiserror-impl v1.0.58
+   Compiling serde_derive v1.0.197
+   Compiling liquid-derive v0.26.4
+   Compiling openssl-macros v0.1.1
+   Compiling clap_derive v4.5.4
+   Compiling rhai_codegen v2.0.0
+   Compiling ignore v0.4.22
+   Compiling rhai v1.17.1
+   Compiling gix-hash v0.14.2
+   Compiling pest v2.7.9
+   Compiling gix-date v0.8.5
+   Compiling gix-path v0.10.7
+   Compiling gix-validate v0.8.4
+   Compiling dialoguer v0.11.0
+   Compiling gix-features v0.38.1
+   Compiling gix-config-value v0.14.6
+   Compiling gix-actor v0.31.1
+   Compiling gix-fs v0.10.1
+   Compiling gix-glob v0.16.2
+   Compiling gix-object v0.42.1
+   Compiling gix-tempfile v13.1.1
+   Compiling gix-lock v13.1.1
+   Compiling clap v4.5.4
+   Compiling pest_meta v2.7.9
+   Compiling gix-ref v0.43.0
+   Compiling pest_generator v2.7.9
+   Compiling gix-config v0.36.0
+   Compiling pest_derive v2.7.9
+   Compiling kstring v2.0.0
+   Compiling toml_datetime v0.6.5
+   Compiling indexmap v2.2.6
+   Compiling serde_spanned v0.6.5
+   Compiling liquid-core v0.26.4
+   Compiling toml_edit v0.22.9
+   Compiling liquid-lib v0.26.4
+   Compiling toml v0.8.12
+   Compiling liquid v0.26.4
+   Compiling git2 v0.18.3
+   Compiling auth-git2 v0.5.4
+   Compiling cargo-generate v0.20.0 (/workspace)
+    Finished test [unoptimized + debuginfo] target(s) in 1m 13s
+     Running unittests src/lib.rs (target/debug/deps/cargo_generate-28447e055065283b)
+
+running 70 tests
+test config::tests::config_try_from_handles_empty ... ok
+test config::tests::locate_configs_doesnt_look_past_cargo_generate ... ok
+test args::cli_tests::test_cli ... ok
+test config::tests::test_deserializes_config ... ok
+test config::tests::config_try_from_errors_on_invalid_keys ... ok
+test config::tests::config_try_from_handles_placeholders ... ok
+test git::utils::should_canonicalize ... ok
+test project_variables::tests::block_invalid_key_names ... ok
+test project_variables::tests::bools_cant_have_regex ... ok
+test project_variables::tests::choices_array_cant_have_anything_but_strings ... ok
+test git::gitconfig::test::should_resolve_instead_url ... ok
+test config::tests::locate_configs_returns_empty_upon_failure ... ok
+test config::tests::locate_configs_can_locate_paths_with_cargo_generate ... ok
+test project_variables::tests::boolean_cant_have_choices ... ok
+test project_variables::tests::choices_cant_be_an_empty_array ... ok
+test project_variables::tests::default_for_bool_only_accepts_bool ... ok
+test project_variables::tests::default_for_boolean_is_fine ... ok
+test project_variables::tests::default_for_string_is_on_choices ... ok
+test filenames::tests::should_prevent_exploitation ... ok
+test project_variables::tests::choices_is_array_string_that_doesnt_match_regex_is_error ... ok
+test filenames::tests::should_prevent_invalid_filenames ... ok
+test filenames::tests::should_do_happy_path ... ok
+test project_variables::tests::choices_is_array_string_no_regex_is_fine ... ok
+test project_variables::tests::choices_is_array_string_that_all_match_regex_is_good ... ok
+test project_variables::tests::default_for_string_isnt_on_choices ... ok
+test project_variables::tests::default_for_string_is_on_choices_and_matches_regex ... ok
+test project_variables::tests::default_for_string_only_accepts_strings ... ok
+test project_variables::tests::choices_is_not_array_string_is_error ... ok
+test project_variables::tests::default_for_string_with_no_choices_and_matching_regex ... ok
+test project_variables::tests::default_for_string_with_no_choices_and_no_regex ... ok
+test project_variables::tests::default_for_string_with_no_choices_and_regex_doesnt_match ... ok
+test project_variables::tests::empty_default_is_fine ... ok
+test project_variables::tests::empty_type_is_string ... ok
+test project_variables::tests::no_choices_boolean ... ok
+test project_variables::tests::invalid_regex_is_err ... ok
+test project_variables::tests::no_choices_editor ... ok
+test project_variables::tests::editor_cant_have_choices ... ok
+test project_variables::tests::no_choices_text ... ok
+test project_variables::tests::no_choices_for_type_string ... ok
+test project_variables::tests::no_regex_is_ok ... ok
+test project_variables::tests::only_tables_as_placeholder_values ... ok
+test project_variables::tests::prompt_as_string_is_ok ... ok
+test project_variables::tests::prompt_cant_be_empty ... ok
+test project_variables::tests::prompt_must_be_string ... ok
+test project_variables::tests::text_cant_have_choices ... ok
+test project_variables::tests::type_must_be_string_type ... ok
+test project_variables::tests::type_must_either_be_string_or_bool ... ok
+test hooks::variable_mod::tests::test_rhai_set ... ok
+test project_variables::tests::strings_can_have_regex ... ok
+test template_variables::project_dir::tests::test_dash_case_is_accepted ... ok
+test template_variables::project_dir::tests::test_converted_to_dash_case ... ok
+test template_variables::project_dir::tests::test_not_converted_to_dash_case_when_with_force ... ok
+test template_variables::project_dir::tests::test_snake_case_is_accepted ... ok
+test template_variables::project_name::tests::test_converted_to_dash_case ... ok
+test template_variables::project_name::tests::test_dash_case_is_accepted ... ok
+test tests::auto_locate_template_returns_base_when_no_cargo_generate_is_found ... ok
+test user_parsed_input::tests::should_support_colon_abbreviations ... ok
+test template_variables::project_name::tests::test_not_converted_to_dash_case_when_with_force ... ok
+test tests::auto_locate_template_returns_path_when_single_cargo_generate_is_found ... ok
+test template_variables::test::names_may_contain_dash ... ok
+test template_variables::test::names_may_contain_underscore ... ok
+test user_parsed_input::tests::should_appreviation_org_repo_to_github ... ok
+test template_variables::test::names_may_contain_digits ... ok
+test tests::auto_locate_template_can_resolve_configured_subtemplates ... ok
+test template_variables::test::spaces_around_assignment_is_ok ... ok
+test template_variables::test::spaces_are_not_allowed_in_names ... ok
+test tests::auto_locate_template_prompts_when_multiple_cargo_generate_is_found ... ok
+test template_variables::project_name::tests::test_snake_case_is_accepted ... ok
+test tests::auto_locate_template_recurses_to_resolve_subtemplates ... ok
+test template_variables::test::names_must_start_with_word_char ... ok
+
+test result: ok. 70 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/main.rs (target/debug/deps/cargo_generate-121a56946031ab0b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration/main.rs (target/debug/deps/integration-7e53bab5571cb44a)
+
+running 98 tests
+test basics::errant_ignore_entry_doesnt_affect_template_files ... FAILED
+test basics::it_always_removes_cargo_ok_file ... FAILED
+test basics::it_doesnt_warn_with_neither_config_nor_ignore ... FAILED
+test basics::it_can_overwrite_files ... FAILED
+test basics::it_always_removes_genignore_file ... FAILED
+test basics::it_can_generate_into_existing_git_dir ... FAILED
+test basics::it_keeps_snake_case_projectname ... FAILED
+test basics::it_loads_a_submodule ... FAILED
+test basics::it_can_generate_inside_existing_repository ... FAILED
+test basics::error_message_for_invalid_repo_or_user ... ok
+test basics::it_allows_relative_paths ... FAILED
+test basics::it_can_generate_at_given_path ... FAILED
+test basics::it_does_not_remove_files_from_outside_project_dir ... FAILED
+test basics::it_processes_dot_github_directory_files ... FAILED
+test basics::it_can_use_a_specified_path ... FAILED
+test basics::it_respects_template_branch_name ... FAILED
+test basics::it_substitutes_authors_and_username ... FAILED
+test basics::it_prints_ignored_files_with_verbose ... FAILED
+test basics::it_allows_user_defined_projectname_when_passing_force_flag ... FAILED
+test basics::it_substitutes_os_arch ... FAILED
+test basics::it_can_use_a_plain_folder ... FAILED
+test basics::it_substitutes_cratename_in_a_rust_file ... FAILED
+test basics::it_skips_substitution_for_random_garbage_in_cargo_toml ... FAILED
+test basics::it_skips_substitution_for_unknown_variables_in_cargo_toml ... FAILED
+test conditionals::it_can_conditionally_include_files ... FAILED
+test config_file::favorites::favorites_default_value_can_be_overridden_by_environment ... FAILED
+test basics::short_commands_work ... FAILED
+test conditionals::it_supports_conditions_in_multiple_levels ... FAILED
+test config_file::favorites::favorite_with_git_becomes_subfolder ... FAILED
+test config_file::defaults::it_uses_ssh_identity_from_defaults_config ... FAILED
+test basics::it_ignore_tags_inside_raw_block ... FAILED
+test conditionals::it_can_conditionally_include_files2 ... FAILED
+test config_file::favorites::favorites_default_to_git_if_not_defined ... FAILED
+test config_file::favorites::a_favorite_can_set_vcs_to_none_by_default ... FAILED
+test conditionals::it_can_ask_placeholders_in_multiple_levels ... FAILED
+test basics::it_removes_files_listed_in_genignore ... FAILED
+test basics::it_removes_genignore_files_before_substitution ... FAILED
+test basics::it_can_generate_into_cwd ... FAILED
+test basics::it_provides_crate_type_bin ... FAILED
+test conditionals::it_supports_conditions_with_creepy_shit_inside ... FAILED
+test basics::it_refuses_to_overwrite_files ... FAILED
+test config_file::favorites::it_can_use_favorites ... FAILED
+test basics::it_provides_crate_type_lib ... FAILED
+test git::should_find_them_all ... ok
+test config_file::values::it_accepts_individual_template_values_from_environment ... FAILED
+test config_file::values::it_accepts_default_template_values ... FAILED
+test config_file::values::it_accepts_individual_template_values_via_flag ... FAILED
+test git::should_retrieve_an_instead_of_url ... ok
+test config_file::values::it_accepts_template_values_file_from_environment ... FAILED
+test config_file::values::cli_value_overrides_others ... FAILED
+test config_file::values::it_accepts_empty_define_variables ... FAILED
+test online::abbreviation_for_github_works ... ignored
+test config_file::favorites::favorite_with_subfolder ... FAILED
+test config_file::favorites::favorite_can_specify_to_be_generated_into_cwd ... FAILED
+test config_file::values::it_accepts_bool_in_file ... FAILED
+test config_file::values::it_accepts_template_values_file_via_flag ... FAILED
+test config_file::favorites::favorite_subfolder_must_be_valid ... FAILED
+test online::git_flag_can_be_skipped_and_cargo_will_use_correct_implementation ... ignored
+test online::plain_git_repo_works ... ignored
+test basics::it_uses_vsc_none_to_avoid_initializing_repository ... FAILED
+test online::ssh_remote::it_should_support_a_custom_ssh_key ... ignored
+test online::ssh_remote::it_should_support_a_private_repo ... ignored
+test config_file::values::cli_values_are_checked_via_regex ... FAILED
+test basics::it_substitutes_projectname_in_cargo_toml ... FAILED
+test git::it_allows_a_git_branch_to_be_specified ... FAILED
+test online::ssh_remote::it_should_support_a_public_repo ... ignored
+test config_file::favorites::favorites_can_use_default_values ... FAILED
+test git::it_allows_a_git_revision_to_be_specified ... FAILED
+test config_file::values::it_accepts_values_via_long_option ... FAILED
+test hooks_and_rhai::it_runs_all_hook_types ... FAILED
+test config_file::values::it_accepts_values_via_short_option ... FAILED
+test hooks_and_rhai::it_fails_when_it_cant_execute_system_command ... FAILED
+test hooks_and_rhai::init_hook_can_change_project_name_but_keeps_init_destination ... FAILED
+test hooks_and_rhai::it_fails_when_a_system_command_returns_non_zero_exit_code ... FAILED
+test hooks_and_rhai::it_can_change_case ... FAILED
+test hooks_and_rhai::init_hook_can_set_project_name ... FAILED
+test filenames::it_substitutes_filename ... FAILED
+test hooks_and_rhai::can_change_variables_from_pre_hook ... FAILED
+test git::it_removes_git_history ... FAILED
+test hooks_and_rhai::it_runs_system_commands ... FAILED
+test hooks_and_rhai::init_hook_can_change_project_name_but_keeps_cli_name_for_destination ... FAILED
+test hooks_and_rhai::rhai_filter_invokes_rhai_script ... FAILED
+test hooks_and_rhai::it_fails_to_prompt_for_system_commands_in_silent_mode ... FAILED
+test template_config_file::includes_and_excludes::it_warns_on_include_and_exclude_in_config ... FAILED
+test git::it_should_init_an_empty_git_repo_even_when_starting_from_a_repo_when_forced ... FAILED
+test git::it_allows_a_git_tag_to_be_specified ... FAILED
+test git::it_removes_git_history_also_on_local_templates ... FAILED
+test public_api::it_allows_generate_call_with_public_args_and_returns_the_generated_path ... FAILED
+test hooks_and_rhai::missing_rhai_filter_fails_prints_warnings ... FAILED
+test template_config_file::misc::it_doesnt_warn_on_config_with_no_ignore ... FAILED
+test template_filters::it_substitutes_date ... FAILED
+test template_config_file::misc::a_template_can_specify_to_be_generated_into_cwd ... FAILED
+test template_config_file::misc::it_always_removes_config_file ... FAILED
+test template_config_file::includes_and_excludes::it_doesnt_process_excluded_files_in_config ... FAILED
+test template_config_file::misc::vsc_none_can_be_specified_in_the_template ... FAILED
+test template_filters::it_applies_filters ... FAILED
+test template_config_file::placeholders::it_prompts_for_placeholders_in_the_config_file_defined_order ... FAILED
+test template_config_file::includes_and_excludes::it_only_processes_include_files_in_config ... FAILED
+
+failures:
+
+---- basics::errant_ignore_entry_doesnt_affect_template_files stdout ----
+thread 'basics::errant_ignore_entry_doesnt_affect_template_files' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateCRvp3s" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- basics::it_always_removes_cargo_ok_file stdout ----
+thread 'basics::it_always_removes_cargo_ok_file' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateATjxvt" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_doesnt_warn_with_neither_config_nor_ignore stdout ----
+thread 'basics::it_doesnt_warn_with_neither_config_nor_ignore' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateyOxaL0" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_can_overwrite_files stdout ----
+thread 'basics::it_can_overwrite_files' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateuM1605" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_always_removes_genignore_file stdout ----
+thread 'basics::it_always_removes_genignore_file' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generaterm24PD" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_can_generate_into_existing_git_dir stdout ----
+thread 'basics::it_can_generate_into_existing_git_dir' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateUZoDe1" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_keeps_snake_case_projectname stdout ----
+thread 'basics::it_keeps_snake_case_projectname' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate4E3lpU" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_loads_a_submodule stdout ----
+thread 'basics::it_loads_a_submodule' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatem2Lmbc" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_can_generate_inside_existing_repository stdout ----
+thread 'basics::it_can_generate_inside_existing_repository' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatehOqCv1" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_allows_relative_paths stdout ----
+thread 'basics::it_allows_relative_paths' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateUDQxNi" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_can_generate_at_given_path stdout ----
+thread 'basics::it_can_generate_at_given_path' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate012WG9" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_does_not_remove_files_from_outside_project_dir stdout ----
+thread 'basics::it_does_not_remove_files_from_outside_project_dir' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatenN6pYS" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_processes_dot_github_directory_files stdout ----
+thread 'basics::it_processes_dot_github_directory_files' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate1t6pQU" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_can_use_a_specified_path stdout ----
+thread 'basics::it_can_use_a_specified_path' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=1
+stderr=```"Error: could not determine the current user, please set $USER\n"```
+command=`cd "/tmp/cargo-generateIGH6jQ" && "/workspace/target/debug/cargo-generate" "generate" "--name" "foobar-project" "--path" "/tmp/cargo-generatehwWY0W"`
+code=1
+stdout=""
+stderr="Error: could not determine the current user, please set $USER\n"
+
+
+---- basics::it_respects_template_branch_name stdout ----
+thread 'basics::it_respects_template_branch_name' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateevciBa" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_substitutes_authors_and_username stdout ----
+thread 'basics::it_substitutes_authors_and_username' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateNBF0Ru" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_prints_ignored_files_with_verbose stdout ----
+thread 'basics::it_prints_ignored_files_with_verbose' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatej6r251" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_allows_user_defined_projectname_when_passing_force_flag stdout ----
+thread 'basics::it_allows_user_defined_projectname_when_passing_force_flag' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateJRF9Vi" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_substitutes_os_arch stdout ----
+thread 'basics::it_substitutes_os_arch' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatecoVbod" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_can_use_a_plain_folder stdout ----
+thread 'basics::it_can_use_a_plain_folder' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=1
+stderr=```"Error: could not determine the current user, please set $USER\n"```
+command=`cd "/tmp/cargo-generatepJbdco" && "/workspace/target/debug/cargo-generate" "generate" "--name" "foobar-project" "/tmp/cargo-generatev5XVXq"`
+code=1
+stdout=" Favorite `/tmp/cargo-generatev5XVXq` not found in config, using it as a local path: /tmp/cargo-generatev5XVXq\n"
+stderr="Error: could not determine the current user, please set $USER\n"
+
+
+---- basics::it_substitutes_cratename_in_a_rust_file stdout ----
+thread 'basics::it_substitutes_cratename_in_a_rust_file' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateU5Hrzg" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_skips_substitution_for_random_garbage_in_cargo_toml stdout ----
+thread 'basics::it_skips_substitution_for_random_garbage_in_cargo_toml' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateuYdZwd" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_skips_substitution_for_unknown_variables_in_cargo_toml stdout ----
+thread 'basics::it_skips_substitution_for_unknown_variables_in_cargo_toml' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateEYKTjU" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- conditionals::it_can_conditionally_include_files stdout ----
+thread 'conditionals::it_can_conditionally_include_files' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateGJw1Pu" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::favorites::favorites_default_value_can_be_overridden_by_environment stdout ----
+thread 'config_file::favorites::favorites_default_value_can_be_overridden_by_environment' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateh1UVXi" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::short_commands_work stdout ----
+thread 'basics::short_commands_work' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatefnkQgC" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- conditionals::it_supports_conditions_in_multiple_levels stdout ----
+thread 'conditionals::it_supports_conditions_in_multiple_levels' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate6zxbGT" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::favorites::favorite_with_git_becomes_subfolder stdout ----
+thread 'config_file::favorites::favorite_with_git_becomes_subfolder' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateElvB6s" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::defaults::it_uses_ssh_identity_from_defaults_config stdout ----
+thread 'config_file::defaults::it_uses_ssh_identity_from_defaults_config' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate37kHrB" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_ignore_tags_inside_raw_block stdout ----
+thread 'basics::it_ignore_tags_inside_raw_block' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate6uqvre" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- conditionals::it_can_conditionally_include_files2 stdout ----
+thread 'conditionals::it_can_conditionally_include_files2' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateUynK8i" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::favorites::favorites_default_to_git_if_not_defined stdout ----
+thread 'config_file::favorites::favorites_default_to_git_if_not_defined' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatelMzW7P" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::favorites::a_favorite_can_set_vcs_to_none_by_default stdout ----
+thread 'config_file::favorites::a_favorite_can_set_vcs_to_none_by_default' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatebkhsEG" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- conditionals::it_can_ask_placeholders_in_multiple_levels stdout ----
+thread 'conditionals::it_can_ask_placeholders_in_multiple_levels' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateVH54Wp" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_removes_files_listed_in_genignore stdout ----
+thread 'basics::it_removes_files_listed_in_genignore' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateJaDmLm" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_removes_genignore_files_before_substitution stdout ----
+thread 'basics::it_removes_genignore_files_before_substitution' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateqiwveF" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_can_generate_into_cwd stdout ----
+thread 'basics::it_can_generate_into_cwd' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateZZJyII" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_provides_crate_type_bin stdout ----
+thread 'basics::it_provides_crate_type_bin' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate2Fv6Be" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- conditionals::it_supports_conditions_with_creepy_shit_inside stdout ----
+thread 'conditionals::it_supports_conditions_with_creepy_shit_inside' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatehTqPbK" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_refuses_to_overwrite_files stdout ----
+thread 'basics::it_refuses_to_overwrite_files' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatekzx9l8" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::favorites::it_can_use_favorites stdout ----
+thread 'config_file::favorites::it_can_use_favorites' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatetEss3S" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_provides_crate_type_lib stdout ----
+thread 'basics::it_provides_crate_type_lib' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatepdAk7T" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::it_accepts_individual_template_values_from_environment stdout ----
+thread 'config_file::values::it_accepts_individual_template_values_from_environment' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatesxexZt" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::it_accepts_default_template_values stdout ----
+thread 'config_file::values::it_accepts_default_template_values' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatem9s6b5" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::it_accepts_individual_template_values_via_flag stdout ----
+thread 'config_file::values::it_accepts_individual_template_values_via_flag' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate2i4dSy" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::it_accepts_template_values_file_from_environment stdout ----
+thread 'config_file::values::it_accepts_template_values_file_from_environment' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateVZwZbv" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::cli_value_overrides_others stdout ----
+thread 'config_file::values::cli_value_overrides_others' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate0ZzmUq" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::it_accepts_empty_define_variables stdout ----
+thread 'config_file::values::it_accepts_empty_define_variables' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateMKDHxq" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::favorites::favorite_with_subfolder stdout ----
+thread 'config_file::favorites::favorite_with_subfolder' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateyiYXAt" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::favorites::favorite_can_specify_to_be_generated_into_cwd stdout ----
+thread 'config_file::favorites::favorite_can_specify_to_be_generated_into_cwd' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateZofFS0" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::it_accepts_bool_in_file stdout ----
+thread 'config_file::values::it_accepts_bool_in_file' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generated4Xob7" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::it_accepts_template_values_file_via_flag stdout ----
+thread 'config_file::values::it_accepts_template_values_file_via_flag' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate2h0SzA" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::favorites::favorite_subfolder_must_be_valid stdout ----
+thread 'config_file::favorites::favorite_subfolder_must_be_valid' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatep4tD13" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_uses_vsc_none_to_avoid_initializing_repository stdout ----
+thread 'basics::it_uses_vsc_none_to_avoid_initializing_repository' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generated0uG1r" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::cli_values_are_checked_via_regex stdout ----
+thread 'config_file::values::cli_values_are_checked_via_regex' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate0I6Cje" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- basics::it_substitutes_projectname_in_cargo_toml stdout ----
+thread 'basics::it_substitutes_projectname_in_cargo_toml' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateydoOYD" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- git::it_allows_a_git_branch_to_be_specified stdout ----
+thread 'git::it_allows_a_git_branch_to_be_specified' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateIxkLqT" && "git" "commit" "--no-gpg-sign" "--message" "initial main commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::favorites::favorites_can_use_default_values stdout ----
+thread 'config_file::favorites::favorites_can_use_default_values' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateZdS29I" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- git::it_allows_a_git_revision_to_be_specified stdout ----
+thread 'git::it_allows_a_git_revision_to_be_specified' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateM8bf6H" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::it_accepts_values_via_long_option stdout ----
+thread 'config_file::values::it_accepts_values_via_long_option' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate3GcTvq" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::it_runs_all_hook_types stdout ----
+thread 'hooks_and_rhai::it_runs_all_hook_types' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateUUPZXz" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- config_file::values::it_accepts_values_via_short_option stdout ----
+thread 'config_file::values::it_accepts_values_via_short_option' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateDkIYzq" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::it_fails_when_it_cant_execute_system_command stdout ----
+thread 'hooks_and_rhai::it_fails_when_it_cant_execute_system_command' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate5lhlUO" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::init_hook_can_change_project_name_but_keeps_init_destination stdout ----
+thread 'hooks_and_rhai::init_hook_can_change_project_name_but_keeps_init_destination' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatecTTUQd" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::it_fails_when_a_system_command_returns_non_zero_exit_code stdout ----
+thread 'hooks_and_rhai::it_fails_when_a_system_command_returns_non_zero_exit_code' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateEWrd1P" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::it_can_change_case stdout ----
+thread 'hooks_and_rhai::it_can_change_case' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatekdXTuy" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::init_hook_can_set_project_name stdout ----
+thread 'hooks_and_rhai::init_hook_can_set_project_name' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate0MgYzX" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- filenames::it_substitutes_filename stdout ----
+thread 'filenames::it_substitutes_filename' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateXm4rEU" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::can_change_variables_from_pre_hook stdout ----
+thread 'hooks_and_rhai::can_change_variables_from_pre_hook' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateO3NcHJ" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- git::it_removes_git_history stdout ----
+thread 'git::it_removes_git_history' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateLXdXsm" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::it_runs_system_commands stdout ----
+thread 'hooks_and_rhai::it_runs_system_commands' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate1illJM" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::init_hook_can_change_project_name_but_keeps_cli_name_for_destination stdout ----
+thread 'hooks_and_rhai::init_hook_can_change_project_name_but_keeps_cli_name_for_destination' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateucs14X" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::rhai_filter_invokes_rhai_script stdout ----
+thread 'hooks_and_rhai::rhai_filter_invokes_rhai_script' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate2UEaGb" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::it_fails_to_prompt_for_system_commands_in_silent_mode stdout ----
+thread 'hooks_and_rhai::it_fails_to_prompt_for_system_commands_in_silent_mode' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatenWtW5U" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_config_file::includes_and_excludes::it_warns_on_include_and_exclude_in_config stdout ----
+thread 'template_config_file::includes_and_excludes::it_warns_on_include_and_exclude_in_config' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatedWb7EL" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- git::it_should_init_an_empty_git_repo_even_when_starting_from_a_repo_when_forced stdout ----
+thread 'git::it_should_init_an_empty_git_repo_even_when_starting_from_a_repo_when_forced' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateq9wNXT" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- git::it_allows_a_git_tag_to_be_specified stdout ----
+thread 'git::it_allows_a_git_tag_to_be_specified' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateWm6YRI" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- git::it_removes_git_history_also_on_local_templates stdout ----
+thread 'git::it_removes_git_history_also_on_local_templates' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatecM00ND" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- public_api::it_allows_generate_call_with_public_args_and_returns_the_generated_path stdout ----
+thread 'public_api::it_allows_generate_call_with_public_args_and_returns_the_generated_path' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate6WjfpZ" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- hooks_and_rhai::missing_rhai_filter_fails_prints_warnings stdout ----
+thread 'hooks_and_rhai::missing_rhai_filter_fails_prints_warnings' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateU2LPcZ" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_config_file::misc::it_doesnt_warn_on_config_with_no_ignore stdout ----
+thread 'template_config_file::misc::it_doesnt_warn_on_config_with_no_ignore' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateBvAPPS" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_filters::it_substitutes_date stdout ----
+thread 'template_filters::it_substitutes_date' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatecx3qbI" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_config_file::misc::a_template_can_specify_to_be_generated_into_cwd stdout ----
+thread 'template_config_file::misc::a_template_can_specify_to_be_generated_into_cwd' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateBIl9EW" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_config_file::misc::it_always_removes_config_file stdout ----
+thread 'template_config_file::misc::it_always_removes_config_file' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatefJJSDD" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_config_file::includes_and_excludes::it_doesnt_process_excluded_files_in_config stdout ----
+thread 'template_config_file::includes_and_excludes::it_doesnt_process_excluded_files_in_config' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateiW7Wau" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_config_file::misc::vsc_none_can_be_specified_in_the_template stdout ----
+thread 'template_config_file::misc::vsc_none_can_be_specified_in_the_template' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generate9DalT7" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_filters::it_applies_filters stdout ----
+thread 'template_filters::it_applies_filters' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generatePZ1roM" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_config_file::placeholders::it_prompts_for_placeholders_in_the_config_file_defined_order stdout ----
+thread 'template_config_file::placeholders::it_prompts_for_placeholders_in_the_config_file_defined_order' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateMaQPQX" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+---- template_config_file::includes_and_excludes::it_only_processes_include_files_in_config stdout ----
+thread 'template_config_file::includes_and_excludes::it_only_processes_include_files_in_config' panicked at /rustc/25ef9e3d85d934b27d9dada2f9dd52b1dc63bb04/library/core/src/ops/function.rs:250:5:
+Unexpected failure.
+code=128
+stderr=``````
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+```
+command=`cd "/tmp/cargo-generateQpbpbU" && "git" "commit" "--no-gpg-sign" "--message" "initial commit"`
+code=128
+stdout=""
+stderr=```
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email \"you@example.com\"
+  git config --global user.name \"Your Name\"
+
+to set your account\'s default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got \'root@68aa29ccf118.(none)\')
+```
+
+
+
+
+failures:
+    basics::errant_ignore_entry_doesnt_affect_template_files
+    basics::it_allows_relative_paths
+    basics::it_allows_user_defined_projectname_when_passing_force_flag
+    basics::it_always_removes_cargo_ok_file
+    basics::it_always_removes_genignore_file
+    basics::it_can_generate_at_given_path
+    basics::it_can_generate_inside_existing_repository
+    basics::it_can_generate_into_cwd
+    basics::it_can_generate_into_existing_git_dir
+    basics::it_can_overwrite_files
+    basics::it_can_use_a_plain_folder
+    basics::it_can_use_a_specified_path
+    basics::it_does_not_remove_files_from_outside_project_dir
+    basics::it_doesnt_warn_with_neither_config_nor_ignore
+    basics::it_ignore_tags_inside_raw_block
+    basics::it_keeps_snake_case_projectname
+    basics::it_loads_a_submodule
+    basics::it_prints_ignored_files_with_verbose
+    basics::it_processes_dot_github_directory_files
+    basics::it_provides_crate_type_bin
+    basics::it_provides_crate_type_lib
+    basics::it_refuses_to_overwrite_files
+    basics::it_removes_files_listed_in_genignore
+    basics::it_removes_genignore_files_before_substitution
+    basics::it_respects_template_branch_name
+    basics::it_skips_substitution_for_random_garbage_in_cargo_toml
+    basics::it_skips_substitution_for_unknown_variables_in_cargo_toml
+    basics::it_substitutes_authors_and_username
+    basics::it_substitutes_cratename_in_a_rust_file
+    basics::it_substitutes_os_arch
+    basics::it_substitutes_projectname_in_cargo_toml
+    basics::it_uses_vsc_none_to_avoid_initializing_repository
+    basics::short_commands_work
+    conditionals::it_can_ask_placeholders_in_multiple_levels
+    conditionals::it_can_conditionally_include_files
+    conditionals::it_can_conditionally_include_files2
+    conditionals::it_supports_conditions_in_multiple_levels
+    conditionals::it_supports_conditions_with_creepy_shit_inside
+    config_file::defaults::it_uses_ssh_identity_from_defaults_config
+    config_file::favorites::a_favorite_can_set_vcs_to_none_by_default
+    config_file::favorites::favorite_can_specify_to_be_generated_into_cwd
+    config_file::favorites::favorite_subfolder_must_be_valid
+    config_file::favorites::favorite_with_git_becomes_subfolder
+    config_file::favorites::favorite_with_subfolder
+    config_file::favorites::favorites_can_use_default_values
+    config_file::favorites::favorites_default_to_git_if_not_defined
+    config_file::favorites::favorites_default_value_can_be_overridden_by_environment
+    config_file::favorites::it_can_use_favorites
+    config_file::values::cli_value_overrides_others
+    config_file::values::cli_values_are_checked_via_regex
+    config_file::values::it_accepts_bool_in_file
+    config_file::values::it_accepts_default_template_values
+    config_file::values::it_accepts_empty_define_variables
+    config_file::values::it_accepts_individual_template_values_from_environment
+    config_file::values::it_accepts_individual_template_values_via_flag
+    config_file::values::it_accepts_template_values_file_from_environment
+    config_file::values::it_accepts_template_values_file_via_flag
+    config_file::values::it_accepts_values_via_long_option
+    config_file::values::it_accepts_values_via_short_option
+    filenames::it_substitutes_filename
+    git::it_allows_a_git_branch_to_be_specified
+    git::it_allows_a_git_revision_to_be_specified
+    git::it_allows_a_git_tag_to_be_specified
+    git::it_removes_git_history
+    git::it_removes_git_history_also_on_local_templates
+    git::it_should_init_an_empty_git_repo_even_when_starting_from_a_repo_when_forced
+    hooks_and_rhai::can_change_variables_from_pre_hook
+    hooks_and_rhai::init_hook_can_change_project_name_but_keeps_cli_name_for_destination
+    hooks_and_rhai::init_hook_can_change_project_name_but_keeps_init_destination
+    hooks_and_rhai::init_hook_can_set_project_name
+    hooks_and_rhai::it_can_change_case
+    hooks_and_rhai::it_fails_to_prompt_for_system_commands_in_silent_mode
+    hooks_and_rhai::it_fails_when_a_system_command_returns_non_zero_exit_code
+    hooks_and_rhai::it_fails_when_it_cant_execute_system_command
+    hooks_and_rhai::it_runs_all_hook_types
+    hooks_and_rhai::it_runs_system_commands
+    hooks_and_rhai::missing_rhai_filter_fails_prints_warnings
+    hooks_and_rhai::rhai_filter_invokes_rhai_script
+    public_api::it_allows_generate_call_with_public_args_and_returns_the_generated_path
+    template_config_file::includes_and_excludes::it_doesnt_process_excluded_files_in_config
+    template_config_file::includes_and_excludes::it_only_processes_include_files_in_config
+    template_config_file::includes_and_excludes::it_warns_on_include_and_exclude_in_config
+    template_config_file::misc::a_template_can_specify_to_be_generated_into_cwd
+    template_config_file::misc::it_always_removes_config_file
+    template_config_file::misc::it_doesnt_warn_on_config_with_no_ignore
+    template_config_file::misc::vsc_none_can_be_specified_in_the_template
+    template_config_file::placeholders::it_prompts_for_placeholders_in_the_config_file_defined_order
+    template_filters::it_applies_filters
+    template_filters::it_substitutes_date
+
+test result: FAILED. 3 passed; 89 failed; 6 ignored; 0 measured; 0 filtered out; finished in 0.23s
+
+error: test failed, to rerun pass `--test integration`
+   Doc-tests cargo-generate
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: 1 target failed:
+    `--test integration`
++ git reset --hard 26427861bddd32bc2fdca354a76bc7b093871084
+HEAD is now at 2642786 feat(docs): add the cargo-binstall installation method
++ git clean -fd
+Removing .cargo/config
+Removing .cargo/lts-repo-at-09ba3c0d65/

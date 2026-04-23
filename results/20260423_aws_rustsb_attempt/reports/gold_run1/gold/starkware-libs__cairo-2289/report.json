@@ -1,0 +1,69 @@
+{
+    "starkware-libs__cairo-2289": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "parser::test::partial_parser_tree_with_trivia::path",
+                    "parser::test::parse_and_compare_tree::test3_tree_no_trivia",
+                    "parser::test::parse_and_compare_tree::test3_tree_with_trivia",
+                    "parser::test::parse_and_compare_tree::test1_tree_no_trivia",
+                    "parser::test::parse_and_compare_tree::test1_tree_with_trivia"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "lexer::test::test_bad_character",
+                    "lexer::test::test_cases",
+                    "lexer::test::test_lex_single_token",
+                    "db::db_test::test_parser",
+                    "parser::test::diagnostic::fn_",
+                    "parser::test::diagnostic::pattern",
+                    "parser::test::diagnostic::semicolon",
+                    "parser::test::diagnostic::module_diagnostics",
+                    "parser::test::diagnostic::if_",
+                    "parser::test::diagnostic::exprs",
+                    "parser::test::diagnostic::match_",
+                    "parser::test::diagnostic::question_mark",
+                    "parser::test::parse_and_compare_tree::short_tree_uncolored",
+                    "parser::test::parse_and_compare_colored::colored",
+                    "parser::test::partial_parser_tree::enum_",
+                    "parser::test::partial_parser_tree::unary_only_operators",
+                    "parser::test::parse_and_compare_colored::colored_verbose",
+                    "parser::test::partial_parser_tree::literal",
+                    "parser::test::partial_parser_tree::let_statement",
+                    "parser::test::partial_parser_tree_with_trivia::path_compat",
+                    "parser::test::parse_and_compare_tree::short_tree_colored",
+                    "parser::test::partial_parser_tree::constant",
+                    "parser::test::partial_parser_tree::function_call",
+                    "parser::test::partial_parser_tree::if_else",
+                    "parser::test::partial_parser_tree::module",
+                    "parser::test::partial_parser_tree::function_signature",
+                    "parser::test::partial_parser_tree::op_eq",
+                    "parser::test::partial_parser_tree::item_free_function",
+                    "parser::test::diagnostic::underscore_not_supported",
+                    "parser::test::parse_and_compare_tree::test2_tree_no_trivia",
+                    "parser::test::partial_parser_tree::item_trait",
+                    "parser::test::diagnostic::reserved_identifier",
+                    "parser::test::parse_and_compare_tree::test2_tree_with_trivia",
+                    "lexer::test::test_lex_token_with_trivia",
+                    "parser::test::fix_parser_tests",
+                    "lexer::test::test_lex_double_token"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

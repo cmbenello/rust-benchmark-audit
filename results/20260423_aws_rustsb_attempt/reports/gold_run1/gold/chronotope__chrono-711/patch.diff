@@ -1,0 +1,49 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -32,6 +32,7 @@ Versions with only mechanical changes will be omitted from the following list.
+ * Fix panicking when parsing a `DateTime` (@botahamec)
+ * Add support for getting week bounds based on a specific `NaiveDate` and a `Weekday` (#666)
+ * Remove libc dependency from Cargo.toml.
++* Add the `and_local_timezone` method to `NaiveDateTime`
+ 
+ ## 0.4.19
+ 
+diff --git a/src/naive/datetime/mod.rs b/src/naive/datetime/mod.rs
+--- a/src/naive/datetime/mod.rs
++++ b/src/naive/datetime/mod.rs
+@@ -21,7 +21,7 @@ use crate::naive::date::{MAX_DATE, MIN_DATE};
+ use crate::naive::time::{MAX_TIME, MIN_TIME};
+ use crate::naive::{IsoWeek, NaiveDate, NaiveTime};
+ use crate::oldtime::Duration as OldDuration;
+-use crate::{Datelike, Timelike, Weekday};
++use crate::{DateTime, Datelike, LocalResult, TimeZone, Timelike, Weekday};
+ 
+ #[cfg(feature = "rustc-serialize")]
+ pub(super) mod rustc_serialize;
+diff --git a/src/naive/datetime/mod.rs b/src/naive/datetime/mod.rs
+--- a/src/naive/datetime/mod.rs
++++ b/src/naive/datetime/mod.rs
+@@ -722,6 +722,22 @@ impl NaiveDateTime {
+     pub fn format<'a>(&self, fmt: &'a str) -> DelayedFormat<StrftimeItems<'a>> {
+         self.format_with_items(StrftimeItems::new(fmt))
+     }
++
++    /// Converts the `NaiveDateTime` into the timezone-aware `DateTime<Tz>`
++    /// with the provided timezone, if possible.
++    ///
++    /// This is experimental and might be removed in the future. Feel free to
++    /// let us know what you think about this API.
++    ///
++    /// # Example
++    ///
++    /// ```
++    /// use chrono::{NaiveDate, Utc};
++    /// let dt = NaiveDate::from_ymd(2015, 9, 5).and_hms(23, 56, 4).and_local_timezone(Utc).unwrap();
++    /// assert_eq!(dt.timezone(), Utc);
++    pub fn and_local_timezone<Tz: TimeZone>(&self, tz: Tz) -> LocalResult<DateTime<Tz>> {
++        tz.from_local_datetime(self)
++    }
+ }
+ 
+ impl Datelike for NaiveDateTime {

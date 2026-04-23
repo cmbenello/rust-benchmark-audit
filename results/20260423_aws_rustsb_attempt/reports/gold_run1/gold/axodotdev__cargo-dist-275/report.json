@@ -1,0 +1,37 @@
+{
+    "axodotdev__cargo-dist-275": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "emit",
+                    "test_error_manifest",
+                    "test_lib_manifest",
+                    "test_manifest"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "tests::test_some_op",
+                    "test_version",
+                    "test_short_help",
+                    "test_long_help",
+                    "test_markdown_help"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

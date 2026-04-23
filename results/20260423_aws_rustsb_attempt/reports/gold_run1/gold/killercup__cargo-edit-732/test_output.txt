@@ -1,0 +1,682 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+<stdin>:52: trailing whitespace.
+    
+<stdin>:55: trailing whitespace.
+    
+Checking patch src/bin/upgrade/upgrade.rs...
+Checking patch src/lib.rs...
+Checking patch tests/cmd/upgrade/invalid_manifest.toml...
+Checking patch tests/cmd/upgrade/invalid_virtual_manifest.toml => dev/null...
+Checking patch tests/cmd/upgrade/invalid_workspace_root_manifest.toml...
+Checking patch tests/cmd/upgrade/virtual_manifest.out/explicit/four/Cargo.toml...
+Checking patch tests/cmd/upgrade/virtual_manifest.out/implicit/three/Cargo.toml...
+Checking patch tests/cmd/upgrade/virtual_manifest.out/one/Cargo.toml...
+Checking patch tests/cmd/upgrade/virtual_manifest.out/two/Cargo.toml...
+Checking patch tests/cmd/upgrade/virtual_manifest.toml...
+Checking patch tests/cmd/upgrade/workspace_member_manifest_path.in...
+Checking patch tests/cmd/upgrade/workspace_member_manifest_path.out/Cargo.toml...
+Checking patch tests/cmd/upgrade/invalid_virtual_manifest.out/one/Cargo.toml => tests/cmd/upgrade/workspace_member_manifest_path.out/one/Cargo.toml...
+Checking patch tests/cmd/upgrade/workspace_member_manifest_path.toml...
+Applied patch src/bin/upgrade/upgrade.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch tests/cmd/upgrade/invalid_manifest.toml cleanly.
+Applied patch tests/cmd/upgrade/invalid_virtual_manifest.toml => dev/null cleanly.
+Applied patch tests/cmd/upgrade/invalid_workspace_root_manifest.toml cleanly.
+Applied patch tests/cmd/upgrade/virtual_manifest.out/explicit/four/Cargo.toml cleanly.
+Applied patch tests/cmd/upgrade/virtual_manifest.out/implicit/three/Cargo.toml cleanly.
+Applied patch tests/cmd/upgrade/virtual_manifest.out/one/Cargo.toml cleanly.
+Applied patch tests/cmd/upgrade/virtual_manifest.out/two/Cargo.toml cleanly.
+Applied patch tests/cmd/upgrade/virtual_manifest.toml cleanly.
+Applied patch tests/cmd/upgrade/workspace_member_manifest_path.in cleanly.
+Applied patch tests/cmd/upgrade/workspace_member_manifest_path.out/Cargo.toml cleanly.
+Applied patch tests/cmd/upgrade/invalid_virtual_manifest.out/one/Cargo.toml => tests/cmd/upgrade/workspace_member_manifest_path.out/one/Cargo.toml cleanly.
+Applied patch tests/cmd/upgrade/workspace_member_manifest_path.toml cleanly.
+warning: 2 lines add whitespace errors.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded tinyvec_macros v0.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded tinyvec v1.6.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded serde_json v1.0.82 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded socks v0.3.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded scopeguard v1.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded static_assertions v1.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded termcolor v1.1.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded subprocess v0.2.9 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded smartstring v1.0.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded webpki v0.22.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded unicode-bidi v0.3.8 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded semver v1.0.12 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded tempfile v3.3.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded serde v1.0.139 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded similar v2.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded unicode-normalization v0.1.21 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded sct v0.7.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded home v0.5.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded quote v1.0.20 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded predicates-core v1.0.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded percent-encoding v2.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded doc-comment v0.3.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded cargo-platform v0.1.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded heck v0.4.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded openssl-macros v0.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded openssl v0.10.41 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded chunked_transfer v1.4.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded toml_edit v0.14.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded libssh2-sys v0.2.23 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded either v1.7.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded proc-macro2 v1.0.40 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded filetime v0.2.17 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded glob v0.3.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded once_cell v1.13.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded indexmap v1.9.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded dirs-next v2.0.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded os_str_bytes v6.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded idna v0.2.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded crossbeam-epoch v0.9.9 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded yansi v0.5.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded crossbeam-channel v0.5.5 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded itoa v1.0.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded terminal_size v0.1.17 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded snapbox-macros v0.2.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded wait-timeout v0.2.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded remove_dir_all v0.5.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded matches v0.1.9 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded openssl-probe v0.1.5 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded walkdir v2.3.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded concolor-query v0.0.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded trycmd v0.13.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded snapbox v0.2.10 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded unicode-ident v1.0.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded serde_derive v1.0.139 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded textwrap v0.15.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded hashbrown v0.12.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded rustls v0.20.6 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded regex-syntax v0.6.27 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded os_pipe v1.0.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded foreign-types-shared v0.1.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded fnv v1.0.7 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded dirs-sys-next v0.1.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded concolor v0.0.8 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded rustc-hash v1.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded difflib v0.4.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded untrusted v0.7.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded env_proxy v0.4.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded kstring v2.0.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded strsim v0.10.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded thread_local v1.1.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded float-cmp v0.9.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded predicates-tree v1.0.5 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded memoffset v0.6.5 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded termtree v0.2.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded shlex v1.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded form_urlencoded v1.0.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded pkg-config v0.3.25 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded spin v0.5.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded jobserver v0.1.24 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded log v0.4.17 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded assert_cmd v2.0.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded cc v1.0.73 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded camino v1.0.9 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded ryu v1.0.10 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded foreign-types v0.3.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded proc-macro-error-attr v1.0.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded atty v0.2.14 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded num-traits v0.2.15 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded url v2.2.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded pathdiff v0.2.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded clap_lex v0.2.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded normalize-line-endings v0.3.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded hex v0.4.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded humantime-serde v1.1.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded num_cpus v1.13.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded concolor-control v0.0.7 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded concolor-query v0.0.5 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded content_inspector v0.2.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded dunce v1.0.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded ignore v0.4.18 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded memchr v2.5.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded globwalk v0.8.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded cargo_metadata v0.15.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded byteorder v1.4.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded proc-macro-error v1.0.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded crossbeam-deque v0.8.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded humantime v2.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded fastrand v1.7.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded crates-index v0.18.8 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded clap_derive v3.2.7 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded assert_fs v1.0.7 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded native-tls v0.2.10 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded anyhow v1.0.58 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded globset v0.4.9 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded crossbeam-utils v0.8.10 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded predicates v2.1.1 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded ureq v2.5.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded rayon-core v1.9.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded bytes v1.1.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded base64 v0.13.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded openssl-sys v0.9.75 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded itertools v0.10.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded regex-automata v0.1.10 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded aho-corasick v0.7.18 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded rayon v1.5.3 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded git2 v0.14.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded combine v4.6.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded syn v1.0.98 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded webpki-roots v0.22.4 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded clap v3.2.11 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded regex v1.6.0 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded bstr v0.2.17 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded libc v0.2.126 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded libgit2-sys v0.13.4+1.4.2 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded libz-sys v1.1.8 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded ring v0.16.20 (registry `lts-repo-at-09985c7dbb`)
+  Downloaded openssl-src v111.22.0+1.1.1q (registry `lts-repo-at-09985c7dbb`)
+   Compiling libc v0.2.126
+   Compiling autocfg v1.1.0
+   Compiling proc-macro2 v1.0.40
+   Compiling unicode-ident v1.0.1
+   Compiling cfg-if v1.0.0
+   Compiling quote v1.0.20
+   Compiling once_cell v1.13.0
+   Compiling syn v1.0.98
+   Compiling memchr v2.5.0
+   Compiling serde_derive v1.0.139
+   Compiling serde v1.0.139
+   Compiling pkg-config v0.3.25
+   Compiling version_check v0.9.4
+   Compiling crossbeam-utils v0.8.10
+   Compiling bitflags v1.3.2
+   Compiling log v0.4.17
+   Compiling tinyvec_macros v0.1.0
+   Compiling either v1.7.0
+   Compiling regex-syntax v0.6.27
+   Compiling matches v0.1.9
+   Compiling spin v0.5.2
+   Compiling rayon-core v1.9.3
+   Compiling unicode-bidi v0.3.8
+   Compiling percent-encoding v2.1.0
+   Compiling scopeguard v1.1.0
+   Compiling untrusted v0.7.1
+   Compiling static_assertions v1.1.0
+   Compiling serde_json v1.0.82
+   Compiling ryu v1.0.10
+   Compiling hashbrown v0.12.2
+   Compiling itoa v1.0.2
+   Compiling semver v1.0.12
+   Compiling camino v1.0.9
+   Compiling rustls v0.20.6
+   Compiling bytes v1.1.0
+   Compiling regex-automata v0.1.10
+   Compiling os_str_bytes v6.1.0
+   Compiling same-file v1.0.6
+   Compiling concolor-query v0.0.5
+   Compiling byteorder v1.4.3
+   Compiling openssl-probe v0.1.5
+   Compiling heck v0.4.0
+   Compiling dunce v1.0.2
+   Compiling anyhow v1.0.58
+   Compiling lazy_static v1.4.0
+   Compiling rustc-hash v1.1.0
+   Compiling yansi v0.5.1
+   Compiling concolor-query v0.0.4
+   Compiling strsim v0.10.0
+   Compiling termcolor v1.1.3
+   Compiling normalize-line-endings v0.3.0
+   Compiling chunked_transfer v1.4.0
+   Compiling base64 v0.13.0
+   Compiling home v0.5.3
+   Compiling fastrand v1.7.0
+   Compiling remove_dir_all v0.5.3
+   Compiling predicates-core v1.0.3
+   Compiling fnv v1.0.7
+   Compiling pathdiff v0.2.1
+   Compiling doc-comment v0.3.3
+   Compiling difflib v0.4.0
+   Compiling termtree v0.2.4
+   Compiling snapbox-macros v0.2.1
+   Compiling humantime v2.1.0
+   Compiling similar v2.1.0
+   Compiling shlex v1.1.0
+   Compiling glob v0.3.0
+   Compiling tinyvec v1.6.0
+   Compiling kstring v2.0.0
+   Compiling form_urlencoded v1.0.1
+   Compiling thread_local v1.1.4
+   Compiling itertools v0.10.3
+   Compiling clap_lex v0.2.4
+   Compiling walkdir v2.3.2
+   Compiling predicates-tree v1.0.5
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling memoffset v0.6.5
+   Compiling crossbeam-epoch v0.9.9
+   Compiling indexmap v1.9.1
+   Compiling rayon v1.5.3
+   Compiling smartstring v1.0.1
+   Compiling num-traits v0.2.15
+   Compiling aho-corasick v0.7.18
+   Compiling combine v4.6.4
+   Compiling bstr v0.2.17
+   Compiling content_inspector v0.2.4
+   Compiling crossbeam-channel v0.5.5
+   Compiling unicode-normalization v0.1.21
+   Compiling crossbeam-deque v0.8.1
+   Compiling jobserver v0.1.24
+   Compiling atty v0.2.14
+   Compiling num_cpus v1.13.1
+   Compiling terminal_size v0.1.17
+   Compiling dirs-sys-next v0.1.2
+   Compiling socks v0.3.4
+   Compiling subprocess v0.2.9
+   Compiling tempfile v3.3.0
+   Compiling wait-timeout v0.2.0
+   Compiling filetime v0.2.17
+   Compiling os_pipe v1.0.1
+   Compiling concolor v0.0.8
+   Compiling concolor-control v0.0.7
+   Compiling textwrap v0.15.0
+   Compiling dirs-next v2.0.0
+   Compiling cc v1.0.73
+   Compiling snapbox v0.2.10
+   Compiling idna v0.2.3
+   Compiling regex v1.6.0
+   Compiling float-cmp v0.9.0
+   Compiling openssl-src v111.22.0+1.1.1q
+   Compiling url v2.2.2
+   Compiling libz-sys v1.1.8
+   Compiling ring v0.16.20
+   Compiling openssl-sys v0.9.75
+   Compiling libssh2-sys v0.2.23
+   Compiling libgit2-sys v0.13.4+1.4.2
+   Compiling env_proxy v0.4.1
+   Compiling globset v0.4.9
+   Compiling predicates v2.1.1
+   Compiling ignore v0.4.18
+   Compiling assert_cmd v2.0.4
+   Compiling globwalk v0.8.1
+   Compiling assert_fs v1.0.7
+   Compiling clap_derive v3.2.7
+   Compiling webpki v0.22.0
+   Compiling sct v0.7.0
+   Compiling webpki-roots v0.22.4
+   Compiling clap v3.2.11
+   Compiling git2 v0.14.4
+   Compiling cargo-platform v0.1.2
+   Compiling hex v0.4.3
+   Compiling toml_edit v0.14.4
+   Compiling humantime-serde v1.1.1
+   Compiling cargo_metadata v0.15.0
+   Compiling ureq v2.5.0
+   Compiling crates-index v0.18.8
+   Compiling cargo-edit v0.9.1 (/workspace)
+   Compiling trycmd v0.13.4
+    Finished test [unoptimized + debuginfo] target(s) in 52.16s
+     Running unittests src/lib.rs (target/debug/deps/cargo_edit-f04feaab8d0f6eb2)
+
+running 31 tests
+test dependency::tests::paths_with_forward_slashes_are_left_as_is ... ok
+test dependency::tests::to_toml_complex_dep ... ok
+test dependency::tests::to_toml_dep_with_git_source ... ok
+test dependency::tests::to_toml_dep_with_path_source ... ok
+test dependency::tests::to_toml_dep_from_alt_registry ... ok
+test dependency::tests::to_toml_dep_without_default_features ... ok
+test dependency::tests::to_toml_renamed_dep ... ok
+test dependency::tests::to_toml_optional_dep ... ok
+test dependency::tests::to_toml_simple_dep_with_version ... ok
+test dependency::tests::to_toml_simple_dep ... ok
+test fetch::get_latest_stable_version ... ok
+test fetch::get_latest_unstable_or_stable_version ... ok
+test fetch::get_latest_version_with_yanked ... ok
+test fetch::get_no_latest_version_from_json_when_all_are_yanked ... ok
+test fetch::test_gen_fuzzy_crate_names ... ok
+test version::test::increment::alpha ... ok
+test version::test::increment::beta ... ok
+test version::test::increment::metadata ... ok
+test version::test::increment::rc ... ok
+test version::test::upgrade_requirement::caret_major ... ok
+test version::test::upgrade_requirement::caret_minor ... ok
+test version::test::upgrade_requirement::caret_patch ... ok
+test version::test::upgrade_requirement::equal_major ... ok
+test version::test::upgrade_requirement::equal_minor ... ok
+test version::test::upgrade_requirement::equal_patch ... ok
+test version::test::upgrade_requirement::tilde_major ... ok
+test version::test::upgrade_requirement::tilde_minor ... ok
+test version::test::upgrade_requirement::tilde_patch ... ok
+test version::test::upgrade_requirement::wildcard_major ... ok
+test version::test::upgrade_requirement::wildcard_minor ... ok
+test version::test::upgrade_requirement::wildcard_patch ... ok
+
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/rm/main.rs (target/debug/deps/cargo_rm-cd3b7b72b8ecb1af)
+
+running 1 test
+test cli::verify_app ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/set-version/main.rs (target/debug/deps/cargo_set_version-3b53fb475b1898ec)
+
+running 1 test
+test cli::verify_app ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/upgrade/main.rs (target/debug/deps/cargo_upgrade-ffe1abe64279b4a7)
+
+running 1 test
+test cli::verify_app ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/cargo-rm.rs (target/debug/deps/cargo_rm-7af15a8dbf76b24e)
+
+running 1 test
+Testing tests/cmd/rm/invalid_arg.toml ... failed
+Exit: 2
+stdout:
+
+
+---- expected: stderr
+++++ actual:   stderr
+   1    1 | error: Found argument '--flag' which wasn't expected, or isn't valid in this context
+   2    2 | 
+   3    3 | 	If you tried to supply `--flag` as a value rather than a flag, use `-- --flag`
+   4    4 | 
+   5    5 | USAGE:
+   6      -     cargo rm [OPTIONS] <CRATE>...
+        6 +     cargo rm <CRATE>...
+   7    7 | 
+   8    8 | For more information try --help
+Testing tests/cmd/rm/invalid_arg.toml:teardown ... ok
+Testing tests/cmd/rm/invalid_rm_target_dep.toml ... ok
+Testing tests/cmd/rm/invalid_rm_target_dep.toml:teardown ... ok
+Testing tests/cmd/rm/no_arg.toml ... ok
+Testing tests/cmd/rm/no_arg.toml:teardown ... ok
+Testing tests/cmd/rm/invalid_rm_target.toml ... ok
+Testing tests/cmd/rm/invalid_rm_target.toml:teardown ... ok
+Testing tests/cmd/rm/invalid_dep.toml ... ok
+Testing tests/cmd/rm/invalid_dep.toml:teardown ... ok
+Testing tests/cmd/rm/rm_avoid_empty_tables.toml ... ok
+Testing tests/cmd/rm/rm_avoid_empty_tables.toml:teardown ... ok
+Testing tests/cmd/rm/rm_optional_dep_feature.toml ... ok
+Testing tests/cmd/rm/rm_optional_dep_feature.toml:teardown ... ok
+Testing tests/cmd/rm/rm_target.toml ... ok
+Testing tests/cmd/rm/rm_target.toml:teardown ... ok
+Testing tests/cmd/rm/rm_multiple_deps.toml ... ok
+Testing tests/cmd/rm/rm_multiple_deps.toml:teardown ... ok
+Testing tests/cmd/rm/rm_build.toml ... ok
+Testing tests/cmd/rm/rm_build.toml:teardown ... ok
+Testing tests/cmd/rm/rm_target_build.toml ... ok
+Testing tests/cmd/rm/rm_target_build.toml:teardown ... ok
+Testing tests/cmd/rm/rm_multiple_dev.toml ... ok
+Testing tests/cmd/rm/rm_multiple_dev.toml:teardown ... ok
+Testing tests/cmd/rm/rm_target_dev.toml ... ok
+Testing tests/cmd/rm/rm_target_dev.toml:teardown ... ok
+Testing tests/cmd/rm/rm_dev.toml ... ok
+Testing tests/cmd/rm/rm_dev.toml:teardown ... ok
+Testing tests/cmd/rm/invalid_section.toml ... ok
+Testing tests/cmd/rm/invalid_section.toml:teardown ... ok
+Testing tests/cmd/rm/invalid_section_dep.toml ... ok
+Testing tests/cmd/rm/invalid_section_dep.toml:teardown ... ok
+Testing tests/cmd/rm/dry_run.toml ... ok
+Testing tests/cmd/rm/dry_run.toml:teardown ... ok
+Testing tests/cmd/rm/rm_existing.toml ... ok
+Testing tests/cmd/rm/rm_existing.toml:teardown ... ok
+Testing tests/cmd/rm/rm_optional_feature.toml ... ok
+Testing tests/cmd/rm/rm_optional_feature.toml:teardown ... ok
+Update snapshots with `TRYCMD=overwrite`
+Debug output with `TRYCMD=dump`
+test cli_tests ... FAILED
+
+failures:
+
+---- cli_tests stdout ----
+thread 'cli_tests' panicked at '1 of 19 tests failed', /root/.cargo/registry/src/-2143fa2f3102626a/trycmd-0.13.4/src/runner.rs:92:17
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    cli_tests
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/cargo-set-version.rs (target/debug/deps/cargo_set_version-80869e1de1038909)
+
+running 1 test
+Testing tests/cmd/set-version/relative_absolute_conflict.toml ... ok
+Testing tests/cmd/set-version/relative_absolute_conflict.toml:teardown ... ok
+Testing tests/cmd/set-version/downgrade_error.toml ... ok
+Testing tests/cmd/set-version/downgrade_error.toml:teardown ... ok
+Testing tests/cmd/set-version/set_absolute_version.toml ... ok
+Testing tests/cmd/set-version/set_absolute_version.toml:teardown ... ok
+Testing tests/cmd/set-version/set_relative_version.toml ... ok
+Testing tests/cmd/set-version/set_relative_version.toml:teardown ... ok
+Testing tests/cmd/set-version/ignore_dependent.toml ... ok
+Testing tests/cmd/set-version/ignore_dependent.toml:teardown ... ok
+Testing tests/cmd/set-version/upgrade_compatible_dependency.toml ... ok
+Testing tests/cmd/set-version/upgrade_compatible_dependency.toml:teardown ... ok
+Testing tests/cmd/set-version/upgrade_incompatible_dependency.toml ... ok
+Testing tests/cmd/set-version/upgrade_incompatible_dependency.toml:teardown ... ok
+Testing tests/cmd/set-version/upgrade_workspace.toml ... ok
+Testing tests/cmd/set-version/upgrade_workspace.toml:teardown ... ok
+test cli_tests ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/cargo-upgrade.rs (target/debug/deps/cargo_upgrade-3d6d7014dfb7d43e)
+
+running 1 test
+Testing tests/cmd/upgrade/virtual_manifest.toml ... failed
+Expected success, was 1
+stdout:
+
+
+---- expected: stderr
+++++ actual:   stderr
+   1      -     Checking one's dependencies
+   2      -    Upgrading libc: v0.2.28 -> v99999.0.0
+   3      -    Upgrading rand: v0.3 -> v99999.0
+   4      -     Checking three's dependencies
+   5      -    Upgrading libc: v0.2.28 -> v99999.0.0
+   6      -     Checking two's dependencies
+   7      -    Upgrading libc: v0.2.28 -> v99999.0.0
+   8      -    Upgrading rand: v0.2 -> v99999.0
+   9      -     Checking four's dependencies
+  10      -    Upgrading libc: v0.2.28 -> v99999.0.0
+        1 + Error: No such file or directory (os error 2)
+Testing tests/cmd/upgrade/virtual_manifest.toml:teardown ... failed
+Failed: Files left in unexpected state
+
+tests/cmd/upgrade/virtual_manifest.out: is good
+tests/cmd/upgrade/virtual_manifest.out/two: Expected dir, was missing
+tests/cmd/upgrade/virtual_manifest.out/two/Cargo.toml: Expected file, was missing
+tests/cmd/upgrade/virtual_manifest.out/one: Expected dir, was missing
+tests/cmd/upgrade/virtual_manifest.out/one/Cargo.toml: Expected file, was missing
+tests/cmd/upgrade/virtual_manifest.out/implicit: Expected dir, was missing
+tests/cmd/upgrade/virtual_manifest.out/implicit/three: Expected dir, was missing
+tests/cmd/upgrade/virtual_manifest.out/implicit/three/Cargo.toml: Expected file, was missing
+tests/cmd/upgrade/virtual_manifest.out/explicit: Expected dir, was missing
+tests/cmd/upgrade/virtual_manifest.out/explicit/four: Expected dir, was missing
+tests/cmd/upgrade/virtual_manifest.out/explicit/four/Cargo.toml: Expected file, was missing
+Testing tests/cmd/upgrade/invalid_flag.toml ... ok
+Testing tests/cmd/upgrade/invalid_flag.toml:teardown ... ok
+Testing tests/cmd/upgrade/invalid_manifest.toml ... ok
+Testing tests/cmd/upgrade/invalid_manifest.toml:teardown ... ok
+Testing tests/cmd/upgrade/invalid_workspace_root_manifest.toml ... ok
+Testing tests/cmd/upgrade/invalid_workspace_root_manifest.toml:teardown ... ok
+test cli_tests has been running for over 60 seconds
+Testing tests/cmd/upgrade/implicit_prerelease.toml ... ok
+Testing tests/cmd/upgrade/implicit_prerelease.toml:teardown ... ok
+Testing tests/cmd/upgrade/preserve_precision_patch.toml ... ok
+Testing tests/cmd/upgrade/preserve_precision_patch.toml:teardown ... ok
+Testing tests/cmd/upgrade/single_dep.toml ... ok
+Testing tests/cmd/upgrade/single_dep.toml:teardown ... ok
+Testing tests/cmd/upgrade/preserve_precision_major.toml ... ok
+Testing tests/cmd/upgrade/preserve_precision_major.toml:teardown ... ok
+Testing tests/cmd/upgrade/optional_dep.toml ... ok
+Testing tests/cmd/upgrade/optional_dep.toml:teardown ... ok
+Testing tests/cmd/upgrade/dry_run.toml ... ok
+Testing tests/cmd/upgrade/dry_run.toml:teardown ... ok
+Testing tests/cmd/upgrade/skip_compatible.toml ... ok
+Testing tests/cmd/upgrade/skip_compatible.toml:teardown ... ok
+Testing tests/cmd/upgrade/preserves_inline_table.toml ... ok
+Testing tests/cmd/upgrade/preserves_inline_table.toml:teardown ... ok
+Testing tests/cmd/upgrade/upgrade_everything.toml ... ok
+Testing tests/cmd/upgrade/upgrade_everything.toml:teardown ... ok
+Testing tests/cmd/upgrade/exclude_renamed.toml ... ok
+Testing tests/cmd/upgrade/exclude_renamed.toml:teardown ... ok
+Testing tests/cmd/upgrade/dry_run_prerelease.toml ... ok
+Testing tests/cmd/upgrade/dry_run_prerelease.toml:teardown ... ok
+Testing tests/cmd/upgrade/prerelease.toml ... ok
+Testing tests/cmd/upgrade/prerelease.toml:teardown ... ok
+Testing tests/cmd/upgrade/locked.toml ... ok
+Testing tests/cmd/upgrade/locked.toml:teardown ... ok
+Testing tests/cmd/upgrade/to_version.toml ... ok
+Testing tests/cmd/upgrade/to_version.toml:teardown ... ok
+Testing tests/cmd/upgrade/specified.toml ... ok
+Testing tests/cmd/upgrade/specified.toml:teardown ... ok
+Testing tests/cmd/upgrade/invalid_dep.toml ... ok
+Testing tests/cmd/upgrade/invalid_dep.toml:teardown ... ok
+Testing tests/cmd/upgrade/alt_registry.toml ... ok
+Testing tests/cmd/upgrade/alt_registry.toml:teardown ... ok
+Testing tests/cmd/upgrade/preserves_std_table.toml ... ok
+Testing tests/cmd/upgrade/preserves_std_table.toml:teardown ... ok
+Testing tests/cmd/upgrade/skip_pinned.toml ... ok
+Testing tests/cmd/upgrade/skip_pinned.toml:teardown ... ok
+Testing tests/cmd/upgrade/preserve_precision_minor.toml ... ok
+Testing tests/cmd/upgrade/preserve_precision_minor.toml:teardown ... ok
+Testing tests/cmd/upgrade/upgrade_renamed.toml ... ok
+Testing tests/cmd/upgrade/upgrade_renamed.toml:teardown ... ok
+Testing tests/cmd/upgrade/exclude_dep.toml ... ok
+Testing tests/cmd/upgrade/exclude_dep.toml:teardown ... ok
+Testing tests/cmd/upgrade/workspace_member_manifest_path.toml ... ok
+Testing tests/cmd/upgrade/workspace_member_manifest_path.toml:teardown ... ok
+Testing tests/cmd/upgrade/workspace_member_cwd.toml ... ok
+Testing tests/cmd/upgrade/workspace_member_cwd.toml:teardown ... ok
+Testing tests/cmd/upgrade/upgrade_workspace.toml ... ok
+Testing tests/cmd/upgrade/upgrade_workspace.toml:teardown ... ok
+Testing tests/cmd/upgrade/upgrade_all.toml ... ok
+Testing tests/cmd/upgrade/upgrade_all.toml:teardown ... ok
+Testing tests/cmd/upgrade/to_lockfile.toml ... ok
+Testing tests/cmd/upgrade/to_lockfile.toml:teardown ... ok
+Update snapshots with `TRYCMD=overwrite`
+Debug output with `TRYCMD=dump`
+test cli_tests ... FAILED
+
+failures:
+
+---- cli_tests stdout ----
+thread 'cli_tests' panicked at '2 of 31 tests failed', /root/.cargo/registry/src/-2143fa2f3102626a/trycmd-0.13.4/src/runner.rs:92:17
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    cli_tests
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 761.40s
+
+     Running tests/readme.rs (target/debug/deps/readme-4999c4c0e717d212)
+
+running 1 test
+Testing README.md:86 ... ok
+Testing README.md:138 ... failed
+Exit: success
+
+---- expected: stdout
+++++ actual:   stdout
+   1    1 | cargo-upgrade [..]
+   2    2 | Upgrade dependencies as specified in the local manifest file (i.e. Cargo.toml)
+   3    3 | 
+   4    4 | USAGE:
+   5    5 |     cargo upgrade [OPTIONS] [DEPENDENCY]...
+   6    6 | 
+   7    7 | ARGS:
+   8    8 |     <DEPENDENCY>...    Crates to be upgraded
+   9    9 | 
+  10   10 | OPTIONS:
+  11   11 |         --all                     [deprecated in favor of `--workspace`]
+  12   12 |         --allow-prerelease        Include prerelease versions when fetching from crates.io (e.g.
+  13   13 |                                   0.6.0-alpha')
+  14   14 |         --dry-run                 Print changes to be made without making them
+  15   15 |         --exclude <EXCLUDE>       Crates to exclude and not upgrade
+  16   16 |     -h, --help                    Print help information
+  17   17 |         --locked                  Require `Cargo.toml` to be up to date
+  18   18 |         --manifest-path <PATH>    Path to the manifest to upgrade
+  19   19 |         --offline                 Run without accessing the network
+  20   20 |     -p, --package <PKGID>         Package id of the crate to add this dependency to
+  21   21 |         --skip-compatible         Only update a dependency if the new version is semver incompatible
+  22   22 |         --skip-pinned             Only update a dependency if it is not currently pinned in the
+  23   23 |                                   manifest. "Pinned" refers to dependencies with a '=' or '<' or
+  24   24 |                                   '<=' version requirement
+  25   25 |         --to-lockfile             Upgrade all packages to the version in the lockfile
+  26   26 |     -v, --verbose                 Use verbose output
+  27   27 |     -V, --version                 Print version information
+  28   28 |         --workspace               Upgrade all packages in the workspace
+  29   29 |     -Z <FLAG>                     Unstable (nightly-only) flags
+  30   30 | 
+  31   31 | This command differs from `cargo update`, which updates the dependency versions recorded in the
+  32   32 | local lock file (Cargo.lock).
+  33   33 | 
+  34   34 | If `<dependency>`(s) are provided, only the specified dependencies will be upgraded. The version to
+  35   35 | upgrade to for each can be specified with e.g. `docopt@0.8.0` or `serde@>=0.9,<2.0`.
+  36   36 | 
+  37   37 | Dev, build, and all target dependencies will also be upgraded. Only dependencies from crates.io are
+  38   38 | supported. Git/path dependencies will be ignored.
+  39   39 | 
+  40   40 | All packages in the workspace will be upgraded if the `--workspace` flag is supplied. The
+  41   41 | `--workspace` flag may be supplied in the presence of a virtual manifest.
+  42   42 | 
+  43   43 | If the '--to-lockfile' flag is supplied, all dependencies will be upgraded to the currently locked
+  44      - version as recorded in the Cargo.lock file. This flag requires that the Cargo.lock file is up-to-
+  45      - date. If the lock file is missing, or it needs to be updated, cargo-upgrade will exit with an error.
+  46      - If the '--to-lockfile' flag is supplied then the network won't be accessed.
+       44 + version as recorded in the Cargo.lock file. This flag requires that the Cargo.lock file is
+       45 + up-to-date. If the lock file is missing, or it needs to be updated, cargo-upgrade will exit with an
+       46 + error. If the '--to-lockfile' flag is supplied then the network won't be accessed.
+stderr:
+
+Testing README.md:208 ... ok
+Update snapshots with `TRYCMD=overwrite`
+Debug output with `TRYCMD=dump`
+test cli_tests ... FAILED
+
+failures:
+
+---- cli_tests stdout ----
+thread 'cli_tests' panicked at '1 of 1 tests failed', /root/.cargo/registry/src/-2143fa2f3102626a/trycmd-0.13.4/src/runner.rs:92:17
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    cli_tests
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests cargo-edit
+
+running 1 test
+test src/manifest.rs - manifest::LocalManifest::remove_from_table (line 259) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.86s
+
+error: test failed.
++ git reset --hard 07c27ad3314463f97abdfd6690035aadf129d122
+HEAD is now at 07c27ad3 Merge pull request #731 from epage/warn
++ git clean -fd
+Removing .cargo/
+Removing dev/
+Removing tests/cmd/upgrade/virtual_manifest.out/
+Removing tests/cmd/upgrade/virtual_manifest.toml
+Removing tests/cmd/upgrade/workspace_member_manifest_path.in
+Removing tests/cmd/upgrade/workspace_member_manifest_path.out/
+Removing tests/cmd/upgrade/workspace_member_manifest_path.toml

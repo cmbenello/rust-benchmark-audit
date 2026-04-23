@@ -1,0 +1,907 @@
+2026-04-17 06:56:04,083 - INFO - Environment image rustb.env.x86_64.google_autocxx:latest found for google__autocxx-74
+Building instance image rustbench/google__autocxx:pr-74 for google__autocxx-74
+2026-04-17 07:02:52,938 - INFO - Creating container for google__autocxx-74...
+2026-04-17 07:02:52,999 - INFO - Container for google__autocxx-74 created: dd0c2f614ce0f843cc079ffc71feaa63d1e15906c8b80e594b3f0897c1d2f645
+2026-04-17 07:02:53,499 - INFO - Container for google__autocxx-74 started: dd0c2f614ce0f843cc079ffc71feaa63d1e15906c8b80e594b3f0897c1d2f645
+2026-04-17 07:02:53,499 - INFO - Intermediate patch for google__autocxx-74 written to logs/run_evaluation/gold_run1/gold/google__autocxx-74/patch.diff, now applying to container...
+2026-04-17 07:02:53,710 - INFO - >>>>> Applied Patch:
+Checking patch demo/src/input.h...
+Checking patch demo/src/main.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/lib.rs...
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 72 (offset 3 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 106 (offset 3 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 144 (offset 3 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 181 (offset 3 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 232 (offset 3 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 277 (offset 3 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 324 (offset 3 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 346 (offset 3 lines).
+Checking patch engine/src/preprocessor_parse_callbacks.rs => dev/null...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Applied patch demo/src/input.h cleanly.
+Applied patch demo/src/main.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/preprocessor_parse_callbacks.rs => dev/null cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+
+2026-04-17 07:02:53,767 - INFO - Git diff before:
+diff --git a/demo/src/input.h b/demo/src/input.h
+index 497fbfcc..6ff50ad2 100644
+--- a/demo/src/input.h
++++ b/demo/src/input.h
+@@ -16,8 +16,6 @@
+ 
+ #include <cstdint>
+ 
+-uint32_t DoMath(uint32_t a);
+-
+ inline uint32_t DoMath(uint32_t a) {
+     return a * 3;
+ }
+diff --git a/demo/src/main.rs b/demo/src/main.rs
+index 6e897a60..50283c4f 100644
+--- a/demo/src/main.rs
++++ b/demo/src/main.rs
+@@ -20,8 +20,5 @@ include_cpp! {
+ }
+ 
+ fn main() {
+-    println!(
+-        "Hello, world! - C++ math should say 12={}",
+-        ffi::cxxbridge::DoMath(4)
+-    );
++    println!("Hello, world! - C++ math should say 12={}", ffi::DoMath(4));
+ }
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+index 2e1fefcf..fefb6be3 100644
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -293,9 +293,6 @@ impl<'a> BridgeConversion<'a> {
+                     output_items.push(item);
+                 }
+                 Item::Const(_) => {
+-                    // TODO consider what to do about constants in namespaces.
+-                    // Putting them in the root namespace is no good in case
+-                    // there's a conflict.
+                     self.all_items.push(item);
+                 }
+                 _ => {
+@@ -403,6 +400,7 @@ impl<'a> BridgeConversion<'a> {
+                 type Kind = cxx::kind::#kind_item;
+             }
+         }));
++        self.add_use(&final_ident);
+         self.types_found.push(final_ident);
+         Ok(())
+     }
+@@ -423,6 +421,12 @@ impl<'a> BridgeConversion<'a> {
+             .collect()
+     }
+ 
++    fn add_use(&mut self, id: &Ident) {
++        self.all_items.push(Item::Use(parse_quote!(
++            pub use cxxbridge:: #id;
++        )));
++    }
++
+     /// Adds items which we always add, cos they're useful.
+     fn generate_utilities(&mut self) {
+         // Unless we've been specifically asked not to do so, we always
+@@ -433,6 +437,7 @@ impl<'a> BridgeConversion<'a> {
+         self.extern_c_mod_items.push(ForeignItem::Fn(parse_quote!(
+             fn make_string(str_: &str) -> UniquePtr<CxxString>;
+         )));
++        self.add_use(&make_ident("make_string"));
+         self.additional_cpp_needs
+             .push(AdditionalNeed::MakeStringConstructor);
+     }
+@@ -466,6 +471,7 @@ impl<'a> BridgeConversion<'a> {
+             &format!("{}_make_unique", ty.to_string()),
+             Span::call_site(),
+         );
++        self.add_use(&call_name);
+         self.extern_c_mod_items.push(ForeignItem::Fn(parse_quote! {
+             pub fn #call_name ( #rs_args ) -> UniquePtr< #self_ty >;
+         }));
+@@ -558,7 +564,8 @@ impl<'a> BridgeConversion<'a> {
+         // put something different into here if we have to do argument or
+         // return type conversion, so get some mutable variables ready.
+         let mut rust_name_attr = Vec::new();
+-        let mut cxxbridge_name = make_ident(&rust_name);
++        let rust_name_ident = make_ident(&rust_name);
++        let mut cxxbridge_name = rust_name_ident.clone();
+ 
+         // Analyze the return type, just as we previously did for the
+         // parameters.
+@@ -640,6 +647,9 @@ impl<'a> BridgeConversion<'a> {
+             #(#rust_name_attr)*
+             #vis fn #cxxbridge_name ( #params ) #ret_type;
+         )));
++        if !is_a_method || wrapper_function_needed {
++            self.add_use(&rust_name_ident);
++        }
+         Ok(())
+     }
+ 
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+index 4b4bc21c..2a1caf09 100644
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -17,7 +17,6 @@ mod bridge_converter;
+ mod byvalue_checker;
+ mod known_types;
+ mod parse;
+-mod preprocessor_parse_callbacks;
+ mod rust_pretty_printer;
+ mod types;
+ mod unqualify;
+@@ -73,6 +72,12 @@ pub enum Error {
+     NoAutoCxxInc,
+     CouldNotCanoncalizeIncludeDir(PathBuf),
+     Conversion(bridge_converter::ConvertError),
++    /// No 'allow' or 'allow_pod' was specified.
++    /// It might be that in future we can simply let things work
++    /// without any allowlist, in which case bindgen should generate
++    /// bindings for everything. That just seems very unlikely to work
++    /// in the common case right now.
++    NoAllowlist,
+ }
+ 
+ pub type Result<T, E = Error> = std::result::Result<T, E>;
+@@ -101,7 +106,6 @@ pub struct IncludeCpp {
+     pod_types: Vec<TypeName>,
+     preconfigured_inc_dirs: Option<std::ffi::OsString>,
+     exclude_utilities: bool,
+-    preprocessor_definitions: Rc<Mutex<PreprocessorDefinitions>>,
+     state: State,
+ }
+ 
+@@ -140,10 +144,7 @@ impl IncludeCpp {
+             if input.parse::<Option<syn::Token![#]>>()?.is_some() {
+                 let ident: syn::Ident = input.parse()?;
+                 if ident != "include" {
+-                    return Err(syn::Error::new(
+-                        ident.span(),
+-                        "expected include",
+-                    ));
++                    return Err(syn::Error::new(ident.span(), "expected include"));
+                 }
+                 let hdr: syn::LitStr = input.parse()?;
+                 inclusions.push(CppInclusion::Header(hdr.value()));
+@@ -180,7 +181,6 @@ impl IncludeCpp {
+             pod_types,
+             preconfigured_inc_dirs: None,
+             exclude_utilities,
+-            preprocessor_definitions: Rc::new(Mutex::new(PreprocessorDefinitions::new())),
+             state: if parse_only {
+                 State::ParseOnly
+             } else {
+@@ -232,9 +232,6 @@ impl IncludeCpp {
+             .clang_args(&["-x", "c++", "-std=c++14"])
+             .derive_copy(false)
+             .derive_debug(false)
+-            .parse_callbacks(Box::new(PreprocessorParseCallbacks::new(
+-                self.preprocessor_definitions.clone(),
+-            )))
+             .default_enum_style(bindgen::EnumVariation::Rust {
+                 non_exhaustive: false,
+             })
+@@ -280,12 +277,6 @@ impl IncludeCpp {
+         }
+     }
+ 
+-    fn get_preprocessor_defs_mod(&self) -> Option<ItemMod> {
+-        let another_ref = self.preprocessor_definitions.clone();
+-        let m = another_ref.try_lock().unwrap().to_mod();
+-        m
+-    }
+-
+     fn parse_bindings(&self, bindings: bindgen::Bindings) -> Result<ItemMod> {
+         // This bindings object is actually a TokenStream internally and we're wasting
+         // effort converting to and from string. We could enhance the bindgen API
+@@ -333,6 +324,10 @@ impl IncludeCpp {
+             State::Generated(_, _) | State::NothingGenerated => panic!("Only call generate once"),
+         }
+ 
++        if self.allowlist.is_empty() {
++            return Err(Error::NoAllowlist);
++        }
++
+         let builder = self.make_bindgen_builder()?;
+         let bindings = self
+             .inject_header_into_bindgen(builder)
+@@ -351,9 +346,10 @@ impl IncludeCpp {
+         let mut additional_cpp_generator = AdditionalCppGenerator::new(self.build_header());
+         additional_cpp_generator.add_needs(conversion.additional_cpp_needs);
+         let mut items = conversion.items;
+-        if let Some(itemmod) = self.get_preprocessor_defs_mod() {
+-            items.push(syn::Item::Mod(itemmod));
+-        }
++        //{
++        //    let local_lock = self.preprocessor_definitions.try_lock().unwrap();
++        //    items.extend(local_lock.to_items());
++        //}
+         let mut new_bindings: ItemMod = parse_quote! {
+             #[allow(non_snake_case)]
+             #[allow(dead_code)]
+diff --git a/engine/src/preprocessor_parse_callbacks.rs b/engine/src/preprocessor_parse_callbacks.rs
+deleted file mode 100644
+index 07ff17ff..00000000
+--- a/engine/src/preprocessor_parse_callbacks.rs
++++ /dev/null
+@@ -1,106 +0,0 @@
+-// Copyright 2020 Google LLC
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//    https://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
+-
+-use bindgen::callbacks::{IntKind, ParseCallbacks};
+-use proc_macro2::Span;
+-use quote::quote;
+-use std::collections::HashMap;
+-use std::rc::Rc;
+-use std::sync::Mutex;
+-use syn::{parse_quote, ItemMod};
+-
+-/// Keeps track of all known preprocessor invocations.
+-#[derive(Debug, Default)]
+-pub(crate) struct PreprocessorDefinitions {
+-    integral: HashMap<String, i64>,
+-    string: HashMap<String, Vec<u8>>,
+-}
+-
+-impl PreprocessorDefinitions {
+-    pub fn new() -> Self {
+-        PreprocessorDefinitions {
+-            integral: HashMap::new(),
+-            string: HashMap::new(),
+-        }
+-    }
+-
+-    fn insert_int_macro(&mut self, name: &str, val: i64) {
+-        self.integral.insert(name.to_string(), val);
+-    }
+-
+-    fn insert_str_macro(&mut self, name: &str, val: &[u8]) {
+-        self.string.insert(name.to_string(), val.to_vec());
+-    }
+-
+-    pub fn to_mod(&self) -> Option<ItemMod> {
+-        if self.integral.is_empty() && self.string.is_empty() {
+-            None
+-        } else {
+-            let span = Span::call_site();
+-            let idefs = self.integral.iter().map(|(k, v)| {
+-                let k = syn::Ident::new(k, span);
+-                quote! {
+-                    pub const #k: i64 = #v;
+-                }
+-            });
+-            let sdefs = self.string.iter().filter_map(|(k, v)| {
+-                let k = syn::Ident::new(k, span);
+-                // TODO _consider_ doing something with non-UTF8 string values. I'm not sure what.
+-                String::from_utf8(v.clone()).ok().map(|v| {
+-                    quote! {
+-                        pub const #k: &'static str = #v;
+-                    }
+-                })
+-            });
+-            Some(parse_quote! {
+-                pub mod defs {
+-                    #(#idefs)*
+-                    #(#sdefs)*
+-                }
+-            })
+-        }
+-    }
+-}
+-
+-/// Callbacks for bindgen.
+-#[derive(Debug)]
+-pub(crate) struct PreprocessorParseCallbacks {
+-    // We use a mutex rather than a RefCell not because we need thread
+-    // safety, but because we need poisoning in order to avoid problems
+-    // with UnwindSafe.
+-    definitions: Rc<Mutex<PreprocessorDefinitions>>,
+-}
+-
+-impl PreprocessorParseCallbacks {
+-    pub fn new(definitions: Rc<Mutex<PreprocessorDefinitions>>) -> Self {
+-        PreprocessorParseCallbacks { definitions }
+-    }
+-
+-    fn get_defs(&self) -> std::sync::MutexGuard<PreprocessorDefinitions> {
+-        self.definitions
+-            .try_lock()
+-            .expect("would block whilst adding macro")
+-    }
+-}
+-
+-impl ParseCallbacks for PreprocessorParseCallbacks {
+-    fn int_macro(&self, name: &str, value: i64) -> Option<IntKind> {
+-        self.get_defs().insert_int_macro(name, value);
+-        None
+-    }
+-
+-    fn str_macro(&self, name: &str, value: &[u8]) {
+-        self.get_defs().insert_str_macro(name, value)
+-    }
+-}
+diff --git a/src/lib.rs b/src/lib.rs
+index 16e57f8e..8e7b0665 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -12,7 +12,6 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-
+ // The crazy macro_rules magic in this file is thanks to dtolnay@
+ // and is a way of attaching rustdoc to each of the possible directives
+ // within the include_cpp outer macro. None of the directives actually
+@@ -42,9 +41,9 @@
+ ///     allow("do_math")
+ /// );
+ ///
+-/// # mod ffi { pub mod cxxbridge { pub fn do_math(a: u32) -> u32 { a+3 } } }
++/// # mod ffi { pub fn do_math(a: u32) -> u32 { a+3 } }
+ /// # fn main() {
+-/// ffi::cxxbridge::do_math(3);
++/// ffi::do_math(3);
+ /// # }
+ /// ```
+ ///
+@@ -87,26 +86,72 @@
+ /// If there's a C++ function which takes a struct by value, but that struct
+ /// is not declared as POD-safe, then we'll generate wrapper functions to move
+ /// that type into and out of [UniquePtr][autocxx_engine::cxx::UniquePtr]s.
+-/// 
++///
+ ///
+ /// # Generated code
+ ///
+ /// You will find that this macro expands to the equivalent of:
+ ///
++/// ```no_run
++/// mod ffi {
++///     pub fn do_math(a: u32) -> u32
++/// #   { a+3 }
++///     pub const kMyCxxConst: i32 = 3;
++///     pub const MY_PREPROCESSOR_DEFINITION: i64 = 3i64;
++/// }
+ /// ```
++///
++/// # Built-in types
++///
++/// The generated code uses `cxx` for interop: see that crate for many important
++/// considerations including safety and the list of built-in types, for example
++/// [UniquePtr][autocxx_engine::cxx::UniquePtr] and
++/// [CxxString][autocxx_engine::cxx::CxxString].
++///
++/// # Making strings
++///
++/// Unless you use [exclude_utilities], you will find a function
++/// called `make_string` exists inside the generated `ffi` block:
++///
++/// ```no_run
+ /// mod ffi {
+-///     pub mod cxxbridge {
+-///         pub fn do_math(a: u32) -> u32
+-/// #       { a+3 }
+-///     }
++/// # use autocxx_engine::cxx::UniquePtr;
++/// # use autocxx_engine::cxx::CxxString;
++///     pub fn make_string(str_: &str) -> UniquePtr<CxxString>
++/// #   { unreachable!() }
++/// }
++/// ```
+ ///
+-///      pub const kMyCxxConst: i32 = 3;
++/// # Making other C++ types
+ ///
+-///      pub mod defs {
+-///          pub const MY_PREPROCESSOR_DEFINITION: i64 = 3i64;
+-///      }
++/// Types gain a `_make_unique` function. At present this is not
++/// an associated function; it's simply the type name followed by
++/// that suffix.
++///
++/// ```
++/// mod ffi {
++/// # struct UniquePtr<T>(T);
++///     struct Bob {
++///         a: u32,
++///     }
++///     pub fn Bob_make_unique() -> UniquePtr<Bob>
++/// #   { unreachable!() }
+ /// }
+ /// ```
++/// # Preprocessor symbols
++///
++/// `#define` and other preprocessor symbols will appear as constants.
++/// For integers this is straightforward; for strings they appear
++/// as `[u8]` with a null terminator. To get a string, do this:
++///
++/// ```cpp
++/// #define BOB "Hello"
++/// ```
++///
++/// ```
++/// # mod ffi { pub static BOB: [u8; 6] = [72u8, 101u8, 108u8, 108u8, 111u8, 0u8]; }
++/// assert_eq!(std::str::from_utf8(&ffi::BOB).unwrap().trim_end_matches(char::from(0)), "Hello");
++/// ```
+ ///
+ /// # Namespaces
+ ///
+2026-04-17 07:02:53,768 - INFO - Eval script for google__autocxx-74 written to logs/run_evaluation/gold_run1/gold/google__autocxx-74/eval.sh; copying to container...
+2026-04-17 07:03:34,225 - INFO - Test runtime: 40.34 seconds
+2026-04-17 07:03:34,226 - INFO - Test output for google__autocxx-74 written to logs/run_evaluation/gold_run1/gold/google__autocxx-74/test_output.txt
+2026-04-17 07:03:34,318 - INFO - Git diff after:
+diff --git a/demo/src/input.h b/demo/src/input.h
+index 497fbfcc..6ff50ad2 100644
+--- a/demo/src/input.h
++++ b/demo/src/input.h
+@@ -16,8 +16,6 @@
+ 
+ #include <cstdint>
+ 
+-uint32_t DoMath(uint32_t a);
+-
+ inline uint32_t DoMath(uint32_t a) {
+     return a * 3;
+ }
+diff --git a/demo/src/main.rs b/demo/src/main.rs
+index 6e897a60..50283c4f 100644
+--- a/demo/src/main.rs
++++ b/demo/src/main.rs
+@@ -20,8 +20,5 @@ include_cpp! {
+ }
+ 
+ fn main() {
+-    println!(
+-        "Hello, world! - C++ math should say 12={}",
+-        ffi::cxxbridge::DoMath(4)
+-    );
++    println!("Hello, world! - C++ math should say 12={}", ffi::DoMath(4));
+ }
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+index 2e1fefcf..fefb6be3 100644
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -293,9 +293,6 @@ impl<'a> BridgeConversion<'a> {
+                     output_items.push(item);
+                 }
+                 Item::Const(_) => {
+-                    // TODO consider what to do about constants in namespaces.
+-                    // Putting them in the root namespace is no good in case
+-                    // there's a conflict.
+                     self.all_items.push(item);
+                 }
+                 _ => {
+@@ -403,6 +400,7 @@ impl<'a> BridgeConversion<'a> {
+                 type Kind = cxx::kind::#kind_item;
+             }
+         }));
++        self.add_use(&final_ident);
+         self.types_found.push(final_ident);
+         Ok(())
+     }
+@@ -423,6 +421,12 @@ impl<'a> BridgeConversion<'a> {
+             .collect()
+     }
+ 
++    fn add_use(&mut self, id: &Ident) {
++        self.all_items.push(Item::Use(parse_quote!(
++            pub use cxxbridge:: #id;
++        )));
++    }
++
+     /// Adds items which we always add, cos they're useful.
+     fn generate_utilities(&mut self) {
+         // Unless we've been specifically asked not to do so, we always
+@@ -433,6 +437,7 @@ impl<'a> BridgeConversion<'a> {
+         self.extern_c_mod_items.push(ForeignItem::Fn(parse_quote!(
+             fn make_string(str_: &str) -> UniquePtr<CxxString>;
+         )));
++        self.add_use(&make_ident("make_string"));
+         self.additional_cpp_needs
+             .push(AdditionalNeed::MakeStringConstructor);
+     }
+@@ -466,6 +471,7 @@ impl<'a> BridgeConversion<'a> {
+             &format!("{}_make_unique", ty.to_string()),
+             Span::call_site(),
+         );
++        self.add_use(&call_name);
+         self.extern_c_mod_items.push(ForeignItem::Fn(parse_quote! {
+             pub fn #call_name ( #rs_args ) -> UniquePtr< #self_ty >;
+         }));
+@@ -558,7 +564,8 @@ impl<'a> BridgeConversion<'a> {
+         // put something different into here if we have to do argument or
+         // return type conversion, so get some mutable variables ready.
+         let mut rust_name_attr = Vec::new();
+-        let mut cxxbridge_name = make_ident(&rust_name);
++        let rust_name_ident = make_ident(&rust_name);
++        let mut cxxbridge_name = rust_name_ident.clone();
+ 
+         // Analyze the return type, just as we previously did for the
+         // parameters.
+@@ -640,6 +647,9 @@ impl<'a> BridgeConversion<'a> {
+             #(#rust_name_attr)*
+             #vis fn #cxxbridge_name ( #params ) #ret_type;
+         )));
++        if !is_a_method || wrapper_function_needed {
++            self.add_use(&rust_name_ident);
++        }
+         Ok(())
+     }
+ 
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+index 4b4bc21c..2a1caf09 100644
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -17,7 +17,6 @@ mod bridge_converter;
+ mod byvalue_checker;
+ mod known_types;
+ mod parse;
+-mod preprocessor_parse_callbacks;
+ mod rust_pretty_printer;
+ mod types;
+ mod unqualify;
+@@ -73,6 +72,12 @@ pub enum Error {
+     NoAutoCxxInc,
+     CouldNotCanoncalizeIncludeDir(PathBuf),
+     Conversion(bridge_converter::ConvertError),
++    /// No 'allow' or 'allow_pod' was specified.
++    /// It might be that in future we can simply let things work
++    /// without any allowlist, in which case bindgen should generate
++    /// bindings for everything. That just seems very unlikely to work
++    /// in the common case right now.
++    NoAllowlist,
+ }
+ 
+ pub type Result<T, E = Error> = std::result::Result<T, E>;
+@@ -101,7 +106,6 @@ pub struct IncludeCpp {
+     pod_types: Vec<TypeName>,
+     preconfigured_inc_dirs: Option<std::ffi::OsString>,
+     exclude_utilities: bool,
+-    preprocessor_definitions: Rc<Mutex<PreprocessorDefinitions>>,
+     state: State,
+ }
+ 
+@@ -140,10 +144,7 @@ impl IncludeCpp {
+             if input.parse::<Option<syn::Token![#]>>()?.is_some() {
+                 let ident: syn::Ident = input.parse()?;
+                 if ident != "include" {
+-                    return Err(syn::Error::new(
+-                        ident.span(),
+-                        "expected include",
+-                    ));
++                    return Err(syn::Error::new(ident.span(), "expected include"));
+                 }
+                 let hdr: syn::LitStr = input.parse()?;
+                 inclusions.push(CppInclusion::Header(hdr.value()));
+@@ -180,7 +181,6 @@ impl IncludeCpp {
+             pod_types,
+             preconfigured_inc_dirs: None,
+             exclude_utilities,
+-            preprocessor_definitions: Rc::new(Mutex::new(PreprocessorDefinitions::new())),
+             state: if parse_only {
+                 State::ParseOnly
+             } else {
+@@ -232,9 +232,6 @@ impl IncludeCpp {
+             .clang_args(&["-x", "c++", "-std=c++14"])
+             .derive_copy(false)
+             .derive_debug(false)
+-            .parse_callbacks(Box::new(PreprocessorParseCallbacks::new(
+-                self.preprocessor_definitions.clone(),
+-            )))
+             .default_enum_style(bindgen::EnumVariation::Rust {
+                 non_exhaustive: false,
+             })
+@@ -280,12 +277,6 @@ impl IncludeCpp {
+         }
+     }
+ 
+-    fn get_preprocessor_defs_mod(&self) -> Option<ItemMod> {
+-        let another_ref = self.preprocessor_definitions.clone();
+-        let m = another_ref.try_lock().unwrap().to_mod();
+-        m
+-    }
+-
+     fn parse_bindings(&self, bindings: bindgen::Bindings) -> Result<ItemMod> {
+         // This bindings object is actually a TokenStream internally and we're wasting
+         // effort converting to and from string. We could enhance the bindgen API
+@@ -333,6 +324,10 @@ impl IncludeCpp {
+             State::Generated(_, _) | State::NothingGenerated => panic!("Only call generate once"),
+         }
+ 
++        if self.allowlist.is_empty() {
++            return Err(Error::NoAllowlist);
++        }
++
+         let builder = self.make_bindgen_builder()?;
+         let bindings = self
+             .inject_header_into_bindgen(builder)
+@@ -351,9 +346,10 @@ impl IncludeCpp {
+         let mut additional_cpp_generator = AdditionalCppGenerator::new(self.build_header());
+         additional_cpp_generator.add_needs(conversion.additional_cpp_needs);
+         let mut items = conversion.items;
+-        if let Some(itemmod) = self.get_preprocessor_defs_mod() {
+-            items.push(syn::Item::Mod(itemmod));
+-        }
++        //{
++        //    let local_lock = self.preprocessor_definitions.try_lock().unwrap();
++        //    items.extend(local_lock.to_items());
++        //}
+         let mut new_bindings: ItemMod = parse_quote! {
+             #[allow(non_snake_case)]
+             #[allow(dead_code)]
+diff --git a/engine/src/preprocessor_parse_callbacks.rs b/engine/src/preprocessor_parse_callbacks.rs
+deleted file mode 100644
+index 07ff17ff..00000000
+--- a/engine/src/preprocessor_parse_callbacks.rs
++++ /dev/null
+@@ -1,106 +0,0 @@
+-// Copyright 2020 Google LLC
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//    https://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
+-
+-use bindgen::callbacks::{IntKind, ParseCallbacks};
+-use proc_macro2::Span;
+-use quote::quote;
+-use std::collections::HashMap;
+-use std::rc::Rc;
+-use std::sync::Mutex;
+-use syn::{parse_quote, ItemMod};
+-
+-/// Keeps track of all known preprocessor invocations.
+-#[derive(Debug, Default)]
+-pub(crate) struct PreprocessorDefinitions {
+-    integral: HashMap<String, i64>,
+-    string: HashMap<String, Vec<u8>>,
+-}
+-
+-impl PreprocessorDefinitions {
+-    pub fn new() -> Self {
+-        PreprocessorDefinitions {
+-            integral: HashMap::new(),
+-            string: HashMap::new(),
+-        }
+-    }
+-
+-    fn insert_int_macro(&mut self, name: &str, val: i64) {
+-        self.integral.insert(name.to_string(), val);
+-    }
+-
+-    fn insert_str_macro(&mut self, name: &str, val: &[u8]) {
+-        self.string.insert(name.to_string(), val.to_vec());
+-    }
+-
+-    pub fn to_mod(&self) -> Option<ItemMod> {
+-        if self.integral.is_empty() && self.string.is_empty() {
+-            None
+-        } else {
+-            let span = Span::call_site();
+-            let idefs = self.integral.iter().map(|(k, v)| {
+-                let k = syn::Ident::new(k, span);
+-                quote! {
+-                    pub const #k: i64 = #v;
+-                }
+-            });
+-            let sdefs = self.string.iter().filter_map(|(k, v)| {
+-                let k = syn::Ident::new(k, span);
+-                // TODO _consider_ doing something with non-UTF8 string values. I'm not sure what.
+-                String::from_utf8(v.clone()).ok().map(|v| {
+-                    quote! {
+-                        pub const #k: &'static str = #v;
+-                    }
+-                })
+-            });
+-            Some(parse_quote! {
+-                pub mod defs {
+-                    #(#idefs)*
+-                    #(#sdefs)*
+-                }
+-            })
+-        }
+-    }
+-}
+-
+-/// Callbacks for bindgen.
+-#[derive(Debug)]
+-pub(crate) struct PreprocessorParseCallbacks {
+-    // We use a mutex rather than a RefCell not because we need thread
+-    // safety, but because we need poisoning in order to avoid problems
+-    // with UnwindSafe.
+-    definitions: Rc<Mutex<PreprocessorDefinitions>>,
+-}
+-
+-impl PreprocessorParseCallbacks {
+-    pub fn new(definitions: Rc<Mutex<PreprocessorDefinitions>>) -> Self {
+-        PreprocessorParseCallbacks { definitions }
+-    }
+-
+-    fn get_defs(&self) -> std::sync::MutexGuard<PreprocessorDefinitions> {
+-        self.definitions
+-            .try_lock()
+-            .expect("would block whilst adding macro")
+-    }
+-}
+-
+-impl ParseCallbacks for PreprocessorParseCallbacks {
+-    fn int_macro(&self, name: &str, value: i64) -> Option<IntKind> {
+-        self.get_defs().insert_int_macro(name, value);
+-        None
+-    }
+-
+-    fn str_macro(&self, name: &str, value: &[u8]) {
+-        self.get_defs().insert_str_macro(name, value)
+-    }
+-}
+diff --git a/src/lib.rs b/src/lib.rs
+index 16e57f8e..8e7b0665 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -12,7 +12,6 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-
+ // The crazy macro_rules magic in this file is thanks to dtolnay@
+ // and is a way of attaching rustdoc to each of the possible directives
+ // within the include_cpp outer macro. None of the directives actually
+@@ -42,9 +41,9 @@
+ ///     allow("do_math")
+ /// );
+ ///
+-/// # mod ffi { pub mod cxxbridge { pub fn do_math(a: u32) -> u32 { a+3 } } }
++/// # mod ffi { pub fn do_math(a: u32) -> u32 { a+3 } }
+ /// # fn main() {
+-/// ffi::cxxbridge::do_math(3);
++/// ffi::do_math(3);
+ /// # }
+ /// ```
+ ///
+@@ -87,26 +86,72 @@
+ /// If there's a C++ function which takes a struct by value, but that struct
+ /// is not declared as POD-safe, then we'll generate wrapper functions to move
+ /// that type into and out of [UniquePtr][autocxx_engine::cxx::UniquePtr]s.
+-/// 
++///
+ ///
+ /// # Generated code
+ ///
+ /// You will find that this macro expands to the equivalent of:
+ ///
++/// ```no_run
++/// mod ffi {
++///     pub fn do_math(a: u32) -> u32
++/// #   { a+3 }
++///     pub const kMyCxxConst: i32 = 3;
++///     pub const MY_PREPROCESSOR_DEFINITION: i64 = 3i64;
++/// }
+ /// ```
++///
++/// # Built-in types
++///
++/// The generated code uses `cxx` for interop: see that crate for many important
++/// considerations including safety and the list of built-in types, for example
++/// [UniquePtr][autocxx_engine::cxx::UniquePtr] and
++/// [CxxString][autocxx_engine::cxx::CxxString].
++///
++/// # Making strings
++///
++/// Unless you use [exclude_utilities], you will find a function
++/// called `make_string` exists inside the generated `ffi` block:
++///
++/// ```no_run
+ /// mod ffi {
+-///     pub mod cxxbridge {
+-///         pub fn do_math(a: u32) -> u32
+-/// #       { a+3 }
+-///     }
++/// # use autocxx_engine::cxx::UniquePtr;
++/// # use autocxx_engine::cxx::CxxString;
++///     pub fn make_string(str_: &str) -> UniquePtr<CxxString>
++/// #   { unreachable!() }
++/// }
++/// ```
+ ///
+-///      pub const kMyCxxConst: i32 = 3;
++/// # Making other C++ types
+ ///
+-///      pub mod defs {
+-///          pub const MY_PREPROCESSOR_DEFINITION: i64 = 3i64;
+-///      }
++/// Types gain a `_make_unique` function. At present this is not
++/// an associated function; it's simply the type name followed by
++/// that suffix.
++///
++/// ```
++/// mod ffi {
++/// # struct UniquePtr<T>(T);
++///     struct Bob {
++///         a: u32,
++///     }
++///     pub fn Bob_make_unique() -> UniquePtr<Bob>
++/// #   { unreachable!() }
+ /// }
+ /// ```
++/// # Preprocessor symbols
++///
++/// `#define` and other preprocessor symbols will appear as constants.
++/// For integers this is straightforward; for strings they appear
++/// as `[u8]` with a null terminator. To get a string, do this:
++///
++/// ```cpp
++/// #define BOB "Hello"
++/// ```
++///
++/// ```
++/// # mod ffi { pub static BOB: [u8; 6] = [72u8, 101u8, 108u8, 108u8, 111u8, 0u8]; }
++/// assert_eq!(std::str::from_utf8(&ffi::BOB).unwrap().trim_end_matches(char::from(0)), "Hello");
++/// ```
+ ///
+ /// # Namespaces
+ ///
+2026-04-17 07:03:34,319 - INFO - Grading answer for google__autocxx-74...
+2026-04-17 07:03:34,319 - INFO - report: {'google__autocxx-74': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['byvalue_checker::tests::test_primitive_by_itself', 'byvalue_checker::tests::test_with_cxxstring', 'byvalue_checker::tests::test_primitives', 'byvalue_checker::tests::test_nested_primitives', 'byvalue_checker::tests::test_with_up', 'integration_tests::test_negative_rs_nonsense::f', 'types::tests::test_ints'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for google__autocxx-74: resolved: True
+2026-04-17 07:03:34,319 - INFO - Attempting to stop container rustb.eval.google__autocxx-74.gold_run1...
+2026-04-17 07:04:45,493 - INFO - Attempting to remove container rustb.eval.google__autocxx-74.gold_run1...
+2026-04-17 07:04:45,562 - INFO - Container rustb.eval.google__autocxx-74.gold_run1 removed.
+2026-04-17 07:04:45,562 - INFO - Attempting to remove image rustbench/google__autocxx:pr-74...
+2026-04-17 07:04:47,934 - INFO - Image rustbench/google__autocxx:pr-74 removed.

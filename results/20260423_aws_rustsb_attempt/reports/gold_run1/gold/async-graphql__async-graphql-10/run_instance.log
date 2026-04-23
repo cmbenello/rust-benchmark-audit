@@ -1,0 +1,239 @@
+2026-04-17 06:28:47,573 - INFO - Environment image rustb.env.x86_64.async-graphql_async-graphql:latest found for async-graphql__async-graphql-10
+Building instance image rustbench/async-graphql__async-graphql:pr-10 for async-graphql__async-graphql-10
+2026-04-17 06:37:08,669 - INFO - Creating container for async-graphql__async-graphql-10...
+2026-04-17 06:37:08,946 - INFO - Container for async-graphql__async-graphql-10 created: d77c201fa0437410db4a3ca1efb92b63c1a01e0c465e478fd7b3519159d1643f
+2026-04-17 06:37:09,187 - INFO - Container for async-graphql__async-graphql-10 started: d77c201fa0437410db4a3ca1efb92b63c1a01e0c465e478fd7b3519159d1643f
+2026-04-17 06:37:09,188 - INFO - Intermediate patch for async-graphql__async-graphql-10 written to logs/run_evaluation/gold_run1/gold/async-graphql__async-graphql-10/patch.diff, now applying to container...
+2026-04-17 06:37:09,409 - INFO - >>>>> Applied Patch:
+Checking patch examples/error_extensions.rs...
+Checking patch src/error.rs...
+Checking patch src/http/mod.rs...
+Checking patch src/http/mod.rs...
+Checking patch src/http/mod.rs...
+Checking patch src/lib.rs...
+Applied patch examples/error_extensions.rs cleanly.
+Applied patch src/error.rs cleanly.
+Applied patch src/http/mod.rs cleanly.
+Applied patch src/http/mod.rs cleanly.
+Applied patch src/http/mod.rs cleanly.
+Applied patch src/lib.rs cleanly.
+
+2026-04-17 06:37:09,565 - INFO - Git diff before:
+diff --git a/src/error.rs b/src/error.rs
+index 27f4d557..bc55a792 100644
+--- a/src/error.rs
++++ b/src/error.rs
+@@ -220,3 +220,39 @@ impl Display for RuleErrors {
+         Ok(())
+     }
+ }
++
++/// A wrapped Error with extensions.
++#[derive(Debug, Error)]
++pub struct ExtendedError(pub String, pub serde_json::Value);
++
++impl Display for ExtendedError {
++    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
++        write!(f, "{}", self.0)
++    }
++}
++
++#[allow(missing_docs)]
++pub trait ResultExt<T, E>
++where
++    Self: Sized,
++    E: std::fmt::Display + Sized,
++{
++    fn extend_err<CB>(self, cb: CB) -> crate::Result<T>
++    where
++        CB: FnOnce(&E) -> serde_json::Value;
++}
++
++impl<T, E> ResultExt<T, E> for std::result::Result<T, E>
++where
++    E: std::fmt::Display + Sized,
++{
++    fn extend_err<C>(self, cb: C) -> crate::Result<T>
++    where
++        C: FnOnce(&E) -> serde_json::Value,
++    {
++        match self {
++            Err(e) => Err(anyhow::anyhow!(ExtendedError(e.to_string(), cb(&e)))),
++            Ok(value) => Ok(value),
++        }
++    }
++}
+diff --git a/src/http/mod.rs b/src/http/mod.rs
+index 7e75e18f..c53076f4 100644
+--- a/src/http/mod.rs
++++ b/src/http/mod.rs
+@@ -6,7 +6,7 @@ mod playground_source;
+ pub use graphiql_source::graphiql_source;
+ pub use playground_source::playground_source;
+ 
+-use crate::error::{RuleError, RuleErrors};
++use crate::error::{ExtendedError, RuleError, RuleErrors};
+ use crate::query::PreparedQuery;
+ use crate::{ObjectType, PositionError, QueryResult, Result, Schema, SubscriptionType, Variables};
+ use graphql_parser::Pos;
+@@ -129,9 +129,17 @@ impl<'a> Serialize for GQLError<'a> {
+             seq.end()
+         } else {
+             let mut seq = serializer.serialize_seq(None)?;
+-            seq.serialize_element(&serde_json::json!({
+-                "message": self.0.to_string(),
+-            }))?;
++            if let Some(extensions) = get_error_extensions(self.0) {
++                seq.serialize_element(&serde_json::json!({
++                    "message": self.0.to_string(),
++                    "extensions": extensions
++                }))?;
++            } else {
++                seq.serialize_element(&serde_json::json!({
++                    "message": self.0.to_string(),
++                }))?;
++            }
++
+             seq.end()
+         }
+     }
+@@ -164,6 +172,9 @@ impl<'a> Serialize for GQLPositionError<'a> {
+             "locations",
+             std::slice::from_ref(&GQLErrorPos(&self.0.position)),
+         )?;
++        if let Some(extensions) = get_error_extensions(&self.0.inner) {
++            map.serialize_entry("extensions", &extensions)?;
++        }
+         map.end()
+     }
+ }
+diff --git a/src/lib.rs b/src/lib.rs
+index 665f0ecb..017e53b7 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -99,7 +99,9 @@ pub mod http;
+ 
+ pub use base::{Scalar, Type};
+ pub use context::{Context, QueryPathSegment, Variables};
+-pub use error::{ErrorWithPosition, PositionError, QueryError, QueryParseError};
++pub use error::{
++    ErrorWithPosition, ExtendedError, PositionError, QueryError, QueryParseError, ResultExt,
++};
+ pub use graphql_parser::query::Value;
+ pub use query::{PreparedQuery, QueryBuilder, QueryResult};
+ pub use registry::CacheControl;
+2026-04-17 06:37:09,566 - INFO - Eval script for async-graphql__async-graphql-10 written to logs/run_evaluation/gold_run1/gold/async-graphql__async-graphql-10/eval.sh; copying to container...
+2026-04-17 06:39:19,342 - INFO - Test runtime: 129.66 seconds
+2026-04-17 06:39:19,342 - INFO - Test output for async-graphql__async-graphql-10 written to logs/run_evaluation/gold_run1/gold/async-graphql__async-graphql-10/test_output.txt
+2026-04-17 06:39:19,548 - INFO - Git diff after:
+diff --git a/src/error.rs b/src/error.rs
+index 27f4d557..bc55a792 100644
+--- a/src/error.rs
++++ b/src/error.rs
+@@ -220,3 +220,39 @@ impl Display for RuleErrors {
+         Ok(())
+     }
+ }
++
++/// A wrapped Error with extensions.
++#[derive(Debug, Error)]
++pub struct ExtendedError(pub String, pub serde_json::Value);
++
++impl Display for ExtendedError {
++    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
++        write!(f, "{}", self.0)
++    }
++}
++
++#[allow(missing_docs)]
++pub trait ResultExt<T, E>
++where
++    Self: Sized,
++    E: std::fmt::Display + Sized,
++{
++    fn extend_err<CB>(self, cb: CB) -> crate::Result<T>
++    where
++        CB: FnOnce(&E) -> serde_json::Value;
++}
++
++impl<T, E> ResultExt<T, E> for std::result::Result<T, E>
++where
++    E: std::fmt::Display + Sized,
++{
++    fn extend_err<C>(self, cb: C) -> crate::Result<T>
++    where
++        C: FnOnce(&E) -> serde_json::Value,
++    {
++        match self {
++            Err(e) => Err(anyhow::anyhow!(ExtendedError(e.to_string(), cb(&e)))),
++            Ok(value) => Ok(value),
++        }
++    }
++}
+diff --git a/src/http/mod.rs b/src/http/mod.rs
+index 7e75e18f..c53076f4 100644
+--- a/src/http/mod.rs
++++ b/src/http/mod.rs
+@@ -6,7 +6,7 @@ mod playground_source;
+ pub use graphiql_source::graphiql_source;
+ pub use playground_source::playground_source;
+ 
+-use crate::error::{RuleError, RuleErrors};
++use crate::error::{ExtendedError, RuleError, RuleErrors};
+ use crate::query::PreparedQuery;
+ use crate::{ObjectType, PositionError, QueryResult, Result, Schema, SubscriptionType, Variables};
+ use graphql_parser::Pos;
+@@ -129,9 +129,17 @@ impl<'a> Serialize for GQLError<'a> {
+             seq.end()
+         } else {
+             let mut seq = serializer.serialize_seq(None)?;
+-            seq.serialize_element(&serde_json::json!({
+-                "message": self.0.to_string(),
+-            }))?;
++            if let Some(extensions) = get_error_extensions(self.0) {
++                seq.serialize_element(&serde_json::json!({
++                    "message": self.0.to_string(),
++                    "extensions": extensions
++                }))?;
++            } else {
++                seq.serialize_element(&serde_json::json!({
++                    "message": self.0.to_string(),
++                }))?;
++            }
++
+             seq.end()
+         }
+     }
+@@ -164,6 +172,9 @@ impl<'a> Serialize for GQLPositionError<'a> {
+             "locations",
+             std::slice::from_ref(&GQLErrorPos(&self.0.position)),
+         )?;
++        if let Some(extensions) = get_error_extensions(&self.0.inner) {
++            map.serialize_entry("extensions", &extensions)?;
++        }
+         map.end()
+     }
+ }
+diff --git a/src/lib.rs b/src/lib.rs
+index 665f0ecb..017e53b7 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -99,7 +99,9 @@ pub mod http;
+ 
+ pub use base::{Scalar, Type};
+ pub use context::{Context, QueryPathSegment, Variables};
+-pub use error::{ErrorWithPosition, PositionError, QueryError, QueryParseError};
++pub use error::{
++    ErrorWithPosition, ExtendedError, PositionError, QueryError, QueryParseError, ResultExt,
++};
+ pub use graphql_parser::query::Value;
+ pub use query::{PreparedQuery, QueryBuilder, QueryResult};
+ pub use registry::CacheControl;
+2026-04-17 06:39:19,548 - INFO - Grading answer for async-graphql__async-graphql-10...
+2026-04-17 06:39:19,549 - INFO - report: {'async-graphql__async-graphql-10': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['http::tests::test_request', 'http::tests::test_request_with_operation_name', 'http::tests::test_response_data', 'http::tests::test_request_with_variables', 'http::tests::test_response_error', 'scalars::tests::test_scalar_type', 'types::list::tests::test_list_type', 'http::tests::test_response_error_with_pos', 'types::optional::tests::test_optional_type', 'test_enum_type', 'test_input_object_default_value', 'test_list_type', 'test_optional_type', 'test_u16_scalar', 'test_u8_scalar', 'test_bool_scalar', 'test_f64_scalar', 'test_i16_scalar', 'test_f32_scalar', 'test_u32_scalar', 'test_i64_scalar', 'test_u64_scalar', 'test_i32_scalar', 'test_i8_scalar', 'src/validators/mod.rs - validators::InputValueValidator (line 15)', 'src/base.rs - base::Scalar (line 97)', 'src/types/empty_mutation.rs - types::empty_mutation::EmptyMutation (line 13)', 'src/registry.rs - registry::CacheControl (line 87)', 'src/lib.rs - types::connection::DataSource (line 10)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for async-graphql__async-graphql-10: resolved: True
+2026-04-17 06:39:19,549 - INFO - Attempting to stop container rustb.eval.async-graphql__async-graphql-10.gold_run1...
+2026-04-17 06:40:55,087 - INFO - Attempting to remove container rustb.eval.async-graphql__async-graphql-10.gold_run1...
+2026-04-17 06:40:55,679 - INFO - Container rustb.eval.async-graphql__async-graphql-10.gold_run1 removed.
+2026-04-17 06:40:55,680 - INFO - Attempting to remove image rustbench/async-graphql__async-graphql:pr-10...
+2026-04-17 06:40:57,283 - INFO - Image rustbench/async-graphql__async-graphql:pr-10 removed.

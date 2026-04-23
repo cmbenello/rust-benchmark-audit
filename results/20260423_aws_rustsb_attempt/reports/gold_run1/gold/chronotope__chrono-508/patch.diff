@@ -1,0 +1,47 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -15,6 +15,7 @@ Versions with only mechanical changes will be omitted from the following list.
+ 
+ * Add more formatting documentation and examples.
+ * Add support for microseconds timestamps serde serialization/deserialization (#304)
++* Fix `DurationRound` is not TZ aware (#495)
+ 
+ ## 0.4.19
+ 
+diff --git a/src/round.rs b/src/round.rs
+--- a/src/round.rs
++++ b/src/round.rs
+@@ -151,10 +151,12 @@ impl<Tz: TimeZone> DurationRound for DateTime<Tz> {
+ 
+     fn duration_round(self, duration: Duration) -> Result<Self, Self::Err> {
+         if let Some(span) = duration.num_nanoseconds() {
+-            if self.timestamp().abs() > MAX_SECONDS_TIMESTAMP_FOR_NANOS {
++            let naive = self.naive_local();
++
++            if naive.timestamp().abs() > MAX_SECONDS_TIMESTAMP_FOR_NANOS {
+                 return Err(RoundingError::TimestampExceedsLimit);
+             }
+-            let stamp = self.timestamp_nanos();
++            let stamp = naive.timestamp_nanos();
+             if span > stamp.abs() {
+                 return Err(RoundingError::DurationExceedsTimestamp);
+             }
+diff --git a/src/round.rs b/src/round.rs
+--- a/src/round.rs
++++ b/src/round.rs
+@@ -180,10 +182,12 @@ impl<Tz: TimeZone> DurationRound for DateTime<Tz> {
+ 
+     fn duration_trunc(self, duration: Duration) -> Result<Self, Self::Err> {
+         if let Some(span) = duration.num_nanoseconds() {
+-            if self.timestamp().abs() > MAX_SECONDS_TIMESTAMP_FOR_NANOS {
++            let naive = self.naive_local();
++
++            if naive.timestamp().abs() > MAX_SECONDS_TIMESTAMP_FOR_NANOS {
+                 return Err(RoundingError::TimestampExceedsLimit);
+             }
+-            let stamp = self.timestamp_nanos();
++            let stamp = naive.timestamp_nanos();
+             if span > stamp.abs() {
+                 return Err(RoundingError::DurationExceedsTimestamp);
+             }

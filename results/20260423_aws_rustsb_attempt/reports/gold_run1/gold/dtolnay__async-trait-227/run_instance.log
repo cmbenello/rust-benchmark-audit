@@ -1,0 +1,115 @@
+2026-04-17 06:45:43,559 - INFO - Environment image rustb.env.x86_64.dtolnay_async-trait:latest found for dtolnay__async-trait-227
+Building instance image rustbench/dtolnay__async-trait:pr-227 for dtolnay__async-trait-227
+2026-04-17 06:59:12,938 - INFO - Creating container for dtolnay__async-trait-227...
+2026-04-17 06:59:13,157 - INFO - Container for dtolnay__async-trait-227 created: 8b5fde5be177ca589872c94cde0cf8ba93c2495ecf98ad6b6f19936e71bf3adb
+2026-04-17 06:59:13,406 - INFO - Container for dtolnay__async-trait-227 started: 8b5fde5be177ca589872c94cde0cf8ba93c2495ecf98ad6b6f19936e71bf3adb
+2026-04-17 06:59:13,406 - INFO - Intermediate patch for dtolnay__async-trait-227 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-227/patch.diff, now applying to container...
+2026-04-17 06:59:13,713 - INFO - >>>>> Applied Patch:
+Checking patch src/expand.rs...
+Checking patch src/expand.rs...
+Applied patch src/expand.rs cleanly.
+Applied patch src/expand.rs cleanly.
+
+2026-04-17 06:59:13,930 - INFO - Git diff before:
+diff --git a/src/expand.rs b/src/expand.rs
+index 53918cb..8e6cd28 100644
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -362,6 +362,12 @@ fn transform_block(context: Context, sig: &mut Signature, block: &mut Block) {
+                 quote!(let #mutability #ident = #self_token;)
+             }
+             FnArg::Typed(arg) => {
++                // If there is a `#[cfg(..)]` attribute that selectively
++                // enables the parameter, forward it to the variable.
++                //
++                // This is currently not applied to the `self` parameter
++                let attrs = arg.attrs.iter();
++
+                 if let Pat::Ident(PatIdent {
+                     ident, mutability, ..
+                 }) = &*arg.pat
+@@ -371,15 +377,24 @@ fn transform_block(context: Context, sig: &mut Signature, block: &mut Block) {
+                         let prefixed = Ident::new("__self", ident.span());
+                         quote!(let #mutability #prefixed = #ident;)
+                     } else {
+-                        quote!(let #mutability #ident = #ident;)
++                        quote!(
++                            #(#attrs)*
++                            let #mutability #ident = #ident;
++                        )
+                     }
+                 } else {
+                     let pat = &arg.pat;
+                     let ident = positional_arg(i, pat);
+                     if let Pat::Wild(_) = **pat {
+-                        quote!(let #ident = #ident;)
++                        quote!(
++                            #(#attrs)*
++                            let #ident = #ident;
++                        )
+                     } else {
+-                        quote!(let #pat = #ident;)
++                        quote!(
++                            #(#attrs)*
++                            let #pat = #ident;
++                        )
+                     }
+                 }
+             }
+2026-04-17 06:59:13,931 - INFO - Eval script for dtolnay__async-trait-227 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-227/eval.sh; copying to container...
+2026-04-17 07:00:08,110 - INFO - Test runtime: 54.00 seconds
+2026-04-17 07:00:08,110 - INFO - Test output for dtolnay__async-trait-227 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-227/test_output.txt
+2026-04-17 07:00:08,160 - INFO - Git diff after:
+diff --git a/src/expand.rs b/src/expand.rs
+index 53918cb..8e6cd28 100644
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -362,6 +362,12 @@ fn transform_block(context: Context, sig: &mut Signature, block: &mut Block) {
+                 quote!(let #mutability #ident = #self_token;)
+             }
+             FnArg::Typed(arg) => {
++                // If there is a `#[cfg(..)]` attribute that selectively
++                // enables the parameter, forward it to the variable.
++                //
++                // This is currently not applied to the `self` parameter
++                let attrs = arg.attrs.iter();
++
+                 if let Pat::Ident(PatIdent {
+                     ident, mutability, ..
+                 }) = &*arg.pat
+@@ -371,15 +377,24 @@ fn transform_block(context: Context, sig: &mut Signature, block: &mut Block) {
+                         let prefixed = Ident::new("__self", ident.span());
+                         quote!(let #mutability #prefixed = #ident;)
+                     } else {
+-                        quote!(let #mutability #ident = #ident;)
++                        quote!(
++                            #(#attrs)*
++                            let #mutability #ident = #ident;
++                        )
+                     }
+                 } else {
+                     let pat = &arg.pat;
+                     let ident = positional_arg(i, pat);
+                     if let Pat::Wild(_) = **pat {
+-                        quote!(let #ident = #ident;)
++                        quote!(
++                            #(#attrs)*
++                            let #ident = #ident;
++                        )
+                     } else {
+-                        quote!(let #pat = #ident;)
++                        quote!(
++                            #(#attrs)*
++                            let #pat = #ident;
++                        )
+                     }
+                 }
+             }
+2026-04-17 07:00:08,160 - INFO - Grading answer for dtolnay__async-trait-227...
+2026-04-17 07:00:08,161 - INFO - report: {'dtolnay__async-trait-227': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['drop_order::test_drop_order', 'issue199::test', 'issue45::tracing', 'src/lib.rs - (line 15) - compile fail', 'src/lib.rs - (line 165) - compile fail', 'src/lib.rs - (line 126)', 'src/lib.rs - (line 186)', 'src/lib.rs - (line 265)', 'src/lib.rs - (line 286)', 'src/lib.rs - (line 47)', 'src/lib.rs - (line 211)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for dtolnay__async-trait-227: resolved: True
+2026-04-17 07:00:08,161 - INFO - Attempting to stop container rustb.eval.dtolnay__async-trait-227.gold_run1...
+2026-04-17 07:01:36,467 - INFO - Attempting to remove container rustb.eval.dtolnay__async-trait-227.gold_run1...
+2026-04-17 07:01:36,519 - INFO - Container rustb.eval.dtolnay__async-trait-227.gold_run1 removed.
+2026-04-17 07:01:36,519 - INFO - Attempting to remove image rustbench/dtolnay__async-trait:pr-227...
+2026-04-17 07:01:39,806 - INFO - Image rustbench/dtolnay__async-trait:pr-227 removed.

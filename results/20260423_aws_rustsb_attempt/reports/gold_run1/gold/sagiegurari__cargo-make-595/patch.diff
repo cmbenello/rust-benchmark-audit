@@ -1,0 +1,322 @@
+diff --git a/docs/_includes/content.md b/docs/_includes/content.md
+--- a/docs/_includes/content.md
++++ b/docs/_includes/content.md
+@@ -2039,6 +2039,19 @@ rustc 1.32.0-nightly (451987d86 2018-11-01)
+ [cargo-make] INFO - Build Done  in 2 seconds.
+ ```
+ 
++It's also possible to assert a minimum required version of rustc with a channel. This can help
++to document required compiler features and to remind developers to upgrade their installation.
++
++```toml
++[tasks.requires-stable-edition-2021]
++toolchain = { channel = "stable", min_version = "1.56" }
++command = "rustc"
++args = ["--version"]
++```
++
++The task will fail when the toolchain is either not installed or the existing version is smaller
++than the specified **min_version**.
++
+ <a name="usage-init-end-tasks"></a>
+ ### Init and End tasks
+ Every task or flow that is executed by the cargo-make has additional 2 tasks.<br>
+diff --git a/examples/toolchain.toml b/examples/toolchain.toml
+--- a/examples/toolchain.toml
++++ b/examples/toolchain.toml
+@@ -4,10 +4,19 @@ toolchain = "stable"
+ command = "rustc"
+ args = ["--version"]
+ 
++[tasks.rustc-version-stable-edition-2021]
++toolchain = { channel = "stable", min_version = "1.56" }
++command = "rustc"
++args = ["--version"]
++
+ [tasks.rustc-version-nightly]
+ toolchain = "nightly"
+ command = "rustc"
+ args = ["--version"]
+ 
+ [tasks.rustc-version-flow]
+-dependencies = ["rustc-version-stable", "rustc-version-nightly"]
++dependencies = [
++    "rustc-version-stable",
++    "rustc-version-stable-edition-2021",
++    "rustc-version-nightly"
++]
+diff --git a/src/lib/environment/mod.rs b/src/lib/environment/mod.rs
+--- a/src/lib/environment/mod.rs
++++ b/src/lib/environment/mod.rs
+@@ -415,9 +415,7 @@ fn setup_env_for_rust(home: Option<PathBuf>) -> RustInfo {
+ 
+     envmnt::set_optional("CARGO_MAKE_RUST_VERSION", &rustinfo.version);
+ 
+-    if rustinfo.channel.is_some() {
+-        let channel_option = rustinfo.channel.unwrap();
+-
++    if let Some(channel_option) = rustinfo.channel {
+         let channel = match channel_option {
+             RustChannel::Stable => "stable",
+             RustChannel::Beta => "beta",
+diff --git a/src/lib/installer/cargo_plugin_installer.rs b/src/lib/installer/cargo_plugin_installer.rs
+--- a/src/lib/installer/cargo_plugin_installer.rs
++++ b/src/lib/installer/cargo_plugin_installer.rs
+@@ -109,7 +110,7 @@ pub(crate) fn get_install_crate_args(
+ }
+ 
+ pub(crate) fn install_crate(
+-    toolchain: &Option<String>,
++    toolchain: &Option<ToolchainSpecifier>,
+     cargo_command: &str,
+     crate_name: &str,
+     args: &Option<Vec<String>>,
+diff --git a/src/lib/installer/crate_installer.rs b/src/lib/installer/crate_installer.rs
+--- a/src/lib/installer/crate_installer.rs
++++ b/src/lib/installer/crate_installer.rs
+@@ -11,9 +11,9 @@ use crate::command;
+ use crate::installer::crate_version_check;
+ use crate::installer::{cargo_plugin_installer, rustup_component_installer};
+ use crate::toolchain::wrap_command;
+-use crate::types::{CommandSpec, InstallCrateInfo, InstallRustupComponentInfo};
++use crate::types::{CommandSpec, InstallCrateInfo, InstallRustupComponentInfo, ToolchainSpecifier};
+ 
+-fn invoke_rustup_install(toolchain: &Option<String>, info: &InstallCrateInfo) -> bool {
++fn invoke_rustup_install(toolchain: &Option<ToolchainSpecifier>, info: &InstallCrateInfo) -> bool {
+     match info.rustup_component_name {
+         Some(ref component) => {
+             let rustup_component_info = InstallRustupComponentInfo {
+diff --git a/src/lib/installer/crate_installer.rs b/src/lib/installer/crate_installer.rs
+--- a/src/lib/installer/crate_installer.rs
++++ b/src/lib/installer/crate_installer.rs
+@@ -28,7 +28,7 @@ fn invoke_rustup_install(toolchain: &Option<String>, info: &InstallCrateInfo) ->
+ }
+ 
+ fn invoke_cargo_install(
+-    toolchain: &Option<String>,
++    toolchain: &Option<ToolchainSpecifier>,
+     info: &InstallCrateInfo,
+     args: &Option<Vec<String>>,
+     validate: bool,
+diff --git a/src/lib/installer/crate_installer.rs b/src/lib/installer/crate_installer.rs
+--- a/src/lib/installer/crate_installer.rs
++++ b/src/lib/installer/crate_installer.rs
+@@ -77,7 +77,7 @@ fn is_crate_only_info(info: &InstallCrateInfo) -> bool {
+ }
+ 
+ pub(crate) fn install(
+-    toolchain: &Option<String>,
++    toolchain: &Option<ToolchainSpecifier>,
+     info: &InstallCrateInfo,
+     args: &Option<Vec<String>>,
+     validate: bool,
+diff --git a/src/lib/installer/mod.rs b/src/lib/installer/mod.rs
+--- a/src/lib/installer/mod.rs
++++ b/src/lib/installer/mod.rs
+@@ -47,10 +47,7 @@ fn get_cargo_plugin_info_from_command(task_config: &Task) -> Option<(String, Str
+ pub(crate) fn install(task_config: &Task, flow_info: &FlowInfo) {
+     let validate = !task_config.should_ignore_errors();
+ 
+-    let toolchain = match task_config.toolchain {
+-        Some(ref value) => Some(value.to_string()),
+-        None => None,
+-    };
++    let toolchain = task_config.toolchain.clone();
+ 
+     let mut install_crate = task_config.install_crate.clone();
+     if let Some(ref install_crate_value) = install_crate {
+diff --git a/src/lib/installer/rustup_component_installer.rs b/src/lib/installer/rustup_component_installer.rs
+--- a/src/lib/installer/rustup_component_installer.rs
++++ b/src/lib/installer/rustup_component_installer.rs
+@@ -60,9 +64,9 @@ pub(crate) fn invoke_rustup_install(
+     command_spec.arg("add");
+ 
+     match toolchain {
+-        Some(ref toolchain_string) => {
++        Some(ref toolchain) => {
+             command_spec.arg("--toolchain");
+-            command_spec.arg(toolchain_string);
++            command_spec.arg(toolchain.channel());
+         }
+         None => {}
+     };
+diff --git a/src/lib/installer/rustup_component_installer.rs b/src/lib/installer/rustup_component_installer.rs
+--- a/src/lib/installer/rustup_component_installer.rs
++++ b/src/lib/installer/rustup_component_installer.rs
+@@ -100,7 +104,7 @@ pub(crate) fn invoke_rustup_install(
+ }
+ 
+ pub(crate) fn install(
+-    toolchain: &Option<String>,
++    toolchain: &Option<ToolchainSpecifier>,
+     info: &InstallRustupComponentInfo,
+     validate: bool,
+ ) -> bool {
+diff --git a/src/lib/toolchain.rs b/src/lib/toolchain.rs
+--- a/src/lib/toolchain.rs
++++ b/src/lib/toolchain.rs
+@@ -57,12 +41,56 @@ pub(crate) fn wrap_command(
+     }
+ }
+ 
+-fn has_toolchain(toolchain: &str) -> bool {
+-    Command::new("rustup")
+-        .args(&["run", toolchain, "rustc"])
++fn get_specified_min_version(toolchain: &ToolchainSpecifier) -> Option<Version> {
++    let min_version = toolchain.min_version()?;
++    let spec_min_version = min_version.parse::<Version>();
++    if let Err(_) = spec_min_version {
++        warn!("Unable to parse min version value: {}", &min_version);
++    }
++    spec_min_version.ok()
++}
++
++fn check_toolchain(toolchain: &ToolchainSpecifier) {
++    let output = Command::new("rustup")
++        .args(&["run", toolchain.channel(), "rustc", "--version"])
+         .stderr(Stdio::null())
+-        .stdout(Stdio::null())
+-        .status()
+-        .expect("Failed to check rustup toolchain")
+-        .success()
++        .stdout(Stdio::piped())
++        .output()
++        .expect("Failed to check rustup toolchain");
++    if !output.status.success() {
++        error!(
++            "Missing toolchain {}! Please install it using rustup.",
++            &toolchain
++        );
++        return;
++    }
++
++    let spec_min_version = get_specified_min_version(toolchain);
++    if let Some(ref spec_min_version) = spec_min_version {
++        let rustc_version = String::from_utf8_lossy(&output.stdout);
++        let rustc_version = rustc_version
++            .split(" ")
++            .nth(1)
++            .expect("expected a version in rustc output");
++        let mut rustc_version = rustc_version
++            .parse::<Version>()
++            .expect("unexpected version format");
++        // Remove prerelease identifiers from the output of rustc. Specifying a toolchain
++        // channel means the user actively chooses beta or nightly (or a custom one).
++        //
++        // Direct comparison with rustc output would otherwise produce unintended results:
++        // `{ channel = "beta", min_version = "1.56" }` is expected to work with
++        // `rustup run beta rustc --version` ==> "rustc 1.56.0-beta.4 (e6e620e1c 2021-10-04)"
++        // so we would have 1.56.0-beta.4 < 1.56 according to semver
++        rustc_version.pre = Prerelease::EMPTY;
++
++        if &rustc_version < spec_min_version {
++            error!(
++                "Installed toolchain {} is required to satisfy version {}, found {}! Please upgrade it using rustup.",
++                toolchain.channel(),
++                &spec_min_version,
++                rustc_version,
++            );
++        }
++    }
+ }
+diff --git a/src/lib/types.rs b/src/lib/types.rs
+--- a/src/lib/types.rs
++++ b/src/lib/types.rs
+@@ -1010,7 +1010,7 @@ pub struct Task {
+     /// A list of tasks to execute before this task
+     pub dependencies: Option<Vec<DependencyIdentifier>>,
+     /// The rust toolchain used to invoke the command or install the needed crates/components
+-    pub toolchain: Option<String>,
++    pub toolchain: Option<ToolchainSpecifier>,
+     /// override task if runtime OS is Linux (takes precedence over alias)
+     pub linux: Option<PlatformOverrideTask>,
+     /// override task if runtime OS is Windows (takes precedence over alias)
+diff --git a/src/lib/types.rs b/src/lib/types.rs
+--- a/src/lib/types.rs
++++ b/src/lib/types.rs
+@@ -1019,6 +1019,73 @@ pub struct Task {
+     pub mac: Option<PlatformOverrideTask>,
+ }
+ 
++/// A toolchain, defined either as a string (following the rustup syntax)
++/// or a ToolchainBoundedSpecifier.
++#[derive(Clone, Debug, Serialize, Deserialize, Eq, PartialEq)]
++#[serde(untagged)]
++pub enum ToolchainSpecifier {
++    /// A string specifying the channel name of the toolchain
++    Simple(String),
++    /// A toolchain with a minimum version bound
++    Bounded(ToolchainBoundedSpecifier),
++}
++
++impl From<String> for ToolchainSpecifier {
++    fn from(channel: String) -> Self {
++        Self::Simple(channel)
++    }
++}
++
++impl From<&str> for ToolchainSpecifier {
++    fn from(channel: &str) -> Self {
++        channel.to_string().into()
++    }
++}
++
++impl std::fmt::Display for ToolchainSpecifier {
++    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
++        match self {
++            Self::Simple(ref channel) => write!(formatter, "{}", channel),
++            Self::Bounded(ref spec) => write!(formatter, "{}", spec),
++        }
++    }
++}
++
++impl ToolchainSpecifier {
++    /// Return the channel of the toolchain to look for
++    pub fn channel(&self) -> &str {
++        match self {
++            Self::Simple(ref channel) => &channel,
++            Self::Bounded(ToolchainBoundedSpecifier { ref channel, .. }) => channel,
++        }
++    }
++
++    /// Return the minimal version, if any, to look for
++    pub fn min_version(&self) -> Option<&str> {
++        match self {
++            Self::Simple(_) => None,
++            Self::Bounded(ToolchainBoundedSpecifier {
++                ref min_version, ..
++            }) => Some(min_version),
++        }
++    }
++}
++
++/// A toolchain with a minumum version bound
++#[derive(Clone, Debug, Serialize, Deserialize, Eq, PartialEq)]
++pub struct ToolchainBoundedSpecifier {
++    /// The channel of the toolchain to use
++    pub channel: String,
++    /// The minimum version to match
++    pub min_version: String,
++}
++
++impl std::fmt::Display for ToolchainBoundedSpecifier {
++    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
++        write!(formatter, "{} >= {}", self.channel, self.min_version)
++    }
++}
++
+ /// A dependency, defined either as a string or as a Dependency object
+ #[derive(Clone, Debug, Serialize, Deserialize, Eq, PartialEq)]
+ #[serde(untagged)]
+diff --git a/src/lib/types.rs b/src/lib/types.rs
+--- a/src/lib/types.rs
++++ b/src/lib/types.rs
+@@ -1686,7 +1753,7 @@ pub struct PlatformOverrideTask {
+     /// A list of tasks to execute before this task
+     pub dependencies: Option<Vec<DependencyIdentifier>>,
+     /// The rust toolchain used to invoke the command or install the needed crates/components
+-    pub toolchain: Option<String>,
++    pub toolchain: Option<ToolchainSpecifier>,
+ }
+ 
+ impl PlatformOverrideTask {

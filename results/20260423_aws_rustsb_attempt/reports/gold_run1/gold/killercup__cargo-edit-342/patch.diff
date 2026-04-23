@@ -1,0 +1,186 @@
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -160,7 +160,13 @@ impl Manifests {
+                 .iter()
+                 .flat_map(|&(_, ref package)| package.dependencies.clone())
+                 .filter(is_version_dep)
+-                .map(|dependency| (dependency.name, None))
++                .map(|dependency| {
++                    let mut dep = Dependency::new(&dependency.name);
++                    if let Some(rename) = dependency.rename {
++                        dep = dep.set_rename(&rename);
++                    }
++                    (dep, None)
++                })
+                 .collect()
+         } else {
+             only_update
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -174,6 +180,7 @@ impl Manifests {
+                     } else {
+                         Ok((name, None))
+                     }
++                    .map(move |(name, version)| (Dependency::new(&name), version))
+                 })
+                 .collect::<Result<_>>()?
+         }))
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -202,8 +209,12 @@ impl Manifests {
+         for (mut manifest, package) in self.0 {
+             println!("{}:", package.name);
+ 
+-            for (name, version) in &upgraded_deps.0 {
+-                manifest.upgrade(&Dependency::new(name).set_version(version), dry_run)?;
++            for (dep, version) in &upgraded_deps.0 {
++                let mut new_dep = Dependency::new(&dep.name).set_version(version);
++                if let Some(rename) = dep.rename() {
++                    new_dep = new_dep.set_rename(&rename);
++                }
++                manifest.upgrade(&new_dep, dry_run)?;
+             }
+         }
+ 
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -212,11 +223,11 @@ impl Manifests {
+ }
+ 
+ /// The set of dependencies to be upgraded, alongside desired versions, if specified by the user.
+-struct DesiredUpgrades(HashMap<String, Option<String>>);
++struct DesiredUpgrades(HashMap<Dependency, Option<String>>);
+ 
+ /// The complete specification of the upgrades that will be performed. Map of the dependency names
+ /// to the new versions.
+-struct ActualUpgrades(HashMap<String, String>);
++struct ActualUpgrades(HashMap<Dependency, String>);
+ 
+ impl DesiredUpgrades {
+     /// Transform the dependencies into their upgraded forms. If a version is specified, all
+diff --git a/src/dependency.rs b/src/dependency.rs
+--- a/src/dependency.rs
++++ b/src/dependency.rs
+@@ -17,12 +17,16 @@ pub struct Dependency {
+     optional: bool,
+     default_features: bool,
+     source: DependencySource,
++    /// If the dependency is renamed, this is the new name for the dependency
++    /// as a string.  None if it is not renamed.
++    rename: Option<String>,
+ }
+ 
+ impl Default for Dependency {
+     fn default() -> Dependency {
+         Dependency {
+             name: "".into(),
++            rename: None,
+             optional: false,
+             default_features: true,
+             source: DependencySource::Version {
+diff --git a/src/dependency.rs b/src/dependency.rs
+--- a/src/dependency.rs
++++ b/src/dependency.rs
+@@ -92,6 +96,19 @@ impl Dependency {
+         self
+     }
+ 
++    /// Set the alias for the dependency
++    pub fn set_rename(mut self, rename: &str) -> Dependency {
++        self.rename = Some(rename.into());
++        self
++    }
++
++    /// Get the dependency name as defined in the manifest,
++    /// that is, either the alias (rename field if Some),
++    /// or the official package name (name field).
++    pub fn name_in_manifest(&self) -> &str {
++        &self.rename().unwrap_or(&self.name)
++    }
++
+     /// Get version of dependency
+     pub fn version(&self) -> Option<&str> {
+         if let DependencySource::Version {
+diff --git a/src/dependency.rs b/src/dependency.rs
+--- a/src/dependency.rs
++++ b/src/dependency.rs
+@@ -105,6 +122,14 @@ impl Dependency {
+         }
+     }
+ 
++    /// Get the alias for the dependency (if any)
++    pub fn rename(&self) -> Option<&str> {
++        match &self.rename {
++            Some(rename) => Some(&rename),
++            None => None,
++        }
++    }
++
+     /// Convert dependency to TOML
+     ///
+     /// Returns a tuple with the dependency's name and either the version as a `String`
+diff --git a/src/manifest.rs b/src/manifest.rs
+--- a/src/manifest.rs
++++ b/src/manifest.rs
+@@ -272,17 +272,28 @@ impl Manifest {
+         table_path: &[String],
+         dep: &Dependency,
+         dry_run: bool,
++    ) -> Result<()> {
++        self.update_table_named_entry(table_path, dep.name_in_manifest(), dep, dry_run)
++    }
++
++    /// Update an entry with a specified name in Cargo.toml.
++    pub fn update_table_named_entry(
++        &mut self,
++        table_path: &[String],
++        item_name: &str,
++        dep: &Dependency,
++        dry_run: bool,
+     ) -> Result<()> {
+         let table = self.get_table(table_path)?;
+         let new_dep = dep.to_toml().1;
+ 
+         // If (and only if) there is an old entry, merge the new one in.
+-        if !table[&dep.name].is_none() {
+-            if let Err(e) = print_upgrade_if_necessary(&dep.name, &table[&dep.name], &new_dep) {
++        if !table[item_name].is_none() {
++            if let Err(e) = print_upgrade_if_necessary(&dep.name, &table[item_name], &new_dep) {
+                 eprintln!("Error while displaying upgrade message, {}", e);
+             }
+             if !dry_run {
+-                merge_dependencies(&mut table[&dep.name], dep);
++                merge_dependencies(&mut table[item_name], dep);
+                 if let Some(t) = table.as_inline_table_mut() {
+                     t.fmt()
+                 }
+diff --git a/src/manifest.rs b/src/manifest.rs
+--- a/src/manifest.rs
++++ b/src/manifest.rs
+@@ -395,10 +406,18 @@ impl LocalManifest {
+     pub fn upgrade(&mut self, dependency: &Dependency, dry_run: bool) -> Result<()> {
+         for (table_path, table) in self.get_sections() {
+             let table_like = table.as_table_like().expect("Unexpected non-table");
+-            for (name, _old_value) in table_like.iter() {
+-                if name == dependency.name {
+-                    self.manifest
+-                        .update_table_entry(&table_path, dependency, dry_run)?;
++            for (name, toml_item) in table_like.iter() {
++                let dep_name = toml_item
++                    .as_table_like()
++                    .and_then(|t| t.get("package").and_then(|p| p.as_str()))
++                    .unwrap_or(name);
++                if dep_name == dependency.name {
++                    self.manifest.update_table_named_entry(
++                        &table_path,
++                        &name,
++                        dependency,
++                        dry_run,
++                    )?;
+                 }
+             }
+         }

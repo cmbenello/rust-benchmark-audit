@@ -1,0 +1,47 @@
+{
+    "axodotdev__cargo-dist-417": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "axolotlsay_user_publish_job"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "akaikatana_repo_with_dot_git",
+                    "axolotlsay_basic",
+                    "akaikatana_basic",
+                    "axolotlsay_edit_existing",
+                    "axolotlsay_no_homebrew_publish",
+                    "axolotlsay_ssldotcom_windows_sign",
+                    "axolotlsay_ssldotcom_windows_sign_prod",
+                    "env_path_invalid - should panic",
+                    "install_path_env_subdir",
+                    "install_path_cargo_home",
+                    "install_path_env_no_subdir",
+                    "install_path_env_subdir_space",
+                    "install_path_env_subdir_space_deeper",
+                    "install_path_home_subdir_deeper",
+                    "install_path_home_subdir_min",
+                    "install_path_home_subdir_space",
+                    "install_path_home_subdir_space_deeper",
+                    "install_path_invalid - should panic"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

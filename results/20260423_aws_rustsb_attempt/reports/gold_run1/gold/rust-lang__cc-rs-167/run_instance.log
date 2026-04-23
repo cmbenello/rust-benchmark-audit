@@ -1,0 +1,169 @@
+2026-04-17 03:28:30,501 - INFO - Environment image rustb.env.x86_64.rust-lang_cc-rs:latest found for rust-lang__cc-rs-167
+Building instance image rustbench/rust-lang__cc-rs:pr-167 for rust-lang__cc-rs-167
+2026-04-17 03:37:05,297 - INFO - Creating container for rust-lang__cc-rs-167...
+2026-04-17 03:37:05,656 - INFO - Container for rust-lang__cc-rs-167 created: 731b25ea07d0bade95e92d17e1f5edc69fe98786bf9e6482fb97cbb9b61206c9
+2026-04-17 03:37:05,998 - INFO - Container for rust-lang__cc-rs-167 started: 731b25ea07d0bade95e92d17e1f5edc69fe98786bf9e6482fb97cbb9b61206c9
+2026-04-17 03:37:05,998 - INFO - Intermediate patch for rust-lang__cc-rs-167 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-167/patch.diff, now applying to container...
+2026-04-17 03:37:06,182 - INFO - >>>>> Applied Patch:
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Checking patch src/lib.rs...
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+Applied patch src/lib.rs cleanly.
+
+2026-04-17 03:37:06,224 - INFO - Git diff before:
+diff --git a/src/lib.rs b/src/lib.rs
+index 7d19e13..1d9a5fb 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -92,6 +92,8 @@ pub struct Config {
+     cargo_metadata: bool,
+     pic: Option<bool>,
+     static_crt: Option<bool>,
++    shared_flag: Option<bool>,
++    static_flag: Option<bool>,
+ }
+ 
+ /// Configuration used to represent an invocation of a C compiler.
+@@ -185,6 +187,8 @@ impl Config {
+             objects: Vec::new(),
+             flags: Vec::new(),
+             files: Vec::new(),
++            shared_flag: None,
++            static_flag: None,
+             cpp: false,
+             cpp_link_stdlib: None,
+             cpp_set_stdlib: None,
+@@ -226,6 +230,24 @@ impl Config {
+         self
+     }
+ 
++    /// Set the `-shared` flag.
++    ///
++    /// When enabled, the compiler will produce a shared object which can
++    /// then be linked with other objects to form an executable.
++    pub fn shared_flag(&mut self, shared_flag: bool) -> &mut Config {
++        self.shared_flag = Some(shared_flag);
++        self
++    }
++
++    /// Set the `-static` flag.
++    ///
++    /// When enabled on systems that support dynamic linking, this prevents
++    /// linking with the shared libraries.
++    pub fn static_flag(&mut self, static_flag: bool) -> &mut Config {
++        self.static_flag = Some(static_flag);
++        self
++    }
++
+     /// Add a file which will be compiled
+     pub fn file<P: AsRef<Path>>(&mut self, p: P) -> &mut Config {
+         self.files.push(p.as_ref().to_path_buf());
+@@ -618,7 +640,7 @@ impl Config {
+                     cmd.args.push("-m64".into());
+                 }
+ 
+-                if target.contains("musl") {
++                if self.static_flag.is_none() && target.contains("musl") {
+                     cmd.args.push("-static".into());
+                 }
+ 
+@@ -698,6 +720,13 @@ impl Config {
+             self.ios_flags(&mut cmd);
+         }
+ 
++        if self.static_flag.unwrap_or(false) {
++            cmd.args.push("-static".into());
++        }
++        if self.shared_flag.unwrap_or(false) {
++            cmd.args.push("-shared".into());
++        }
++
+         if self.cpp {
+             match (self.cpp_set_stdlib.as_ref(), cmd.family) {
+                 (None, _) => { }
+2026-04-17 03:37:06,224 - INFO - Eval script for rust-lang__cc-rs-167 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-167/eval.sh; copying to container...
+2026-04-17 03:38:37,984 - INFO - Test runtime: 91.65 seconds
+2026-04-17 03:38:37,984 - INFO - Test output for rust-lang__cc-rs-167 written to logs/run_evaluation/gold_run1/gold/rust-lang__cc-rs-167/test_output.txt
+2026-04-17 03:38:38,120 - INFO - Git diff after:
+diff --git a/src/lib.rs b/src/lib.rs
+index 7d19e13..1d9a5fb 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -92,6 +92,8 @@ pub struct Config {
+     cargo_metadata: bool,
+     pic: Option<bool>,
+     static_crt: Option<bool>,
++    shared_flag: Option<bool>,
++    static_flag: Option<bool>,
+ }
+ 
+ /// Configuration used to represent an invocation of a C compiler.
+@@ -185,6 +187,8 @@ impl Config {
+             objects: Vec::new(),
+             flags: Vec::new(),
+             files: Vec::new(),
++            shared_flag: None,
++            static_flag: None,
+             cpp: false,
+             cpp_link_stdlib: None,
+             cpp_set_stdlib: None,
+@@ -226,6 +230,24 @@ impl Config {
+         self
+     }
+ 
++    /// Set the `-shared` flag.
++    ///
++    /// When enabled, the compiler will produce a shared object which can
++    /// then be linked with other objects to form an executable.
++    pub fn shared_flag(&mut self, shared_flag: bool) -> &mut Config {
++        self.shared_flag = Some(shared_flag);
++        self
++    }
++
++    /// Set the `-static` flag.
++    ///
++    /// When enabled on systems that support dynamic linking, this prevents
++    /// linking with the shared libraries.
++    pub fn static_flag(&mut self, static_flag: bool) -> &mut Config {
++        self.static_flag = Some(static_flag);
++        self
++    }
++
+     /// Add a file which will be compiled
+     pub fn file<P: AsRef<Path>>(&mut self, p: P) -> &mut Config {
+         self.files.push(p.as_ref().to_path_buf());
+@@ -618,7 +640,7 @@ impl Config {
+                     cmd.args.push("-m64".into());
+                 }
+ 
+-                if target.contains("musl") {
++                if self.static_flag.is_none() && target.contains("musl") {
+                     cmd.args.push("-static".into());
+                 }
+ 
+@@ -698,6 +720,13 @@ impl Config {
+             self.ios_flags(&mut cmd);
+         }
+ 
++        if self.static_flag.unwrap_or(false) {
++            cmd.args.push("-static".into());
++        }
++        if self.shared_flag.unwrap_or(false) {
++            cmd.args.push("-shared".into());
++        }
++
+         if self.cpp {
+             match (self.cpp_set_stdlib.as_ref(), cmd.family) {
+                 (None, _) => { }
+2026-04-17 03:38:38,121 - INFO - Grading answer for rust-lang__cc-rs-167...
+2026-04-17 03:38:38,121 - INFO - report: {'rust-lang__cc-rs-167': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['main', 'msvc_debug', 'msvc_include', 'gnu_compile_assembly', 'msvc_opt_level_0', 'msvc_static_crt', 'gnu_include', 'gnu_opt_level_1', 'msvc_define', 'msvc_smoke', 'gnu_opt_level_s', 'gnu_debug', 'msvc_no_static_crt', 'gnu_set_stdlib', 'gnu_smoke', 'gnu_define', 'gnu_x86_64', 'gnu_i686', 'gnu_x86_64_no_pic', 'gnu_i686_pic', 'src/lib.rs -  (line 24)', 'src/lib.rs -  (line 35)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rust-lang__cc-rs-167: resolved: True
+2026-04-17 03:38:38,121 - INFO - Attempting to stop container rustb.eval.rust-lang__cc-rs-167.gold_run1...
+2026-04-17 03:39:56,508 - INFO - Attempting to remove container rustb.eval.rust-lang__cc-rs-167.gold_run1...
+2026-04-17 03:39:56,543 - INFO - Container rustb.eval.rust-lang__cc-rs-167.gold_run1 removed.

@@ -1,0 +1,937 @@
+2026-04-17 06:47:40,917 - INFO - Environment image rustb.env.x86_64.google_autocxx:latest found for google__autocxx-129
+Building instance image rustbench/google__autocxx:pr-129 for google__autocxx-129
+2026-04-17 06:56:08,581 - INFO - Creating container for google__autocxx-129...
+2026-04-17 06:56:08,777 - INFO - Container for google__autocxx-129 created: 7e138e574475006710013da09bbcdcec1b5ef769b84873788df51c3eba5b669f
+2026-04-17 06:56:09,091 - INFO - Container for google__autocxx-129 started: 7e138e574475006710013da09bbcdcec1b5ef769b84873788df51c3eba5b669f
+2026-04-17 06:56:09,091 - INFO - Intermediate patch for google__autocxx-129 written to logs/run_evaluation/gold_run1/gold/google__autocxx-129/patch.diff, now applying to container...
+2026-04-17 06:56:09,314 - INFO - >>>>> Applied Patch:
+Checking patch engine/src/additional_cpp_generator.rs...
+Checking patch engine/src/additional_cpp_generator.rs...
+Checking patch engine/src/additional_cpp_generator.rs...
+Checking patch engine/src/additional_cpp_generator.rs...
+Checking patch engine/src/additional_cpp_generator.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/bridge_converter.rs...
+Checking patch engine/src/function_wrapper.rs...
+Checking patch engine/src/function_wrapper.rs...
+Checking patch engine/src/function_wrapper.rs...
+Checking patch engine/src/function_wrapper.rs...
+Checking patch engine/src/known_types.rs...
+Checking patch engine/src/known_types.rs...
+Checking patch engine/src/lib.rs...
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 131 (offset -1 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 152 (offset -1 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 173 (offset -1 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 193 (offset -1 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 205 (offset -1 lines).
+Checking patch engine/src/lib.rs...
+Hunk #1 succeeded at 362 (offset -1 lines).
+Checking patch engine/src/type_database.rs...
+Checking patch engine/src/types.rs...
+Checking patch src/lib.rs...
+Applied patch engine/src/additional_cpp_generator.rs cleanly.
+Applied patch engine/src/additional_cpp_generator.rs cleanly.
+Applied patch engine/src/additional_cpp_generator.rs cleanly.
+Applied patch engine/src/additional_cpp_generator.rs cleanly.
+Applied patch engine/src/additional_cpp_generator.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/bridge_converter.rs cleanly.
+Applied patch engine/src/function_wrapper.rs cleanly.
+Applied patch engine/src/function_wrapper.rs cleanly.
+Applied patch engine/src/function_wrapper.rs cleanly.
+Applied patch engine/src/function_wrapper.rs cleanly.
+Applied patch engine/src/known_types.rs cleanly.
+Applied patch engine/src/known_types.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
+Applied patch engine/src/type_database.rs cleanly.
+Applied patch engine/src/types.rs cleanly.
+Applied patch src/lib.rs cleanly.
+
+2026-04-17 06:56:09,394 - INFO - Git diff before:
+diff --git a/engine/src/additional_cpp_generator.rs b/engine/src/additional_cpp_generator.rs
+index a9ff51dc..80509c26 100644
+--- a/engine/src/additional_cpp_generator.rs
++++ b/engine/src/additional_cpp_generator.rs
+@@ -12,7 +12,10 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-use crate::function_wrapper::{FunctionWrapper, FunctionWrapperPayload};
++use crate::{
++    function_wrapper::{FunctionWrapper, FunctionWrapperPayload},
++    type_database::TypeDatabase,
++};
+ use itertools::Itertools;
+ use std::collections::HashSet;
+ 
+@@ -80,12 +83,16 @@ impl AdditionalCppGenerator {
+         }
+     }
+ 
+-    pub(crate) fn add_needs(&mut self, additions: Vec<AdditionalNeed>) {
++    pub(crate) fn add_needs(
++        &mut self,
++        additions: Vec<AdditionalNeed>,
++        type_database: &TypeDatabase,
++    ) {
+         for need in additions {
+             match need {
+                 AdditionalNeed::MakeStringConstructor => self.generate_string_constructor(),
+                 AdditionalNeed::FunctionWrapper(by_value_wrapper) => {
+-                    self.generate_by_value_wrapper(*by_value_wrapper)
++                    self.generate_by_value_wrapper(*by_value_wrapper, type_database)
+                 }
+             }
+         }
+@@ -145,7 +152,11 @@ impl AdditionalCppGenerator {
+         })
+     }
+ 
+-    fn generate_by_value_wrapper(&mut self, details: FunctionWrapper) {
++    fn generate_by_value_wrapper(
++        &mut self,
++        details: FunctionWrapper,
++        type_database: &TypeDatabase,
++    ) {
+         // Even if the original function call is in a namespace,
+         // we generate this wrapper in the global namespace.
+         // We could easily do this the other way round, and when
+@@ -173,18 +184,24 @@ impl AdditionalCppGenerator {
+             .argument_conversion
+             .iter()
+             .enumerate()
+-            .map(|(counter, ty)| format!("{} {}", ty.unconverted_type(), get_arg_name(counter)))
++            .map(|(counter, ty)| {
++                format!(
++                    "{} {}",
++                    ty.unconverted_type(type_database),
++                    get_arg_name(counter)
++                )
++            })
+             .join(", ");
+         let ret_type = details
+             .return_conversion
+             .as_ref()
+-            .map_or("void".to_string(), |x| x.converted_type());
++            .map_or("void".to_string(), |x| x.converted_type(type_database));
+         let declaration = format!("{} {}({})", ret_type, name, args);
+         let mut arg_list = details
+             .argument_conversion
+             .iter()
+             .enumerate()
+-            .map(|(counter, conv)| conv.conversion(&get_arg_name(counter)));
++            .map(|(counter, conv)| conv.conversion(&get_arg_name(counter), type_database));
+         let receiver = if is_a_method { arg_list.next() } else { None };
+         let arg_list = arg_list.join(", ");
+         let mut underlying_function_call = match details.payload {
+@@ -210,8 +227,10 @@ impl AdditionalCppGenerator {
+             }
+         };
+         if let Some(ret) = details.return_conversion {
+-            underlying_function_call =
+-                format!("return {}", ret.conversion(&underlying_function_call));
++            underlying_function_call = format!(
++                "return {}",
++                ret.conversion(&underlying_function_call, type_database)
++            );
+         };
+         let definition = format!("{} {{ {}; }}", declaration, underlying_function_call,);
+         let declaration = format!("{};", declaration);
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+index 433ba2ae..8f21cc73 100644
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -22,6 +22,7 @@ use crate::{
+     namespace_organizer::{NamespaceEntries, Use},
+     rust_name_tracker::RustNameTracker,
+     type_converter::TypeConverter,
++    type_database::TypeDatabase,
+     typedef_analyzer::analyze_typedef_target,
+     typedef_analyzer::TypedefTarget,
+     types::make_ident,
+@@ -90,16 +91,16 @@ pub(crate) struct BridgeConversionResults {
+ /// At the moment this crate takes the view that it's OK to panic
+ /// if the bindgen output is not as expected. It may be in future that
+ /// we need to be a bit more graceful, but for now, that's OK.
+-pub(crate) struct BridgeConverter {
+-    include_list: Vec<String>,
+-    pod_requests: Vec<TypeName>,
++pub(crate) struct BridgeConverter<'a> {
++    include_list: &'a Vec<String>,
++    type_database: &'a TypeDatabase,
+ }
+ 
+-impl BridgeConverter {
+-    pub fn new(include_list: Vec<String>, pod_requests: Vec<TypeName>) -> Self {
++impl<'a> BridgeConverter<'a> {
++    pub fn new(include_list: &'a Vec<String>, type_database: &'a TypeDatabase) -> Self {
+         Self {
+             include_list,
+-            pod_requests,
++            type_database,
+         }
+     }
+ 
+@@ -131,11 +132,11 @@ impl BridgeConverter {
+                     idents_found: Vec::new(),
+                     type_converter: TypeConverter::new(),
+                     byvalue_checker: ByValueChecker::new(),
+-                    pod_requests: &self.pod_requests,
+                     include_list: &self.include_list,
+                     final_uses: Vec::new(),
+                     bridge_name_tracker: BridgeNameTracker::new(),
+                     rust_name_tracker: RustNameTracker::new(),
++                    type_database: &self.type_database,
+                 };
+                 conversion.convert_items(items, exclude_utilities)
+             }
+@@ -162,8 +163,8 @@ struct BridgeConversion<'a> {
+     idents_found: Vec<Ident>,
+     type_converter: TypeConverter,
+     byvalue_checker: ByValueChecker,
+-    pod_requests: &'a Vec<TypeName>,
+     include_list: &'a Vec<String>,
++    type_database: &'a TypeDatabase,
+     final_uses: Vec<Use>,
+     bridge_name_tracker: BridgeNameTracker,
+     rust_name_tracker: RustNameTracker,
+@@ -437,7 +438,7 @@ impl<'a> BridgeConversion<'a> {
+     ) -> Result<(), ConvertError> {
+         self.find_nested_pod_types_in_mod(items, ns)?;
+         self.byvalue_checker
+-            .satisfy_requests(self.pod_requests.clone())
++            .satisfy_requests(self.type_database.get_pod_requests())
+             .map_err(ConvertError::UnsafePODType)
+     }
+ 
+@@ -448,9 +449,13 @@ impl<'a> BridgeConversion<'a> {
+     ) -> Result<(), ConvertError> {
+         let final_ident = make_ident(tyname.get_final_ident());
+         let kind_item = make_ident(if should_be_pod { "Trivial" } else { "Opaque" });
+-        let tynamestring = tyname.to_cpp_name();
+-        let mut for_extern_c_ts = if tyname.has_namespace() {
+-            let ns_string = tyname
++        let effective_type = self
++            .type_database
++            .get_effective_type(&tyname)
++            .unwrap_or(&tyname);
++        let tynamestring = effective_type.to_cpp_name();
++        let mut for_extern_c_ts = if effective_type.has_namespace() {
++            let ns_string = effective_type
+                 .ns_segment_iter()
+                 .cloned()
+                 .collect::<Vec<String>>()
+diff --git a/engine/src/function_wrapper.rs b/engine/src/function_wrapper.rs
+index 49fde3bd..3ace3f5b 100644
+--- a/engine/src/function_wrapper.rs
++++ b/engine/src/function_wrapper.rs
+@@ -1,6 +1,8 @@
+ use syn::{parse_quote, Ident, Type};
+ 
+-use crate::types::{type_to_cpp, Namespace};
++use crate::{
++    known_types::type_lacks_copy_constructor, type_database::TypeDatabase, types::Namespace,
++};
+ 
+ // Copyright 2020 Google LLC
+ //
+@@ -55,17 +57,17 @@ impl ArgumentConversion {
+         !matches!(self.conversion, ArgumentConversionType::None)
+     }
+ 
+-    pub(crate) fn unconverted_type(&self) -> String {
++    pub(crate) fn unconverted_type(&self, type_database: &TypeDatabase) -> String {
+         match self.conversion {
+-            ArgumentConversionType::FromUniquePtrToValue => self.wrapped_type(),
+-            _ => self.unwrapped_type_as_string(),
++            ArgumentConversionType::FromUniquePtrToValue => self.wrapped_type(type_database),
++            _ => self.unwrapped_type_as_string(type_database),
+         }
+     }
+ 
+-    pub(crate) fn converted_type(&self) -> String {
++    pub(crate) fn converted_type(&self, type_database: &TypeDatabase) -> String {
+         match self.conversion {
+-            ArgumentConversionType::FromValueToUniquePtr => self.wrapped_type(),
+-            _ => self.unwrapped_type_as_string(),
++            ArgumentConversionType::FromValueToUniquePtr => self.wrapped_type(type_database),
++            _ => self.unwrapped_type_as_string(type_database),
+         }
+     }
+ 
+@@ -83,23 +85,21 @@ impl ArgumentConversion {
+         }
+     }
+ 
+-    fn unwrapped_type_as_string(&self) -> String {
+-        type_to_cpp(&self.unwrapped_type)
++    fn unwrapped_type_as_string(&self, type_database: &TypeDatabase) -> String {
++        type_database.type_to_cpp(&self.unwrapped_type)
+     }
+ 
+-    fn wrapped_type(&self) -> String {
+-        format!("std::unique_ptr<{}>", self.unwrapped_type_as_string())
++    fn wrapped_type(&self, type_database: &TypeDatabase) -> String {
++        format!(
++            "std::unique_ptr<{}>",
++            self.unwrapped_type_as_string(type_database)
++        )
+     }
+ 
+-    fn type_lacks_copy_constructor(ty: &Type) -> bool {
+-        // TODO obtain this from known_types
+-        type_to_cpp(ty).starts_with("std::unique_ptr")
+-    }
+-
+-    pub(crate) fn conversion(&self, var_name: &str) -> String {
++    pub(crate) fn conversion(&self, var_name: &str, type_database: &TypeDatabase) -> String {
+         match self.conversion {
+             ArgumentConversionType::None => {
+-                if Self::type_lacks_copy_constructor(&self.unwrapped_type) {
++                if type_lacks_copy_constructor(&self.unwrapped_type) {
+                     format!("std::move({})", var_name)
+                 } else {
+                     var_name.to_string()
+@@ -108,7 +108,7 @@ impl ArgumentConversion {
+             ArgumentConversionType::FromUniquePtrToValue => format!("std::move(*{})", var_name),
+             ArgumentConversionType::FromValueToUniquePtr => format!(
+                 "std::make_unique<{}>({})",
+-                self.unconverted_type(),
++                self.unconverted_type(type_database),
+                 var_name
+             ),
+         }
+diff --git a/engine/src/known_types.rs b/engine/src/known_types.rs
+index a899cdff..7f1e8bfd 100644
+--- a/engine/src/known_types.rs
++++ b/engine/src/known_types.rs
+@@ -16,7 +16,7 @@ use crate::types::{make_ident, TypeName};
+ use indoc::indoc;
+ use lazy_static::lazy_static;
+ use std::collections::HashMap;
+-use syn::{parse_quote, TypePath};
++use syn::{parse_quote, Type, TypePath};
+ 
+ /// Whether this type should be included in the 'prelude'
+ /// passed to bindgen, and if so, how.
+@@ -267,3 +267,16 @@ pub(crate) fn special_cpp_name(rs: &TypeName) -> Option<String> {
+ pub(crate) fn is_known_type(ty: &TypeName) -> bool {
+     KNOWN_TYPES.by_rs_name.contains_key(ty)
+ }
++
++/// If a given type lacks a copy constructor, we should always use
++/// std::move in wrapper functions.
++pub(crate) fn type_lacks_copy_constructor(ty: &Type) -> bool {
++    // In future we may wish to look this up in KNOWN_TYPES.
++    match ty {
++        Type::Path(typ) => {
++            let tn = TypeName::from_type_path(typ);
++            tn.to_cpp_name().starts_with("std::unique_ptr")
++        }
++        _ => false,
++    }
++}
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+index d6ab6a29..974fbd2c 100644
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -25,6 +25,7 @@ mod parse;
+ mod rust_name_tracker;
+ mod rust_pretty_printer;
+ mod type_converter;
++mod type_database;
+ mod typedef_analyzer;
+ mod types;
+ mod unqualify;
+@@ -130,7 +131,7 @@ enum State {
+ pub struct IncludeCpp {
+     inclusions: Vec<CppInclusion>,
+     allowlist: Vec<String>, // not TypeName as it may be functions or whatever.
+-    pod_types: Vec<TypeName>,
++    type_database: TypeDatabase,
+     preconfigured_inc_dirs: Option<std::ffi::OsString>,
+     exclude_utilities: bool,
+     state: State,
+@@ -151,9 +152,9 @@ impl IncludeCpp {
+ 
+         let mut inclusions = Vec::new();
+         let mut allowlist = Vec::new();
+-        let mut pod_types = Vec::new();
+         let mut parse_only = false;
+         let mut exclude_utilities = false;
++        let mut type_database = TypeDatabase::new();
+ 
+         while !input.is_empty() {
+             if input.parse::<Option<syn::Token![#]>>()?.is_some() {
+@@ -172,8 +173,19 @@ impl IncludeCpp {
+                     let generate: syn::LitStr = args.parse()?;
+                     allowlist.push(generate.value());
+                     if ident == "generate_pod" {
+-                        pod_types.push(TypeName::new_from_user_input(&generate.value()));
++                        type_database
++                            .note_pod_request(TypeName::new_from_user_input(&generate.value()));
+                     }
++                } else if ident == "nested_type" {
++                    let args;
++                    syn::parenthesized!(args in input);
++                    let nested: syn::LitStr = args.parse()?;
++                    args.parse::<syn::Token![,]>()?;
++                    let nested_in: syn::LitStr = args.parse()?;
++                    type_database.note_nested_type(
++                        TypeName::new_from_user_input(&nested.value()),
++                        TypeName::new_from_user_input(&nested_in.value()),
++                    );
+                 } else if ident == "parse_only" {
+                     parse_only = true;
+                 } else if ident == "exclude_utilities" {
+@@ -181,7 +193,7 @@ impl IncludeCpp {
+                 } else {
+                     return Err(syn::Error::new(
+                         ident.span(),
+-                        "expected generate, generate_pod or exclude_utilities",
++                        "expected generate, generate_pod, nested_type or exclude_utilities",
+                     ));
+                 }
+             }
+@@ -193,9 +205,9 @@ impl IncludeCpp {
+         Ok(IncludeCpp {
+             inclusions,
+             allowlist,
+-            pod_types,
+             preconfigured_inc_dirs: None,
+             exclude_utilities,
++            type_database,
+             state: if parse_only {
+                 State::ParseOnly
+             } else {
+@@ -350,16 +362,15 @@ impl IncludeCpp {
+             .map_err(Error::Bindgen)?;
+         let bindings = self.parse_bindings(bindings)?;
+ 
+-        let mut converter = bridge_converter::BridgeConverter::new(
+-            self.generate_include_list(),
+-            self.pod_types.clone(), // TODO take self by value to avoid clone.
+-        );
++        let include_list = self.generate_include_list();
++        let mut converter =
++            bridge_converter::BridgeConverter::new(&include_list, &self.type_database);
+ 
+         let conversion = converter
+             .convert(bindings, self.exclude_utilities)
+             .map_err(Error::Conversion)?;
+         let mut additional_cpp_generator = AdditionalCppGenerator::new(self.build_header());
+-        additional_cpp_generator.add_needs(conversion.additional_cpp_needs);
++        additional_cpp_generator.add_needs(conversion.additional_cpp_needs, &self.type_database);
+         let mut items = conversion.items;
+         let mut new_bindings: ItemMod = parse_quote! {
+             #[allow(non_snake_case)]
+diff --git a/engine/src/types.rs b/engine/src/types.rs
+index 32cf2145..3a4258e3 100644
+--- a/engine/src/types.rs
++++ b/engine/src/types.rs
+@@ -16,7 +16,7 @@ use itertools::Itertools;
+ use proc_macro2::Span;
+ use std::fmt::Display;
+ use std::iter::Peekable;
+-use syn::{parse_quote, Ident, PathSegment, Type, TypePath};
++use syn::{parse_quote, Ident, PathSegment, TypePath};
+ 
+ use crate::known_types::is_known_type;
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+index 7d5a70f7..fbb71a78 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -238,6 +238,33 @@ macro_rules! exclude_utilities {
+     ($($tt:tt)*) => { $crate::usage!{$($tt)*} };
+ }
+ 
++/// Specify that a struct (or other type) is nested within
++/// some outer type. autocxx can't currently determine
++/// this itself; it's hoped that this is a temporary restriction
++/// and that the need for this directive will evaporate soon.
++/// Meanwhile, specify two arguments - first the path to the
++/// type without any nesting; and secondly the path with nesting.
++/// So for instance for a situation like
++/// ```cpp
++/// namespace A {
++///   struct B {
++///     struct C {
++///       uint32_t b;
++///     }
++///     uint32_t a;
++///   }
++/// ```
++/// specify
++/// `nested_type("A::C", "A::B::C")`
++///
++/// A directive to be included inside
++/// [include_cpp] - see [include_cpp] for general information.
++#[macro_export]
++macro_rules! nested_type {
++    ($($tt:tt)*) => { $crate::usage!{$($tt)*} };
++}
++
++
+ #[doc(hidden)]
+ #[macro_export]
+ macro_rules! usage {
+2026-04-17 06:56:09,394 - INFO - Eval script for google__autocxx-129 written to logs/run_evaluation/gold_run1/gold/google__autocxx-129/eval.sh; copying to container...
+2026-04-17 06:57:55,256 - INFO - Test runtime: 105.74 seconds
+2026-04-17 06:57:55,256 - INFO - Test output for google__autocxx-129 written to logs/run_evaluation/gold_run1/gold/google__autocxx-129/test_output.txt
+2026-04-17 06:57:55,296 - INFO - Git diff after:
+diff --git a/engine/src/additional_cpp_generator.rs b/engine/src/additional_cpp_generator.rs
+index a9ff51dc..80509c26 100644
+--- a/engine/src/additional_cpp_generator.rs
++++ b/engine/src/additional_cpp_generator.rs
+@@ -12,7 +12,10 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-use crate::function_wrapper::{FunctionWrapper, FunctionWrapperPayload};
++use crate::{
++    function_wrapper::{FunctionWrapper, FunctionWrapperPayload},
++    type_database::TypeDatabase,
++};
+ use itertools::Itertools;
+ use std::collections::HashSet;
+ 
+@@ -80,12 +83,16 @@ impl AdditionalCppGenerator {
+         }
+     }
+ 
+-    pub(crate) fn add_needs(&mut self, additions: Vec<AdditionalNeed>) {
++    pub(crate) fn add_needs(
++        &mut self,
++        additions: Vec<AdditionalNeed>,
++        type_database: &TypeDatabase,
++    ) {
+         for need in additions {
+             match need {
+                 AdditionalNeed::MakeStringConstructor => self.generate_string_constructor(),
+                 AdditionalNeed::FunctionWrapper(by_value_wrapper) => {
+-                    self.generate_by_value_wrapper(*by_value_wrapper)
++                    self.generate_by_value_wrapper(*by_value_wrapper, type_database)
+                 }
+             }
+         }
+@@ -145,7 +152,11 @@ impl AdditionalCppGenerator {
+         })
+     }
+ 
+-    fn generate_by_value_wrapper(&mut self, details: FunctionWrapper) {
++    fn generate_by_value_wrapper(
++        &mut self,
++        details: FunctionWrapper,
++        type_database: &TypeDatabase,
++    ) {
+         // Even if the original function call is in a namespace,
+         // we generate this wrapper in the global namespace.
+         // We could easily do this the other way round, and when
+@@ -173,18 +184,24 @@ impl AdditionalCppGenerator {
+             .argument_conversion
+             .iter()
+             .enumerate()
+-            .map(|(counter, ty)| format!("{} {}", ty.unconverted_type(), get_arg_name(counter)))
++            .map(|(counter, ty)| {
++                format!(
++                    "{} {}",
++                    ty.unconverted_type(type_database),
++                    get_arg_name(counter)
++                )
++            })
+             .join(", ");
+         let ret_type = details
+             .return_conversion
+             .as_ref()
+-            .map_or("void".to_string(), |x| x.converted_type());
++            .map_or("void".to_string(), |x| x.converted_type(type_database));
+         let declaration = format!("{} {}({})", ret_type, name, args);
+         let mut arg_list = details
+             .argument_conversion
+             .iter()
+             .enumerate()
+-            .map(|(counter, conv)| conv.conversion(&get_arg_name(counter)));
++            .map(|(counter, conv)| conv.conversion(&get_arg_name(counter), type_database));
+         let receiver = if is_a_method { arg_list.next() } else { None };
+         let arg_list = arg_list.join(", ");
+         let mut underlying_function_call = match details.payload {
+@@ -210,8 +227,10 @@ impl AdditionalCppGenerator {
+             }
+         };
+         if let Some(ret) = details.return_conversion {
+-            underlying_function_call =
+-                format!("return {}", ret.conversion(&underlying_function_call));
++            underlying_function_call = format!(
++                "return {}",
++                ret.conversion(&underlying_function_call, type_database)
++            );
+         };
+         let definition = format!("{} {{ {}; }}", declaration, underlying_function_call,);
+         let declaration = format!("{};", declaration);
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+index 433ba2ae..8f21cc73 100644
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -22,6 +22,7 @@ use crate::{
+     namespace_organizer::{NamespaceEntries, Use},
+     rust_name_tracker::RustNameTracker,
+     type_converter::TypeConverter,
++    type_database::TypeDatabase,
+     typedef_analyzer::analyze_typedef_target,
+     typedef_analyzer::TypedefTarget,
+     types::make_ident,
+@@ -90,16 +91,16 @@ pub(crate) struct BridgeConversionResults {
+ /// At the moment this crate takes the view that it's OK to panic
+ /// if the bindgen output is not as expected. It may be in future that
+ /// we need to be a bit more graceful, but for now, that's OK.
+-pub(crate) struct BridgeConverter {
+-    include_list: Vec<String>,
+-    pod_requests: Vec<TypeName>,
++pub(crate) struct BridgeConverter<'a> {
++    include_list: &'a Vec<String>,
++    type_database: &'a TypeDatabase,
+ }
+ 
+-impl BridgeConverter {
+-    pub fn new(include_list: Vec<String>, pod_requests: Vec<TypeName>) -> Self {
++impl<'a> BridgeConverter<'a> {
++    pub fn new(include_list: &'a Vec<String>, type_database: &'a TypeDatabase) -> Self {
+         Self {
+             include_list,
+-            pod_requests,
++            type_database,
+         }
+     }
+ 
+@@ -131,11 +132,11 @@ impl BridgeConverter {
+                     idents_found: Vec::new(),
+                     type_converter: TypeConverter::new(),
+                     byvalue_checker: ByValueChecker::new(),
+-                    pod_requests: &self.pod_requests,
+                     include_list: &self.include_list,
+                     final_uses: Vec::new(),
+                     bridge_name_tracker: BridgeNameTracker::new(),
+                     rust_name_tracker: RustNameTracker::new(),
++                    type_database: &self.type_database,
+                 };
+                 conversion.convert_items(items, exclude_utilities)
+             }
+@@ -162,8 +163,8 @@ struct BridgeConversion<'a> {
+     idents_found: Vec<Ident>,
+     type_converter: TypeConverter,
+     byvalue_checker: ByValueChecker,
+-    pod_requests: &'a Vec<TypeName>,
+     include_list: &'a Vec<String>,
++    type_database: &'a TypeDatabase,
+     final_uses: Vec<Use>,
+     bridge_name_tracker: BridgeNameTracker,
+     rust_name_tracker: RustNameTracker,
+@@ -437,7 +438,7 @@ impl<'a> BridgeConversion<'a> {
+     ) -> Result<(), ConvertError> {
+         self.find_nested_pod_types_in_mod(items, ns)?;
+         self.byvalue_checker
+-            .satisfy_requests(self.pod_requests.clone())
++            .satisfy_requests(self.type_database.get_pod_requests())
+             .map_err(ConvertError::UnsafePODType)
+     }
+ 
+@@ -448,9 +449,13 @@ impl<'a> BridgeConversion<'a> {
+     ) -> Result<(), ConvertError> {
+         let final_ident = make_ident(tyname.get_final_ident());
+         let kind_item = make_ident(if should_be_pod { "Trivial" } else { "Opaque" });
+-        let tynamestring = tyname.to_cpp_name();
+-        let mut for_extern_c_ts = if tyname.has_namespace() {
+-            let ns_string = tyname
++        let effective_type = self
++            .type_database
++            .get_effective_type(&tyname)
++            .unwrap_or(&tyname);
++        let tynamestring = effective_type.to_cpp_name();
++        let mut for_extern_c_ts = if effective_type.has_namespace() {
++            let ns_string = effective_type
+                 .ns_segment_iter()
+                 .cloned()
+                 .collect::<Vec<String>>()
+diff --git a/engine/src/function_wrapper.rs b/engine/src/function_wrapper.rs
+index 49fde3bd..3ace3f5b 100644
+--- a/engine/src/function_wrapper.rs
++++ b/engine/src/function_wrapper.rs
+@@ -1,6 +1,8 @@
+ use syn::{parse_quote, Ident, Type};
+ 
+-use crate::types::{type_to_cpp, Namespace};
++use crate::{
++    known_types::type_lacks_copy_constructor, type_database::TypeDatabase, types::Namespace,
++};
+ 
+ // Copyright 2020 Google LLC
+ //
+@@ -55,17 +57,17 @@ impl ArgumentConversion {
+         !matches!(self.conversion, ArgumentConversionType::None)
+     }
+ 
+-    pub(crate) fn unconverted_type(&self) -> String {
++    pub(crate) fn unconverted_type(&self, type_database: &TypeDatabase) -> String {
+         match self.conversion {
+-            ArgumentConversionType::FromUniquePtrToValue => self.wrapped_type(),
+-            _ => self.unwrapped_type_as_string(),
++            ArgumentConversionType::FromUniquePtrToValue => self.wrapped_type(type_database),
++            _ => self.unwrapped_type_as_string(type_database),
+         }
+     }
+ 
+-    pub(crate) fn converted_type(&self) -> String {
++    pub(crate) fn converted_type(&self, type_database: &TypeDatabase) -> String {
+         match self.conversion {
+-            ArgumentConversionType::FromValueToUniquePtr => self.wrapped_type(),
+-            _ => self.unwrapped_type_as_string(),
++            ArgumentConversionType::FromValueToUniquePtr => self.wrapped_type(type_database),
++            _ => self.unwrapped_type_as_string(type_database),
+         }
+     }
+ 
+@@ -83,23 +85,21 @@ impl ArgumentConversion {
+         }
+     }
+ 
+-    fn unwrapped_type_as_string(&self) -> String {
+-        type_to_cpp(&self.unwrapped_type)
++    fn unwrapped_type_as_string(&self, type_database: &TypeDatabase) -> String {
++        type_database.type_to_cpp(&self.unwrapped_type)
+     }
+ 
+-    fn wrapped_type(&self) -> String {
+-        format!("std::unique_ptr<{}>", self.unwrapped_type_as_string())
++    fn wrapped_type(&self, type_database: &TypeDatabase) -> String {
++        format!(
++            "std::unique_ptr<{}>",
++            self.unwrapped_type_as_string(type_database)
++        )
+     }
+ 
+-    fn type_lacks_copy_constructor(ty: &Type) -> bool {
+-        // TODO obtain this from known_types
+-        type_to_cpp(ty).starts_with("std::unique_ptr")
+-    }
+-
+-    pub(crate) fn conversion(&self, var_name: &str) -> String {
++    pub(crate) fn conversion(&self, var_name: &str, type_database: &TypeDatabase) -> String {
+         match self.conversion {
+             ArgumentConversionType::None => {
+-                if Self::type_lacks_copy_constructor(&self.unwrapped_type) {
++                if type_lacks_copy_constructor(&self.unwrapped_type) {
+                     format!("std::move({})", var_name)
+                 } else {
+                     var_name.to_string()
+@@ -108,7 +108,7 @@ impl ArgumentConversion {
+             ArgumentConversionType::FromUniquePtrToValue => format!("std::move(*{})", var_name),
+             ArgumentConversionType::FromValueToUniquePtr => format!(
+                 "std::make_unique<{}>({})",
+-                self.unconverted_type(),
++                self.unconverted_type(type_database),
+                 var_name
+             ),
+         }
+diff --git a/engine/src/known_types.rs b/engine/src/known_types.rs
+index a899cdff..7f1e8bfd 100644
+--- a/engine/src/known_types.rs
++++ b/engine/src/known_types.rs
+@@ -16,7 +16,7 @@ use crate::types::{make_ident, TypeName};
+ use indoc::indoc;
+ use lazy_static::lazy_static;
+ use std::collections::HashMap;
+-use syn::{parse_quote, TypePath};
++use syn::{parse_quote, Type, TypePath};
+ 
+ /// Whether this type should be included in the 'prelude'
+ /// passed to bindgen, and if so, how.
+@@ -267,3 +267,16 @@ pub(crate) fn special_cpp_name(rs: &TypeName) -> Option<String> {
+ pub(crate) fn is_known_type(ty: &TypeName) -> bool {
+     KNOWN_TYPES.by_rs_name.contains_key(ty)
+ }
++
++/// If a given type lacks a copy constructor, we should always use
++/// std::move in wrapper functions.
++pub(crate) fn type_lacks_copy_constructor(ty: &Type) -> bool {
++    // In future we may wish to look this up in KNOWN_TYPES.
++    match ty {
++        Type::Path(typ) => {
++            let tn = TypeName::from_type_path(typ);
++            tn.to_cpp_name().starts_with("std::unique_ptr")
++        }
++        _ => false,
++    }
++}
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+index d6ab6a29..974fbd2c 100644
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -25,6 +25,7 @@ mod parse;
+ mod rust_name_tracker;
+ mod rust_pretty_printer;
+ mod type_converter;
++mod type_database;
+ mod typedef_analyzer;
+ mod types;
+ mod unqualify;
+@@ -130,7 +131,7 @@ enum State {
+ pub struct IncludeCpp {
+     inclusions: Vec<CppInclusion>,
+     allowlist: Vec<String>, // not TypeName as it may be functions or whatever.
+-    pod_types: Vec<TypeName>,
++    type_database: TypeDatabase,
+     preconfigured_inc_dirs: Option<std::ffi::OsString>,
+     exclude_utilities: bool,
+     state: State,
+@@ -151,9 +152,9 @@ impl IncludeCpp {
+ 
+         let mut inclusions = Vec::new();
+         let mut allowlist = Vec::new();
+-        let mut pod_types = Vec::new();
+         let mut parse_only = false;
+         let mut exclude_utilities = false;
++        let mut type_database = TypeDatabase::new();
+ 
+         while !input.is_empty() {
+             if input.parse::<Option<syn::Token![#]>>()?.is_some() {
+@@ -172,8 +173,19 @@ impl IncludeCpp {
+                     let generate: syn::LitStr = args.parse()?;
+                     allowlist.push(generate.value());
+                     if ident == "generate_pod" {
+-                        pod_types.push(TypeName::new_from_user_input(&generate.value()));
++                        type_database
++                            .note_pod_request(TypeName::new_from_user_input(&generate.value()));
+                     }
++                } else if ident == "nested_type" {
++                    let args;
++                    syn::parenthesized!(args in input);
++                    let nested: syn::LitStr = args.parse()?;
++                    args.parse::<syn::Token![,]>()?;
++                    let nested_in: syn::LitStr = args.parse()?;
++                    type_database.note_nested_type(
++                        TypeName::new_from_user_input(&nested.value()),
++                        TypeName::new_from_user_input(&nested_in.value()),
++                    );
+                 } else if ident == "parse_only" {
+                     parse_only = true;
+                 } else if ident == "exclude_utilities" {
+@@ -181,7 +193,7 @@ impl IncludeCpp {
+                 } else {
+                     return Err(syn::Error::new(
+                         ident.span(),
+-                        "expected generate, generate_pod or exclude_utilities",
++                        "expected generate, generate_pod, nested_type or exclude_utilities",
+                     ));
+                 }
+             }
+@@ -193,9 +205,9 @@ impl IncludeCpp {
+         Ok(IncludeCpp {
+             inclusions,
+             allowlist,
+-            pod_types,
+             preconfigured_inc_dirs: None,
+             exclude_utilities,
++            type_database,
+             state: if parse_only {
+                 State::ParseOnly
+             } else {
+@@ -350,16 +362,15 @@ impl IncludeCpp {
+             .map_err(Error::Bindgen)?;
+         let bindings = self.parse_bindings(bindings)?;
+ 
+-        let mut converter = bridge_converter::BridgeConverter::new(
+-            self.generate_include_list(),
+-            self.pod_types.clone(), // TODO take self by value to avoid clone.
+-        );
++        let include_list = self.generate_include_list();
++        let mut converter =
++            bridge_converter::BridgeConverter::new(&include_list, &self.type_database);
+ 
+         let conversion = converter
+             .convert(bindings, self.exclude_utilities)
+             .map_err(Error::Conversion)?;
+         let mut additional_cpp_generator = AdditionalCppGenerator::new(self.build_header());
+-        additional_cpp_generator.add_needs(conversion.additional_cpp_needs);
++        additional_cpp_generator.add_needs(conversion.additional_cpp_needs, &self.type_database);
+         let mut items = conversion.items;
+         let mut new_bindings: ItemMod = parse_quote! {
+             #[allow(non_snake_case)]
+diff --git a/engine/src/types.rs b/engine/src/types.rs
+index 32cf2145..3a4258e3 100644
+--- a/engine/src/types.rs
++++ b/engine/src/types.rs
+@@ -16,7 +16,7 @@ use itertools::Itertools;
+ use proc_macro2::Span;
+ use std::fmt::Display;
+ use std::iter::Peekable;
+-use syn::{parse_quote, Ident, PathSegment, Type, TypePath};
++use syn::{parse_quote, Ident, PathSegment, TypePath};
+ 
+ use crate::known_types::is_known_type;
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+index 7d5a70f7..fbb71a78 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -238,6 +238,33 @@ macro_rules! exclude_utilities {
+     ($($tt:tt)*) => { $crate::usage!{$($tt)*} };
+ }
+ 
++/// Specify that a struct (or other type) is nested within
++/// some outer type. autocxx can't currently determine
++/// this itself; it's hoped that this is a temporary restriction
++/// and that the need for this directive will evaporate soon.
++/// Meanwhile, specify two arguments - first the path to the
++/// type without any nesting; and secondly the path with nesting.
++/// So for instance for a situation like
++/// ```cpp
++/// namespace A {
++///   struct B {
++///     struct C {
++///       uint32_t b;
++///     }
++///     uint32_t a;
++///   }
++/// ```
++/// specify
++/// `nested_type("A::C", "A::B::C")`
++///
++/// A directive to be included inside
++/// [include_cpp] - see [include_cpp] for general information.
++#[macro_export]
++macro_rules! nested_type {
++    ($($tt:tt)*) => { $crate::usage!{$($tt)*} };
++}
++
++
+ #[doc(hidden)]
+ #[macro_export]
+ macro_rules! usage {
+2026-04-17 06:57:55,296 - INFO - Grading answer for google__autocxx-129...
+2026-04-17 06:57:55,297 - INFO - report: {'google__autocxx-129': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['bridge_name_tracker::tests::test', 'byvalue_checker::tests::test_primitive_by_itself', 'byvalue_checker::tests::test_with_cxxstring', 'byvalue_checker::tests::test_primitives', 'byvalue_checker::tests::test_nested_primitives', 'byvalue_checker::tests::test_with_up', 'integration_tests::test_negative_rs_nonsense::f', 'overload_tracker::tests::test_by_function', 'namespace_organizer::tests::test_ns_entries_sort', 'overload_tracker::tests::test_by_method', 'types::tests::test_ints', 'rust_name_tracker::tests::test'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for google__autocxx-129: resolved: True
+2026-04-17 06:57:55,297 - INFO - Attempting to stop container rustb.eval.google__autocxx-129.gold_run1...
+2026-04-17 06:59:05,379 - INFO - Attempting to remove container rustb.eval.google__autocxx-129.gold_run1...
+2026-04-17 06:59:06,300 - INFO - Container rustb.eval.google__autocxx-129.gold_run1 removed.
+2026-04-17 06:59:06,300 - INFO - Attempting to remove image rustbench/google__autocxx:pr-129...
+2026-04-17 06:59:07,745 - INFO - Image rustbench/google__autocxx:pr-129 removed.

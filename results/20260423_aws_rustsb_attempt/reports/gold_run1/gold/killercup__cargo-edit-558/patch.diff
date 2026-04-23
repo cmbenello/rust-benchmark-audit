@@ -1,0 +1,282 @@
+diff --git a/Cargo.lock b/Cargo.lock
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -154,9 +154,9 @@ version = "0.8.0"
+ dependencies = [
+  "assert_cmd",
+  "assert_fs",
+- "atty",
+  "cargo_metadata",
+  "clap",
++ "concolor-control",
+  "crates-index",
+  "dirs-next",
+  "dunce",
+diff --git a/Cargo.toml b/Cargo.toml
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -49,7 +49,7 @@ path = "src/bin/set-version/main.rs"
+ required-features = ["set-version"]
+ 
+ [dependencies]
+-atty = { version = "0.2.14", optional = true }
++concolor-control = { version = "0.0.7", default-features = false }
+ cargo_metadata = "0.14.0"
+ crates-index = "0.18.1"
+ dunce = "1.0"
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -16,14 +16,15 @@ extern crate error_chain;
+ 
+ use crate::args::{Args, Command};
+ use cargo_edit::{
+-    find, manifest_from_pkgid, registry_url, update_registry_index, Dependency, LocalManifest,
++    colorize_stderr, find, manifest_from_pkgid, registry_url, update_registry_index, Dependency,
++    LocalManifest,
+ };
+ use clap::Parser;
+ use std::io::Write;
+ use std::path::Path;
+ use std::process;
+ use std::{borrow::Cow, collections::BTreeSet};
+-use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
++use termcolor::{BufferWriter, Color, ColorSpec, StandardStream, WriteColor};
+ use toml_edit::Item as TomlItem;
+ 
+ mod args;
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -69,11 +70,7 @@ mod errors {
+ use crate::errors::*;
+ 
+ fn print_msg(dep: &Dependency, section: &[String], optional: bool) -> Result<()> {
+-    let colorchoice = if atty::is(atty::Stream::Stdout) {
+-        ColorChoice::Auto
+-    } else {
+-        ColorChoice::Never
+-    };
++    let colorchoice = colorize_stderr();
+     let mut output = StandardStream::stderr(colorchoice);
+     output.set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))?;
+     write!(output, "{:>12}", "Adding")?;
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -126,7 +123,8 @@ fn is_sorted(mut it: impl Iterator<Item = impl PartialOrd>) -> bool {
+ }
+ 
+ fn unrecognized_features_message(message: &str) -> Result<()> {
+-    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
++    let colorchoice = colorize_stderr();
++    let bufwtr = BufferWriter::stderr(colorchoice);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Yellow)).set_bold(true))
+diff --git a/src/bin/rm/main.rs b/src/bin/rm/main.rs
+--- a/src/bin/rm/main.rs
++++ b/src/bin/rm/main.rs
+@@ -14,13 +14,13 @@
+ #[macro_use]
+ extern crate error_chain;
+ 
+-use cargo_edit::{manifest_from_pkgid, LocalManifest};
++use cargo_edit::{colorize_stderr, manifest_from_pkgid, LocalManifest};
+ use clap::Parser;
+ use std::borrow::Cow;
+ use std::io::Write;
+ use std::path::PathBuf;
+ use std::process;
+-use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
++use termcolor::{Color, ColorSpec, StandardStream, WriteColor};
+ 
+ mod errors {
+     error_chain! {
+diff --git a/src/bin/rm/main.rs b/src/bin/rm/main.rs
+--- a/src/bin/rm/main.rs
++++ b/src/bin/rm/main.rs
+@@ -94,11 +94,7 @@ impl Args {
+ }
+ 
+ fn print_msg(name: &str, section: &str) -> Result<()> {
+-    let colorchoice = if atty::is(atty::Stream::Stdout) {
+-        ColorChoice::Auto
+-    } else {
+-        ColorChoice::Never
+-    };
++    let colorchoice = colorize_stderr();
+     let mut output = StandardStream::stderr(colorchoice);
+     output.set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))?;
+     write!(output, "{:>12}", "Removing")?;
+diff --git a/src/bin/set-version/main.rs b/src/bin/set-version/main.rs
+--- a/src/bin/set-version/main.rs
++++ b/src/bin/set-version/main.rs
+@@ -20,10 +20,11 @@ use std::path::{Path, PathBuf};
+ use std::process;
+ 
+ use cargo_edit::{
+-    find, manifest_from_pkgid, upgrade_requirement, workspace_members, LocalManifest,
++    colorize_stderr, find, manifest_from_pkgid, upgrade_requirement, workspace_members,
++    LocalManifest,
+ };
+ use clap::Parser;
+-use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec, WriteColor};
++use termcolor::{BufferWriter, Color, ColorSpec, WriteColor};
+ 
+ mod args;
+ mod errors;
+diff --git a/src/bin/set-version/main.rs b/src/bin/set-version/main.rs
+--- a/src/bin/set-version/main.rs
++++ b/src/bin/set-version/main.rs
+@@ -209,7 +210,8 @@ impl Manifests {
+ }
+ 
+ fn dry_run_message() -> Result<()> {
+-    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
++    let colorchoice = colorize_stderr();
++    let bufwtr = BufferWriter::stderr(colorchoice);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Cyan)).set_bold(true))
+diff --git a/src/bin/set-version/main.rs b/src/bin/set-version/main.rs
+--- a/src/bin/set-version/main.rs
++++ b/src/bin/set-version/main.rs
+@@ -226,7 +228,8 @@ fn dry_run_message() -> Result<()> {
+ }
+ 
+ fn deprecated_message(message: &str) -> Result<()> {
+-    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
++    let colorchoice = colorize_stderr();
++    let bufwtr = BufferWriter::stderr(colorchoice);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true))
+diff --git a/src/bin/set-version/main.rs b/src/bin/set-version/main.rs
+--- a/src/bin/set-version/main.rs
++++ b/src/bin/set-version/main.rs
+@@ -241,7 +244,8 @@ fn deprecated_message(message: &str) -> Result<()> {
+ }
+ 
+ fn upgrade_message(name: &str, from: &semver::Version, to: &semver::Version) -> Result<()> {
+-    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
++    let colorchoice = colorize_stderr();
++    let bufwtr = BufferWriter::stderr(colorchoice);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))
+diff --git a/src/bin/set-version/main.rs b/src/bin/set-version/main.rs
+--- a/src/bin/set-version/main.rs
++++ b/src/bin/set-version/main.rs
+@@ -258,7 +262,8 @@ fn upgrade_message(name: &str, from: &semver::Version, to: &semver::Version) ->
+ }
+ 
+ fn upgrade_dependent_message(name: &str, old_req: &str, new_req: &str) -> Result<()> {
+-    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
++    let colorchoice = colorize_stderr();
++    let bufwtr = BufferWriter::stderr(colorchoice);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -141,7 +141,8 @@ fn is_version_dep(dependency: &cargo_metadata::Dependency) -> bool {
+ }
+ 
+ fn deprecated_message(message: &str) -> Result<()> {
+-    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
++    let colorchoice = colorize_stderr();
++    let bufwtr = BufferWriter::stderr(colorchoice);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true))
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -156,7 +157,8 @@ fn deprecated_message(message: &str) -> Result<()> {
+ }
+ 
+ fn dry_run_message() -> Result<()> {
+-    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
++    let colorchoice = colorize_stderr();
++    let bufwtr = BufferWriter::stderr(colorchoice);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Cyan)).set_bold(true))
+diff --git a/src/fetch.rs b/src/fetch.rs
+--- a/src/fetch.rs
++++ b/src/fetch.rs
+@@ -217,11 +217,7 @@ pub fn get_features_from_registry(
+ 
+ /// update registry index for given project
+ pub fn update_registry_index(registry: &Url, quiet: bool) -> Result<()> {
+-    let colorchoice = if atty::is(atty::Stream::Stdout) {
+-        ColorChoice::Auto
+-    } else {
+-        ColorChoice::Never
+-    };
++    let colorchoice = crate::colorize_stderr();
+     let mut output = StandardStream::stderr(colorchoice);
+ 
+     let mut index = crates_index::Index::from_url(registry.as_str())?;
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -25,6 +25,7 @@ mod fetch;
+ mod manifest;
+ mod metadata;
+ mod registry;
++mod util;
+ mod version;
+ 
+ pub use crate::crate_name::CrateName;
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -37,4 +38,5 @@ pub use crate::fetch::{
+ pub use crate::manifest::{find, LocalManifest, Manifest};
+ pub use crate::metadata::{manifest_from_pkgid, workspace_members};
+ pub use crate::registry::registry_url;
++pub use crate::util::{colorize_stderr, ColorChoice};
+ pub use crate::version::{upgrade_requirement, VersionExt};
+diff --git a/src/manifest.rs b/src/manifest.rs
+--- a/src/manifest.rs
++++ b/src/manifest.rs
+@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
+ use std::{env, str};
+ 
+ use semver::{Version, VersionReq};
+-use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec, WriteColor};
++use termcolor::{BufferWriter, Color, ColorSpec, WriteColor};
+ 
+ use crate::dependency::Dependency;
+ use crate::errors::*;
+diff --git a/src/manifest.rs b/src/manifest.rs
+--- a/src/manifest.rs
++++ b/src/manifest.rs
+@@ -529,7 +529,8 @@ fn print_upgrade_if_necessary(
+         if old_version == new_version {
+             return Ok(());
+         }
+-        let bufwtr = BufferWriter::stderr(ColorChoice::Always);
++        let colorchoice = crate::colorize_stderr();
++        let bufwtr = BufferWriter::stderr(colorchoice);
+         let mut buffer = bufwtr.buffer();
+         buffer
+             .set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))
+diff --git /dev/null b/src/util.rs
+new file mode 100644
+--- /dev/null
++++ b/src/util.rs
+@@ -0,0 +1,10 @@
++pub use termcolor::ColorChoice;
++
++/// Whether to color logged output
++pub fn colorize_stderr() -> ColorChoice {
++    if concolor_control::get(concolor_control::Stream::Stderr).color() {
++        ColorChoice::Always
++    } else {
++        ColorChoice::Never
++    }
++}

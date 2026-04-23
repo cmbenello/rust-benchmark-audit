@@ -1,0 +1,83 @@
+{
+    "rust-lang__cc-rs-1279": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "inherits_rustflags"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "target::llvm::tests::test_basic_llvm_triple_guessing",
+                    "target::tests::cannot_parse_extra",
+                    "target::tests::tier1",
+                    "tests::test_android_clang_compiler_uses_target_arg_internally",
+                    "main",
+                    "gnu_no_warnings_if_cflags",
+                    "gnu_test_parse_shell_escaped_flags",
+                    "gnu_no_warnings_if_cxxflags",
+                    "compile_intermediates",
+                    "msvc_define",
+                    "msvc_std_c",
+                    "msvc_static_crt",
+                    "msvc_opt_level_0",
+                    "msvc_smoke",
+                    "msvc_no_dash_dash",
+                    "msvc_no_static_crt",
+                    "msvc_debug",
+                    "gnu_x86_64_no_plt",
+                    "gnu_define",
+                    "gnu_warnings_into_errors",
+                    "gnu_warnings",
+                    "gnu_warnings_overridable",
+                    "gnu_std_c",
+                    "gnu_no_dash_dash",
+                    "gnu_include",
+                    "gnu_debug_fp_auto",
+                    "gnu_debug_fp",
+                    "clang_android",
+                    "gnu_opt_level_1",
+                    "gnu_compile_assembly",
+                    "gnu_set_stdlib",
+                    "gnu_extra_warnings1",
+                    "gnu_shared",
+                    "msvc_include",
+                    "gnu_extra_warnings0",
+                    "gnu_opt_level_s",
+                    "gnu_smoke",
+                    "gnu_flag_if_supported_cpp",
+                    "gnu_x86_64",
+                    "gnu_apple_darwin",
+                    "gnu_i686",
+                    "gnu_x86_64_no_pic",
+                    "gnu_debug",
+                    "gnu_debug_nofp",
+                    "gnu_aarch64_none_no_pic",
+                    "gnu_i686_pic",
+                    "gnu_flag_if_supported",
+                    "gnu_uefi_no_pic",
+                    "gnu_static",
+                    "src/lib.rs - (line 45) - compile",
+                    "src/lib.rs - (line 180) - compile",
+                    "src/lib.rs - (line 168) - compile",
+                    "src/lib.rs - (line 20) - compile",
+                    "src/lib.rs - (line 198) - compile"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

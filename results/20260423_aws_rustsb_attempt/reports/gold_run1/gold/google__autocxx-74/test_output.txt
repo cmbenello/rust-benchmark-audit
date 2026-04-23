@@ -1,0 +1,609 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/integration_tests.rs...
+Checking patch engine/src/lib.rs...
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/integration_tests.rs cleanly.
+Applied patch engine/src/lib.rs cleanly.
++ cd engine
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded cexpr v0.4.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded version_check v0.9.2 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded vec_map v0.8.2 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded ansi_term v0.11.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded which v3.1.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded cxxbridge-flags v0.5.5 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded cfg-if v1.0.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded clang-sys v1.0.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded codespan-reporting v0.9.5 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded atty v0.2.14 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded link-cplusplus v1.0.4 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded lazycell v1.3.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded itoa v0.4.6 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded thread_local v1.0.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded remove_dir_all v0.5.3 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded dunce v1.0.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded unicode-xid v0.2.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded rand_chacha v0.2.2 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded quick-error v1.2.3 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded test-env-log v0.2.2 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded peeking_take_while v0.1.2 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded cfg-if v0.1.10 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded indoc v1.0.3 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded either v1.6.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded unindent v0.1.7 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded proc-macro-error-attr v1.0.4 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded rustc-hash v1.1.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded strsim v0.8.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded shlex v0.1.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded cc v1.0.62 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded rand_core v0.5.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded libloading v0.6.5 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded proc-macro-error v1.0.4 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded tempfile v3.1.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded textwrap v0.11.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded cxxbridge-macro v0.5.5 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded unicode-width v0.1.8 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded ppv-lite86 v0.2.10 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded bitflags v1.2.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded getrandom v0.1.15 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded termcolor v1.1.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded env_logger v0.7.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded trybuild v1.0.35 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded proc-macro2 v1.0.24 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded quote v1.0.7 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded log v0.4.11 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded memchr v2.3.4 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded humantime v1.3.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded cxx-gen v0.6.2 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded toml v0.5.7 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded cxx v0.5.5 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded serde_derive v1.0.117 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded itertools v0.9.0 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded serde v1.0.117 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded aho-corasick v0.7.15 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded serde_json v1.0.59 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded rand v0.7.3 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded nom v5.1.2 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded bindgen v0.55.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded clap v2.33.3 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded syn v1.0.48 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded regex v1.4.2 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded regex-syntax v0.6.21 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded rust_info v0.3.1 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+  Downloaded libc v0.2.80 (registry `/testbed/.cargo/lts-repo-at-4865932aab`)
+   Compiling proc-macro2 v1.0.24
+   Compiling unicode-xid v0.2.1
+   Compiling libc v0.2.80
+   Compiling syn v1.0.48
+   Compiling version_check v0.9.2
+   Compiling memchr v2.3.4
+   Compiling cfg-if v0.1.10
+   Compiling cc v1.0.62
+   Compiling glob v0.3.0
+   Compiling lazy_static v1.4.0
+   Compiling unicode-width v0.1.8
+   Compiling termcolor v1.1.0
+   Compiling log v0.4.11
+   Compiling bitflags v1.2.1
+   Compiling regex-syntax v0.6.21
+   Compiling cfg-if v1.0.0
+   Compiling serde_derive v1.0.117
+   Compiling quick-error v1.2.3
+   Compiling cxxbridge-flags v0.5.5
+   Compiling getrandom v0.1.15
+   Compiling bindgen v0.55.1
+   Compiling ansi_term v0.11.0
+   Compiling serde v1.0.117
+   Compiling vec_map v0.8.2
+   Compiling strsim v0.8.0
+   Compiling rustc-hash v1.1.0
+   Compiling lazycell v1.3.0
+   Compiling ryu v1.0.5
+   Compiling peeking_take_while v0.1.2
+   Compiling shlex v0.1.1
+   Compiling either v1.6.1
+   Compiling unindent v0.1.7
+   Compiling dunce v1.0.1
+   Compiling serde_json v1.0.59
+   Compiling ppv-lite86 v0.2.10
+   Compiling trybuild v1.0.35
+   Compiling itoa v0.4.6
+   Compiling remove_dir_all v0.5.3
+   Compiling rust_info v0.3.1
+   Compiling libloading v0.6.5
+   Compiling thread_local v1.0.1
+   Compiling textwrap v0.11.0
+   Compiling humantime v1.3.0
+   Compiling itertools v0.9.0
+   Compiling indoc v1.0.3
+   Compiling codespan-reporting v0.9.5
+   Compiling aho-corasick v0.7.15
+   Compiling nom v5.1.2
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling clang-sys v1.0.1
+   Compiling link-cplusplus v1.0.4
+   Compiling cxx v0.5.5
+   Compiling quote v1.0.7
+   Compiling atty v0.2.14
+   Compiling which v3.1.1
+   Compiling clap v2.33.3
+   Compiling rand_core v0.5.1
+   Compiling rand_chacha v0.2.2
+   Compiling rand v0.7.3
+   Compiling regex v1.4.2
+   Compiling tempfile v3.1.0
+   Compiling cexpr v0.4.0
+   Compiling env_logger v0.7.1
+   Compiling cxx-gen v0.6.2
+   Compiling cxxbridge-macro v0.5.5
+   Compiling test-env-log v0.2.2
+   Compiling autocxx-engine v0.3.3 (/workspace/engine)
+   Compiling autocxx-macro v0.3.3 (/workspace/macro)
+   Compiling autocxx v0.3.3 (/workspace)
+   Compiling toml v0.5.7
+    Finished test [unoptimized + debuginfo] target(s) in 26.01s
+     Running /workspace/target/debug/deps/autocxx_engine-85e09afeef5a0c57
+
+running 69 tests
+test byvalue_checker::tests::test_primitive_by_itself ... ok
+test integration_tests::test_give_up_int::f ... ignored
+test byvalue_checker::tests::test_with_cxxstring ... ok
+test byvalue_checker::tests::test_primitives ... ok
+test byvalue_checker::tests::test_nested_primitives ... ok
+test integration_tests::test_make_up_int::f ... ignored
+test byvalue_checker::tests::test_with_up ... ok
+test integration_tests::test_method_pass_string_by_value::f ... FAILED
+test integration_tests::test_give_pod_class_by_value::f ... FAILED
+test integration_tests::test_i32_const::f ... FAILED
+test integration_tests::test_give_pod_by_value::f ... FAILED
+test integration_tests::test_define_str::f ... FAILED
+test integration_tests::test_method_pass_pod_by_up::f ... FAILED
+test integration_tests::test_define_int::f ... FAILED
+test integration_tests::test_inline_method::f ... FAILED
+test integration_tests::test_make_up::f ... FAILED
+test integration_tests::test_cycle_string_by_mut_ref::f ... FAILED
+test integration_tests::test_cycle_nonpod_with_str_by_ref::f ... FAILED
+test integration_tests::test_method_pass_pod_by_reference::f ... FAILED
+test integration_tests::test_enum_with_funcs::f ... FAILED
+test integration_tests::test_give_string_up::f ... FAILED
+test integration_tests::test_cycle_string::f ... FAILED
+test integration_tests::test_make_up_with_args::f ... FAILED
+test integration_tests::test_method_return_nonpod_by_value::f ... FAILED
+test integration_tests::test_method_pass_nonpod_by_reference::f ... FAILED
+test integration_tests::test_cycle_string_by_ref::f ... FAILED
+test integration_tests::test_give_pod_by_up::f ... FAILED
+test integration_tests::test_method_pass_nonpod_by_value::f ... FAILED
+test integration_tests::test_get_str_by_value::f ... FAILED
+test integration_tests::test_get_str_by_up::f ... FAILED
+test integration_tests::test_inline_full_pipeline::f ... FAILED
+test integration_tests::test_cycle_string_full_pipeline::f ... FAILED
+test integration_tests::test_enum_no_funcs::f ... FAILED
+test integration_tests::test_give_string_plain::f ... FAILED
+test integration_tests::test_cycle_string_up::f ... FAILED
+test integration_tests::test_method_pass_nonpod_by_up::f ... FAILED
+test integration_tests::test_method_pass_pod_by_mut_reference::f ... FAILED
+test integration_tests::test_method_pass_nonpod_by_mut_reference::f ... FAILED
+test integration_tests::test_method_pass_pod_by_value::f ... FAILED
+test integration_tests::test_method_return_string_by_value::f ... FAILED
+test integration_tests::test_negative_rs_nonsense::f ... ok
+test integration_tests::test_negative_make_nonpod::f ... FAILED
+test integration_tests::test_pass_rust_string_by_ref::f ... FAILED
+test integration_tests::test_pass_rust_str::f ... FAILED
+test integration_tests::test_ns_func::f ... FAILED
+test integration_tests::test_ns_take_struct::f ... FAILED
+test integration_tests::test_pass_rust_string_by_value::f ... FAILED
+test integration_tests::test_negative_cpp_nonsense::f ... FAILED
+test integration_tests::test_pass_string_by_value::f ... FAILED
+test integration_tests::test_ns_return_struct::f ... FAILED
+test types::tests::test_ints ... ok
+test integration_tests::test_take_i32::f ... FAILED
+test integration_tests::test_return_void::f ... FAILED
+test integration_tests::test_return_nonpod_by_value::f ... FAILED
+test integration_tests::test_pod_method::f ... FAILED
+test integration_tests::test_take_pod_by_ref::f ... FAILED
+test integration_tests::test_return_string_by_value::f ... FAILED
+test integration_tests::test_take_pod_by_value::f ... FAILED
+test integration_tests::test_take_nonpod_by_mut_ref::f ... FAILED
+test integration_tests::test_take_nonpod_by_ref::f ... FAILED
+test integration_tests::test_two_funcs_with_definition::f ... FAILED
+test integration_tests::test_two_funcs::f ... FAILED
+test integration_tests::test_return_i32::f ... FAILED
+test integration_tests::test_take_nonpod_by_value::f ... FAILED
+test integration_tests::test_pod_mut_method::f ... FAILED
+test integration_tests::test_take_pod_by_mut_ref::f ... FAILED
+test integration_tests::test_take_nested_pod_by_value::f ... FAILED
+test integration_tests::test_take_pod_class_by_value::f ... FAILED
+test integration_tests::test_multiple_classes_with_methods::f ... FAILED
+
+failures:
+
+---- integration_tests::test_method_pass_string_by_value::f stdout ----
+thread 'integration_tests::test_method_pass_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_give_pod_class_by_value::f stdout ----
+thread 'integration_tests::test_give_pod_class_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_i32_const::f stdout ----
+thread 'integration_tests::test_i32_const::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_give_pod_by_value::f stdout ----
+thread 'integration_tests::test_give_pod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_define_str::f stdout ----
+thread 'integration_tests::test_define_str::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_pass_pod_by_up::f stdout ----
+thread 'integration_tests::test_method_pass_pod_by_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_define_int::f stdout ----
+thread 'integration_tests::test_define_int::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_inline_method::f stdout ----
+thread 'integration_tests::test_inline_method::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_make_up::f stdout ----
+thread 'integration_tests::test_make_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_cycle_string_by_mut_ref::f stdout ----
+thread 'integration_tests::test_cycle_string_by_mut_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_cycle_nonpod_with_str_by_ref::f stdout ----
+thread 'integration_tests::test_cycle_nonpod_with_str_by_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_pass_pod_by_reference::f stdout ----
+thread 'integration_tests::test_method_pass_pod_by_reference::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_enum_with_funcs::f stdout ----
+thread 'integration_tests::test_enum_with_funcs::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_give_string_up::f stdout ----
+thread 'integration_tests::test_give_string_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_cycle_string::f stdout ----
+thread 'integration_tests::test_cycle_string::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_make_up_with_args::f stdout ----
+thread 'integration_tests::test_make_up_with_args::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_return_nonpod_by_value::f stdout ----
+thread 'integration_tests::test_method_return_nonpod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_pass_nonpod_by_reference::f stdout ----
+thread 'integration_tests::test_method_pass_nonpod_by_reference::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_cycle_string_by_ref::f stdout ----
+thread 'integration_tests::test_cycle_string_by_ref::f' panicked at 'Unable to find libclang: "couldn\'t find any valid shared libraries matching: [\'libclang.so\', \'libclang-*.so\', \'libclang.so.*\', \'libclang-*.so.*\'], set the `LIBCLANG_PATH` environment variable to a path where one of these files can be found (invalid: [])"', /root/.cargo/registry/src/-1abfa5f83ecf19e7/bindgen-0.55.1/src/lib.rs:1896:31
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- integration_tests::test_give_pod_by_up::f stdout ----
+thread 'integration_tests::test_give_pod_by_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_pass_nonpod_by_value::f stdout ----
+thread 'integration_tests::test_method_pass_nonpod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_get_str_by_value::f stdout ----
+thread 'integration_tests::test_get_str_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_get_str_by_up::f stdout ----
+thread 'integration_tests::test_get_str_by_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_inline_full_pipeline::f stdout ----
+cargo:rustc-env=AUTOCXX_INC=/tmp/.tmpXxgeKC:/tmp/.tmpXxgeKC/target/autocxx-build/include
+thread 'integration_tests::test_inline_full_pipeline::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_cycle_string_full_pipeline::f stdout ----
+cargo:rustc-env=AUTOCXX_INC=/tmp/.tmpBxYWU8:/tmp/.tmpBxYWU8/target/autocxx-build/include
+thread 'integration_tests::test_cycle_string_full_pipeline::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_enum_no_funcs::f stdout ----
+thread 'integration_tests::test_enum_no_funcs::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_give_string_plain::f stdout ----
+thread 'integration_tests::test_give_string_plain::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_cycle_string_up::f stdout ----
+thread 'integration_tests::test_cycle_string_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_pass_nonpod_by_up::f stdout ----
+thread 'integration_tests::test_method_pass_nonpod_by_up::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_pass_pod_by_mut_reference::f stdout ----
+thread 'integration_tests::test_method_pass_pod_by_mut_reference::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_pass_nonpod_by_mut_reference::f stdout ----
+thread 'integration_tests::test_method_pass_nonpod_by_mut_reference::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_pass_pod_by_value::f stdout ----
+thread 'integration_tests::test_method_pass_pod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_method_return_string_by_value::f stdout ----
+thread 'integration_tests::test_method_return_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_negative_make_nonpod::f stdout ----
+thread 'integration_tests::test_negative_make_nonpod::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_pass_rust_string_by_ref::f stdout ----
+thread 'integration_tests::test_pass_rust_string_by_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_pass_rust_str::f stdout ----
+thread 'integration_tests::test_pass_rust_str::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_ns_func::f stdout ----
+thread 'integration_tests::test_ns_func::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_ns_take_struct::f stdout ----
+thread 'integration_tests::test_ns_take_struct::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_pass_rust_string_by_value::f stdout ----
+thread 'integration_tests::test_pass_rust_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_negative_cpp_nonsense::f stdout ----
+thread 'integration_tests::test_negative_cpp_nonsense::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_pass_string_by_value::f stdout ----
+thread 'integration_tests::test_pass_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_ns_return_struct::f stdout ----
+thread 'integration_tests::test_ns_return_struct::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_take_i32::f stdout ----
+thread 'integration_tests::test_take_i32::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_return_void::f stdout ----
+thread 'integration_tests::test_return_void::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_return_nonpod_by_value::f stdout ----
+thread 'integration_tests::test_return_nonpod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_pod_method::f stdout ----
+thread 'integration_tests::test_pod_method::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_take_pod_by_ref::f stdout ----
+thread 'integration_tests::test_take_pod_by_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_return_string_by_value::f stdout ----
+thread 'integration_tests::test_return_string_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_take_pod_by_value::f stdout ----
+thread 'integration_tests::test_take_pod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_take_nonpod_by_mut_ref::f stdout ----
+thread 'integration_tests::test_take_nonpod_by_mut_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_take_nonpod_by_ref::f stdout ----
+thread 'integration_tests::test_take_nonpod_by_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_two_funcs_with_definition::f stdout ----
+Here
+thread 'integration_tests::test_two_funcs_with_definition::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_two_funcs::f stdout ----
+thread 'integration_tests::test_two_funcs::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_return_i32::f stdout ----
+thread 'integration_tests::test_return_i32::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_take_nonpod_by_value::f stdout ----
+thread 'integration_tests::test_take_nonpod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_pod_mut_method::f stdout ----
+thread 'integration_tests::test_pod_mut_method::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_take_pod_by_mut_ref::f stdout ----
+thread 'integration_tests::test_take_pod_by_mut_ref::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_take_nested_pod_by_value::f stdout ----
+thread 'integration_tests::test_take_nested_pod_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_take_pod_class_by_value::f stdout ----
+thread 'integration_tests::test_take_pod_class_by_value::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+---- integration_tests::test_multiple_classes_with_methods::f stdout ----
+cargo:rustc-env=AUTOCXX_INC=/tmp/.tmpleMCgr:/tmp/.tmpleMCgr/target/autocxx-build/include
+thread 'integration_tests::test_multiple_classes_with_methods::f' panicked at 'Once instance has previously been poisoned', library/std/src/sync/once.rs:396:21
+
+
+failures:
+    integration_tests::test_cycle_nonpod_with_str_by_ref::f
+    integration_tests::test_cycle_string::f
+    integration_tests::test_cycle_string_by_mut_ref::f
+    integration_tests::test_cycle_string_by_ref::f
+    integration_tests::test_cycle_string_full_pipeline::f
+    integration_tests::test_cycle_string_up::f
+    integration_tests::test_define_int::f
+    integration_tests::test_define_str::f
+    integration_tests::test_enum_no_funcs::f
+    integration_tests::test_enum_with_funcs::f
+    integration_tests::test_get_str_by_up::f
+    integration_tests::test_get_str_by_value::f
+    integration_tests::test_give_pod_by_up::f
+    integration_tests::test_give_pod_by_value::f
+    integration_tests::test_give_pod_class_by_value::f
+    integration_tests::test_give_string_plain::f
+    integration_tests::test_give_string_up::f
+    integration_tests::test_i32_const::f
+    integration_tests::test_inline_full_pipeline::f
+    integration_tests::test_inline_method::f
+    integration_tests::test_make_up::f
+    integration_tests::test_make_up_with_args::f
+    integration_tests::test_method_pass_nonpod_by_mut_reference::f
+    integration_tests::test_method_pass_nonpod_by_reference::f
+    integration_tests::test_method_pass_nonpod_by_up::f
+    integration_tests::test_method_pass_nonpod_by_value::f
+    integration_tests::test_method_pass_pod_by_mut_reference::f
+    integration_tests::test_method_pass_pod_by_reference::f
+    integration_tests::test_method_pass_pod_by_up::f
+    integration_tests::test_method_pass_pod_by_value::f
+    integration_tests::test_method_pass_string_by_value::f
+    integration_tests::test_method_return_nonpod_by_value::f
+    integration_tests::test_method_return_string_by_value::f
+    integration_tests::test_multiple_classes_with_methods::f
+    integration_tests::test_negative_cpp_nonsense::f
+    integration_tests::test_negative_make_nonpod::f
+    integration_tests::test_ns_func::f
+    integration_tests::test_ns_return_struct::f
+    integration_tests::test_ns_take_struct::f
+    integration_tests::test_pass_rust_str::f
+    integration_tests::test_pass_rust_string_by_ref::f
+    integration_tests::test_pass_rust_string_by_value::f
+    integration_tests::test_pass_string_by_value::f
+    integration_tests::test_pod_method::f
+    integration_tests::test_pod_mut_method::f
+    integration_tests::test_return_i32::f
+    integration_tests::test_return_nonpod_by_value::f
+    integration_tests::test_return_string_by_value::f
+    integration_tests::test_return_void::f
+    integration_tests::test_take_i32::f
+    integration_tests::test_take_nested_pod_by_value::f
+    integration_tests::test_take_nonpod_by_mut_ref::f
+    integration_tests::test_take_nonpod_by_ref::f
+    integration_tests::test_take_nonpod_by_value::f
+    integration_tests::test_take_pod_by_mut_ref::f
+    integration_tests::test_take_pod_by_ref::f
+    integration_tests::test_take_pod_by_value::f
+    integration_tests::test_take_pod_class_by_value::f
+    integration_tests::test_two_funcs::f
+    integration_tests::test_two_funcs_with_definition::f
+
+test result: FAILED. 7 passed; 60 failed; 2 ignored; 0 measured; 0 filtered out
+
+   Doc-tests autocxx-engine
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
++ cd ../
++ git reset --hard e93e85e61116ce5f0c1e18c69020ab1eca5704fd
+HEAD is now at e93e85e6 Merge pull request #73 from google/macro-new-syntax
++ git clean -fd
+Removing .cargo/
+Removing dev/

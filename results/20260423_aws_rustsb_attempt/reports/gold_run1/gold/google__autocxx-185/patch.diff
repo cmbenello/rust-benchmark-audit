@@ -1,0 +1,352 @@
+diff --git a/engine/src/byvalue_scanner.rs b/engine/src/byvalue_scanner.rs
+--- a/engine/src/byvalue_scanner.rs
++++ b/engine/src/byvalue_scanner.rs
+@@ -13,12 +13,11 @@
+ // limitations under the License.
+ 
+ use autocxx_parser::TypeDatabase;
+-use syn::Item;
++use syn::{Item, Type, TypePath};
+ 
+ use crate::{
+-    byvalue_checker::ByValueChecker, conversion::ConvertError,
+-    typedef_analyzer::analyze_typedef_target, typedef_analyzer::TypedefTarget, types::Namespace,
+-    types::TypeName,
++    byvalue_checker::ByValueChecker, conversion::ConvertError, known_types::KNOWN_TYPES,
++    types::Namespace, types::TypeName,
+ };
+ 
+ struct ByValueScanner<'a> {
+diff --git a/engine/src/byvalue_scanner.rs b/engine/src/byvalue_scanner.rs
+--- a/engine/src/byvalue_scanner.rs
++++ b/engine/src/byvalue_scanner.rs
+@@ -51,15 +50,13 @@ impl<'a> ByValueScanner<'a> {
+                     .byvalue_checker
+                     .ingest_pod_type(TypeName::new(&ns, &e.ident.to_string())),
+                 Item::Type(ity) => {
+-                    let typedef_type = analyze_typedef_target(ity.ty.as_ref());
+                     let name = TypeName::new(ns, &ity.ident.to_string());
+-                    match typedef_type {
+-                        TypedefTarget::NoArguments(tn) => {
+-                            self.byvalue_checker.ingest_simple_typedef(name, tn)
+-                        }
+-                        TypedefTarget::HasArguments | TypedefTarget::SomethingComplex => {
+-                            self.byvalue_checker.ingest_nonpod_type(name)
+-                        }
++                    let typedef_type = Self::analyze_typedef_target(ity.ty.as_ref());
++                    match &typedef_type {
++                        Some(typ) => self
++                            .byvalue_checker
++                            .ingest_simple_typedef(name, TypeName::from_type_path(&typ)),
++                        None => self.byvalue_checker.ingest_nonpod_type(name),
+                     }
+                 }
+                 Item::Mod(itm) => {
+diff --git a/engine/src/byvalue_scanner.rs b/engine/src/byvalue_scanner.rs
+--- a/engine/src/byvalue_scanner.rs
++++ b/engine/src/byvalue_scanner.rs
+@@ -74,6 +71,13 @@ impl<'a> ByValueScanner<'a> {
+         Ok(())
+     }
+ 
++    fn analyze_typedef_target(ty: &Type) -> Option<TypePath> {
++        match ty {
++            Type::Path(typ) => KNOWN_TYPES.known_type_substitute_path(&typ),
++            _ => None,
++        }
++    }
++
+     fn find_nested_pod_types(&mut self, items: &[Item]) -> Result<(), ConvertError> {
+         self.find_nested_pod_types_in_mod(items, &Namespace::new())?;
+         let pod_requests = self
+diff --git a/engine/src/conversion/api.rs b/engine/src/conversion/api.rs
+--- a/engine/src/conversion/api.rs
++++ b/engine/src/conversion/api.rs
+@@ -33,6 +33,7 @@ pub enum ConvertError {
+     UnexpectedThisType(Namespace, String),
+     UnsupportedBuiltInType(TypeName),
+     VirtualThisType(Namespace, String),
++    ConflictingTemplatedArgsWithTypedef(TypeName),
+ }
+ 
+ impl Display for ConvertError {
+diff --git a/engine/src/conversion/api.rs b/engine/src/conversion/api.rs
+--- a/engine/src/conversion/api.rs
++++ b/engine/src/conversion/api.rs
+@@ -47,6 +48,7 @@ impl Display for ConvertError {
+             ConvertError::UnexpectedThisType(ns, fn_name) => write!(f, "Unexpected type for 'this' in the function {}{}.", fn_name, ns.to_display_suffix())?,
+             ConvertError::UnsupportedBuiltInType(ty) => write!(f, "autocxx does not yet know how to support the built-in C++ type {} - please raise an issue on github", ty.to_cpp_name())?,
+             ConvertError::VirtualThisType(ns, fn_name) => write!(f, "Member function encountered where the 'this' type is 'void*'. This is usually because it's a virtual function that may be overridden, which is not supported. Function {}{}.", fn_name, ns.to_display_suffix())?,
++            ConvertError::ConflictingTemplatedArgsWithTypedef(tn) => write!(f, "Type {} has templatd arguments and so does the typedef to which it points", tn)?,
+         }
+         Ok(())
+     }
+diff --git a/engine/src/conversion/parse/parse_bindgen.rs b/engine/src/conversion/parse/parse_bindgen.rs
+--- a/engine/src/conversion/parse/parse_bindgen.rs
++++ b/engine/src/conversion/parse/parse_bindgen.rs
+@@ -188,9 +188,11 @@ impl<'a> ParseBindgen<'a> {
+                         impl_entry: None,
+                     });
+                 }
+-                Item::Type(ity) => {
++                Item::Type(mut ity) => {
+                     let tyname = TypeName::new(&ns, &ity.ident.to_string());
+-                    self.type_converter.insert_typedef(tyname, ity.ty.as_ref());
++                    let final_type = self.type_converter.convert_type(*ity.ty, &ns)?;
++                    ity.ty = Box::new(final_type.ty.clone());
++                    self.type_converter.insert_typedef(tyname, final_type.ty);
+                     self.add_api(Api {
+                         id: ity.ident.clone(),
+                         ns: ns.clone(),
+diff --git a/engine/src/conversion/parse/parse_bindgen.rs b/engine/src/conversion/parse/parse_bindgen.rs
+--- a/engine/src/conversion/parse/parse_bindgen.rs
++++ b/engine/src/conversion/parse/parse_bindgen.rs
+@@ -198,7 +200,7 @@ impl<'a> ParseBindgen<'a> {
+                         extern_c_mod_item: None,
+                         global_items: Vec::new(),
+                         additional_cpp: None,
+-                        deps: HashSet::new(),
++                        deps: final_type.types_encountered,
+                         use_stmt: Use::Unused,
+                         id_for_allowlist: None,
+                         bindgen_mod_item: Some(Item::Type(ity)),
+diff --git a/engine/src/conversion/parse/type_converter.rs b/engine/src/conversion/parse/type_converter.rs
+--- a/engine/src/conversion/parse/type_converter.rs
++++ b/engine/src/conversion/parse/type_converter.rs
+@@ -12,7 +12,6 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-use crate::typedef_analyzer::{analyze_typedef_target, TypedefTarget};
+ use crate::{
+     additional_cpp_generator::AdditionalNeed,
+     conversion::{
+diff --git a/engine/src/conversion/parse/type_converter.rs b/engine/src/conversion/parse/type_converter.rs
+--- a/engine/src/conversion/parse/type_converter.rs
++++ b/engine/src/conversion/parse/type_converter.rs
+@@ -60,7 +59,7 @@ impl<T> Annotated<T> {
+ 
+ pub(crate) struct TypeConverter {
+     types_found: Vec<TypeName>,
+-    typedefs: HashMap<TypeName, TypedefTarget>,
++    typedefs: HashMap<TypeName, Type>,
+     concrete_templates: HashMap<String, TypeName>,
+ }
+ 
+diff --git a/engine/src/conversion/parse/type_converter.rs b/engine/src/conversion/parse/type_converter.rs
+--- a/engine/src/conversion/parse/type_converter.rs
++++ b/engine/src/conversion/parse/type_converter.rs
+@@ -77,8 +76,7 @@ impl TypeConverter {
+         self.types_found.push(ty);
+     }
+ 
+-    pub(crate) fn insert_typedef(&mut self, id: TypeName, ty: &Type) {
+-        let target = analyze_typedef_target(ty);
++    pub(crate) fn insert_typedef(&mut self, id: TypeName, target: Type) {
+         self.typedefs.insert(id, target);
+     }
+ 
+diff --git a/engine/src/conversion/parse/type_converter.rs b/engine/src/conversion/parse/type_converter.rs
+--- a/engine/src/conversion/parse/type_converter.rs
++++ b/engine/src/conversion/parse/type_converter.rs
+@@ -98,20 +96,24 @@ impl TypeConverter {
+         let result = match ty {
+             Type::Path(p) => {
+                 let newp = self.convert_type_path(p, ns)?;
+-                // Special handling because rust_Str (as emitted by bindgen)
+-                // doesn't simply get renamed to a different type _identifier_.
+-                // This plain type-by-value (as far as bindgen is concerned)
+-                // is actually a &str.
+-                if KNOWN_TYPES.should_dereference_in_cpp(&newp.ty) {
+-                    Annotated::new(
+-                        Type::Reference(parse_quote! {
+-                            &str
+-                        }),
+-                        newp.types_encountered,
+-                        newp.extra_apis,
+-                    )
++                if let Type::Path(newpp) = &newp.ty {
++                    // Special handling because rust_Str (as emitted by bindgen)
++                    // doesn't simply get renamed to a different type _identifier_.
++                    // This plain type-by-value (as far as bindgen is concerned)
++                    // is actually a &str.
++                    if KNOWN_TYPES.should_dereference_in_cpp(newpp) {
++                        Annotated::new(
++                            Type::Reference(parse_quote! {
++                                &str
++                            }),
++                            newp.types_encountered,
++                            newp.extra_apis,
++                        )
++                    } else {
++                        newp
++                    }
+                 } else {
+-                    newp.map(Type::Path)
++                    newp
+                 }
+             }
+             Type::Reference(mut r) => {
+diff --git a/engine/src/conversion/parse/type_converter.rs b/engine/src/conversion/parse/type_converter.rs
+--- a/engine/src/conversion/parse/type_converter.rs
++++ b/engine/src/conversion/parse/type_converter.rs
+@@ -133,7 +135,7 @@ impl TypeConverter {
+         &mut self,
+         mut typ: TypePath,
+         ns: &Namespace,
+-    ) -> Result<Annotated<TypePath>, ConvertError> {
++    ) -> Result<Annotated<Type>, ConvertError> {
+         let mut types_encountered = HashSet::new();
+         if typ.path.segments.iter().next().unwrap().ident != "root" {
+             let ty = TypeName::from_type_path(&typ);
+diff --git a/engine/src/conversion/parse/type_converter.rs b/engine/src/conversion/parse/type_converter.rs
+--- a/engine/src/conversion/parse/type_converter.rs
++++ b/engine/src/conversion/parse/type_converter.rs
+@@ -178,27 +180,26 @@ impl TypeConverter {
+             })
+             .collect::<Result<_, _>>()?;
+ 
+-        let mut last_seg_args = None;
+-        let mut seg_iter = typ.path.segments.iter().peekable();
+-        while let Some(seg) = seg_iter.next() {
+-            if !seg.arguments.is_empty() {
+-                if seg_iter.peek().is_some() {
+-                    panic!("Did not expect bindgen to create a type with path arguments on a non-final segment")
+-                } else {
+-                    last_seg_args = Some(seg.arguments.clone());
+-                }
+-            }
+-        }
+-        drop(seg_iter);
+-        let tn = TypeName::from_type_path(&typ);
++        let mut last_seg_args = Self::get_last_segment_args(&typ);
++
++        let mut tn = TypeName::from_type_path(&typ);
+         types_encountered.insert(tn.clone());
+         // Let's see if this is a typedef.
+-        let typ = match self.resolve_typedef(&tn)? {
++        let typ = match self.resolve_typedef(&tn) {
+             None => typ,
+-            Some(resolved_tn) => {
+-                types_encountered.insert(resolved_tn.clone());
+-                resolved_tn.to_type_path()
++            Some(Type::Path(resolved_tp)) => {
++                types_encountered.insert(TypeName::from_type_path(&resolved_tp));
++                let typedef_target_args = Self::get_last_segment_args(&resolved_tp);
++                if let Some(typedef_target_args) = typedef_target_args {
++                    if last_seg_args.is_some() {
++                        return Err(ConvertError::ConflictingTemplatedArgsWithTypedef(tn));
++                    }
++                    last_seg_args = Some(typedef_target_args);
++                    tn = TypeName::from_type_path(&resolved_tp);
++                }
++                resolved_tp.clone()
+             }
++            Some(other) => return Ok(Annotated::new(other.clone(), HashSet::new(), Vec::new())),
+         };
+ 
+         // This will strip off any path arguments...
+diff --git a/engine/src/conversion/parse/type_converter.rs b/engine/src/conversion/parse/type_converter.rs
+--- a/engine/src/conversion/parse/type_converter.rs
++++ b/engine/src/conversion/parse/type_converter.rs
+@@ -220,7 +221,25 @@ impl TypeConverter {
+                 types_encountered.insert(new_tn);
+             }
+         }
+-        Ok(Annotated::new(typ, types_encountered, extra_apis))
++        Ok(Annotated::new(
++            Type::Path(typ),
++            types_encountered,
++            extra_apis,
++        ))
++    }
++
++    fn get_last_segment_args(typ: &TypePath) -> Option<PathArguments> {
++        let mut seg_iter = typ.path.segments.iter().peekable();
++        while let Some(seg) = seg_iter.next() {
++            if !seg.arguments.is_empty() {
++                if seg_iter.peek().is_some() {
++                    panic!("Did not expect bindgen to create a type with path arguments on a non-final segment")
++                } else {
++                    return Some(seg.arguments.clone());
++                }
++            }
++        }
++        None
+     }
+ 
+     fn convert_punctuated<P>(
+diff --git a/engine/src/conversion/parse/type_converter.rs b/engine/src/conversion/parse/type_converter.rs
+--- a/engine/src/conversion/parse/type_converter.rs
++++ b/engine/src/conversion/parse/type_converter.rs
+@@ -248,20 +267,14 @@ impl TypeConverter {
+         Ok(Annotated::new(new_pun, types_encountered, extra_apis))
+     }
+ 
+-    fn resolve_typedef<'b>(
+-        &'b self,
+-        tn: &'b TypeName,
+-    ) -> Result<Option<&'b TypeName>, ConvertError> {
+-        match self.typedefs.get(&tn) {
+-            None => Ok(None),
+-            Some(TypedefTarget::NoArguments(original_tn)) => {
+-                match self.resolve_typedef(original_tn)? {
+-                    None => Ok(Some(original_tn)),
+-                    Some(further_resolution) => Ok(Some(further_resolution)),
+-                }
++    fn resolve_typedef<'b>(&'b self, tn: &TypeName) -> Option<&'b Type> {
++        self.typedefs.get(&tn).and_then(|resolution| match resolution {
++            Type::Path(typ) => {
++                let tn = TypeName::from_type_path(typ);
++                Some(self.resolve_typedef(&tn).unwrap_or(resolution))
+             }
+-            _ => Err(ConvertError::ComplexTypedefTarget(tn.to_cpp_name())),
+-        }
++            _ => Some(resolution),
++        })
+     }
+ 
+     fn convert_ptr_to_reference(
+diff --git a/engine/src/typedef_analyzer.rs /dev/null
+--- a/engine/src/typedef_analyzer.rs
++++ /dev/null
+@@ -1,39 +0,0 @@
+-use syn::Type;
+-
+-use crate::types::TypeName;
+-
+-// Copyright 2020 Google LLC
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//    https://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
+-
+-/// Analysis of a typedef.
+-#[derive(Debug)]
+-pub(crate) enum TypedefTarget {
+-    NoArguments(TypeName),
+-    HasArguments,
+-    SomethingComplex,
+-}
+-
+-pub(crate) fn analyze_typedef_target(ty: &Type) -> TypedefTarget {
+-    match ty {
+-        Type::Path(typ) => {
+-            let seg = typ.path.segments.last().unwrap();
+-            if seg.arguments.is_empty() {
+-                TypedefTarget::NoArguments(TypeName::from_type_path(typ))
+-            } else {
+-                TypedefTarget::HasArguments
+-            }
+-        }
+-        _ => TypedefTarget::SomethingComplex,
+-    }
+-}

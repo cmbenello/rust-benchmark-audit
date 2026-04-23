@@ -1,0 +1,289 @@
+diff --git a/docs.md b/docs.md
+--- a/docs.md
++++ b/docs.md
+@@ -335,7 +348,6 @@ Given configuration in the cbindgen.toml, `cbindgen` can generate these attribut
+ 
+ This is controlled by the `swift_name_macro` option in the cbindgen.toml.
+ 
+-
+ ## cbindgen.toml
+ 
+ Most configuration happens through your cbindgen.toml file. Every value has a default (that is usually reasonable), so you can start with an empty cbindgen.toml and tweak it until you like the output you're getting.
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -2,6 +2,7 @@
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
++use std::collections::hash_map::Entry;
+ use std::collections::{HashMap, HashSet};
+ use std::fs::File;
+ use std::io::Read;
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -17,7 +18,7 @@ use crate::bindgen::ir::{
+     AnnotationSet, Cfg, Constant, Documentation, Enum, Function, GenericParams, ItemMap,
+     OpaqueItem, Path, Static, Struct, Type, Typedef, Union,
+ };
+-use crate::bindgen::utilities::{SynAbiHelpers, SynItemFnHelpers, SynItemHelpers};
++use crate::bindgen::utilities::{SynAbiHelpers, SynAttributeHelpers, SynItemFnHelpers};
+ 
+ const STD_CRATES: &[&str] = &[
+     "std",
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -178,7 +179,7 @@ impl<'a> Parser<'a> {
+             return Ok(());
+         }
+ 
+-        let mod_parsed = {
++        let mod_items = {
+             if !self.cache_expanded_crate.contains_key(&pkg.name) {
+                 let s = self
+                     .lib
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -245,15 +212,14 @@ impl<'a> Parser<'a> {
+         mod_path: &FilePath,
+         depth: usize,
+     ) -> Result<(), Error> {
+-        let mod_parsed = {
+-            let owned_mod_path = mod_path.to_path_buf();
+-
+-            if !self.cache_src.contains_key(&owned_mod_path) {
++        let mod_items = match self.cache_src.entry(mod_path.to_path_buf()) {
++            Entry::Vacant(vacant_entry) => {
+                 let mut s = String::new();
+                 let mut f = File::open(mod_path).map_err(|_| Error::ParseCannotOpenFile {
+                     crate_name: pkg.name.clone(),
+                     src_path: mod_path.to_str().unwrap().to_owned(),
+                 })?;
++
+                 f.read_to_string(&mut s)
+                     .map_err(|_| Error::ParseCannotOpenFile {
+                         crate_name: pkg.name.clone(),
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -262,14 +228,13 @@ impl<'a> Parser<'a> {
+ 
+                 let i = syn::parse_file(&s).map_err(|x| Error::ParseSyntaxError {
+                     crate_name: pkg.name.clone(),
+-                    src_path: owned_mod_path.to_string_lossy().into(),
++                    src_path: mod_path.to_string_lossy().into(),
+                     error: x,
+                 })?;
+ 
+-                self.cache_src.insert(owned_mod_path.clone(), i.items);
++                vacant_entry.insert(i.items).clone()
+             }
+-
+-            self.cache_src.get(&owned_mod_path).unwrap().clone()
++            Entry::Occupied(occupied_entry) => occupied_entry.get().clone(),
+         };
+ 
+         // Compute module directory according to Rust 2018 rules
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -285,17 +250,20 @@ impl<'a> Parser<'a> {
+             &mod_dir_2018
+         };
+ 
+-        self.process_mod(pkg, &mod_dir, &mod_parsed, depth)
++        self.process_mod(pkg, Some(&mod_dir), &mod_items, depth)
+     }
+ 
++    /// `mod_dir` is the path to the current directory of the module. It may be
++    /// `None` for pre-expanded modules.
+     fn process_mod(
+         &mut self,
+         pkg: &PackageRef,
+-        mod_dir: &FilePath,
++        mod_dir: Option<&FilePath>,
+         items: &[syn::Item],
+         depth: usize,
+     ) -> Result<(), Error> {
+-        self.out.load_syn_crate_mod(
++        // We process the items first then the nested modules.
++        let nested_modules = self.out.load_syn_crate_mod(
+             &self.config,
+             &self.binding_crate_name,
+             &pkg.name,
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -343,25 +312,30 @@ impl<'a> Parser<'a> {
+                                         break;
+                                     }
+                                     _ => (),
+-                                },
+-                                _ => (),
++                                }
+                             }
++                            _ => (),
+                         }
++                    }
+ 
+-                        // This should be an error, but it's common enough to
+-                        // just elicit a warning
+-                        if !path_attr_found {
+-                            warn!(
+-                                "Parsing crate `{}`: can't find mod {}`.",
+-                                pkg.name, next_mod_name
+-                            );
+-                        }
++                    // This should be an error, but it's common enough to
++                    // just elicit a warning
++                    if !path_attr_found {
++                        warn!(
++                            "Parsing crate `{}`: can't find mod {}`.",
++                            pkg.name, next_mod_name
++                        );
+                     }
+                 }
++            } else {
++                warn!(
++                    "Parsing expanded crate `{}`: can't find mod {}`.",
++                    pkg.name, next_mod_name
++                );
++            }
+ 
+-                if cfg.is_some() {
+-                    self.cfg_stack.pop();
+-                }
++            if cfg.is_some() {
++                self.cfg_stack.pop();
+             }
+         }
+ 
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -511,6 +486,9 @@ impl Parse {
+                 syn::Item::Macro(ref item) => {
+                     self.load_builtin_macro(config, crate_name, mod_cfg, item)
+                 }
++                syn::Item::Mod(ref item) => {
++                    nested_modules.push(item);
++                }
+                 _ => {}
+             }
+         }
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -518,6 +496,8 @@ impl Parse {
+         for item_impl in impls_with_assoc_consts {
+             self.load_syn_assoc_consts_from_impl(crate_name, mod_cfg, item_impl)
+         }
++
++        nested_modules
+     }
+ 
+     fn load_syn_assoc_consts_from_impl(
+diff --git a/src/bindgen/utilities.rs b/src/bindgen/utilities.rs
+--- a/src/bindgen/utilities.rs
++++ b/src/bindgen/utilities.rs
+@@ -39,7 +39,7 @@ pub fn find_first_some<T>(slice: &[Option<T>]) -> Option<&T> {
+     None
+ }
+ 
+-pub trait SynItemFnHelpers: SynItemHelpers {
++pub trait SynItemFnHelpers: SynAttributeHelpers {
+     fn exported_name(&self) -> Option<String>;
+ }
+ 
+diff --git a/src/bindgen/utilities.rs b/src/bindgen/utilities.rs
+--- a/src/bindgen/utilities.rs
++++ b/src/bindgen/utilities.rs
+@@ -202,83 +287,9 @@ impl SynAbiHelpers for syn::Abi {
+     }
+ }
+ 
+-pub trait SynAttributeHelpers {
+-    fn get_comment_lines(&self) -> Vec<String>;
+-    fn has_attr_word(&self, name: &str) -> bool;
+-    fn has_attr_list(&self, name: &str, args: &[&str]) -> bool;
+-    fn attr_name_value_lookup(&self, name: &str) -> Option<String>;
+-}
+-
+ impl SynAttributeHelpers for [syn::Attribute] {
+-    fn has_attr_word(&self, name: &str) -> bool {
+-        self.iter().filter_map(|x| x.parse_meta().ok()).any(|attr| {
+-            if let syn::Meta::Path(ref path) = attr {
+-                path.is_ident(name)
+-            } else {
+-                false
+-            }
+-        })
+-    }
+-
+-    fn has_attr_list(&self, name: &str, args: &[&str]) -> bool {
+-        self.iter().filter_map(|x| x.parse_meta().ok()).any(|attr| {
+-            if let syn::Meta::List(syn::MetaList { path, nested, .. }) = attr {
+-                if !path.is_ident(name) {
+-                    return false;
+-                }
+-                args.iter().all(|arg| {
+-                    nested.iter().any(|nested_meta| {
+-                        if let syn::NestedMeta::Meta(syn::Meta::Path(path)) = nested_meta {
+-                            path.is_ident(arg)
+-                        } else {
+-                            false
+-                        }
+-                    })
+-                })
+-            } else {
+-                false
+-            }
+-        })
+-    }
+-
+-    fn attr_name_value_lookup(&self, name: &str) -> Option<String> {
+-        self.iter()
+-            .filter_map(|attr| {
+-                let attr = attr.parse_meta().ok()?;
+-                if let syn::Meta::NameValue(syn::MetaNameValue {
+-                    path,
+-                    lit: syn::Lit::Str(lit),
+-                    ..
+-                }) = attr
+-                {
+-                    if path.is_ident(name) {
+-                        return Some(lit.value());
+-                    }
+-                }
+-                None
+-            })
+-            .next()
+-    }
+-
+-    fn get_comment_lines(&self) -> Vec<String> {
+-        let mut comment = Vec::new();
+-
+-        for attr in self {
+-            if attr.style == syn::AttrStyle::Outer {
+-                if let Ok(syn::Meta::NameValue(syn::MetaNameValue {
+-                    path,
+-                    lit: syn::Lit::Str(content),
+-                    ..
+-                })) = attr.parse_meta()
+-                {
+-                    if path.is_ident("doc") {
+-                        comment.extend(split_doc_attr(&content.value()));
+-                    }
+-                }
+-            }
+-        }
+-
+-        comment
++    fn attrs(&self) -> &[syn::Attribute] {
++        self
+     }
+ }
+ 

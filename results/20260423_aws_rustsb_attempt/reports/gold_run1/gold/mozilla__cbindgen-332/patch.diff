@@ -1,0 +1,477 @@
+diff --git a/src/bindgen/cargo/cargo.rs b/src/bindgen/cargo/cargo.rs
+--- a/src/bindgen/cargo/cargo.rs
++++ b/src/bindgen/cargo/cargo.rs
+@@ -6,9 +6,11 @@ use std::path::{Path, PathBuf};
+ 
+ use bindgen::cargo::cargo_expand;
+ use bindgen::cargo::cargo_lock::{self, Lock};
++pub(crate) use bindgen::cargo::cargo_metadata::PackageRef;
+ use bindgen::cargo::cargo_metadata::{self, Metadata};
+ use bindgen::cargo::cargo_toml;
+ use bindgen::error::Error;
++use bindgen::ir::Cfg;
+ 
+ /// Parse a dependency string used in Cargo.lock
+ fn parse_dep_string(dep_string: &str) -> (&str, &str) {
+diff --git a/src/bindgen/cargo/cargo.rs b/src/bindgen/cargo/cargo.rs
+--- a/src/bindgen/cargo/cargo.rs
++++ b/src/bindgen/cargo/cargo.rs
+@@ -17,12 +19,6 @@ fn parse_dep_string(dep_string: &str) -> (&str, &str) {
+     (split[0], split[1])
+ }
+ 
+-/// A reference to a package including it's name and the specific version.
+-pub(crate) struct PackageRef {
+-    pub name: String,
+-    pub version: String,
+-}
+-
+ /// A collection of metadata for a library from cargo.
+ #[derive(Clone, Debug)]
+ pub(crate) struct Cargo {
+diff --git a/src/bindgen/cargo/cargo.rs b/src/bindgen/cargo/cargo.rs
+--- a/src/bindgen/cargo/cargo.rs
++++ b/src/bindgen/cargo/cargo.rs
+@@ -88,86 +84,62 @@ impl Cargo {
+         self.find_pkg_ref(&self.binding_crate_name).unwrap()
+     }
+ 
+-    /// Finds the package reference in `cargo metadata` that has `package_name`
+-    /// ignoring the version.
+-    fn find_pkg_ref(&self, package_name: &str) -> Option<PackageRef> {
+-        for package in &self.metadata.packages {
+-            if package.name == package_name {
+-                return Some(PackageRef {
+-                    name: package_name.to_owned(),
+-                    version: package.version.clone(),
+-                });
+-            }
+-        }
+-        None
+-    }
+-
+-    /// Finds the package reference for a dependency of a crate using
+-    /// `Cargo.lock`.
+-    pub(crate) fn find_dep_ref(
+-        &self,
+-        package: &PackageRef,
+-        dependency_name: &str,
+-    ) -> Option<PackageRef> {
+-        if self.lock.is_none() {
+-            return None;
+-        }
++    pub(crate) fn dependencies(&self, package: &PackageRef) -> Vec<(PackageRef, Option<Cfg>)> {
+         let lock = self.lock.as_ref().unwrap();
+ 
+-        // the name in Cargo.lock could use '-' instead of '_', so we need to
+-        // look for that too.
+-        let mut dependency_name = dependency_name;
+-        let mut replaced_name = dependency_name.replace("_", "-");
+-
+-        // The Cargo.toml may contain a rename which we need to apply
+-        for metadata_package in &self.metadata.packages {
+-            if metadata_package.name == package.name {
+-                for dep in &metadata_package.dependencies {
+-                    if let Some(ref rename) = dep.rename {
+-                        if rename == dependency_name || rename == &replaced_name {
+-                            dependency_name = &dep.name;
+-                            replaced_name = dependency_name.replace("_", "-");
+-                        }
+-                    }
+-                }
+-            }
+-        }
++        let mut dependencies = None;
+ 
++        // Find the dependencies listing in the lockfile
+         if let &Some(ref root) = &lock.root {
+             if root.name == package.name && root.version == package.version {
+-                if let Some(ref deps) = root.dependencies {
+-                    for dep in deps {
+-                        let (name, version) = parse_dep_string(dep);
+-
+-                        if name == dependency_name || name == &replaced_name {
+-                            return Some(PackageRef {
+-                                name: name.to_owned(),
+-                                version: version.to_owned(),
+-                            });
+-                        }
++                dependencies = root.dependencies.as_ref();
++            }
++        }
++        if dependencies.is_none() {
++            if let Some(ref lock_packages) = lock.package {
++                for lock_package in lock_packages {
++                    if lock_package.name == package.name && lock_package.version == package.version
++                    {
++                        dependencies = lock_package.dependencies.as_ref();
++                        break;
+                     }
+                 }
+-                return None;
+             }
+         }
++        if dependencies.is_none() {
++            return vec![];
++        }
+ 
+-        if let &Some(ref lock_packages) = &lock.package {
+-            for lock_package in lock_packages {
+-                if lock_package.name == package.name && lock_package.version == package.version {
+-                    if let Some(ref deps) = lock_package.dependencies {
+-                        for dep in deps {
+-                            let (name, version) = parse_dep_string(dep);
+-
+-                            if name == dependency_name || name == &replaced_name {
+-                                return Some(PackageRef {
+-                                    name: name.to_owned(),
+-                                    version: version.to_owned(),
+-                                });
+-                            }
+-                        }
+-                    }
+-                    return None;
+-                }
++        dependencies
++            .unwrap()
++            .iter()
++            .map(|dep| {
++                let (dep_name, dep_version) = parse_dep_string(dep);
++
++                // Try to find the cfgs in the Cargo.toml
++                let cfg = self
++                    .metadata
++                    .packages
++                    .get(package)
++                    .and_then(|meta_package| meta_package.dependencies.get(dep_name))
++                    .and_then(|meta_dep| Cfg::load_metadata(meta_dep));
++
++                let package_ref = PackageRef {
++                    name: dep_name.to_owned(),
++                    version: dep_version.to_owned(),
++                };
++
++                (package_ref, cfg)
++            })
++            .collect()
++    }
++
++    /// Finds the package reference in `cargo metadata` that has `package_name`
++    /// ignoring the version.
++    fn find_pkg_ref(&self, package_name: &str) -> Option<PackageRef> {
++        for package in &self.metadata.packages {
++            if package.name_and_version.name == package_name {
++                return Some(package.name_and_version.clone());
+             }
+         }
+         None
+diff --git a/src/bindgen/cargo/cargo.rs b/src/bindgen/cargo/cargo.rs
+--- a/src/bindgen/cargo/cargo.rs
++++ b/src/bindgen/cargo/cargo.rs
+@@ -176,14 +148,14 @@ impl Cargo {
+     /// Finds the directory for a specified package reference.
+     #[allow(unused)]
+     pub(crate) fn find_crate_dir(&self, package: &PackageRef) -> Option<PathBuf> {
+-        for meta_package in &self.metadata.packages {
+-            if meta_package.name == package.name && meta_package.version == package.version {
+-                return Path::new(&meta_package.manifest_path)
++        self.metadata
++            .packages
++            .get(package)
++            .and_then(|meta_package| {
++                Path::new(&meta_package.manifest_path)
+                     .parent()
+-                    .map(|x| x.to_owned());
+-            }
+-        }
+-        None
++                    .map(|x| x.to_owned())
++            })
+     }
+ 
+     /// Finds `src/lib.rs` for a specified package reference.
+diff --git a/src/bindgen/cargo/cargo.rs b/src/bindgen/cargo/cargo.rs
+--- a/src/bindgen/cargo/cargo.rs
++++ b/src/bindgen/cargo/cargo.rs
+@@ -194,8 +166,10 @@ impl Cargo {
+         let kind_cdylib = String::from("cdylib");
+         let kind_dylib = String::from("dylib");
+ 
+-        for meta_package in &self.metadata.packages {
+-            if meta_package.name == package.name && meta_package.version == package.version {
++        self.metadata
++            .packages
++            .get(package)
++            .and_then(|meta_package| {
+                 for target in &meta_package.targets {
+                     if target.kind.contains(&kind_lib)
+                         || target.kind.contains(&kind_staticlib)
+diff --git a/src/bindgen/cargo/cargo.rs b/src/bindgen/cargo/cargo.rs
+--- a/src/bindgen/cargo/cargo.rs
++++ b/src/bindgen/cargo/cargo.rs
+@@ -206,10 +180,8 @@ impl Cargo {
+                         return Some(PathBuf::from(&target.src_path));
+                     }
+                 }
+-                break;
+-            }
+-        }
+-        None
++                None
++            })
+     }
+ 
+     pub(crate) fn expand_crate(
+diff --git a/src/bindgen/cargo/cargo_metadata.rs b/src/bindgen/cargo/cargo_metadata.rs
+--- a/src/bindgen/cargo/cargo_metadata.rs
++++ b/src/bindgen/cargo/cargo_metadata.rs
+@@ -9,10 +9,12 @@
+ //   3. Add `--all-features` argument
+ //   4. Remove the `--no-deps` argument
+ 
+-use std::collections::HashMap;
++use std::borrow::Borrow;
++use std::collections::{HashMap, HashSet};
+ use std::env;
+ use std::error;
+ use std::fmt;
++use std::hash::{Hash, Hasher};
+ use std::io;
+ use std::path::Path;
+ use std::process::{Command, Output};
+diff --git a/src/bindgen/cargo/cargo_metadata.rs b/src/bindgen/cargo/cargo_metadata.rs
+--- a/src/bindgen/cargo/cargo_metadata.rs
++++ b/src/bindgen/cargo/cargo_metadata.rs
+@@ -53,8 +60,6 @@ pub struct Package {
+ pub struct Dependency {
+     /// Name as given in the `Cargo.toml`
+     pub name: String,
+-    /// If Some, "extern rename" will appears as "name" in the lock
+-    pub rename: Option<String>,
+     source: Option<String>,
+     /// Whether this is required or optional
+     pub req: String,
+diff --git a/src/bindgen/cargo/cargo_metadata.rs b/src/bindgen/cargo/cargo_metadata.rs
+--- a/src/bindgen/cargo/cargo_metadata.rs
++++ b/src/bindgen/cargo/cargo_metadata.rs
+@@ -62,7 +67,7 @@ pub struct Dependency {
+     optional: bool,
+     uses_default_features: bool,
+     features: Vec<String>,
+-    target: Option<String>,
++    pub target: Option<String>,
+ }
+ 
+ #[derive(Clone, Deserialize, Debug)]
+diff --git a/src/bindgen/cargo/cargo_metadata.rs b/src/bindgen/cargo/cargo_metadata.rs
+--- a/src/bindgen/cargo/cargo_metadata.rs
++++ b/src/bindgen/cargo/cargo_metadata.rs
+@@ -131,6 +136,48 @@ impl error::Error for Error {
+     }
+ }
+ 
++// Implementations that let us lookup Packages and Dependencies by name (string)
++
++impl Borrow<PackageRef> for Package {
++    fn borrow(&self) -> &PackageRef {
++        &self.name_and_version
++    }
++}
++
++impl Hash for Package {
++    fn hash<H: Hasher>(&self, state: &mut H) {
++        self.name_and_version.hash(state);
++    }
++}
++
++impl PartialEq for Package {
++    fn eq(&self, other: &Self) -> bool {
++        self.name_and_version == other.name_and_version
++    }
++}
++
++impl Eq for Package {}
++
++impl Borrow<str> for Dependency {
++    fn borrow(&self) -> &str {
++        &self.name
++    }
++}
++
++impl Hash for Dependency {
++    fn hash<H: Hasher>(&self, state: &mut H) {
++        self.name.hash(state);
++    }
++}
++
++impl PartialEq for Dependency {
++    fn eq(&self, other: &Self) -> bool {
++        self.name == other.name
++    }
++}
++
++impl Eq for Dependency {}
++
+ /// The main entry point to obtaining metadata
+ pub fn metadata(manifest_path: &Path) -> Result<Metadata, Error> {
+     let cargo = env::var("CARGO").unwrap_or_else(|_| String::from("cargo"));
+diff --git a/src/bindgen/ir/cfg.rs b/src/bindgen/ir/cfg.rs
+--- a/src/bindgen/ir/cfg.rs
++++ b/src/bindgen/ir/cfg.rs
+@@ -7,6 +7,7 @@ use std::io::Write;
+ 
+ use syn;
+ 
++use bindgen::cargo::cargo_metadata::Dependency;
+ use bindgen::config::Config;
+ use bindgen::writer::SourceWriter;
+ 
+diff --git a/src/bindgen/ir/cfg.rs b/src/bindgen/ir/cfg.rs
+--- a/src/bindgen/ir/cfg.rs
++++ b/src/bindgen/ir/cfg.rs
+@@ -127,6 +128,26 @@ impl Cfg {
+         }
+     }
+ 
++    pub fn load_metadata(dependency: &Dependency) -> Option<Cfg> {
++        dependency
++            .target
++            .as_ref()
++            .map(|target| {
++                syn::parse_str::<syn::Meta>(target)
++                    .expect("error parsing dependency's target metadata")
++            })
++            .and_then(|target| {
++                if let syn::Meta::List(syn::MetaList { ident, nested, .. }) = target {
++                    if ident != "cfg" || nested.len() != 1 {
++                        return None;
++                    }
++                    Cfg::load_single(nested.first().unwrap().value())
++                } else {
++                    None
++                }
++            })
++    }
++
+     fn load_single(item: &syn::NestedMeta) -> Option<Cfg> {
+         match item {
+             &syn::NestedMeta::Meta(syn::Meta::Word(ref ident)) => {
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -156,6 +156,25 @@ impl<'a> Parser<'a> {
+         assert!(self.lib.is_some());
+         self.parsed_crates.insert(pkg.name.clone());
+ 
++        // Before we do anything with this crate, we must first parse all of its dependencies.
++        // This is guaranteed to terminate because the crate-graph is acyclic (and even if it
++        // wasn't, we've already marked the crate as parsed in the line above).
++        for (dep_pkg, cfg) in self.lib.as_ref().unwrap().dependencies(&pkg) {
++            if !self.should_parse_dependency(&dep_pkg.name) {
++                continue;
++            }
++
++            if let Some(ref cfg) = cfg {
++                self.cfg_stack.push(cfg.clone());
++            }
++
++            self.parse_crate(&dep_pkg)?;
++
++            if cfg.is_some() {
++                self.cfg_stack.pop();
++            }
++        }
++
+         // Check if we should use cargo expand for this crate
+         if self.expand.contains(&pkg.name) {
+             return self.parse_expand_crate(pkg);
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -237,41 +256,6 @@ impl<'a> Parser<'a> {
+                         self.cfg_stack.pop();
+                     }
+                 }
+-                syn::Item::ExternCrate(ref item) => {
+-                    let dep_pkg_name = item.ident.to_string();
+-
+-                    let cfg = Cfg::load(&item.attrs);
+-                    if let &Some(ref cfg) = &cfg {
+-                        self.cfg_stack.push(cfg.clone());
+-                    }
+-
+-                    if self.should_parse_dependency(&dep_pkg_name) {
+-                        if self.lib.is_some() {
+-                            let dep_pkg_ref =
+-                                self.lib.as_ref().unwrap().find_dep_ref(pkg, &dep_pkg_name);
+-
+-                            if let Some(dep_pkg_ref) = dep_pkg_ref {
+-                                self.parse_crate(&dep_pkg_ref)?;
+-                            } else {
+-                                error!(
+-                                    "Parsing crate `{}`: can't find dependency version for `{}`.",
+-                                    pkg.name, dep_pkg_name
+-                                );
+-                            }
+-                        } else {
+-                            error!(
+-                                "Parsing crate `{}`: cannot parse external crate `{}` because \
+-                                 cbindgen is in single source mode. Consider specifying a crate \
+-                                 directory instead of a source file.",
+-                                pkg.name, dep_pkg_name
+-                            );
+-                        }
+-                    }
+-
+-                    if cfg.is_some() {
+-                        self.cfg_stack.pop();
+-                    }
+-                }
+                 _ => {}
+             }
+         }
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -385,41 +369,6 @@ impl<'a> Parser<'a> {
+                         self.cfg_stack.pop();
+                     }
+                 }
+-                syn::Item::ExternCrate(ref item) => {
+-                    let dep_pkg_name = item.ident.to_string();
+-
+-                    let cfg = Cfg::load(&item.attrs);
+-                    if let &Some(ref cfg) = &cfg {
+-                        self.cfg_stack.push(cfg.clone());
+-                    }
+-
+-                    if self.should_parse_dependency(&dep_pkg_name) {
+-                        if self.lib.is_some() {
+-                            let dep_pkg_ref =
+-                                self.lib.as_ref().unwrap().find_dep_ref(pkg, &dep_pkg_name);
+-
+-                            if let Some(dep_pkg_ref) = dep_pkg_ref {
+-                                self.parse_crate(&dep_pkg_ref)?;
+-                            } else {
+-                                error!(
+-                                    "Parsing crate `{}`: can't find dependency version for `{}`.",
+-                                    pkg.name, dep_pkg_name
+-                                );
+-                            }
+-                        } else {
+-                            error!(
+-                                "Parsing crate `{}`: cannot parse external crate `{}` because \
+-                                 cbindgen is in single source mode. Consider specifying a crate \
+-                                 directory instead of a source file.",
+-                                pkg.name, dep_pkg_name
+-                            );
+-                        }
+-                    }
+-
+-                    if cfg.is_some() {
+-                        self.cfg_stack.pop();
+-                    }
+-                }
+                 _ => {}
+             }
+         }

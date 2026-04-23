@@ -1,0 +1,51 @@
+2026-04-17 06:45:22,357 - INFO - Environment image rustb.env.x86_64.dtolnay_async-trait:latest found for dtolnay__async-trait-150
+Building instance image rustbench/dtolnay__async-trait:pr-150 for dtolnay__async-trait-150
+2026-04-17 06:56:08,849 - INFO - Creating container for dtolnay__async-trait-150...
+2026-04-17 06:56:09,083 - INFO - Container for dtolnay__async-trait-150 created: 48b4c7defaaa905fb1af11aea93f47e5fe1871fa3257d7bf15cbd73db64104c1
+2026-04-17 06:56:09,206 - INFO - Container for dtolnay__async-trait-150 started: 48b4c7defaaa905fb1af11aea93f47e5fe1871fa3257d7bf15cbd73db64104c1
+2026-04-17 06:56:09,206 - INFO - Intermediate patch for dtolnay__async-trait-150 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-150/patch.diff, now applying to container...
+2026-04-17 06:56:09,372 - INFO - >>>>> Applied Patch:
+Checking patch src/expand.rs...
+Applied patch src/expand.rs cleanly.
+
+2026-04-17 06:56:09,438 - INFO - Git diff before:
+diff --git a/src/expand.rs b/src/expand.rs
+index b0ebb4c..06c4ba3 100644
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -350,6 +350,9 @@ fn transform_block(sig: &mut Signature, block: &mut Block) {
+             let _: () = { #(#decls)* #(#stmts)* };
+         },
+         ReturnType::Type(_, ret) => quote_spanned! {block.brace_token.span=>
++            if let ::core::option::Option::Some(__ret) = ::core::option::Option::None::<#ret> {
++                return __ret;
++            }
+             let __ret: #ret = { #(#decls)* #(#stmts)* };
+             #[allow(unreachable_code)]
+             __ret
+2026-04-17 06:56:09,438 - INFO - Eval script for dtolnay__async-trait-150 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-150/eval.sh; copying to container...
+2026-04-17 06:57:49,300 - INFO - Test runtime: 99.74 seconds
+2026-04-17 06:57:49,300 - INFO - Test output for dtolnay__async-trait-150 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-150/test_output.txt
+2026-04-17 06:57:49,537 - INFO - Git diff after:
+diff --git a/src/expand.rs b/src/expand.rs
+index b0ebb4c..06c4ba3 100644
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -350,6 +350,9 @@ fn transform_block(sig: &mut Signature, block: &mut Block) {
+             let _: () = { #(#decls)* #(#stmts)* };
+         },
+         ReturnType::Type(_, ret) => quote_spanned! {block.brace_token.span=>
++            if let ::core::option::Option::Some(__ret) = ::core::option::Option::None::<#ret> {
++                return __ret;
++            }
+             let __ret: #ret = { #(#decls)* #(#stmts)* };
+             #[allow(unreachable_code)]
+             __ret
+2026-04-17 06:57:49,537 - INFO - Grading answer for dtolnay__async-trait-150...
+2026-04-17 06:57:49,537 - INFO - report: {'dtolnay__async-trait-150': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['issue45::tracing', 'drop_order::test_drop_order', 'src/lib.rs - (line 15)', 'src/lib.rs - (line 165)', 'src/lib.rs - (line 286)', 'src/lib.rs - (line 211)', 'src/lib.rs - (line 186)', 'src/lib.rs - (line 47)', 'src/lib.rs - (line 265)', 'src/lib.rs - (line 126)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for dtolnay__async-trait-150: resolved: True
+2026-04-17 06:57:49,537 - INFO - Attempting to stop container rustb.eval.dtolnay__async-trait-150.gold_run1...
+2026-04-17 06:59:05,372 - INFO - Attempting to remove container rustb.eval.dtolnay__async-trait-150.gold_run1...
+2026-04-17 06:59:05,467 - INFO - Container rustb.eval.dtolnay__async-trait-150.gold_run1 removed.
+2026-04-17 06:59:05,467 - INFO - Attempting to remove image rustbench/dtolnay__async-trait:pr-150...
+2026-04-17 06:59:07,742 - INFO - Image rustbench/dtolnay__async-trait:pr-150 removed.

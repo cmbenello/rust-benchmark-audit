@@ -1,0 +1,50 @@
+{
+    "rinja-rs__askama-1097": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "test_for",
+                    "test_for_array",
+                    "test_for_cycle",
+                    "test_for_cycle_dynamic",
+                    "test_for_cycle_empty",
+                    "test_for_destructoring_ref_tuple",
+                    "test_for_enumerate",
+                    "test_for_destructoring_tuple",
+                    "test_for_in_if",
+                    "test_for_index",
+                    "test_for_method_call",
+                    "test_for_path_call",
+                    "test_for_range",
+                    "test_for_vec_attr_range",
+                    "test_for_vec_attr_slice",
+                    "test_for_vec_attr_slice_shadowing",
+                    "test_for_vec_attr_vec",
+                    "test_for_zip_ranges",
+                    "test_loop_break",
+                    "test_loop_break_continue",
+                    "test_loop_continue",
+                    "test_nested_for",
+                    "test_precedence_for"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

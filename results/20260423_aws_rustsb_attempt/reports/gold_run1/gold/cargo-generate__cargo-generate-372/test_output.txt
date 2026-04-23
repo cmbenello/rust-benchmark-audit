@@ -1,0 +1,887 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch .github/workflows/build.yml...
+Checking patch src/git.rs...
+Checking patch tests/integration/basics.rs...
+Checking patch tests/integration/basics.rs...
+Checking patch tests/integration/basics.rs...
+Checking patch tests/integration/library.rs...
+Applied patch .github/workflows/build.yml cleanly.
+Applied patch src/git.rs cleanly.
+Applied patch tests/integration/basics.rs cleanly.
+Applied patch tests/integration/basics.rs cleanly.
+Applied patch tests/integration/basics.rs cleanly.
+Applied patch tests/integration/library.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded unicode-width v0.1.8 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded console v0.14.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded cc v1.0.69 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded bytesize v1.0.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded byteorder v1.4.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded crates-io v0.33.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded tinyvec_macros v0.1.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded vec_map v0.8.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded walkdir v2.3.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded sized-chunks v0.6.5 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded crossbeam-utils v0.8.5 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded crc32fast v1.2.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded chrono v0.4.19 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded unicode-segmentation v1.8.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded unicode-xid v0.2.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded clap v2.33.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded rustc-workspace-hack v1.0.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded time v0.1.43 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded cfg-if v1.0.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded wait-timeout v0.2.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded cargo-platform v0.1.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded version_check v0.9.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded strsim v0.8.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded same-file v1.0.6 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded crypto-hash v0.3.4 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded remove_dir_all v0.7.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded unicode-normalization v0.1.19 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded remove_dir_all v0.5.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded structopt-derive v0.4.15 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded url v2.2.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded curl v0.4.38 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded syn v1.0.73 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded serde_ignored v0.1.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded serde_derive v1.0.126 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded vte v0.3.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded cargo v0.54.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded matches v0.1.8 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded lazycell v1.3.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded once_cell v1.8.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded itertools v0.10.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded pest_derive v2.1.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded normalize-line-endings v0.3.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded thiserror-impl v1.0.26 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded zeroize v1.3.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded liquid-lib v0.22.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded ppv-lite86 v0.2.10 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded indicatif v0.16.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded im-rc v15.0.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded opener v0.4.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded unicode-bidi v0.3.5 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded liquid v0.22.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded terminal_size v0.1.17 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded proc-macro2 v1.0.27 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded rand_core v0.5.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded rand_chacha v0.3.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded proc-quote-impl v0.3.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded toml v0.5.8 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded rand_core v0.6.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded proc-macro-hack v0.5.19 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded proc-macro-error v1.0.4 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded thread_local v1.1.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded pest_generator v2.1.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded humantime v2.1.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded fake-simd v0.1.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded memchr v2.4.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded kstring v1.0.4 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded termcolor v1.1.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded num_cpus v1.13.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded socket2 v0.4.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded jobserver v0.1.22 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded filetime v0.2.14 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded either v1.6.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded dialoguer v0.8.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded git2 v0.13.20 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded digest v0.8.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded regex-syntax v0.6.25 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded libgit2-sys v0.12.21+1.1.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded generic-array v0.12.4 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded rand_xoshiro v0.4.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded proc-macro-error-attr v1.0.4 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded shell-escape v0.1.5 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded pest_meta v2.1.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded liquid-derive v0.22.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded dirs v3.0.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded treeline v0.1.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded serde v1.0.126 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded block-padding v0.1.5 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded foreign-types-shared v0.1.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded pkg-config v0.3.19 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded liquid-core v0.22.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded home v0.5.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded ucd-trie v0.1.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded hex v0.4.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded rand v0.8.4 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded heck v0.3.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded idna v0.2.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded num-integer v0.1.44 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded globset v0.4.8 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded opaque-debug v0.2.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded proc-quote v0.3.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded textwrap v0.11.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded doc-comment v0.3.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded tempfile v3.2.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded tinyvec v1.2.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded cargo-util v0.1.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded strip-ansi-escapes v0.1.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded semver-parser v0.7.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded semver v0.10.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded sha-1 v0.8.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded utf8parse v0.1.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded structopt v0.3.22 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded libssh2-sys v0.2.21 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded number_prefix v0.4.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded quote v1.0.9 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded tar v0.4.35 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded thiserror v1.0.26 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded difflib v0.4.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded assert_cmd v1.0.7 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded serde_json v1.0.64 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded rustfix v0.5.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded openssl v0.10.35 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded typenum v1.13.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded maplit v1.0.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded libz-sys v1.1.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded ignore v0.4.18 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded anyhow v1.0.42 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded libc v0.2.98 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded bitflags v1.2.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded git2-curl v0.14.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded ansi_term v0.11.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded aho-corasick v0.7.18 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded itoa v0.4.7 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded fnv v1.0.7 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded flate2 v1.0.20 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded predicates-core v1.0.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded foreign-types v0.3.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded regex v1.5.4 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded autocfg v1.0.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded atty v0.2.14 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded openssl-sys v0.9.65 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded dirs-sys v0.3.6 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded predicates-tree v1.0.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded num-traits v0.2.14 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded pest v2.1.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded form_urlencoded v1.0.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded getrandom v0.2.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded byte-tools v0.3.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded regex-automata v0.1.10 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded percent-encoding v2.1.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded float-cmp v0.8.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded block-buffer v0.7.3 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded log v0.4.14 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded predicates v2.0.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded env_logger v0.8.4 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded bstr v0.2.16 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded hex v0.3.2 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded anymap v0.12.1 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded curl-sys v0.4.44+curl-7.77.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded bitmaps v2.1.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded openssl-probe v0.1.4 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded libnghttp2-sys v0.1.6+1.43.0 (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+  Downloaded openssl-src v111.15.0+1.1.1k (registry `/testbed/.cargo/lts-repo-at-df1d9699ef`)
+   Compiling libc v0.2.98
+   Compiling autocfg v1.0.1
+   Compiling proc-macro2 v1.0.27
+   Compiling unicode-xid v0.2.2
+   Compiling pkg-config v0.3.19
+   Compiling syn v1.0.73
+   Compiling cfg-if v1.0.0
+   Compiling memchr v2.4.0
+   Compiling serde_derive v1.0.126
+   Compiling serde v1.0.126
+   Compiling version_check v0.9.3
+   Compiling regex-syntax v0.6.25
+   Compiling bitflags v1.2.1
+   Compiling log v0.4.14
+   Compiling lazy_static v1.4.0
+   Compiling matches v0.1.8
+   Compiling once_cell v1.8.0
+   Compiling percent-encoding v2.1.0
+   Compiling tinyvec_macros v0.1.0
+   Compiling proc-macro-hack v0.5.19
+   Compiling unicode-width v0.1.8
+   Compiling ucd-trie v0.1.3
+   Compiling ryu v1.0.5
+   Compiling ppv-lite86 v0.2.10
+   Compiling maplit v1.0.2
+   Compiling crc32fast v1.2.1
+   Compiling anyhow v1.0.42
+   Compiling either v1.6.1
+   Compiling typenum v1.13.0
+   Compiling unicode-segmentation v1.8.0
+   Compiling openssl-probe v0.1.4
+   Compiling serde_json v1.0.64
+   Compiling foreign-types-shared v0.1.1
+   Compiling curl v0.4.38
+   Compiling regex-automata v0.1.10
+   Compiling openssl v0.10.35
+   Compiling remove_dir_all v0.5.3
+   Compiling doc-comment v0.3.3
+   Compiling crossbeam-utils v0.8.5
+   Compiling itoa v0.4.7
+   Compiling same-file v1.0.6
+   Compiling anymap v0.12.1
+   Compiling hex v0.3.2
+   Compiling vec_map v0.8.2
+   Compiling ansi_term v0.11.0
+   Compiling fnv v1.0.7
+   Compiling rand_core v0.5.1
+   Compiling strsim v0.8.0
+   Compiling utf8parse v0.1.1
+   Compiling hex v0.4.3
+   Compiling shell-escape v0.1.5
+   Compiling humantime v2.1.0
+   Compiling semver-parser v0.7.0
+   Compiling termcolor v1.1.2
+   Compiling predicates-core v1.0.2
+   Compiling glob v0.3.0
+   Compiling bytesize v1.0.1
+   Compiling opener v0.4.1
+   Compiling zeroize v1.3.0
+   Compiling rustc-workspace-hack v1.0.0
+   Compiling number_prefix v0.4.0
+   Compiling home v0.5.3
+   Compiling lazycell v1.3.0
+   Compiling treeline v0.1.0
+   Compiling difflib v0.4.0
+   Compiling normalize-line-endings v0.3.0
+   Compiling tinyvec v1.2.0
+   Compiling unicode-bidi v0.3.5
+   Compiling textwrap v0.11.0
+   Compiling foreign-types v0.3.2
+   Compiling itertools v0.10.1
+   Compiling walkdir v2.3.2
+   Compiling form_urlencoded v1.0.1
+   Compiling thread_local v1.1.3
+   Compiling pest v2.1.3
+   Compiling heck v0.3.3
+   Compiling rand_xoshiro v0.4.0
+   Compiling vte v0.3.3
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling im-rc v15.0.0
+   Compiling num-traits v0.2.14
+   Compiling num-integer v0.1.44
+   Compiling predicates-tree v1.0.2
+   Compiling strip-ansi-escapes v0.1.0
+   Compiling unicode-normalization v0.1.19
+   Compiling pest_meta v2.1.3
+   Compiling aho-corasick v0.7.18
+   Compiling bstr v0.2.16
+   Compiling quote v1.0.9
+   Compiling jobserver v0.1.22
+   Compiling getrandom v0.2.3
+   Compiling filetime v0.2.14
+   Compiling time v0.1.43
+   Compiling socket2 v0.4.0
+   Compiling atty v0.2.14
+   Compiling terminal_size v0.1.17
+   Compiling num_cpus v1.13.0
+   Compiling dirs-sys v0.3.6
+   Compiling remove_dir_all v0.7.0
+   Compiling wait-timeout v0.2.0
+   Compiling clap v2.33.3
+   Compiling tar v0.4.35
+   Compiling rand_core v0.6.3
+   Compiling dirs v3.0.2
+   Compiling cc v1.0.69
+   Compiling bitmaps v2.1.0
+   Compiling rand_chacha v0.3.1
+   Compiling float-cmp v0.8.0
+   Compiling idna v0.2.3
+   Compiling rand v0.8.4
+   Compiling chrono v0.4.19
+   Compiling openssl-src v111.15.0+1.1.1k
+   Compiling regex v1.5.4
+   Compiling proc-quote-impl v0.3.2
+   Compiling url v2.2.2
+   Compiling openssl-sys v0.9.65
+   Compiling libz-sys v1.1.3
+   Compiling libnghttp2-sys v0.1.6+1.43.0
+   Compiling libssh2-sys v0.2.21
+   Compiling curl-sys v0.4.44+curl-7.77.0
+   Compiling libgit2-sys v0.12.21+1.1.0
+   Compiling tempfile v3.2.0
+   Compiling flate2 v1.0.20
+   Compiling console v0.14.1
+   Compiling globset v0.4.8
+   Compiling env_logger v0.8.4
+   Compiling predicates v2.0.0
+   Compiling cargo v0.54.0
+   Compiling dialoguer v0.8.0
+   Compiling indicatif v0.16.2
+   Compiling assert_cmd v1.0.7
+   Compiling ignore v0.4.18
+   Compiling pest_generator v2.1.3
+   Compiling proc-quote v0.3.2
+   Compiling sized-chunks v0.6.5
+   Compiling pest_derive v2.1.0
+   Compiling liquid-derive v0.22.0
+   Compiling thiserror-impl v1.0.26
+   Compiling structopt-derive v0.4.15
+   Compiling thiserror v1.0.26
+   Compiling structopt v0.3.22
+   Compiling git2 v0.13.20
+   Compiling crypto-hash v0.3.4
+   Compiling cargo-util v0.1.0
+   Compiling kstring v1.0.4
+   Compiling serde_ignored v0.1.2
+   Compiling semver v0.10.0
+   Compiling cargo-platform v0.1.1
+   Compiling toml v0.5.8
+   Compiling liquid-core v0.22.0
+   Compiling git2-curl v0.14.1
+   Compiling rustfix v0.5.1
+   Compiling crates-io v0.33.0
+   Compiling liquid-lib v0.22.0
+   Compiling liquid v0.22.0
+   Compiling cargo-generate v0.6.1 (/workspace)
+    Finished test [unoptimized + debuginfo] target(s) in 53.46s
+     Running unittests (target/debug/deps/cargo_generate-ec113789fe48c728)
+
+running 44 tests
+test config::tests::config_try_from_handles_empty ... ok
+test config::tests::config_try_from_errors_on_invalid_keys ... ok
+test git::should_canonicalize ... FAILED
+test git::should_pretty_path ... ok
+test git::tests::should_determine_repo_kind ... ok
+test git::tests::should_not_fail_for_ssh_remote_urls ... ok
+test git::tests::should_fail_for_non_existing_local_path ... ok
+test config::tests::config_try_from_handles_placeholders ... ok
+test git::tests::should_support_a_local_absolute_path ... ok
+test git::tests::should_support_a_local_relative_path ... ok
+test project_variables::tests::block_invalid_key_names ... ok
+test git::tests::should_support_abbreviated_repository_short_urls_like ... ok
+test project_variables::tests::boolean_cant_have_choices ... ok
+test git::tests::should_test_happy_path ... ok
+test project_variables::tests::bools_cant_have_regex ... ok
+test project_variables::tests::choices_array_cant_have_anything_but_strings ... ok
+test project_variables::tests::choices_cant_be_an_empty_array ... ok
+test project_variables::tests::choices_is_array_string_no_regex_is_fine ... ok
+test project_variables::tests::choices_is_not_array_string_is_error ... ok
+test project_variables::tests::default_for_bool_only_accepts_bool ... ok
+test project_variables::tests::default_for_boolean_is_fine ... ok
+test project_variables::tests::default_for_string_is_on_choices ... ok
+test project_variables::tests::default_for_string_isnt_on_choices ... ok
+test project_variables::tests::default_for_string_only_accepts_strings ... ok
+test project_variables::tests::default_for_string_with_no_choices_and_no_regex ... ok
+test project_variables::tests::empty_default_is_fine ... ok
+test project_variables::tests::empty_type_is_string ... ok
+test project_variables::tests::no_choices_boolean ... ok
+test project_variables::tests::no_choices_for_type_string ... ok
+test project_variables::tests::no_regex_is_ok ... ok
+test project_variables::tests::only_tables_as_placeholder_values ... ok
+test project_variables::tests::invalid_regex_is_err ... ok
+test project_variables::tests::prompt_cant_be_empty ... ok
+test project_variables::tests::choices_is_array_string_that_doesnt_match_regex_is_error ... ok
+test project_variables::tests::prompt_must_be_string ... ok
+test project_variables::tests::choices_is_array_string_that_all_match_regex_is_good ... ok
+test project_variables::tests::type_must_be_string_type ... ok
+test project_variables::tests::prompt_as_string_is_ok ... ok
+test project_variables::tests::default_for_string_is_on_choices_and_matches_regex ... ok
+test project_variables::tests::type_must_either_be_string_or_bool ... ok
+test project_variables::tests::default_for_string_with_no_choices_and_regex_doesnt_match ... ok
+test project_variables::tests::default_for_string_with_no_choices_and_matching_regex ... ok
+test project_variables::tests::strings_can_have_regex ... ok
+test config::tests::test_deserializes_config ... ok
+
+failures:
+
+---- git::should_canonicalize stdout ----
+thread 'git::should_canonicalize' panicked at 'assertion failed: canonicalize_path(&PathBuf::from(\"../\")).unwrap().starts_with(\"/home/\")', src/git.rs:94:5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    git::should_canonicalize
+
+test result: FAILED. 43 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests (target/debug/deps/cargo_generate-16beb64b1bbbd025)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration/main.rs (target/debug/deps/integration-fcb169329349027f)
+
+running 39 tests
+test basics::ssh_remote::it_should_support_a_custom_ssh_key ... ignored
+test basics::ssh_remote::it_should_support_a_private_repo ... FAILED
+test basics::ssh_remote::it_should_support_a_public_repo ... FAILED
+test favorites::favorites_default_to_git_if_not_defined ... FAILED
+test basics::it_allows_a_git_branch_to_be_specified ... FAILED
+test basics::it_allows_relative_paths ... FAILED
+test basics::it_allows_user_defined_projectname_when_passing_force_flag ... FAILED
+test basics::it_always_removes_cargo_ok_file ... FAILED
+test basics::it_provides_crate_type_bin ... FAILED
+test basics::it_respects_template_branch_name ... FAILED
+test basics::it_does_not_remove_files_from_outside_project_dir ... FAILED
+test basics::it_doesnt_warn_on_config_with_no_ignore ... FAILED
+test basics::it_doesnt_warn_with_neither_config_nor_ignore ... FAILED
+test basics::it_substitutes_cratename_in_a_rust_file ... FAILED
+test basics::it_kebabcases_projectname_when_passed_to_flag ... FAILED
+test basics::it_loads_a_submodule ... FAILED
+test basics::it_removes_genignore_files_before_substitution ... FAILED
+test basics::it_prints_ignored_files_with_verbose ... FAILED
+test basics::errant_ignore_entry_doesnt_affect_template_files ... FAILED
+test basics::it_applies_filters ... FAILED
+test basics::short_commands_work ... FAILED
+test basics::it_only_processes_include_files_in_config ... FAILED
+test basics::it_always_removes_genignore_file ... FAILED
+test basics::it_can_generate_inside_existing_repository ... FAILED
+test basics::it_substitutes_date ... FAILED
+test basics::it_removes_files_listed_in_genignore ... FAILED
+test basics::it_substitutes_os_arch ... FAILED
+test favorites::git_specification_overrides_favorite ... FAILED
+test basics::it_provides_crate_type_lib ... FAILED
+test basics::it_doesnt_process_excluded_files_in_config ... FAILED
+test basics::it_substitutes_projectname_in_cargo_toml ... FAILED
+test basics::it_uses_vsc_none_to_avoid_initializing_repository ... FAILED
+test library::it_allows_generate_call_with_public_args ... FAILED
+test basics::it_ignore_tags_inside_raw_block ... FAILED
+test basics::it_always_removes_config_file ... FAILED
+test basics::it_warns_on_include_and_exclude_in_config ... FAILED
+test basics::it_processes_dot_github_directory_files ... FAILED
+test favorites::it_can_use_favorites ... FAILED
+test favorites::it_survives_an_empty_config ... FAILED
+
+failures:
+
+---- basics::ssh_remote::it_should_support_a_private_repo stdout ----
+thread 'basics::ssh_remote::it_should_support_a_private_repo' panicked at 'Unexpected failure.
+code-1
+stderr=```"Error:  Git Error: private key path was not was incorrect\n"```
+command=`"/workspace/target/debug/cargo-generate" "generate" "--git" "git@github.com:cargo-generate/wasm-pack-template.git" "--name" "foobar-project"`
+code=1
+stdout=```" Creating project called `foobar-project`...\n"```
+stderr=```"Error:  Git Error: private key path was not was incorrect\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- basics::ssh_remote::it_should_support_a_public_repo stdout ----
+thread 'basics::ssh_remote::it_should_support_a_public_repo' panicked at 'Unexpected failure.
+code-1
+stderr=```"Error:  Git Error: private key path was not was incorrect\n"```
+command=`"/workspace/target/debug/cargo-generate" "generate" "--git" "git@github.com:ashleygwilliams/wasm-pack-template.git" "--name" "foobar-project"`
+code=1
+stdout=```" Creating project called `foobar-project`...\n"```
+stderr=```"Error:  Git Error: private key path was not was incorrect\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- favorites::favorites_default_to_git_if_not_defined stdout ----
+thread 'favorites::favorites_default_to_git_if_not_defined' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_allows_a_git_branch_to_be_specified stdout ----
+thread 'basics::it_allows_a_git_branch_to_be_specified' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial main commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_allows_relative_paths stdout ----
+thread 'basics::it_allows_relative_paths' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_allows_user_defined_projectname_when_passing_force_flag stdout ----
+thread 'basics::it_allows_user_defined_projectname_when_passing_force_flag' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_always_removes_cargo_ok_file stdout ----
+thread 'basics::it_always_removes_cargo_ok_file' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_provides_crate_type_bin stdout ----
+thread 'basics::it_provides_crate_type_bin' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_respects_template_branch_name stdout ----
+thread 'basics::it_respects_template_branch_name' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_does_not_remove_files_from_outside_project_dir stdout ----
+thread 'basics::it_does_not_remove_files_from_outside_project_dir' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_doesnt_warn_on_config_with_no_ignore stdout ----
+thread 'basics::it_doesnt_warn_on_config_with_no_ignore' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_doesnt_warn_with_neither_config_nor_ignore stdout ----
+thread 'basics::it_doesnt_warn_with_neither_config_nor_ignore' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_substitutes_cratename_in_a_rust_file stdout ----
+thread 'basics::it_substitutes_cratename_in_a_rust_file' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_kebabcases_projectname_when_passed_to_flag stdout ----
+thread 'basics::it_kebabcases_projectname_when_passed_to_flag' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_loads_a_submodule stdout ----
+thread 'basics::it_loads_a_submodule' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_removes_genignore_files_before_substitution stdout ----
+thread 'basics::it_removes_genignore_files_before_substitution' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_prints_ignored_files_with_verbose stdout ----
+thread 'basics::it_prints_ignored_files_with_verbose' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::errant_ignore_entry_doesnt_affect_template_files stdout ----
+thread 'basics::errant_ignore_entry_doesnt_affect_template_files' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_applies_filters stdout ----
+thread 'basics::it_applies_filters' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::short_commands_work stdout ----
+thread 'basics::short_commands_work' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_only_processes_include_files_in_config stdout ----
+thread 'basics::it_only_processes_include_files_in_config' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_always_removes_genignore_file stdout ----
+thread 'basics::it_always_removes_genignore_file' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_can_generate_inside_existing_repository stdout ----
+thread 'basics::it_can_generate_inside_existing_repository' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_substitutes_date stdout ----
+thread 'basics::it_substitutes_date' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_removes_files_listed_in_genignore stdout ----
+thread 'basics::it_removes_files_listed_in_genignore' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_substitutes_os_arch stdout ----
+thread 'basics::it_substitutes_os_arch' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- favorites::git_specification_overrides_favorite stdout ----
+thread 'favorites::git_specification_overrides_favorite' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_provides_crate_type_lib stdout ----
+thread 'basics::it_provides_crate_type_lib' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_doesnt_process_excluded_files_in_config stdout ----
+thread 'basics::it_doesnt_process_excluded_files_in_config' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_substitutes_projectname_in_cargo_toml stdout ----
+thread 'basics::it_substitutes_projectname_in_cargo_toml' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_uses_vsc_none_to_avoid_initializing_repository stdout ----
+thread 'basics::it_uses_vsc_none_to_avoid_initializing_repository' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- library::it_allows_generate_call_with_public_args stdout ----
+thread 'library::it_allows_generate_call_with_public_args' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_ignore_tags_inside_raw_block stdout ----
+thread 'basics::it_ignore_tags_inside_raw_block' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_always_removes_config_file stdout ----
+thread 'basics::it_always_removes_config_file' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_warns_on_include_and_exclude_in_config stdout ----
+thread 'basics::it_warns_on_include_and_exclude_in_config' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- basics::it_processes_dot_github_directory_files stdout ----
+thread 'basics::it_processes_dot_github_directory_files' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- favorites::it_can_use_favorites stdout ----
+thread 'favorites::it_can_use_favorites' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+---- favorites::it_survives_an_empty_config stdout ----
+thread 'favorites::it_survives_an_empty_config' panicked at 'Unexpected failure.
+code-128
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+command=`"git" "commit" "--message" "initial commit"`
+code=128
+stdout=```""```
+stderr=```"\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account\'s default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got \'root@12f4c225484d.(none)\')\n"```
+', /root/.cargo/registry/src/-dc172c7bc7aed9b6/assert_cmd-1.0.7/src/assert.rs:155:13
+
+
+failures:
+    basics::errant_ignore_entry_doesnt_affect_template_files
+    basics::it_allows_a_git_branch_to_be_specified
+    basics::it_allows_relative_paths
+    basics::it_allows_user_defined_projectname_when_passing_force_flag
+    basics::it_always_removes_cargo_ok_file
+    basics::it_always_removes_config_file
+    basics::it_always_removes_genignore_file
+    basics::it_applies_filters
+    basics::it_can_generate_inside_existing_repository
+    basics::it_does_not_remove_files_from_outside_project_dir
+    basics::it_doesnt_process_excluded_files_in_config
+    basics::it_doesnt_warn_on_config_with_no_ignore
+    basics::it_doesnt_warn_with_neither_config_nor_ignore
+    basics::it_ignore_tags_inside_raw_block
+    basics::it_kebabcases_projectname_when_passed_to_flag
+    basics::it_loads_a_submodule
+    basics::it_only_processes_include_files_in_config
+    basics::it_prints_ignored_files_with_verbose
+    basics::it_processes_dot_github_directory_files
+    basics::it_provides_crate_type_bin
+    basics::it_provides_crate_type_lib
+    basics::it_removes_files_listed_in_genignore
+    basics::it_removes_genignore_files_before_substitution
+    basics::it_respects_template_branch_name
+    basics::it_substitutes_cratename_in_a_rust_file
+    basics::it_substitutes_date
+    basics::it_substitutes_os_arch
+    basics::it_substitutes_projectname_in_cargo_toml
+    basics::it_uses_vsc_none_to_avoid_initializing_repository
+    basics::it_warns_on_include_and_exclude_in_config
+    basics::short_commands_work
+    basics::ssh_remote::it_should_support_a_private_repo
+    basics::ssh_remote::it_should_support_a_public_repo
+    favorites::favorites_default_to_git_if_not_defined
+    favorites::git_specification_overrides_favorite
+    favorites::it_can_use_favorites
+    favorites::it_survives_an_empty_config
+    library::it_allows_generate_call_with_public_args
+
+test result: FAILED. 0 passed; 38 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.35s
+
+   Doc-tests cargo-generate
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed.
++ git reset --hard 4daf0d95d5238250edbcb4a596b1c85ae25faec7
+HEAD is now at 4daf0d9 chore(deps): bump anyhow from 1.0.41 to 1.0.42
++ git clean -fd
+Removing .cargo/

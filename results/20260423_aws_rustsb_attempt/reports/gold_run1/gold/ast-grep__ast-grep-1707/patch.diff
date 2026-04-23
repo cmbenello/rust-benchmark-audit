@@ -1,0 +1,215 @@
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -146,23 +146,16 @@ impl<P: Printer> Worker for ScanWithConfig<P> {
+       let file_content = grep.source().to_string();
+       let path = &path;
+       let rules = self.configs.get_rule_from_lang(path, *grep.lang());
+-      let combined = CombinedScan::new(rules);
++      let mut combined = CombinedScan::new(rules);
++      combined.set_unused_suppression_rule(&self.unused_suppression_rule);
+       let interactive = self.arg.output.needs_interactive();
+       // exclude_fix rule because we already have diff inspection before
+       let scanned = combined.scan(&grep, pre_scan, /* separate_fix*/ interactive);
+       if interactive {
+-        let diffs = scanned
+-          .diffs
+-          .into_iter()
+-          .map(|(idx, nm)| {
+-            let rule = combined.get_rule(idx);
+-            (nm, rule)
+-          })
+-          .collect();
++        let diffs = scanned.diffs;
+         match_rule_diff_on_file(path, diffs, &self.printer)?;
+       }
+-      for (idx, matches) in scanned.matches {
+-        let rule = combined.get_rule(idx);
++      for (rule, matches) in scanned.matches {
+         if matches!(rule.severity, Severity::Error) {
+           error_count = error_count.saturating_add(matches.len());
+         }
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -187,11 +180,11 @@ impl<P: Printer> Worker for ScanWithConfig<P> {
+ }
+ 
+ fn unused_suppression_rule_config(overwrite: &RuleOverwrite) -> RuleConfig<SgLang> {
+-  let rule: SerializableRule = serde_json::from_str(r#"{"pattern": "a"}"#).unwrap();
++  let rule: SerializableRule = serde_json::from_str(r#"{"any": []}"#).unwrap();
+   let core = SerializableRuleCore {
+     rule,
+     constraints: None,
+-    fix: None,
++    fix: serde_json::from_str(r#""""#).unwrap(),
+     transform: None,
+     utils: None,
+   };
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -276,8 +269,7 @@ impl<P: Printer> Worker for ScanWithRule<P> {
+       let file_content = grep.source().to_string();
+       // do not exclude_fix rule in run_with_rule
+       let scanned = combined.scan(&grep, pre_scan, false);
+-      for (idx, matches) in scanned.matches {
+-        let rule = combined.get_rule(idx);
++      for (rule, matches) in scanned.matches {
+         if matches!(rule.severity, Severity::Error) {
+           error_count = error_count.saturating_add(matches.len());
+         }
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -309,12 +301,12 @@ impl<P: Printer> StdInWorker for ScanWithRule<P> {
+ }
+ fn match_rule_diff_on_file(
+   path: &Path,
+-  matches: Vec<(NodeMatch<StrDoc<SgLang>>, &RuleConfig<SgLang>)>,
++  matches: Vec<(&RuleConfig<SgLang>, NodeMatch<StrDoc<SgLang>>)>,
+   reporter: &impl Printer,
+ ) -> Result<()> {
+   let diffs = matches
+     .into_iter()
+-    .filter_map(|(m, rule)| {
++    .filter_map(|(rule, m)| {
+       let fix = rule.matcher.fixer.as_ref()?;
+       let diff = Diff::generate(m, &rule.matcher, fix);
+       Some((diff, rule))
+diff --git a/crates/config/src/combined.rs b/crates/config/src/combined.rs
+--- a/crates/config/src/combined.rs
++++ b/crates/config/src/combined.rs
+@@ -6,10 +6,52 @@ use ast_grep_core::{AstGrep, Doc, Matcher, Node, NodeMatch};
+ use bit_set::BitSet;
+ use std::collections::{HashMap, HashSet};
+ 
+-pub struct ScanResult<'r, D: Doc> {
+-  pub diffs: Vec<(usize, NodeMatch<'r, D>)>,
+-  pub matches: HashMap<usize, Vec<NodeMatch<'r, D>>>,
+-  pub unused_suppressions: Vec<NodeMatch<'r, D>>,
++pub struct ScanResult<'t, 'r, D: Doc, L: Language> {
++  pub diffs: Vec<(&'r RuleConfig<L>, NodeMatch<'t, D>)>,
++  pub matches: Vec<(&'r RuleConfig<L>, Vec<NodeMatch<'t, D>>)>,
++  pub unused_suppressions: Vec<NodeMatch<'t, D>>,
++}
++
++/// store the index to the rule and the matched node
++/// it will be converted to ScanResult by resolving the rule
++struct ScanResultInner<'t, D: Doc> {
++  diffs: Vec<(usize, NodeMatch<'t, D>)>,
++  matches: HashMap<usize, Vec<NodeMatch<'t, D>>>,
++  unused_suppressions: Vec<NodeMatch<'t, D>>,
++}
++
++impl<'t, D: Doc> ScanResultInner<'t, D> {
++  pub fn into_result<'r, L: Language>(
++    self,
++    combined: &CombinedScan<'r, L>,
++    separate_fix: bool,
++  ) -> ScanResult<'t, 'r, D, L> {
++    let mut diffs: Vec<_> = self
++      .diffs
++      .into_iter()
++      .map(|(idx, nm)| (combined.get_rule(idx), nm))
++      .collect();
++    let mut matches: Vec<_> = self
++      .matches
++      .into_iter()
++      .map(|(idx, nms)| (combined.get_rule(idx), nms))
++      .collect();
++    if let Some(rule) = combined.unused_suppression_rule {
++      if separate_fix {
++        diffs.extend(self.unused_suppressions.into_iter().map(|nm| (rule, nm)));
++        diffs.sort_unstable_by_key(|(_, nm)| nm.range().start);
++      } else {
++        let mut supprs = self.unused_suppressions;
++        supprs.sort_unstable_by_key(|nm| nm.range().start);
++        matches.push((rule, supprs));
++      }
++    }
++    ScanResult {
++      diffs,
++      matches,
++      unused_suppressions: vec![],
++    }
++  }
+ }
+ 
+ struct Suppressions(HashMap<usize, Suppression>);
+diff --git a/crates/config/src/combined.rs b/crates/config/src/combined.rs
+--- a/crates/config/src/combined.rs
++++ b/crates/config/src/combined.rs
+@@ -97,6 +139,8 @@ pub struct CombinedScan<'r, L: Language> {
+   rules: Vec<&'r RuleConfig<L>>,
+   /// a vec of vec, mapping from kind to a list of rule index
+   kind_rule_mapping: Vec<Vec<usize>>,
++  /// a rule for unused_suppressions
++  unused_suppression_rule: Option<&'r RuleConfig<L>>,
+ }
+ 
+ impl<'r, L: Language> CombinedScan<'r, L> {
+diff --git a/crates/config/src/combined.rs b/crates/config/src/combined.rs
+--- a/crates/config/src/combined.rs
++++ b/crates/config/src/combined.rs
+@@ -123,9 +167,14 @@ impl<'r, L: Language> CombinedScan<'r, L> {
+     Self {
+       rules,
+       kind_rule_mapping: mapping,
++      unused_suppression_rule: None,
+     }
+   }
+ 
++  pub fn set_unused_suppression_rule(&mut self, rule: &'r RuleConfig<L>) {
++    self.unused_suppression_rule = Some(rule);
++  }
++
+   pub fn find<D>(&self, root: &AstGrep<D>) -> PreScan
+   where
+     D: Doc<Lang = L>,
+diff --git a/crates/config/src/combined.rs b/crates/config/src/combined.rs
+--- a/crates/config/src/combined.rs
++++ b/crates/config/src/combined.rs
+@@ -159,11 +208,11 @@ impl<'r, L: Language> CombinedScan<'r, L> {
+     root: &'a AstGrep<D>,
+     pre: PreScan,
+     separate_fix: bool,
+-  ) -> ScanResult<'a, D>
++  ) -> ScanResult<'a, '_, D, L>
+   where
+     D: Doc<Lang = L>,
+   {
+-    let mut result = ScanResult {
++    let mut result = ScanResultInner {
+       diffs: vec![],
+       matches: HashMap::new(),
+       unused_suppressions: vec![],
+diff --git a/crates/config/src/combined.rs b/crates/config/src/combined.rs
+--- a/crates/config/src/combined.rs
++++ b/crates/config/src/combined.rs
+@@ -215,10 +264,10 @@ impl<'r, L: Language> CombinedScan<'r, L> {
+         }
+       })
+       .collect();
+-    result
++    result.into_result(self, separate_fix)
+   }
+ 
+-  pub fn get_rule(&self, idx: usize) -> &RuleConfig<L> {
++  pub fn get_rule(&self, idx: usize) -> &'r RuleConfig<L> {
+     self.rules[idx]
+   }
+ }
+diff --git a/crates/lsp/src/lib.rs b/crates/lsp/src/lib.rs
+--- a/crates/lsp/src/lib.rs
++++ b/crates/lsp/src/lib.rs
+@@ -205,8 +205,7 @@ impl<L: LSPLang> Backend<L> {
+     let pre_scan = scan.find(&versioned.root);
+     let matches = scan.scan(&versioned.root, pre_scan, false).matches;
+     let mut diagnostics = vec![];
+-    for (id, ms) in matches {
+-      let rule = scan.get_rule(id);
++    for (rule, ms) in matches {
+       let to_diagnostic = |m| convert_match_to_diagnostic(m, rule);
+       diagnostics.extend(ms.into_iter().map(to_diagnostic));
+     }

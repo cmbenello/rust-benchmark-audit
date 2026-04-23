@@ -1,0 +1,301 @@
+2026-04-17 09:22:39,338 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-399
+Building instance image rustbench/rinja-rs__askama:pr-399 for rinja-rs__askama-399
+2026-04-17 09:35:03,607 - INFO - Creating container for rinja-rs__askama-399...
+2026-04-17 09:35:09,844 - INFO - Container for rinja-rs__askama-399 created: 89c03e657c33abd896ce3cfcd65c3ac35457b702c1f2056cceea8d5e84b6c20c
+2026-04-17 09:35:09,999 - INFO - Container for rinja-rs__askama-399 started: 89c03e657c33abd896ce3cfcd65c3ac35457b702c1f2056cceea8d5e84b6c20c
+2026-04-17 09:35:09,999 - INFO - Intermediate patch for rinja-rs__askama-399 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-399/patch.diff, now applying to container...
+2026-04-17 09:35:10,181 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/heritage.rs...
+Checking patch askama_shared/src/parser.rs...
+Checking patch askama_shared/src/parser.rs...
+Checking patch askama_shared/src/parser.rs...
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/heritage.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+
+2026-04-17 09:35:10,235 - INFO - Git diff before:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index 6a185c1..320e55e 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -444,8 +444,8 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+                 Node::Cond(ref conds, ws) => {
+                     self.write_cond(ctx, buf, conds, ws)?;
+                 }
+-                Node::Match(ws1, ref expr, inter, ref arms, ws2) => {
+-                    self.write_match(ctx, buf, ws1, expr, inter, arms, ws2)?;
++                Node::Match(ws1, ref expr, ref arms, ws2) => {
++                    self.write_match(ctx, buf, ws1, expr, arms, ws2)?;
+                 }
+                 Node::Loop(ws1, ref var, ref iter, ref body, ws2) => {
+                     self.write_loop(ctx, buf, ws1, var, iter, body, ws2)?;
+@@ -561,23 +561,28 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+         buf: &mut Buffer,
+         ws1: WS,
+         expr: &Expr,
+-        inter: Option<&'a str>,
+         arms: &'a [When],
+         ws2: WS,
+     ) -> Result<usize, CompileError> {
+         self.flush_ws(ws1);
+         let flushed = self.write_buf_writable(buf)?;
+         let mut arm_sizes = Vec::new();
+-        if let Some(inter) = inter {
+-            if !inter.is_empty() {
+-                self.next_ws = Some(inter);
+-            }
+-        }
+ 
+         let expr_code = self.visit_expr_root(expr)?;
+         buf.writeln(&format!("match &{} {{", expr_code))?;
+-        for arm in arms {
++
++        let mut arm_size = 0;
++        for (i, arm) in arms.iter().enumerate() {
+             let &(ws, ref variant, ref params, ref body) = arm;
++            self.handle_ws(ws);
++
++            if i > 0 {
++                arm_sizes.push(arm_size + self.write_buf_writable(buf)?);
++
++                buf.writeln("}")?;
++                self.locals.pop();
++            }
++
+             self.locals.push();
+             match *variant {
+                 Some(ref param) => {
+@@ -624,15 +629,17 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+                 }
+             }
+             buf.writeln(" => {")?;
+-            self.handle_ws(ws);
+-            let arm_size = self.handle(ctx, body, buf, AstLevel::Nested)?;
+-            arm_sizes.push(arm_size + self.write_buf_writable(buf)?);
+-            buf.writeln("}")?;
+-            self.locals.pop();
++
++            arm_size = self.handle(ctx, body, buf, AstLevel::Nested)?;
+         }
+ 
+-        buf.writeln("}")?;
+         self.handle_ws(ws2);
++        arm_sizes.push(arm_size + self.write_buf_writable(buf)?);
++        buf.writeln("}")?;
++        self.locals.pop();
++
++        buf.writeln("}")?;
++
+         Ok(flushed + median(&mut arm_sizes))
+     }
+ 
+diff --git a/askama_shared/src/heritage.rs b/askama_shared/src/heritage.rs
+index bc9e701..87f23e0 100644
+--- a/askama_shared/src/heritage.rs
++++ b/askama_shared/src/heritage.rs
+@@ -89,7 +89,7 @@ impl<'a> Context<'a> {
+                     Node::Loop(_, _, _, nodes, _) => {
+                         nested.push(nodes);
+                     }
+-                    Node::Match(_, _, _, arms, _) => {
++                    Node::Match(_, _, arms, _) => {
+                         for (_, _, _, arm) in arms {
+                             nested.push(arm);
+                         }
+diff --git a/askama_shared/src/parser.rs b/askama_shared/src/parser.rs
+index 8210ed0..a40e967 100644
+--- a/askama_shared/src/parser.rs
++++ b/askama_shared/src/parser.rs
+@@ -19,7 +19,7 @@ pub enum Node<'a> {
+     LetDecl(WS, Target<'a>),
+     Let(WS, Target<'a>, Expr<'a>),
+     Cond(Vec<(WS, Option<Expr<'a>>, Vec<Node<'a>>)>, WS),
+-    Match(WS, Expr<'a>, Option<&'a str>, Vec<When<'a>>, WS),
++    Match(WS, Expr<'a>, Vec<When<'a>>, WS),
+     Loop(WS, Target<'a>, Expr<'a>, Vec<Node<'a>>, WS),
+     Extends(Expr<'a>),
+     BlockDef(WS, &'a str, Vec<Node<'a>>, WS),
+@@ -771,8 +771,8 @@ fn block_match<'a>(i: &'a [u8], s: &'a Syntax<'a>) -> IResult<&'a [u8], Node<'a>
+         arms.push(arm);
+     }
+ 
+-    let inter = match inter {
+-        Some(Node::Lit(lws, val, rws)) => {
++    match inter {
++        Some(Node::Lit(_, val, rws)) => {
+             assert!(
+                 val.is_empty(),
+                 "only whitespace allowed between match and first when, found {}",
+@@ -783,18 +783,16 @@ fn block_match<'a>(i: &'a [u8], s: &'a Syntax<'a>) -> IResult<&'a [u8], Node<'a>
+                 "only whitespace allowed between match and first when, found {}",
+                 rws
+             );
+-            Some(lws)
+         }
+-        None => None,
++        None => {}
+         _ => panic!("only literals allowed between match and first when"),
+-    };
++    }
+ 
+     Ok((
+         i,
+         Node::Match(
+             WS(pws1.is_some(), nws1.is_some()),
+             expr,
+-            inter,
+             arms,
+             WS(pws2.is_some(), nws2.is_some()),
+         ),
+2026-04-17 09:35:10,235 - INFO - Eval script for rinja-rs__askama-399 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-399/eval.sh; copying to container...
+2026-04-17 09:35:48,818 - INFO - Test runtime: 38.39 seconds
+2026-04-17 09:35:48,819 - INFO - Test output for rinja-rs__askama-399 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-399/test_output.txt
+2026-04-17 09:35:49,056 - INFO - Git diff after:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index 6a185c1..320e55e 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -444,8 +444,8 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+                 Node::Cond(ref conds, ws) => {
+                     self.write_cond(ctx, buf, conds, ws)?;
+                 }
+-                Node::Match(ws1, ref expr, inter, ref arms, ws2) => {
+-                    self.write_match(ctx, buf, ws1, expr, inter, arms, ws2)?;
++                Node::Match(ws1, ref expr, ref arms, ws2) => {
++                    self.write_match(ctx, buf, ws1, expr, arms, ws2)?;
+                 }
+                 Node::Loop(ws1, ref var, ref iter, ref body, ws2) => {
+                     self.write_loop(ctx, buf, ws1, var, iter, body, ws2)?;
+@@ -561,23 +561,28 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+         buf: &mut Buffer,
+         ws1: WS,
+         expr: &Expr,
+-        inter: Option<&'a str>,
+         arms: &'a [When],
+         ws2: WS,
+     ) -> Result<usize, CompileError> {
+         self.flush_ws(ws1);
+         let flushed = self.write_buf_writable(buf)?;
+         let mut arm_sizes = Vec::new();
+-        if let Some(inter) = inter {
+-            if !inter.is_empty() {
+-                self.next_ws = Some(inter);
+-            }
+-        }
+ 
+         let expr_code = self.visit_expr_root(expr)?;
+         buf.writeln(&format!("match &{} {{", expr_code))?;
+-        for arm in arms {
++
++        let mut arm_size = 0;
++        for (i, arm) in arms.iter().enumerate() {
+             let &(ws, ref variant, ref params, ref body) = arm;
++            self.handle_ws(ws);
++
++            if i > 0 {
++                arm_sizes.push(arm_size + self.write_buf_writable(buf)?);
++
++                buf.writeln("}")?;
++                self.locals.pop();
++            }
++
+             self.locals.push();
+             match *variant {
+                 Some(ref param) => {
+@@ -624,15 +629,17 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+                 }
+             }
+             buf.writeln(" => {")?;
+-            self.handle_ws(ws);
+-            let arm_size = self.handle(ctx, body, buf, AstLevel::Nested)?;
+-            arm_sizes.push(arm_size + self.write_buf_writable(buf)?);
+-            buf.writeln("}")?;
+-            self.locals.pop();
++
++            arm_size = self.handle(ctx, body, buf, AstLevel::Nested)?;
+         }
+ 
+-        buf.writeln("}")?;
+         self.handle_ws(ws2);
++        arm_sizes.push(arm_size + self.write_buf_writable(buf)?);
++        buf.writeln("}")?;
++        self.locals.pop();
++
++        buf.writeln("}")?;
++
+         Ok(flushed + median(&mut arm_sizes))
+     }
+ 
+diff --git a/askama_shared/src/heritage.rs b/askama_shared/src/heritage.rs
+index bc9e701..87f23e0 100644
+--- a/askama_shared/src/heritage.rs
++++ b/askama_shared/src/heritage.rs
+@@ -89,7 +89,7 @@ impl<'a> Context<'a> {
+                     Node::Loop(_, _, _, nodes, _) => {
+                         nested.push(nodes);
+                     }
+-                    Node::Match(_, _, _, arms, _) => {
++                    Node::Match(_, _, arms, _) => {
+                         for (_, _, _, arm) in arms {
+                             nested.push(arm);
+                         }
+diff --git a/askama_shared/src/parser.rs b/askama_shared/src/parser.rs
+index 8210ed0..a40e967 100644
+--- a/askama_shared/src/parser.rs
++++ b/askama_shared/src/parser.rs
+@@ -19,7 +19,7 @@ pub enum Node<'a> {
+     LetDecl(WS, Target<'a>),
+     Let(WS, Target<'a>, Expr<'a>),
+     Cond(Vec<(WS, Option<Expr<'a>>, Vec<Node<'a>>)>, WS),
+-    Match(WS, Expr<'a>, Option<&'a str>, Vec<When<'a>>, WS),
++    Match(WS, Expr<'a>, Vec<When<'a>>, WS),
+     Loop(WS, Target<'a>, Expr<'a>, Vec<Node<'a>>, WS),
+     Extends(Expr<'a>),
+     BlockDef(WS, &'a str, Vec<Node<'a>>, WS),
+@@ -771,8 +771,8 @@ fn block_match<'a>(i: &'a [u8], s: &'a Syntax<'a>) -> IResult<&'a [u8], Node<'a>
+         arms.push(arm);
+     }
+ 
+-    let inter = match inter {
+-        Some(Node::Lit(lws, val, rws)) => {
++    match inter {
++        Some(Node::Lit(_, val, rws)) => {
+             assert!(
+                 val.is_empty(),
+                 "only whitespace allowed between match and first when, found {}",
+@@ -783,18 +783,16 @@ fn block_match<'a>(i: &'a [u8], s: &'a Syntax<'a>) -> IResult<&'a [u8], Node<'a>
+                 "only whitespace allowed between match and first when, found {}",
+                 rws
+             );
+-            Some(lws)
+         }
+-        None => None,
++        None => {}
+         _ => panic!("only literals allowed between match and first when"),
+-    };
++    }
+ 
+     Ok((
+         i,
+         Node::Match(
+             WS(pws1.is_some(), nws1.is_some()),
+             expr,
+-            inter,
+             arms,
+             WS(pws2.is_some(), nws2.is_some()),
+         ),
+2026-04-17 09:35:49,056 - INFO - Grading answer for rinja-rs__askama-399...
+2026-04-17 09:35:49,056 - INFO - report: {'rinja-rs__askama-399': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_match_custom_enum', 'test_match_literal_char', 'test_match_literal', 'test_match_literal_num', 'test_match_option', 'test_match_ref_deref', 'test_extra_whitespace', 'test_match_ws'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_match_no_whitespace', 'test_cond_ws'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-399: resolved: True
+2026-04-17 09:35:49,056 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-399.gold_run1...
+2026-04-17 09:36:52,930 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-399.gold_run1...
+2026-04-17 09:36:52,992 - INFO - Container rustb.eval.rinja-rs__askama-399.gold_run1 removed.
+2026-04-17 09:36:52,992 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-399...
+2026-04-17 09:36:54,041 - INFO - Image rustbench/rinja-rs__askama:pr-399 removed.

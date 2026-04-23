@@ -1,0 +1,12 @@
+diff --git a/src/weekday.rs b/src/weekday.rs
+--- a/src/weekday.rs
++++ b/src/weekday.rs
+@@ -171,7 +171,7 @@ impl Weekday {
+ 
+ impl fmt::Display for Weekday {
+     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+-        f.write_str(match *self {
++        f.pad(match *self {
+             Weekday::Mon => "Mon",
+             Weekday::Tue => "Tue",
+             Weekday::Wed => "Wed",

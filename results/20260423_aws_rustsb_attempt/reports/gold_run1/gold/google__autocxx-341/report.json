@@ -1,0 +1,39 @@
+{
+    "google__autocxx-341": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "conversion::analysis::fun::overload_tracker::tests::test_by_function",
+                    "conversion::analysis::fun::overload_tracker::tests::test_by_method",
+                    "conversion::analysis::fun::rust_name_tracker::tests::test",
+                    "conversion::codegen_rs::namespace_organizer::tests::test_ns_entries_sort",
+                    "conversion::analysis::fun::bridge_name_tracker::tests::test",
+                    "conversion::analysis::pod::byvalue_checker::tests::test_primitive_by_itself",
+                    "conversion::analysis::pod::byvalue_checker::tests::test_with_cxxstring",
+                    "conversion::analysis::pod::byvalue_checker::tests::test_primitives",
+                    "conversion::analysis::pod::byvalue_checker::tests::test_nested_primitives",
+                    "conversion::analysis::pod::byvalue_checker::tests::test_with_up",
+                    "integration_tests::test_negative_rs_nonsense",
+                    "types::tests::test_ints"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

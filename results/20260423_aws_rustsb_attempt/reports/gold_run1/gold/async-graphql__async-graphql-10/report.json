@@ -1,0 +1,56 @@
+{
+    "async-graphql__async-graphql-10": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "http::tests::test_request",
+                    "http::tests::test_request_with_operation_name",
+                    "http::tests::test_response_data",
+                    "http::tests::test_request_with_variables",
+                    "http::tests::test_response_error",
+                    "scalars::tests::test_scalar_type",
+                    "types::list::tests::test_list_type",
+                    "http::tests::test_response_error_with_pos",
+                    "types::optional::tests::test_optional_type",
+                    "test_enum_type",
+                    "test_input_object_default_value",
+                    "test_list_type",
+                    "test_optional_type",
+                    "test_u16_scalar",
+                    "test_u8_scalar",
+                    "test_bool_scalar",
+                    "test_f64_scalar",
+                    "test_i16_scalar",
+                    "test_f32_scalar",
+                    "test_u32_scalar",
+                    "test_i64_scalar",
+                    "test_u64_scalar",
+                    "test_i32_scalar",
+                    "test_i8_scalar",
+                    "src/validators/mod.rs - validators::InputValueValidator (line 15)",
+                    "src/base.rs - base::Scalar (line 97)",
+                    "src/types/empty_mutation.rs - types::empty_mutation::EmptyMutation (line 13)",
+                    "src/registry.rs - registry::CacheControl (line 87)",
+                    "src/lib.rs - types::connection::DataSource (line 10)"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

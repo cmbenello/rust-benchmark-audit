@@ -1,0 +1,143 @@
+2026-04-17 02:36:53,622 - INFO - Environment image rustb.env.x86_64.aya-rs_aya:latest found for aya-rs__aya-774
+Building instance image rustbench/aya-rs__aya:pr-774 for aya-rs__aya-774
+2026-04-17 02:54:04,110 - INFO - Creating container for aya-rs__aya-774...
+2026-04-17 02:54:04,175 - INFO - Container for aya-rs__aya-774 created: 957aeb52eab733fb3bb031ed3eccfba1628b14ab886d341266c879e561acd26a
+2026-04-17 02:54:04,346 - INFO - Container for aya-rs__aya-774 started: 957aeb52eab733fb3bb031ed3eccfba1628b14ab886d341266c879e561acd26a
+2026-04-17 02:54:04,346 - INFO - Intermediate patch for aya-rs__aya-774 written to logs/run_evaluation/gold_20260417_023105/gold/aya-rs__aya-774/patch.diff, now applying to container...
+2026-04-17 02:54:04,584 - INFO - >>>>> Applied Patch:
+Checking patch aya/src/maps/mod.rs...
+Checking patch aya/src/maps/mod.rs...
+Checking patch aya/src/maps/mod.rs...
+Checking patch aya/src/maps/mod.rs...
+Applied patch aya/src/maps/mod.rs cleanly.
+Applied patch aya/src/maps/mod.rs cleanly.
+Applied patch aya/src/maps/mod.rs cleanly.
+Applied patch aya/src/maps/mod.rs cleanly.
+
+2026-04-17 02:54:04,706 - INFO - Git diff before:
+diff --git a/aya/src/maps/mod.rs b/aya/src/maps/mod.rs
+index cd082530..4d8183e9 100644
+--- a/aya/src/maps/mod.rs
++++ b/aya/src/maps/mod.rs
+@@ -291,9 +291,9 @@ macro_rules! impl_try_from_map {
+     // rather than the repeated idents used later because the macro language does not allow one
+     // repetition to be pasted inside another.
+     ($ty_param:tt {
+-        $($ty:ident $(from $variant:ident)?),+ $(,)?
++        $($ty:ident $(from $($variant:ident)|+)?),+ $(,)?
+     }) => {
+-        $(impl_try_from_map!(<$ty_param> $ty $(from $variant)?);)+
++        $(impl_try_from_map!(<$ty_param> $ty $(from $($variant)|+)?);)+
+     };
+     // Add the "from $variant" using $ty as the default if it is missing.
+     (<$ty_param:tt> $ty:ident) => {
+@@ -301,17 +301,17 @@ macro_rules! impl_try_from_map {
+     };
+     // Dispatch for each of the lifetimes.
+     (
+-        <($($ty_param:ident),*)> $ty:ident from $variant:ident
++        <($($ty_param:ident),*)> $ty:ident from $($variant:ident)|+
+     ) => {
+-        impl_try_from_map!(<'a> ($($ty_param),*) $ty from $variant);
+-        impl_try_from_map!(<'a mut> ($($ty_param),*) $ty from $variant);
+-        impl_try_from_map!(<> ($($ty_param),*) $ty from $variant);
++        impl_try_from_map!(<'a> ($($ty_param),*) $ty from $($variant)|+);
++        impl_try_from_map!(<'a mut> ($($ty_param),*) $ty from $($variant)|+);
++        impl_try_from_map!(<> ($($ty_param),*) $ty from $($variant)|+);
+     };
+     // An individual impl.
+     (
+         <$($l:lifetime $($m:ident)?)?>
+         ($($ty_param:ident),*)
+-        $ty:ident from $variant:ident
++        $ty:ident from $($variant:ident)|+
+     ) => {
+         impl<$($l,)? $($ty_param: Pod),*> TryFrom<$(&$l $($m)?)? Map>
+             for $ty<$(&$l $($m)?)? MapData, $($ty_param),*>
+@@ -320,7 +320,7 @@ macro_rules! impl_try_from_map {
+ 
+             fn try_from(map: $(&$l $($m)?)? Map) -> Result<Self, Self::Error> {
+                 match map {
+-                    Map::$variant(map_data) => Self::new(map_data),
++                    $(Map::$variant(map_data) => Self::new(map_data),)+
+                     map => Err(MapError::InvalidMapType {
+                         map_type: map.map_type()
+                     }),
+@@ -353,8 +353,8 @@ impl_try_from_map!((V) {
+ });
+ 
+ impl_try_from_map!((K, V) {
+-    HashMap,
+-    PerCpuHashMap,
++    HashMap from HashMap|LruHashMap,
++    PerCpuHashMap from PerCpuHashMap|PerCpuLruHashMap,
+     LpmTrie,
+ });
+2026-04-17 02:54:04,706 - INFO - Eval script for aya-rs__aya-774 written to logs/run_evaluation/gold_20260417_023105/gold/aya-rs__aya-774/eval.sh; copying to container...
+2026-04-17 02:55:23,028 - INFO - Test runtime: 78.19 seconds
+2026-04-17 02:55:23,028 - INFO - Test output for aya-rs__aya-774 written to logs/run_evaluation/gold_20260417_023105/gold/aya-rs__aya-774/test_output.txt
+2026-04-17 02:56:23,797 - INFO - Git diff after:
+diff --git a/aya/src/maps/mod.rs b/aya/src/maps/mod.rs
+index cd082530..4d8183e9 100644
+--- a/aya/src/maps/mod.rs
++++ b/aya/src/maps/mod.rs
+@@ -291,9 +291,9 @@ macro_rules! impl_try_from_map {
+     // rather than the repeated idents used later because the macro language does not allow one
+     // repetition to be pasted inside another.
+     ($ty_param:tt {
+-        $($ty:ident $(from $variant:ident)?),+ $(,)?
++        $($ty:ident $(from $($variant:ident)|+)?),+ $(,)?
+     }) => {
+-        $(impl_try_from_map!(<$ty_param> $ty $(from $variant)?);)+
++        $(impl_try_from_map!(<$ty_param> $ty $(from $($variant)|+)?);)+
+     };
+     // Add the "from $variant" using $ty as the default if it is missing.
+     (<$ty_param:tt> $ty:ident) => {
+@@ -301,17 +301,17 @@ macro_rules! impl_try_from_map {
+     };
+     // Dispatch for each of the lifetimes.
+     (
+-        <($($ty_param:ident),*)> $ty:ident from $variant:ident
++        <($($ty_param:ident),*)> $ty:ident from $($variant:ident)|+
+     ) => {
+-        impl_try_from_map!(<'a> ($($ty_param),*) $ty from $variant);
+-        impl_try_from_map!(<'a mut> ($($ty_param),*) $ty from $variant);
+-        impl_try_from_map!(<> ($($ty_param),*) $ty from $variant);
++        impl_try_from_map!(<'a> ($($ty_param),*) $ty from $($variant)|+);
++        impl_try_from_map!(<'a mut> ($($ty_param),*) $ty from $($variant)|+);
++        impl_try_from_map!(<> ($($ty_param),*) $ty from $($variant)|+);
+     };
+     // An individual impl.
+     (
+         <$($l:lifetime $($m:ident)?)?>
+         ($($ty_param:ident),*)
+-        $ty:ident from $variant:ident
++        $ty:ident from $($variant:ident)|+
+     ) => {
+         impl<$($l,)? $($ty_param: Pod),*> TryFrom<$(&$l $($m)?)? Map>
+             for $ty<$(&$l $($m)?)? MapData, $($ty_param),*>
+@@ -320,7 +320,7 @@ macro_rules! impl_try_from_map {
+ 
+             fn try_from(map: $(&$l $($m)?)? Map) -> Result<Self, Self::Error> {
+                 match map {
+-                    Map::$variant(map_data) => Self::new(map_data),
++                    $(Map::$variant(map_data) => Self::new(map_data),)+
+                     map => Err(MapError::InvalidMapType {
+                         map_type: map.map_type()
+                     }),
+@@ -353,8 +353,8 @@ impl_try_from_map!((V) {
+ });
+ 
+ impl_try_from_map!((K, V) {
+-    HashMap,
+-    PerCpuHashMap,
++    HashMap from HashMap|LruHashMap,
++    PerCpuHashMap from PerCpuHashMap|PerCpuLruHashMap,
+     LpmTrie,
+ });
+2026-04-17 02:56:23,798 - INFO - Grading answer for aya-rs__aya-774...
+2026-04-17 02:56:23,801 - INFO - report: {'aya-rs__aya-774': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['maps::hash_map::hash_map::tests::test_try_from_ok_lru', 'maps::hash_map::per_cpu_hash_map::tests::test_try_from_ok_lru'], 'failure': []}, 'PASS_TO_PASS': {'success': ['maps::bloom_filter::tests::test_contains_not_found', 'maps::bloom_filter::tests::test_contains_syscall_error', 'maps::bloom_filter::tests::test_insert_ok', 'maps::bloom_filter::tests::test_insert_syscall_error', 'maps::bloom_filter::tests::test_new_ok', 'maps::bloom_filter::tests::test_try_from_ok', 'maps::bloom_filter::tests::test_try_from_wrong_map', 'maps::bloom_filter::tests::test_wrong_value_size', 'maps::hash_map::hash_map::tests::test_get_not_found', 'maps::hash_map::hash_map::tests::test_get_syscall_error', 'maps::hash_map::hash_map::tests::test_insert_boxed_ok', 'maps::hash_map::hash_map::tests::test_insert_ok', 'maps::hash_map::hash_map::tests::test_insert_syscall_error', 'maps::hash_map::hash_map::tests::test_iter', 'maps::hash_map::hash_map::tests::test_iter_key_deleted', 'maps::hash_map::hash_map::tests::test_iter_key_error', 'maps::hash_map::hash_map::tests::test_iter_value_error', 'maps::hash_map::hash_map::tests::test_keys', 'maps::hash_map::hash_map::tests::test_keys_empty', 'maps::hash_map::hash_map::tests::test_keys_error', 'maps::hash_map::hash_map::tests::test_new_ok', 'maps::hash_map::hash_map::tests::test_remove_ok', 'maps::hash_map::hash_map::tests::test_remove_syscall_error', 'maps::hash_map::hash_map::tests::test_try_from_ok', 'maps::hash_map::hash_map::tests::test_try_from_wrong_map', 'maps::hash_map::hash_map::tests::test_try_from_wrong_map_values', 'maps::hash_map::hash_map::tests::test_wrong_key_size', 'maps::hash_map::hash_map::tests::test_wrong_value_size', 'maps::hash_map::per_cpu_hash_map::tests::test_try_from_ok', 'maps::lpm_trie::tests::test_get_not_found', 'maps::lpm_trie::tests::test_get_syscall_error', 'maps::lpm_trie::tests::test_insert_ok', 'maps::lpm_trie::tests::test_insert_syscall_error', 'maps::lpm_trie::tests::test_new_ok', 'maps::lpm_trie::tests::test_remove_ok', 'maps::lpm_trie::tests::test_remove_syscall_error', 'maps::lpm_trie::tests::test_try_from_ok', 'maps::lpm_trie::tests::test_try_from_wrong_map', 'maps::lpm_trie::tests::test_wrong_key_size', 'maps::lpm_trie::tests::test_wrong_value_size', 'maps::perf::perf_buffer::tests::test_invalid_page_count', 'maps::perf::perf_buffer::tests::test_no_events', 'maps::perf::perf_buffer::tests::test_no_out_bufs', 'maps::perf::perf_buffer::tests::test_read_first_sample', 'maps::perf::perf_buffer::tests::test_read_first_lost', 'maps::perf::perf_buffer::tests::test_read_many_with_many_reads', 'maps::perf::perf_buffer::tests::test_read_last_sample', 'maps::perf::perf_buffer::tests::test_read_many_with_one_read', 'maps::perf::perf_buffer::tests::test_read_wrapping_sample_size', 'maps::perf::perf_buffer::tests::test_read_wrapping_value', 'maps::tests::test_create', 'maps::tests::test_create_failed', 'programs::links::tests::test_already_attached', 'programs::links::tests::test_drop_detach', 'programs::links::tests::test_link_map', 'programs::links::tests::test_not_attached', 'programs::links::tests::test_owned_detach', 'sys::bpf::tests::test_perf_link_supported', 'sys::netlink::tests::test_nlattr_iterator_empty', 'sys::netlink::tests::test_nested_attrs', 'sys::netlink::tests::test_nlattr_iterator_many', 'programs::links::tests::test_pin', 'sys::netlink::tests::test_nlattr_iterator_nested', 'sys::netlink::tests::test_nlattr_iterator_one', 'util::tests::test_parse_kernel_version_string', 'util::tests::test_parse_kernel_symbols', 'util::tests::test_parse_online_cpus', 'programs::uprobe::test_resolve_attach_path', 'aya/src/bpf.rs - bpf::Bpf::program_mut (line 879) - compile', "aya/src/bpf.rs - bpf::BpfLoader<'a>::set_global (line 248) - compile", 'aya/src/bpf.rs - bpf::BpfLoader (line 116) - compile', 'aya/src/programs/mod.rs - programs (line 16) - compile', 'aya/src/maps/hash_map/hash_map.rs - maps::hash_map::hash_map::HashMap (line 20) - compile', 'aya/src/programs/links.rs - programs::links::FdLink (line 95) - compile', 'aya/src/bpf.rs - bpf::Bpf::programs (line 895) - compile', 'aya/src/util.rs - util::syscall_prefix (line 239) - compile', 'aya/src/programs/xdp.rs - programs::xdp::Xdp (line 71) - compile', "aya/src/bpf.rs - bpf::BpfLoader<'a>::map_pin_path (line 228) - compile", 'aya/src/bpf.rs - bpf::Bpf::programs_mut (line 913) - compile', 'aya/src/maps/mod.rs - maps::PerCpuValues (line 671) - compile', 'aya/src/programs/socket_filter.rs - programs::socket_filter::SocketFilter (line 37) - compile', 'aya/src/programs/sk_lookup.rs - programs::sk_lookup::SkLookup (line 25) - compile', 'aya/src/maps/array/program_array.rs - maps::array::program_array::ProgramArray (line 25) - compile', 'aya/src/programs/cgroup_sysctl.rs - programs::cgroup_sysctl::CgroupSysctl (line 25) - compile', "aya/src/bpf.rs - bpf::BpfLoader<'a>::set_max_entries (line 298) - compile", 'aya/src/programs/fexit.rs - programs::fexit::FExit (line 26) - compile', 'aya/src/maps/hash_map/per_cpu_hash_map.rs - maps::hash_map::per_cpu_hash_map::PerCpuHashMap (line 27) - compile', 'aya/src/maps/stack_trace.rs - maps::stack_trace::StackTraceMap (line 24) - compile', 'aya/src/bpf.rs - bpf::Bpf::program (line 862) - compile', 'aya/src/maps/sock/sock_map.rs - maps::sock::sock_map::SockMap (line 28) - compile', 'aya/src/maps/sock/sock_hash.rs - maps::sock::sock_hash::SockHash (line 30) - compile', 'aya/src/programs/lsm.rs - programs::lsm::Lsm (line 28) - compile', 'aya/src/programs/cgroup_device.rs - programs::cgroup_device::CgroupDevice (line 27) - compile', 'aya/src/maps/lpm_trie.rs - maps::lpm_trie::Key (line 59) - compile', 'aya/src/maps/lpm_trie.rs - maps::lpm_trie::LpmTrie (line 21) - compile', 'aya/src/programs/raw_trace_point.rs - programs::raw_trace_point::RawTracePoint (line 26) - compile', "aya/src/bpf.rs - bpf::BpfLoader<'a>::load_file (line 356) - compile", 'aya/src/programs/cgroup_sock.rs - programs::cgroup_sock::CgroupSock (line 30) - compile', 'aya/src/bpf.rs - bpf::Bpf::load (line 782) - compile', "aya/src/bpf.rs - bpf::BpfLoader<'a>::allow_unsupported_maps (line 207) - compile", "aya/src/bpf.rs - bpf::BpfLoader<'a>::set_global (line 255) - compile", 'aya/src/programs/tc.rs - programs::tc::SchedClassifier (line 48) - compile', 'aya/src/bpf.rs - bpf::Bpf::load_file (line 760) - compile', "aya/src/bpf.rs - bpf::BpfLoader<'a>::set_global (line 271) - compile", 'aya/src/programs/lirc_mode2.rs - programs::lirc_mode2::LircMode2 (line 23) - compile', 'aya/src/maps/lpm_trie.rs - maps::lpm_trie::Key<K>::new (line 82) - compile', 'aya/src/programs/cgroup_sock_addr.rs - programs::cgroup_sock_addr::CgroupSockAddr (line 31) - compile', 'aya/src/maps/perf/perf_event_array.rs - maps::perf::perf_event_array::PerfEventArray (line 84) - compile', "aya/src/bpf.rs - bpf::BpfLoader<'a>::btf (line 182) - compile", 'aya/src/bpf.rs - bpf::Bpf::maps (line 838) - compile', 'aya/src/maps/mod.rs - maps (line 20) - compile', 'aya/src/programs/extension.rs - programs::extension::Extension (line 37) - compile', 'aya/src/maps/stack.rs - maps::stack::Stack (line 20) - compile', 'aya/src/programs/cgroup_sockopt.rs - programs::cgroup_sockopt::CgroupSockopt (line 28) - compile', 'aya/src/programs/links.rs - programs::links::FdLink::pin (line 127) - compile', 'aya/src/programs/cgroup_skb.rs - programs::cgroup_skb::CgroupSkb (line 32) - compile', 'aya/src/programs/trace_point.rs - programs::trace_point::TracePoint (line 42) - compile', 'aya/src/programs/sock_ops.rs - programs::sock_ops::SockOps (line 24) - compile', 'aya/src/programs/tp_btf.rs - programs::tp_btf::BtfTracePoint (line 25) - compile', 'aya/src/maps/array/array.rs - maps::array::array::Array (line 22) - compile', 'aya/src/maps/hash_map/per_cpu_hash_map.rs - maps::hash_map::per_cpu_hash_map::PerCpuHashMap<T,K,V>::insert (line 91) - compile', "aya/src/bpf.rs - bpf::BpfLoader<'a>::load (line 374) - compile", 'aya/src/programs/sk_msg.rs - programs::sk_msg::SkMsg (line 26) - compile', 'aya/src/programs/tc.rs - programs::tc::SchedClassifierLink::attached (line 262) - compile', 'aya/src/maps/queue.rs - maps::queue::Queue (line 20) - compile', 'aya/src/programs/sk_skb.rs - programs::sk_skb::SkSkb (line 39) - compile', 'aya/src/programs/fentry.rs - programs::fentry::FEntry (line 26) - compile', 'aya/src/maps/array/per_cpu_array.rs - maps::array::per_cpu_array::PerCpuArray (line 22) - compile', 'aya/src/maps/perf/async_perf_event_array.rs - maps::perf::async_perf_event_array::AsyncPerfEventArray (line 38) - compile', 'aya/src/programs/perf_event.rs - programs::perf_event::PerfEvent (line 92) - compile', 'aya/src/maps/bloom_filter.rs - maps::bloom_filter::BloomFilter (line 21) - compile', "aya/src/bpf.rs - bpf::BpfLoader<'a>::verifier_log_level (line 338) - compile", "aya/src/bpf.rs - bpf::BpfLoader<'a>::extension (line 320) - compile", 'aya/src/programs/kprobe.rs - programs::kprobe::KProbe (line 36) - compile', 'aya/src/programs/mod.rs - programs::loaded_programs (line 1100)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for aya-rs__aya-774: resolved: True
+2026-04-17 02:56:23,804 - INFO - Attempting to stop container rustb.eval.aya-rs__aya-774.gold_20260417_023105...
+2026-04-17 02:56:57,522 - INFO - Attempting to remove container rustb.eval.aya-rs__aya-774.gold_20260417_023105...
+2026-04-17 02:56:57,601 - INFO - Container rustb.eval.aya-rs__aya-774.gold_20260417_023105 removed.
