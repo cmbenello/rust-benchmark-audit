@@ -198,15 +198,39 @@ def _prepare_local_dataset_for_job(
                 ds = load_dataset(benchmark, split="train")
             ds_rows = [dict(row) for row in ds if row.get("instance_id") in instance_ids]
 
+        # For repos that swebench already ships specs for, specs are keyed by
+        # the PR/pull number rather than the project's own semver. Rustbench
+        # rows carry the project semver in `version` (e.g. "0.6"), which
+        # doesn't match upstream spec keys. Override with the pull-number
+        # when upstream has a matching spec so the harness finds it.
+        try:
+            from swebench.harness.constants import MAP_REPO_VERSION_TO_SPECS
+            _upstream_specs = MAP_REPO_VERSION_TO_SPECS
+        except Exception:
+            _upstream_specs = {}
+
         rows = []
         inferred_versions = 0
+        overridden_versions = 0
         for item in ds_rows:
             iid = item.get("instance_id")
-            if not item.get("version"):
-                inferred_version = _infer_version_from_instance_id(iid)
-                if inferred_version:
-                    item["version"] = inferred_version
-                    inferred_versions += 1
+            pull_number_version = _infer_version_from_instance_id(iid)
+            repo = item.get("repo")
+
+            # Prefer the pull-number version when upstream has it on file.
+            if (
+                repo
+                and pull_number_version
+                and isinstance(_upstream_specs.get(repo), dict)
+                and pull_number_version in _upstream_specs[repo]
+                and item.get("version") != pull_number_version
+            ):
+                item["version"] = pull_number_version
+                overridden_versions += 1
+            elif not item.get("version") and pull_number_version:
+                item["version"] = pull_number_version
+                inferred_versions += 1
+
             item["PASS_TO_PASS"] = _normalize_test_list(item.get("PASS_TO_PASS"))
             item["FAIL_TO_PASS"] = _normalize_test_list(item.get("FAIL_TO_PASS"))
             rows.append(item)
@@ -216,7 +240,11 @@ def _prepare_local_dataset_for_job(
 
         dataset_path = output_dir / f"{_slug(benchmark)}_normalized_dataset.jsonl"
         _write_jsonl(dataset_path, rows)
-        note = f"Normalized local dataset rows={len(rows)}, inferred_versions={inferred_versions}"
+        note = (
+            f"Normalized local dataset rows={len(rows)}, "
+            f"inferred_versions={inferred_versions}, "
+            f"overridden_with_pull_number={overridden_versions}"
+        )
         return str(dataset_path), False, note, str(dataset_path)
     except Exception as exc:
         import traceback
@@ -317,6 +345,7 @@ def evaluate_prediction_jobs(
     fail_fast: bool = False,
     docker_host: str | None = None,
     skip_known_incompatible: bool = True,
+    rust_version_override: str | None = None,
 ) -> List[dict]:
     """Run swebench harness for each prediction job and collect run metadata."""
     output_dir = Path(output_dir)
@@ -395,6 +424,8 @@ def evaluate_prediction_jobs(
                 "--benchmark_hint",
                 benchmark,
             ])
+        if rust_version_override:
+            cmd.extend(["--rust_version_override", rust_version_override])
 
         env = os.environ.copy()
         if resolved_docker_host and not env.get("DOCKER_HOST"):
@@ -469,6 +500,7 @@ def evaluate_predictions(
     fail_fast: bool = False,
     docker_host: str | None = None,
     skip_known_incompatible: bool = True,
+    rust_version_override: str | None = None,
 ) -> List[dict]:
     """Backwards-compatible wrapper around `evaluate_prediction_jobs`."""
     if isinstance(predictions, dict):
@@ -492,6 +524,7 @@ def evaluate_predictions(
         fail_fast=fail_fast,
         docker_host=docker_host,
         skip_known_incompatible=skip_known_incompatible,
+        rust_version_override=rust_version_override,
     )
 
 
@@ -507,6 +540,16 @@ def main() -> int:
         "--include-known-incompatible",
         action="store_true",
         help="Include benchmarks known to error with current swebench/datasets versions.",
+    )
+    parser.add_argument(
+        "--rust-version-override",
+        default=None,
+        help=(
+            "Force docker_specs.rust_version for rust/rustbench rows. "
+            "Needed because upstream swebench pins rust_version=1.81 but many "
+            "current crates.io deps require Cargo 1.85+ (edition2024). "
+            "Recommended: 1.86."
+        ),
     )
     args = parser.parse_args()
 
@@ -524,6 +567,7 @@ def main() -> int:
         output_dir=args.output_dir,
         docker_host=args.docker_host,
         skip_known_incompatible=not args.include_known_incompatible,
+        rust_version_override=args.rust_version_override,
     )
     print(json.dumps(summaries, ensure_ascii=True, indent=2))
     return 0

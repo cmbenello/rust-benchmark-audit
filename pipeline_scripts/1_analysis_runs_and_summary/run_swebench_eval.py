@@ -168,11 +168,19 @@ def _preflight_validate_prediction_membership(
 
 
 def _patch_swebench_specs_from_dataset(
-    dataset_jsonl: Path, benchmark_hint: str | None = None
-) -> tuple[int, int, int]:
+    dataset_jsonl: Path,
+    benchmark_hint: str | None = None,
+    rust_version_override: str | None = None,
+) -> tuple[int, int, int, int]:
     """
     Dynamically patch swebench constants so unsupported repos/versions in a local
     dataset can still run via common script generation.
+
+    When ``rust_version_override`` is set and the row is a rust/rustbench row,
+    we ensure ``docker_specs.rust_version`` is at least that value. This is
+    needed because upstream swebench pins rust_version=1.81 for its 7 known
+    rust repos, but many popular crates on crates.io now require Cargo 1.85+
+    for ``edition2024``.
     """
     from swebench.harness.constants import MAP_REPO_TO_EXT, MAP_REPO_VERSION_TO_SPECS
     from swebench.harness.log_parsers import MAP_REPO_TO_PARSER
@@ -181,9 +189,26 @@ def _patch_swebench_specs_from_dataset(
     dataset_text = str(dataset_jsonl).lower()
     is_rustbench = "rustbench" in hint_text or "rustbench" in dataset_text
 
+    def _bump_rust_version(existing_specs: dict) -> bool:
+        """Force `docker_specs.rust_version` to the override when set.
+
+        Returns True if the spec was modified.
+        """
+        if not rust_version_override:
+            return False
+        ds = existing_specs.get("docker_specs")
+        if not isinstance(ds, dict):
+            ds = {}
+            existing_specs["docker_specs"] = ds
+        if ds.get("rust_version") != rust_version_override:
+            ds["rust_version"] = rust_version_override
+            return True
+        return False
+
     patched = 0
     skipped = 0
     parser_patched = 0
+    rust_version_bumped = 0
     for row in _read_jsonl(dataset_jsonl):
         repo = row.get("repo") or _infer_repo_from_instance_id(row.get("instance_id"))
         language = str(row.get("language") or "").lower()
@@ -214,9 +239,15 @@ def _patch_swebench_specs_from_dataset(
             if row_test_cmd:
                 test_cmd = _normalize_test_cmd(row_test_cmd)
         # Rustbench rows often omit per-instance test metadata. In that case,
-        # keep upstream swebench repo/version specs when they already exist.
+        # keep upstream swebench repo/version specs when they already exist,
+        # but optionally bump rust_version so transitive deps that require a
+        # newer edition don't blow up the install step.
         if not test_cmd and has_existing_repo_version_spec:
             MAP_REPO_TO_EXT.setdefault(repo, ext)
+            if ext == "rs" and is_rustbench:
+                existing_specs = repo_specs[version]
+                if isinstance(existing_specs, dict) and _bump_rust_version(existing_specs):
+                    rust_version_bumped += 1
             if repo not in MAP_REPO_TO_PARSER:
                 parser_fn = _default_parser_for_extension(ext)
                 if parser_fn is not None:
@@ -225,8 +256,12 @@ def _patch_swebench_specs_from_dataset(
             continue
         if not test_cmd and ext == "rs" and is_rustbench:
             # If the repo/version is not known to swebench, we still need a
-            # synthetic spec. Use --locked to avoid pulling newest deps.
-            test_cmd = ["RUSTFLAGS=-Awarnings cargo test --workspace --all-targets --locked"]
+            # synthetic spec. Avoid --locked because rustbench instances often
+            # have Cargo.lock files that pre-date the current rust toolchain
+            # and fail `cargo test --locked` with "lockfile needs update".
+            # --offline is ignored since the env image already has deps
+            # vendored, so let cargo refresh the lock if necessary.
+            test_cmd = ["RUSTFLAGS=-Awarnings cargo test --workspace --all-targets"]
         if not test_cmd:
             skipped += 1
             continue
@@ -235,7 +270,11 @@ def _patch_swebench_specs_from_dataset(
         if not isinstance(docker_specs, dict):
             docker_specs = {}
         if ext == "rs" and is_rustbench:
-            docker_specs.setdefault("rust_version", str(row.get("rust_version") or "1.81"))
+            default_rust = rust_version_override or str(row.get("rust_version") or "1.81")
+            docker_specs.setdefault("rust_version", default_rust)
+            if rust_version_override and docker_specs.get("rust_version") != rust_version_override:
+                docker_specs["rust_version"] = rust_version_override
+                rust_version_bumped += 1
 
         specs = {
             "test_cmd": test_cmd,
@@ -257,7 +296,7 @@ def _patch_swebench_specs_from_dataset(
                 parser_patched += 1
         patched += 1
 
-    return patched, skipped, parser_patched
+    return patched, skipped, parser_patched, rust_version_bumped
 
 
 def _resolve_arch(requested_arch: str) -> str:
@@ -357,6 +396,16 @@ def main() -> int:
         action="store_true",
         help="Run prediction-vs-dataset instance_id validation and exit.",
     )
+    parser.add_argument(
+        "--rust_version_override",
+        default=None,
+        help=(
+            "Force docker_specs.rust_version to this value for rust/rustbench rows. "
+            "Useful because upstream swebench pins rust_version=1.81 on its 7 known "
+            "rust repos, while many current crates.io deps require Cargo 1.85+ "
+            "(edition2024). Recommended: 1.86 or newer."
+        ),
+    )
     args = parser.parse_args()
 
     pred_count, dataset_count, dataset_source = _preflight_validate_prediction_membership(
@@ -373,14 +422,15 @@ def main() -> int:
 
     if args.dynamic_specs_dataset:
         patch_hint = args.benchmark_hint or args.dataset_name
-        patched, skipped, parser_patched = _patch_swebench_specs_from_dataset(
+        patched, skipped, parser_patched, rust_bumped = _patch_swebench_specs_from_dataset(
             args.dynamic_specs_dataset,
             benchmark_hint=patch_hint,
+            rust_version_override=args.rust_version_override,
         )
         print(
             f"Dynamic swebench specs patch: patched={patched}, skipped_rows={skipped}, "
-            f"parser_patched={parser_patched}, dataset={args.dynamic_specs_dataset}, "
-            f"benchmark_hint={patch_hint}"
+            f"parser_patched={parser_patched}, rust_version_bumped={rust_bumped}, "
+            f"dataset={args.dynamic_specs_dataset}, benchmark_hint={patch_hint}"
         )
 
     selected_arch = _resolve_arch(args.arch)
