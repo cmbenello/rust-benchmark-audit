@@ -261,6 +261,7 @@ def main() -> int:
                 continue
             # Inspect candidate runs in order, take the first that has a patch.
             patch = None
+            resolved = None
             for run_id in ids:
                 try:
                     run = client.get_agent_run(args.collection_id, run_id)
@@ -269,6 +270,20 @@ def main() -> int:
                     continue
                 if run is None:
                     continue
+                            # Extract metadata.scores.resolved if present.
+                metadata = getattr(run, "metadata", None)
+                if metadata:
+                    if isinstance(metadata, dict):
+                        resolved = (
+                            metadata.get("scores", {})
+                            .get("resolved")
+                        )
+                    else:
+                        scores = getattr(metadata, "scores", None)
+                        if isinstance(scores, dict):
+                            resolved = scores.get("resolved")
+                        else:
+                            resolved = getattr(scores, "resolved", None)
                 patch = _extract_patch_from_transcripts(run.transcripts, iid)
                 if patch:
                     logger.info("[ok] %s — found patch in run %s (%d chars)", iid, run_id, len(patch))
@@ -282,6 +297,7 @@ def main() -> int:
                 "instance_id": iid,
                 "model_name_or_path": args.model_name,
                 "model_patch": patch,
+                "resolved": resolved
             }) + "\n")
             n_written += 1
 
