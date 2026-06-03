@@ -1,0 +1,486 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch src/http/mod.rs...
+Checking patch src/http/mod.rs...
+Applied patch src/http/mod.rs cleanly.
+Applied patch src/http/mod.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded byteorder v1.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded base64 v0.12.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded uuid v0.8.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded thiserror v1.0.14 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded quote v1.0.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded chrono v0.4.11 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded mime v0.3.16 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded bson v0.14.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded serde_derive v1.0.105 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded slab v0.4.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded fnv v1.0.6 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-rt v1.0.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded bytes v0.5.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded chrono-tz v0.5.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded Inflector v0.11.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded serde_json v1.0.50 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded serde v1.0.105 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-web v2.0.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded regex v1.3.6 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded syn v1.0.17 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded graphql-parser v0.2.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded async-std v1.5.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded parking_lot v0.10.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded once_cell v1.3.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded proc-macro2 v1.0.9 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tide v0.6.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded url v2.1.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded async-trait v0.1.27 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded anyhow v1.0.27 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-web-codegen v0.2.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded linked-hash-map v0.5.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded serde_urlencoded v0.6.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-timer v2.0.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded ryu v1.0.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded pin-utils v0.1.0-alpha.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded mio-uds v0.6.7 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-service v1.0.5 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded parking_lot_core v0.7.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-router v0.2.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded pin-project v0.4.8 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded thread_local v1.0.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-io v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-channel v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-http v1.0.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-codec v0.2.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded hex v0.3.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded kv-log-macro v1.0.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-threadpool v0.3.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded aho-corasick v0.7.10 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded parse-zoneinfo v0.2.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded net2 v0.2.33 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded crossbeam-utils v0.7.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded time v0.1.42 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-testing v1.0.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded num-integer v0.1.42 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-utils v1.0.6 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded failure v0.1.7 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded mio v0.6.21 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded unicode-xid v0.2.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded log v0.4.8 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded async-attributes v1.1.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-tls v1.0.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded num_cpus v1.12.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded thiserror-impl v1.0.14 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded itoa v0.4.5 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded broadcaster v1.0.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-macros v0.1.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded copyless v0.1.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded lock_api v0.3.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-server v1.0.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-util v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-task v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded crossbeam-deque v0.7.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded fxhash v0.2.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-core v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded combine v3.8.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded memchr v2.3.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded derive_more v0.99.5 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded rand v0.7.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded num-traits v0.2.11 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded libc v0.2.68 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded md5 v0.6.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded async-task v1.3.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded pin-project-lite v0.1.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-sink v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio v0.2.13 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded regex-syntax v0.6.17 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded crossbeam-channel v0.4.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded indexmap v1.3.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-executor v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded awc v1.0.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded encoding_rs v0.8.22 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded iovec v0.1.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded crossbeam-epoch v0.8.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded actix-connect v1.0.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded proc-macro-nested v0.1.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded sha1 v0.6.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded http-service v0.4.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded http-service-hyper v0.4.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded route-recognizer v0.1.13 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded rand_chacha v0.2.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded cookie v0.12.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-util v0.2.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded ascii v0.9.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded getrandom v0.1.14 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded dtoa v0.4.5 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded failure_derive v0.1.7 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded proc-macro-hack v0.5.14 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded smallvec v1.2.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded cfg-if v0.1.10 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded h2 v0.2.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded idna v0.2.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded httparse v1.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-macro v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded matches v0.1.8 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded scopeguard v1.1.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded signal-hook-registry v1.2.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-io v0.1.13 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded http v0.2.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded bytestring v0.1.5 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded rand_core v0.5.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded either v1.5.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded http v0.1.21 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded brotli2 v0.3.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded maybe-uninit v2.0.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded pin-project-internal v0.4.8 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded threadpool v1.7.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded autocfg v1.0.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded language-tags v0.2.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded base64 v0.11.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded serde_qs v0.5.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded unreachable v1.0.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded backtrace v0.3.46 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded percent-encoding v2.1.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded flate2 v1.0.14 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded bitflags v1.2.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures v0.1.29 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded trust-dns-resolver v0.18.0-alpha.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded bytes v0.4.12 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded hyper v0.12.35 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded void v1.0.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded percent-encoding v1.0.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded unicode-bidi v0.3.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded data-encoding v2.2.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded memoffset v0.5.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded ppv-lite86 v0.2.6 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded error-chain v0.12.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded synstructure v0.12.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded rustc-demangle v0.1.16 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded unicode-normalization v0.1.12 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded url v1.7.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded backtrace-sys v0.1.35 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded arc-swap v0.4.5 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded brotli-sys v0.3.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded trust-dns-proto v0.18.0-alpha.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded futures-cpupool v0.1.8 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded lru-cache v0.1.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded version_check v0.9.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded rustc_version v0.2.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded miniz_oxide v0.3.6 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-tcp v0.1.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded idna v0.1.5 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded crc32fast v1.2.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio v0.1.22 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded want v0.2.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-timer v0.2.13 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-reactor v0.1.12 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-threadpool v0.1.18 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-buf v0.1.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded http-body v0.1.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-executor v0.1.10 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded h2 v0.1.26 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded resolv-conf v0.6.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded crossbeam-queue v0.2.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded semver v0.9.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded try-lock v0.2.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded adler32 v1.0.4 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded enum-as-inner v0.3.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded parking_lot v0.9.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded cc v1.0.50 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded socket2 v0.3.11 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-current-thread v0.1.7 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded tokio-sync v0.1.8 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded quick-error v1.2.3 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded heck v0.3.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded semver-parser v0.7.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded string v0.2.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded hostname v0.3.1 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded parking_lot_core v0.6.2 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded unicode-segmentation v1.6.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded match_cfg v0.1.0 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+  Downloaded smallvec v0.6.13 (registry `/testbed/.cargo/lts-repo-at-a2d9f06bdf`)
+   Compiling libc v0.2.68
+   Compiling cfg-if v0.1.10
+   Compiling proc-macro2 v1.0.9
+   Compiling unicode-xid v0.2.0
+   Compiling syn v1.0.17
+   Compiling lazy_static v1.4.0
+   Compiling autocfg v1.0.0
+   Compiling byteorder v1.3.4
+   Compiling log v0.4.8
+   Compiling memchr v2.3.3
+   Compiling futures v0.1.29
+   Compiling either v1.5.3
+   Compiling slab v0.4.2
+   Compiling fnv v1.0.6
+   Compiling smallvec v1.2.0
+   Compiling futures-core v0.3.4
+   Compiling futures-sink v0.3.4
+   Compiling scopeguard v1.1.0
+   Compiling proc-macro-nested v0.1.4
+   Compiling proc-macro-hack v0.5.14
+   Compiling futures-io v0.3.4
+   Compiling futures-task v0.3.4
+   Compiling pin-utils v0.1.0-alpha.4
+   Compiling cc v1.0.50
+   Compiling pin-project-lite v0.1.4
+   Compiling bytes v0.5.4
+   Compiling itoa v0.4.5
+   Compiling maybe-uninit v2.0.0
+   Compiling semver-parser v0.7.0
+   Compiling arc-swap v0.4.5
+   Compiling matches v0.1.8
+   Compiling rustc-demangle v0.1.16
+   Compiling getrandom v0.1.14
+   Compiling regex-syntax v0.6.17
+   Compiling failure_derive v0.1.7
+   Compiling serde v1.0.105
+   Compiling bitflags v1.2.1
+   Compiling ppv-lite86 v0.2.6
+   Compiling percent-encoding v2.1.0
+   Compiling copyless v0.1.4
+   Compiling ryu v1.0.3
+   Compiling linked-hash-map v0.5.2
+   Compiling httparse v1.3.4
+   Compiling unicode-segmentation v1.6.0
+   Compiling match_cfg v0.1.0
+   Compiling crc32fast v1.2.0
+   Compiling quick-error v1.2.3
+   Compiling version_check v0.9.1
+   Compiling void v1.0.2
+   Compiling adler32 v1.0.4
+   Compiling once_cell v1.3.1
+   Compiling encoding_rs v0.8.22
+   Compiling percent-encoding v1.0.1
+   Compiling try-lock v0.2.2
+   Compiling dtoa v0.4.5
+   Compiling ascii v0.9.3
+   Compiling mime v0.3.16
+   Compiling futures-timer v2.0.2
+   Compiling anyhow v1.0.27
+   Compiling language-tags v0.2.2
+   Compiling sha1 v0.6.0
+   Compiling base64 v0.11.0
+   Compiling hex v0.3.2
+   Compiling md5 v0.6.1
+   Compiling data-encoding v2.2.0
+   Compiling base64 v0.12.0
+   Compiling route-recognizer v0.1.13
+   Compiling uuid v0.8.1
+   Compiling unicode-bidi v0.3.4
+   Compiling lock_api v0.3.3
+   Compiling thread_local v1.0.1
+   Compiling unicode-normalization v0.1.12
+   Compiling futures-channel v0.3.4
+   Compiling semver v0.9.0
+   Compiling unreachable v1.0.0
+   Compiling lru-cache v0.1.2
+   Compiling miniz_oxide v0.3.6
+   Compiling http v0.2.1
+   Compiling bytestring v0.1.5
+   Compiling heck v0.3.1
+   Compiling crossbeam-utils v0.7.2
+   Compiling indexmap v1.3.2
+   Compiling memoffset v0.5.4
+   Compiling num-traits v0.2.11
+   Compiling crossbeam-epoch v0.8.2
+   Compiling num-integer v0.1.42
+   Compiling rustc_version v0.2.3
+   Compiling error-chain v0.12.2
+   Compiling smallvec v0.6.13
+   Compiling kv-log-macro v1.0.4
+   Compiling aho-corasick v0.7.10
+   Compiling combine v3.8.1
+   Compiling fxhash v0.2.1
+   Compiling quote v1.0.3
+   Compiling parking_lot_core v0.6.2
+   Compiling parking_lot v0.9.0
+   Compiling hyper v0.12.35
+   Compiling idna v0.2.0
+   Compiling idna v0.1.5
+   Compiling backtrace-sys v0.1.35
+   Compiling brotli-sys v0.3.2
+   Compiling iovec v0.1.4
+   Compiling net2 v0.2.33
+   Compiling num_cpus v1.12.0
+   Compiling parking_lot_core v0.7.0
+   Compiling signal-hook-registry v1.2.0
+   Compiling time v0.1.42
+   Compiling socket2 v0.3.11
+   Compiling hostname v0.3.1
+   Compiling async-task v1.3.1
+   Compiling flate2 v1.0.14
+   Compiling tokio-sync v0.1.8
+   Compiling want v0.2.0
+   Compiling bytes v0.4.12
+   Compiling tokio-executor v0.1.10
+   Compiling crossbeam-queue v0.2.1
+   Compiling crossbeam-channel v0.4.2
+   Compiling threadpool v1.7.1
+   Compiling futures-cpupool v0.1.8
+   Compiling resolv-conf v0.6.3
+   Compiling mio v0.6.21
+   Compiling rand_core v0.5.1
+   Compiling parking_lot v0.10.0
+   Compiling tokio-current-thread v0.1.7
+   Compiling tokio-timer v0.2.13
+   Compiling url v1.7.2
+   Compiling tokio-io v0.1.13
+   Compiling http v0.1.21
+   Compiling string v0.2.1
+   Compiling tokio-buf v0.1.1
+   Compiling rand_chacha v0.2.2
+   Compiling url v2.1.1
+   Compiling crossbeam-deque v0.7.3
+   Compiling regex v1.3.6
+   Compiling tokio-threadpool v0.1.18
+   Compiling mio-uds v0.6.7
+   Compiling tokio-reactor v0.1.12
+   Compiling rand v0.7.3
+   Compiling chrono v0.4.11
+   Compiling cookie v0.12.0
+   Compiling tokio v0.2.13
+   Compiling tokio-tcp v0.1.4
+   Compiling tokio v0.1.22
+   Compiling backtrace v0.3.46
+   Compiling parse-zoneinfo v0.2.1
+   Compiling Inflector v0.11.4
+   Compiling h2 v0.1.26
+   Compiling http-body v0.1.0
+   Compiling chrono-tz v0.5.1
+   Compiling tokio-util v0.2.0
+   Compiling actix-codec v0.2.0
+   Compiling brotli2 v0.3.2
+   Compiling synstructure v0.12.3
+   Compiling futures-macro v0.3.4
+   Compiling serde_derive v1.0.105
+   Compiling pin-project-internal v0.4.8
+   Compiling derive_more v0.99.5
+   Compiling actix-macros v0.1.1
+   Compiling async-trait v0.1.27
+   Compiling enum-as-inner v0.3.2
+   Compiling async-attributes v1.1.1
+   Compiling thiserror-impl v1.0.14
+   Compiling actix-web-codegen v0.2.1
+   Compiling failure v0.1.7
+   Compiling graphql-parser v0.2.3
+   Compiling futures-util v0.3.4
+   Compiling thiserror v1.0.14
+   Compiling pin-project v0.4.8
+   Compiling actix-threadpool v0.3.1
+   Compiling futures-executor v0.3.4
+   Compiling actix-service v1.0.5
+   Compiling broadcaster v1.0.0
+   Compiling h2 v0.2.3
+   Compiling futures v0.3.4
+   Compiling async-std v1.5.0
+   Compiling actix-rt v1.0.0
+   Compiling trust-dns-proto v0.18.0-alpha.2
+   Compiling actix-utils v1.0.6
+   Compiling actix-server v1.0.2
+   Compiling actix-tls v1.0.0
+   Compiling actix-testing v1.0.0
+   Compiling async-graphql-derive v1.6.4 (/workspace/async-graphql-derive)
+   Compiling trust-dns-resolver v0.18.0-alpha.2
+   Compiling actix-connect v1.0.2
+   Compiling http-service v0.4.0
+   Compiling http-service-hyper v0.4.1
+   Compiling serde_json v1.0.50
+   Compiling serde_urlencoded v0.6.1
+   Compiling serde_qs v0.5.2
+   Compiling actix-router v0.2.4
+   Compiling actix-http v1.0.1
+   Compiling bson v0.14.1
+   Compiling tide v0.6.0
+   Compiling async-graphql v1.6.4 (/workspace)
+   Compiling awc v1.0.1
+   Compiling actix-web v2.0.0
+    Finished test [unoptimized + debuginfo] target(s) in 49.71s
+     Running target/debug/deps/async_graphql-8cbd3035f90a8ebe
+
+running 10 tests
+test http::tests::test_request ... ok
+test http::tests::test_request_with_operation_name ... ok
+test http::tests::test_response_data ... ok
+test http::tests::test_request_with_variables ... ok
+test types::list::tests::test_list_type ... ok
+test http::tests::test_response_error_with_pos ... ok
+test http::tests::test_response_error ... ok
+test http::tests::test_response_error_with_extension ... ok
+test types::optional::tests::test_optional_type ... ok
+test scalars::tests::test_scalar_type ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/enum-ed3290a91e440b27
+
+running 1 test
+test test_enum_type ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/input_object-82ee80828bbc0fab
+
+running 1 test
+test test_input_object_default_value ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/list-7dd84ae7fff07584
+
+running 1 test
+test test_list_type ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/optional-17dd8ea2783078ea
+
+running 1 test
+test test_optional_type ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/scalars-c199243c5e7fc100
+
+running 11 tests
+test test_bool_scalar ... ok
+test test_f32_scalar ... ok
+test test_i16_scalar ... ok
+test test_f64_scalar ... ok
+test test_i32_scalar ... ok
+test test_i8_scalar ... ok
+test test_i64_scalar ... ok
+test test_u32_scalar ... ok
+test test_u16_scalar ... ok
+test test_u64_scalar ... ok
+test test_u8_scalar ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests async-graphql
+
+running 13 tests
+test src/lib.rs - Interface (line 428) ... ignored
+test src/lib.rs - Object (line 184) ... ignored
+test src/lib.rs - Subscription (line 547) ... ignored
+test src/validators/mod.rs - validators::InputValueValidator (line 15) ... ok
+test src/base.rs - base::Scalar (line 97) ... ok
+test src/registry.rs - registry::CacheControl (line 87) ... ok
+test src/lib.rs - SimpleObject (line 267) ... ok
+test src/lib.rs - Enum (line 306) ... ok
+test src/lib.rs - InputObject (line 362) ... ok
+test src/lib.rs - Object (line 193) ... ok
+test src/lib.rs - Interface (line 440) ... ok
+test src/types/empty_mutation.rs - types::empty_mutation::EmptyMutation (line 13) ... ok
+test src/lib.rs - types::connection::DataSource (line 10) ... ok
+
+test result: ok. 10 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out
+
++ git reset --hard ba64ecc31d8c94b29b481a4c6a6573e397a1a132
+HEAD is now at ba64ecc3 v1.6.4
++ git clean -fd
+Removing .cargo/
+Removing examples/error_extensions.rs

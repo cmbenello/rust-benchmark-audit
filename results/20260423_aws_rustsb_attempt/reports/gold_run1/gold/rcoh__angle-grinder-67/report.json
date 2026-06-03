@@ -1,0 +1,92 @@
+{
+    "rcoh__angle-grinder-67": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "integration::fields_after_agg_bug"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "data::tests::agg",
+                    "data::tests::from_string",
+                    "data::tests::ordering",
+                    "lang::tests::parse_parses",
+                    "lang::tests::query_operators",
+                    "lang::tests::parse_quoted_string",
+                    "lang::tests::query_no_operators",
+                    "data::tests::record_put_get",
+                    "lang::tests::parse_percentile",
+                    "lang::tests::parse_var_list",
+                    "errors::tests::did_you_mean",
+                    "lang::tests::parse_operator",
+                    "lang::tests::parse_limit",
+                    "lang::tests::parse_expr",
+                    "lang::tests::parse_keyword_string",
+                    "data::tests::panic_on_invalid_row",
+                    "lang::tests::parse_agg_operator",
+                    "lang::tests::parse_expr_value",
+                    "operator::tests::fields_only",
+                    "operator::tests::sort_raw",
+                    "render::tests::test_format_with_ellipsis",
+                    "operator::tests::parse_nodrop",
+                    "operator::tests::fields_except",
+                    "operator::tests::sort_aggregate",
+                    "render::tests::pretty_print_record_too_long",
+                    "render::tests::pretty_print_aggregate",
+                    "operator::tests::parse_from_field",
+                    "render::tests::pretty_print_aggregate_too_long",
+                    "operator::tests::count_groups",
+                    "operator::tests::count_no_groups",
+                    "operator::tests::test_agg_adapter",
+                    "operator::tests::multi_grouper",
+                    "operator::tests::parse_nodrop_preserve_existing",
+                    "operator::tests::json",
+                    "render::tests::print_raw",
+                    "render::tests::pretty_print_record",
+                    "lang::tests::parse_ident",
+                    "operator::tests::test_total",
+                    "lang::tests::parse_expr_ident",
+                    "operator::tests::parse_drop",
+                    "operator::tests::parse",
+                    "integration::validate_readme_examples",
+                    "integration::basic_count",
+                    "integration::test_where_typecheck",
+                    "integration::aggregate_of_aggregate",
+                    "integration::test_limit",
+                    "integration::fields",
+                    "integration::parse_plain_text",
+                    "integration::long_aggregate_values",
+                    "integration::no_args",
+                    "integration::file_input",
+                    "integration::sort_order",
+                    "integration::parse_failure",
+                    "integration::sum_operator",
+                    "integration::json_from",
+                    "integration::total",
+                    "integration::count_distinct_operator",
+                    "integration::test_limit_typecheck",
+                    "integration::filter_wildcard",
+                    "integration::parse_operator",
+                    "integration::limit",
+                    "integration::suggest_alternatives",
+                    "integration::where_operator"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

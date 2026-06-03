@@ -1,0 +1,202 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch testing/tests/gen_ws_tests.py...
+Checking patch testing/tests/gen_ws_tests.py...
+Checking patch testing/tests/gen_ws_tests.py...
+Checking patch testing/tests/matches.rs...
+Checking patch testing/tests/matches.rs...
+Checking patch testing/tests/matches.rs...
+Checking patch testing/tests/matches.rs...
+Checking patch testing/tests/matches.rs...
+Checking patch testing/tests/whitespace.rs...
+Checking patch testing/tests/ws.rs...
+Applied patch testing/tests/gen_ws_tests.py cleanly.
+Applied patch testing/tests/gen_ws_tests.py cleanly.
+Applied patch testing/tests/gen_ws_tests.py cleanly.
+Applied patch testing/tests/matches.rs cleanly.
+Applied patch testing/tests/matches.rs cleanly.
+Applied patch testing/tests/matches.rs cleanly.
+Applied patch testing/tests/matches.rs cleanly.
+Applied patch testing/tests/matches.rs cleanly.
+Applied patch testing/tests/whitespace.rs cleanly.
+Applied patch testing/tests/ws.rs cleanly.
++ cd testing
++ cargo test --no-fail-fast --all-features --test matches
+ Downloading crates ...
+  Downloaded radium v0.5.3 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded crossbeam-deque v0.8.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded rustc_version v0.2.3 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded unicode-xid v0.2.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded unicode-width v0.1.8 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded semver v0.9.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded num-traits v0.2.14 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded half v1.6.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded toml v0.5.7 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded syn v1.0.54 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded itertools v0.9.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded crossbeam-epoch v0.9.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded percent-encoding v2.1.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded proc-macro2 v1.0.24 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded memoffset v0.6.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded itoa v0.4.6 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded humansize v1.1.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded csv-core v0.1.10 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded cfg-if v1.0.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded crossbeam-utils v0.8.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded same-file v1.0.6 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded either v1.6.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded cast v0.2.3 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded const_fn v0.4.4 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded num_cpus v1.13.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded quote v1.0.7 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded memchr v2.3.4 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded atty v0.2.14 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded rayon-core v1.9.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded version_check v0.9.2 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded tap v1.0.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded oorandom v11.1.3 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded byteorder v1.3.4 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded autocfg v1.0.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded tinytemplate v1.1.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded bitflags v1.2.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded semver-parser v0.7.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded funty v1.0.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded scopeguard v1.1.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded textwrap v0.11.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded walkdir v2.3.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded criterion-plot v0.4.3 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded wyz v0.2.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded serde v1.0.118 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded termcolor v1.1.2 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded regex-automata v0.1.9 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded trybuild v1.0.35 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded serde_cbor v0.11.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded serde_derive v1.0.118 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded crossbeam-channel v0.5.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded criterion v0.3.3 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded serde_json v1.0.60 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded rayon v1.5.0 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded nom v6.0.1 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded bitvec v0.19.4 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded regex v1.4.2 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded clap v2.33.3 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded regex-syntax v0.6.21 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded bstr v0.2.14 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded libc v0.2.81 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded plotters v0.2.15 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+  Downloaded csv v1.1.5 (registry `/testbed/.cargo/lts-repo-at-ba4cb5dd1b`)
+   Compiling autocfg v1.0.1
+   Compiling proc-macro2 v1.0.24
+   Compiling unicode-xid v0.2.1
+   Compiling syn v1.0.54
+   Compiling serde_derive v1.0.118
+   Compiling serde v1.0.118
+   Compiling lazy_static v1.4.0
+   Compiling ryu v1.0.5
+   Compiling memchr v2.3.4
+   Compiling serde_json v1.0.60
+   Compiling itoa v0.4.6
+   Compiling const_fn v0.4.4
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.81
+   Compiling semver-parser v0.7.0
+   Compiling radium v0.5.3
+   Compiling byteorder v1.3.4
+   Compiling version_check v0.9.2
+   Compiling scopeguard v1.1.0
+   Compiling funty v1.0.1
+   Compiling tap v1.0.0
+   Compiling rayon-core v1.9.0
+   Compiling wyz v0.2.0
+   Compiling either v1.6.1
+   Compiling bitflags v1.2.1
+   Compiling humansize v1.1.0
+   Compiling percent-encoding v2.1.0
+   Compiling askama_escape v0.10.1 (/workspace/askama_escape)
+   Compiling unicode-width v0.1.8
+   Compiling same-file v1.0.6
+   Compiling half v1.6.0
+   Compiling regex-syntax v0.6.21
+   Compiling trybuild v1.0.35
+   Compiling termcolor v1.1.2
+   Compiling glob v0.3.0
+   Compiling oorandom v11.1.3
+   Compiling textwrap v0.11.0
+   Compiling walkdir v2.3.1
+   Compiling semver v0.9.0
+   Compiling itertools v0.9.0
+   Compiling nom v6.0.1
+   Compiling crossbeam-utils v0.8.1
+   Compiling num-traits v0.2.14
+   Compiling memoffset v0.6.1
+   Compiling rayon v1.5.0
+   Compiling rustc_version v0.2.3
+   Compiling clap v2.33.3
+   Compiling regex-automata v0.1.9
+   Compiling cast v0.2.3
+   Compiling csv-core v0.1.10
+   Compiling bitvec v0.19.4
+   Compiling num_cpus v1.13.0
+   Compiling atty v0.2.14
+   Compiling quote v1.0.7
+   Compiling crossbeam-epoch v0.9.1
+   Compiling crossbeam-channel v0.5.0
+   Compiling criterion-plot v0.4.3
+   Compiling crossbeam-deque v0.8.0
+   Compiling plotters v0.2.15
+   Compiling regex v1.4.2
+   Compiling toml v0.5.7
+   Compiling bstr v0.2.14
+   Compiling serde_cbor v0.11.1
+   Compiling csv v1.1.5
+   Compiling tinytemplate v1.1.0
+   Compiling askama_shared v0.10.5 (/workspace/askama_shared)
+   Compiling criterion v0.3.3
+   Compiling askama_derive v0.10.3 (/workspace/askama_derive)
+   Compiling askama v0.10.3 (/workspace/askama)
+   Compiling askama_testing v0.1.0 (/workspace/testing)
+    Finished test [unoptimized + debuginfo] target(s) in 30.02s
+     Running /workspace/target/debug/deps/matches-6b792f64434675bd
+
+running 7 tests
+test test_match_custom_enum ... ok
+test test_match_literal ... ok
+test test_match_literal_char ... ok
+test test_match_literal_num ... ok
+test test_match_no_whitespace ... ok
+test test_match_option ... ok
+test test_match_ref_deref ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ cargo test --no-fail-fast --all-features --test whitespace
+   Compiling askama_testing v0.1.0 (/workspace/testing)
+    Finished test [unoptimized + debuginfo] target(s) in 1.15s
+     Running /workspace/target/debug/deps/whitespace-46f3d2dd58ac5e35
+
+running 1 test
+test test_extra_whitespace ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ cargo test --no-fail-fast --all-features --test ws
+   Compiling askama_testing v0.1.0 (/workspace/testing)
+    Finished test [unoptimized + debuginfo] target(s) in 2.58s
+     Running /workspace/target/debug/deps/ws-b789280663523f60
+
+running 2 tests
+test test_match_ws ... ok
+test test_cond_ws ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ cd ../
++ git reset --hard 5b01e605914a49f0b9e71e7dbe7c17ef1de2c522
+HEAD is now at 5b01e60 Fixed whitespace issue when generating if statement (#394)
++ git clean -fd
+Removing .cargo/

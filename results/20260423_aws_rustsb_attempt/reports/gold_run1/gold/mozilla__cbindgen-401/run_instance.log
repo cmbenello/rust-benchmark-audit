@@ -1,0 +1,1613 @@
+2026-04-17 07:01:39,812 - INFO - Environment image rustb.env.x86_64.mozilla_cbindgen:latest found for mozilla__cbindgen-401
+Building instance image rustbench/mozilla__cbindgen:pr-401 for mozilla__cbindgen-401
+2026-04-17 07:12:03,966 - INFO - Creating container for mozilla__cbindgen-401...
+2026-04-17 07:12:04,172 - INFO - Container for mozilla__cbindgen-401 created: 7fe8d014a888ce7413d53c38657ed82a8f3ad862d6eddb0f1ee69abc52ef99a0
+2026-04-17 07:12:04,310 - INFO - Container for mozilla__cbindgen-401 started: 7fe8d014a888ce7413d53c38657ed82a8f3ad862d6eddb0f1ee69abc52ef99a0
+2026-04-17 07:12:04,310 - INFO - Intermediate patch for mozilla__cbindgen-401 written to logs/run_evaluation/gold_run1/gold/mozilla__cbindgen-401/patch.diff, now applying to container...
+2026-04-17 07:12:04,558 - INFO - >>>>> Applied Patch:
+Checking patch src/bindgen/bindings.rs...
+Checking patch src/bindgen/bindings.rs...
+Checking patch src/bindgen/bindings.rs...
+Hunk #1 succeeded at 47 (offset 6 lines).
+Checking patch src/bindgen/bindings.rs...
+Hunk #1 succeeded at 68 (offset 6 lines).
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Checking patch src/bindgen/ir/constant.rs...
+Applied patch src/bindgen/bindings.rs cleanly.
+Applied patch src/bindgen/bindings.rs cleanly.
+Applied patch src/bindgen/bindings.rs cleanly.
+Applied patch src/bindgen/bindings.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+Applied patch src/bindgen/ir/constant.rs cleanly.
+
+2026-04-17 07:12:04,641 - INFO - Git diff before:
+diff --git a/Cargo.lock b/Cargo.lock
+index f48e792..62dd52b 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -5,47 +5,49 @@ name = "ansi_term"
+ version = "0.11.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "atty"
+-version = "0.2.11"
++version = "0.2.13"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "termion 1.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+-name = "autocfg"
+-version = "0.1.4"
++name = "bitflags"
++version = "1.2.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+-name = "bitflags"
+-version = "1.1.0"
++name = "c2-chacha"
++version = "0.2.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
++dependencies = [
++ "ppv-lite86 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
++]
+ 
+ [[package]]
+ name = "cbindgen"
+ version = "0.9.1"
+ dependencies = [
+  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+- "proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde 1.0.93 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde_json 1.0.39 (registry+https://github.com/rust-lang/crates.io-index)",
+- "syn 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "tempfile 3.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+- "toml 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_json 1.0.41 (registry+https://github.com/rust-lang/crates.io-index)",
++ "syn 1.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
++ "tempfile 3.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "toml 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "cfg-if"
+-version = "0.1.9"
++version = "0.1.10"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -54,27 +56,24 @@ version = "2.33.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "ansi_term 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "atty 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)",
+- "bitflags 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "atty 0.2.13 (registry+https://github.com/rust-lang/crates.io-index)",
++ "bitflags 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "strsim 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "textwrap 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "unicode-width 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
++ "unicode-width 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+  "vec_map 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+-name = "cloudabi"
+-version = "0.0.3"
++name = "getrandom"
++version = "0.1.13"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "bitflags 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)",
++ "wasi 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+-[[package]]
+-name = "fuchsia-cprng"
+-version = "0.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-
+ [[package]]
+ name = "itoa"
+ version = "0.4.4"
+@@ -82,25 +81,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.58"
++version = "0.2.65"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "log"
+-version = "0.4.6"
++version = "0.4.8"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "cfg-if 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
++ "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+-name = "numtoa"
+-version = "0.1.0"
++name = "ppv-lite86"
++version = "0.2.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.0"
++version = "1.0.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "unicode-xid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+@@ -108,168 +107,93 @@ dependencies = [
+ 
+ [[package]]
+ name = "quote"
+-version = "1.0.0"
++version = "1.0.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand"
+-version = "0.6.5"
++version = "0.7.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "autocfg 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_chacha 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_hc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_isaac 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_jitter 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_os 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_pcg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_xorshift 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
++ "getrandom 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_chacha 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_hc 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_chacha"
+-version = "0.1.1"
++version = "0.2.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "autocfg 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "c2-chacha 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_core"
+-version = "0.3.1"
++version = "0.5.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "getrandom 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+-[[package]]
+-name = "rand_core"
+-version = "0.4.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-
+ [[package]]
+ name = "rand_hc"
+-version = "0.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_isaac"
+-version = "0.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_jitter"
+-version = "0.1.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_os"
+-version = "0.1.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_pcg"
+-version = "0.1.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "autocfg 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_xorshift"
+-version = "0.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rdrand"
+-version = "0.4.0"
++version = "0.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "redox_syscall"
+-version = "0.1.54"
++version = "0.1.56"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+-[[package]]
+-name = "redox_termios"
+-version = "0.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "redox_syscall 0.1.54 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+ [[package]]
+ name = "remove_dir_all"
+ version = "0.5.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "ryu"
+-version = "0.2.8"
++version = "1.0.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.93"
++version = "1.0.102"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "serde_derive 1.0.99 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_derive 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.99"
++version = "1.0.102"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "syn 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "syn 1.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.39"
++version = "1.0.41"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "itoa 0.4.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "ryu 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde 1.0.93 (registry+https://github.com/rust-lang/crates.io-index)",
++ "ryu 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -279,36 +203,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "syn"
+-version = "1.0.1"
++version = "1.0.8"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+  "unicode-xid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "tempfile"
+-version = "3.0.8"
++version = "3.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "cfg-if 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_syscall 0.1.54 (registry+https://github.com/rust-lang/crates.io-index)",
++ "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "redox_syscall 0.1.56 (registry+https://github.com/rust-lang/crates.io-index)",
+  "remove_dir_all 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "termion"
+-version = "1.5.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "numtoa 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_syscall 0.1.54 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_termios 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -316,20 +229,20 @@ name = "textwrap"
+ version = "0.11.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "unicode-width 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
++ "unicode-width 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "toml"
+-version = "0.5.1"
++version = "0.5.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "serde 1.0.93 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "unicode-width"
+-version = "0.1.5"
++version = "0.1.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -342,9 +255,14 @@ name = "vec_map"
+ version = "0.8.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
++[[package]]
++name = "wasi"
++version = "0.7.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++
+ [[package]]
+ name = "winapi"
+-version = "0.3.7"
++version = "0.3.8"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "winapi-i686-pc-windows-gnu 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+@@ -363,46 +281,37 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [metadata]
+ "checksum ansi_term 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ee49baf6cb617b853aa8d93bf420db2383fab46d314482ca2803b40d5fde979b"
+-"checksum atty 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)" = "9a7d5b8723950951411ee34d271d99dddcc2035a16ab25310ea2c8cfd4369652"
+-"checksum autocfg 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "0e49efa51329a5fd37e7c79db4621af617cd4e3e5bc224939808d076077077bf"
+-"checksum bitflags 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3d155346769a6855b86399e9bc3814ab343cd3d62c7e985113d46a0ec3c281fd"
+-"checksum cfg-if 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)" = "b486ce3ccf7ffd79fdeb678eac06a9e6c09fc88d33836340becb8fffe87c5e33"
++"checksum atty 0.2.13 (registry+https://github.com/rust-lang/crates.io-index)" = "1803c647a3ec87095e7ae7acfca019e98de5ec9a7d01343f611cf3152ed71a90"
++"checksum bitflags 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
++"checksum c2-chacha 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "214238caa1bf3a496ec3392968969cab8549f96ff30652c9e56885329315f6bb"
++"checksum cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)" = "4785bdd1c96b2a846b2bd7cc02e86b6b3dbf14e7e53446c4f54c92a361040822"
+ "checksum clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)" = "5067f5bb2d80ef5d68b4c87db81601f0b75bca627bc2ef76b141d7b846a3c6d9"
+-"checksum cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "ddfc5b9aa5d4507acaf872de71051dfd0e309860e88966e1051e462a077aac4f"
+-"checksum fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
++"checksum getrandom 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)" = "e7db7ca94ed4cd01190ceee0d8a8052f08a247aa1b469a7f68c6a3b71afcf407"
+ "checksum itoa 0.4.4 (registry+https://github.com/rust-lang/crates.io-index)" = "501266b7edd0174f8530248f87f99c88fbe60ca4ef3dd486835b8d8d53136f7f"
+-"checksum libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)" = "6281b86796ba5e4366000be6e9e18bf35580adf9e63fbe2294aadb587613a319"
+-"checksum log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)" = "c84ec4b527950aa83a329754b01dbe3f58361d1c5efacd1f6d68c494d08a17c6"
+-"checksum numtoa 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b8f8bdf33df195859076e54ab11ee78a1b208382d3a26ec40d142ffc1ecc49ef"
+-"checksum proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "19f287c234c9b2d0308d692dee5c449c1a171167a6f8150f7cf2a49d8fd96967"
+-"checksum quote 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7ab938ebe6f1c82426b5fb82eaf10c3e3028c53deaa3fbe38f5904b37cf4d767"
+-"checksum rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)" = "6d71dacdc3c88c1fde3885a3be3fbab9f35724e6ce99467f7d9c5026132184ca"
+-"checksum rand_chacha 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "556d3a1ca6600bfcbab7c7c91ccb085ac7fbbcd70e008a98742e7847f4f7bcef"
+-"checksum rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6fdeb83b075e8266dcc8762c22776f6877a63111121f5f8c7411e5be7eed4b"
+-"checksum rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d0e7a549d590831370895ab7ba4ea0c1b6b011d106b5ff2da6eee112615e6dc0"
+-"checksum rand_hc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7b40677c7be09ae76218dc623efbf7b18e34bced3f38883af07bb75630a21bc4"
+-"checksum rand_isaac 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "ded997c9d5f13925be2a6fd7e66bf1872597f759fd9dd93513dd7e92e5a5ee08"
+-"checksum rand_jitter 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "1166d5c91dc97b88d1decc3285bb0a99ed84b05cfd0bc2341bdf2d43fc41e39b"
+-"checksum rand_os 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)" = "7b75f676a1e053fc562eafbb47838d67c84801e38fc1ba459e8f180deabd5071"
+-"checksum rand_pcg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "abf9b09b01790cfe0364f52bf32995ea3c39f4d2dd011eac241d2914146d0b44"
+-"checksum rand_xorshift 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cbf7e9e623549b0e21f6e97cf8ecf247c1a8fd2e8a992ae265314300b2455d5c"
+-"checksum rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "678054eb77286b51581ba43620cc911abf02758c91f93f479767aed0f90458b2"
+-"checksum redox_syscall 0.1.54 (registry+https://github.com/rust-lang/crates.io-index)" = "12229c14a0f65c4f1cb046a3b52047cdd9da1f4b30f8a39c5063c8bae515e252"
+-"checksum redox_termios 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7e891cfe48e9100a70a3b6eb652fef28920c117d366339687bd5576160db0f76"
++"checksum libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)" = "1a31a0627fdf1f6a39ec0dd577e101440b7db22672c0901fe00a9a6fbb5c24e8"
++"checksum log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)" = "14b6052be84e6b71ab17edffc2eeabf5c2c3ae1fdb464aae35ac50c67a44e1f7"
++"checksum ppv-lite86 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "74490b50b9fbe561ac330df47c08f3f33073d2d00c150f719147d7c54522fa1b"
++"checksum proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "9c9e470a8dc4aeae2dee2f335e8f533e2d4b347e1434e5671afc49b054592f27"
++"checksum quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "053a8c8bcc71fcce321828dc897a98ab9760bef03a4fc36693c231e5b3216cfe"
++"checksum rand 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)" = "3ae1b169243eaf61759b8475a998f0a385e42042370f3a7dbaf35246eacc8412"
++"checksum rand_chacha 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "03a2a90da8c7523f554344f921aa97283eadf6ac484a6d2a7d0212fa7f8d6853"
++"checksum rand_core 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "90bde5296fc891b0cef12a6d03ddccc162ce7b2aff54160af9338f8d40df6d19"
++"checksum rand_hc 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ca3129af7b92a17112d59ad498c6f81eaf463253766b90396d39ea7a39d6613c"
++"checksum redox_syscall 0.1.56 (registry+https://github.com/rust-lang/crates.io-index)" = "2439c63f3f6139d1b57529d16bc3b8bb855230c8efcc5d3a896c8bea7c3b1e84"
+ "checksum remove_dir_all 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)" = "4a83fa3702a688b9359eccba92d153ac33fd2e8462f9e0e3fdf155239ea7792e"
+-"checksum ryu 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)" = "b96a9549dc8d48f2c283938303c4b5a77aa29bfbc5b54b084fb1630408899a8f"
+-"checksum serde 1.0.93 (registry+https://github.com/rust-lang/crates.io-index)" = "960e29cf7004b3b6e65fc5002981400eb3ccc017a08a2406940823e58e7179a9"
+-"checksum serde_derive 1.0.99 (registry+https://github.com/rust-lang/crates.io-index)" = "cb4dc18c61206b08dc98216c98faa0232f4337e1e1b8574551d5bad29ea1b425"
+-"checksum serde_json 1.0.39 (registry+https://github.com/rust-lang/crates.io-index)" = "5a23aa71d4a4d43fdbfaac00eff68ba8a06a51759a89ac3304323e800c4dd40d"
++"checksum ryu 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "bfa8506c1de11c9c4e4c38863ccbe02a305c8188e85a05a784c9e11e1c3910c8"
++"checksum serde 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)" = "0c4b39bd9b0b087684013a792c59e3e07a46a01d2322518d8a1104641a0b1be0"
++"checksum serde_derive 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)" = "ca13fc1a832f793322228923fbb3aba9f3f44444898f835d31ad1b74fa0a2bf8"
++"checksum serde_json 1.0.41 (registry+https://github.com/rust-lang/crates.io-index)" = "2f72eb2a68a7dc3f9a691bfda9305a1c017a6215e5a4545c258500d2099a37c2"
+ "checksum strsim 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
+-"checksum syn 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "863ecbce06044c8380458360b4146d7372edadfedd77f120ba8c193da427b708"
+-"checksum tempfile 3.0.8 (registry+https://github.com/rust-lang/crates.io-index)" = "7dc4738f2e68ed2855de5ac9cdbe05c9216773ecde4739b2f095002ab03a13ef"
+-"checksum termion 1.5.3 (registry+https://github.com/rust-lang/crates.io-index)" = "6a8fb22f7cde82c8220e5aeacb3258ed7ce996142c77cba193f203515e26c330"
++"checksum syn 1.0.8 (registry+https://github.com/rust-lang/crates.io-index)" = "661641ea2aa15845cddeb97dad000d22070bb5c1fb456b96c1cba883ec691e92"
++"checksum tempfile 3.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6e24d9338a0a5be79593e2fa15a648add6138caa803e2d5bc782c371732ca9"
+ "checksum textwrap 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d326610f408c7a4eb6f51c37c330e496b08506c9457c9d34287ecc38809fb060"
+-"checksum toml 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b8c96d7873fa7ef8bdeb3a9cda3ac48389b4154f32b9803b4bc26220b677b039"
+-"checksum unicode-width 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)" = "882386231c45df4700b275c7ff55b6f3698780a650026380e72dabe76fa46526"
++"checksum toml 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)" = "01d1404644c8b12b16bfcffa4322403a91a451584daaaa7c28d3152e6cbc98cf"
++"checksum unicode-width 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "7007dbd421b92cc6e28410fe7362e2e0a2503394908f417b68ec8d1c364c4e20"
+ "checksum unicode-xid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "826e7639553986605ec5979c7dd957c7895e93eabed50ab2ffa7f6128a75097c"
+ "checksum vec_map 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)" = "05c78687fb1a80548ae3250346c3db86a80a7cdd77bda190189f2d0a0987c81a"
+-"checksum winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)" = "f10e386af2b13e47c89e7236a7a14a086791a2b88ebad6df9bf42040195cf770"
++"checksum wasi 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b89c3ce4ce14bdc6fb6beaf9ec7928ca331de5df7e5ea278375642a2f478570d"
++"checksum winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)" = "8093091eeb260906a183e6ae1abdba2ef5ef2257a21801128899c3fc699229c6"
+ "checksum winapi-i686-pc-windows-gnu 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ac3b87c63620426dd9b991e5ce0329eff545bccbbb34f3be09ff6fb6ab51b7b6"
+ "checksum winapi-x86_64-pc-windows-gnu 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+index 8e790b8..0a41681 100644
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -2,10 +2,13 @@
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
++use std::cell::RefCell;
++use std::collections::HashMap;
+ use std::fs;
+ use std::fs::File;
+ use std::io::{Read, Write};
+ use std::path;
++use std::rc::Rc;
+ 
+ use bindgen::config::{Config, Language};
+ use bindgen::ir::{
+@@ -19,6 +22,7 @@ pub struct Bindings {
+     /// The map from path to struct, used to lookup whether a given type is a
+     /// transparent struct. This is needed to generate code for constants.
+     struct_map: ItemMap<Struct>,
++    struct_fileds_memo: RefCell<HashMap<BindgenPath, Rc<Vec<String>>>>,
+     globals: Vec<Static>,
+     constants: Vec<Constant>,
+     items: Vec<ItemContainer>,
+@@ -43,6 +47,7 @@ impl Bindings {
+         Bindings {
+             config,
+             struct_map,
++            struct_fileds_memo: Default::default(),
+             globals,
+             constants,
+             items,
+@@ -63,6 +68,30 @@ impl Bindings {
+         any
+     }
+ 
++    pub fn struct_field_names(&self, path: &BindgenPath) -> Rc<Vec<String>> {
++        let mut memos = self.struct_fileds_memo.borrow_mut();
++        if let Some(memo) = memos.get(path) {
++            return memo.clone();
++        }
++
++        let mut fields = Vec::<String>::new();
++        self.struct_map.for_items(path, |st| {
++            let mut pos: usize = 0;
++            for field in &st.fields {
++                if let Some(found_pos) = fields.iter().position(|v| *v == field.0) {
++                    pos = found_pos + 1;
++                } else {
++                    fields.insert(pos, field.0.clone());
++                    pos += 1;
++                }
++            }
++        });
++
++        let fields = Rc::new(fields);
++        memos.insert(path.clone(), fields.clone());
++        fields
++    }
++
+     pub fn write_to_file<P: AsRef<path::Path>>(&self, path: P) -> bool {
+         // Don't compare files if we've never written this file before
+         if !path.as_ref().is_file() {
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+index cf28155..f9f590c 100644
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -3,7 +3,7 @@
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
+ use std::borrow::Cow;
+-use std::fmt;
++use std::collections::HashMap;
+ use std::io::Write;
+ 
+ use syn;
+@@ -23,6 +23,10 @@ use syn::UnOp;
+ #[derive(Debug, Clone)]
+ pub enum Literal {
+     Expr(String),
++    PostfixUnaryOp {
++        op: &'static str,
++        value: Box<Literal>,
++    },
+     BinOp {
+         left: Box<Literal>,
+         op: &'static str,
+@@ -31,14 +35,14 @@ pub enum Literal {
+     Struct {
+         path: Path,
+         export_name: String,
+-        fields: Vec<(String, Literal)>,
++        fields: HashMap<String, Literal>,
+     },
+ }
+ 
+ impl Literal {
+     fn replace_self_with(&mut self, self_ty: &Path) {
+         match *self {
+-            Literal::BinOp { .. } | Literal::Expr(..) => {}
++            Literal::PostfixUnaryOp { .. } | Literal::BinOp { .. } | Literal::Expr(..) => {}
+             Literal::Struct {
+                 ref mut path,
+                 ref mut export_name,
+@@ -47,7 +51,7 @@ impl Literal {
+                 if path.replace_self_with(self_ty) {
+                     *export_name = self_ty.name().to_owned();
+                 }
+-                for &mut (ref _name, ref mut expr) in fields {
++                for (ref _name, ref mut expr) in fields {
+                     expr.replace_self_with(self_ty);
+                 }
+             }
+@@ -57,6 +61,7 @@ impl Literal {
+     fn is_valid(&self, bindings: &Bindings) -> bool {
+         match *self {
+             Literal::Expr(..) => true,
++            Literal::PostfixUnaryOp { ref value, .. } => value.is_valid(bindings),
+             Literal::BinOp {
+                 ref left,
+                 ref right,
+@@ -67,33 +72,6 @@ impl Literal {
+     }
+ }
+ 
+-impl fmt::Display for Literal {
+-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+-        match self {
+-            Literal::Expr(v) => write!(f, "{}", v),
+-            Literal::BinOp {
+-                ref left,
+-                op,
+-                ref right,
+-            } => write!(f, "{} {} {}", left, op, right),
+-            Literal::Struct {
+-                export_name,
+-                fields,
+-                ..
+-            } => write!(
+-                f,
+-                "({}){{ {} }}",
+-                export_name,
+-                fields
+-                    .iter()
+-                    .map(|(key, lit)| format!(".{} = {}", key, lit))
+-                    .collect::<Vec<String>>()
+-                    .join(", "),
+-            ),
+-        }
+-    }
+-}
+-
+ impl Literal {
+     pub fn rename_for_config(&mut self, config: &Config) {
+         match self {
+@@ -107,6 +85,9 @@ impl Literal {
+                     lit.rename_for_config(config);
+                 }
+             }
++            Literal::PostfixUnaryOp { ref mut value, .. } => {
++                value.rename_for_config(config);
++            }
+             Literal::BinOp {
+                 ref mut left,
+                 ref mut right,
+@@ -174,7 +155,7 @@ impl Literal {
+                 ..
+             }) => {
+                 let struct_name = path.segments[0].ident.to_string();
+-                let mut field_pairs: Vec<(String, Literal)> = Vec::new();
++                let mut field_map = HashMap::<String, Literal>::default();
+                 for field in fields {
+                     let ident = match field.member {
+                         syn::Member::Named(ref name) => name.to_string(),
+@@ -182,12 +163,12 @@ impl Literal {
+                     };
+                     let key = ident.to_string();
+                     let value = Literal::load(&field.expr)?;
+-                    field_pairs.push((key, value));
++                    field_map.insert(key, value);
+                 }
+                 Ok(Literal::Struct {
+                     path: Path::new(struct_name.clone()),
+                     export_name: struct_name,
+-                    fields: field_pairs,
++                    fields: field_map,
+                 })
+             }
+             syn::Expr::Unary(syn::ExprUnary {
+@@ -195,13 +176,67 @@ impl Literal {
+             }) => match *op {
+                 UnOp::Neg(_) => {
+                     let val = Self::load(expr)?;
+-                    Ok(Literal::Expr(format!("-{}", val)))
++                    Ok(Literal::PostfixUnaryOp {
++                        op: "-",
++                        value: Box::new(val),
++                    })
+                 }
+                 _ => Err(format!("Unsupported Unary expression. {:?}", *op)),
+             },
+             _ => Err(format!("Unsupported literal expression. {:?}", *expr)),
+         }
+     }
++
++    fn write<F: Write>(&self, config: &Config, out: &mut SourceWriter<F>) {
++        match self {
++            Literal::Expr(v) => write!(out, "{}", v),
++            Literal::PostfixUnaryOp { op, ref value } => {
++                write!(out, "{}", op);
++                value.write(config, out);
++            }
++            Literal::BinOp {
++                ref left,
++                op,
++                ref right,
++            } => {
++                left.write(config, out);
++                write!(out, " {} ", op);
++                right.write(config, out);
++            }
++            Literal::Struct {
++                export_name,
++                fields,
++                path,
++            } => {
++                if config.language == Language::C {
++                    write!(out, "({})", export_name);
++                } else {
++                    write!(out, "{}", export_name);
++                }
++
++                write!(out, "{{ ");
++                let mut is_first_field = true;
++                // In C++, same order as defined is required.
++                let ordered_fields = out.bindings().struct_field_names(path);
++                for ordered_key in ordered_fields.iter() {
++                    if let Some(ref lit) = fields.get(ordered_key) {
++                        if !is_first_field {
++                            write!(out, ", ");
++                        } else {
++                            is_first_field = false;
++                        }
++                        if config.language == Language::Cxx {
++                            write!(out, "/* .{} = */ ", ordered_key);
++                        } else {
++                            write!(out, ".{} = ", ordered_key);
++                        }
++                        lit.write(config, out);
++                    }
++                }
++                write!(out, " }}");
++            }
++        }
++    }
+ }
+ 
+ #[derive(Debug, Clone)]
+@@ -405,7 +440,7 @@ impl Constant {
+                 ref fields,
+                 ref path,
+                 ..
+-            } if out.bindings().struct_is_transparent(path) => &fields[0].1,
++            } if out.bindings().struct_is_transparent(path) => &fields.iter().next().unwrap().1,
+             _ => &self.value,
+         };
+ 
+@@ -417,9 +452,12 @@ impl Constant {
+                 out.write("const ");
+             }
+             self.ty.write(config, out);
+-            write!(out, " {} = {};", name, value)
++            write!(out, " {} = ", name);
++            value.write(config, out);
++            write!(out, ";");
+         } else {
+-            write!(out, "#define {} {}", name, value)
++            write!(out, "#define {} ", name);
++            value.write(config, out);
+         }
+         condition.write_after(config, out);
+     }
+2026-04-17 07:12:04,642 - INFO - Eval script for mozilla__cbindgen-401 written to logs/run_evaluation/gold_run1/gold/mozilla__cbindgen-401/eval.sh; copying to container...
+2026-04-17 07:14:07,083 - INFO - Test runtime: 122.30 seconds
+2026-04-17 07:14:07,083 - INFO - Test output for mozilla__cbindgen-401 written to logs/run_evaluation/gold_run1/gold/mozilla__cbindgen-401/test_output.txt
+2026-04-17 07:14:07,229 - INFO - Git diff after:
+diff --git a/Cargo.lock b/Cargo.lock
+index f48e792..62dd52b 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -5,47 +5,49 @@ name = "ansi_term"
+ version = "0.11.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "atty"
+-version = "0.2.11"
++version = "0.2.13"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "termion 1.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+-name = "autocfg"
+-version = "0.1.4"
++name = "bitflags"
++version = "1.2.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+-name = "bitflags"
+-version = "1.1.0"
++name = "c2-chacha"
++version = "0.2.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
++dependencies = [
++ "ppv-lite86 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
++]
+ 
+ [[package]]
+ name = "cbindgen"
+ version = "0.9.1"
+ dependencies = [
+  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+- "proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde 1.0.93 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde_json 1.0.39 (registry+https://github.com/rust-lang/crates.io-index)",
+- "syn 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "tempfile 3.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+- "toml 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_json 1.0.41 (registry+https://github.com/rust-lang/crates.io-index)",
++ "syn 1.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
++ "tempfile 3.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "toml 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "cfg-if"
+-version = "0.1.9"
++version = "0.1.10"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -54,27 +56,24 @@ version = "2.33.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "ansi_term 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "atty 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)",
+- "bitflags 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "atty 0.2.13 (registry+https://github.com/rust-lang/crates.io-index)",
++ "bitflags 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "strsim 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "textwrap 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "unicode-width 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
++ "unicode-width 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+  "vec_map 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+-name = "cloudabi"
+-version = "0.0.3"
++name = "getrandom"
++version = "0.1.13"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "bitflags 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)",
++ "wasi 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+-[[package]]
+-name = "fuchsia-cprng"
+-version = "0.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-
+ [[package]]
+ name = "itoa"
+ version = "0.4.4"
+@@ -82,25 +81,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.58"
++version = "0.2.65"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "log"
+-version = "0.4.6"
++version = "0.4.8"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "cfg-if 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
++ "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+-name = "numtoa"
+-version = "0.1.0"
++name = "ppv-lite86"
++version = "0.2.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.0"
++version = "1.0.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "unicode-xid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+@@ -108,168 +107,93 @@ dependencies = [
+ 
+ [[package]]
+ name = "quote"
+-version = "1.0.0"
++version = "1.0.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand"
+-version = "0.6.5"
++version = "0.7.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "autocfg 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_chacha 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_hc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_isaac 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_jitter 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_os 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_pcg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_xorshift 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
++ "getrandom 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_chacha 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_hc 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_chacha"
+-version = "0.1.1"
++version = "0.2.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "autocfg 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "c2-chacha 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_core"
+-version = "0.3.1"
++version = "0.5.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "getrandom 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+-[[package]]
+-name = "rand_core"
+-version = "0.4.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-
+ [[package]]
+ name = "rand_hc"
+-version = "0.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_isaac"
+-version = "0.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_jitter"
+-version = "0.1.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_os"
+-version = "0.1.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_pcg"
+-version = "0.1.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "autocfg 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rand_xorshift"
+-version = "0.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "rdrand"
+-version = "0.4.0"
++version = "0.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "redox_syscall"
+-version = "0.1.54"
++version = "0.1.56"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+-[[package]]
+-name = "redox_termios"
+-version = "0.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "redox_syscall 0.1.54 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+ [[package]]
+ name = "remove_dir_all"
+ version = "0.5.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "ryu"
+-version = "0.2.8"
++version = "1.0.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.93"
++version = "1.0.102"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "serde_derive 1.0.99 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_derive 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.99"
++version = "1.0.102"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "syn 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "syn 1.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.39"
++version = "1.0.41"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "itoa 0.4.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "ryu 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde 1.0.93 (registry+https://github.com/rust-lang/crates.io-index)",
++ "ryu 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -279,36 +203,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "syn"
+-version = "1.0.1"
++version = "1.0.8"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+  "unicode-xid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "tempfile"
+-version = "3.0.8"
++version = "3.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "cfg-if 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_syscall 0.1.54 (registry+https://github.com/rust-lang/crates.io-index)",
++ "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "redox_syscall 0.1.56 (registry+https://github.com/rust-lang/crates.io-index)",
+  "remove_dir_all 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
+- "winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "termion"
+-version = "1.5.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)",
+- "numtoa 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_syscall 0.1.54 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_termios 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -316,20 +229,20 @@ name = "textwrap"
+ version = "0.11.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "unicode-width 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
++ "unicode-width 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "toml"
+-version = "0.5.1"
++version = "0.5.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "serde 1.0.93 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "unicode-width"
+-version = "0.1.5"
++version = "0.1.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -342,9 +255,14 @@ name = "vec_map"
+ version = "0.8.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
++[[package]]
++name = "wasi"
++version = "0.7.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++
+ [[package]]
+ name = "winapi"
+-version = "0.3.7"
++version = "0.3.8"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "winapi-i686-pc-windows-gnu 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+@@ -363,46 +281,37 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [metadata]
+ "checksum ansi_term 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ee49baf6cb617b853aa8d93bf420db2383fab46d314482ca2803b40d5fde979b"
+-"checksum atty 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)" = "9a7d5b8723950951411ee34d271d99dddcc2035a16ab25310ea2c8cfd4369652"
+-"checksum autocfg 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "0e49efa51329a5fd37e7c79db4621af617cd4e3e5bc224939808d076077077bf"
+-"checksum bitflags 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3d155346769a6855b86399e9bc3814ab343cd3d62c7e985113d46a0ec3c281fd"
+-"checksum cfg-if 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)" = "b486ce3ccf7ffd79fdeb678eac06a9e6c09fc88d33836340becb8fffe87c5e33"
++"checksum atty 0.2.13 (registry+https://github.com/rust-lang/crates.io-index)" = "1803c647a3ec87095e7ae7acfca019e98de5ec9a7d01343f611cf3152ed71a90"
++"checksum bitflags 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
++"checksum c2-chacha 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "214238caa1bf3a496ec3392968969cab8549f96ff30652c9e56885329315f6bb"
++"checksum cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)" = "4785bdd1c96b2a846b2bd7cc02e86b6b3dbf14e7e53446c4f54c92a361040822"
+ "checksum clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)" = "5067f5bb2d80ef5d68b4c87db81601f0b75bca627bc2ef76b141d7b846a3c6d9"
+-"checksum cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "ddfc5b9aa5d4507acaf872de71051dfd0e309860e88966e1051e462a077aac4f"
+-"checksum fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
++"checksum getrandom 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)" = "e7db7ca94ed4cd01190ceee0d8a8052f08a247aa1b469a7f68c6a3b71afcf407"
+ "checksum itoa 0.4.4 (registry+https://github.com/rust-lang/crates.io-index)" = "501266b7edd0174f8530248f87f99c88fbe60ca4ef3dd486835b8d8d53136f7f"
+-"checksum libc 0.2.58 (registry+https://github.com/rust-lang/crates.io-index)" = "6281b86796ba5e4366000be6e9e18bf35580adf9e63fbe2294aadb587613a319"
+-"checksum log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)" = "c84ec4b527950aa83a329754b01dbe3f58361d1c5efacd1f6d68c494d08a17c6"
+-"checksum numtoa 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b8f8bdf33df195859076e54ab11ee78a1b208382d3a26ec40d142ffc1ecc49ef"
+-"checksum proc-macro2 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "19f287c234c9b2d0308d692dee5c449c1a171167a6f8150f7cf2a49d8fd96967"
+-"checksum quote 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7ab938ebe6f1c82426b5fb82eaf10c3e3028c53deaa3fbe38f5904b37cf4d767"
+-"checksum rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)" = "6d71dacdc3c88c1fde3885a3be3fbab9f35724e6ce99467f7d9c5026132184ca"
+-"checksum rand_chacha 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "556d3a1ca6600bfcbab7c7c91ccb085ac7fbbcd70e008a98742e7847f4f7bcef"
+-"checksum rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6fdeb83b075e8266dcc8762c22776f6877a63111121f5f8c7411e5be7eed4b"
+-"checksum rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d0e7a549d590831370895ab7ba4ea0c1b6b011d106b5ff2da6eee112615e6dc0"
+-"checksum rand_hc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7b40677c7be09ae76218dc623efbf7b18e34bced3f38883af07bb75630a21bc4"
+-"checksum rand_isaac 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "ded997c9d5f13925be2a6fd7e66bf1872597f759fd9dd93513dd7e92e5a5ee08"
+-"checksum rand_jitter 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "1166d5c91dc97b88d1decc3285bb0a99ed84b05cfd0bc2341bdf2d43fc41e39b"
+-"checksum rand_os 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)" = "7b75f676a1e053fc562eafbb47838d67c84801e38fc1ba459e8f180deabd5071"
+-"checksum rand_pcg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "abf9b09b01790cfe0364f52bf32995ea3c39f4d2dd011eac241d2914146d0b44"
+-"checksum rand_xorshift 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cbf7e9e623549b0e21f6e97cf8ecf247c1a8fd2e8a992ae265314300b2455d5c"
+-"checksum rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "678054eb77286b51581ba43620cc911abf02758c91f93f479767aed0f90458b2"
+-"checksum redox_syscall 0.1.54 (registry+https://github.com/rust-lang/crates.io-index)" = "12229c14a0f65c4f1cb046a3b52047cdd9da1f4b30f8a39c5063c8bae515e252"
+-"checksum redox_termios 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7e891cfe48e9100a70a3b6eb652fef28920c117d366339687bd5576160db0f76"
++"checksum libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)" = "1a31a0627fdf1f6a39ec0dd577e101440b7db22672c0901fe00a9a6fbb5c24e8"
++"checksum log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)" = "14b6052be84e6b71ab17edffc2eeabf5c2c3ae1fdb464aae35ac50c67a44e1f7"
++"checksum ppv-lite86 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "74490b50b9fbe561ac330df47c08f3f33073d2d00c150f719147d7c54522fa1b"
++"checksum proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "9c9e470a8dc4aeae2dee2f335e8f533e2d4b347e1434e5671afc49b054592f27"
++"checksum quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "053a8c8bcc71fcce321828dc897a98ab9760bef03a4fc36693c231e5b3216cfe"
++"checksum rand 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)" = "3ae1b169243eaf61759b8475a998f0a385e42042370f3a7dbaf35246eacc8412"
++"checksum rand_chacha 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "03a2a90da8c7523f554344f921aa97283eadf6ac484a6d2a7d0212fa7f8d6853"
++"checksum rand_core 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "90bde5296fc891b0cef12a6d03ddccc162ce7b2aff54160af9338f8d40df6d19"
++"checksum rand_hc 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ca3129af7b92a17112d59ad498c6f81eaf463253766b90396d39ea7a39d6613c"
++"checksum redox_syscall 0.1.56 (registry+https://github.com/rust-lang/crates.io-index)" = "2439c63f3f6139d1b57529d16bc3b8bb855230c8efcc5d3a896c8bea7c3b1e84"
+ "checksum remove_dir_all 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)" = "4a83fa3702a688b9359eccba92d153ac33fd2e8462f9e0e3fdf155239ea7792e"
+-"checksum ryu 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)" = "b96a9549dc8d48f2c283938303c4b5a77aa29bfbc5b54b084fb1630408899a8f"
+-"checksum serde 1.0.93 (registry+https://github.com/rust-lang/crates.io-index)" = "960e29cf7004b3b6e65fc5002981400eb3ccc017a08a2406940823e58e7179a9"
+-"checksum serde_derive 1.0.99 (registry+https://github.com/rust-lang/crates.io-index)" = "cb4dc18c61206b08dc98216c98faa0232f4337e1e1b8574551d5bad29ea1b425"
+-"checksum serde_json 1.0.39 (registry+https://github.com/rust-lang/crates.io-index)" = "5a23aa71d4a4d43fdbfaac00eff68ba8a06a51759a89ac3304323e800c4dd40d"
++"checksum ryu 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "bfa8506c1de11c9c4e4c38863ccbe02a305c8188e85a05a784c9e11e1c3910c8"
++"checksum serde 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)" = "0c4b39bd9b0b087684013a792c59e3e07a46a01d2322518d8a1104641a0b1be0"
++"checksum serde_derive 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)" = "ca13fc1a832f793322228923fbb3aba9f3f44444898f835d31ad1b74fa0a2bf8"
++"checksum serde_json 1.0.41 (registry+https://github.com/rust-lang/crates.io-index)" = "2f72eb2a68a7dc3f9a691bfda9305a1c017a6215e5a4545c258500d2099a37c2"
+ "checksum strsim 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
+-"checksum syn 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "863ecbce06044c8380458360b4146d7372edadfedd77f120ba8c193da427b708"
+-"checksum tempfile 3.0.8 (registry+https://github.com/rust-lang/crates.io-index)" = "7dc4738f2e68ed2855de5ac9cdbe05c9216773ecde4739b2f095002ab03a13ef"
+-"checksum termion 1.5.3 (registry+https://github.com/rust-lang/crates.io-index)" = "6a8fb22f7cde82c8220e5aeacb3258ed7ce996142c77cba193f203515e26c330"
++"checksum syn 1.0.8 (registry+https://github.com/rust-lang/crates.io-index)" = "661641ea2aa15845cddeb97dad000d22070bb5c1fb456b96c1cba883ec691e92"
++"checksum tempfile 3.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6e24d9338a0a5be79593e2fa15a648add6138caa803e2d5bc782c371732ca9"
+ "checksum textwrap 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d326610f408c7a4eb6f51c37c330e496b08506c9457c9d34287ecc38809fb060"
+-"checksum toml 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b8c96d7873fa7ef8bdeb3a9cda3ac48389b4154f32b9803b4bc26220b677b039"
+-"checksum unicode-width 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)" = "882386231c45df4700b275c7ff55b6f3698780a650026380e72dabe76fa46526"
++"checksum toml 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)" = "01d1404644c8b12b16bfcffa4322403a91a451584daaaa7c28d3152e6cbc98cf"
++"checksum unicode-width 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "7007dbd421b92cc6e28410fe7362e2e0a2503394908f417b68ec8d1c364c4e20"
+ "checksum unicode-xid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "826e7639553986605ec5979c7dd957c7895e93eabed50ab2ffa7f6128a75097c"
+ "checksum vec_map 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)" = "05c78687fb1a80548ae3250346c3db86a80a7cdd77bda190189f2d0a0987c81a"
+-"checksum winapi 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)" = "f10e386af2b13e47c89e7236a7a14a086791a2b88ebad6df9bf42040195cf770"
++"checksum wasi 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b89c3ce4ce14bdc6fb6beaf9ec7928ca331de5df7e5ea278375642a2f478570d"
++"checksum winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)" = "8093091eeb260906a183e6ae1abdba2ef5ef2257a21801128899c3fc699229c6"
+ "checksum winapi-i686-pc-windows-gnu 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ac3b87c63620426dd9b991e5ce0329eff545bccbbb34f3be09ff6fb6ab51b7b6"
+ "checksum winapi-x86_64-pc-windows-gnu 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+index 8e790b8..0a41681 100644
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -2,10 +2,13 @@
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
++use std::cell::RefCell;
++use std::collections::HashMap;
+ use std::fs;
+ use std::fs::File;
+ use std::io::{Read, Write};
+ use std::path;
++use std::rc::Rc;
+ 
+ use bindgen::config::{Config, Language};
+ use bindgen::ir::{
+@@ -19,6 +22,7 @@ pub struct Bindings {
+     /// The map from path to struct, used to lookup whether a given type is a
+     /// transparent struct. This is needed to generate code for constants.
+     struct_map: ItemMap<Struct>,
++    struct_fileds_memo: RefCell<HashMap<BindgenPath, Rc<Vec<String>>>>,
+     globals: Vec<Static>,
+     constants: Vec<Constant>,
+     items: Vec<ItemContainer>,
+@@ -43,6 +47,7 @@ impl Bindings {
+         Bindings {
+             config,
+             struct_map,
++            struct_fileds_memo: Default::default(),
+             globals,
+             constants,
+             items,
+@@ -63,6 +68,30 @@ impl Bindings {
+         any
+     }
+ 
++    pub fn struct_field_names(&self, path: &BindgenPath) -> Rc<Vec<String>> {
++        let mut memos = self.struct_fileds_memo.borrow_mut();
++        if let Some(memo) = memos.get(path) {
++            return memo.clone();
++        }
++
++        let mut fields = Vec::<String>::new();
++        self.struct_map.for_items(path, |st| {
++            let mut pos: usize = 0;
++            for field in &st.fields {
++                if let Some(found_pos) = fields.iter().position(|v| *v == field.0) {
++                    pos = found_pos + 1;
++                } else {
++                    fields.insert(pos, field.0.clone());
++                    pos += 1;
++                }
++            }
++        });
++
++        let fields = Rc::new(fields);
++        memos.insert(path.clone(), fields.clone());
++        fields
++    }
++
+     pub fn write_to_file<P: AsRef<path::Path>>(&self, path: P) -> bool {
+         // Don't compare files if we've never written this file before
+         if !path.as_ref().is_file() {
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+index cf28155..f9f590c 100644
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -3,7 +3,7 @@
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
+ use std::borrow::Cow;
+-use std::fmt;
++use std::collections::HashMap;
+ use std::io::Write;
+ 
+ use syn;
+@@ -23,6 +23,10 @@ use syn::UnOp;
+ #[derive(Debug, Clone)]
+ pub enum Literal {
+     Expr(String),
++    PostfixUnaryOp {
++        op: &'static str,
++        value: Box<Literal>,
++    },
+     BinOp {
+         left: Box<Literal>,
+         op: &'static str,
+@@ -31,14 +35,14 @@ pub enum Literal {
+     Struct {
+         path: Path,
+         export_name: String,
+-        fields: Vec<(String, Literal)>,
++        fields: HashMap<String, Literal>,
+     },
+ }
+ 
+ impl Literal {
+     fn replace_self_with(&mut self, self_ty: &Path) {
+         match *self {
+-            Literal::BinOp { .. } | Literal::Expr(..) => {}
++            Literal::PostfixUnaryOp { .. } | Literal::BinOp { .. } | Literal::Expr(..) => {}
+             Literal::Struct {
+                 ref mut path,
+                 ref mut export_name,
+@@ -47,7 +51,7 @@ impl Literal {
+                 if path.replace_self_with(self_ty) {
+                     *export_name = self_ty.name().to_owned();
+                 }
+-                for &mut (ref _name, ref mut expr) in fields {
++                for (ref _name, ref mut expr) in fields {
+                     expr.replace_self_with(self_ty);
+                 }
+             }
+@@ -57,6 +61,7 @@ impl Literal {
+     fn is_valid(&self, bindings: &Bindings) -> bool {
+         match *self {
+             Literal::Expr(..) => true,
++            Literal::PostfixUnaryOp { ref value, .. } => value.is_valid(bindings),
+             Literal::BinOp {
+                 ref left,
+                 ref right,
+@@ -67,33 +72,6 @@ impl Literal {
+     }
+ }
+ 
+-impl fmt::Display for Literal {
+-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+-        match self {
+-            Literal::Expr(v) => write!(f, "{}", v),
+-            Literal::BinOp {
+-                ref left,
+-                op,
+-                ref right,
+-            } => write!(f, "{} {} {}", left, op, right),
+-            Literal::Struct {
+-                export_name,
+-                fields,
+-                ..
+-            } => write!(
+-                f,
+-                "({}){{ {} }}",
+-                export_name,
+-                fields
+-                    .iter()
+-                    .map(|(key, lit)| format!(".{} = {}", key, lit))
+-                    .collect::<Vec<String>>()
+-                    .join(", "),
+-            ),
+-        }
+-    }
+-}
+-
+ impl Literal {
+     pub fn rename_for_config(&mut self, config: &Config) {
+         match self {
+@@ -107,6 +85,9 @@ impl Literal {
+                     lit.rename_for_config(config);
+                 }
+             }
++            Literal::PostfixUnaryOp { ref mut value, .. } => {
++                value.rename_for_config(config);
++            }
+             Literal::BinOp {
+                 ref mut left,
+                 ref mut right,
+@@ -174,7 +155,7 @@ impl Literal {
+                 ..
+             }) => {
+                 let struct_name = path.segments[0].ident.to_string();
+-                let mut field_pairs: Vec<(String, Literal)> = Vec::new();
++                let mut field_map = HashMap::<String, Literal>::default();
+                 for field in fields {
+                     let ident = match field.member {
+                         syn::Member::Named(ref name) => name.to_string(),
+@@ -182,12 +163,12 @@ impl Literal {
+                     };
+                     let key = ident.to_string();
+                     let value = Literal::load(&field.expr)?;
+-                    field_pairs.push((key, value));
++                    field_map.insert(key, value);
+                 }
+                 Ok(Literal::Struct {
+                     path: Path::new(struct_name.clone()),
+                     export_name: struct_name,
+-                    fields: field_pairs,
++                    fields: field_map,
+                 })
+             }
+             syn::Expr::Unary(syn::ExprUnary {
+@@ -195,13 +176,67 @@ impl Literal {
+             }) => match *op {
+                 UnOp::Neg(_) => {
+                     let val = Self::load(expr)?;
+-                    Ok(Literal::Expr(format!("-{}", val)))
++                    Ok(Literal::PostfixUnaryOp {
++                        op: "-",
++                        value: Box::new(val),
++                    })
+                 }
+                 _ => Err(format!("Unsupported Unary expression. {:?}", *op)),
+             },
+             _ => Err(format!("Unsupported literal expression. {:?}", *expr)),
+         }
+     }
++
++    fn write<F: Write>(&self, config: &Config, out: &mut SourceWriter<F>) {
++        match self {
++            Literal::Expr(v) => write!(out, "{}", v),
++            Literal::PostfixUnaryOp { op, ref value } => {
++                write!(out, "{}", op);
++                value.write(config, out);
++            }
++            Literal::BinOp {
++                ref left,
++                op,
++                ref right,
++            } => {
++                left.write(config, out);
++                write!(out, " {} ", op);
++                right.write(config, out);
++            }
++            Literal::Struct {
++                export_name,
++                fields,
++                path,
++            } => {
++                if config.language == Language::C {
++                    write!(out, "({})", export_name);
++                } else {
++                    write!(out, "{}", export_name);
++                }
++
++                write!(out, "{{ ");
++                let mut is_first_field = true;
++                // In C++, same order as defined is required.
++                let ordered_fields = out.bindings().struct_field_names(path);
++                for ordered_key in ordered_fields.iter() {
++                    if let Some(ref lit) = fields.get(ordered_key) {
++                        if !is_first_field {
++                            write!(out, ", ");
++                        } else {
++                            is_first_field = false;
++                        }
++                        if config.language == Language::Cxx {
++                            write!(out, "/* .{} = */ ", ordered_key);
++                        } else {
++                            write!(out, ".{} = ", ordered_key);
++                        }
++                        lit.write(config, out);
++                    }
++                }
++                write!(out, " }}");
++            }
++        }
++    }
+ }
+ 
+ #[derive(Debug, Clone)]
+@@ -405,7 +440,7 @@ impl Constant {
+                 ref fields,
+                 ref path,
+                 ..
+-            } if out.bindings().struct_is_transparent(path) => &fields[0].1,
++            } if out.bindings().struct_is_transparent(path) => &fields.iter().next().unwrap().1,
+             _ => &self.value,
+         };
+ 
+@@ -417,9 +452,12 @@ impl Constant {
+                 out.write("const ");
+             }
+             self.ty.write(config, out);
+-            write!(out, " {} = {};", name, value)
++            write!(out, " {} = ", name);
++            value.write(config, out);
++            write!(out, ";");
+         } else {
+-            write!(out, "#define {} {}", name, value)
++            write!(out, "#define {} ", name);
++            value.write(config, out);
+         }
+         condition.write_after(config, out);
+     }
+2026-04-17 07:14:07,229 - INFO - Grading answer for mozilla__cbindgen-401...
+2026-04-17 07:14:07,230 - INFO - report: {'mozilla__cbindgen-401': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_struct_literal_order'], 'failure': []}, 'PASS_TO_PASS': {'success': ['bindgen::mangle::generics', 'test_no_includes', 'test_custom_header', 'test_include_guard', 'test_cfg_field', 'test_alias', 'test_cdecl', 'test_docstyle_doxy', 'test_docstyle_c99', 'test_assoc_constant', 'test_annotation', 'test_body', 'test_array', 'test_include_item', 'test_assoc_const_conflict', 'test_const_transparent', 'test_bitflags', 'test_asserted_cast', 'test_global_attr', 'test_inner_mod', 'test_style_crash', 'test_std_lib', 'test_associated_in_body', 'test_prefixed_struct_literal_deep', 'test_using_namespaces', 'test_const_conflict', 'test_prefixed_struct_literal', 'test_extern_2', 'test_extern', 'test_fns', 'test_item_types', 'test_documentation', 'test_va_list', 'test_must_use', 'test_rename', 'test_nested_import', 'test_item_types_renamed', 'test_simplify_option_ptr', 'test_struct', 'test_static', 'test_namespaces_constant', 'test_monomorph_2', 'test_typedef', 'test_docstyle_auto', 'test_include_specific', 'test_transform_op', 'test_lifetime_arg', 'test_reserved', 'test_namespace_constant', 'test_union', 'test_cfg_2', 'test_monomorph_3', 'test_display_list', 'test_monomorph_1', 'test_cfg', 'test_renaming_overrides_prefixing', 'test_transparent', 'test_constant', 'test_prefix', 'test_nonnull', 'test_euclid', 'test_enum', 'test_struct_literal', 'test_destructor_and_copy_ctor', 'test_derive_eq', 'test_mod_path', 'test_external_workspace_child', 'test_mod_attr', 'test_rename_crate', 'test_workspace', 'test_include'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for mozilla__cbindgen-401: resolved: True
+2026-04-17 07:14:07,230 - INFO - Attempting to stop container rustb.eval.mozilla__cbindgen-401.gold_run1...
+2026-04-17 07:15:26,634 - INFO - Attempting to remove container rustb.eval.mozilla__cbindgen-401.gold_run1...
+2026-04-17 07:15:26,669 - INFO - Container rustb.eval.mozilla__cbindgen-401.gold_run1 removed.
+2026-04-17 07:15:26,669 - INFO - Attempting to remove image rustbench/mozilla__cbindgen:pr-401...
+2026-04-17 07:15:27,525 - INFO - Image rustbench/mozilla__cbindgen:pr-401 removed.

@@ -1,0 +1,241 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch askama_derive/src/parser/tests.rs...
+Checking patch testing/templates/rust-macros-full-path.html...
+Checking patch testing/tests/rust_macro.rs...
+Checking patch testing/tests/rust_macro.rs...
+Applied patch askama_derive/src/parser/tests.rs cleanly.
+Applied patch testing/templates/rust-macros-full-path.html cleanly.
+Applied patch testing/tests/rust_macro.rs cleanly.
+Applied patch testing/tests/rust_macro.rs cleanly.
++ cd askama_derive
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-8d80389b36`)
+  Downloaded unicode-ident v1.0.11 (registry `lts-repo-at-8d80389b36`)
+  Downloaded mime v0.3.17 (registry `lts-repo-at-8d80389b36`)
+  Downloaded basic-toml v0.1.4 (registry `lts-repo-at-8d80389b36`)
+  Downloaded unicase v2.6.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded quote v1.0.32 (registry `lts-repo-at-8d80389b36`)
+  Downloaded proc-macro2 v1.0.66 (registry `lts-repo-at-8d80389b36`)
+  Downloaded memchr v2.5.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded serde v1.0.175 (registry `lts-repo-at-8d80389b36`)
+  Downloaded nom v7.1.3 (registry `lts-repo-at-8d80389b36`)
+  Downloaded minimal-lexical v0.2.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded mime_guess v2.0.4 (registry `lts-repo-at-8d80389b36`)
+  Downloaded syn v2.0.27 (registry `lts-repo-at-8d80389b36`)
+  Downloaded serde_derive v1.0.175 (registry `lts-repo-at-8d80389b36`)
+   Compiling version_check v0.9.4
+   Compiling proc-macro2 v1.0.66
+   Compiling serde v1.0.175
+   Compiling unicode-ident v1.0.11
+   Compiling memchr v2.5.0
+   Compiling serde_derive v1.0.175
+   Compiling minimal-lexical v0.2.1
+   Compiling mime v0.3.17
+   Compiling unicase v2.6.0
+   Compiling quote v1.0.32
+   Compiling mime_guess v2.0.4
+   Compiling nom v7.1.3
+   Compiling syn v2.0.27
+   Compiling basic-toml v0.1.4
+   Compiling askama_derive v0.12.1 (/workspace/askama_derive)
+    Finished test [unoptimized + debuginfo] target(s) in 5.65s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/askama_derive-321bd3d3989dbc26)
+
+running 36 tests
+test config::tests::find_absolute ... ok
+test config::tests::find_relative ... ok
+test config::tests::escape_modes ... ok
+test config::tests::add_syntax_two ... ok
+test config::tests::add_syntax ... ok
+test config::tests::find_relative_sub ... ok
+test config::tests::get_source ... ok
+test config::tests::find_relative_nonexistent - should panic ... ok
+test config::tests::test_config_whitespace_error ... ok
+test config::tests::test_config_dirs ... ok
+test config::tests::illegal_delimiters ... ok
+test config::tests::test_default_config ... ok
+test config::tests::longer_delimiters ... ok
+test input::tests::test_double_ext ... ok
+test input::tests::test_ext ... ok
+test config::tests::test_whitespace_parsing ... ok
+test input::tests::test_only_jinja_ext ... ok
+test input::tests::test_skip_jinja_ext ... ok
+test parser::tests::change_delimiters_parse_filter ... ok
+test parser::tests::test_missing_space_after_kw ... ok
+test parser::tests::test_invalid_block - should panic ... ok
+test parser::tests::test_parse_comments ... ok
+test parser::tests::test_associativity ... ok
+test parser::tests::test_parse_const ... ok
+test parser::tests::test_parse_numbers ... ok
+test parser::tests::test_parse_filter ... ok
+test parser::tests::test_odd_calls ... ok
+test parser::tests::test_parse_path_call ... ok
+test parser::tests::test_parse_root_path ... ok
+test parser::tests::test_parse_path ... ok
+test parser::tests::test_parse_var ... ok
+test parser::tests::test_parse_var_call ... ok
+test parser::tests::test_ws_splitter ... ok
+test parser::tests::test_precedence ... ok
+test parser::tests::test_rust_macro ... ok
+test parser::tests::test_parse_tuple ... ok
+
+test result: ok. 36 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests askama_derive
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../
++ cd testing
++ cargo test --no-fail-fast --all-features --test rust_macro
+ Downloading crates ...
+  Downloaded humansize v2.1.3 (registry `lts-repo-at-8d80389b36`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded aho-corasick v1.0.2 (registry `lts-repo-at-8d80389b36`)
+  Downloaded criterion-plot v0.5.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded half v1.8.2 (registry `lts-repo-at-8d80389b36`)
+  Downloaded itertools v0.10.5 (registry `lts-repo-at-8d80389b36`)
+  Downloaded criterion v0.5.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded anes v0.1.6 (registry `lts-repo-at-8d80389b36`)
+  Downloaded anstyle v1.0.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded either v1.9.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded ciborium-io v0.2.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded deunicode v0.4.3 (registry `lts-repo-at-8d80389b36`)
+  Downloaded rayon-core v1.11.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded num-traits v0.2.16 (registry `lts-repo-at-8d80389b36`)
+  Downloaded plotters-svg v0.3.5 (registry `lts-repo-at-8d80389b36`)
+  Downloaded entities v1.0.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded rayon v1.7.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded crossbeam-epoch v0.9.15 (registry `lts-repo-at-8d80389b36`)
+  Downloaded itoa v1.0.9 (registry `lts-repo-at-8d80389b36`)
+  Downloaded once_cell v1.18.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded num_cpus v1.16.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded regex v1.9.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded libc v0.2.147 (registry `lts-repo-at-8d80389b36`)
+  Downloaded libm v0.2.7 (registry `lts-repo-at-8d80389b36`)
+  Downloaded crossbeam-utils v0.8.16 (registry `lts-repo-at-8d80389b36`)
+  Downloaded comrak v0.18.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded serde_json v1.0.103 (registry `lts-repo-at-8d80389b36`)
+  Downloaded unicode_categories v0.1.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded typed-arena v2.0.2 (registry `lts-repo-at-8d80389b36`)
+  Downloaded slug v0.1.4 (registry `lts-repo-at-8d80389b36`)
+  Downloaded walkdir v2.3.3 (registry `lts-repo-at-8d80389b36`)
+  Downloaded tinytemplate v1.2.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded trybuild v1.0.82 (registry `lts-repo-at-8d80389b36`)
+  Downloaded termcolor v1.2.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded ryu v1.0.15 (registry `lts-repo-at-8d80389b36`)
+  Downloaded plotters-backend v0.3.5 (registry `lts-repo-at-8d80389b36`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded rustix v0.38.4 (registry `lts-repo-at-8d80389b36`)
+  Downloaded plotters v0.3.5 (registry `lts-repo-at-8d80389b36`)
+  Downloaded regex-syntax v0.7.4 (registry `lts-repo-at-8d80389b36`)
+  Downloaded regex-automata v0.3.3 (registry `lts-repo-at-8d80389b36`)
+  Downloaded linux-raw-sys v0.4.3 (registry `lts-repo-at-8d80389b36`)
+  Downloaded clap_lex v0.5.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded clap v4.3.19 (registry `lts-repo-at-8d80389b36`)
+  Downloaded ciborium v0.2.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-8d80389b36`)
+  Downloaded percent-encoding v2.3.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded oorandom v11.1.3 (registry `lts-repo-at-8d80389b36`)
+  Downloaded memoffset v0.9.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded crossbeam-deque v0.8.3 (registry `lts-repo-at-8d80389b36`)
+  Downloaded crossbeam-channel v0.5.8 (registry `lts-repo-at-8d80389b36`)
+  Downloaded bitflags v2.3.3 (registry `lts-repo-at-8d80389b36`)
+  Downloaded is-terminal v0.4.9 (registry `lts-repo-at-8d80389b36`)
+  Downloaded glob v0.3.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded cast v0.3.0 (registry `lts-repo-at-8d80389b36`)
+  Downloaded ciborium-ll v0.2.1 (registry `lts-repo-at-8d80389b36`)
+  Downloaded clap_builder v4.3.19 (registry `lts-repo-at-8d80389b36`)
+   Compiling autocfg v1.1.0
+   Compiling memchr v2.5.0
+   Compiling serde v1.0.175
+   Compiling crossbeam-utils v0.8.16
+   Compiling version_check v0.9.4
+   Compiling cfg-if v1.0.0
+   Compiling serde_json v1.0.103
+   Compiling libc v0.2.147
+   Compiling scopeguard v1.2.0
+   Compiling regex-syntax v0.7.4
+   Compiling ryu v1.0.15
+   Compiling itoa v1.0.9
+   Compiling either v1.9.0
+   Compiling rayon-core v1.11.0
+   Compiling libm v0.2.7
+   Compiling rustix v0.38.4
+   Compiling once_cell v1.18.0
+   Compiling ciborium-io v0.2.1
+   Compiling plotters-backend v0.3.5
+   Compiling clap_lex v0.5.0
+   Compiling linux-raw-sys v0.4.3
+   Compiling bitflags v2.3.3
+   Compiling deunicode v0.4.3
+   Compiling half v1.8.2
+   Compiling anstyle v1.0.1
+   Compiling same-file v1.0.6
+   Compiling cast v0.3.0
+   Compiling entities v1.0.1
+   Compiling unicode_categories v0.1.1
+   Compiling trybuild v1.0.82
+   Compiling typed-arena v2.0.2
+   Compiling anes v0.1.6
+   Compiling syn v2.0.27
+   Compiling oorandom v11.1.3
+   Compiling percent-encoding v2.3.0
+   Compiling slug v0.1.4
+   Compiling walkdir v2.3.3
+   Compiling itertools v0.10.5
+   Compiling termcolor v1.2.0
+   Compiling askama_escape v0.10.3 (/workspace/askama_escape)
+   Compiling clap_builder v4.3.19
+   Compiling glob v0.3.1
+   Compiling ciborium-ll v0.2.1
+   Compiling plotters-svg v0.3.5
+   Compiling memoffset v0.9.0
+   Compiling crossbeam-epoch v0.9.15
+   Compiling num-traits v0.2.16
+   Compiling unicase v2.6.0
+   Compiling crossbeam-channel v0.5.8
+   Compiling humansize v2.1.3
+   Compiling mime_guess v2.0.4
+   Compiling crossbeam-deque v0.8.3
+   Compiling aho-corasick v1.0.2
+   Compiling nom v7.1.3
+   Compiling is-terminal v0.4.9
+   Compiling plotters v0.3.5
+   Compiling criterion-plot v0.5.0
+   Compiling regex-automata v0.3.3
+   Compiling num_cpus v1.16.0
+   Compiling clap v4.3.19
+   Compiling rayon v1.7.0
+   Compiling basic-toml v0.1.4
+   Compiling ciborium v0.2.1
+   Compiling askama_derive v0.12.1 (/workspace/askama_derive)
+   Compiling regex v1.9.1
+   Compiling tinytemplate v1.2.1
+   Compiling comrak v0.18.0
+   Compiling criterion v0.5.1
+   Compiling askama v0.12.0 (/workspace/askama)
+   Compiling askama_testing v0.1.0 (/workspace/testing)
+    Finished test [unoptimized + debuginfo] target(s) in 7.41s
+     Running tests/rust_macro.rs (/workspace/target/debug/deps/rust_macro-39582b70a20e1060)
+
+running 3 tests
+test macro_basic ... ok
+test macro_full_path ... ok
+test macro_with_args ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../
++ git reset --hard 9de9af4a006021a63f705e420be4cdef3eb6af82
+HEAD is now at 9de9af4 fix clippy::items-after-test-module error (#839)
++ git clean -fd
+Removing .cargo/
+Removing testing/templates/rust-macros-full-path.html

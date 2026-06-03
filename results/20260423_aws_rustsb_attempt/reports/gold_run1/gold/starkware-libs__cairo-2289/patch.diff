@@ -1,0 +1,338 @@
+diff --git a/crates/cairo-lang-parser/src/colored_printer.rs b/crates/cairo-lang-parser/src/colored_printer.rs
+--- a/crates/cairo-lang-parser/src/colored_printer.rs
++++ b/crates/cairo-lang-parser/src/colored_printer.rs
+@@ -50,6 +50,7 @@ pub fn is_empty_kind(kind: SyntaxKind) -> bool {
+             | SyntaxKind::OptionTypeClauseEmpty
+             | SyntaxKind::OptionReturnTypeClauseEmpty
+             | SyntaxKind::OptionTerminalSemicolonEmpty
++            | SyntaxKind::OptionTerminalColonColonEmpty
+             | SyntaxKind::OptionWrappedGenericParamListEmpty
+     )
+ }
+diff --git a/crates/cairo-lang-parser/src/parser.rs b/crates/cairo-lang-parser/src/parser.rs
+--- a/crates/cairo-lang-parser/src/parser.rs
++++ b/crates/cairo-lang-parser/src/parser.rs
+@@ -693,7 +693,7 @@ impl<'a> Parser<'a> {
+                 });
+                 Some(ExprUnary::new_green(self.db, op, expr).into())
+             }
+-            SyntaxKind::TerminalIdentifier => Some(self.parse_path().into()),
++            SyntaxKind::TerminalIdentifier => Some(self.parse_type_path().into()),
+             SyntaxKind::TerminalLParen => Some(self.expect_parenthesized_expr()),
+             _ => {
+                 // TODO(yuval): report to diagnostics.
+diff --git a/crates/cairo-lang-parser/src/parser.rs b/crates/cairo-lang-parser/src/parser.rs
+--- a/crates/cairo-lang-parser/src/parser.rs
++++ b/crates/cairo-lang-parser/src/parser.rs
+@@ -1272,6 +1272,24 @@ impl<'a> Parser<'a> {
+         if self.is_peek_identifier_like() { Some(self.parse_path()) } else { None }
+     }
+ 
++    /// Expected pattern: `(<PathSegment>::)*<PathSegment>(::){0,1}<GenericArgs>`
++    /// Returns a GreenId of a node with kind ExprPath.
++    fn parse_type_path(&mut self) -> ExprPathGreen {
++        let mut children: Vec<ExprPathElementOrSeparatorGreen> = vec![];
++        loop {
++            let (segment, optional_separator) = self.parse_type_path_segment();
++            children.push(segment.into());
++
++            if let Some(separator) = optional_separator {
++                children.push(separator.into());
++                continue;
++            }
++            break;
++        }
++
++        ExprPath::new_green(self.db, children)
++    }
++
+     /// Returns a PathSegment and an optional separator.
+     fn parse_path_segment(&mut self) -> (PathSegmentGreen, Option<TerminalColonColonGreen>) {
+         let identifier = match self.try_parse_identifier() {
+diff --git a/crates/cairo-lang-parser/src/parser.rs b/crates/cairo-lang-parser/src/parser.rs
+--- a/crates/cairo-lang-parser/src/parser.rs
++++ b/crates/cairo-lang-parser/src/parser.rs
+@@ -1286,13 +1304,56 @@ impl<'a> Parser<'a> {
+                 );
+             }
+         };
++        match self.try_parse_token::<TerminalColonColon>() {
++            Some(separator) if self.peek().kind == SyntaxKind::TerminalLT => (
++                PathSegmentWithGenericArgs::new_green(
++                    self.db,
++                    identifier,
++                    separator.into(),
++                    self.expect_generic_args(),
++                )
++                .into(),
++                self.try_parse_token::<TerminalColonColon>(),
++            ),
++            optional_separator => {
++                (PathSegmentSimple::new_green(self.db, identifier).into(), optional_separator)
++            }
++        }
++    }
+ 
++    /// Returns a Typed PathSegment or a normal PathSegment.
++    /// Additionally returns an optional separators.
++    fn parse_type_path_segment(&mut self) -> (PathSegmentGreen, Option<TerminalColonColonGreen>) {
++        let identifier = match self.try_parse_identifier() {
++            Some(identifier) => identifier,
++            None => {
++                return (
++                    self.create_and_report_missing::<PathSegment>(
++                        ParserDiagnosticKind::MissingPathSegment,
++                    ),
++                    // TODO(ilya, 10/10/2022): Should we continue parsing the path here?
++                    None,
++                );
++            }
++        };
+         match self.try_parse_token::<TerminalColonColon>() {
++            None if self.peek().kind == SyntaxKind::TerminalLT => (
++                PathSegmentWithGenericArgs::new_green(
++                    self.db,
++                    identifier,
++                    OptionTerminalColonColonEmpty::new_green(self.db).into(),
++                    self.expect_generic_args(),
++                )
++                .into(),
++                None,
++            ),
++            // This is here to preserve backwards compatibility.
++            // This allows Option::<T> to still work after this change.
+             Some(separator) if self.peek().kind == SyntaxKind::TerminalLT => (
+                 PathSegmentWithGenericArgs::new_green(
+                     self.db,
+                     identifier,
+-                    separator,
++                    separator.into(),
+                     self.expect_generic_args(),
+                 )
+                 .into(),
+diff --git a/crates/cairo-lang-syntax-codegen/src/cairo_spec.rs b/crates/cairo-lang-syntax-codegen/src/cairo_spec.rs
+--- a/crates/cairo-lang-syntax-codegen/src/cairo_spec.rs
++++ b/crates/cairo-lang-syntax-codegen/src/cairo_spec.rs
+@@ -66,9 +66,10 @@ pub fn get_spec() -> Vec<Node> {
+     .add_struct(StructBuilder::new("ExprMissing"))
+     .add_enum(EnumBuilder::new("PathSegment").missing("Simple").node("WithGenericArgs"))
+     .add_struct(StructBuilder::new("PathSegmentSimple").node("ident", "TerminalIdentifier"))
++    .add_option("TerminalColonColon")
+     .add_struct(StructBuilder::new("PathSegmentWithGenericArgs")
+         .node("ident", "TerminalIdentifier")
+-        .node("separator", "TerminalColonColon")
++        .node("separator", "OptionTerminalColonColon")
+         .node("generic_args", "GenericArgs")
+     )
+     .add_separated_list("ExprPath", "PathSegment", "TerminalColonColon")
+diff --git a/crates/cairo-lang-syntax/src/node/ast.rs b/crates/cairo-lang-syntax/src/node/ast.rs
+--- a/crates/cairo-lang-syntax/src/node/ast.rs
++++ b/crates/cairo-lang-syntax/src/node/ast.rs
+@@ -1420,6 +1420,132 @@ impl TypedSyntaxNode for PathSegmentSimple {
+     }
+ }
+ #[derive(Clone, Debug, Eq, Hash, PartialEq)]
++pub enum OptionTerminalColonColon {
++    Empty(OptionTerminalColonColonEmpty),
++    TerminalColonColon(TerminalColonColon),
++}
++#[derive(Copy, Clone, PartialEq, Eq, Hash, Debug)]
++pub struct OptionTerminalColonColonPtr(pub SyntaxStablePtrId);
++impl OptionTerminalColonColonPtr {
++    pub fn untyped(&self) -> SyntaxStablePtrId {
++        self.0
++    }
++}
++impl From<OptionTerminalColonColonEmptyPtr> for OptionTerminalColonColonPtr {
++    fn from(value: OptionTerminalColonColonEmptyPtr) -> Self {
++        Self(value.0)
++    }
++}
++impl From<TerminalColonColonPtr> for OptionTerminalColonColonPtr {
++    fn from(value: TerminalColonColonPtr) -> Self {
++        Self(value.0)
++    }
++}
++impl From<OptionTerminalColonColonEmptyGreen> for OptionTerminalColonColonGreen {
++    fn from(value: OptionTerminalColonColonEmptyGreen) -> Self {
++        Self(value.0)
++    }
++}
++impl From<TerminalColonColonGreen> for OptionTerminalColonColonGreen {
++    fn from(value: TerminalColonColonGreen) -> Self {
++        Self(value.0)
++    }
++}
++#[derive(Copy, Clone, PartialEq, Eq, Hash, Debug)]
++pub struct OptionTerminalColonColonGreen(pub GreenId);
++impl TypedSyntaxNode for OptionTerminalColonColon {
++    const OPTIONAL_KIND: Option<SyntaxKind> = None;
++    type StablePtr = OptionTerminalColonColonPtr;
++    type Green = OptionTerminalColonColonGreen;
++    fn missing(db: &dyn SyntaxGroup) -> Self::Green {
++        panic!("No missing variant.");
++    }
++    fn from_syntax_node(db: &dyn SyntaxGroup, node: SyntaxNode) -> Self {
++        let kind = node.kind(db);
++        match kind {
++            SyntaxKind::OptionTerminalColonColonEmpty => OptionTerminalColonColon::Empty(
++                OptionTerminalColonColonEmpty::from_syntax_node(db, node),
++            ),
++            SyntaxKind::TerminalColonColon => OptionTerminalColonColon::TerminalColonColon(
++                TerminalColonColon::from_syntax_node(db, node),
++            ),
++            _ => panic!(
++                "Unexpected syntax kind {:?} when constructing {}.",
++                kind, "OptionTerminalColonColon"
++            ),
++        }
++    }
++    fn as_syntax_node(&self) -> SyntaxNode {
++        match self {
++            OptionTerminalColonColon::Empty(x) => x.as_syntax_node(),
++            OptionTerminalColonColon::TerminalColonColon(x) => x.as_syntax_node(),
++        }
++    }
++    fn from_ptr(db: &dyn SyntaxGroup, root: &SyntaxFile, ptr: Self::StablePtr) -> Self {
++        Self::from_syntax_node(db, root.as_syntax_node().lookup_ptr(db, ptr.0))
++    }
++    fn stable_ptr(&self) -> Self::StablePtr {
++        OptionTerminalColonColonPtr(self.as_syntax_node().0.stable_ptr)
++    }
++}
++#[derive(Clone, Debug, Eq, Hash, PartialEq)]
++pub struct OptionTerminalColonColonEmpty {
++    node: SyntaxNode,
++    children: Vec<SyntaxNode>,
++}
++impl OptionTerminalColonColonEmpty {
++    pub fn new_green(db: &dyn SyntaxGroup) -> OptionTerminalColonColonEmptyGreen {
++        let children: Vec<GreenId> = vec![];
++        let width = children.iter().copied().map(|id| db.lookup_intern_green(id).width()).sum();
++        OptionTerminalColonColonEmptyGreen(db.intern_green(GreenNode {
++            kind: SyntaxKind::OptionTerminalColonColonEmpty,
++            details: GreenNodeDetails::Node { children, width },
++        }))
++    }
++}
++impl OptionTerminalColonColonEmpty {}
++#[derive(Copy, Clone, PartialEq, Eq, Hash, Debug)]
++pub struct OptionTerminalColonColonEmptyPtr(pub SyntaxStablePtrId);
++impl OptionTerminalColonColonEmptyPtr {
++    pub fn untyped(&self) -> SyntaxStablePtrId {
++        self.0
++    }
++}
++#[derive(Copy, Clone, PartialEq, Eq, Hash, Debug)]
++pub struct OptionTerminalColonColonEmptyGreen(pub GreenId);
++impl TypedSyntaxNode for OptionTerminalColonColonEmpty {
++    const OPTIONAL_KIND: Option<SyntaxKind> = Some(SyntaxKind::OptionTerminalColonColonEmpty);
++    type StablePtr = OptionTerminalColonColonEmptyPtr;
++    type Green = OptionTerminalColonColonEmptyGreen;
++    fn missing(db: &dyn SyntaxGroup) -> Self::Green {
++        OptionTerminalColonColonEmptyGreen(db.intern_green(GreenNode {
++            kind: SyntaxKind::OptionTerminalColonColonEmpty,
++            details: GreenNodeDetails::Node { children: vec![], width: TextWidth::default() },
++        }))
++    }
++    fn from_syntax_node(db: &dyn SyntaxGroup, node: SyntaxNode) -> Self {
++        let kind = node.kind(db);
++        assert_eq!(
++            kind,
++            SyntaxKind::OptionTerminalColonColonEmpty,
++            "Unexpected SyntaxKind {:?}. Expected {:?}.",
++            kind,
++            SyntaxKind::OptionTerminalColonColonEmpty
++        );
++        let children = node.children(db).collect();
++        Self { node, children }
++    }
++    fn from_ptr(db: &dyn SyntaxGroup, root: &SyntaxFile, ptr: Self::StablePtr) -> Self {
++        Self::from_syntax_node(db, root.as_syntax_node().lookup_ptr(db, ptr.0))
++    }
++    fn as_syntax_node(&self) -> SyntaxNode {
++        self.node.clone()
++    }
++    fn stable_ptr(&self) -> Self::StablePtr {
++        OptionTerminalColonColonEmptyPtr(self.node.0.stable_ptr)
++    }
++}
++#[derive(Clone, Debug, Eq, Hash, PartialEq)]
+ pub struct PathSegmentWithGenericArgs {
+     node: SyntaxNode,
+     children: Vec<SyntaxNode>,
+diff --git a/crates/cairo-lang-syntax/src/node/ast.rs b/crates/cairo-lang-syntax/src/node/ast.rs
+--- a/crates/cairo-lang-syntax/src/node/ast.rs
++++ b/crates/cairo-lang-syntax/src/node/ast.rs
+@@ -1431,7 +1557,7 @@ impl PathSegmentWithGenericArgs {
+     pub fn new_green(
+         db: &dyn SyntaxGroup,
+         ident: TerminalIdentifierGreen,
+-        separator: TerminalColonColonGreen,
++        separator: OptionTerminalColonColonGreen,
+         generic_args: GenericArgsGreen,
+     ) -> PathSegmentWithGenericArgsGreen {
+         let children: Vec<GreenId> = vec![ident.0, separator.0, generic_args.0];
+diff --git a/crates/cairo-lang-syntax/src/node/ast.rs b/crates/cairo-lang-syntax/src/node/ast.rs
+--- a/crates/cairo-lang-syntax/src/node/ast.rs
++++ b/crates/cairo-lang-syntax/src/node/ast.rs
+@@ -1446,8 +1572,8 @@ impl PathSegmentWithGenericArgs {
+     pub fn ident(&self, db: &dyn SyntaxGroup) -> TerminalIdentifier {
+         TerminalIdentifier::from_syntax_node(db, self.children[0].clone())
+     }
+-    pub fn separator(&self, db: &dyn SyntaxGroup) -> TerminalColonColon {
+-        TerminalColonColon::from_syntax_node(db, self.children[1].clone())
++    pub fn separator(&self, db: &dyn SyntaxGroup) -> OptionTerminalColonColon {
++        OptionTerminalColonColon::from_syntax_node(db, self.children[1].clone())
+     }
+     pub fn generic_args(&self, db: &dyn SyntaxGroup) -> GenericArgs {
+         GenericArgs::from_syntax_node(db, self.children[2].clone())
+diff --git a/crates/cairo-lang-syntax/src/node/ast.rs b/crates/cairo-lang-syntax/src/node/ast.rs
+--- a/crates/cairo-lang-syntax/src/node/ast.rs
++++ b/crates/cairo-lang-syntax/src/node/ast.rs
+@@ -1472,7 +1598,7 @@ impl TypedSyntaxNode for PathSegmentWithGenericArgs {
+             details: GreenNodeDetails::Node {
+                 children: vec![
+                     TerminalIdentifier::missing(db).0,
+-                    TerminalColonColon::missing(db).0,
++                    OptionTerminalColonColon::missing(db).0,
+                     GenericArgs::missing(db).0,
+                 ],
+                 width: TextWidth::default(),
+diff --git a/crates/cairo-lang-syntax/src/node/key_fields.rs b/crates/cairo-lang-syntax/src/node/key_fields.rs
+--- a/crates/cairo-lang-syntax/src/node/key_fields.rs
++++ b/crates/cairo-lang-syntax/src/node/key_fields.rs
+@@ -18,6 +18,7 @@ pub fn get_key_fields(kind: SyntaxKind, children: Vec<GreenId>) -> Vec<GreenId>
+         SyntaxKind::ArgList => vec![],
+         SyntaxKind::ExprMissing => vec![],
+         SyntaxKind::PathSegmentSimple => vec![],
++        SyntaxKind::OptionTerminalColonColonEmpty => vec![],
+         SyntaxKind::PathSegmentWithGenericArgs => vec![],
+         SyntaxKind::ExprPath => vec![],
+         SyntaxKind::ExprParenthesized => vec![],
+diff --git a/crates/cairo-lang-syntax/src/node/kind.rs b/crates/cairo-lang-syntax/src/node/kind.rs
+--- a/crates/cairo-lang-syntax/src/node/kind.rs
++++ b/crates/cairo-lang-syntax/src/node/kind.rs
+@@ -14,6 +14,7 @@ pub enum SyntaxKind {
+     ArgList,
+     ExprMissing,
+     PathSegmentSimple,
++    OptionTerminalColonColonEmpty,
+     PathSegmentWithGenericArgs,
+     ExprPath,
+     ExprParenthesized,
+diff --git a/docs/CONTRIBUTING.md b/docs/CONTRIBUTING.md
+--- a/docs/CONTRIBUTING.md
++++ b/docs/CONTRIBUTING.md
+@@ -50,6 +50,8 @@ Please try to create bug reports that are:
+    that relate to your submission. You don't want to duplicate effort.
+ 2. Fork the project
+ 3. Create your feature branch (`git checkout -b feat/amazing_feature`)
+-4. Commit your changes (`git commit -m 'feat: add amazing_feature'`) 
+-5. Push to the branch (`git push origin feat/amazing_feature`)
+-6. [Open a Pull Request](https://github.com/starkware-libs-cairo/compare?expand=1)
++4. Implement your feature
++5. Run the code formatter for rust and cairo (`./scripts/rust_fmt.sh && ./scripts/cairo_fmt.sh`)
++6. Commit your changes (`git commit -m 'feat: add amazing_feature'`) 
++7. Push to the branch (`git push origin feat/amazing_feature`)
++8. [Open a Pull Request](https://github.com/starkware-libs-cairo/compare?expand=1)

@@ -1,0 +1,37 @@
+{
+    "dtolnay__async-trait-160": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "drop_order::test_drop_order",
+                    "issue45::tracing",
+                    "src/lib.rs - (line 15)",
+                    "src/lib.rs - (line 165)",
+                    "src/lib.rs - (line 126)",
+                    "src/lib.rs - (line 186)",
+                    "src/lib.rs - (line 286)",
+                    "src/lib.rs - (line 265)",
+                    "src/lib.rs - (line 47)",
+                    "src/lib.rs - (line 211)"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

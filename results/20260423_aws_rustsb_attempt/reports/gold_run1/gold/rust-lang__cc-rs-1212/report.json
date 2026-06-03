@@ -1,0 +1,99 @@
+{
+    "rust-lang__cc-rs-1212": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "gnu_aarch64_none_no_pic"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "tests::test_android_clang_compiler_uses_target_arg_internally",
+                    "main",
+                    "gnu_no_warnings_if_cflags",
+                    "gnu_test_parse_shell_escaped_flags",
+                    "gnu_no_warnings_if_cxxflags",
+                    "msvc_no_dash_dash",
+                    "msvc_debug",
+                    "clang_android",
+                    "msvc_smoke",
+                    "msvc_static_crt",
+                    "msvc_std_c",
+                    "msvc_opt_level_0",
+                    "msvc_no_static_crt",
+                    "msvc_include",
+                    "msvc_define",
+                    "gnu_include",
+                    "gnu_no_dash_dash",
+                    "gnu_shared",
+                    "gnu_set_stdlib",
+                    "gnu_compile_assembly",
+                    "gnu_static",
+                    "gnu_opt_level_s",
+                    "gnu_warnings_overridable",
+                    "gnu_x86_64_no_plt",
+                    "gnu_opt_level_1",
+                    "gnu_warnings",
+                    "gnu_define",
+                    "gnu_std_c",
+                    "gnu_smoke",
+                    "gnu_debug_fp",
+                    "gnu_extra_warnings0",
+                    "gnu_debug_fp_auto",
+                    "gnu_extra_warnings1",
+                    "gnu_warnings_into_errors",
+                    "gnu_flag_if_supported_cpp",
+                    "gnu_x86_64_no_pic",
+                    "gnu_x86_64",
+                    "gnu_i686_pic",
+                    "gnu_apple_darwin",
+                    "gnu_debug_nofp",
+                    "gnu_i686",
+                    "gnu_debug",
+                    "compile_intermediates",
+                    "gnu_flag_if_supported",
+                    "src/lib.rs - (line 45) - compile",
+                    "src/lib.rs - (line 20) - compile",
+                    "src/lib.rs - (line 161) - compile",
+                    "src/lib.rs - Build::expand (line 1798) - compile",
+                    "src/lib.rs - Build::ar_flag (line 560) - compile",
+                    "src/lib.rs - Build::static_flag (line 788) - compile",
+                    "src/lib.rs - (line 191) - compile",
+                    "src/lib.rs - Build::flag_if_supported (line 718) - compile",
+                    "src/lib.rs - Build::asm_flag (line 579) - compile",
+                    "src/lib.rs - Build::extra_warnings (line 980) - compile",
+                    "src/lib.rs - (line 173) - compile",
+                    "src/lib.rs - Build::include (line 443) - compile",
+                    "src/lib.rs - Build::shared_flag (line 770) - compile",
+                    "src/lib.rs - Build::target (line 1076) - compile",
+                    "src/lib.rs - Build::warnings (line 958) - compile",
+                    "src/lib.rs - Build::compile (line 1469) - compile",
+                    "src/lib.rs - Build::define (line 492) - compile",
+                    "src/lib.rs - Build::flag (line 527) - compile",
+                    "src/lib.rs - Build::warnings_into_errors (line 937) - compile",
+                    "src/lib.rs - Build::includes (line 463) - compile",
+                    "src/lib.rs - Build::host (line 1094) - compile",
+                    "src/lib.rs - Build::cpp_set_stdlib (line 1053) - compile",
+                    "src/lib.rs - Build::cpp_link_stdlib (line 1011) - compile",
+                    "src/lib.rs - Build::std (line 912) - compile",
+                    "src/lib.rs - Build::try_flags_from_environment (line 745) - compile",
+                    "src/lib.rs - Build::remove_flag (line 544)"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

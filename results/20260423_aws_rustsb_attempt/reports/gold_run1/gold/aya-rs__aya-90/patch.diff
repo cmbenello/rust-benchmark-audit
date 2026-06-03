@@ -1,0 +1,36 @@
+diff --git a/aya/src/obj/mod.rs b/aya/src/obj/mod.rs
+--- a/aya/src/obj/mod.rs
++++ b/aya/src/obj/mod.rs
+@@ -410,6 +410,7 @@ struct Section<'a> {
+     address: u64,
+     name: &'a str,
+     data: &'a [u8],
++    size: u64,
+     relocations: Vec<Relocation>,
+ }
+ 
+diff --git a/aya/src/obj/mod.rs b/aya/src/obj/mod.rs
+--- a/aya/src/obj/mod.rs
++++ b/aya/src/obj/mod.rs
+@@ -428,6 +429,7 @@ impl<'data, 'file, 'a> TryFrom<&'a ObjSection<'data, 'file>> for Section<'a> {
+             address: section.address(),
+             name: section.name().map_err(map_err)?,
+             data: section.data().map_err(map_err)?,
++            size: section.size(),
+             relocations: section
+                 .relocations()
+                 .map(|(offset, r)| {
+diff --git a/aya/src/obj/mod.rs b/aya/src/obj/mod.rs
+--- a/aya/src/obj/mod.rs
++++ b/aya/src/obj/mod.rs
+@@ -505,7 +507,9 @@ fn parse_map(section: &Section, name: &str) -> Result<Map, ParseError> {
+         let def = bpf_map_def {
+             map_type: BPF_MAP_TYPE_ARRAY as u32,
+             key_size: mem::size_of::<u32>() as u32,
+-            value_size: section.data.len() as u32,
++            // We need to use section.size here since
++            // .bss will always have data.len() == 0
++            value_size: section.size as u32,
+             max_entries: 1,
+             map_flags: 0, /* FIXME: set rodata readonly */
+             ..Default::default()

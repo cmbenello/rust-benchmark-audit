@@ -1,0 +1,88 @@
+{
+    "cargo-generate__cargo-generate-691": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "config::tests::config_try_from_handles_empty",
+                    "config::tests::config_try_from_errors_on_invalid_keys",
+                    "config::tests::config_try_from_handles_placeholders",
+                    "git::utils::should_canonicalize",
+                    "project_variables::tests::block_invalid_key_names",
+                    "config::tests::locate_configs_can_doesnt_look_past_cargo_generate",
+                    "project_variables::tests::boolean_cant_have_choices",
+                    "git::identity_path::tests::should_pretty_path",
+                    "project_variables::tests::bools_cant_have_regex",
+                    "config::tests::locate_configs_returns_empty_upon_failure",
+                    "project_variables::tests::choices_array_cant_have_anything_but_strings",
+                    "project_variables::tests::choices_cant_be_an_empty_array",
+                    "project_variables::tests::choices_is_array_string_no_regex_is_fine",
+                    "config::tests::test_deserializes_config",
+                    "config::tests::locate_configs_can_locate_paths_with_cargo_generate",
+                    "git::gitconfig::test::should_resolve_instead_url",
+                    "project_variables::tests::choices_is_not_array_string_is_error",
+                    "project_variables::tests::default_for_bool_only_accepts_bool",
+                    "project_variables::tests::default_for_boolean_is_fine",
+                    "project_variables::tests::default_for_string_is_on_choices",
+                    "project_variables::tests::default_for_string_only_accepts_strings",
+                    "project_variables::tests::default_for_string_isnt_on_choices",
+                    "project_variables::tests::default_for_string_with_no_choices_and_no_regex",
+                    "project_variables::tests::empty_default_is_fine",
+                    "project_variables::tests::empty_type_is_string",
+                    "project_variables::tests::choices_is_array_string_that_doesnt_match_regex_is_error",
+                    "project_variables::tests::no_choices_boolean",
+                    "project_variables::tests::choices_is_array_string_that_all_match_regex_is_good",
+                    "project_variables::tests::invalid_regex_is_err",
+                    "project_variables::tests::no_choices_for_type_string",
+                    "project_variables::tests::no_regex_is_ok",
+                    "project_variables::tests::default_for_string_with_no_choices_and_matching_regex",
+                    "project_variables::tests::only_tables_as_placeholder_values",
+                    "project_variables::tests::prompt_as_string_is_ok",
+                    "project_variables::tests::default_for_string_is_on_choices_and_matches_regex",
+                    "project_variables::tests::prompt_cant_be_empty",
+                    "project_variables::tests::prompt_must_be_string",
+                    "project_variables::tests::type_must_be_string_type",
+                    "project_variables::tests::default_for_string_with_no_choices_and_regex_doesnt_match",
+                    "project_variables::tests::type_must_either_be_string_or_bool",
+                    "filenames::tests::should_prevent_invalid_filenames",
+                    "filenames::tests::should_do_happy_path",
+                    "project_variables::tests::strings_can_have_regex",
+                    "filenames::tests::should_prevent_exploitation",
+                    "user_parsed_input::tests::should_support_bb_gl_gh_abbreviations",
+                    "template_variables::test::names_may_contain_dash",
+                    "template_variables::test::names_may_contain_underscore",
+                    "tests::auto_locate_template_can_resolve_configured_subtemplates",
+                    "template_variables::test::spaces_are_not_allowed_in_names",
+                    "template_variables::test::spaces_around_assignment_is_ok",
+                    "tests::auto_locate_template_returns_base_when_no_cargo_generate_is_found",
+                    "template_variables::test::names_may_contain_digits",
+                    "tests::auto_locate_template_prompts_when_multiple_cargo_generate_is_found",
+                    "tests::auto_locate_template_returns_path_when_single_cargo_generate_is_found",
+                    "user_parsed_input::tests::should_appreviation_org_repo_to_github",
+                    "tests::auto_locate_template_recurses_to_resolve_subtemplates",
+                    "template_variables::test::names_must_start_with_word_char",
+                    "hooks::variable_mod::tests::test_rhai_set",
+                    "git::should_retrieve_an_instead_of_url",
+                    "git::should_find_them_all",
+                    "basics::error_message_for_invalid_repo_or_user"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

@@ -1,0 +1,161 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/test.rs...
+Applied patch tests/test.rs cleanly.
++ cargo test --no-fail-fast --all-features
+warning: `/workspace/.cargo/config` is deprecated in favor of `config.toml`
+note: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+note: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+ Downloading crates ...
+  Downloaded bitflags v2.6.0 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded jobserver v0.1.32 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded tempfile v3.12.0 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded shlex v1.3.0 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded once_cell v1.19.0 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded fastrand v2.1.1 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded errno v0.3.9 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded rustix v0.38.37 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded libc v0.2.158 (registry `lts-repo-at-ed9bb66484`)
+  Downloaded linux-raw-sys v0.4.14 (registry `lts-repo-at-ed9bb66484`)
+   Compiling libc v0.2.158
+   Compiling rustix v0.38.37
+   Compiling shlex v1.3.0
+   Compiling linux-raw-sys v0.4.14
+   Compiling bitflags v2.6.0
+   Compiling cfg-if v1.0.0
+   Compiling fastrand v2.1.1
+   Compiling once_cell v1.19.0
+   Compiling jobserver v0.1.32
+   Compiling cc v1.1.20 (/workspace)
+   Compiling tempfile v3.12.0
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.44s
+     Running unittests src/lib.rs (target/debug/deps/cc-24f7214dd6c33ce7)
+
+running 1 test
+test tests::test_android_clang_compiler_uses_target_arg_internally ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/gcc-shim.rs (target/debug/deps/gcc_shim-df9c0f9025ff9178)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/cc_env.rs (target/debug/deps/cc_env-0dd83ff027fb9da7)
+
+running 1 test
+test main ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/cflags.rs (target/debug/deps/cflags-d7fb8628426b0e20)
+
+running 1 test
+test gnu_no_warnings_if_cflags ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/cflags_shell_escaped.rs (target/debug/deps/cflags_shell_escaped-f77edd728ce47868)
+
+running 1 test
+test gnu_test_parse_shell_escaped_flags ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/cxxflags.rs (target/debug/deps/cxxflags-01ca85a4f3e22b06)
+
+running 1 test
+test gnu_no_warnings_if_cxxflags ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/test.rs (target/debug/deps/test-384a545a8bab392a)
+
+running 40 tests
+test msvc_debug ... ok
+test clang_android ... ok
+test gnu_extra_warnings0 ... ok
+test gnu_warnings_overridable ... ok
+test gnu_define ... ok
+test gnu_compile_assembly ... ok
+test gnu_opt_level_1 ... ok
+test gnu_shared ... ok
+test gnu_extra_warnings1 ... ok
+test gnu_opt_level_s ... ok
+test gnu_warnings_into_errors ... ok
+test gnu_include ... ok
+test gnu_no_dash_dash ... ok
+test gnu_std_c ... ok
+test gnu_debug_fp ... ok
+test msvc_define ... ok
+test gnu_set_stdlib ... ok
+test gnu_smoke ... ok
+test gnu_warnings ... ok
+test gnu_debug_fp_auto ... ok
+test gnu_x86_64_no_plt ... ok
+test msvc_include ... ok
+test gnu_static ... ok
+test msvc_no_dash_dash ... ok
+test msvc_no_static_crt ... ok
+test msvc_static_crt ... ok
+test msvc_opt_level_0 ... ok
+test msvc_std_c ... ok
+test msvc_smoke ... ok
+test gnu_aarch64_none_no_pic ... ok
+test gnu_apple_darwin ... ok
+test gnu_x86_64 ... ok
+test gnu_i686 ... ok
+test gnu_flag_if_supported_cpp ... ok
+test gnu_i686_pic ... ok
+test gnu_x86_64_no_pic ... ok
+test gnu_debug_nofp ... ok
+test gnu_debug ... ok
+exit status: 0
+exit status: 0
+exit status: 0
+test compile_intermediates ... ok
+test gnu_flag_if_supported ... ok
+
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+
+   Doc-tests cc
+
+running 26 tests
+test src/lib.rs - (line 45) - compile ... ok
+test src/lib.rs - Build::expand (line 1798) - compile ... ok
+test src/lib.rs - Build::include (line 443) - compile ... ok
+test src/lib.rs - Build::includes (line 463) - compile ... ok
+test src/lib.rs - Build::extra_warnings (line 980) - compile ... ok
+test src/lib.rs - Build::cpp_link_stdlib (line 1011) - compile ... ok
+test src/lib.rs - (line 173) - compile ... ok
+test src/lib.rs - Build::compile (line 1469) - compile ... ok
+test src/lib.rs - Build::ar_flag (line 560) - compile ... ok
+test src/lib.rs - Build::warnings_into_errors (line 937) - compile ... ok
+test src/lib.rs - (line 161) - compile ... ok
+test src/lib.rs - Build::define (line 492) - compile ... ok
+test src/lib.rs - Build::std (line 912) - compile ... ok
+test src/lib.rs - (line 20) - compile ... ok
+test src/lib.rs - Build::host (line 1094) - compile ... ok
+test src/lib.rs - (line 191) - compile ... ok
+test src/lib.rs - Build::warnings (line 958) - compile ... ok
+test src/lib.rs - Build::flag_if_supported (line 718) - compile ... ok
+test src/lib.rs - Build::try_flags_from_environment (line 745) - compile ... ok
+test src/lib.rs - Build::asm_flag (line 579) - compile ... ok
+test src/lib.rs - Build::cpp_set_stdlib (line 1053) - compile ... ok
+test src/lib.rs - Build::static_flag (line 788) - compile ... ok
+test src/lib.rs - Build::shared_flag (line 770) - compile ... ok
+test src/lib.rs - Build::flag (line 527) - compile ... ok
+test src/lib.rs - Build::target (line 1076) - compile ... ok
+test src/lib.rs - Build::remove_flag (line 544) ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.54s
+
++ git reset --hard 92a5e28c084aefc101d2f71f236614d9fcaa1f9e
+HEAD is now at 92a5e28 chore: release (#1210)
++ git clean -fd
+Removing .cargo/

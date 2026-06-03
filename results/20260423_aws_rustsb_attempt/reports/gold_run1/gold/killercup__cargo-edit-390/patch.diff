@@ -1,0 +1,257 @@
+diff --git a/src/bin/add/args.rs b/src/bin/add/args.rs
+--- a/src/bin/add/args.rs
++++ b/src/bin/add/args.rs
+@@ -83,9 +83,18 @@ pub struct Args {
+     pub optional: bool,
+ 
+     /// Path to the manifest to add a dependency to.
+-    #[structopt(long = "manifest-path", value_name = "path")]
++    #[structopt(long = "manifest-path", value_name = "path", conflicts_with = "pkgid")]
+     pub manifest_path: Option<PathBuf>,
+ 
++    /// Package id of the crate to add this dependency to.
++    #[structopt(
++        long = "package",
++        short = "p",
++        value_name = "pkgid",
++        conflicts_with = "path"
++    )]
++    pub pkgid: Option<String>,
++
+     /// Choose method of semantic version upgrade.  Must be one of "none" (exact version, `=`
+     /// modifier), "patch" (`~` modifier), "minor" (`^` modifier), "all" (`>=`), or "default" (no
+     /// modifier).
+diff --git a/src/bin/add/args.rs b/src/bin/add/args.rs
+--- a/src/bin/add/args.rs
++++ b/src/bin/add/args.rs
+@@ -276,6 +285,7 @@ impl Default for Args {
+             target: None,
+             optional: false,
+             manifest_path: None,
++            pkgid: None,
+             upgrade: "minor".to_string(),
+             allow_prerelease: false,
+             no_default_features: false,
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -15,7 +15,10 @@
+ extern crate error_chain;
+ 
+ use crate::args::{Args, Command};
+-use cargo_edit::{find, registry_url, update_registry_index, Dependency, Manifest};
++use cargo_edit::{
++    find, manifest_from_pkgid, registry_url, update_registry_index, Dependency, Manifest,
++};
++use std::borrow::Cow;
+ use std::io::Write;
+ use std::process;
+ use structopt::StructOpt;
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -83,8 +86,13 @@ fn print_msg(dep: &Dependency, section: &[String], optional: bool) -> Result<()>
+ }
+ 
+ fn handle_add(args: &Args) -> Result<()> {
+-    let manifest_path = &args.manifest_path;
+-    let mut manifest = Manifest::open(manifest_path)?;
++    let manifest_path = if let Some(ref pkgid) = args.pkgid {
++        let pkg = manifest_from_pkgid(pkgid)?;
++        Cow::Owned(Some(pkg.manifest_path))
++    } else {
++        Cow::Borrowed(&args.manifest_path)
++    };
++    let mut manifest = Manifest::open(&manifest_path)?;
+     let deps = &args.parse_dependencies()?;
+ 
+     if !args.offline && std::env::var("CARGO_IS_TEST").is_err() {
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -122,7 +130,7 @@ fn handle_add(args: &Args) -> Result<()> {
+             err
+         })?;
+ 
+-    let mut file = Manifest::find_file(manifest_path)?;
++    let mut file = Manifest::find_file(&manifest_path)?;
+     manifest.write_to_file(&mut file)?;
+ 
+     Ok(())
+diff --git a/src/bin/rm/main.rs b/src/bin/rm/main.rs
+--- a/src/bin/rm/main.rs
++++ b/src/bin/rm/main.rs
+@@ -14,7 +14,8 @@
+ #[macro_use]
+ extern crate error_chain;
+ 
+-use cargo_edit::Manifest;
++use cargo_edit::{manifest_from_pkgid, Manifest};
++use std::borrow::Cow;
+ use std::io::Write;
+ use std::path::PathBuf;
+ use std::process;
+diff --git a/src/bin/rm/main.rs b/src/bin/rm/main.rs
+--- a/src/bin/rm/main.rs
++++ b/src/bin/rm/main.rs
+@@ -56,9 +57,18 @@ struct Args {
+     build: bool,
+ 
+     /// Path to the manifest to remove a dependency from.
+-    #[structopt(long = "manifest-path", value_name = "path")]
++    #[structopt(long = "manifest-path", value_name = "path", conflicts_with = "pkgid")]
+     manifest_path: Option<PathBuf>,
+ 
++    /// Package id of the crate to add this dependency to.
++    #[structopt(
++        long = "package",
++        short = "p",
++        value_name = "pkgid",
++        conflicts_with = "path"
++    )]
++    pkgid: Option<String>,
++
+     /// Do not print any output in case of success.
+     #[structopt(long = "quiet", short = "q")]
+     quiet: bool,
+diff --git a/src/bin/rm/main.rs b/src/bin/rm/main.rs
+--- a/src/bin/rm/main.rs
++++ b/src/bin/rm/main.rs
+@@ -92,8 +102,13 @@ fn print_msg(name: &str, section: &str) -> Result<()> {
+ }
+ 
+ fn handle_rm(args: &Args) -> Result<()> {
+-    let manifest_path = &args.manifest_path;
+-    let mut manifest = Manifest::open(manifest_path)?;
++    let manifest_path = if let Some(ref pkgid) = args.pkgid {
++        let pkg = manifest_from_pkgid(pkgid)?;
++        Cow::Owned(Some(pkg.manifest_path))
++    } else {
++        Cow::Borrowed(&args.manifest_path)
++    };
++    let mut manifest = Manifest::open(&manifest_path)?;
+     let deps = &args.crates;
+ 
+     deps.iter()
+diff --git a/src/bin/rm/main.rs b/src/bin/rm/main.rs
+--- a/src/bin/rm/main.rs
++++ b/src/bin/rm/main.rs
+@@ -111,7 +126,7 @@ fn handle_rm(args: &Args) -> Result<()> {
+             err
+         })?;
+ 
+-    let mut file = Manifest::find_file(manifest_path)?;
++    let mut file = Manifest::find_file(&manifest_path)?;
+     manifest.write_to_file(&mut file)?;
+ 
+     Ok(())
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -71,9 +71,18 @@ struct Args {
+     dependency: Vec<String>,
+ 
+     /// Path to the manifest to upgrade
+-    #[structopt(long = "manifest-path", value_name = "path")]
++    #[structopt(long = "manifest-path", value_name = "path", conflicts_with = "pkgid")]
+     manifest_path: Option<PathBuf>,
+ 
++    /// Package id of the crate to add this dependency to.
++    #[structopt(
++        long = "package",
++        short = "p",
++        value_name = "pkgid",
++        conflicts_with = "path"
++    )]
++    pkgid: Option<String>,
++
+     /// Upgrade all packages in the workspace.
+     #[structopt(long = "all")]
+     all: bool,
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -153,6 +162,12 @@ impl Manifests {
+             .map(Manifests)
+     }
+ 
++    fn get_pkgid(pkgid: &str) -> Result<Self> {
++        let package = manifest_from_pkgid(pkgid)?;
++        let manifest = LocalManifest::try_new(Path::new(&package.manifest_path))?;
++        Ok(Manifests(vec![(manifest, package.to_owned())]))
++    }
++
+     /// Get the manifest specified by the manifest path. Try to make an educated guess if no path is
+     /// provided.
+     fn get_local_one(manifest_path: &Option<PathBuf>) -> Result<Self> {
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -401,6 +416,7 @@ fn process(args: Args) -> Result<()> {
+     let Args {
+         dependency,
+         manifest_path,
++        pkgid,
+         all,
+         allow_prerelease,
+         dry_run,
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -416,6 +432,8 @@ fn process(args: Args) -> Result<()> {
+ 
+     let manifests = if all {
+         Manifests::get_all(&manifest_path)
++    } else if let Some(ref pkgid) = pkgid {
++        Manifests::get_pkgid(pkgid)
+     } else {
+         Manifests::get_local_one(&manifest_path)
+     }?;
+diff --git a/src/errors.rs b/src/errors.rs
+--- a/src/errors.rs
++++ b/src/errors.rs
+@@ -2,6 +2,7 @@ error_chain! {
+     foreign_links {
+         Io(::std::io::Error) #[doc = "An error from the std::io module"];
+         Git(::git2::Error)#[doc = "An error from the git2 crate"];
++        CargoMetadata(::failure::Compat<::cargo_metadata::Error>)#[doc = "An error from the cargo_metadata crate"];
+     }
+ 
+     errors {
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -23,6 +23,7 @@ mod dependency;
+ mod errors;
+ mod fetch;
+ mod manifest;
++mod metadata;
+ mod registry;
+ 
+ pub use crate::crate_name::CrateName;
+diff --git /dev/null b/src/metadata.rs
+new file mode 100644
+--- /dev/null
++++ b/src/metadata.rs
+@@ -0,0 +1,21 @@
++use crate::errors::*;
++use cargo_metadata::Package;
++use failure::Fail;
++
++/// Takes a pkgid and attempts to find the path to it's `Cargo.toml`, using `cargo`'s metadata
++pub fn manifest_from_pkgid(pkgid: &str) -> Result<Package> {
++    let mut cmd = cargo_metadata::MetadataCommand::new();
++    cmd.no_deps();
++    let result = cmd
++        .exec()
++        .map_err(|e| Error::from(e.compat()).chain_err(|| "Invalid manifest"))?;
++    let packages = result.packages;
++    let package = packages
++        .into_iter()
++        .find(|pkg| &pkg.name == pkgid)
++        .chain_err(|| {
++            "Found virtual manifest, but this command requires running against an \
++             actual package in this workspace. Try adding `--all`."
++        })?;
++    Ok(package)
++}

@@ -1,0 +1,124 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch askama_shared/src/parser.rs...
+Applied patch askama_shared/src/parser.rs cleanly.
++ cd askama_shared
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded humansize v1.1.0 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded proc-macro2 v1.0.24 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded percent-encoding v2.1.0 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded funty v1.1.0 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded itoa v0.4.7 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded memchr v2.3.4 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded nom v6.0.1 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded serde_yaml v0.8.15 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded linked-hash-map v0.5.3 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded dtoa v0.4.7 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded wyz v0.2.0 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded tap v1.0.0 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded autocfg v1.0.1 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded version_check v0.9.2 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded radium v0.5.3 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded yaml-rust v0.4.5 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded unicode-xid v0.2.1 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded quote v1.0.8 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded num-traits v0.2.14 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded toml v0.5.8 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded serde_derive v1.0.118 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded serde v1.0.118 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded serde_json v1.0.61 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded syn v1.0.57 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+  Downloaded bitvec v0.19.4 (registry `/testbed/.cargo/lts-repo-at-7030c6693d`)
+   Compiling proc-macro2 v1.0.24
+   Compiling unicode-xid v0.2.1
+   Compiling syn v1.0.57
+   Compiling serde_derive v1.0.118
+   Compiling serde v1.0.118
+   Compiling radium v0.5.3
+   Compiling version_check v0.9.2
+   Compiling memchr v2.3.4
+   Compiling ryu v1.0.5
+   Compiling autocfg v1.0.1
+   Compiling linked-hash-map v0.5.3
+   Compiling serde_json v1.0.61
+   Compiling tap v1.0.0
+   Compiling funty v1.1.0
+   Compiling wyz v0.2.0
+   Compiling dtoa v0.4.7
+   Compiling itoa v0.4.7
+   Compiling askama_escape v0.10.1 (/workspace/askama_escape)
+   Compiling humansize v1.1.0
+   Compiling percent-encoding v2.1.0
+   Compiling yaml-rust v0.4.5
+   Compiling nom v6.0.1
+   Compiling num-traits v0.2.14
+   Compiling bitvec v0.19.4
+   Compiling quote v1.0.8
+   Compiling toml v0.5.8
+   Compiling serde_yaml v0.8.15
+   Compiling askama_shared v0.11.1 (/workspace/askama_shared)
+    Finished test [unoptimized + debuginfo] target(s) in 16.22s
+     Running /workspace/target/debug/deps/askama_shared-19f25950a6560574
+
+running 41 tests
+test filters::tests::test_abs ... ok
+test filters::tests::test_capitalize ... ok
+test filters::json::tests::test_json ... ok
+test filters::tests::test_center ... ok
+test filters::tests::test_filesizeformat ... ok
+test filters::tests::test_into_isize ... ok
+test filters::tests::test_into_f64 ... ok
+test filters::tests::test_linebreaksbr ... ok
+test filters::tests::test_linebreaks ... ok
+test filters::tests::test_join ... ok
+test filters::tests::test_indent ... ok
+test filters::tests::test_lower ... ok
+test filters::tests::test_trim ... ok
+test filters::tests::test_upper ... ok
+test filters::tests::test_truncate ... ok
+test filters::tests::test_urlencoding ... ok
+test filters::tests::test_wordcount ... ok
+test filters::yaml::tests::test_yaml ... ok
+test parser::tests::change_delimiters_parse_filter ... ok
+test parser::tests::test_parse_comments ... ok
+test parser::tests::test_invalid_block ... ok
+test parser::tests::test_ws_splitter ... ok
+test parser::tests::test_parse_path_call ... ok
+test tests::add_syntax ... ok
+test tests::add_syntax_two ... ok
+test tests::duplicated_syntax_name_on_list ... ok
+test parser::tests::test_parse_root_path ... ok
+test parser::tests::test_parse_var_call ... ok
+test tests::find_absolute ... ok
+test tests::escape_modes ... ok
+test parser::tests::test_parse_filter ... ok
+test tests::find_relative_nonexistent ... ok
+test tests::find_relative ... ok
+test tests::test_default_config ... ok
+test tests::test_config_dirs ... ok
+test tests::get_source ... ok
+test tests::find_relative_sub ... ok
+test tests::is_not_exist_default_syntax ... ok
+test tests::use_default_at_syntax_name ... ok
+test parser::tests::test_associativity ... ok
+test parser::tests::test_precedence ... ok
+
+test result: ok. 41 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests askama_shared
+
+running 2 tests
+test src/filters/mod.rs - filters::fmt (line 177) ... ignored
+test src/filters/mod.rs - filters::format (line 191) ... ignored
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out
+
++ cd ../
++ git reset --hard c29ecd68714bddf5e27a9e347c902faa23b2a545
+HEAD is now at c29ecd6 Changed multi-line commands to single-line commands
++ git clean -fd
+Removing .cargo/

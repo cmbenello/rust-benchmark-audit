@@ -1,0 +1,59 @@
+diff --git a/src/expand.rs b/src/expand.rs
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -81,6 +81,13 @@ pub fn expand(input: &mut Item, is_local: bool) {
+             }
+         }
+         Item::Impl(input) => {
++            let mut lifetimes = CollectLifetimes::with("'impl_life");
++            lifetimes.visit_type_mut(&mut *input.self_ty);
++            lifetimes.visit_path_mut(&mut input.trait_.as_mut().unwrap().1);
++            let params = &input.generics.params;
++            let elided = lifetimes.elided;
++            input.generics.params = parse_quote!( #(#elided,)* #params );
++
+             let context = Context::Impl {
+                 impl_generics: &input.generics,
+                 receiver: &input.self_ty,
+diff --git a/src/lifetime.rs b/src/lifetime.rs
+--- a/src/lifetime.rs
++++ b/src/lifetime.rs
+@@ -24,6 +24,7 @@ impl VisitMut for HasAsyncLifetime {
+ pub struct CollectLifetimes {
+     pub elided: Vec<Lifetime>,
+     pub explicit: Vec<Lifetime>,
++    pub name: &'static str,
+ }
+ 
+ impl CollectLifetimes {
+diff --git a/src/lifetime.rs b/src/lifetime.rs
+--- a/src/lifetime.rs
++++ b/src/lifetime.rs
+@@ -31,6 +32,15 @@ impl CollectLifetimes {
+         CollectLifetimes {
+             elided: Vec::new(),
+             explicit: Vec::new(),
++            name: "'life",
++        }
++    }
++
++    pub fn with(name: &'static str) -> Self {
++        CollectLifetimes {
++            elided: Vec::new(),
++            explicit: Vec::new(),
++            name,
+         }
+     }
+ 
+diff --git a/src/lifetime.rs b/src/lifetime.rs
+--- a/src/lifetime.rs
++++ b/src/lifetime.rs
+@@ -50,7 +60,7 @@ impl CollectLifetimes {
+     }
+ 
+     fn next_lifetime(&mut self) -> Lifetime {
+-        let name = format!("'life{}", self.elided.len());
++        let name = format!("{}{}", self.name, self.elided.len());
+         let life = Lifetime::new(&name, Span::call_site());
+         self.elided.push(life.clone());
+         life

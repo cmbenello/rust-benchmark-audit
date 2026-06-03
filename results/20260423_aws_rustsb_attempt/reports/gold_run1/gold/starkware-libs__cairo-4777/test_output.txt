@@ -1,0 +1,351 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch crates/cairo-lang-sierra-generator/src/store_variables/test.rs...
+Checking patch crates/cairo-lang-sierra-generator/src/store_variables/test.rs...
+Applied patch crates/cairo-lang-sierra-generator/src/store_variables/test.rs cleanly.
+Applied patch crates/cairo-lang-sierra-generator/src/store_variables/test.rs cleanly.
++ cd crates/cairo-lang-sierra-generator
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded xshell v0.2.5 (registry `lts-repo-at-10ef836274`)
+  Downloaded unescaper v0.1.3 (registry `lts-repo-at-10ef836274`)
+  Downloaded yansi v0.5.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded typenum v1.17.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded test-log-macros v0.2.14 (registry `lts-repo-at-10ef836274`)
+  Downloaded test-log v0.2.14 (registry `lts-repo-at-10ef836274`)
+  Downloaded test-case v3.3.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded syn v2.0.48 (registry `lts-repo-at-10ef836274`)
+  Downloaded zerocopy v0.7.32 (registry `lts-repo-at-10ef836274`)
+  Downloaded thiserror v1.0.56 (registry `lts-repo-at-10ef836274`)
+  Downloaded test-case-core v3.3.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded string_cache v0.8.7 (registry `lts-repo-at-10ef836274`)
+  Downloaded xshell-macros v0.2.5 (registry `lts-repo-at-10ef836274`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-10ef836274`)
+  Downloaded rustix v0.38.30 (registry `lts-repo-at-10ef836274`)
+  Downloaded thiserror-impl v1.0.56 (registry `lts-repo-at-10ef836274`)
+  Downloaded smallvec v1.12.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded siphasher v0.3.11 (registry `lts-repo-at-10ef836274`)
+  Downloaded ryu v1.0.16 (registry `lts-repo-at-10ef836274`)
+  Downloaded relative-path v1.9.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded regex-automata v0.4.3 (registry `lts-repo-at-10ef836274`)
+  Downloaded pretty_assertions v1.4.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded precomputed-hash v0.1.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded once_cell v1.19.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded spin v0.5.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded humantime v2.1.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded sha3 v0.10.8 (registry `lts-repo-at-10ef836274`)
+  Downloaded linux-raw-sys v0.4.12 (registry `lts-repo-at-10ef836274`)
+  Downloaded smol_str v0.2.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded serde_derive v1.0.195 (registry `lts-repo-at-10ef836274`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded schemars_derive v0.8.16 (registry `lts-repo-at-10ef836274`)
+  Downloaded salsa-macros v0.16.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded salsa v0.16.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded rustc-hash v1.1.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded regex-syntax v0.8.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded regex-syntax v0.7.5 (registry `lts-repo-at-10ef836274`)
+  Downloaded proc-macro2 v1.0.76 (registry `lts-repo-at-10ef836274`)
+  Downloaded parking_lot v0.12.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded log v0.4.20 (registry `lts-repo-at-10ef836274`)
+  Downloaded lalrpop-util v0.20.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded lalrpop v0.20.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded itoa v1.0.10 (registry `lts-repo-at-10ef836274`)
+  Downloaded is-terminal v0.4.10 (registry `lts-repo-at-10ef836274`)
+  Downloaded hashbrown v0.14.3 (registry `lts-repo-at-10ef836274`)
+  Downloaded env_logger v0.10.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded ena v0.14.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded dirs-next v2.0.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded crossbeam-utils v0.8.19 (registry `lts-repo-at-10ef836274`)
+  Downloaded convert_case v0.6.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded const-fnv1a-hash v1.1.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded cairo-felt v0.9.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded bit-vec v0.6.3 (registry `lts-repo-at-10ef836274`)
+  Downloaded bit-set v0.5.3 (registry `lts-repo-at-10ef836274`)
+  Downloaded ascii-canvas v3.0.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded aho-corasick v1.1.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded libc v0.2.152 (registry `lts-repo-at-10ef836274`)
+  Downloaded id-arena v2.2.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded serde_json v1.0.111 (registry `lts-repo-at-10ef836274`)
+  Downloaded serde v1.0.195 (registry `lts-repo-at-10ef836274`)
+  Downloaded schemars v0.8.16 (registry `lts-repo-at-10ef836274`)
+  Downloaded petgraph v0.6.4 (registry `lts-repo-at-10ef836274`)
+  Downloaded parity-scale-codec v3.6.9 (registry `lts-repo-at-10ef836274`)
+  Downloaded arrayvec v0.7.4 (registry `lts-repo-at-10ef836274`)
+  Downloaded anyhow v1.0.79 (registry `lts-repo-at-10ef836274`)
+  Downloaded genco-macros v0.17.8 (registry `lts-repo-at-10ef836274`)
+  Downloaded serde_derive_internals v0.26.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded parking_lot_core v0.9.9 (registry `lts-repo-at-10ef836274`)
+  Downloaded parking_lot_core v0.8.6 (registry `lts-repo-at-10ef836274`)
+  Downloaded parking_lot v0.11.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded oorandom v11.1.3 (registry `lts-repo-at-10ef836274`)
+  Downloaded num-bigint v0.4.4 (registry `lts-repo-at-10ef836274`)
+  Downloaded memchr v2.7.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded itertools v0.11.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded indexmap v2.1.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded fixedbitset v0.4.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded either v1.9.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded colored v2.1.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded byte-slice-cast v1.2.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded path-clean v1.0.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded num-integer v0.1.45 (registry `lts-repo-at-10ef836274`)
+  Downloaded new_debug_unreachable v1.0.4 (registry `lts-repo-at-10ef836274`)
+  Downloaded lock_api v0.4.11 (registry `lts-repo-at-10ef836274`)
+  Downloaded generic-array v0.14.7 (registry `lts-repo-at-10ef836274`)
+  Downloaded dyn-clone v1.0.16 (registry `lts-repo-at-10ef836274`)
+  Downloaded derivative v2.2.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded heck v0.3.3 (registry `lts-repo-at-10ef836274`)
+  Downloaded hashbrown v0.12.3 (registry `lts-repo-at-10ef836274`)
+  Downloaded equivalent v1.0.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded regex v1.10.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded quote v1.0.35 (registry `lts-repo-at-10ef836274`)
+  Downloaded pico-args v0.5.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded num-traits v0.2.17 (registry `lts-repo-at-10ef836274`)
+  Downloaded keccak v0.1.5 (registry `lts-repo-at-10ef836274`)
+  Downloaded itertools v0.10.5 (registry `lts-repo-at-10ef836274`)
+  Downloaded instant v0.1.12 (registry `lts-repo-at-10ef836274`)
+  Downloaded indexmap v1.9.3 (registry `lts-repo-at-10ef836274`)
+  Downloaded indent v0.1.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded impl-trait-for-tuples v0.2.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded genco v0.17.8 (registry `lts-repo-at-10ef836274`)
+  Downloaded errno v0.3.8 (registry `lts-repo-at-10ef836274`)
+  Downloaded dirs-sys-next v0.1.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded digest v0.10.7 (registry `lts-repo-at-10ef836274`)
+  Downloaded diff v0.1.13 (registry `lts-repo-at-10ef836274`)
+  Downloaded crypto-common v0.1.6 (registry `lts-repo-at-10ef836274`)
+  Downloaded crunchy v0.2.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded block-buffer v0.10.4 (registry `lts-repo-at-10ef836274`)
+  Downloaded bitflags v2.4.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded allocator-api2 v0.2.16 (registry `lts-repo-at-10ef836274`)
+  Downloaded ahash v0.8.7 (registry `lts-repo-at-10ef836274`)
+  Downloaded phf_shared v0.10.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded indoc v2.0.4 (registry `lts-repo-at-10ef836274`)
+  Downloaded unicode-xid v0.2.4 (registry `lts-repo-at-10ef836274`)
+  Downloaded unicode-segmentation v1.10.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded unicode-ident v1.0.12 (registry `lts-repo-at-10ef836274`)
+  Downloaded tiny-keccak v2.0.2 (registry `lts-repo-at-10ef836274`)
+  Downloaded test-case-macros v3.3.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded termcolor v1.4.1 (registry `lts-repo-at-10ef836274`)
+  Downloaded term v0.7.0 (registry `lts-repo-at-10ef836274`)
+  Downloaded syn v1.0.109 (registry `lts-repo-at-10ef836274`)
+   Compiling proc-macro2 v1.0.76
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.1.0
+   Compiling cfg-if v1.0.0
+   Compiling version_check v0.9.4
+   Compiling once_cell v1.19.0
+   Compiling syn v1.0.109
+   Compiling libc v0.2.152
+   Compiling zerocopy v0.7.32
+   Compiling allocator-api2 v0.2.16
+   Compiling serde v1.0.195
+   Compiling equivalent v1.0.1
+   Compiling either v1.9.0
+   Compiling smallvec v1.12.0
+   Compiling scopeguard v1.2.0
+   Compiling byte-slice-cast v1.2.2
+   Compiling arrayvec v0.7.4
+   Compiling serde_json v1.0.111
+   Compiling hashbrown v0.12.3
+   Compiling schemars v0.8.16
+   Compiling ryu v1.0.16
+   Compiling itoa v1.0.10
+   Compiling memchr v2.7.1
+   Compiling dyn-clone v1.0.16
+   Compiling unicode-segmentation v1.10.1
+   Compiling log v0.4.20
+   Compiling parking_lot_core v0.8.6
+   Compiling crossbeam-utils v0.8.19
+   Compiling thiserror v1.0.56
+   Compiling oorandom v11.1.3
+   Compiling spin v0.5.2
+   Compiling itertools v0.11.0
+   Compiling instant v0.1.12
+   Compiling rustc-hash v1.1.0
+   Compiling lazy_static v1.4.0
+   Compiling genco-macros v0.17.8
+   Compiling rustix v0.38.30
+   Compiling linux-raw-sys v0.4.12
+   Compiling typenum v1.17.0
+   Compiling parking_lot_core v0.9.9
+   Compiling bitflags v2.4.1
+   Compiling diff v0.1.13
+   Compiling path-clean v1.0.1
+   Compiling crunchy v0.2.2
+   Compiling relative-path v1.9.2
+   Compiling regex-syntax v0.8.2
+   Compiling heck v0.3.3
+   Compiling xshell-macros v0.2.5
+   Compiling colored v2.1.0
+   Compiling tiny-keccak v2.0.2
+   Compiling siphasher v0.3.11
+   Compiling ahash v0.8.7
+   Compiling num-integer v0.1.45
+   Compiling lock_api v0.4.11
+   Compiling num-traits v0.2.17
+   Compiling indexmap v1.9.3
+   Compiling num-bigint v0.4.4
+   Compiling aho-corasick v1.1.2
+   Compiling generic-array v0.14.7
+   Compiling phf_shared v0.10.0
+   Compiling precomputed-hash v0.1.1
+   Compiling new_debug_unreachable v1.0.4
+   Compiling bit-vec v0.6.3
+   Compiling fixedbitset v0.4.2
+   Compiling itertools v0.10.5
+   Compiling unicode-xid v0.2.4
+   Compiling regex-syntax v0.7.5
+   Compiling pico-args v0.5.0
+   Compiling yansi v0.5.1
+   Compiling indoc v2.0.4
+   Compiling anyhow v1.0.79
+   Compiling indent v0.1.1
+   Compiling id-arena v2.2.1
+   Compiling xshell v0.2.5
+   Compiling ena v0.14.2
+   Compiling bit-set v0.5.3
+   Compiling keccak v0.1.5
+   Compiling convert_case v0.6.0
+   Compiling const-fnv1a-hash v1.1.0
+   Compiling pretty_assertions v1.4.0
+   Compiling termcolor v1.4.1
+   Compiling humantime v2.1.0
+   Compiling quote v1.0.35
+   Compiling dirs-sys-next v0.1.2
+   Compiling syn v2.0.48
+   Compiling dirs-next v2.0.0
+   Compiling is-terminal v0.4.10
+   Compiling term v0.7.0
+   Compiling parking_lot v0.11.2
+   Compiling parking_lot v0.12.1
+   Compiling regex-automata v0.4.3
+   Compiling string_cache v0.8.7
+   Compiling ascii-canvas v3.0.0
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.6
+   Compiling digest v0.10.7
+   Compiling sha3 v0.10.8
+   Compiling hashbrown v0.14.3
+   Compiling indexmap v2.1.0
+   Compiling regex v1.10.2
+   Compiling petgraph v0.6.4
+   Compiling test-case-core v3.3.1
+   Compiling lalrpop-util v0.20.0
+   Compiling env_logger v0.10.1
+   Compiling serde_derive v1.0.195
+   Compiling thiserror-impl v1.0.56
+   Compiling test-case-macros v3.3.1
+   Compiling test-log-macros v0.2.14
+   Compiling serde_derive_internals v0.26.0
+   Compiling lalrpop v0.20.0
+   Compiling test-log v0.2.14
+   Compiling test-case v3.3.1
+   Compiling genco v0.17.8
+   Compiling impl-trait-for-tuples v0.2.2
+   Compiling schemars_derive v0.8.16
+   Compiling salsa-macros v0.16.0
+   Compiling derivative v2.2.0
+   Compiling unescaper v0.1.3
+   Compiling cairo-lang-syntax-codegen v2.4.1 (/workspace/crates/cairo-lang-syntax-codegen)
+   Compiling parity-scale-codec v3.6.9
+   Compiling cairo-lang-utils v2.4.1 (/workspace/crates/cairo-lang-utils)
+   Compiling cairo-lang-debug v2.4.1 (/workspace/crates/cairo-lang-debug)
+   Compiling cairo-lang-proc-macros v2.4.1 (/workspace/crates/cairo-lang-proc-macros)
+   Compiling smol_str v0.2.0
+   Compiling salsa v0.16.1
+   Compiling cairo-felt v0.9.1
+   Compiling cairo-lang-test-utils v2.4.1 (/workspace/crates/cairo-lang-test-utils)
+   Compiling cairo-lang-filesystem v2.4.1 (/workspace/crates/cairo-lang-filesystem)
+   Compiling cairo-lang-sierra v2.4.1 (/workspace/crates/cairo-lang-sierra)
+   Compiling cairo-lang-syntax v2.4.1 (/workspace/crates/cairo-lang-syntax)
+   Compiling cairo-lang-diagnostics v2.4.1 (/workspace/crates/cairo-lang-diagnostics)
+   Compiling cairo-lang-parser v2.4.1 (/workspace/crates/cairo-lang-parser)
+   Compiling cairo-lang-defs v2.4.1 (/workspace/crates/cairo-lang-defs)
+   Compiling cairo-lang-plugins v2.4.1 (/workspace/crates/cairo-lang-plugins)
+   Compiling cairo-lang-semantic v2.4.1 (/workspace/crates/cairo-lang-semantic)
+   Compiling cairo-lang-lowering v2.4.1 (/workspace/crates/cairo-lang-lowering)
+   Compiling cairo-lang-sierra-generator v2.4.1 (/workspace/crates/cairo-lang-sierra-generator)
+    Finished test [unoptimized + debuginfo] target(s) in 1m 01s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/cairo_lang_sierra_generator-1c048acd30c515ae)
+
+running 62 tests
+test canonical_id_replacer::test::test_replacer ... ok
+test lifetime::test::variable_lifetime::snapshot ... ok
+test local_variables::test::find_local_variables::block ... ok
+test local_variables::test::find_local_variables::construct_enum ... ok
+test lifetime::test::variable_lifetime::block ... ok
+test lifetime::test::variable_lifetime::simple ... ok
+test function_generator::test::function_generator::simple ... ok
+test function_generator::test::function_generator::literals ... ok
+test lifetime::test::variable_lifetime::struct_ ... ok
+test lifetime::test::variable_lifetime::enum_ ... ok
+test lifetime::test::variable_lifetime::locals ... ok
+test local_variables::test::find_local_variables::simple ... ok
+test store_variables::known_stack::test::merge_stacks ... ok
+test resolve_labels::test::test_resolve_labels ... ok
+test store_variables::test::consecutive_appends_with_branch ... ok
+test store_variables::test::consecutive_const_additions ... ok
+test store_variables::test::consecutive_push_values ... ok
+test store_variables::test::consecutive_const_additions_with_branch ... ok
+test store_variables::test::push_values_after_branch_merge ... ok
+test store_variables::test::push_values_clear_known_stack ... ok
+test store_variables::test::push_values_optimization ... ok
+test store_variables::test::push_values_temp_not_on_top ... ok
+test store_variables::test::push_values_early_return ... ok
+test store_variables::test::push_values_with_hole ... ok
+test store_variables::test::same_as_param ... ok
+test store_variables::test::same_as_param_push_value_optimization ... ok
+test store_variables::test::store_local_result_of_if ... ok
+test store_variables::test::store_temp_for_branch_command ... ok
+test store_variables::test::store_local_simple ... ok
+test store_variables::test::store_temp_push_values ... ok
+test store_variables::test::store_temp_push_values_with_dup ... ok
+test store_variables::test::store_temp_simple ... ok
+test local_variables::test::find_local_variables::struct_ ... ok
+test function_generator::test::function_generator::match_ ... ok
+test function_generator::test::function_generator::inline ... ok
+test function_generator::test::function_generator::struct_ ... ok
+test lifetime::test::variable_lifetime::early_return ... ok
+test local_variables::test::find_local_variables::snapshot ... ok
+test function_generator::test::function_generator::stack_tracking ... ok
+test local_variables::test::find_local_variables::match_enum ... ok
+test lifetime::test::variable_lifetime::match_ ... ok
+test program_generator::test::test_only_include_dependencies::f4_f5_f6_f6_ ... ok
+test program_generator::test::test_only_include_dependencies::self_loop ... ok
+test program_generator::test::test_only_include_dependencies::f5_f6 ... ok
+test program_generator::test::test_only_include_dependencies::f3_f5_f6 ... ok
+test program_generator::test::test_only_include_dependencies::all_but_first ... ok
+test program_generator::test::test_only_include_dependencies::finds_all ... ok
+test local_variables::test::find_local_variables::match_extern ... ok
+test local_variables::test::find_local_variables::inline ... ok
+test local_variables::test::e2e::e2e ... ok
+test program_generator::test::test_type_dependency ... ok
+test program_generator::test::test_program_generator ... ok
+test lifetime::test::variable_lifetime::inline ... ok
+test function_generator::test::function_generator::snapshot ... ok
+test ap_change::test::ap_change::tests ... ok
+test block_generator::test::block_generator::early_return ... ok
+test block_generator::test::block_generator::serialization ... ok
+test block_generator::test::block_generator::inline ... ok
+test block_generator::test::block_generator::literals ... ok
+test block_generator::test::block_generator::panic ... ok
+test block_generator::test::block_generator::match_ ... ok
+test block_generator::test::block_generator::function_call ... ok
+
+test result: ok. 62 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.45s
+
+   Doc-tests cairo-lang-sierra-generator
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../../
++ git reset --hard 75f779e8553d28e4bfff3b23f140ccc781c9dab0
+HEAD is now at 75f779e85 Add bool::then_some function (#4529)
++ git clean -fd
+Removing .cargo/

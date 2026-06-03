@@ -1,0 +1,169 @@
+diff --git a/src/buf/buf_mut.rs b/src/buf/buf_mut.rs
+--- a/src/buf/buf_mut.rs
++++ b/src/buf/buf_mut.rs
+@@ -270,7 +270,7 @@ pub trait BufMut {
+     fn put_slice(&mut self, src: &[u8]) {
+         let mut off = 0;
+ 
+-        assert!(self.remaining_mut() >= src.len(), "buffer overflow");
++        assert!(self.remaining_mut() >= src.len(), "buffer overflow; remaining = {}; src = {}", self.remaining_mut(), src.len());
+ 
+         while off < src.len() {
+             let cnt;
+diff --git a/src/buf/ext/mod.rs b/src/buf/ext/mod.rs
+--- a/src/buf/ext/mod.rs
++++ b/src/buf/ext/mod.rs
+@@ -124,6 +124,32 @@ pub trait BufMutExt: BufMut {
+     fn writer(self) -> Writer<Self> where Self: Sized {
+         writer::new(self)
+     }
++
++    /// Creates an adapter which will chain this buffer with another.
++    ///
++    /// The returned `BufMut` instance will first write to all bytes from
++    /// `self`. Afterwards, it will write to `next`.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// use bytes::{BufMut, buf::BufMutExt};
++    ///
++    /// let mut a = [0u8; 5];
++    /// let mut b = [0u8; 6];
++    ///
++    /// let mut chain = (&mut a[..]).chain_mut(&mut b[..]);
++    ///
++    /// chain.put_slice(b"hello world");
++    ///
++    /// assert_eq!(&a[..], b"hello");
++    /// assert_eq!(&b[..], b" world");
++    /// ```
++    fn chain_mut<U: BufMut>(self, next: U) -> Chain<Self, U>
++        where Self: Sized
++    {
++        Chain::new(self, next)
++    }
+ }
+ 
+ impl<B: BufMut + ?Sized> BufMutExt for B {}
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -1,4 +1,5 @@
+-use core::{cmp, fmt, hash, isize, mem, slice, usize};
++use core::{cmp, fmt, hash, isize, slice, usize};
++use core::mem::{self, ManuallyDrop};
+ use core::ops::{Deref, DerefMut};
+ use core::ptr::{self, NonNull};
+ use core::iter::{FromIterator, Iterator};
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -559,17 +560,15 @@ impl BytesMut {
+                     self.cap += off;
+                 } else {
+                     // No space - allocate more
+-                    let mut v = rebuild_vec(self.ptr.as_ptr(), self.len, self.cap, off);
++                    let mut v = ManuallyDrop::new(rebuild_vec(self.ptr.as_ptr(), self.len, self.cap, off));
+                     v.reserve(additional);
+ 
+                     // Update the info
+                     self.ptr = vptr(v.as_mut_ptr().offset(off as isize));
+                     self.len = v.len() - off;
+                     self.cap = v.capacity() - off;
+-
+-                    // Drop the vec reference
+-                    mem::forget(v);
+                 }
++
+                 return;
+             }
+         }
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -582,7 +581,8 @@ impl BytesMut {
+         // allocating a new vector with the requested capacity.
+         //
+         // Compute the new capacity
+-        let mut new_cap = len + additional;
++        let mut new_cap = len.checked_add(additional).expect("overflow");
++
+         let original_capacity;
+         let original_capacity_repr;
+ 
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -618,8 +618,10 @@ impl BytesMut {
+                 // There are some situations, using `reserve_exact` that the
+                 // buffer capacity could be below `original_capacity`, so do a
+                 // check.
++                let double = v.capacity().checked_shl(1).unwrap_or(new_cap);
++
+                 new_cap = cmp::max(
+-                    cmp::max(v.capacity() << 1, new_cap),
++                    cmp::max(double, new_cap),
+                     original_capacity);
+             } else {
+                 new_cap = cmp::max(new_cap, original_capacity);
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -627,7 +629,7 @@ impl BytesMut {
+         }
+ 
+         // Create a new vector to store the data
+-        let mut v = Vec::with_capacity(new_cap);
++        let mut v = ManuallyDrop::new(Vec::with_capacity(new_cap));
+ 
+         // Copy the bytes
+         v.extend_from_slice(self.as_ref());
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -642,10 +644,6 @@ impl BytesMut {
+         self.ptr = vptr(v.as_mut_ptr());
+         self.len = v.len();
+         self.cap = v.capacity();
+-
+-        // Forget the vector handle
+-        mem::forget(v);
+-
+     }
+     /// Appends given bytes to this object.
+     ///
+diff --git a/src/bytes_mut.rs b/src/bytes_mut.rs
+--- a/src/bytes_mut.rs
++++ b/src/bytes_mut.rs
+@@ -924,20 +922,27 @@ impl Buf for BytesMut {
+ impl BufMut for BytesMut {
+     #[inline]
+     fn remaining_mut(&self) -> usize {
+-        self.capacity() - self.len()
++        usize::MAX - self.len()
+     }
+ 
+     #[inline]
+     unsafe fn advance_mut(&mut self, cnt: usize) {
+         let new_len = self.len() + cnt;
+-        assert!(new_len <= self.cap);
++        assert!(new_len <= self.cap, "new_len = {}; capacity = {}", new_len, self.cap);
+         self.len = new_len;
+     }
+ 
+     #[inline]
+     fn bytes_mut(&mut self) -> &mut [mem::MaybeUninit<u8>] {
++        if self.capacity() == self.len() {
++            self.reserve(64);
++        }
++
+         unsafe {
+-            slice::from_raw_parts_mut(self.ptr.as_ptr().offset(self.len as isize) as *mut mem::MaybeUninit<u8>, self.cap)
++            let ptr = self.ptr.as_ptr().offset(self.len as isize);
++            let len = self.cap - self.len;
++
++            slice::from_raw_parts_mut(ptr as *mut mem::MaybeUninit<u8>, len)
+         }
+     }
+ }

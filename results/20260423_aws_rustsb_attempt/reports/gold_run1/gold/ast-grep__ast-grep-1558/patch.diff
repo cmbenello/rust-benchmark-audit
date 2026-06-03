@@ -1,0 +1,276 @@
+diff --git a/crates/cli/src/config.rs b/crates/cli/src/config.rs
+--- a/crates/cli/src/config.rs
++++ b/crates/cli/src/config.rs
+@@ -60,12 +60,6 @@ pub struct ProjectConfig {
+ }
+ 
+ impl ProjectConfig {
+-  pub fn by_config_path_must(config_path: Option<PathBuf>) -> Result<Self> {
+-    Self::discover_project(config_path, None)?.ok_or_else(|| anyhow::anyhow!(EC::ProjectNotExist))
+-  }
+-  pub fn by_config_path(config_path: Option<PathBuf>) -> Result<Option<Self>> {
+-    Self::discover_project(config_path, None)
+-  }
+   // return None if config file does not exist
+   fn discover_project(config_path: Option<PathBuf>, base: Option<&Path>) -> Result<Option<Self>> {
+     let config_path =
+diff --git a/crates/cli/src/config.rs b/crates/cli/src/config.rs
+--- a/crates/cli/src/config.rs
++++ b/crates/cli/src/config.rs
+@@ -94,17 +88,17 @@ impl ProjectConfig {
+     let global_rules = find_util_rules(self)?;
+     read_directory_yaml(self, global_rules, rule_overwrite)
+   }
++  // do not report error if no sgconfig.yml is found
++  pub fn setup(config_path: Option<PathBuf>) -> Result<Option<Self>> {
++    let Some(config) = Self::discover_project(config_path, None)? else {
++      return Ok(None);
++    };
++    register_custom_language(&config.project_dir, config.sg_config.clone())?;
++    Ok(Some(config))
++  }
+ }
+ 
+-pub fn register_custom_language(project_config: Option<ProjectConfig>) -> Result<()> {
+-  // do not report error if no sgconfig.yml is found
+-  let Some(project_config) = project_config else {
+-    return Ok(());
+-  };
+-  let ProjectConfig {
+-    project_dir,
+-    sg_config,
+-  } = project_config;
++fn register_custom_language(project_dir: &Path, sg_config: AstGrepConfig) -> Result<()> {
+   if let Some(custom_langs) = sg_config.custom_languages {
+     SgLang::register_custom_language(project_dir, custom_langs);
+   }
+diff --git a/crates/cli/src/lang/custom_lang.rs b/crates/cli/src/lang/custom_lang.rs
+--- a/crates/cli/src/lang/custom_lang.rs
++++ b/crates/cli/src/lang/custom_lang.rs
+@@ -16,10 +16,10 @@ pub struct CustomLang {
+ }
+ 
+ impl CustomLang {
+-  pub fn register(base: PathBuf, langs: HashMap<String, CustomLang>) {
++  pub fn register(base: &Path, langs: HashMap<String, CustomLang>) {
+     let registrations = langs
+       .into_iter()
+-      .map(|(name, custom)| to_registration(name, custom, &base))
++      .map(|(name, custom)| to_registration(name, custom, base))
+       .collect();
+     // TODO, add error handling
+     unsafe { DynamicLang::register(registrations).expect("TODO") }
+diff --git a/crates/cli/src/lang/mod.rs b/crates/cli/src/lang/mod.rs
+--- a/crates/cli/src/lang/mod.rs
++++ b/crates/cli/src/lang/mod.rs
+@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
+ use std::borrow::Cow;
+ use std::collections::HashMap;
+ use std::fmt::{Debug, Display, Formatter};
+-use std::path::{Path, PathBuf};
++use std::path::Path;
+ use std::str::FromStr;
+ 
+ pub use custom_lang::CustomLang;
+diff --git a/crates/cli/src/lang/mod.rs b/crates/cli/src/lang/mod.rs
+--- a/crates/cli/src/lang/mod.rs
++++ b/crates/cli/src/lang/mod.rs
+@@ -40,7 +40,7 @@ impl SgLang {
+   }
+ 
+   // register_globs must be called after register_custom_language
+-  pub fn register_custom_language(base: PathBuf, langs: HashMap<String, CustomLang>) {
++  pub fn register_custom_language(base: &Path, langs: HashMap<String, CustomLang>) {
+     CustomLang::register(base, langs)
+   }
+ 
+diff --git a/crates/cli/src/lsp.rs b/crates/cli/src/lsp.rs
+--- a/crates/cli/src/lsp.rs
++++ b/crates/cli/src/lsp.rs
+@@ -1,4 +1,4 @@
+-use crate::config::{register_custom_language, ProjectConfig};
++use crate::config::ProjectConfig;
+ use crate::utils::ErrorContext as EC;
+ use anyhow::{Context, Result};
+ use ast_grep_lsp::{Backend, LspService, Server};
+diff --git a/crates/cli/src/lsp.rs b/crates/cli/src/lsp.rs
+--- a/crates/cli/src/lsp.rs
++++ b/crates/cli/src/lsp.rs
+@@ -15,8 +15,9 @@ pub struct LspArg {
+ async fn run_language_server_impl(arg: LspArg) -> Result<()> {
+   // env_logger::init();
+   // TODO: move this error to client
+-  let project_config = ProjectConfig::by_config_path_must(arg.config.clone())?;
+-  register_custom_language(Some(project_config.clone()))?;
++  let Some(project_config) = ProjectConfig::setup(arg.config.clone())? else {
++    return Err(anyhow::anyhow!(EC::ProjectNotExist));
++  };
+   let stdin = tokio::io::stdin();
+   let stdout = tokio::io::stdout();
+   let config_result = project_config.find_rules(Default::default());
+diff --git a/crates/cli/src/new.rs b/crates/cli/src/new.rs
+--- a/crates/cli/src/new.rs
++++ b/crates/cli/src/new.rs
+@@ -1,4 +1,4 @@
+-use crate::config::{register_custom_language, AstGrepConfig, ProjectConfig, TestConfig};
++use crate::config::{AstGrepConfig, ProjectConfig, TestConfig};
+ use crate::lang::SgLang;
+ use crate::utils::ErrorContext as EC;
+ 
+diff --git a/crates/cli/src/new.rs b/crates/cli/src/new.rs
+--- a/crates/cli/src/new.rs
++++ b/crates/cli/src/new.rs
+@@ -31,7 +31,7 @@ pub struct NewArg {
+   yes: bool,
+ 
+   /// Path to ast-grep root config, default is sgconfig.yml.
+-  #[clap(short, long, value_name = "CONFIG_FILE")]
++  #[clap(short, long, global = true, value_name = "CONFIG_FILE")]
+   config: Option<PathBuf>,
+ }
+ 
+diff --git a/crates/cli/src/new.rs b/crates/cli/src/new.rs
+--- a/crates/cli/src/new.rs
++++ b/crates/cli/src/new.rs
+@@ -46,9 +46,6 @@ fn create_dir(project_dir: &Path, dir: &str) -> Result<PathBuf> {
+ }
+ 
+ impl NewArg {
+-  fn find_project_config(&self) -> Result<Option<ProjectConfig>> {
+-    ProjectConfig::by_config_path(self.config.clone())
+-  }
+   fn ask_dir(&self, prompt: &str, default: &str) -> Result<String> {
+     let dir = if self.yes {
+       default.to_owned()
+diff --git a/crates/cli/src/new.rs b/crates/cli/src/new.rs
+--- a/crates/cli/src/new.rs
++++ b/crates/cli/src/new.rs
+@@ -152,18 +149,17 @@ impl Display for Entity {
+ }
+ 
+ pub fn run_create_new(mut arg: NewArg) -> Result<()> {
+-  let project_config = arg.find_project_config()?;
+-  register_custom_language(project_config)?;
++  let project_config = ProjectConfig::setup(arg.config.clone())?;
+   if let Some(entity) = arg.entity.take() {
+-    run_create_entity(entity, arg)
++    run_create_entity(entity, arg, project_config)
+   } else {
+-    ask_entity_type(arg)
++    ask_entity_type(arg, project_config)
+   }
+ }
+ 
+-fn run_create_entity(entity: Entity, arg: NewArg) -> Result<()> {
++fn run_create_entity(entity: Entity, arg: NewArg, project: Option<ProjectConfig>) -> Result<()> {
+   // check if we are under a project dir
+-  if let Some(found) = arg.find_project_config()? {
++  if let Some(found) = project {
+     return do_create_entity(entity, found, arg);
+   }
+   // check if we creating a project
+diff --git a/crates/cli/src/new.rs b/crates/cli/src/new.rs
+--- a/crates/cli/src/new.rs
++++ b/crates/cli/src/new.rs
+@@ -185,9 +181,9 @@ fn do_create_entity(entity: Entity, found: ProjectConfig, arg: NewArg) -> Result
+   }
+ }
+ 
+-fn ask_entity_type(arg: NewArg) -> Result<()> {
++fn ask_entity_type(arg: NewArg, project: Option<ProjectConfig>) -> Result<()> {
+   // 1. check if we are under a sgconfig.yml
+-  if let Some(found) = arg.find_project_config()? {
++  if let Some(found) = project {
+     // 2. ask users what to create if yes
+     let entity = arg.ask_entity_type()?;
+     do_create_entity(entity, found, arg)
+diff --git a/crates/cli/src/run.rs b/crates/cli/src/run.rs
+--- a/crates/cli/src/run.rs
++++ b/crates/cli/src/run.rs
+@@ -7,7 +7,7 @@ use ast_grep_language::Language;
+ use clap::{builder::PossibleValue, Parser, ValueEnum};
+ use ignore::WalkParallel;
+ 
+-use crate::config::register_custom_language;
++use crate::config::ProjectConfig;
+ use crate::lang::SgLang;
+ use crate::print::{ColoredPrinter, Diff, Heading, InteractivePrinter, JSONPrinter, Printer};
+ use crate::utils::ErrorContext as EC;
+diff --git a/crates/cli/src/run.rs b/crates/cli/src/run.rs
+--- a/crates/cli/src/run.rs
++++ b/crates/cli/src/run.rs
+@@ -22,7 +22,7 @@ pub fn register_custom_language_if_is_run(args: &[String]) -> Result<()> {
+     return Ok(());
+   };
+   if arg.starts_with('-') || arg == "run" {
+-    register_custom_language(None)?;
++    ProjectConfig::setup(None)?;
+   }
+   Ok(())
+ }
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -9,7 +9,7 @@ use ast_grep_core::{NodeMatch, StrDoc};
+ use clap::Args;
+ use ignore::WalkParallel;
+ 
+-use crate::config::{read_rule_file, register_custom_language, ProjectConfig};
++use crate::config::{read_rule_file, ProjectConfig};
+ use crate::lang::SgLang;
+ use crate::print::{
+   CloudPrinter, ColoredPrinter, Diff, InteractivePrinter, JSONPrinter, Platform, Printer,
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -68,8 +68,6 @@ pub struct ScanArg {
+ }
+ 
+ pub fn run_with_config(arg: ScanArg) -> Result<()> {
+-  let project_config = ProjectConfig::by_config_path(arg.config.clone())?;
+-  register_custom_language(project_config)?;
+   let context = arg.context.get();
+   if let Some(_format) = &arg.format {
+     let printer = CloudPrinter::stdout();
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -93,12 +91,13 @@ pub fn run_with_config(arg: ScanArg) -> Result<()> {
+ }
+ 
+ fn run_scan<P: Printer + 'static>(arg: ScanArg, printer: P) -> Result<()> {
++  let project_config = ProjectConfig::setup(arg.config.clone())?;
+   if arg.input.stdin {
+     let worker = ScanWithRule::try_new(arg, printer)?;
+     // TODO: report a soft error if rules have different languages
+     worker.run_std_in()
+   } else {
+-    let worker = ScanWithConfig::try_new(arg, printer)?;
++    let worker = ScanWithConfig::try_new(arg, printer, project_config)?;
+     worker.run_path()
+   }
+ }
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -110,7 +109,7 @@ struct ScanWithConfig<Printer> {
+   trace: ScanTrace,
+ }
+ impl<P: Printer> ScanWithConfig<P> {
+-  fn try_new(arg: ScanArg, printer: P) -> Result<Self> {
++  fn try_new(arg: ScanArg, printer: P, project: Option<ProjectConfig>) -> Result<Self> {
+     let mut rule_trace = RuleTrace::default();
+     let configs = if let Some(path) = &arg.rule {
+       let rules = read_rule_file(path, None)?;
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -120,7 +119,7 @@ impl<P: Printer> ScanWithConfig<P> {
+         .with_context(|| EC::ParseRule("INLINE_RULES".into()))?;
+       RuleCollection::try_new(rules).context(EC::GlobPattern)?
+     } else {
+-      let project_config = ProjectConfig::by_config_path_must(arg.config.clone())?;
++      let project_config = project.ok_or_else(|| anyhow::anyhow!(EC::ProjectNotExist))?;
+       let overwrite = RuleOverwrite::new(&arg.overwrite)?;
+       let (configs, r_stats) = project_config.find_rules(overwrite)?;
+       rule_trace = r_stats;

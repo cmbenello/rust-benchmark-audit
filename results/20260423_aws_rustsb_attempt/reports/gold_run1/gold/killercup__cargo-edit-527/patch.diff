@@ -1,0 +1,96 @@
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+--- a/src/bin/add/main.rs
++++ b/src/bin/add/main.rs
+@@ -74,7 +74,7 @@ fn print_msg(dep: &Dependency, section: &[String], optional: bool) -> Result<()>
+     } else {
+         ColorChoice::Never
+     };
+-    let mut output = StandardStream::stdout(colorchoice);
++    let mut output = StandardStream::stderr(colorchoice);
+     output.set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))?;
+     write!(output, "{:>12}", "Adding")?;
+     output.reset()?;
+diff --git a/src/bin/rm/main.rs b/src/bin/rm/main.rs
+--- a/src/bin/rm/main.rs
++++ b/src/bin/rm/main.rs
+@@ -94,7 +94,7 @@ fn print_msg(name: &str, section: &str) -> Result<()> {
+     } else {
+         ColorChoice::Never
+     };
+-    let mut output = StandardStream::stdout(colorchoice);
++    let mut output = StandardStream::stderr(colorchoice);
+     output.set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))?;
+     write!(output, "{:>12}", "Removing")?;
+     output.reset()?;
+diff --git a/src/bin/set-version/main.rs b/src/bin/set-version/main.rs
+--- a/src/bin/set-version/main.rs
++++ b/src/bin/set-version/main.rs
+@@ -209,7 +209,7 @@ impl Manifests {
+ }
+ 
+ fn dry_run_message() -> Result<()> {
+-    let bufwtr = BufferWriter::stdout(ColorChoice::Always);
++    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Cyan)).set_bold(true))
+diff --git a/src/bin/set-version/main.rs b/src/bin/set-version/main.rs
+--- a/src/bin/set-version/main.rs
++++ b/src/bin/set-version/main.rs
+@@ -241,7 +241,7 @@ fn deprecated_message(message: &str) -> Result<()> {
+ }
+ 
+ fn upgrade_message(name: &str, from: &semver::Version, to: &semver::Version) -> Result<()> {
+-    let bufwtr = BufferWriter::stdout(ColorChoice::Always);
++    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))
+diff --git a/src/bin/set-version/main.rs b/src/bin/set-version/main.rs
+--- a/src/bin/set-version/main.rs
++++ b/src/bin/set-version/main.rs
+@@ -258,7 +258,7 @@ fn upgrade_message(name: &str, from: &semver::Version, to: &semver::Version) ->
+ }
+ 
+ fn upgrade_dependent_message(name: &str, old_req: &str, new_req: &str) -> Result<()> {
+-    let bufwtr = BufferWriter::stdout(ColorChoice::Always);
++    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+--- a/src/bin/upgrade/main.rs
++++ b/src/bin/upgrade/main.rs
+@@ -151,7 +151,7 @@ fn deprecated_message(message: &str) -> Result<()> {
+ }
+ 
+ fn dry_run_message() -> Result<()> {
+-    let bufwtr = BufferWriter::stdout(ColorChoice::Always);
++    let bufwtr = BufferWriter::stderr(ColorChoice::Always);
+     let mut buffer = bufwtr.buffer();
+     buffer
+         .set_color(ColorSpec::new().set_fg(Some(Color::Cyan)).set_bold(true))
+diff --git a/src/fetch.rs b/src/fetch.rs
+--- a/src/fetch.rs
++++ b/src/fetch.rs
+@@ -98,7 +98,7 @@ pub fn update_registry_index(registry: &Url, quiet: bool) -> Result<()> {
+     } else {
+         ColorChoice::Never
+     };
+-    let mut output = StandardStream::stdout(colorchoice);
++    let mut output = StandardStream::stderr(colorchoice);
+ 
+     let index = crates_index::BareIndex::from_url(registry.as_str())?;
+     let mut index = index.open_or_clone()?;
+diff --git a/src/manifest.rs b/src/manifest.rs
+--- a/src/manifest.rs
++++ b/src/manifest.rs
+@@ -137,7 +137,7 @@ fn print_upgrade_if_necessary(
+         if old_version == new_version {
+             return Ok(());
+         }
+-        let bufwtr = BufferWriter::stdout(ColorChoice::Always);
++        let bufwtr = BufferWriter::stderr(ColorChoice::Always);
+         let mut buffer = bufwtr.buffer();
+         buffer
+             .set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))

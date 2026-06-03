@@ -1,0 +1,1012 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/complex_object.rs...
+Checking patch tests/complex_object.rs...
+Applied patch tests/complex_object.rs cleanly.
+Applied patch tests/complex_object.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded cache-padded v1.1.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded version_check v0.9.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded block-buffer v0.7.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded thiserror-impl v1.0.26 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded blocking v1.0.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded convert_case v0.4.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded typenum v1.13.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded tracing-futures v0.2.5 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded zeroize v1.3.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded tinyvec_macros v0.1.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded darling v0.12.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded tracing-attributes v0.1.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded static_assertions v1.1.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded unchecked-index v0.2.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded syn v1.0.73 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded tokio-macros v1.2.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded tokio v1.8.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded pest_generator v2.1.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded parking v2.0.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded fastrand v1.4.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded bson v2.0.0-beta.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded time v0.1.44 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded ucd-trie v0.1.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-macro v0.3.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded twoway v0.2.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded cfg-if v1.0.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded concurrent-queue v1.2.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded darling_macro v0.12.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded itoa v0.4.7 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded once_cell v1.8.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded num-integer v0.1.44 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded tempfile v3.2.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded bytes v1.0.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded derive_more v0.99.14 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded unicode-xid v0.2.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded block-buffer v0.9.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded tracing v0.1.26 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded byteorder v1.4.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded unicode-normalization v0.1.19 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded serde v1.0.126 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded chrono v0.4.19 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded opentelemetry v0.13.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded rand_chacha v0.2.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded opaque-debug v0.2.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded event-listener v2.5.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded proc-macro-hack v0.5.19 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded fake-simd v0.1.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded pest v2.1.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded rand_chacha v0.3.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded parse-zoneinfo v0.3.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded httparse v1.4.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded ppv-lite86 v0.2.10 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded pin-project v1.0.7 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded opaque-debug v0.3.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded memchr v2.4.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded slab v0.4.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded proc-macro2 v1.0.27 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded strsim v0.10.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded byte-tools v0.3.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-lite v1.12.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded block-padding v0.1.5 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded getrandom v0.2.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded uuid v0.8.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded digest v0.9.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded url v2.2.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded thiserror v1.0.26 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded tracing-core v0.1.18 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded multer v2.0.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded secrecy v0.7.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded waker-fn v1.1.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded unicode-bidi v0.3.5 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded percent-encoding v2.1.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded tinyvec v1.2.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded sha-1 v0.8.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded regex v1.5.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded pin-utils v0.1.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded cpufeatures v0.1.5 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded toml v0.5.8 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-io v0.3.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded hex v0.4.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded serde_json v1.0.64 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded num-traits v0.2.14 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded fnv v1.0.7 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded log v0.4.14 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded proc-macro-crate v1.0.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded generic-array v0.14.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded async-stream v0.3.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded pest_meta v2.1.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded async-channel v1.6.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded encoding_rs v0.8.28 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded digest v0.8.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded spin v0.9.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded matches v0.1.8 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded pest_derive v2.1.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded serde_derive v1.0.126 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded darling_core v0.12.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded mime v0.3.16 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded sha2 v0.9.5 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded pin-project-lite v0.2.7 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-util v0.3.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded generic-array v0.12.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded rand v0.7.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded lru v0.6.5 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded async-stream-impl v0.3.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded quote v1.0.9 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded rust_decimal v1.14.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-channel v0.3.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures v0.3.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded async-task v4.0.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded remove_dir_all v0.5.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded num_cpus v1.13.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded proc-macro-nested v0.1.7 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-sink v0.3.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded autocfg v1.0.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded maplit v1.0.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded rand v0.8.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded ident_case v1.0.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded arrayvec v0.5.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded rand_core v0.6.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded async-trait v0.1.50 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded pin-project-internal v1.0.7 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded chrono-tz v0.5.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-task v0.3.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded atomic-waker v1.0.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded Inflector v0.11.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-executor v0.3.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded indexmap v1.7.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded base64 v0.13.0 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded getrandom v0.1.16 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded rand_core v0.5.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded aho-corasick v0.7.18 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded ahash v0.4.7 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-core v0.3.15 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded futures-timer v3.0.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded form_urlencoded v1.0.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded hashbrown v0.11.2 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded hashbrown v0.9.1 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded http v0.2.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded regex-syntax v0.6.25 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded libc v0.2.97 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded idna v0.2.3 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+  Downloaded ahash v0.7.4 (registry `/testbed/.cargo/lts-repo-at-996fd0f465`)
+   Compiling proc-macro2 v1.0.27
+   Compiling unicode-xid v0.2.2
+   Compiling syn v1.0.73
+   Compiling autocfg v1.0.1
+   Compiling libc v0.2.97
+   Compiling cfg-if v1.0.0
+   Compiling memchr v2.4.0
+   Compiling version_check v0.9.3
+   Compiling futures-core v0.3.15
+   Compiling serde_derive v1.0.126
+   Compiling serde v1.0.126
+   Compiling pin-project-lite v0.2.7
+   Compiling proc-macro-hack v0.5.19
+   Compiling futures-channel v0.3.15
+   Compiling proc-macro-nested v0.1.7
+   Compiling futures-io v0.3.15
+   Compiling futures-task v0.3.15
+   Compiling futures-sink v0.3.15
+   Compiling ppv-lite86 v0.2.10
+   Compiling itoa v0.4.7
+   Compiling lazy_static v1.4.0
+   Compiling regex-syntax v0.6.25
+   Compiling ryu v1.0.5
+   Compiling slab v0.4.3
+   Compiling serde_json v1.0.64
+   Compiling getrandom v0.1.16
+   Compiling hashbrown v0.11.2
+   Compiling fnv v1.0.7
+   Compiling pin-utils v0.1.0
+   Compiling ucd-trie v0.1.3
+   Compiling typenum v1.13.0
+   Compiling maplit v1.0.2
+   Compiling matches v0.1.8
+   Compiling strsim v0.10.0
+   Compiling tinyvec_macros v0.1.0
+   Compiling ident_case v1.0.1
+   Compiling async-trait v0.1.50
+   Compiling encoding_rs v0.8.28
+   Compiling log v0.4.14
+   Compiling once_cell v1.8.0
+   Compiling percent-encoding v2.1.0
+   Compiling httparse v1.4.1
+   Compiling cache-padded v1.1.1
+   Compiling waker-fn v1.1.0
+   Compiling bytes v1.0.1
+   Compiling ahash v0.4.7
+   Compiling unchecked-index v0.2.2
+   Compiling parking v2.0.0
+   Compiling event-listener v2.5.1
+   Compiling fastrand v1.4.1
+   Compiling convert_case v0.4.0
+   Compiling spin v0.9.1
+   Compiling remove_dir_all v0.5.3
+   Compiling opaque-debug v0.3.0
+   Compiling zeroize v1.3.0
+   Compiling atomic-waker v1.0.0
+   Compiling hex v0.4.3
+   Compiling arrayvec v0.5.2
+   Compiling base64 v0.13.0
+   Compiling cpufeatures v0.1.5
+   Compiling async-task v4.0.3
+   Compiling mime v0.3.16
+   Compiling futures-timer v3.0.2
+   Compiling static_assertions v1.1.0
+   Compiling tracing-core v0.1.18
+   Compiling unicode-bidi v0.3.5
+   Compiling tinyvec v1.2.0
+   Compiling form_urlencoded v1.0.1
+   Compiling pest v2.1.3
+   Compiling concurrent-queue v1.2.2
+   Compiling hashbrown v0.9.1
+   Compiling secrecy v0.7.0
+   Compiling generic-array v0.14.4
+   Compiling ahash v0.7.4
+   Compiling multer v2.0.0
+   Compiling http v0.2.4
+   Compiling futures-macro v0.3.15
+   Compiling indexmap v1.7.0
+   Compiling num-traits v0.2.14
+   Compiling futures-util v0.3.15
+   Compiling num-integer v0.1.44
+   Compiling tokio v1.8.0
+   Compiling lru v0.6.5
+   Compiling async-channel v1.6.1
+   Compiling aho-corasick v0.7.18
+   Compiling twoway v0.2.2
+   Compiling futures-lite v1.12.0
+   Compiling unicode-normalization v0.1.19
+   Compiling pest_meta v2.1.3
+   Compiling quote v1.0.9
+   Compiling getrandom v0.2.3
+   Compiling time v0.1.44
+   Compiling num_cpus v1.13.0
+   Compiling rand_core v0.5.1
+   Compiling rand_core v0.6.3
+   Compiling rand_chacha v0.2.2
+   Compiling rand_chacha v0.3.1
+   Compiling block-buffer v0.9.0
+   Compiling digest v0.9.0
+   Compiling sha2 v0.9.5
+   Compiling rand v0.8.4
+   Compiling rand v0.7.3
+   Compiling regex v1.5.4
+   Compiling blocking v1.0.2
+   Compiling chrono v0.4.19
+   Compiling idna v0.2.3
+   Compiling tempfile v3.2.0
+   Compiling url v2.2.2
+   Compiling parse-zoneinfo v0.3.0
+   Compiling Inflector v0.11.4
+   Compiling chrono-tz v0.5.3
+   Compiling darling_core v0.12.4
+   Compiling pest_generator v2.1.3
+   Compiling thiserror-impl v1.0.26
+   Compiling pin-project-internal v1.0.7
+   Compiling tracing-attributes v0.1.15
+   Compiling pest_derive v2.1.0
+   Compiling derive_more v0.99.14
+   Compiling async-stream-impl v0.3.2
+   Compiling tokio-macros v1.2.0
+   Compiling darling_macro v0.12.4
+   Compiling async-stream v0.3.2
+   Compiling darling v0.12.4
+   Compiling thiserror v1.0.26
+   Compiling tracing v0.1.26
+   Compiling pin-project v1.0.7
+   Compiling futures-executor v0.3.15
+   Compiling futures v0.3.15
+   Compiling tracing-futures v0.2.5
+   Compiling opentelemetry v0.13.0
+   Compiling toml v0.5.8
+   Compiling uuid v0.8.2
+   Compiling rust_decimal v1.14.3
+   Compiling async-graphql-value v2.9.6 (/workspace/value)
+   Compiling bson v2.0.0-beta.2
+   Compiling proc-macro-crate v1.0.0
+   Compiling async-graphql-parser v2.9.6 (/workspace/parser)
+   Compiling async-graphql-derive v2.9.6 (/workspace/derive)
+   Compiling async-graphql v2.9.6 (/workspace)
+    Finished test [unoptimized + debuginfo] target(s) in 1m 02s
+     Running unittests (target/debug/deps/async_graphql-14ecf1f5569d30b7)
+
+running 281 tests
+test dataloader::tests::test_dataloader_load_empty ... ok
+test request::tests::test_batch_request_batch ... ok
+test request::tests::test_deserialize_request_with_null_variables ... ok
+test request::tests::test_batch_request_single ... ok
+test request::tests::test_request ... ok
+test request::tests::test_request_with_operation_name ... ok
+test response::tests::test_batch_response_batch ... ok
+test response::tests::test_batch_response_single ... ok
+test registry::stringify_exec_doc::tests::test_stringify ... ok
+test request::tests::test_request_with_variables ... ok
+test types::any::test::test_conversion_ok ... ok
+test types::external::optional::tests::test_optional_type ... ok
+test types::maybe_undefined::tests::test_maybe_undefined_type ... ok
+test registry::stringify_exec_doc::tests::test_stringify_secret ... ok
+test types::maybe_undefined::tests::test_maybe_undefined_serde ... ok
+test dataloader::tests::test_duplicate_keys ... ok
+test extensions::apollo_persisted_queries::tests::test ... ok
+test extensions::analyzer::tests::analyzer ... ok
+test types::json::test::test_output_json_type ... ok
+test types::external::cow::test::test_cow_type ... ok
+test types::json::test::test_json_type ... ok
+test types::string_number::test::test_string_number ... ok
+test validation::rules::arguments_of_correct_type::tests::int_into_boolean ... ok
+test validation::rules::arguments_of_correct_type::tests::good_string_value ... ok
+test validation::rules::arguments_of_correct_type::tests::incorrect_value_type ... ok
+test validation::rules::arguments_of_correct_type::tests::empty_list_value ... ok
+test validation::rules::arguments_of_correct_type::tests::good_int_value ... ok
+test validation::rules::arguments_of_correct_type::tests::incorrect_value_and_missing_argument ... ok
+test validation::rules::arguments_of_correct_type::tests::good_list_value ... ok
+test validation::rules::arguments_of_correct_type::tests::float_into_enum ... ok
+test validation::rules::arguments_of_correct_type::tests::float_into_int ... ok
+test validation::rules::arguments_of_correct_type::tests::float_into_string ... ok
+test validation::rules::arguments_of_correct_type::tests::good_enum_value ... ok
+test validation::rules::arguments_of_correct_type::tests::good_null_value ... ok
+test validation::rules::arguments_of_correct_type::tests::incorrect_item_type ... ok
+test validation::rules::arguments_of_correct_type::tests::good_boolean_value ... ok
+test validation::rules::arguments_of_correct_type::tests::good_float_value ... ok
+test validation::rules::arguments_of_correct_type::tests::float_into_boolean ... ok
+test validation::rules::arguments_of_correct_type::tests::directive_with_valid_types ... ok
+test validation::rules::arguments_of_correct_type::tests::float_into_id ... ok
+test validation::rules::arguments_of_correct_type::tests::boolean_into_float ... ok
+test validation::rules::arguments_of_correct_type::tests::boolean_into_string ... ok
+test validation::rules::arguments_of_correct_type::tests::full_object ... ok
+test validation::rules::arguments_of_correct_type::tests::full_object_with_fields_in_different_order ... ok
+test validation::rules::arguments_of_correct_type::tests::arg_on_optional_arg ... ok
+test validation::rules::arguments_of_correct_type::tests::boolean_into_enum ... ok
+test validation::rules::arguments_of_correct_type::tests::boolean_into_id ... ok
+test validation::rules::arguments_of_correct_type::tests::different_case_enum_value_into_enum ... ok
+test validation::rules::arguments_of_correct_type::tests::all_reqs_and_opts_on_mixed_list ... ok
+test validation::rules::arguments_of_correct_type::tests::directive_with_incorrect_types ... ok
+test validation::rules::arguments_of_correct_type::tests::int_into_float ... ok
+test validation::rules::arguments_of_correct_type::tests::int_into_id ... ok
+test validation::rules::arguments_of_correct_type::tests::int_into_string ... ok
+test validation::rules::arguments_of_correct_type::tests::multiple_args ... ok
+test validation::rules::arguments_of_correct_type::tests::multiple_args_reverse_order ... ok
+test dataloader::tests::test_dataloader_with_cache_hashmap_fnv ... ok
+test dataloader::tests::test_dataloader_with_cache ... ok
+test validation::rules::arguments_of_correct_type::tests::no_arg_on_optional_arg ... ok
+test validation::rules::arguments_of_correct_type::tests::multiple_reqs_on_mixed_list ... ok
+test validation::rules::arguments_of_correct_type::tests::optional_arg_despite_required_field_in_type ... ok
+test validation::rules::arguments_of_correct_type::tests::one_arg_on_multiple_optional ... ok
+test validation::rules::arguments_of_correct_type::tests::null_into_int ... ok
+test look_ahead::tests::test_look_ahead ... ok
+test validation::rules::arguments_of_correct_type::tests::partial_object_only_required ... ok
+test validation::rules::arguments_of_correct_type::tests::partial_object_missing_required ... ok
+test validation::rules::arguments_of_correct_type::tests::int_into_enum ... ok
+test validation::rules::arguments_of_correct_type::tests::no_args_on_multiple_optional ... ok
+test validation::rules::arguments_of_correct_type::tests::second_arg_on_multiple_optional ... ok
+test validation::rules::arguments_of_correct_type::tests::simple_float_into_int ... ok
+test validation::rules::arguments_of_correct_type::tests::multiple_reqs_and_one_opt_on_mixed_list ... ok
+test validation::rules::arguments_of_correct_type::tests::string_into_boolean ... ok
+test validation::rules::arguments_of_correct_type::tests::partial_object_including_required ... ok
+test validation::rules::arguments_of_correct_type::tests::string_into_float ... ok
+test validation::rules::arguments_of_correct_type::tests::partial_object_invalid_field_type ... ok
+test validation::rules::arguments_of_correct_type::tests::unquoted_into_float ... ok
+test validation::rules::arguments_of_correct_type::tests::single_value_into_list ... ok
+test validation::rules::default_values_of_correct_type::tests::complex_variables_missing_required_field ... ok
+test validation::rules::arguments_of_correct_type::tests::single_value_of_incorrect_type ... ok
+test validation::rules::default_values_of_correct_type::tests::required_variables_without_default_values ... ok
+test validation::rules::default_values_of_correct_type::tests::list_variables_with_invalid_item ... ok
+test validation::rules::arguments_of_correct_type::tests::string_into_id ... ok
+test validation::rules::arguments_of_correct_type::tests::string_into_int ... ok
+test validation::rules::default_values_of_correct_type::tests::no_required_variables_with_default_values ... ok
+test validation::rules::arguments_of_correct_type::tests::partial_object_unknown_field_arg ... ok
+test validation::rules::fields_on_correct_type::tests::aliased_selection_on_interface ... ok
+test validation::rules::arguments_of_correct_type::tests::unknown_enum_value_into_enum ... ok
+test validation::rules::default_values_of_correct_type::tests::variables_with_invalid_default_values ... ok
+test validation::rules::arguments_of_correct_type::tests::partial_object_required_field_can_be_falsy ... ok
+test validation::rules::fields_on_correct_type::tests::aliased_selection_on_object ... ok
+test validation::rules::fields_on_correct_type::tests::defined_in_concrete_types_but_not_interface ... ok
+test validation::rules::fields_on_correct_type::tests::fields_on_union ... ok
+test validation::rules::arguments_of_correct_type::tests::unquoted_into_id ... ok
+test validation::rules::fields_on_correct_type::tests::ignores_unknown_type ... ok
+test validation::rules::arguments_of_correct_type::tests::unquoted_string_into_int ... ok
+test validation::rules::fields_on_correct_type::tests::lying_alias_selection ... ok
+test validation::rules::default_values_of_correct_type::tests::variables_with_no_default_values ... ok
+test validation::rules::fields_on_correct_type::tests::meta_field_on_union ... ok
+test validation::rules::arguments_of_correct_type::tests::unquoted_string_into_string ... ok
+test dataloader::tests::test_dataloader ... ok
+test validation::rules::default_values_of_correct_type::tests::variables_with_valid_default_values ... ok
+test validation::rules::fields_on_correct_type::tests::nested_unknown_fields ... ok
+test validation::rules::fields_on_correct_type::tests::ignores_deeply_unknown_field ... ok
+test validation::rules::arguments_of_correct_type::tests::unquoted_into_boolean ... ok
+test validation::rules::fields_on_correct_type::tests::not_defined_on_interface ... ok
+test validation::rules::fields_on_correct_type::tests::selection_on_interface ... ok
+test validation::rules::fields_on_correct_type::tests::selection_on_object ... ok
+test validation::rules::fields_on_correct_type::tests::typename_on_union ... ok
+test validation::rules::fields_on_correct_type::tests::unknown_subfield ... ok
+test validation::rules::fields_on_correct_type::tests::valid_field_in_inline_fragment ... ok
+test validation::rules::fragments_on_composite_types::tests::not_on_scalar ... ok
+test validation::rules::fragments_on_composite_types::tests::not_on_scalar_inline ... ok
+test validation::rules::fields_on_correct_type::tests::unknown_field_on_fragment ... ok
+test validation::rules::fields_on_correct_type::tests::unknown_field_on_inline_fragment ... ok
+test validation::rules::fragments_on_composite_types::tests::on_object ... ok
+test validation::rules::fragments_on_composite_types::tests::on_object_inline ... ok
+test validation::rules::fragments_on_composite_types::tests::on_union ... ok
+test validation::rules::fragments_on_composite_types::tests::not_on_enum ... ok
+test validation::rules::known_argument_names::tests::directive_args_are_known ... ok
+test validation::rules::fragments_on_composite_types::tests::not_on_input_object ... ok
+test validation::rules::fields_on_correct_type::tests::unknown_aliased_target ... ok
+test validation::rules::fields_on_correct_type::tests::unknown_aliased_lying_field_target ... ok
+test validation::rules::fragments_on_composite_types::tests::on_inline_without_type_cond ... ok
+test validation::rules::known_argument_names::tests::multiple_args_are_known ... ok
+test validation::rules::known_argument_names::tests::args_are_known_deeply ... ok
+test validation::rules::fragments_on_composite_types::tests::on_interface ... ok
+test validation::rules::known_argument_names::tests::ignores_args_of_unknown_fields ... ok
+test validation::rules::known_argument_names::tests::invalid_arg_name ... ok
+test validation::rules::known_directives::tests::with_known_directives ... ok
+test validation::rules::known_argument_names::tests::no_args_on_optional_arg ... ok
+test validation::rules::known_argument_names::tests::undirective_args_are_invalid ... ok
+test validation::rules::known_directives::tests::with_unknown_directive ... ok
+test validation::rules::known_directives::tests::with_misplaced_directives ... ok
+test validation::rules::known_argument_names::tests::single_arg_is_known ... ok
+test validation::rules::known_directives::tests::with_many_unknown_directives ... ok
+test validation::rules::known_argument_names::tests::multiple_args_in_reverse_order_are_known ... ok
+test validation::rules::no_fragment_cycles::tests::does_not_false_positive_on_unknown_fragment ... ok
+test validation::rules::known_directives::tests::with_well_placed_directives ... ok
+test validation::rules::known_argument_names::tests::unknown_args_amongst_known_args ... ok
+test validation::rules::no_fragment_cycles::tests::no_spreading_itself_directly_within_inline_fragment ... ok
+test validation::rules::no_fragment_cycles::tests::no_spreading_itself_indirectly_reports_opposite_order ... ok
+test validation::rules::known_argument_names::tests::unknown_args_deeply ... ok
+test validation::rules::no_fragment_cycles::tests::spreading_recursively_within_field_fails ... ok
+test validation::rules::no_fragment_cycles::tests::single_reference_is_valid ... ok
+test validation::rules::no_fragment_cycles::tests::no_spreading_itself_indirectly_within_inline_fragment ... ok
+test validation::rules::no_fragment_cycles::tests::double_spread_within_abstract_types ... ok
+test validation::rules::no_fragment_cycles::tests::spreading_twice_is_not_circular ... ok
+test validation::rules::known_fragment_names::tests::known ... ok
+test validation::rules::no_fragment_cycles::tests::spreading_twice_indirectly_is_not_circular ... ok
+test validation::rules::no_undefined_variables::tests::all_variables_deeply_defined ... ok
+test validation::rules::no_fragment_cycles::tests::no_spreading_itself_deeply ... ok
+test validation::rules::known_directives::tests::with_no_directives ... ok
+test validation::rules::known_fragment_names::tests::unknown ... ok
+test validation::rules::no_undefined_variables::tests::all_variables_defined ... ok
+test validation::rules::no_fragment_cycles::tests::no_spreading_itself_directly ... ok
+test validation::rules::no_fragment_cycles::tests::no_spreading_itself_deeply_and_immediately ... ok
+test validation::rules::no_fragment_cycles::tests::no_spreading_itself_indirectly ... ok
+test validation::rules::no_undefined_variables::tests::all_variables_deeply_defined_in_inline_fragments_defined ... ok
+test validation::rules::no_fragment_cycles::tests::no_spreading_itself_deeply_two_paths_alt_traversal_order ... ok
+test validation::rules::known_type_names::tests::unknown_type_names_are_invalid ... ok
+test validation::rules::no_fragment_cycles::tests::no_spreading_itself_deeply_two_paths ... ok
+test validation::rules::no_undefined_variables::tests::multiple_variables_in_fragments_not_defined ... ok
+test validation::rules::no_undefined_variables::tests::multiple_undefined_variables_produce_multiple_errors ... ok
+test validation::rules::no_undefined_variables::tests::variable_within_recursive_fragment_defined ... ok
+test validation::rules::no_undefined_variables::tests::variable_in_fragment_not_defined_by_operation ... ok
+test validation::rules::no_undefined_variables::tests::variable_within_single_fragment_defined_in_multiple_operations ... ok
+test validation::rules::no_unused_fragments::tests::contains_unknown_and_undef_fragments ... ok
+test validation::rules::no_undefined_variables::tests::multiple_variables_not_defined ... ok
+test validation::rules::no_undefined_variables::tests::variable_in_fragment_not_defined_by_unnamed_query ... ok
+test validation::rules::known_type_names::tests::known_type_names_are_valid ... ok
+test validation::rules::no_undefined_variables::tests::single_variable_in_fragment_not_defined_by_multiple_operations ... ok
+test validation::rules::no_undefined_variables::tests::variable_not_defined_by_unnamed_query ... ok
+test validation::rules::no_unused_fragments::tests::all_fragment_names_are_used ... ok
+test validation::rules::no_undefined_variables::tests::all_variables_in_fragments_deeply_defined ... ok
+test validation::rules::no_unused_fragments::tests::all_fragment_names_are_used_by_multiple_operations ... ok
+test validation::rules::no_undefined_variables::tests::variable_not_defined ... ok
+test validation::rules::no_undefined_variables::tests::variable_in_fragment_used_by_other_operation ... ok
+test validation::rules::no_unused_fragments::tests::contains_unknown_fragments ... ok
+test validation::rules::no_unused_variables::tests::uses_all_variables ... ok
+test validation::rules::no_undefined_variables::tests::variable_within_fragments_defined_in_operations ... ok
+test validation::rules::no_unused_variables::tests::uses_all_variables_deeply ... ok
+test validation::rules::no_unused_variables::tests::multiple_variables_not_used_2 ... ok
+test validation::rules::no_unused_variables::tests::variable_not_used_by_unreferenced_fragment ... ok
+test validation::rules::no_undefined_variables::tests::variables_in_fragment_not_defined_by_multiple_operations ... ok
+test validation::rules::no_unused_variables::tests::multiple_variables_not_used_1 ... ok
+test validation::rules::possible_fragment_spreads::tests::different_object_into_object ... ok
+test validation::rules::no_unused_fragments::tests::contains_unknown_fragments_with_ref_cycle ... ok
+test validation::rules::possible_fragment_spreads::tests::different_object_into_object_in_inline_fragment ... ok
+test validation::rules::no_unused_variables::tests::variable_not_used_by_fragment_used_by_other_operation ... ok
+test validation::rules::possible_fragment_spreads::tests::interface_into_non_implementing_object ... ok
+test validation::rules::possible_fragment_spreads::tests::interface_into_implemented_object ... ok
+test validation::rules::possible_fragment_spreads::tests::interface_into_non_overlapping_interface ... ok
+test validation::rules::no_unused_variables::tests::variable_not_used ... ok
+test validation::rules::no_unused_variables::tests::variable_used_by_fragment_in_multiple_operations ... ok
+test validation::rules::possible_fragment_spreads::tests::interface_into_non_overlapping_interface_in_inline_fragment ... ok
+test validation::rules::no_unused_variables::tests::uses_all_variables_deeply_in_inline_fragments ... ok
+test validation::rules::possible_fragment_spreads::tests::interface_into_overlapping_interface ... ok
+test validation::rules::possible_fragment_spreads::tests::interface_into_overlapping_union ... ok
+test validation::rules::no_unused_variables::tests::variable_used_by_inline_fragment ... ok
+test validation::rules::possible_fragment_spreads::tests::object_into_containing_union ... ok
+test validation::rules::possible_fragment_spreads::tests::object_into_an_implemented_interface ... ok
+test validation::rules::no_unused_variables::tests::variable_used_by_recursive_fragment ... ok
+test validation::rules::no_unused_variables::tests::uses_all_variables_in_fragments ... ok
+test validation::rules::possible_fragment_spreads::tests::of_the_same_object_with_inline_fragment ... ok
+test validation::rules::no_unused_variables::tests::variable_not_used_in_fragment ... ok
+test validation::rules::possible_fragment_spreads::tests::union_into_contained_object ... ok
+test validation::rules::possible_fragment_spreads::tests::union_into_non_overlapping_interface ... ok
+test validation::rules::possible_fragment_spreads::tests::interface_into_non_overlapping_union ... ok
+test validation::rules::possible_fragment_spreads::tests::union_into_non_overlapping_union ... ok
+test validation::rules::possible_fragment_spreads::tests::union_into_not_contained_object ... ok
+test validation::rules::possible_fragment_spreads::tests::interface_into_overlapping_interface_in_inline_fragment ... ok
+test validation::rules::possible_fragment_spreads::tests::of_the_same_object ... ok
+test validation::rules::possible_fragment_spreads::tests::object_into_not_containing_union ... ok
+test validation::rules::possible_fragment_spreads::tests::object_into_not_implementing_interface ... ok
+test validation::rules::possible_fragment_spreads::tests::union_into_overlapping_union ... ok
+test validation::rules::possible_fragment_spreads::tests::union_into_overlapping_interface ... ok
+test validation::rules::provided_non_null_arguments::tests::ignores_unknown_directives ... ok
+test validation::rules::provided_non_null_arguments::tests::ignores_unknown_arguments ... ok
+test validation::rules::provided_non_null_arguments::tests::all_reqs_on_opts_on_mixed_list ... ok
+test validation::rules::provided_non_null_arguments::tests::arg_on_optional_arg ... ok
+test validation::rules::provided_non_null_arguments::tests::multiple_args_reverse_order ... ok
+test validation::rules::provided_non_null_arguments::tests::missing_multiple_non_nullable_arguments ... ok
+test validation::rules::provided_non_null_arguments::tests::one_arg_on_multiple_optional ... ok
+test validation::rules::provided_non_null_arguments::tests::incorrect_value_and_missing_argument ... ok
+test validation::rules::provided_non_null_arguments::tests::no_args_on_multiple_optional ... ok
+test validation::rules::provided_non_null_arguments::tests::multiple_reqs_and_one_opt_on_mixed_list ... ok
+test validation::rules::scalar_leafs::tests::interface_type_missing_selection ... ok
+test validation::rules::scalar_leafs::tests::object_type_missing_selection ... ok
+test validation::rules::provided_non_null_arguments::tests::muliple_reqs_on_mixed_list ... ok
+test validation::rules::scalar_leafs::tests::scalar_selection_not_allowed_on_boolean ... ok
+test validation::rules::provided_non_null_arguments::tests::multiple_args ... ok
+test validation::rules::scalar_leafs::tests::scalar_selection_not_allowed_with_directives ... ok
+test validation::rules::provided_non_null_arguments::tests::no_arg_on_optional_arg ... ok
+test validation::rules::scalar_leafs::tests::scalar_selection_not_allowed_with_directives_and_args ... ok
+test validation::rules::unique_argument_names::tests::duplicate_directive_arguments ... ok
+test validation::rules::provided_non_null_arguments::tests::second_arg_on_multiple_optional ... ok
+test validation::rules::provided_non_null_arguments::tests::missing_one_non_nullable_argument ... ok
+test validation::rules::scalar_leafs::tests::scalar_selection_not_allowed_on_enum ... ok
+test validation::rules::unique_argument_names::tests::many_duplicate_directive_arguments ... ok
+test validation::rules::unique_argument_names::tests::many_duplicate_field_arguments ... ok
+test validation::rules::unique_argument_names::tests::no_arguments_on_field ... ok
+test validation::rules::unique_argument_names::tests::multiple_directive_arguments ... ok
+test validation::rules::unique_argument_names::tests::multiple_field_arguments ... ok
+test validation::rules::scalar_leafs::tests::valid_scalar_selection ... ok
+test validation::rules::scalar_leafs::tests::scalar_selection_not_allowed_with_args ... ok
+test validation::rules::unique_argument_names::tests::same_argument_on_field_and_directive ... ok
+test validation::rules::provided_non_null_arguments::tests::with_directives_of_valid_types ... ok
+test validation::rules::unique_argument_names::tests::argument_on_directive ... ok
+test validation::rules::unique_argument_names::tests::argument_on_field ... ok
+test validation::rules::scalar_leafs::tests::valid_scalar_selection_with_args ... ok
+test validation::rules::unique_argument_names::tests::duplicate_field_arguments ... ok
+test validation::rules::provided_non_null_arguments::tests::with_directive_with_missing_types ... ok
+test validation::rules::unique_argument_names::tests::no_arguments_on_directive ... ok
+test validation::rules::unique_argument_names::tests::same_argument_on_two_directives ... ok
+test validation::rules::unique_argument_names::tests::same_argument_on_two_fields ... ok
+test validation::rules::unique_variable_names::tests::duplicate_variable_names ... ok
+test validation::rules::variables_in_allowed_position::tests::int_into_non_null_int ... ok
+test validation::rules::variables_in_allowed_position::tests::boolean_in_non_null_in_directive_with_default ... ok
+test validation::rules::variables_are_input_types::tests::input_types_are_valid ... ok
+test validation::rules::variables_in_allowed_position::tests::complex_input_into_complex_input_in_field_position ... ok
+test validation::rules::variables_are_input_types::tests::output_types_are_invalid ... ok
+test validation::rules::variables_in_allowed_position::tests::int_into_non_null_int_with_default ... ok
+test validation::rules::variables_in_allowed_position::tests::int_into_non_null_int_within_fragment ... ok
+test validation::rules::variables_in_allowed_position::tests::int_into_non_null_int_within_nested_fragment ... ok
+test validation::rules::unique_variable_names::tests::unique_variable_names ... ok
+test validation::rules::variables_in_allowed_position::tests::string_into_non_null_boolean_in_directive ... ok
+test validation::rules::variables_in_allowed_position::tests::boolean_into_boolean ... ok
+test validation::rules::variables_in_allowed_position::tests::non_null_string_list_into_string_list ... ok
+test validation::rules::variables_in_allowed_position::tests::boolean_into_non_null_boolean_in_directive ... ok
+test validation::rules::variables_in_allowed_position::tests::boolean_into_boolean_within_fragment ... ok
+test validation::rules::variables_in_allowed_position::tests::non_null_boolean_into_boolean_within_fragment ... ok
+test validation::rules::variables_in_allowed_position::tests::string_over_boolean ... ok
+test validation::rules::variables_in_allowed_position::tests::complex_input_into_complex_input ... ok
+test validation::rules::variables_in_allowed_position::tests::non_null_boolean_into_boolean ... ok
+test validation::rules::variables_in_allowed_position::tests::non_null_boolean_into_non_null_boolean_in_directive ... ok
+test validation::rules::variables_in_allowed_position::tests::string_into_string_list ... ok
+test validation::rules::variables_in_allowed_position::tests::string_into_string_list_in_item_position ... ok
+test validation::rules::variables_in_allowed_position::tests::string_list_into_string_list ... ok
+test validation::rules::variables_in_allowed_position::tests::non_null_string_into_string_list_in_item_position ... ok
+test validation::visitors::depth::tests::depth ... ok
+test validation::visitors::complexity::tests::complex_subscription ... ok
+test validation::visitors::complexity::tests::complex_object ... ok
+
+test result: ok. 281 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/batch_request.rs (target/debug/deps/batch_request-19b5800e6353842e)
+
+running 1 test
+test test_batch_request ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/complex_object.rs (target/debug/deps/complex_object-13671fa24d6be491)
+
+running 3 tests
+test test_complex_object_with_generic_context_data ... ok
+test test_complex_object ... ok
+test test_complex_object_with_generic_concrete_type ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/connection.rs (target/debug/deps/connection-4c01d6b8853f7f57)
+
+running 1 test
+test test_connection_additional_fields ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/default_value.rs (target/debug/deps/default_value-4c55b0a74e8659a2)
+
+running 2 tests
+test test_default_value_arg ... ok
+test test_default_value_inputobject ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/directive.rs (target/debug/deps/directive-bb60114f52b42717)
+
+running 3 tests
+test test_directive_include ... ok
+test test_directive_skip ... ok
+test test_directive_ifdef ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/enum.rs (target/debug/deps/enum-31d605b11c42eedd)
+
+running 3 tests
+test test_remote_enum ... ok
+test test_enum_derive_and_item_attributes ... ok
+test test_enum_type ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/error_ext.rs (target/debug/deps/error_ext-64beaba6c8e48bcf)
+
+running 1 test
+test test_error_extensions ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/extension.rs (target/debug/deps/extension-57e15719debd45d1)
+
+running 2 tests
+test test_extension_call_order ... ok
+test test_extension_ctx ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/federation.rs (target/debug/deps/federation-cf4a31a7e438a6ef)
+
+running 3 tests
+test test_federation ... ok
+test test_nested_key ... ok
+test test_find_entity_with_context ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/field_features.rs (target/debug/deps/field_features-9946e0f0c4444415)
+
+running 1 test
+test test_field_features ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/fields_merge.rs (target/debug/deps/fields_merge-6dbc1a428a0ee472)
+
+running 3 tests
+test test_field_merge ... ok
+test test_field_object_merge2 ... ok
+test test_field_object_merge ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/generic_types.rs (target/debug/deps/generic_types-82cdfa2d880cbf2b)
+
+running 4 tests
+test test_generic_subscription ... ok
+test test_generic_object ... ok
+test test_generic_simple_object ... ok
+test test_input_object_generic ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/guard.rs (target/debug/deps/guard-606deb9f132c71ce)
+
+running 5 tests
+test test_guard_and_operator ... ok
+test test_guard_or_operator ... ok
+test test_guard_simple_rule ... ok
+test test_guard_chain_operator ... ok
+test test_guard_race_operator ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/hygiene.rs (target/debug/deps/hygiene-b66f81e96c3d9f27)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/input_object.rs (target/debug/deps/input_object-6a315661a7b9d8f7)
+
+running 6 tests
+test test_inputobject_derive_and_item_attributes ... ok
+test test_inputobject_flatten_multiple ... ok
+test test_input_object_skip_field ... ok
+test test_input_object_default_value ... ok
+test test_box_input_object ... ok
+test test_inputobject_flatten_recursive ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/input_validators.rs (target/debug/deps/input_validators-ee4c0e1f1a9fb78d)
+
+running 14 tests
+test test_input_validator_operator_and ... ok
+test test_input_validator_string_min_length ... ok
+test test_input_validator_string_max_length ... ok
+test test_input_validator_list_max_length ... ok
+test test_input_validator_list_min_length ... ok
+test test_input_validator_variable ... ok
+test test_input_validator_int_equal ... ok
+test test_input_validator_int_range ... ok
+test test_input_validator_int_less_than ... ok
+test test_input_validator_int_nonzero ... ok
+test test_input_validator_int_greater_than ... ok
+test test_input_validator_string_email ... ok
+test test_input_validator_operator_or ... ok
+test test_input_validator_string_mac ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/input_value.rs (target/debug/deps/input_value-b7653fe6f31fe9b5)
+
+running 1 test
+test test_input_value_custom_error ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/interface.rs (target/debug/deps/interface-df6360bb1300886c)
+
+running 8 tests
+test test_interface_simple_object ... ok
+test test_interface_field_result ... ok
+test test_interface_field_method ... ok
+test test_issue_330 ... ok
+test test_interface_simple_object2 ... ok
+test test_interface_implement_other_interface ... ok
+test test_multiple_objects_in_multiple_interfaces ... ok
+test test_multiple_interfaces ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/introspection.rs (target/debug/deps/introspection-12098d44de5f89e5)
+
+running 10 tests
+test test_introspection_scalar ... ok
+test test_introspection_union ... ok
+test test_introspection_input_object ... ok
+test test_introspection_enum ... ok
+test test_introspection_subscription ... ok
+test test_introspection_mutation ... ok
+test test_introspection_interface ... ok
+test test_disable_introspection ... ok
+test test_introspection_type_kind ... ok
+test test_introspection_deprecation ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/introspection_visible.rs (target/debug/deps/introspection_visible-a1ed2a785fce1f0c)
+
+running 4 tests
+test test_enum_value_visible ... ok
+test test_visible_fn ... ok
+test test_field_visible ... ok
+test test_type_visible ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/json_type.rs (target/debug/deps/json_type-c291268154350d4e)
+
+running 1 test
+test test_json_scalar ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/lifetime.rs (target/debug/deps/lifetime-78aa8e9661e7b98d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/list.rs (target/debug/deps/list-6fbb38daaf908a1b)
+
+running 2 tests
+test test_array_type ... ok
+test test_list_type ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/maybe_undefined.rs (target/debug/deps/maybe_undefined-d2af6229136636d5)
+
+running 1 test
+test test_maybe_undefined_type ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/merged_object.rs (target/debug/deps/merged_object-c4a5f8d97b069dac)
+
+running 8 tests
+test test_merged_object_default ... ok
+test test_merged_object_derive ... ok
+test test_issue_333 ... ok
+test test_merged_object_macro ... ok
+test test_merged_entity ... ok
+test test_issue_539 ... ok
+test test_merged_subscription ... ok
+test test_issue_316 ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/mut_args.rs (target/debug/deps/mut_args-f61b585aaf822eee)
+
+running 1 test
+test test_mut_args ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/mutation.rs (target/debug/deps/mutation-42a773042261999a)
+
+running 5 tests
+test test_mutation_fragment ... ok
+test test_serial_simple_object ... ok
+test test_serial_object ... ok
+test test_root_mutation_execution_order ... ok
+test test_serial_merged_object ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.41s
+
+     Running tests/optional.rs (target/debug/deps/optional-ed9bd65d87c70eec)
+
+running 1 test
+test test_optional_type ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/proc_macro_in_macro_rules.rs (target/debug/deps/proc_macro_in_macro_rules-e772f1e15dbb9eca)
+
+running 3 tests
+test test_subscription ... ok
+test test_object ... ok
+test test_scalar ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/raw_ident.rs (target/debug/deps/raw_ident-5072e2a6f8b83ac9)
+
+running 1 test
+test test_input_value_custom_error ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/rename.rs (target/debug/deps/rename-d69b535edf429dc1)
+
+running 5 tests
+test test_object ... ok
+test test_simple_object ... ok
+test test_enum ... ok
+test test_subscription ... ok
+test test_input_object ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/result.rs (target/debug/deps/result-2bb25daab1be73fc)
+
+running 3 tests
+test test_custom_error ... ok
+test test_fieldresult ... ok
+test test_error_propagation ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scalar.rs (target/debug/deps/scalar-76c9b8b109d05d20)
+
+running 1 test
+test test_scalar_macro ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/schema.rs (target/debug/deps/schema-cc3b532672e7d1a2)
+
+running 1 test
+test test_schema_default ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/subscription.rs (target/debug/deps/subscription-73442c4a698dbb56)
+
+running 8 tests
+test test_subscription_with_ctx_data ... ok
+test test_subscription_fieldresult ... ok
+test test_subscription_with_token ... ok
+test test_subscription_error ... ok
+test test_subscription_inline_fragment ... ok
+test test_subscription_fragment ... ok
+test test_subscription_fragment2 ... ok
+test test_subscription ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/subscription_websocket_graphql_ws.rs (target/debug/deps/subscription_websocket_graphql_ws-91fc8ecd1b6e5e4d)
+
+running 8 tests
+test test_start_before_connection_init ... ok
+test test_subscription_init_error ... ok
+test test_subscription_too_many_initialisation_requests_error ... ok
+test test_query_over_websocket ... ok
+test test_subscription_ws_transport ... ok
+test test_subscription_ws_transport_error ... ok
+test test_subscription_ws_transport_with_token ... ok
+test test_stream_drop ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/subscription_websocket_subscriptions_transport_ws.rs (target/debug/deps/subscription_websocket_subscriptions_transport_ws-e464a0e7809a2176)
+
+running 6 tests
+test test_start_before_connection_init ... ok
+test test_subscription_too_many_initialisation_requests_error ... ok
+test test_query_over_websocket ... ok
+test test_subscription_ws_transport ... ok
+test test_subscription_ws_transport_error ... ok
+test test_subscription_ws_transport_with_token ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/union.rs (target/debug/deps/union-b89055677a84fa6c)
+
+running 6 tests
+test test_union_simple_object ... ok
+test test_union_field_result ... ok
+test test_union_simple_object2 ... ok
+test test_multiple_objects_in_multiple_unions ... ok
+test test_union_flatten ... ok
+test test_multiple_unions ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/use_type_description.rs (target/debug/deps/use_type_description-2dca8f747561f04e)
+
+running 5 tests
+test test_object_with_lifetime ... ok
+test test_object ... ok
+test test_subscription ... ok
+test test_scalar ... ok
+test test_override_description ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/variables.rs (target/debug/deps/variables-1ab189285ac584e7)
+
+running 7 tests
+test test_variable_default_value ... ok
+test test_variable_null ... ok
+test test_variable_no_value ... ok
+test test_variables_json ... ok
+test test_variables ... ok
+test test_variables_enum ... ok
+test test_variable_in_input_object ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests async-graphql
+
+running 33 tests
+test src/lib.rs - Interface (line 725) ... ignored
+test src/lib.rs - Object (line 307) ... ignored
+test src/context.rs - context::ContextBase::insert_http_header (line 391) ... ok
+test src/extensions/tracing.rs - extensions::tracing::Tracing (line 23) ... ok
+test src/context.rs - context::ContextBase::append_http_header (line 443) ... ok
+test src/context.rs - context::ContextBase::http_header_contains (line 349) ... ok
+test src/validators/mod.rs - validators::InputValueValidator (line 19) ... ok
+test src/resolver_utils/scalar.rs - resolver_utils::scalar::ScalarType (line 9) ... ok
+test src/lib.rs - Subscription (line 935) ... ok
+test src/context.rs - context::ContextBase::look_ahead (line 573) ... ok
+test src/types/upload.rs - types::upload::Upload (line 68) ... ok
+test src/lib.rs - MergedSubscription (line 1151) ... ok
+test src/lib.rs - MergedObject (line 1111) ... ok
+test src/http/playground_source.rs - http::playground_source::playground_source (line 9) ... ok
+test src/schema.rs - schema::SchemaBuilder<Query, Mutation, Subscription>::extension (line 67) ... ok
+test src/types/empty_mutation.rs - types::empty_mutation::EmptyMutation (line 16) ... ok
+test src/lib.rs - SimpleObject (line 456) ... ok
+test src/types/maybe_undefined.rs - types::maybe_undefined::MaybeUndefined (line 13) ... ok
+test src/lib.rs - InputObject (line 642) ... ok
+test src/registry/cache_control.rs - registry::cache_control::CacheControl (line 5) ... ok
+test src/lib.rs - NewType (line 978) ... ok
+test src/context.rs - context::ContextBase::field (line 613) ... ok
+test src/lib.rs - Object (line 318) ... ok
+test src/lib.rs - ComplexObject (line 511) ... ok
+test src/resolver_utils/scalar.rs - scalar (line 52) ... ok
+test src/lib.rs - NewType (line 1034) ... ok
+test src/lib.rs - Description (line 1188) ... ok
+test src/dataloader/mod.rs - dataloader (line 5) ... ok
+test src/lib.rs - Enum (line 577) ... ok
+test src/lib.rs - Object (line 370) ... ok
+test src/types/connection/mod.rs - types::connection::query (line 26) ... ok
+test src/lib.rs - Interface (line 740) ... ok
+test src/lib.rs - Union (line 838) ... ok
+
+test result: ok. 31 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 14.98s
+
++ git reset --hard f1dd3f380cd374a357908c9c8f11248713da2606
+HEAD is now at f1dd3f38 Merge pull request #561 from okrplay/master
++ git clean -fd
+Removing .cargo/

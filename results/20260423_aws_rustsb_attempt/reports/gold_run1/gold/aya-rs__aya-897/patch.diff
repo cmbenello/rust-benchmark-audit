@@ -1,0 +1,12 @@
+diff --git a/aya-bpf-macros/src/cgroup_skb.rs b/aya-bpf-macros/src/cgroup_skb.rs
+--- a/aya-bpf-macros/src/cgroup_skb.rs
++++ b/aya-bpf-macros/src/cgroup_skb.rs
+@@ -29,7 +29,7 @@ impl CgroupSkb {
+         let section_name: Cow<'_, _> = if self.attach_type.is_some() {
+             format!("cgroup_skb/{}", self.attach_type.as_ref().unwrap()).into()
+         } else {
+-            "cgroup_skb".into()
++            "cgroup/skb".into()
+         };
+         let fn_vis = &self.item.vis;
+         let fn_name = self.item.sig.ident.clone();

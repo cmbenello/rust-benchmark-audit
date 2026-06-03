@@ -1,0 +1,170 @@
+diff --git a/docs.md b/docs.md
+--- a/docs.md
++++ b/docs.md
+@@ -488,7 +488,16 @@ renaming_overrides_prefixing = true
+ "MyType" = "my_cool_type"
+ "my_function" = "BetterFunctionName"
+ 
+-# Table of things to add to the body of any struct, union, or enum that has the
++# Table of things to prepend to the body of any struct, union, or enum that has the
++# given name. This can be used to add things like methods which don't change ABI,
++# mark fields private, etc
++[export.pre_body]
++"MyType" = """
++  MyType() = delete;
++private:
++"""
++
++# Table of things to append to the body of any struct, union, or enum that has the
+ # given name. This can be used to add things like methods which don't change ABI.
+ [export.body]
+ "MyType" = """
+diff --git a/src/bindgen/config.rs b/src/bindgen/config.rs
+--- a/src/bindgen/config.rs
++++ b/src/bindgen/config.rs
+@@ -214,6 +214,8 @@ pub struct ExportConfig {
+     pub exclude: Vec<String>,
+     /// Table of name conversions to apply to item names
+     pub rename: HashMap<String, String>,
++    /// Table of raw strings to prepend to the body of items.
++    pub pre_body: HashMap<String, String>,
+     /// Table of raw strings to append to the body of items.
+     pub body: HashMap<String, String>,
+     /// A prefix to add before the name of every item
+diff --git a/src/bindgen/config.rs b/src/bindgen/config.rs
+--- a/src/bindgen/config.rs
++++ b/src/bindgen/config.rs
+@@ -229,7 +231,11 @@ impl ExportConfig {
+         self.item_types.is_empty() || self.item_types.contains(&item_type)
+     }
+ 
+-    pub(crate) fn extra_body(&self, path: &Path) -> Option<&str> {
++    pub(crate) fn pre_body(&self, path: &Path) -> Option<&str> {
++        self.pre_body.get(path.name()).map(|s| s.trim_matches('\n'))
++    }
++
++    pub(crate) fn post_body(&self, path: &Path) -> Option<&str> {
+         self.body.get(path.name()).map(|s| s.trim_matches('\n'))
+     }
+ 
+diff --git a/src/bindgen/ir/enumeration.rs b/src/bindgen/ir/enumeration.rs
+--- a/src/bindgen/ir/enumeration.rs
++++ b/src/bindgen/ir/enumeration.rs
+@@ -527,6 +527,14 @@ impl Source for Enum {
+ 
+             write!(out, " {}", self.export_name());
+             out.open_brace();
++
++            // Emit the pre_body section, if relevant
++            // Only do this here if we're writing C++, since the struct that wraps everything is starting here.
++            // If we're writing C, we aren't wrapping the enum and variant structs definitions, so the actual enum struct willstart down below
++            if let Some(body) = config.export.pre_body(&self.path) {
++                out.write_raw_block(body);
++                out.new_line();
++            }
+         }
+ 
+         let enum_name = if let Some(ref tag) = self.tag {
+diff --git a/src/bindgen/ir/enumeration.rs b/src/bindgen/ir/enumeration.rs
+--- a/src/bindgen/ir/enumeration.rs
++++ b/src/bindgen/ir/enumeration.rs
+@@ -642,6 +650,14 @@ impl Source for Enum {
+                 }
+ 
+                 out.open_brace();
++
++                // Emit the pre_body section, if relevant
++                // Only do this if we're writing C, since the struct is starting right here.
++                // For C++, the struct wraps all of the above variant structs too, and we write the pre_body section at the begining of that
++                if let Some(body) = config.export.pre_body(&self.path) {
++                    out.write_raw_block(body);
++                    out.new_line();
++                }
+             }
+ 
+             // C++ allows accessing only common initial sequence of union
+diff --git a/src/bindgen/ir/enumeration.rs b/src/bindgen/ir/enumeration.rs
+--- a/src/bindgen/ir/enumeration.rs
++++ b/src/bindgen/ir/enumeration.rs
+@@ -1008,7 +1024,9 @@ impl Source for Enum {
+                 }
+             }
+ 
+-            if let Some(body) = config.export.extra_body(&self.path) {
++            // Emit the post_body section, if relevant
++            if let Some(body) = config.export.post_body(&self.path) {
++                out.new_line();
+                 out.write_raw_block(body);
+             }
+ 
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -452,6 +452,12 @@ impl Source for Struct {
+ 
+         out.open_brace();
+ 
++        // Emit the pre_body section, if relevant
++        if let Some(body) = config.export.pre_body(&self.path) {
++            out.write_raw_block(body);
++            out.new_line();
++        }
++
+         if config.documentation {
+             out.write_vertical_source_list(&self.fields, ListType::Cap(";"));
+         } else {
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -600,7 +606,9 @@ impl Source for Struct {
+             }
+         }
+ 
+-        if let Some(body) = config.export.extra_body(&self.path) {
++        // Emit the post_body section, if relevant
++        if let Some(body) = config.export.post_body(&self.path) {
++            out.new_line();
+             out.write_raw_block(body);
+         }
+ 
+diff --git a/src/bindgen/ir/union.rs b/src/bindgen/ir/union.rs
+--- a/src/bindgen/ir/union.rs
++++ b/src/bindgen/ir/union.rs
+@@ -299,6 +299,12 @@ impl Source for Union {
+ 
+         out.open_brace();
+ 
++        // Emit the pre_body section, if relevant
++        if let Some(body) = config.export.pre_body(&self.path) {
++            out.write_raw_block(body);
++            out.new_line();
++        }
++
+         if config.documentation {
+             out.write_vertical_source_list(&self.fields, ListType::Cap(";"));
+         } else {
+diff --git a/src/bindgen/ir/union.rs b/src/bindgen/ir/union.rs
+--- a/src/bindgen/ir/union.rs
++++ b/src/bindgen/ir/union.rs
+@@ -310,7 +316,9 @@ impl Source for Union {
+             out.write_vertical_source_list(&vec[..], ListType::Cap(";"));
+         }
+ 
+-        if let Some(body) = config.export.extra_body(&self.path) {
++        // Emit the post_body section, if relevant
++        if let Some(body) = config.export.post_body(&self.path) {
++            out.new_line();
+             out.write_raw_block(body);
+         }
+ 
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -176,7 +176,6 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     }
+ 
+     pub fn write_raw_block(&mut self, block: &str) {
+-        self.new_line();
+         self.line_started = true;
+         write!(self, "{}", block);
+     }

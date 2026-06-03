@@ -1,0 +1,139 @@
+2026-04-17 08:34:00,679 - INFO - Environment image rustb.env.x86_64.tokio-rs_bytes:latest found for tokio-rs__bytes-197
+Building instance image rustbench/tokio-rs__bytes:pr-197 for tokio-rs__bytes-197
+2026-04-17 08:40:32,554 - INFO - Creating container for tokio-rs__bytes-197...
+2026-04-17 08:40:32,638 - INFO - Container for tokio-rs__bytes-197 created: a89211bb23403f42af2a0dad364072c5aafe951d969de02ab0fc73ea56202f07
+2026-04-17 08:40:32,843 - INFO - Container for tokio-rs__bytes-197 started: a89211bb23403f42af2a0dad364072c5aafe951d969de02ab0fc73ea56202f07
+2026-04-17 08:40:32,845 - INFO - Intermediate patch for tokio-rs__bytes-197 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-197/patch.diff, now applying to container...
+2026-04-17 08:40:33,110 - INFO - >>>>> Applied Patch:
+Checking patch src/bytes.rs...
+Applied patch src/bytes.rs cleanly.
+
+2026-04-17 08:40:33,173 - INFO - Git diff before:
+diff --git a/src/bytes.rs b/src/bytes.rs
+index 60cf5d4..c85ebf3 100644
+--- a/src/bytes.rs
++++ b/src/bytes.rs
+@@ -2250,20 +2250,42 @@ impl Inner {
+         }
+ 
+         if kind == KIND_VEC {
+-            // Currently backed by a vector, so just use `Vector::reserve`.
++            // If there's enough free space before the start of the buffer, then
++            // just copy the data backwards and reuse the already-allocated
++            // space.
++            //
++            // Otherwise, since backed by a vector, use `Vec::reserve`
+             unsafe {
+-                let (off, _) = self.uncoordinated_get_vec_pos();
+-                let mut v = rebuild_vec(self.ptr, self.len, self.cap, off);
+-                v.reserve(additional);
+-
+-                // Update the info
+-                self.ptr = v.as_mut_ptr().offset(off as isize);
+-                self.len = v.len() - off;
+-                self.cap = v.capacity() - off;
++                let (off, prev) = self.uncoordinated_get_vec_pos();
++
++                // Only reuse space if we stand to gain at least capacity/2
++                // bytes of space back
++                if off >= additional && off >= (self.cap / 2) {
++                    // There's space - reuse it
++                    //
++                    // Just move the pointer back to the start after copying
++                    // data back.
++                    let base_ptr = self.ptr.offset(-(off as isize));
++                    ptr::copy(self.ptr, base_ptr, self.len);
++                    self.ptr = base_ptr;
++                    self.uncoordinated_set_vec_pos(0, prev);
++
++                    // Length stays constant, but since we moved backwards we
++                    // can gain capacity back.
++                    self.cap += off;
++                } else {
++                    // No space - allocate more
++                    let mut v = rebuild_vec(self.ptr, self.len, self.cap, off);
++                    v.reserve(additional);
+ 
+-                // Drop the vec reference
+-                mem::forget(v);
++                    // Update the info
++                    self.ptr = v.as_mut_ptr().offset(off as isize);
++                    self.len = v.len() - off;
++                    self.cap = v.capacity() - off;
+ 
++                    // Drop the vec reference
++                    mem::forget(v);
++                }
+                 return;
+             }
+         }
+2026-04-17 08:40:33,177 - INFO - Eval script for tokio-rs__bytes-197 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-197/eval.sh; copying to container...
+2026-04-17 08:40:52,016 - INFO - Test runtime: 18.65 seconds
+2026-04-17 08:40:52,016 - INFO - Test output for tokio-rs__bytes-197 written to logs/run_evaluation/gold_run1/gold/tokio-rs__bytes-197/test_output.txt
+2026-04-17 08:40:52,071 - INFO - Git diff after:
+diff --git a/src/bytes.rs b/src/bytes.rs
+index 60cf5d4..c85ebf3 100644
+--- a/src/bytes.rs
++++ b/src/bytes.rs
+@@ -2250,20 +2250,42 @@ impl Inner {
+         }
+ 
+         if kind == KIND_VEC {
+-            // Currently backed by a vector, so just use `Vector::reserve`.
++            // If there's enough free space before the start of the buffer, then
++            // just copy the data backwards and reuse the already-allocated
++            // space.
++            //
++            // Otherwise, since backed by a vector, use `Vec::reserve`
+             unsafe {
+-                let (off, _) = self.uncoordinated_get_vec_pos();
+-                let mut v = rebuild_vec(self.ptr, self.len, self.cap, off);
+-                v.reserve(additional);
+-
+-                // Update the info
+-                self.ptr = v.as_mut_ptr().offset(off as isize);
+-                self.len = v.len() - off;
+-                self.cap = v.capacity() - off;
++                let (off, prev) = self.uncoordinated_get_vec_pos();
++
++                // Only reuse space if we stand to gain at least capacity/2
++                // bytes of space back
++                if off >= additional && off >= (self.cap / 2) {
++                    // There's space - reuse it
++                    //
++                    // Just move the pointer back to the start after copying
++                    // data back.
++                    let base_ptr = self.ptr.offset(-(off as isize));
++                    ptr::copy(self.ptr, base_ptr, self.len);
++                    self.ptr = base_ptr;
++                    self.uncoordinated_set_vec_pos(0, prev);
++
++                    // Length stays constant, but since we moved backwards we
++                    // can gain capacity back.
++                    self.cap += off;
++                } else {
++                    // No space - allocate more
++                    let mut v = rebuild_vec(self.ptr, self.len, self.cap, off);
++                    v.reserve(additional);
+ 
+-                // Drop the vec reference
+-                mem::forget(v);
++                    // Update the info
++                    self.ptr = v.as_mut_ptr().offset(off as isize);
++                    self.len = v.len() - off;
++                    self.cap = v.capacity() - off;
+ 
++                    // Drop the vec reference
++                    mem::forget(v);
++                }
+                 return;
+             }
+         }
+2026-04-17 08:40:52,071 - INFO - Grading answer for tokio-rs__bytes-197...
+2026-04-17 08:40:52,072 - INFO - report: {'tokio-rs__bytes-197': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['reserve_vec_recycling'], 'failure': []}, 'PASS_TO_PASS': {'success': ['bytes::test_original_capacity_from_repr', 'bytes::test_original_capacity_to_repr', 'test_bufs_vec', 'test_fresh_cursor_vec', 'test_get_u16', 'test_get_u8', 'test_get_u16_buffer_underflow', 'test_bufs_vec_mut', 'test_clone', 'test_put_u16', 'test_put_u8', 'test_vec_advance_mut', 'test_vec_as_mut_buf', 'advance_vec', 'advance_static', 'bytes_mut_unsplit_arc_different', 'bytes_mut_unsplit_arc_non_contiguous', 'bytes_mut_unsplit_empty_other', 'bytes_mut_unsplit_empty_self', 'bytes_mut_unsplit_arc_inline', 'bytes_mut_unsplit_inline_arc', 'bytes_unsplit_arc_different', 'advance_inline', 'bytes_mut_unsplit_both_inline', 'bytes_mut_unsplit_two_split_offs', 'bytes_mut_unsplit_basic', 'bytes_unsplit_arc_non_contiguous', 'advance_past_len', 'bytes_unsplit_empty_self', 'bytes_unsplit_basic', 'bytes_unsplit_arc_inline', 'bytes_unsplit_both_inline', 'bytes_unsplit_empty_other', 'bytes_unsplit_inline_arc', 'bytes_unsplit_two_split_offs', 'extend_from_slice_shr', 'extend_from_slice_mut', 'extend_mut', 'bytes_unsplit_overlapping_references', 'fmt', 'fns_defined_for_bytes_mut', 'from_slice', 'extend_shr', 'from_static', 'inline_storage', 'index', 'fmt_write', 'len', 'partial_eq_bytesmut', 'reserve_convert', 'reserve_growth', 'reserve_in_arc_nonunique_does_not_overallocate', 'reserve_in_arc_unique_does_not_overallocate', 'reserve_in_arc_unique_doubles', 'slice', 'split_off', 'slice_oob_1', 'slice_oob_2', 'split_off_uninitialized', 'split_off_oob', 'split_to_1', 'split_off_to_at_gt_len', 'reserve_allocates_at_least_original_capacity', 'split_to_2', 'split_to_uninitialized', 'split_to_oob_mut', 'split_to_oob', 'test_bounds', 'split_off_to_loop', 'reserve_max_original_capacity_value', 'stress', 'writing_chained', 'collect_two_bufs', 'vectored_read', 'iterating_two_bufs', 'collect_to_bytes', 'collect_to_bytes_mut', 'collect_to_vec', 'empty_iter_len', 'iter_len', 'test_ser_de', 'test_ser_de_empty', 'long_take', 'src/buf/buf.rs - buf::buf::Buf::has_remaining (line 200)', 'src/buf/buf.rs - buf::buf::Buf::get_f32_le (line 673)', 'src/buf/buf.rs - buf::buf::Buf::get_f32 (line 651)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::new (line 40)', 'src/buf/buf.rs - buf::buf::Buf::get_u32_le (line 419)', 'src/buf/buf.rs - buf::buf::Buf::get_f64_le (line 717)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::has_remaining_mut (line 106)', 'src/buf/buf.rs - buf::buf::Buf (line 49)', 'src/buf/buf.rs - buf::buf::Buf::get_f64 (line 695)', 'src/buf/buf.rs - buf::buf::Buf::get_u16_le (line 335)', 'src/buf/buf.rs - buf::buf::Buf::get_i64_le (line 545)', 'src/buf/buf.rs - buf::buf::Buf::bytes (line 101)', 'src/buf/buf.rs - buf::buf::Buf::remaining (line 73)', 'src/buf/buf.rs - buf::buf::Buf::get_i16 (line 356)', 'src/buf/buf.rs - buf::buf::Buf::get_i32_le (line 461)', 'src/buf/buf.rs - buf::buf::Buf::get_int (line 608)', 'src/buf/buf.rs - buf::buf::Buf::get_int_le (line 629)', 'src/buf/buf.rs - buf::buf::Buf::iter (line 866)', 'src/buf/buf.rs - buf::buf::Buf::get_u16 (line 314)', 'src/buf/buf.rs - buf::buf::Buf::get_u64_le (line 503)', 'src/buf/buf.rs - buf::buf::Buf::advance (line 168)', 'src/buf/buf.rs - buf::buf::Buf::get_u32 (line 398)', 'src/buf/buf.rs - buf::buf::Buf::get_i8 (line 290)', 'src/buf/buf.rs - buf::buf::Buf::get_uint_le (line 587)', 'src/buf/buf.rs - buf::buf::Buf::get_uint (line 566)', 'src/buf/buf.rs - buf::buf::Buf::get_u8 (line 266)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::last_ref (line 96)', 'src/buf/buf.rs - buf::buf::Buf::get_i32 (line 440)', 'src/buf/buf.rs - buf::buf::Buf::chain (line 791)', 'src/buf/buf.rs - buf::buf::Buf::get_u64 (line 482)', 'src/buf/buf.rs - buf::buf::Buf::get_i16_le (line 377)', 'src/buf/buf.rs - buf::buf::Buf::get_i64 (line 524)', 'src/buf/buf.rs - buf::buf::Buf::copy_to_slice (line 223)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i32 (line 491)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::first_ref (line 61)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f64_le (line 807)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i64_le (line 611)', 'src/buf/buf.rs - buf::buf::Buf::by_ref (line 814)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_int_le (line 707)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u16_le (line 371)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::into_inner (line 131)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u16 (line 347)', 'src/buf/iter.rs - buf::iter::Iter<T>::get_mut (line 76)', 'src/buf/buf.rs - buf::buf::Buf::collect (line 741)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f32 (line 732)', 'src/buf/iter.rs - buf::iter::Iter (line 11)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i32_le (line 515)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i16_le (line 419)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_uint_le (line 659)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i16 (line 395)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f64 (line 782)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u8 (line 301)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u64 (line 539)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::remaining_mut (line 36)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_int (line 683)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::advance_mut (line 66)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::bytes_mut (line 133)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f32_le (line 757)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::by_ref (line 832)', 'src/buf/buf.rs - buf::buf::Buf::reader (line 844)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put (line 209)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i64 (line 587)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u64_le (line 563)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u32_le (line 467)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i8 (line 324)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut (line 18)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_uint (line 635)', 'src/buf/from_buf.rs - buf::from_buf::FromBuf (line 17)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_slice (line 255)', 'src/buf/buf.rs - buf::buf::Buf::take (line 763)', 'src/buf/into_buf.rs - buf::into_buf::IntoBuf::into_buf (line 34)', 'src/buf/into_buf.rs - buf::into_buf::IntoBuf (line 13)', 'src/buf/from_buf.rs - buf::from_buf::FromBuf (line 40)', 'src/buf/chain.rs - buf::chain::Chain (line 15)', 'src/buf/from_buf.rs - buf::from_buf::FromBuf::from_buf (line 77)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u32 (line 443)', 'src/buf/from_buf.rs - buf::from_buf::FromBuf (line 29)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::last_mut (line 112)', 'src/buf/chain.rs - buf::chain::Chain<T, U>::first_mut (line 77)', 'src/buf/buf_mut.rs - buf::buf_mut::BufMut::writer (line 863)', 'src/bytes.rs - bytes::Bytes::clear (line 719)', 'src/bytes.rs - bytes::Bytes::extend_from_slice (line 787)', 'src/bytes.rs - bytes::Bytes::len (line 462)', 'src/buf/reader.rs - buf::reader::Reader<B>::get_ref (line 26)', 'src/bytes.rs - bytes::Bytes (line 23)', 'src/buf/iter.rs - buf::iter::Iter<T>::get_ref (line 56)', 'src/buf/take.rs - buf::take::Take<T>::get_ref (line 53)', 'src/bytes.rs - bytes::Bytes::from_static (line 445)', 'src/bytes.rs - bytes::Bytes::is_empty (line 476)', 'src/buf/writer.rs - buf::writer::Writer<B>::get_ref (line 26)', 'src/bytes.rs - bytes::BytesMut::reserve (line 1404)', 'src/bytes.rs - bytes::BytesMut::clear (line 1342)', 'src/bytes.rs - bytes::Bytes::is_inline (line 489)', 'src/buf/take.rs - buf::take::Take<T>::limit (line 96)', 'src/bytes.rs - bytes::BytesMut::is_inline (line 1137)', 'src/bytes.rs - bytes::Bytes::slice (line 509)', 'src/bytes.rs - bytes::BytesMut::is_empty (line 1123)', 'src/bytes.rs - bytes::Bytes::truncate (line 686)', 'src/buf/iter.rs - buf::iter::Iter<T>::into_inner (line 35)', 'src/bytes.rs - bytes::BytesMut::capacity (line 1152)', 'src/bytes.rs - bytes::Bytes::new (line 427)', 'src/bytes.rs - bytes::BytesMut::len (line 1108)', 'src/bytes.rs - bytes::Bytes::split_off (line 601)', 'src/bytes.rs - bytes::Bytes::slice_from (line 550)', 'src/bytes.rs - bytes::Bytes::slice_to (line 575)', 'src/buf/writer.rs - buf::writer::Writer<B>::get_mut (line 43)', 'src/bytes.rs - bytes::Bytes::split_to (line 640)', 'src/buf/writer.rs - buf::writer::Writer<B>::into_inner (line 60)', 'src/bytes.rs - bytes::Bytes::with_capacity (line 402)', 'src/bytes.rs - bytes::BytesMut::truncate (line 1309)', 'src/bytes.rs - bytes::Bytes::try_mut (line 738)', 'src/bytes.rs - bytes::BytesMut::split_off (line 1202)', 'src/bytes.rs - bytes::BytesMut::extend_from_slice (line 1447)', 'src/bytes.rs - bytes::Bytes::unsplit (line 825)', 'src/buf/reader.rs - buf::reader::Reader<B>::get_mut (line 44)', 'src/bytes.rs - bytes::BytesMut::reserve (line 1414)', 'src/bytes.rs - bytes::BytesMut::set_len (line 1361)', 'src/buf/reader.rs - buf::reader::Reader<B>::into_inner (line 64)', 'src/buf/take.rs - buf::take::Take<T>::into_inner (line 27)', 'src/bytes.rs - bytes::BytesMut::split_to (line 1270)', 'src/bytes.rs - bytes::BytesMut::new (line 1087)', 'src/buf/take.rs - buf::take::Take<T>::get_mut (line 71)', 'src/buf/take.rs - buf::take::Take<T>::set_limit (line 119)', 'src/bytes.rs - bytes::BytesMut (line 131)', 'src/bytes.rs - bytes::BytesMut::with_capacity (line 1061)', 'src/bytes.rs - bytes::BytesMut::unsplit (line 1467)', 'src/lib.rs -  (line 25)', 'src/bytes.rs - bytes::BytesMut::take (line 1236)', 'src/bytes.rs - bytes::BytesMut::freeze (line 1171)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for tokio-rs__bytes-197: resolved: True
+2026-04-17 08:40:52,072 - INFO - Attempting to stop container rustb.eval.tokio-rs__bytes-197.gold_run1...
+2026-04-17 08:41:11,165 - INFO - Attempting to remove container rustb.eval.tokio-rs__bytes-197.gold_run1...
+2026-04-17 08:41:11,196 - INFO - Container rustb.eval.tokio-rs__bytes-197.gold_run1 removed.
+2026-04-17 08:41:11,196 - INFO - Attempting to remove image rustbench/tokio-rs__bytes:pr-197...
+2026-04-17 08:41:12,295 - INFO - Image rustbench/tokio-rs__bytes:pr-197 removed.

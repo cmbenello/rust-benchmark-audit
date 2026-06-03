@@ -1,0 +1,125 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch aya-bpf-macros/src/cgroup_skb.rs...
+Applied patch aya-bpf-macros/src/cgroup_skb.rs cleanly.
++ cd aya-bpf-macros
++ cargo test --no-fail-fast --all-features
+warning: Both `/workspace/.cargo/config` and `/workspace/.cargo/config.toml` exist. Using `/workspace/.cargo/config`
+ Downloading crates ...
+  Downloaded unicode-ident v1.0.12 (registry `lts-repo-at-8e14c2304e`)
+  Downloaded rustversion v1.0.14 (registry `lts-repo-at-8e14c2304e`)
+  Downloaded proc-macro2 v1.0.78 (registry `lts-repo-at-8e14c2304e`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-8e14c2304e`)
+  Downloaded proc-macro-error-attr v1.0.4 (registry `lts-repo-at-8e14c2304e`)
+  Downloaded syn v2.0.52 (registry `lts-repo-at-8e14c2304e`)
+  Downloaded quote v1.0.35 (registry `lts-repo-at-8e14c2304e`)
+  Downloaded proc-macro-error v1.0.4 (registry `lts-repo-at-8e14c2304e`)
+   Compiling proc-macro2 v1.0.78
+   Compiling version_check v0.9.4
+   Compiling unicode-ident v1.0.12
+   Compiling rustversion v1.0.14
+   Compiling aya-bpf-cty v0.2.1 (/workspace/bpf/aya-bpf-cty)
+   Compiling aya-bpf-bindings v0.1.0 (/workspace/bpf/aya-bpf-bindings)
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling quote v1.0.35
+   Compiling syn v2.0.52
+   Compiling aya-bpf v0.1.0 (/workspace/bpf/aya-bpf)
+   Compiling aya-bpf-macros v0.1.0 (/workspace/aya-bpf-macros)
+    Finished test [unoptimized + debuginfo] target(s) in 14.04s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/aya_bpf_macros-3284048ddfd2b7c2)
+
+running 64 tests
+test cgroup_skb::tests::cgroup_skb ... ok
+test cgroup_device::tests::test_cgroup_device ... ok
+test btf_tracepoint::tests::test_btf_tracepoint_with_function ... ok
+test btf_tracepoint::tests::test_btf_tracepoint ... ok
+test cgroup_skb::tests::cgroup_skb_egress ... ok
+test cgroup_skb::tests::cgroup_skb_ingress ... ok
+test cgroup_skb::tests::priv_function ... ok
+test cgroup_skb::tests::pub_function ... ok
+test cgroup_skb::tests::pub_crate_function ... ok
+test cgroup_sock::tests::cgroup_sock_post_bind4 ... ok
+test cgroup_sock::tests::cgroup_sock_sock_create ... ok
+test cgroup_sock::tests::cgroup_sock_post_bind6 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_bind4 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_bind6 ... ok
+test cgroup_sock::tests::cgroup_sock_sock_release ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_connect4 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_getpeername4 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_getpeername6 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_connect6 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_getsockname4 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_getsockname6 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_recvmsg4 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_recvmsg6 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_sendmsg4 ... ok
+test cgroup_sock_addr::tests::cgroup_sock_addr_sendmsg6 ... ok
+test cgroup_sockopt::tests::cgroup_sockopt_setsockopt ... ok
+test cgroup_sockopt::tests::cgroup_sockopt_getsockopt ... ok
+test cgroup_sysctl::tests::test_cgroup_sysctl ... ok
+test fentry::tests::test_fentry ... ok
+test fexit::tests::test_fexit ... ok
+test fentry::tests::test_fentry_sleepable ... ok
+test fexit::tests::test_fexit_sleepable ... ok
+test fentry::tests::test_fentry_with_function ... ok
+test fexit::tests::test_fexit_with_function ... ok
+test kprobe::tests::test_kprobe_with_function ... ok
+test kprobe::tests::test_kprobe_with_function_and_offset ... ok
+test map::tests::test_map_no_name ... ok
+test perf_event::tests::test_perf_event ... ok
+test raw_tracepoint::tests::test_raw_tracepoint ... ok
+test sk_skb::tests::test_stream_parser ... ok
+test sk_skb::tests::test_stream_verdict ... ok
+test lsm::tests::test_lsm_sleepable ... ok
+test lsm::tests::test_lsm ... ok
+test kprobe::tests::test_kretprobe ... ok
+test kprobe::tests::test_kprobe ... ok
+test sk_msg::tests::test_sk_msg ... ok
+test uprobe::tests::uprobe_sleepable ... ok
+test sk_lookup::tests::test_sk_lookup ... ok
+test uprobe::tests::uprobe_with_path ... ok
+test xdp::tests::test_xdp ... ok
+test sock_ops::tests::test_sock_ops ... ok
+test xdp::tests::test_xdp_cpumap ... ok
+test socket_filter::tests::test_socket_filter ... ok
+test xdp::tests::test_xdp_devmap ... ok
+test xdp::tests::test_xdp_bad_map - should panic ... ok
+test xdp::tests::test_xdp_frags ... ok
+test tracepoint::tests::test_tracepoint ... ok
+test uprobe::tests::uprobe ... ok
+test map::tests::test_map_with_name ... ok
+test uprobe::tests::test_uretprobe ... ok
+test tc::tests::test_sched_classifier ... ok
+test xdp::tests::test_xdp_frags_devmap ... ok
+test xdp::tests::test_xdp_frags_cpumap ... ok
+test uprobe::tests::test_uprobe_with_path_and_offset ... ok
+
+test result: ok. 64 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests aya-bpf-macros
+
+running 12 tests
+test aya-bpf-macros/src/lib.rs - cgroup_device (line 647) - compile ... ok
+test aya-bpf-macros/src/lib.rs - stream_verdict (line 458) - compile ... ok
+test aya-bpf-macros/src/lib.rs - xdp (line 144) - compile ... ok
+test aya-bpf-macros/src/lib.rs - stream_parser (line 427) - compile ... ok
+test aya-bpf-macros/src/lib.rs - sk_lookup (line 617) - compile ... ok
+test aya-bpf-macros/src/lib.rs - fentry (line 530) - compile ... ok
+test aya-bpf-macros/src/lib.rs - btf_tracepoint (line 389) - compile ... ok
+test aya-bpf-macros/src/lib.rs - socket_filter (line 499) - compile ... ok
+test aya-bpf-macros/src/lib.rs - raw_tracepoint (line 302) - compile ... ok
+test aya-bpf-macros/src/lib.rs - lsm (line 349) - compile ... ok
+test aya-bpf-macros/src/lib.rs - cgroup_sock_addr (line 224) - compile ... ok
+test aya-bpf-macros/src/lib.rs - fexit (line 575) - compile ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
++ cd ../
++ git reset --hard b6a84b658ae00f23d0f1721c30d11f2e57f99eab
+HEAD is now at b6a84b65 Release aya-log-common v0.1.14, aya-log v0.2.0
++ git clean -fd
+Removing .cargo/config
+Removing .cargo/lts-repo-at-8e14c2304e/

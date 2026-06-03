@@ -1,0 +1,85 @@
+2026-04-17 06:45:20,467 - INFO - Environment image rustb.env.x86_64.dtolnay_async-trait:latest found for dtolnay__async-trait-160
+Building instance image rustbench/dtolnay__async-trait:pr-160 for dtolnay__async-trait-160
+2026-04-17 06:56:08,567 - INFO - Creating container for dtolnay__async-trait-160...
+2026-04-17 06:56:08,778 - INFO - Container for dtolnay__async-trait-160 created: 55100cc009e622841f7bd943df2196cfd3834a8506b96701260fa9342cbe6fa2
+2026-04-17 06:56:09,059 - INFO - Container for dtolnay__async-trait-160 started: 55100cc009e622841f7bd943df2196cfd3834a8506b96701260fa9342cbe6fa2
+2026-04-17 06:56:09,060 - INFO - Intermediate patch for dtolnay__async-trait-160 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-160/patch.diff, now applying to container...
+2026-04-17 06:56:09,234 - INFO - >>>>> Applied Patch:
+Checking patch src/receiver.rs...
+Checking patch src/receiver.rs...
+Applied patch src/receiver.rs cleanly.
+Applied patch src/receiver.rs cleanly.
+
+2026-04-17 06:56:09,289 - INFO - Git diff before:
+diff --git a/src/receiver.rs b/src/receiver.rs
+index 64ab65e..7f837f4 100644
+--- a/src/receiver.rs
++++ b/src/receiver.rs
+@@ -2,7 +2,7 @@ use proc_macro2::{Group, Span, TokenStream, TokenTree};
+ use std::iter::FromIterator;
+ use syn::visit_mut::{self, VisitMut};
+ use syn::{
+-    Block, ExprPath, Ident, Item, Macro, Pat, PatIdent, PatPath, Receiver, Signature, Token,
++    Block, ExprPath, Ident, Item, Macro, Pat, PatIdent, PatPath, Path, Receiver, Signature, Token,
+     TypePath,
+ };
+ 
+@@ -139,6 +139,16 @@ impl VisitMut for ReplaceSelf {
+         self.prepend_underscore_to_self(i);
+     }
+ 
++    fn visit_path_mut(&mut self, p: &mut Path) {
++        if p.segments.len() == 1 {
++            // Replace `self`, but not `self::function`.
++            self.visit_ident_mut(&mut p.segments[0].ident);
++        }
++        for segment in &mut p.segments {
++            self.visit_path_arguments_mut(&mut segment.arguments);
++        }
++    }
++
+     fn visit_item_mut(&mut self, i: &mut Item) {
+         // Visit `macro_rules!` because locally defined macros can refer to
+         // `self`. Otherwise, do not recurse into nested items.
+2026-04-17 06:56:09,289 - INFO - Eval script for dtolnay__async-trait-160 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-160/eval.sh; copying to container...
+2026-04-17 06:57:48,859 - INFO - Test runtime: 99.45 seconds
+2026-04-17 06:57:48,859 - INFO - Test output for dtolnay__async-trait-160 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-160/test_output.txt
+2026-04-17 06:57:48,997 - INFO - Git diff after:
+diff --git a/src/receiver.rs b/src/receiver.rs
+index 64ab65e..7f837f4 100644
+--- a/src/receiver.rs
++++ b/src/receiver.rs
+@@ -2,7 +2,7 @@ use proc_macro2::{Group, Span, TokenStream, TokenTree};
+ use std::iter::FromIterator;
+ use syn::visit_mut::{self, VisitMut};
+ use syn::{
+-    Block, ExprPath, Ident, Item, Macro, Pat, PatIdent, PatPath, Receiver, Signature, Token,
++    Block, ExprPath, Ident, Item, Macro, Pat, PatIdent, PatPath, Path, Receiver, Signature, Token,
+     TypePath,
+ };
+ 
+@@ -139,6 +139,16 @@ impl VisitMut for ReplaceSelf {
+         self.prepend_underscore_to_self(i);
+     }
+ 
++    fn visit_path_mut(&mut self, p: &mut Path) {
++        if p.segments.len() == 1 {
++            // Replace `self`, but not `self::function`.
++            self.visit_ident_mut(&mut p.segments[0].ident);
++        }
++        for segment in &mut p.segments {
++            self.visit_path_arguments_mut(&mut segment.arguments);
++        }
++    }
++
+     fn visit_item_mut(&mut self, i: &mut Item) {
+         // Visit `macro_rules!` because locally defined macros can refer to
+         // `self`. Otherwise, do not recurse into nested items.
+2026-04-17 06:57:48,997 - INFO - Grading answer for dtolnay__async-trait-160...
+2026-04-17 06:57:48,998 - INFO - report: {'dtolnay__async-trait-160': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['drop_order::test_drop_order', 'issue45::tracing', 'src/lib.rs - (line 15)', 'src/lib.rs - (line 165)', 'src/lib.rs - (line 126)', 'src/lib.rs - (line 186)', 'src/lib.rs - (line 286)', 'src/lib.rs - (line 265)', 'src/lib.rs - (line 47)', 'src/lib.rs - (line 211)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for dtolnay__async-trait-160: resolved: True
+2026-04-17 06:57:48,998 - INFO - Attempting to stop container rustb.eval.dtolnay__async-trait-160.gold_run1...
+2026-04-17 06:59:05,200 - INFO - Attempting to remove container rustb.eval.dtolnay__async-trait-160.gold_run1...
+2026-04-17 06:59:05,452 - INFO - Container rustb.eval.dtolnay__async-trait-160.gold_run1 removed.
+2026-04-17 06:59:05,453 - INFO - Attempting to remove image rustbench/dtolnay__async-trait:pr-160...
+2026-04-17 06:59:07,736 - INFO - Image rustbench/dtolnay__async-trait:pr-160 removed.

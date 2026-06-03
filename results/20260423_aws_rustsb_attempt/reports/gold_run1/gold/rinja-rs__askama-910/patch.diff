@@ -1,0 +1,333 @@
+diff --git a/askama_derive/src/generator.rs b/askama_derive/src/generator.rs
+--- a/askama_derive/src/generator.rs
++++ b/askama_derive/src/generator.rs
+@@ -727,7 +727,50 @@ impl<'a> Generator<'a> {
+                 args.len()
+             )));
+         }
+-        for (expr, arg) in std::iter::zip(args, &def.args) {
++        let mut named_arguments = HashMap::new();
++        // Since named arguments can only be passed last, we only need to check if the last argument
++        // is a named one.
++        if let Some(Expr::NamedArgument(_, _)) = args.last() {
++            // First we check that all named arguments actually exist in the called item.
++            for arg in args.iter().rev() {
++                let Expr::NamedArgument(arg_name, _) = arg else {
++                    break;
++                };
++                if !def.args.iter().any(|arg| arg == arg_name) {
++                    return Err(CompileError::from(format!(
++                        "no argument named `{arg_name}` in macro {name:?}"
++                    )));
++                }
++                named_arguments.insert(arg_name, arg);
++            }
++        }
++
++        // Handling both named and unnamed arguments requires to be careful of the named arguments
++        // order. To do so, we iterate through the macro defined arguments and then check if we have
++        // a named argument with this name:
++        //
++        // * If there is one, we add it and move to the next argument.
++        // * If there isn't one, then we pick the next argument (we can do it without checking
++        //   anything since named arguments are always last).
++        let mut allow_positional = true;
++        for (index, arg) in def.args.iter().enumerate() {
++            let expr = match named_arguments.get(&arg) {
++                Some(expr) => {
++                    allow_positional = false;
++                    expr
++                }
++                None => {
++                    if !allow_positional {
++                        // If there is already at least one named argument, then it's not allowed
++                        // to use unnamed ones at this point anymore.
++                        return Err(CompileError::from(format!(
++                            "cannot have unnamed argument (`{arg}`) after named argument in macro \
++                             {name:?}"
++                        )));
++                    }
++                    &args[index]
++                }
++            };
+             match expr {
+                 // If `expr` is already a form of variable then
+                 // don't reintroduce a new variable. This is
+diff --git a/askama_derive/src/generator.rs b/askama_derive/src/generator.rs
+--- a/askama_derive/src/generator.rs
++++ b/askama_derive/src/generator.rs
+@@ -1104,6 +1147,7 @@ impl<'a> Generator<'a> {
+             Expr::RustMacro(ref path, args) => self.visit_rust_macro(buf, path, args),
+             Expr::Try(ref expr) => self.visit_try(buf, expr.as_ref())?,
+             Expr::Tuple(ref exprs) => self.visit_tuple(buf, exprs)?,
++            Expr::NamedArgument(_, ref expr) => self.visit_named_argument(buf, expr)?,
+         })
+     }
+ 
+diff --git a/askama_derive/src/generator.rs b/askama_derive/src/generator.rs
+--- a/askama_derive/src/generator.rs
++++ b/askama_derive/src/generator.rs
+@@ -1504,6 +1548,15 @@ impl<'a> Generator<'a> {
+         Ok(DisplayWrap::Unwrapped)
+     }
+ 
++    fn visit_named_argument(
++        &mut self,
++        buf: &mut Buffer,
++        expr: &Expr<'_>,
++    ) -> Result<DisplayWrap, CompileError> {
++        self.visit_expr(buf, expr)?;
++        Ok(DisplayWrap::Unwrapped)
++    }
++
+     fn visit_array(
+         &mut self,
+         buf: &mut Buffer,
+diff --git a/askama_derive/src/generator.rs b/askama_derive/src/generator.rs
+--- a/askama_derive/src/generator.rs
++++ b/askama_derive/src/generator.rs
+@@ -1913,6 +1966,7 @@ pub(crate) fn is_cacheable(expr: &Expr<'_>) -> bool {
+         }
+         Expr::Group(arg) => is_cacheable(arg),
+         Expr::Tuple(args) => args.iter().all(is_cacheable),
++        Expr::NamedArgument(_, expr) => is_cacheable(expr),
+         // We have too little information to tell if the expression is pure:
+         Expr::Call(_, _) => false,
+         Expr::RustMacro(_, _) => false,
+diff --git a/askama_parser/src/expr.rs b/askama_parser/src/expr.rs
+--- a/askama_parser/src/expr.rs
++++ b/askama_parser/src/expr.rs
+@@ -1,3 +1,5 @@
++use std::borrow::Cow;
++use std::collections::HashSet;
+ use std::str;
+ 
+ use nom::branch::alt;
+diff --git a/askama_parser/src/expr.rs b/askama_parser/src/expr.rs
+--- a/askama_parser/src/expr.rs
++++ b/askama_parser/src/expr.rs
+@@ -12,7 +14,7 @@ use nom::sequence::{pair, preceded, terminated, tuple};
+ use super::{
+     char_lit, identifier, not_ws, num_lit, path_or_identifier, str_lit, ws, Level, PathOrIdentifier,
+ };
+-use crate::ParseResult;
++use crate::{ErrorContext, ParseResult};
+ 
+ macro_rules! expr_prec_layer {
+     ( $name:ident, $inner:ident, $op:expr ) => {
+diff --git a/askama_parser/src/expr.rs b/askama_parser/src/expr.rs
+--- a/askama_parser/src/expr.rs
++++ b/askama_parser/src/expr.rs
+@@ -61,6 +63,7 @@ pub enum Expr<'a> {
+     Attr(Box<Expr<'a>>, &'a str),
+     Index(Box<Expr<'a>>, Box<Expr<'a>>),
+     Filter(&'a str, Vec<Expr<'a>>),
++    NamedArgument(&'a str, Box<Expr<'a>>),
+     Unary(&'a str, Box<Expr<'a>>),
+     BinOp(&'a str, Box<Expr<'a>>, Box<Expr<'a>>),
+     Range(&'a str, Option<Box<Expr<'a>>>, Option<Box<Expr<'a>>>),
+diff --git a/askama_parser/src/expr.rs b/askama_parser/src/expr.rs
+--- a/askama_parser/src/expr.rs
++++ b/askama_parser/src/expr.rs
+@@ -72,17 +75,83 @@ pub enum Expr<'a> {
+ }
+ 
+ impl<'a> Expr<'a> {
+-    pub(super) fn arguments(i: &'a str, level: Level) -> ParseResult<'a, Vec<Self>> {
++    pub(super) fn arguments(
++        i: &'a str,
++        level: Level,
++        is_template_macro: bool,
++    ) -> ParseResult<'a, Vec<Self>> {
+         let (_, level) = level.nest(i)?;
++        let mut named_arguments = HashSet::new();
++        let start = i;
++
+         preceded(
+             ws(char('(')),
+             cut(terminated(
+-                separated_list0(char(','), ws(move |i| Self::parse(i, level))),
++                separated_list0(
++                    char(','),
++                    ws(move |i| {
++                        // Needed to prevent borrowing it twice between this closure and the one
++                        // calling `Self::named_arguments`.
++                        let named_arguments = &mut named_arguments;
++                        let has_named_arguments = !named_arguments.is_empty();
++
++                        let (i, expr) = alt((
++                            move |i| {
++                                Self::named_argument(
++                                    i,
++                                    level,
++                                    named_arguments,
++                                    start,
++                                    is_template_macro,
++                                )
++                            },
++                            move |i| Self::parse(i, level),
++                        ))(i)?;
++                        if has_named_arguments && !matches!(expr, Self::NamedArgument(_, _)) {
++                            Err(nom::Err::Failure(ErrorContext {
++                                input: start,
++                                message: Some(Cow::Borrowed(
++                                    "named arguments must always be passed last",
++                                )),
++                            }))
++                        } else {
++                            Ok((i, expr))
++                        }
++                    }),
++                ),
+                 char(')'),
+             )),
+         )(i)
+     }
+ 
++    fn named_argument(
++        i: &'a str,
++        level: Level,
++        named_arguments: &mut HashSet<&'a str>,
++        start: &'a str,
++        is_template_macro: bool,
++    ) -> ParseResult<'a, Self> {
++        if !is_template_macro {
++            // If this is not a template macro, we don't want to parse named arguments so
++            // we instead return an error which will allow to continue the parsing.
++            return Err(nom::Err::Error(error_position!(i, ErrorKind::Alt)));
++        }
++
++        let (_, level) = level.nest(i)?;
++        let (i, (argument, _, value)) =
++            tuple((identifier, ws(char('=')), move |i| Self::parse(i, level)))(i)?;
++        if named_arguments.insert(argument) {
++            Ok((i, Self::NamedArgument(argument, Box::new(value))))
++        } else {
++            Err(nom::Err::Failure(ErrorContext {
++                input: start,
++                message: Some(Cow::Owned(format!(
++                    "named argument `{argument}` was passed more than once"
++                ))),
++            }))
++        }
++    }
++
+     pub(super) fn parse(i: &'a str, level: Level) -> ParseResult<'a, Self> {
+         let (_, level) = level.nest(i)?;
+         let range_right = move |i| {
+diff --git a/askama_parser/src/expr.rs b/askama_parser/src/expr.rs
+--- a/askama_parser/src/expr.rs
++++ b/askama_parser/src/expr.rs
+@@ -122,7 +191,7 @@ impl<'a> Expr<'a> {
+             let (i, (_, fname, args)) = tuple((
+                 char('|'),
+                 ws(identifier),
+-                opt(|i| Expr::arguments(i, level)),
++                opt(|i| Expr::arguments(i, level, false)),
+             ))(i)?;
+             Ok((i, (fname, args)))
+         }
+diff --git a/askama_parser/src/expr.rs b/askama_parser/src/expr.rs
+--- a/askama_parser/src/expr.rs
++++ b/askama_parser/src/expr.rs
+@@ -354,7 +423,7 @@ impl<'a> Suffix<'a> {
+ 
+     fn call(i: &'a str, level: Level) -> ParseResult<'a, Self> {
+         let (_, level) = level.nest(i)?;
+-        map(move |i| Expr::arguments(i, level), Self::Call)(i)
++        map(move |i| Expr::arguments(i, level, false), Self::Call)(i)
+     }
+ 
+     fn r#try(i: &'a str) -> ParseResult<'a, Self> {
+diff --git a/askama_parser/src/node.rs b/askama_parser/src/node.rs
+--- a/askama_parser/src/node.rs
++++ b/askama_parser/src/node.rs
+@@ -564,7 +564,7 @@ impl<'a> Call<'a> {
+             cut(tuple((
+                 opt(tuple((ws(identifier), ws(tag("::"))))),
+                 ws(identifier),
+-                opt(ws(|nested| Expr::arguments(nested, s.level.get()))),
++                opt(ws(|nested| Expr::arguments(nested, s.level.get(), true))),
+                 opt(Whitespace::parse),
+             ))),
+         ));
+diff --git a/book/src/template_syntax.md b/book/src/template_syntax.md
+--- a/book/src/template_syntax.md
++++ b/book/src/template_syntax.md
+@@ -564,7 +564,7 @@ You can define macros within your template by using `{% macro name(args) %}`, en
+ 
+ You can then call it with `{% call name(args) %}`:
+ 
+-```
++```jinja
+ {% macro heading(arg) %}
+ 
+ <h1>{{arg}}</h1>
+diff --git a/book/src/template_syntax.md b/book/src/template_syntax.md
+--- a/book/src/template_syntax.md
++++ b/book/src/template_syntax.md
+@@ -576,7 +576,7 @@ You can then call it with `{% call name(args) %}`:
+ 
+ You can place macros in a separate file and use them in your templates by using `{% import %}`:
+ 
+-```
++```jinja
+ {%- import "macro.html" as scope -%}
+ 
+ {% call scope::heading(s) %}
+diff --git a/book/src/template_syntax.md b/book/src/template_syntax.md
+--- a/book/src/template_syntax.md
++++ b/book/src/template_syntax.md
+@@ -584,6 +584,51 @@ You can place macros in a separate file and use them in your templates by using
+ 
+ You can optionally specify the name of the macro in `endmacro`:
+ 
+-```html
++```jinja
+ {% macro heading(arg) %}<p>{{arg}}</p>{% endmacro heading %}
+ ```
++
++You can also specify arguments by their name (as defined in the macro):
++
++```jinja
++{% macro heading(arg, bold) %}
++
++<h1>{{arg}} <b>{{bold}}</b></h1>
++
++{% endmacro %}
++
++{% call heading(bold="something", arg="title") %}
++```
++
++You can use whitespace characters around `=`:
++
++```jinja
++{% call heading(bold = "something", arg = "title") %}
++```
++
++You can mix named and non-named arguments when calling a macro:
++
++```
++{% call heading("title", bold="something") %}
++```
++
++However please note than named arguments must always come **last**.
++
++Another thing to note, if a named argument is referring to an argument that would
++be used for a non-named argument, it will error:
++
++```jinja
++{% macro heading(arg1, arg2, arg3, arg4) %}
++{% endmacro %}
++
++{% call heading("something", "b", arg4="ah", arg2="title") %}
++```
++
++In here it's invalid because `arg2` is the second argument and would be used by
++`"b"`. So either you replace `"b"` with `arg3="b"` or you pass `"title"` before:
++
++```jinja
++{% call heading("something", arg3="b", arg4="ah", arg2="title") %}
++{# Equivalent of: #}
++{% call heading("something", "title", "b", arg4="ah") %}
++```

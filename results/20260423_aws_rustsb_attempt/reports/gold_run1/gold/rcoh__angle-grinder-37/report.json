@@ -1,0 +1,75 @@
+{
+    "rcoh__angle-grinder-37": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "lang::tests::parse_expr_ident",
+                    "lang::tests::parse_expr",
+                    "lang::tests::query_no_operators",
+                    "lang::tests::parse_operator",
+                    "data::tests::ordering",
+                    "lang::tests::parse_keyword_string",
+                    "lang::tests::parse_expr_value",
+                    "data::tests::panic_on_invalid_row",
+                    "data::tests::record_put_get",
+                    "operator::tests::parse",
+                    "render::tests::pretty_print_record_too_long",
+                    "lang::tests::parse_ident",
+                    "lang::tests::parse_agg_operator",
+                    "operator::tests::fields_only",
+                    "lang::tests::parse_quoted_string",
+                    "lang::tests::parse_parses",
+                    "lang::tests::parse_var_list",
+                    "operator::tests::count_groups",
+                    "lang::tests::query_operators",
+                    "lang::tests::parse_percentile",
+                    "operator::tests::sort_aggregate",
+                    "operator::tests::fields_except",
+                    "operator::tests::count_no_groups",
+                    "operator::tests::json",
+                    "operator::tests::parse_from_field",
+                    "operator::tests::sort_raw",
+                    "operator::tests::test_agg_adapter",
+                    "data::tests::agg",
+                    "operator::tests::multi_grouper",
+                    "render::tests::pretty_print_record",
+                    "render::tests::print_raw",
+                    "data::tests::from_string",
+                    "render::tests::pretty_print_aggregate",
+                    "integration::validate_readme_examples",
+                    "integration::file_input",
+                    "integration::aggregate_of_aggregate",
+                    "integration::count_distinct_operator",
+                    "integration::basic_count",
+                    "integration::parse_plain_text",
+                    "integration::sum_operator",
+                    "integration::test_where_typecheck",
+                    "integration::sort_order",
+                    "integration::no_args",
+                    "integration::fields",
+                    "integration::json_from",
+                    "integration::parse_failure",
+                    "integration::filter_wildcard",
+                    "integration::where_operator"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

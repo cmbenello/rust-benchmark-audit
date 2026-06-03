@@ -1,0 +1,1471 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ chmod -R 755 /workspace
++ git apply -v -
+<stdin>:176: trailing whitespace.
+    case "$_arch" in 
+Checking patch cargo-dist/tests/integration-tests.rs...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap...
+<stdin>:2369: new blank line at EOF.
++
+Applied patch cargo-dist/tests/integration-tests.rs cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap cleanly.
+warning: 2 lines add whitespace errors.
++ git status
+On branch main
+Your branch is behind 'origin/main' by 2890 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .gitattributes
+	modified:   .github/workflows/append-release.yml
+	modified:   .github/workflows/ci.yml
+	modified:   .github/workflows/publish-release.yml
+	modified:   .github/workflows/release.yml
+	modified:   .github/workflows/web.yml
+	modified:   .gitignore
+	modified:   CHANGELOG.md
+	modified:   CODE_OF_CONDUCT.md
+	modified:   CONTRIBUTING.md
+	modified:   Cargo.lock
+	modified:   Cargo.toml
+	modified:   LICENSE-APACHE
+	modified:   LICENSE-MIT
+	modified:   README.md
+	modified:   SECURITY.md
+	modified:   book/book.toml
+	modified:   book/src/SUMMARY.md
+	modified:   book/src/artifacts.md
+	modified:   book/src/cargo-release-guide.md
+	modified:   book/src/cli.md
+	modified:   book/src/concepts.md
+	modified:   book/src/config.md
+	modified:   book/src/guide.md
+	modified:   book/src/img/announcement-error.png
+	modified:   book/src/img/global-build.png
+	modified:   book/src/img/human-manifest-all.png
+	modified:   book/src/img/local-build.png
+	modified:   book/src/img/quickstart-build.png
+	modified:   book/src/img/quickstart-plan.png
+	modified:   book/src/img/simple-app-manifest-with-files.png
+	modified:   book/src/img/simple-app-manifest.png
+	modified:   book/src/img/simple-github-release.png
+	modified:   book/src/img/workspace-log.png
+	modified:   book/src/install.md
+	modified:   book/src/installers.md
+	modified:   book/src/introduction.md
+	modified:   book/src/reference.md
+	modified:   book/src/schema.md
+	modified:   book/src/simple-guide.md
+	modified:   book/src/way-too-quickstart.md
+	modified:   book/src/workspace-guide.md
+	modified:   cargo-dist-schema/Cargo.toml
+	modified:   cargo-dist-schema/README.md
+	modified:   cargo-dist-schema/cargo-dist-json-schema.json
+	modified:   cargo-dist-schema/src/lib.rs
+	modified:   cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+	modified:   cargo-dist/Cargo.toml
+	modified:   cargo-dist/oranda.json
+	modified:   cargo-dist/src/backend/ci/github.rs
+	modified:   cargo-dist/src/backend/ci/mod.rs
+	modified:   cargo-dist/src/backend/installer/homebrew.rs
+	modified:   cargo-dist/src/backend/installer/mod.rs
+	modified:   cargo-dist/src/backend/installer/npm.rs
+	modified:   cargo-dist/src/backend/installer/powershell.rs
+	modified:   cargo-dist/src/backend/installer/shell.rs
+	modified:   cargo-dist/src/backend/mod.rs
+	modified:   cargo-dist/src/backend/templates.rs
+	modified:   cargo-dist/src/changelog.rs
+	modified:   cargo-dist/src/cli.rs
+	modified:   cargo-dist/src/config.rs
+	modified:   cargo-dist/src/errors.rs
+	modified:   cargo-dist/src/init.rs
+	modified:   cargo-dist/src/lib.rs
+	modified:   cargo-dist/src/main.rs
+	modified:   cargo-dist/src/tasks.rs
+	modified:   cargo-dist/src/tests/mod.rs
+	modified:   cargo-dist/templates/ci/github_ci.yml.j2
+	modified:   cargo-dist/templates/installer/homebrew.rb.j2
+	modified:   cargo-dist/templates/installer/installer.ps1.j2
+	modified:   cargo-dist/templates/installer/installer.sh.j2
+	modified:   cargo-dist/templates/installer/npm/.gitignore.j2
+	modified:   cargo-dist/templates/installer/npm/binary.js.j2
+	modified:   cargo-dist/templates/installer/npm/install.js.j2
+	modified:   cargo-dist/templates/installer/npm/npm-shrinkwrap.json.j2
+	modified:   cargo-dist/templates/installer/npm/package.json.j2
+	modified:   cargo-dist/templates/installer/npm/run.js.j2
+	modified:   cargo-dist/tests/cli-tests.rs
+	modified:   cargo-dist/tests/gallery/command.rs
+	modified:   cargo-dist/tests/gallery/dist.rs
+	modified:   cargo-dist/tests/gallery/errors.rs
+	modified:   cargo-dist/tests/gallery/mod.rs
+	modified:   cargo-dist/tests/gallery/repo.rs
+	modified:   cargo-dist/tests/integration-tests.rs
+	modified:   cargo-dist/tests/snapshots/akaikatana_basic.snap
+	modified:   cargo-dist/tests/snapshots/akaikatana_repo_with_dot_git.snap
+	modified:   cargo-dist/tests/snapshots/axolotlsay_basic.snap
+	modified:   cargo-dist/tests/snapshots/axolotlsay_no_homebrew_publish.snap
+	modified:   cargo-dist/tests/snapshots/error_manifest.snap
+	modified:   cargo-dist/tests/snapshots/install_path_cargo_home.snap
+	modified:   cargo-dist/tests/snapshots/install_path_env_no_subdir.snap
+	modified:   cargo-dist/tests/snapshots/install_path_env_subdir.snap
+	modified:   cargo-dist/tests/snapshots/install_path_env_subdir_space.snap
+	modified:   cargo-dist/tests/snapshots/install_path_env_subdir_space_deeper.snap
+	modified:   cargo-dist/tests/snapshots/install_path_home_subdir_deeper.snap
+	modified:   cargo-dist/tests/snapshots/install_path_home_subdir_min.snap
+	modified:   cargo-dist/tests/snapshots/install_path_home_subdir_space.snap
+	modified:   cargo-dist/tests/snapshots/install_path_home_subdir_space_deeper.snap
+	modified:   cargo-dist/tests/snapshots/lib_manifest.snap
+	modified:   cargo-dist/tests/snapshots/long-help.snap
+	modified:   cargo-dist/tests/snapshots/manifest.snap
+	modified:   cargo-dist/tests/snapshots/markdown-help.snap
+	modified:   cargo-dist/tests/snapshots/short-help.snap
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.cargo/
+	cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff
+diff --git a/.gitattributes b/.gitattributes
+old mode 100644
+new mode 100755
+diff --git a/.github/workflows/append-release.yml b/.github/workflows/append-release.yml
+old mode 100644
+new mode 100755
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+old mode 100644
+new mode 100755
+diff --git a/.github/workflows/publish-release.yml b/.github/workflows/publish-release.yml
+old mode 100644
+new mode 100755
+diff --git a/.github/workflows/release.yml b/.github/workflows/release.yml
+old mode 100644
+new mode 100755
+diff --git a/.github/workflows/web.yml b/.github/workflows/web.yml
+old mode 100644
+new mode 100755
+diff --git a/.gitignore b/.gitignore
+old mode 100644
+new mode 100755
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+old mode 100644
+new mode 100755
+diff --git a/CODE_OF_CONDUCT.md b/CODE_OF_CONDUCT.md
+old mode 100644
+new mode 100755
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+old mode 100644
+new mode 100755
+diff --git a/Cargo.lock b/Cargo.lock
+old mode 100644
+new mode 100755
+index a934c41c..a1be3afb
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -188,9 +188,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "base64"
+-version = "0.21.2"
++version = "0.21.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "604178f6c5c21f02dc555784810edfb88d34ac2c73b2eae109655649ee73ce3d"
++checksum = "414dcefbc63d77c526a76b3afcf6fbb9b5e2791c19c3aa2297733208750c6e53"
+ 
+ [[package]]
+ name = "base64ct"
+@@ -1232,9 +1232,9 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+ 
+ [[package]]
+ name = "memo-map"
+-version = "0.3.1"
++version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "aec276c09560ce4447087aaefc19eb0c18d97e31bd05ebac38881c4723400c40"
++checksum = "374c335b2df19e62d4cb323103473cbc6510980253119180de862d89184f6a83"
+ 
+ [[package]]
+ name = "memoffset"
+@@ -1285,9 +1285,9 @@ checksum = "6877bb514081ee2a7ff5ef9de3281f14a4dd4bceac4c09388074a6b5df8a139a"
+ 
+ [[package]]
+ name = "minijinja"
+-version = "1.0.6"
++version = "1.0.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e436cdb19900a08197c6b874280d24f9289d127275eadc23623276e0f5ec97e9"
++checksum = "50c43c912b380856deeb78d826e3b77df13a90e69aef6223e3ad28c02d2ca857"
+ dependencies = [
+  "aho-corasick",
+  "memo-map",
+@@ -1516,9 +1516,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pin-project-lite"
+-version = "0.2.12"
++version = "0.2.13"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "12cc1b0bf1727a77a54b6654e7b5f1af8604923edc8b81885f8ec92f9e3f0a05"
++checksum = "8afb450f006bf6385ca15ef45d71d2288452bc3683ce2e2cacc0d18e4be60b58"
+ 
+ [[package]]
+ name = "pin-utils"
+@@ -1611,9 +1611,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex"
+-version = "1.9.3"
++version = "1.9.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "81bc1d4caf89fac26a70747fe603c130093b53c773888797a6329091246d651a"
++checksum = "12de2eff854e5fa4b1295edd650e227e9d8fb0c9e90b12e7f36d6a6811791a29"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -1623,9 +1623,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-automata"
+-version = "0.3.6"
++version = "0.3.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fed1ceff11a1dddaee50c9dc8e4938bd106e9d89ae372f192311e7da498e3b69"
++checksum = "49530408a136e16e5b486e883fbb6ba058e8e4e8ae6621a77b048b314336e629"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -1634,9 +1634,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-syntax"
+-version = "0.7.4"
++version = "0.7.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e5ea92a5b6195c6ef2a0295ea818b312502c6fc94dde986c5553242e18fd4ce2"
++checksum = "dbb5fb1acd8a1a18b3dd5be62d25485eb770e05afb408a9627d14d451bae12da"
+ 
+ [[package]]
+ name = "reqwest"
+@@ -1700,9 +1700,9 @@ checksum = "d626bb9dae77e28219937af045c257c28bfd3f69333c512553507f5f9798cb76"
+ 
+ [[package]]
+ name = "rustix"
+-version = "0.38.8"
++version = "0.38.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "19ed4fa021d81c8392ce04db050a3da9a60299050b7ae1cf482d862b54a7218f"
++checksum = "9bfe0f2582b4931a45d1fa608f8a8722e8b3c7ac54dd6d5f3b3212791fedef49"
+ dependencies = [
+  "bitflags 2.4.0",
+  "errno",
+@@ -1814,18 +1814,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.186"
++version = "1.0.188"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9f5db24220c009de9bd45e69fb2938f4b6d2df856aa9304ce377b3180f83b7c1"
++checksum = "cf9e0fcba69a370eed61bcf2b728575f726b50b55cba78064753d708ddc7549e"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.186"
++version = "1.0.188"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5ad697f7e0b65af4983a4ce8f56ed5b357e8d3c36651bf6a7e13639c17b8e670"
++checksum = "4eca7ac642d82aa35b60049a6eccb4be6be75e599bd2e9adb5f875a737654af2"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -2144,9 +2144,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "time"
+-version = "0.3.27"
++version = "0.3.28"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0bb39ee79a6d8de55f48f2293a830e040392f1c5f16e336bdd1788cd0aadce07"
++checksum = "17f6bb557fd245c28e6411aa56b6403c689ad95061f50e4be16c274e70a17e48"
+ dependencies = [
+  "deranged",
+  "serde",
+diff --git a/Cargo.toml b/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/LICENSE-APACHE b/LICENSE-APACHE
+old mode 100644
+new mode 100755
+diff --git a/LICENSE-MIT b/LICENSE-MIT
+old mode 100644
+new mode 100755
+diff --git a/README.md b/README.md
+old mode 100644
+new mode 100755
+diff --git a/SECURITY.md b/SECURITY.md
+old mode 100644
+new mode 100755
+diff --git a/book/book.toml b/book/book.toml
+old mode 100644
+new mode 100755
+diff --git a/book/src/SUMMARY.md b/book/src/SUMMARY.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/artifacts.md b/book/src/artifacts.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/cargo-release-guide.md b/book/src/cargo-release-guide.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/cli.md b/book/src/cli.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/concepts.md b/book/src/concepts.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/config.md b/book/src/config.md
+old mode 100644
+new mode 100755
+index c670f39c..0a80e256
+--- a/book/src/config.md
++++ b/book/src/config.md
+@@ -305,6 +305,24 @@ Prior to 0.1.0 we didn't set the correct flags in our CI scripts to do this, but
+ This flag was introduced to allow you to restore the old behaviour if you prefer.
+ 
+ 
++### create-release
++
++> since 0.2.0
++
++Example: `create-release = false`
++
++**This can only be set globally**
++
++Whether we should create the Github Release for you in your Release CI.
++
++If true (default), cargo-dist will create a new Github Release and generate
++a title/body for it based on your changelog.
++
++If false, cargo-dist will assume a draft Github Release for the current git tag
++already exists with the title/body you want, and just upload artifacts to it.
++At the end of a successful publish it will undraft the Github Release.
++
++
+ ### install-path
+ 
+ > since 0.1.0
+diff --git a/book/src/guide.md b/book/src/guide.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/announcement-error.png b/book/src/img/announcement-error.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/global-build.png b/book/src/img/global-build.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/human-manifest-all.png b/book/src/img/human-manifest-all.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/local-build.png b/book/src/img/local-build.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/quickstart-build.png b/book/src/img/quickstart-build.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/quickstart-plan.png b/book/src/img/quickstart-plan.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/simple-app-manifest-with-files.png b/book/src/img/simple-app-manifest-with-files.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/simple-app-manifest.png b/book/src/img/simple-app-manifest.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/simple-github-release.png b/book/src/img/simple-github-release.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/img/workspace-log.png b/book/src/img/workspace-log.png
+old mode 100644
+new mode 100755
+diff --git a/book/src/install.md b/book/src/install.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/installers.md b/book/src/installers.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/introduction.md b/book/src/introduction.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/reference.md b/book/src/reference.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/schema.md b/book/src/schema.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/simple-guide.md b/book/src/simple-guide.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/way-too-quickstart.md b/book/src/way-too-quickstart.md
+old mode 100644
+new mode 100755
+diff --git a/book/src/workspace-guide.md b/book/src/workspace-guide.md
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist-schema/Cargo.toml b/cargo-dist-schema/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist-schema/README.md b/cargo-dist-schema/README.md
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist-schema/cargo-dist-json-schema.json b/cargo-dist-schema/cargo-dist-json-schema.json
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist-schema/src/lib.rs b/cargo-dist-schema/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap b/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/Cargo.toml b/cargo-dist/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/oranda.json b/cargo-dist/oranda.json
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/backend/ci/github.rs b/cargo-dist/src/backend/ci/github.rs
+old mode 100644
+new mode 100755
+index f329faa2..d323f46e
+--- a/cargo-dist/src/backend/ci/github.rs
++++ b/cargo-dist/src/backend/ci/github.rs
+@@ -18,6 +18,7 @@ struct CiInfo {
+     install_dist_sh: String,
+     install_dist_ps1: String,
+     fail_fast: bool,
++    create_release: bool,
+     local_tasks: Vec<CiTask>,
+     global_task: Option<CiTask>,
+     tap: Option<String>,
+@@ -64,6 +65,7 @@ fn compute_ci_info(dist: &DistGraph) -> CiInfo {
+         .as_ref()
+         .unwrap_or(&self_dist_version);
+     let fail_fast = dist.fail_fast;
++    let create_release = dist.create_release;
+ 
+     // Figure out what builds we need to do
+     let mut needs_global_build = false;
+@@ -123,6 +125,7 @@ fn compute_ci_info(dist: &DistGraph) -> CiInfo {
+         install_dist_sh,
+         install_dist_ps1,
+         fail_fast,
++        create_release,
+         local_tasks,
+         global_task,
+         tap,
+diff --git a/cargo-dist/src/backend/ci/mod.rs b/cargo-dist/src/backend/ci/mod.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/backend/installer/homebrew.rs b/cargo-dist/src/backend/installer/homebrew.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/backend/installer/mod.rs b/cargo-dist/src/backend/installer/mod.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/backend/installer/npm.rs b/cargo-dist/src/backend/installer/npm.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/backend/installer/powershell.rs b/cargo-dist/src/backend/installer/powershell.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/backend/installer/shell.rs b/cargo-dist/src/backend/installer/shell.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/backend/mod.rs b/cargo-dist/src/backend/mod.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/backend/templates.rs b/cargo-dist/src/backend/templates.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/changelog.rs b/cargo-dist/src/changelog.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/cli.rs b/cargo-dist/src/cli.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+old mode 100644
+new mode 100755
+index d6d692d0..7edf6081
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -228,6 +228,18 @@ pub struct DistMetadata {
+     #[serde(skip_serializing_if = "Option::is_none")]
+     #[serde(rename = "publish-jobs")]
+     pub publish_jobs: Option<Vec<PublishStyle>>,
++
++    /// Whether we should create the Github Release for you when you push a tag.
++    ///
++    /// If true (default), cargo-dist will create a new Github Release and generate
++    /// a title/body for it based on your changelog.
++    ///
++    /// If false, cargo-dist will assume a draft Github Release already exists
++    /// with the title/body you want. At the end of a successful publish it will
++    /// undraft the Github Release.
++    #[serde(skip_serializing_if = "Option::is_none")]
++    #[serde(rename = "create-release")]
++    pub create_release: Option<bool>,
+ }
+ 
+ impl DistMetadata {
+@@ -256,6 +268,7 @@ impl DistMetadata {
+             default_features: _,
+             all_features: _,
+             publish_jobs: _,
++            create_release: _,
+         } = self;
+         if let Some(include) = include {
+             for include in include {
+@@ -293,6 +306,7 @@ impl DistMetadata {
+             default_features,
+             all_features,
+             publish_jobs,
++            create_release,
+         } = self;
+ 
+         // Check for global settings on local packages
+@@ -314,6 +328,9 @@ impl DistMetadata {
+         if fail_fast.is_some() {
+             warn!("package.metadata.dist.fail-fast is set, but this is only accepted in workspace.metadata (value is being ignored): {}", package_manifest_path);
+         }
++        if create_release.is_some() {
++            warn!("package.metadata.dist.create-release is set, but this is only accepted in workspace.metadata (value is being ignored): {}", package_manifest_path);
++        }
+ 
+         // Merge non-global settings
+         if installers.is_none() {
+diff --git a/cargo-dist/src/errors.rs b/cargo-dist/src/errors.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/init.rs b/cargo-dist/src/init.rs
+old mode 100644
+new mode 100755
+index 3018cdf6..2d1401c2
+--- a/cargo-dist/src/init.rs
++++ b/cargo-dist/src/init.rs
+@@ -204,6 +204,7 @@ fn get_new_dist_metadata(
+             default_features: None,
+             all_features: None,
+             publish_jobs: None,
++            create_release: None,
+         }
+     };
+ 
+@@ -632,6 +633,7 @@ fn update_toml_metadata(
+         all_features,
+         default_features,
+         publish_jobs,
++        create_release,
+     } = &meta;
+ 
+     apply_optional_value(
+@@ -746,6 +748,13 @@ fn update_toml_metadata(
+         *fail_fast,
+     );
+ 
++    apply_optional_value(
++        table,
++        "create-release",
++        "# Whether cargo-dist should create a Github Release or use an existing draft\n",
++        *create_release,
++    );
++
+     apply_optional_value(
+         table,
+         "install-path",
+diff --git a/cargo-dist/src/lib.rs b/cargo-dist/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/main.rs b/cargo-dist/src/main.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+old mode 100644
+new mode 100755
+index 5da51dcf..9d80a124
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -149,6 +149,8 @@ pub struct DistGraph {
+     pub merge_tasks: bool,
+     /// Whether failing tasks should make us give up on all other tasks
+     pub fail_fast: bool,
++    /// Whether to creat a github release or edit an existing draft
++    pub create_release: bool,
+     /// The desired cargo-dist version for handling this project
+     pub desired_cargo_dist_version: Option<Version>,
+     /// The desired rust toolchain for handling this project
+@@ -628,6 +630,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             features,
+             default_features: no_default_features,
+             all_features,
++            create_release,
+         } = &workspace_metadata;
+ 
+         let desired_cargo_dist_version = cargo_dist_version.clone();
+@@ -637,6 +640,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         }
+         let merge_tasks = merge_tasks.unwrap_or(false);
+         let fail_fast = fail_fast.unwrap_or(false);
++        let create_release = create_release.unwrap_or(true);
+         let mut packages_with_mismatched_features = vec![];
+         // Compute/merge package configs
+         let mut package_metadata = vec![];
+@@ -684,6 +688,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+                 precise_builds,
+                 fail_fast,
+                 merge_tasks,
++                create_release,
+                 desired_cargo_dist_version,
+                 desired_rust_toolchain,
+                 tools,
+diff --git a/cargo-dist/src/tests/mod.rs b/cargo-dist/src/tests/mod.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/templates/ci/github_ci.yml.j2 b/cargo-dist/templates/ci/github_ci.yml.j2
+old mode 100644
+new mode 100755
+index 5be9660b..be65bec8
+--- a/cargo-dist/templates/ci/github_ci.yml.j2
++++ b/cargo-dist/templates/ci/github_ci.yml.j2
+@@ -69,12 +69,18 @@ jobs:
+           echo "dist plan ran successfully"
+           cat dist-manifest.json
+ 
++      {{%- if create_release %}}
++
+           # Create the Github Release™ based on what cargo-dist thinks it should be
+           ANNOUNCEMENT_TITLE=$(jq --raw-output ".announcement_title" dist-manifest.json)
+           IS_PRERELEASE=$(jq --raw-output ".announcement_is_prerelease" dist-manifest.json)
+           jq --raw-output ".announcement_github_body" dist-manifest.json > new_dist_announcement.md
+           gh release create ${{ github.ref_name }} --draft --prerelease="$IS_PRERELEASE" --title="$ANNOUNCEMENT_TITLE" --notes-file=new_dist_announcement.md
+           echo "created announcement!"
++      {{%- else %}}
++
++          # We're assuming a draft Github Release™ with the desired name/tag/body already exists
++      {{%- endif %}}
+ 
+           # Upload the manifest to the Github Release™
+           gh release upload ${{ github.ref_name }} dist-manifest.json
+diff --git a/cargo-dist/templates/installer/homebrew.rb.j2 b/cargo-dist/templates/installer/homebrew.rb.j2
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/templates/installer/installer.ps1.j2 b/cargo-dist/templates/installer/installer.ps1.j2
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/templates/installer/installer.sh.j2 b/cargo-dist/templates/installer/installer.sh.j2
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/templates/installer/npm/.gitignore.j2 b/cargo-dist/templates/installer/npm/.gitignore.j2
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/templates/installer/npm/binary.js.j2 b/cargo-dist/templates/installer/npm/binary.js.j2
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/templates/installer/npm/install.js.j2 b/cargo-dist/templates/installer/npm/install.js.j2
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/templates/installer/npm/npm-shrinkwrap.json.j2 b/cargo-dist/templates/installer/npm/npm-shrinkwrap.json.j2
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/templates/installer/npm/package.json.j2 b/cargo-dist/templates/installer/npm/package.json.j2
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/templates/installer/npm/run.js.j2 b/cargo-dist/templates/installer/npm/run.js.j2
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/cli-tests.rs b/cargo-dist/tests/cli-tests.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/gallery/command.rs b/cargo-dist/tests/gallery/command.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/gallery/dist.rs b/cargo-dist/tests/gallery/dist.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/gallery/errors.rs b/cargo-dist/tests/gallery/errors.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/gallery/mod.rs b/cargo-dist/tests/gallery/mod.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/gallery/repo.rs b/cargo-dist/tests/gallery/repo.rs
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/integration-tests.rs b/cargo-dist/tests/integration-tests.rs
+old mode 100644
+new mode 100755
+index a7216956..acbcd5c0
+--- a/cargo-dist/tests/integration-tests.rs
++++ b/cargo-dist/tests/integration-tests.rs
+@@ -89,6 +89,39 @@ scope = "@axodotdev"
+     })
+ }
+ 
++#[test]
++fn axolotlsay_edit_existing() -> Result<(), miette::Report> {
++    let test_name = _function_name!();
++    AXOLOTLSAY.run_test(|ctx| {
++        let dist_version = ctx.tools.cargo_dist.version().unwrap();
++        ctx.patch_cargo_toml(format!(r#"
++[workspace.metadata.dist]
++cargo-dist-version = "{dist_version}"
++installers = ["shell", "powershell", "homebrew", "npm"]
++tap = "axodotdev/homebrew-packages"
++publish-jobs = ["homebrew"]
++targets = ["x86_64-unknown-linux-gnu", "x86_64-apple-darwin", "x86_64-pc-windows-msvc", "aarch64-apple-darwin"]
++ci = ["github"]
++unix-archive = ".tar.gz"
++windows-archive = ".tar.gz"
++scope = "@axodotdev"
++create-release = false
++
++"#
++        ))?;
++
++        // Do usual build+plan checks
++        let main_result = ctx.cargo_dist_build_and_plan(test_name)?;
++        let main_snap = main_result.check_all(ctx, ".cargo/bin/")?;
++        // Check generate-ci
++        let ci_result = ctx.cargo_dist_generate_ci(test_name)?;
++        let ci_snap = ci_result.check_all()?;
++        // snapshot all
++        main_snap.join(ci_snap).snap();
++        Ok(())
++    })
++}
++
+ #[test]
+ fn akaikatana_basic() -> Result<(), miette::Report> {
+     let test_name = _function_name!();
+diff --git a/cargo-dist/tests/snapshots/akaikatana_basic.snap b/cargo-dist/tests/snapshots/akaikatana_basic.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/akaikatana_repo_with_dot_git.snap b/cargo-dist/tests/snapshots/akaikatana_repo_with_dot_git.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/axolotlsay_basic.snap b/cargo-dist/tests/snapshots/axolotlsay_basic.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/axolotlsay_no_homebrew_publish.snap b/cargo-dist/tests/snapshots/axolotlsay_no_homebrew_publish.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/error_manifest.snap b/cargo-dist/tests/snapshots/error_manifest.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/install_path_cargo_home.snap b/cargo-dist/tests/snapshots/install_path_cargo_home.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/install_path_env_no_subdir.snap b/cargo-dist/tests/snapshots/install_path_env_no_subdir.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/install_path_env_subdir.snap b/cargo-dist/tests/snapshots/install_path_env_subdir.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/install_path_env_subdir_space.snap b/cargo-dist/tests/snapshots/install_path_env_subdir_space.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/install_path_env_subdir_space_deeper.snap b/cargo-dist/tests/snapshots/install_path_env_subdir_space_deeper.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/install_path_home_subdir_deeper.snap b/cargo-dist/tests/snapshots/install_path_home_subdir_deeper.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/install_path_home_subdir_min.snap b/cargo-dist/tests/snapshots/install_path_home_subdir_min.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/install_path_home_subdir_space.snap b/cargo-dist/tests/snapshots/install_path_home_subdir_space.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/install_path_home_subdir_space_deeper.snap b/cargo-dist/tests/snapshots/install_path_home_subdir_space_deeper.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/lib_manifest.snap b/cargo-dist/tests/snapshots/lib_manifest.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/long-help.snap b/cargo-dist/tests/snapshots/long-help.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/manifest.snap b/cargo-dist/tests/snapshots/manifest.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/markdown-help.snap b/cargo-dist/tests/snapshots/markdown-help.snap
+old mode 100644
+new mode 100755
+diff --git a/cargo-dist/tests/snapshots/short-help.snap b/cargo-dist/tests/snapshots/short-help.snap
+old mode 100644
+new mode 100755
++ cd cargo-dist
++ cargo test --no-fail-fast --test integration-tests
+ Downloading crates ...
+  Downloaded either v1.9.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded heck v0.4.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded futures-core v0.3.28 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded http-body v0.4.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded base64ct v1.6.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded axocli v0.1.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded byteorder v1.4.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded equivalent v1.0.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded clap_derive v4.4.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded cargo-platform v0.1.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded crossbeam-deque v0.8.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded cipher v0.4.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded dialoguer v0.10.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded hashbrown v0.14.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded inout v0.1.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded include_dir_macros v0.7.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded half v2.2.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded getrandom v0.2.10 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded parse-changelog v0.6.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded lzma-sys v0.1.20 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded pin-utils v0.1.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded linux-raw-sys v0.4.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded sha2 v0.10.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded subtle v2.5.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tinyvec_macros v0.1.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded rustc-demangle v0.1.23 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded target-lexicon v0.12.11 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded static_assertions v1.1.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded sharded-slab v0.1.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded regex-automata v0.3.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded regex-syntax v0.7.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded reqwest v0.11.20 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded syn v1.0.109 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded ring v0.16.20 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded rustls-pemfile v1.0.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded serde_urlencoded v0.7.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded serde v1.0.188 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded hyper-rustls v0.24.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded httpdate v1.0.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded httparse v1.8.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded h2 v0.3.21 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded supports-hyperlinks v2.1.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tar v0.4.40 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded png v0.17.10 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded similar v2.2.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded rustls-webpki v0.101.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded socket2 v0.5.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded proc-macro2 v1.0.66 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded regex v1.9.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded image v0.24.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded dyn-clone v1.0.13 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded base64 v0.21.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded futures-task v0.3.28 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded futures-sink v0.3.28 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded futures-macro v0.3.28 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded flume v0.10.14 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded flate2 v1.0.27 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded doc-comment v0.3.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded crypto-common v0.1.6 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded clap v4.4.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded block-buffer v0.10.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded fnv v1.0.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded digest v0.10.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded aes v0.8.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded strsim v0.10.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded schemars_derive v0.8.12 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded anstyle-parse v0.2.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded guppy v0.15.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded generic-array v0.14.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded futures-channel v0.3.28 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded form_urlencoded v1.2.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded filetime v0.2.22 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded fdeflate v0.3.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded cruet v0.13.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded crossbeam-epoch v0.9.15 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded crc32fast v1.3.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded clap_lex v0.5.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded cc v1.0.83 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded cargo_metadata v0.17.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded camino v1.1.6 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded bytemuck v1.13.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded bit_field v0.10.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded backtrace v0.3.69 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded anstyle-query v1.0.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded anstyle v1.0.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded anstream v0.5.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded aho-corasick v1.0.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded adler v1.0.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded addr2line v0.21.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded rustix v0.38.9 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded rustls v0.21.6 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded minijinja v1.0.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded jpeg-decoder v0.3.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tokio v1.32.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded rayon v1.7.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded quote v1.0.33 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded syn v2.0.29 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded self_cell v1.0.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded sct v0.7.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded spin v0.5.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded smallvec v1.11.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded sha1 v0.10.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded serde_derive_internals v0.26.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded semver v1.0.18 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded qoi v0.4.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded slab v0.4.9 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded spin v0.9.8 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded supports-color v2.0.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded serde_json v1.0.105 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded rand_core v0.6.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded socket2 v0.4.9 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded ryu v1.0.15 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded rayon-core v1.11.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded supports-unicode v2.0.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded simd-adler32 v0.3.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded schemars v0.8.12 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded libc v0.2.147 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded itoa v1.0.9 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded zstd v0.11.2+zstd.1.5.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded xattr v1.0.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded unicode-ident v1.0.11 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded unicode-bidi v0.3.13 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tracing-log v0.1.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tower-service v0.3.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tokio-util v0.7.8 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tiff v0.9.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded petgraph v0.6.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded object v0.32.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded itertools v0.10.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded webpki-roots v0.25.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded unicode-segmentation v1.10.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded try-lock v0.2.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tracing-subscriber v0.3.17 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded insta v1.31.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded serde_derive v1.0.188 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded pin-project-lite v0.2.13 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded pin-project v1.1.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded zip v0.6.6 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded url v2.4.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded toml v0.5.11 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded thiserror v1.0.47 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded pkg-config v0.3.27 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded pin-project-internal v1.1.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded zeroize v1.6.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded smawk v0.3.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded shell-words v1.1.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded percent-encoding v2.3.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded lexopt v0.3.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded ipnet v2.8.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded walkdir v2.3.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded utf8parse v0.2.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded unicode-linebreak v0.1.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded toml_datetime v0.6.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded thiserror-impl v1.0.47 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded target-spec v1.4.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded once_cell v1.18.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded textwrap v0.15.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded time-core v0.1.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded password-hash v0.4.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded owo-colors v3.5.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded overload v0.1.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded num_cpus v1.16.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded num-integer v0.1.45 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded nu-ansi-term v0.46.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded newline-converter v0.2.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded nested v0.1.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded nanorand v0.7.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded miniz_oxide v0.7.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded miette v5.10.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded memoffset v0.9.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded memo-map v0.3.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded memchr v2.5.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded log v0.4.20 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded lock_api v0.4.10 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded lebe v0.5.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded is_ci v1.1.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded zune-inflate v0.2.54 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded xz2 v0.1.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded want v0.3.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded typenum v1.16.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tracing-core v0.1.31 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tracing v0.1.37 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tokio-rustls v0.24.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tinyvec v1.6.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded thread_local v1.1.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded terminal_size v0.1.17 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tempfile v3.8.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded fastrand v2.0.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded axoasset v0.5.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded zstd-sys v2.0.8+zstd.1.5.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded winnow v0.5.15 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded gimli v0.28.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded exr v1.7.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded encoding_rs v0.8.33 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded pbkdf2 v0.11.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded pathdiff v0.2.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded parse-changelog v0.5.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded num-traits v0.2.16 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded num-rational v0.4.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded mio v0.8.8 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded mime v0.3.17 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded miette-derive v5.10.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded linked-hash-map v0.5.6 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded jobserver v0.1.26 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded is-terminal v0.4.9 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded zstd-safe v5.0.2+zstd.1.5.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded yaml-rust v0.4.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded weezl v0.1.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded untrusted v0.7.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded unicode-width v0.1.10 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded unicode-normalization v0.1.22 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded tracing-attributes v0.1.26 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded toml_edit v0.19.14 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded time v0.3.28 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded indexmap v2.0.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded indexmap v1.9.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded http v0.2.9 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded guppy-workspace-hack v0.1.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded gif v0.12.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded futures-util v0.3.28 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded deranged v0.3.8 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded crossbeam-channel v0.5.8 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded constant_time_eq v0.1.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded clap_builder v4.4.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded cargo_metadata v0.15.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded bzip2-sys v0.1.11+1.0.8 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded bzip2 v0.4.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded backtrace-ext v0.2.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded axoproject v0.4.4 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded anyhow v1.0.75 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded include_dir v0.7.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded fixedbitset v0.4.2 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded console v0.15.7 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded bytes v1.4.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded bitflags v2.4.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded hyper v0.14.27 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded cpufeatures v0.2.9 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded color_quant v1.1.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded clap-cargo v0.10.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded idna v0.4.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded hmac v0.12.1 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded debug-ignore v1.0.5 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded colorchoice v1.0.0 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded hashbrown v0.12.3 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded crossbeam-utils v0.8.16 (registry `lts-repo-at-96c41c0b67`)
+  Downloaded cfg-expr v0.15.4 (registry `lts-repo-at-96c41c0b67`)
+   Compiling libc v0.2.147
+   Compiling proc-macro2 v1.0.66
+   Compiling unicode-ident v1.0.11
+   Compiling autocfg v1.1.0
+   Compiling cfg-if v1.0.0
+   Compiling once_cell v1.18.0
+   Compiling serde v1.0.188
+   Compiling itoa v1.0.9
+   Compiling memchr v2.5.0
+   Compiling pkg-config v0.3.27
+   Compiling typenum v1.16.0
+   Compiling version_check v0.9.4
+   Compiling simd-adler32 v0.3.7
+   Compiling futures-core v0.3.28
+   Compiling pin-project-lite v0.2.13
+   Compiling serde_json v1.0.105
+   Compiling log v0.4.20
+   Compiling ryu v1.0.15
+   Compiling adler v1.0.2
+   Compiling crossbeam-utils v0.8.16
+   Compiling scopeguard v1.2.0
+   Compiling rustix v0.38.9
+   Compiling bytes v1.4.0
+   Compiling bitflags v2.4.0
+   Compiling linux-raw-sys v0.4.5
+   Compiling futures-sink v0.3.28
+   Compiling futures-task v0.3.28
+   Compiling crc32fast v1.3.2
+   Compiling camino v1.1.6
+   Compiling subtle v2.5.0
+   Compiling spin v0.5.2
+   Compiling thiserror v1.0.47
+   Compiling untrusted v0.7.1
+   Compiling smallvec v1.11.0
+   Compiling rayon-core v1.11.0
+   Compiling hashbrown v0.12.3
+   Compiling either v1.9.0
+   Compiling futures-util v0.3.28
+   Compiling unicode-width v0.1.10
+   Compiling lazy_static v1.4.0
+   Compiling fnv v1.0.7
+   Compiling rustls v0.21.6
+   Compiling httparse v1.8.0
+   Compiling semver v1.0.18
+   Compiling hashbrown v0.14.0
+   Compiling pin-utils v0.1.0
+   Compiling equivalent v1.0.1
+   Compiling tracing-core v0.1.31
+   Compiling gimli v0.28.0
+   Compiling miniz_oxide v0.7.1
+   Compiling http v0.2.9
+   Compiling cpufeatures v0.2.9
+   Compiling tinyvec_macros v0.1.1
+   Compiling regex-syntax v0.7.5
+   Compiling futures-channel v0.3.28
+   Compiling tinyvec v1.6.0
+   Compiling syn v1.0.109
+   Compiling generic-array v0.14.7
+   Compiling memoffset v0.9.0
+   Compiling crossbeam-epoch v0.9.15
+   Compiling indexmap v1.9.3
+   Compiling slab v0.4.9
+   Compiling lock_api v0.4.10
+   Compiling num-traits v0.2.16
+   Compiling num-integer v0.1.45
+   Compiling rustc-demangle v0.1.23
+   Compiling zstd-safe v5.0.2+zstd.1.5.2
+   Compiling target-lexicon v0.12.11
+   Compiling try-lock v0.2.4
+   Compiling utf8parse v0.2.1
+   Compiling percent-encoding v2.3.0
+   Compiling http-body v0.4.5
+   Compiling unicode-normalization v0.1.22
+   Compiling num-rational v0.4.1
+   Compiling want v0.3.1
+   Compiling anstyle-parse v0.2.1
+   Compiling form_urlencoded v1.2.0
+   Compiling is_ci v1.1.1
+   Compiling anstyle v1.0.2
+   Compiling guppy-workspace-hack v0.1.0
+   Compiling smawk v0.3.1
+   Compiling colorchoice v1.0.0
+   Compiling unicode-bidi v0.3.13
+   Compiling httpdate v1.0.3
+   Compiling rand_core v0.6.4
+   Compiling tower-service v0.3.2
+   Compiling base64ct v1.6.0
+   Compiling addr2line v0.21.0
+   Compiling unicode-linebreak v0.1.5
+   Compiling anstyle-query v1.0.0
+   Compiling weezl v0.1.7
+   Compiling fdeflate v0.3.0
+   Compiling zune-inflate v0.2.54
+   Compiling color_quant v1.1.0
+   Compiling flate2 v1.0.27
+   Compiling bit_field v0.10.2
+   Compiling time-core v0.1.1
+   Compiling crossbeam-channel v0.5.8
+   Compiling anstream v0.5.0
+   Compiling spin v0.9.8
+   Compiling anyhow v1.0.75
+   Compiling owo-colors v3.5.0
+   Compiling target-spec v1.4.0
+   Compiling password-hash v0.4.2
+   Compiling textwrap v0.15.2
+   Compiling bitflags v1.3.2
+   Compiling aho-corasick v1.0.4
+   Compiling object v0.32.0
+   Compiling heck v0.4.1
+   Compiling byteorder v1.4.3
+   Compiling idna v0.4.0
+   Compiling crossbeam-deque v0.8.3
+   Compiling half v2.2.1
+   Compiling clap_lex v0.5.1
+   Compiling deranged v0.3.8
+   Compiling strsim v0.10.0
+   Compiling base64 v0.21.3
+   Compiling bytemuck v1.13.1
+   Compiling lebe v0.5.2
+   Compiling quote v1.0.33
+   Compiling jobserver v0.1.26
+   Compiling mio v0.8.8
+   Compiling socket2 v0.5.3
+   Compiling num_cpus v1.16.0
+   Compiling getrandom v0.2.10
+   Compiling socket2 v0.4.9
+   Compiling terminal_size v0.1.17
+   Compiling console v0.15.7
+   Compiling clap_builder v4.4.0
+   Compiling xattr v1.0.1
+   Compiling filetime v0.2.22
+   Compiling syn v2.0.29
+   Compiling cc v1.0.83
+   Compiling nanorand v0.7.0
+   Compiling rustls-pemfile v1.0.3
+   Compiling qoi v0.4.1
+   Compiling png v0.17.10
+   Compiling cfg-expr v0.15.4
+   Compiling gif v0.12.0
+   Compiling url v2.4.0
+   Compiling encoding_rs v0.8.33
+   Compiling webpki-roots v0.25.2
+   Compiling tokio v1.32.0
+   Compiling ipnet v2.8.0
+   Compiling overload v0.1.1
+   Compiling toml_datetime v0.6.3
+   Compiling fixedbitset v0.4.2
+   Compiling mime v0.3.17
+   Compiling constant_time_eq v0.1.5
+   Compiling doc-comment v0.3.3
+   Compiling same-file v1.0.6
+   Compiling schemars v0.8.12
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.4
+   Compiling inout v0.1.3
+   Compiling winnow v0.5.15
+   Compiling walkdir v2.3.3
+   Compiling nu-ansi-term v0.46.0
+   Compiling cipher v0.4.4
+   Compiling tar v0.4.40
+   Compiling digest v0.10.7
+   Compiling time v0.3.28
+   Compiling rayon v1.7.0
+   Compiling tracing-log v0.1.3
+   Compiling itertools v0.10.5
+   Compiling thread_local v1.1.7
+   Compiling sharded-slab v0.1.4
+   Compiling regex-automata v0.3.7
+   Compiling hmac v0.12.1
+   Compiling sha2 v0.10.7
+   Compiling aes v0.8.3
+   Compiling sha1 v0.10.5
+   Compiling debug-ignore v1.0.5
+   Compiling lexopt v0.3.0
+   Compiling dyn-clone v1.0.13
+   Compiling nested v0.1.1
+   Compiling fastrand v2.0.0
+   Compiling static_assertions v1.1.0
+   Compiling include_dir_macros v0.7.3
+   Compiling self_cell v1.0.1
+   Compiling unicode-segmentation v1.10.1
+   Compiling zeroize v1.6.0
+   Compiling shell-words v1.1.0
+   Compiling memo-map v0.3.2
+   Compiling linked-hash-map v0.5.6
+   Compiling pbkdf2 v0.11.0
+   Compiling similar v2.2.1
+   Compiling yaml-rust v0.4.5
+   Compiling tracing-subscriber v0.3.17
+   Compiling is-terminal v0.4.9
+   Compiling supports-hyperlinks v2.1.0
+   Compiling ring v0.16.20
+   Compiling zstd-sys v2.0.8+zstd.1.5.5
+   Compiling backtrace v0.3.69
+   Compiling bzip2-sys v0.1.11+1.0.8
+   Compiling lzma-sys v0.1.20
+   Compiling supports-color v2.0.0
+   Compiling supports-unicode v2.0.0
+   Compiling tempfile v3.8.0
+   Compiling newline-converter v0.2.2
+   Compiling dialoguer v0.10.4
+   Compiling include_dir v0.7.3
+   Compiling serde_derive_internals v0.26.0
+   Compiling xz2 v0.1.7
+   Compiling bzip2 v0.4.4
+   Compiling jpeg-decoder v0.3.0
+   Compiling schemars_derive v0.8.12
+   Compiling backtrace-ext v0.2.1
+   Compiling regex v1.9.4
+   Compiling tiff v0.9.0
+   Compiling cruet v0.13.3
+   Compiling parse-changelog v0.5.4
+   Compiling insta v1.31.0
+   Compiling serde_derive v1.0.188
+   Compiling tracing-attributes v0.1.26
+   Compiling thiserror-impl v1.0.47
+   Compiling futures-macro v0.3.28
+   Compiling pin-project-internal v1.1.3
+   Compiling miette-derive v5.10.0
+   Compiling clap_derive v4.4.0
+   Compiling sct v0.7.0
+   Compiling rustls-webpki v0.101.4
+   Compiling pin-project v1.1.3
+   Compiling flume v0.10.14
+   Compiling miette v5.10.0
+   Compiling tracing v0.1.37
+   Compiling exr v1.7.0
+   Compiling tokio-util v0.7.8
+   Compiling zstd v0.11.2+zstd.1.5.2
+   Compiling zip v0.6.6
+   Compiling clap v4.4.0
+   Compiling clap-cargo v0.10.0
+   Compiling h2 v0.3.21
+   Compiling tokio-rustls v0.24.1
+   Compiling image v0.24.7
+   Compiling indexmap v2.0.0
+   Compiling cargo-platform v0.1.3
+   Compiling serde_urlencoded v0.7.1
+   Compiling toml v0.5.11
+   Compiling pathdiff v0.2.1
+   Compiling toml_edit v0.19.14
+   Compiling petgraph v0.6.4
+   Compiling cargo_metadata v0.15.4
+   Compiling parse-changelog v0.6.2
+   Compiling cargo_metadata v0.17.0
+   Compiling axocli v0.1.0
+   Compiling minijinja v1.0.7
+   Compiling hyper v0.14.27
+   Compiling cargo-dist-schema v0.2.0-prerelease.5 (/workspace/cargo-dist-schema)
+   Compiling guppy v0.15.2
+   Compiling hyper-rustls v0.24.1
+   Compiling reqwest v0.11.20
+   Compiling axoasset v0.5.0
+   Compiling axoproject v0.4.4
+   Compiling cargo-dist v0.2.0-prerelease.5 (/workspace/cargo-dist)
+    Finished test [unoptimized + debuginfo] target(s) in 32.54s
+     Running tests/integration-tests.rs (/workspace/target/debug/deps/integration_tests-03628292ca7b9e58)
+
+running 16 tests
+test akaikatana_basic ... ok
+test akaikatana_repo_with_dot_git ... ok
+test axolotlsay_basic ... ok
+test axolotlsay_edit_existing ... ok
+test axolotlsay_no_homebrew_publish ... ok
+test env_path_invalid - should panic ... ok
+test install_path_cargo_home ... ok
+test install_path_env_no_subdir ... ok
+test install_path_env_subdir ... ok
+test install_path_env_subdir_space ... ok
+test install_path_env_subdir_space_deeper ... ok
+test install_path_home_subdir_deeper ... ok
+test install_path_home_subdir_min ... ok
+test install_path_home_subdir_space ... ok
+test install_path_home_subdir_space_deeper ... ok
+test install_path_invalid - should panic ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.33s
+
++ cd ../
++ git status
+On branch main
+Your branch is behind 'origin/main' by 2890 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .gitattributes
+	modified:   .github/workflows/append-release.yml
+	modified:   .github/workflows/ci.yml
+	modified:   .github/workflows/publish-release.yml
+	modified:   .github/workflows/release.yml
+	modified:   .github/workflows/web.yml
+	modified:   .gitignore
+	modified:   CHANGELOG.md
+	modified:   CODE_OF_CONDUCT.md
+	modified:   CONTRIBUTING.md
+	modified:   Cargo.lock
+	modified:   Cargo.toml
+	modified:   LICENSE-APACHE
+	modified:   LICENSE-MIT
+	modified:   README.md
+	modified:   SECURITY.md
+	modified:   book/book.toml
+	modified:   book/src/SUMMARY.md
+	modified:   book/src/artifacts.md
+	modified:   book/src/cargo-release-guide.md
+	modified:   book/src/cli.md
+	modified:   book/src/concepts.md
+	modified:   book/src/config.md
+	modified:   book/src/guide.md
+	modified:   book/src/img/announcement-error.png
+	modified:   book/src/img/global-build.png
+	modified:   book/src/img/human-manifest-all.png
+	modified:   book/src/img/local-build.png
+	modified:   book/src/img/quickstart-build.png
+	modified:   book/src/img/quickstart-plan.png
+	modified:   book/src/img/simple-app-manifest-with-files.png
+	modified:   book/src/img/simple-app-manifest.png
+	modified:   book/src/img/simple-github-release.png
+	modified:   book/src/img/workspace-log.png
+	modified:   book/src/install.md
+	modified:   book/src/installers.md
+	modified:   book/src/introduction.md
+	modified:   book/src/reference.md
+	modified:   book/src/schema.md
+	modified:   book/src/simple-guide.md
+	modified:   book/src/way-too-quickstart.md
+	modified:   book/src/workspace-guide.md
+	modified:   cargo-dist-schema/Cargo.toml
+	modified:   cargo-dist-schema/README.md
+	modified:   cargo-dist-schema/cargo-dist-json-schema.json
+	modified:   cargo-dist-schema/src/lib.rs
+	modified:   cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+	modified:   cargo-dist/Cargo.toml
+	modified:   cargo-dist/oranda.json
+	modified:   cargo-dist/src/backend/ci/github.rs
+	modified:   cargo-dist/src/backend/ci/mod.rs
+	modified:   cargo-dist/src/backend/installer/homebrew.rs
+	modified:   cargo-dist/src/backend/installer/mod.rs
+	modified:   cargo-dist/src/backend/installer/npm.rs
+	modified:   cargo-dist/src/backend/installer/powershell.rs
+	modified:   cargo-dist/src/backend/installer/shell.rs
+	modified:   cargo-dist/src/backend/mod.rs
+	modified:   cargo-dist/src/backend/templates.rs
+	modified:   cargo-dist/src/changelog.rs
+	modified:   cargo-dist/src/cli.rs
+	modified:   cargo-dist/src/config.rs
+	modified:   cargo-dist/src/errors.rs
+	modified:   cargo-dist/src/init.rs
+	modified:   cargo-dist/src/lib.rs
+	modified:   cargo-dist/src/main.rs
+	modified:   cargo-dist/src/tasks.rs
+	modified:   cargo-dist/src/tests/mod.rs
+	modified:   cargo-dist/templates/ci/github_ci.yml.j2
+	modified:   cargo-dist/templates/installer/homebrew.rb.j2
+	modified:   cargo-dist/templates/installer/installer.ps1.j2
+	modified:   cargo-dist/templates/installer/installer.sh.j2
+	modified:   cargo-dist/templates/installer/npm/.gitignore.j2
+	modified:   cargo-dist/templates/installer/npm/binary.js.j2
+	modified:   cargo-dist/templates/installer/npm/install.js.j2
+	modified:   cargo-dist/templates/installer/npm/npm-shrinkwrap.json.j2
+	modified:   cargo-dist/templates/installer/npm/package.json.j2
+	modified:   cargo-dist/templates/installer/npm/run.js.j2
+	modified:   cargo-dist/tests/cli-tests.rs
+	modified:   cargo-dist/tests/gallery/command.rs
+	modified:   cargo-dist/tests/gallery/dist.rs
+	modified:   cargo-dist/tests/gallery/errors.rs
+	modified:   cargo-dist/tests/gallery/mod.rs
+	modified:   cargo-dist/tests/gallery/repo.rs
+	modified:   cargo-dist/tests/integration-tests.rs
+	modified:   cargo-dist/tests/snapshots/akaikatana_basic.snap
+	modified:   cargo-dist/tests/snapshots/akaikatana_repo_with_dot_git.snap
+	modified:   cargo-dist/tests/snapshots/axolotlsay_basic.snap
+	modified:   cargo-dist/tests/snapshots/axolotlsay_no_homebrew_publish.snap
+	modified:   cargo-dist/tests/snapshots/error_manifest.snap
+	modified:   cargo-dist/tests/snapshots/install_path_cargo_home.snap
+	modified:   cargo-dist/tests/snapshots/install_path_env_no_subdir.snap
+	modified:   cargo-dist/tests/snapshots/install_path_env_subdir.snap
+	modified:   cargo-dist/tests/snapshots/install_path_env_subdir_space.snap
+	modified:   cargo-dist/tests/snapshots/install_path_env_subdir_space_deeper.snap
+	modified:   cargo-dist/tests/snapshots/install_path_home_subdir_deeper.snap
+	modified:   cargo-dist/tests/snapshots/install_path_home_subdir_min.snap
+	modified:   cargo-dist/tests/snapshots/install_path_home_subdir_space.snap
+	modified:   cargo-dist/tests/snapshots/install_path_home_subdir_space_deeper.snap
+	modified:   cargo-dist/tests/snapshots/lib_manifest.snap
+	modified:   cargo-dist/tests/snapshots/long-help.snap
+	modified:   cargo-dist/tests/snapshots/manifest.snap
+	modified:   cargo-dist/tests/snapshots/markdown-help.snap
+	modified:   cargo-dist/tests/snapshots/short-help.snap
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.cargo/
+	cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git reset --hard b3c413953f319841c755dc9247035122f26918f3
+HEAD is now at b3c41395 fix: update cargo_metadata
++ git clean -fd
+Removing .cargo/
+Removing cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap

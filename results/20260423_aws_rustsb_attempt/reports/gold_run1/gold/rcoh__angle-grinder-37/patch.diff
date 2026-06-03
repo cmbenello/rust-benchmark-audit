@@ -1,0 +1,557 @@
+diff --git a/README.md b/README.md
+--- a/README.md
++++ b/README.md
+@@ -181,6 +181,13 @@ Count number of source_hosts:
+ * | json | count by endpoint_url, status_code | sort by endpoint_url desc
+ ```
+ 
++##### Total
++`total(a)`: Compute the running total of a given field
++*Examples*:
++```agrind
++* | json | total(num_requests) as tot_requests
++```
++
+ ##### Count Distinct
+ `count_distinct(a)`: Count distinct values of column `a`. Warning: this is not fixed memory. Be careful about processing too many groups.
+ *Examples*:
+diff --git a/src/data.rs b/src/data.rs
+--- a/src/data.rs
++++ b/src/data.rs
+@@ -107,7 +107,12 @@ impl Value {
+     }
+ 
+     pub fn from_float(f: f64) -> Value {
+-        Value::Float(OrderedFloat(f))
++        let rounded = f as i64;
++        if f == f.floor() {
++            Value::Int(rounded)
++        } else {
++            Value::Float(OrderedFloat(f))
++        }
+     }
+ 
+     pub fn from_string(s: &str) -> Value {
+diff --git a/src/data.rs b/src/data.rs
+--- a/src/data.rs
++++ b/src/data.rs
+@@ -138,7 +143,8 @@ impl Aggregate {
+                 }
+             });
+         });
+-        let raw_data: Vec<HashMap<String, Value>> = data.iter()
++        let raw_data: Vec<HashMap<String, Value>> = data
++            .iter()
+             .map(|&(ref keycols, ref value)| {
+                 let mut new_map: HashMap<String, Value> = keycols
+                     .iter()
+diff --git a/src/lang.rs b/src/lang.rs
+--- a/src/lang.rs
++++ b/src/lang.rs
+@@ -1,7 +1,7 @@
+ use crate::data;
+ use nom;
+ use nom::types::CompleteStr;
+-use nom::{is_alphabetic, is_alphanumeric, is_digit, digit1, multispace};
++use nom::{digit1, is_alphabetic, is_alphanumeric, is_digit, multispace};
+ use std::str;
+ 
+ #[derive(Debug, PartialEq, Eq, Clone)]
+diff --git a/src/lang.rs b/src/lang.rs
+--- a/src/lang.rs
++++ b/src/lang.rs
+@@ -45,7 +45,7 @@ enum KeywordType {
+     /// The keyword string should exactly match the input.
+     EXACT,
+     /// The keyword string can contain wildcards.
+-    WILDCARD
++    WILDCARD,
+ }
+ 
+ /// Represents a `keyword` search string.
+diff --git a/src/lang.rs b/src/lang.rs
+--- a/src/lang.rs
++++ b/src/lang.rs
+@@ -90,6 +90,7 @@ pub enum Operator {
+     Inline(InlineOperator),
+     MultiAggregate(MultiAggregateOperator),
+     Sort(SortOperator),
++    Total(TotalOperator),
+ }
+ 
+ #[derive(Debug, PartialEq, Eq)]
+diff --git a/src/lang.rs b/src/lang.rs
+--- a/src/lang.rs
++++ b/src/lang.rs
+@@ -155,6 +156,12 @@ pub struct SortOperator {
+     pub direction: SortMode,
+ }
+ 
++#[derive(Debug, PartialEq)]
++pub struct TotalOperator {
++    pub input_column: Expr,
++    pub output_column: String,
++}
++
+ #[derive(Debug, PartialEq)]
+ pub struct Query {
+     pub search: Vec<Keyword>,
+diff --git a/src/lang.rs b/src/lang.rs
+--- a/src/lang.rs
++++ b/src/lang.rs
+@@ -178,7 +185,7 @@ fn is_keyword(c: char) -> bool {
+     match c {
+         '-' | '_' | ':' | '/' | '.' | '+' | '@' | '#' | '$' | '%' | '^' | '*' => true,
+         alpha if is_alphanumeric(alpha as u8) => true,
+-        _ => false
++        _ => false,
+     }
+ }
+ 
+diff --git a/src/lang.rs b/src/lang.rs
+--- a/src/lang.rs
++++ b/src/lang.rs
+@@ -349,7 +356,7 @@ named!(aggregate_function<CompleteStr, AggregateFunction>, alt!(
+     sum |
+     p_nn));
+ 
+-named!(operator<CompleteStr, Operator>, alt!(inline_operator | sort | multi_aggregate_operator));
++named!(operator<CompleteStr, Operator>, alt!(inline_operator | sort | multi_aggregate_operator | total));
+ 
+ // count by x,y
+ // avg(foo) by x
+diff --git a/src/lang.rs b/src/lang.rs
+--- a/src/lang.rs
++++ b/src/lang.rs
+@@ -411,6 +418,17 @@ named!(sort<CompleteStr, Operator>, ws!(do_parse!(
+      })))
+ ));
+ 
++named!(total<CompleteStr, Operator>, ws!(do_parse!(
++    tag!("total") >>
++    input_column: delimited!(tag!("("), expr, tag!(")")) >>
++    rename_opt: opt!(ws!(preceded!(tag!("as"), ident))) >>
++    (Operator::Total(TotalOperator{
++        input_column,
++        output_column:
++            rename_opt.map(|s|s.to_string()).unwrap_or_else(||"_total".to_string()),
++     })))
++));
++
+ named!(filter_cond<CompleteStr, Keyword>, alt!(
+     map!(quoted_string, |s| Keyword::new_exact(s.to_string())) |
+     map!(keyword, |s| Keyword::new_wildcard(s.trim_matches('*').to_string()))
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -17,17 +17,17 @@ mod render;
+ mod typecheck;
+ 
+ pub mod pipeline {
+-    use crossbeam_channel::{bounded, Receiver, RecvTimeoutError};
+     use crate::data::{Record, Row, Value};
+-    use failure::Error;
+     use crate::lang;
+     use crate::lang::*;
+     use crate::operator;
+     use crate::render::{RenderConfig, Renderer};
++    use crate::typecheck;
++    use crossbeam_channel::{bounded, Receiver, RecvTimeoutError};
++    use failure::Error;
+     use std::io::BufRead;
+     use std::thread;
+     use std::time::Duration;
+-    use crate::typecheck;
+ 
+     #[derive(Debug, Fail)]
+     pub enum CompileError {
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -125,12 +125,12 @@ pub mod pipeline {
+                     pattern,
+                     fields,
+                     input_column,
+-                } => Ok(
+-                    operator::Parse::new(
+-                        pattern.to_regex(),
+-                        fields,
+-                        input_column.map(|c| c.force()))?.into(),
+-                ),
++                } => Ok(operator::Parse::new(
++                    pattern.to_regex(),
++                    fields,
++                    input_column.map(|c| c.force()),
++                )?
++                .into()),
+                 InlineOperator::Fields { fields, mode } => {
+                     let omode = match mode {
+                         FieldMode::Except => operator::FieldMode::Except,
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -145,6 +145,10 @@ pub mod pipeline {
+             }
+         }
+ 
++        fn convert_total(op: lang::TotalOperator) -> Box<operator::AggregateOperator> {
++            Box::new(operator::Total::new(op.input_column, op.output_column))
++        }
++
+         fn convert_sort(op: lang::SortOperator) -> Box<operator::AggregateOperator> {
+             let mode = match op.direction {
+                 SortMode::Ascending => operator::SortDirection::Ascending,
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -168,7 +172,8 @@ pub mod pipeline {
+         }
+ 
+         fn convert_multi_agg(op: lang::MultiAggregateOperator) -> Box<operator::AggregateOperator> {
+-            let agg_functions = op.aggregate_functions
++            let agg_functions = op
++                .aggregate_functions
+                 .into_iter()
+                 .map(|(k, func)| (k, Pipeline::convert_agg_function(func)));
+             let key_cols: Vec<operator::Expr> =
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -185,9 +190,7 @@ pub mod pipeline {
+                 message: format!("{:?}", e),
+             });
+             let query = parsed?;
+-            let filters = query.search.iter()
+-                .map(lang::Keyword::to_regex)
+-                .collect();
++            let filters = query.search.iter().map(lang::Keyword::to_regex).collect();
+             let mut in_agg = false;
+             let mut pre_agg: Vec<Box<operator::UnaryPreAggOperator>> = Vec::new();
+             let mut post_agg: Vec<Box<operator::AggregateOperator>> = Vec::new();
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -210,16 +213,19 @@ pub mod pipeline {
+             };
+             for op in query.operators {
+                 match op {
+-                    Operator::Inline(inline_op) => if !in_agg {
+-                        pre_agg.push(Pipeline::convert_inline(inline_op)?);
+-                    } else {
+-                        post_agg.push(Pipeline::convert_inline_adapted(inline_op)?)
+-                    },
++                    Operator::Inline(inline_op) => {
++                        if !in_agg {
++                            pre_agg.push(Pipeline::convert_inline(inline_op)?);
++                        } else {
++                            post_agg.push(Pipeline::convert_inline_adapted(inline_op)?)
++                        }
++                    }
+                     Operator::MultiAggregate(agg_op) => {
+                         in_agg = true;
+                         post_agg.push(Pipeline::convert_multi_agg(agg_op))
+                     }
+                     Operator::Sort(sort_op) => post_agg.push(Pipeline::convert_sort(sort_op)),
++                    Operator::Total(total_op) => post_agg.push(Pipeline::convert_total(total_op)),
+                 }
+             }
+             if let Some(op) = final_op {
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -285,9 +291,6 @@ pub mod pipeline {
+             let preaggs = self.pre_aggregates;
+             let renderer = self.renderer;
+             let t = if !aggregators.is_empty() {
+-                if aggregators.len() == 1 {
+-                    panic!("Every aggregate pipeline should have a real operator and a sort");
+-                }
+                 let head = aggregators.remove(0);
+                 thread::spawn(move || Pipeline::render_aggregate(head, aggregators, renderer, &rx))
+             } else {
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -327,7 +330,6 @@ pub mod pipeline {
+             } else {
+                 None
+             }
+-
+         }
+ 
+         pub fn run_agg_pipeline(
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -36,8 +36,10 @@ pub enum TypeError {
+     #[fail(display = "Expected boolean expression, found {}", found)]
+     ExpectedBool { found: String },
+ 
+-    #[fail(display = "Wrong number of patterns for parse. Pattern has {} but {} were extracted",
+-           pattern, extracted)]
++    #[fail(
++        display = "Wrong number of patterns for parse. Pattern has {} but {} were extracted",
++        pattern, extracted
++    )]
+     ParseNumPatterns { pattern: usize, extracted: usize },
+ }
+ 
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -51,6 +53,9 @@ pub trait EvaluatableBorrowed<T> {
+ 
+ pub trait UnaryPreAggOperator: Send + Sync {
+     fn process(&self, rec: Record) -> Result<Option<Record>, EvalError>;
++    fn process_mut(&mut self, rec: Record) -> Result<Option<Record>, EvalError> {
++        self.process(rec)
++    }
+     fn get_input<'a>(&self, rec: &'a Record, col: &Option<Expr>) -> Result<&'a str, EvalError> {
+         match col {
+             Some(expr) => {
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -106,7 +111,8 @@ impl<T: UnaryPreAggOperator + Send + Sync> AggregateOperator for PreAggAdapter<T
+             Row::Aggregate(agg) => {
+                 let columns = agg.columns;
+                 let processed_records: Vec<data::VMap> = {
+-                    let records = agg.data
++                    let records = agg
++                        .data
+                         .into_iter()
+                         .map(|vmap| data::Record {
+                             data: vmap,
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -123,7 +129,8 @@ impl<T: UnaryPreAggOperator + Send + Sync> AggregateOperator for PreAggAdapter<T
+                         .filter(|col| !columns.contains(col))
+                         .unique()
+                         .cloned()
+-                }.collect();
++                }
++                .collect();
+                 let mut columns = columns;
+                 columns.extend(new_keys);
+                 self.state = Aggregate {
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -282,7 +289,8 @@ impl AggregateFunction for Sum {
+                 &data::Value::Int(ref i) => {
+                     self.total += *i as f64;
+                 }
+-                _other => self.warnings
++                _other => self
++                    .warnings
+                     .push("Got string. Can only average into or float".to_string()),
+             });
+     }
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -362,7 +370,8 @@ impl AggregateFunction for Average {
+                     self.total += *i as f64;
+                     self.count += 1
+                 }
+-                _other => self.warnings
++                _other => self
++                    .warnings
+                     .push("Got string. Can only average into or float".to_string()),
+             });
+     }
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -407,7 +416,8 @@ impl AggregateFunction for Percentile {
+                     self.ckms.insert(f.into_inner());
+                 }
+                 &data::Value::Int(ref i) => self.ckms.insert(*i as f64),
+-                _other => self.warnings
++                _other => self
++                    .warnings
+                     .push("Got string. Can only average int or float".to_string()),
+             });
+     }
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -448,7 +458,8 @@ impl Sorter {
+     }
+ 
+     fn new_columns(&self, data: &HashMap<String, data::Value>) -> Vec<String> {
+-        let mut new_keys: Vec<String> = data.keys()
++        let mut new_keys: Vec<String> = data
++            .keys()
+             .filter(|key| !self.columns.contains(key))
+             .cloned()
+             .collect();
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -590,8 +601,7 @@ impl Parse {
+ 
+     fn matches(&self, rec: &Record) -> Result<Option<Vec<data::Value>>, EvalError> {
+         let inp = self.get_input(rec, &self.input_column)?;
+-        let matches: Vec<regex::Captures> = self.regex.captures_iter(inp.trim())
+-            .collect();
++        let matches: Vec<regex::Captures> = self.regex.captures_iter(inp.trim()).collect();
+         if matches.is_empty() {
+             Ok(None)
+         } else {
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -642,6 +652,85 @@ impl<T: Evaluatable<bool> + Send + Sync> UnaryPreAggOperator for Where<T> {
+     }
+ }
+ 
++pub struct Total {
++    column: Expr,
++    total: f64,
++    state: Vec<Data>,
++    columns: Vec<String>,
++    output_column: String,
++}
++
++impl Total {
++    pub fn new<T: Into<Expr>>(column: T, output_column: String) -> Total {
++        Total {
++            column: column.into(),
++            total: 0.0,
++            state: Vec::new(),
++            columns: Vec::new(),
++            output_column,
++        }
++    }
++
++    fn new_columns(&self, data: &HashMap<String, data::Value>) -> Vec<String> {
++        let mut new_keys: Vec<String> = data
++            .keys()
++            .filter(|key| !self.columns.contains(key))
++            .cloned()
++            .collect();
++        new_keys.sort();
++        new_keys
++    }
++
++    fn proc_rec(&mut self, mut data: Data) -> Data {
++        let val: f64 = self
++            .column
++            .eval_borrowed(&data)
++            .map(|value| match value {
++                data::Value::Int(i) => *i as f64,
++                data::Value::Float(f) => f.into_inner(),
++                _ => 0.0,
++            })
++            .unwrap_or(0.0);
++        self.total += val;
++        data.insert(
++            self.output_column.to_string(),
++            data::Value::from_float(self.total),
++        );
++        data
++    }
++}
++
++impl AggregateOperator for Total {
++    fn emit(&self) -> data::Aggregate {
++        Aggregate {
++            data: self.state.to_vec(),
++            columns: self.columns.clone(),
++        }
++    }
++
++    fn process(&mut self, row: Row) {
++        match row {
++            Row::Aggregate(mut agg) => {
++                agg.columns.push("_total".to_string());
++                self.columns = agg.columns;
++                self.total = 0.0;
++                let new_agg = agg
++                    .data
++                    .into_iter()
++                    .map(|data| self.proc_rec(data))
++                    .collect();
++                self.state = new_agg;
++            }
++            Row::Record(rec) => {
++                let processed = self.proc_rec(rec.data);
++                let new_cols = self.new_columns(&processed);
++                self.state.push(processed);
++                self.columns.extend(new_cols);
++            }
++        }
++    }
++}
++
+ pub enum FieldMode {
+     Only,
+     Except,
+diff --git a/src/operator.rs b/src/operator.rs
+--- a/src/operator.rs
++++ b/src/operator.rs
+@@ -699,11 +788,13 @@ impl UnaryPreAggOperator for ParseJson {
+         let res = match json {
+             JsonValue::Object(map) => map.iter().fold(Some(rec), |record_opt, (k, v)| {
+                 record_opt.and_then(|record| match v {
+-                    &JsonValue::Number(ref num) => if num.is_i64() {
+-                        Some(record.put(k, data::Value::Int(num.as_i64().unwrap())))
+-                    } else {
+-                        Some(record.put(k, data::Value::from_float(num.as_f64().unwrap())))
+-                    },
++                    &JsonValue::Number(ref num) => {
++                        if num.is_i64() {
++                            Some(record.put(k, data::Value::Int(num.as_i64().unwrap())))
++                        } else {
++                            Some(record.put(k, data::Value::from_float(num.as_f64().unwrap())))
++                        }
++                    }
+                     &JsonValue::String(ref s) => {
+                         Some(record.put(k, data::Value::Str(s.to_string())))
+                     }
+diff --git a/src/render.rs b/src/render.rs
+--- a/src/render.rs
++++ b/src/render.rs
+@@ -56,7 +56,8 @@ impl PrettyPrinter {
+     }
+ 
+     fn new_columns(&self, data: &HashMap<String, data::Value>) -> Vec<String> {
+-        let mut new_keys: Vec<String> = data.keys()
++        let mut new_keys: Vec<String> = data
++            .keys()
+             .filter(|key| !self.column_order.contains(key))
+             .cloned()
+             .collect();
+diff --git a/src/render.rs b/src/render.rs
+--- a/src/render.rs
++++ b/src/render.rs
+@@ -100,7 +101,8 @@ impl PrettyPrinter {
+         } else {
+             false
+         };
+-        let strs: Vec<String> = self.column_order
++        let strs: Vec<String> = self
++            .column_order
+             .iter()
+             .map(|column_name| {
+                 let value = record.data.get(column_name);
+diff --git a/src/render.rs b/src/render.rs
+--- a/src/render.rs
++++ b/src/render.rs
+@@ -149,10 +151,10 @@ impl PrettyPrinter {
+         if aggregate.data.is_empty() {
+             return "No data\n".to_string();
+         }
+-        aggregate
+-            .data
+-            .iter()
+-            .for_each(|row| self.column_widths = self.compute_column_widths(row));
++        aggregate.data.iter().for_each(|row| {
++            let new_widths = self.compute_column_widths(row);
++            self.column_widths.extend(new_widths);
++        });
+         let header: Vec<String> = aggregate
+             .columns
+             .iter()

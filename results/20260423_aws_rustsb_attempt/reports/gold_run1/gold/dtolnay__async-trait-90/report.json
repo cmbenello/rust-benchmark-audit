@@ -1,0 +1,35 @@
+{
+    "dtolnay__async-trait-90": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "src/lib.rs -  (line 10)",
+                    "src/lib.rs -  (line 160)",
+                    "src/lib.rs -  (line 121)",
+                    "src/lib.rs -  (line 281)",
+                    "src/lib.rs -  (line 181)",
+                    "src/lib.rs -  (line 260)",
+                    "src/lib.rs -  (line 42)",
+                    "src/lib.rs -  (line 206)"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

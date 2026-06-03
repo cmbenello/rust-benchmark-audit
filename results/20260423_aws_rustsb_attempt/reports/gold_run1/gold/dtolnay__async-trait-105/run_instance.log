@@ -1,0 +1,49 @@
+2026-04-17 06:40:57,291 - INFO - Environment image rustb.env.x86_64.dtolnay_async-trait:latest found for dtolnay__async-trait-105
+Building instance image rustbench/dtolnay__async-trait:pr-105 for dtolnay__async-trait-105
+2026-04-17 06:53:10,219 - INFO - Creating container for dtolnay__async-trait-105...
+2026-04-17 06:53:18,487 - INFO - Container for dtolnay__async-trait-105 created: f01fa1935e8e838a3c9388697077bd0c710628d5d7a1907b127421539caaa42c
+2026-04-17 06:53:18,768 - INFO - Container for dtolnay__async-trait-105 started: f01fa1935e8e838a3c9388697077bd0c710628d5d7a1907b127421539caaa42c
+2026-04-17 06:53:18,768 - INFO - Intermediate patch for dtolnay__async-trait-105 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-105/patch.diff, now applying to container...
+2026-04-17 06:53:18,950 - INFO - >>>>> Applied Patch:
+Checking patch src/expand.rs...
+Applied patch src/expand.rs cleanly.
+
+2026-04-17 06:53:19,014 - INFO - Git diff before:
+diff --git a/src/expand.rs b/src/expand.rs
+index c72c11d..3222389 100644
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -258,7 +258,7 @@ fn transform_block(
+ 
+     let inner = format_ident!("__{}", sig.ident);
+     let args = sig.inputs.iter().enumerate().map(|(i, arg)| match arg {
+-        FnArg::Receiver(_) => quote!(self),
++        FnArg::Receiver(Receiver { self_token, .. }) => quote!(#self_token),
+         FnArg::Typed(arg) => {
+             if let Pat::Ident(PatIdent { ident, .. }) = &*arg.pat {
+                 quote!(#ident)
+2026-04-17 06:53:19,015 - INFO - Eval script for dtolnay__async-trait-105 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-105/eval.sh; copying to container...
+2026-04-17 06:55:23,327 - INFO - Test runtime: 124.16 seconds
+2026-04-17 06:55:23,328 - INFO - Test output for dtolnay__async-trait-105 written to logs/run_evaluation/gold_run1/gold/dtolnay__async-trait-105/test_output.txt
+2026-04-17 06:55:23,374 - INFO - Git diff after:
+diff --git a/src/expand.rs b/src/expand.rs
+index c72c11d..3222389 100644
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -258,7 +258,7 @@ fn transform_block(
+ 
+     let inner = format_ident!("__{}", sig.ident);
+     let args = sig.inputs.iter().enumerate().map(|(i, arg)| match arg {
+-        FnArg::Receiver(_) => quote!(self),
++        FnArg::Receiver(Receiver { self_token, .. }) => quote!(#self_token),
+         FnArg::Typed(arg) => {
+             if let Pat::Ident(PatIdent { ident, .. }) = &*arg.pat {
+                 quote!(#ident)
+2026-04-17 06:55:23,374 - INFO - Grading answer for dtolnay__async-trait-105...
+2026-04-17 06:55:23,375 - INFO - report: {'dtolnay__async-trait-105': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['issue45::tracing', 'src/lib.rs -  (line 15)', 'src/lib.rs -  (line 165)', 'src/lib.rs -  (line 126)', 'src/lib.rs -  (line 286)', 'src/lib.rs -  (line 186)', 'src/lib.rs -  (line 211)', 'src/lib.rs -  (line 265)', 'src/lib.rs -  (line 47)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for dtolnay__async-trait-105: resolved: True
+2026-04-17 06:55:23,375 - INFO - Attempting to stop container rustb.eval.dtolnay__async-trait-105.gold_run1...
+2026-04-17 06:56:01,322 - INFO - Attempting to remove container rustb.eval.dtolnay__async-trait-105.gold_run1...
+2026-04-17 06:56:01,413 - INFO - Container rustb.eval.dtolnay__async-trait-105.gold_run1 removed.
+2026-04-17 06:56:01,413 - INFO - Attempting to remove image rustbench/dtolnay__async-trait:pr-105...
+2026-04-17 06:56:04,083 - INFO - Image rustbench/dtolnay__async-trait:pr-105 removed.

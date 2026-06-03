@@ -1,0 +1,559 @@
+2026-04-17 08:45:05,165 - INFO - Environment image rustb.env.x86_64.chronotope_chrono:latest found for chronotope__chrono-320
+Building instance image rustbench/chronotope__chrono:pr-320 for chronotope__chrono-320
+2026-04-17 08:55:40,552 - INFO - Creating container for chronotope__chrono-320...
+2026-04-17 08:55:40,757 - INFO - Container for chronotope__chrono-320 created: b8f8bd011b38c9b26746399b1b7574a8eece28fa4dec4e1deb7e40ce75a4fa4f
+2026-04-17 08:55:40,946 - INFO - Container for chronotope__chrono-320 started: b8f8bd011b38c9b26746399b1b7574a8eece28fa4dec4e1deb7e40ce75a4fa4f
+2026-04-17 08:55:40,946 - INFO - Intermediate patch for chronotope__chrono-320 written to logs/run_evaluation/gold_run1/gold/chronotope__chrono-320/patch.diff, now applying to container...
+2026-04-17 08:55:41,198 - INFO - >>>>> Applied Patch:
+Checking patch src/format/mod.rs...
+Checking patch src/format/mod.rs...
+Checking patch src/format/mod.rs...
+Checking patch src/format/mod.rs...
+Checking patch src/format/mod.rs...
+Checking patch src/format/mod.rs...
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/mod.rs cleanly.
+
+2026-04-17 08:55:41,275 - INFO - Git diff before:
+diff --git a/src/format/mod.rs b/src/format/mod.rs
+index bd8337b..a0a9333 100644
+--- a/src/format/mod.rs
++++ b/src/format/mod.rs
+@@ -334,9 +334,15 @@ const BAD_FORMAT:   ParseError = ParseError(ParseErrorKind::BadFormat);
+ 
+ /// Tries to format given arguments with given formatting items.
+ /// Internally used by `DelayedFormat`.
+-pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Option<&NaiveTime>,
+-                     off: Option<&(String, FixedOffset)>, items: I) -> fmt::Result
+-        where I: Iterator<Item=Item<'a>> {
++pub fn format<'a, I>(
++    w: &mut fmt::Formatter,
++    date: Option<&NaiveDate>,
++    time: Option<&NaiveTime>,
++    off: Option<&(String, FixedOffset)>,
++    items: I,
++) -> fmt::Result
++    where I: Iterator<Item=Item<'a>>
++{
+     // full and abbreviated month and weekday names
+     static SHORT_MONTHS: [&'static str; 12] =
+         ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+@@ -348,10 +354,13 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+     static LONG_WEEKDAYS: [&'static str; 7] =
+         ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+ 
++    use std::fmt::Write;
++    let mut result = String::new();
++
+     for item in items {
+         match item {
+-            Item::Literal(s) | Item::Space(s) => try!(write!(w, "{}", s)),
+-            Item::OwnedLiteral(ref s) | Item::OwnedSpace(ref s) => try!(write!(w, "{}", s)),
++            Item::Literal(s) | Item::Space(s) => result.push_str(s),
++            Item::OwnedLiteral(ref s) | Item::OwnedSpace(ref s) => result.push_str(s),
+ 
+             Item::Numeric(spec, pad) => {
+                 use self::Numeric::*;
+@@ -398,23 +407,26 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+                     Internal(ref int) => match int._dummy {},
+                 };
+ 
++
+                 if let Some(v) = v {
+-                    if (spec == Year || spec == IsoYear) && !(0 <= v && v < 10_000) {
+-                        // non-four-digit years require an explicit sign as per ISO 8601
+-                        match pad {
+-                            Pad::None => try!(write!(w, "{:+}", v)),
+-                            Pad::Zero => try!(write!(w, "{:+01$}", v, width + 1)),
+-                            Pad::Space => try!(write!(w, "{:+1$}", v, width + 1)),
+-                        }
+-                    } else {
+-                        match pad {
+-                            Pad::None => try!(write!(w, "{}", v)),
+-                            Pad::Zero => try!(write!(w, "{:01$}", v, width)),
+-                            Pad::Space => try!(write!(w, "{:1$}", v, width)),
++                    try!(
++                        if (spec == Year || spec == IsoYear) && !(0 <= v && v < 10_000) {
++                            // non-four-digit years require an explicit sign as per ISO 8601
++                            match pad {
++                                Pad::None => write!(result, "{:+}", v),
++                                Pad::Zero => write!(result, "{:+01$}", v, width + 1),
++                                Pad::Space => write!(result, "{:+1$}", v, width + 1),
++                            }
++                        } else {
++                            match pad {
++                                Pad::None => write!(result, "{}", v),
++                                Pad::Zero => write!(result, "{:01$}", v, width),
++                                Pad::Space => write!(result, "{:1$}", v, width),
++                            }
+                         }
+-                    }
++                    )
+                 } else {
+-                    return Err(fmt::Error); // insufficient arguments for given format
++                    return Err(fmt::Error) // insufficient arguments for given format
+                 }
+             },
+ 
+@@ -423,99 +435,130 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+ 
+                 /// Prints an offset from UTC in the format of `+HHMM` or `+HH:MM`.
+                 /// `Z` instead of `+00[:]00` is allowed when `allow_zulu` is true.
+-                fn write_local_minus_utc(w: &mut fmt::Formatter, off: FixedOffset,
+-                                         allow_zulu: bool, use_colon: bool) -> fmt::Result {
++                fn write_local_minus_utc(
++                    result: &mut String,
++                    off: FixedOffset,
++                    allow_zulu: bool,
++                    use_colon: bool,
++                ) -> fmt::Result {
+                     let off = off.local_minus_utc();
+                     if !allow_zulu || off != 0 {
+                         let (sign, off) = if off < 0 {('-', -off)} else {('+', off)};
+                         if use_colon {
+-                            write!(w, "{}{:02}:{:02}", sign, off / 3600, off / 60 % 60)
++                            write!(result, "{}{:02}:{:02}", sign, off / 3600, off / 60 % 60)
+                         } else {
+-                            write!(w, "{}{:02}{:02}", sign, off / 3600, off / 60 % 60)
++                            write!(result, "{}{:02}{:02}", sign, off / 3600, off / 60 % 60)
+                         }
+                     } else {
+-                        write!(w, "Z")
++                        result.push_str("Z");
++                        Ok(())
+                     }
+                 }
+ 
+                 let ret = match spec {
+                     ShortMonthName =>
+-                        date.map(|d| write!(w, "{}", SHORT_MONTHS[d.month0() as usize])),
++                        date.map(|d| {
++                            result.push_str(SHORT_MONTHS[d.month0() as usize]);
++                            Ok(())
++                        }),
+                     LongMonthName =>
+-                        date.map(|d| write!(w, "{}", LONG_MONTHS[d.month0() as usize])),
++                        date.map(|d| {
++                            result.push_str(LONG_MONTHS[d.month0() as usize]);
++                            Ok(())
++                        }),
+                     ShortWeekdayName =>
+-                        date.map(|d| write!(w, "{}",
+-                            SHORT_WEEKDAYS[d.weekday().num_days_from_monday() as usize])),
++                        date.map(|d| {
++                            result.push_str(
++                                SHORT_WEEKDAYS[d.weekday().num_days_from_monday() as usize]
++                            );
++                            Ok(())
++                        }),
+                     LongWeekdayName =>
+-                        date.map(|d| write!(w, "{}",
+-                            LONG_WEEKDAYS[d.weekday().num_days_from_monday() as usize])),
++                        date.map(|d| {
++                            result.push_str(
++                                LONG_WEEKDAYS[d.weekday().num_days_from_monday() as usize]
++                            );
++                            Ok(())
++                        }),
+                     LowerAmPm =>
+-                        time.map(|t| write!(w, "{}", if t.hour12().0 {"pm"} else {"am"})),
++                        time.map(|t| {
++                            result.push_str(if t.hour12().0 {"pm"} else {"am"});
++                            Ok(())
++                        }),
+                     UpperAmPm =>
+-                        time.map(|t| write!(w, "{}", if t.hour12().0 {"PM"} else {"AM"})),
++                        time.map(|t| {
++                            result.push_str(if t.hour12().0 {"PM"} else {"AM"});
++                            Ok(())
++                        }),
+                     Nanosecond =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+                             if nano == 0 {
+                                 Ok(())
+                             } else if nano % 1_000_000 == 0 {
+-                                write!(w, ".{:03}", nano / 1_000_000)
++                                write!(result, ".{:03}", nano / 1_000_000)
+                             } else if nano % 1_000 == 0 {
+-                                write!(w, ".{:06}", nano / 1_000)
++                                write!(result, ".{:06}", nano / 1_000)
+                             } else {
+-                                write!(w, ".{:09}", nano)
++                                write!(result, ".{:09}", nano)
+                             }
+                         }),
+                     Nanosecond3 =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, ".{:03}", nano / 1_000_000)
++                            write!(result, ".{:03}", nano / 1_000_000)
+                         }),
+                     Nanosecond6 =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, ".{:06}", nano / 1_000)
++                            write!(result, ".{:06}", nano / 1_000)
+                         }),
+                     Nanosecond9 =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, ".{:09}", nano)
++                            write!(result, ".{:09}", nano)
+                         }),
+                     Internal(InternalFixed { val: InternalInternal::Nanosecond3NoDot }) =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, "{:03}", nano / 1_000_000)
++                            write!(result, "{:03}", nano / 1_000_000)
+                         }),
+                     Internal(InternalFixed { val: InternalInternal::Nanosecond6NoDot }) =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, "{:06}", nano / 1_000)
++                            write!(result, "{:06}", nano / 1_000)
+                         }),
+                     Internal(InternalFixed { val: InternalInternal::Nanosecond9NoDot }) =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, "{:09}", nano)
++                            write!(result, "{:09}", nano)
+                         }),
+                     TimezoneName =>
+-                        off.map(|&(ref name, _)| write!(w, "{}", *name)),
++                        off.map(|&(ref name, _)| {
++                            result.push_str(name);
++                            Ok(())
++                        }),
+                     TimezoneOffsetColon =>
+-                        off.map(|&(_, off)| write_local_minus_utc(w, off, false, true)),
++                        off.map(|&(_, off)| write_local_minus_utc(&mut result, off, false, true)),
+                     TimezoneOffsetColonZ =>
+-                        off.map(|&(_, off)| write_local_minus_utc(w, off, true, true)),
++                        off.map(|&(_, off)| write_local_minus_utc(&mut result, off, true, true)),
+                     TimezoneOffset =>
+-                        off.map(|&(_, off)| write_local_minus_utc(w, off, false, false)),
++                        off.map(|&(_, off)| write_local_minus_utc(&mut result, off, false, false)),
+                     TimezoneOffsetZ =>
+-                        off.map(|&(_, off)| write_local_minus_utc(w, off, true, false)),
++                        off.map(|&(_, off)| write_local_minus_utc(&mut result, off, true, false)),
+                     Internal(InternalFixed { val: InternalInternal::TimezoneOffsetPermissive }) =>
+                         panic!("Do not try to write %#z it is undefined"),
+                     RFC2822 => // same to `%a, %e %b %Y %H:%M:%S %z`
+                         if let (Some(d), Some(t), Some(&(_, off))) = (date, time, off) {
+                             let sec = t.second() + t.nanosecond() / 1_000_000_000;
+-                            try!(write!(w, "{}, {:2} {} {:04} {:02}:{:02}:{:02} ",
+-                                        SHORT_WEEKDAYS[d.weekday().num_days_from_monday() as usize],
+-                                        d.day(), SHORT_MONTHS[d.month0() as usize], d.year(),
+-                                        t.hour(), t.minute(), sec));
+-                            Some(write_local_minus_utc(w, off, false, false))
++                            try!(write!(
++                                result,
++                                "{}, {:2} {} {:04} {:02}:{:02}:{:02} ",
++                                SHORT_WEEKDAYS[d.weekday().num_days_from_monday() as usize],
++                                d.day(), SHORT_MONTHS[d.month0() as usize], d.year(),
++                                t.hour(), t.minute(), sec
++                            ));
++                            Some(write_local_minus_utc(&mut result, off, false, false))
+                         } else {
+                             None
+                         },
+@@ -523,8 +566,8 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+                         if let (Some(d), Some(t), Some(&(_, off))) = (date, time, off) {
+                             // reuse `Debug` impls which already print ISO 8601 format.
+                             // this is faster in this way.
+-                            try!(write!(w, "{:?}T{:?}", d, t));
+-                            Some(write_local_minus_utc(w, off, false, true))
++                            try!(write!(result, "{:?}T{:?}", d, t));
++                            Some(write_local_minus_utc(&mut result, off, false, true))
+                         } else {
+                             None
+                         },
+@@ -540,7 +583,7 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+         }
+     }
+ 
+-    Ok(())
++    w.pad(&result)
+ }
+ 
+ mod parsed;
+2026-04-17 08:55:41,275 - INFO - Eval script for chronotope__chrono-320 written to logs/run_evaluation/gold_run1/gold/chronotope__chrono-320/eval.sh; copying to container...
+2026-04-17 08:57:10,479 - INFO - Test runtime: 89.02 seconds
+2026-04-17 08:57:10,479 - INFO - Test output for chronotope__chrono-320 written to logs/run_evaluation/gold_run1/gold/chronotope__chrono-320/test_output.txt
+2026-04-17 08:57:10,525 - INFO - Git diff after:
+diff --git a/src/format/mod.rs b/src/format/mod.rs
+index bd8337b..a0a9333 100644
+--- a/src/format/mod.rs
++++ b/src/format/mod.rs
+@@ -334,9 +334,15 @@ const BAD_FORMAT:   ParseError = ParseError(ParseErrorKind::BadFormat);
+ 
+ /// Tries to format given arguments with given formatting items.
+ /// Internally used by `DelayedFormat`.
+-pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Option<&NaiveTime>,
+-                     off: Option<&(String, FixedOffset)>, items: I) -> fmt::Result
+-        where I: Iterator<Item=Item<'a>> {
++pub fn format<'a, I>(
++    w: &mut fmt::Formatter,
++    date: Option<&NaiveDate>,
++    time: Option<&NaiveTime>,
++    off: Option<&(String, FixedOffset)>,
++    items: I,
++) -> fmt::Result
++    where I: Iterator<Item=Item<'a>>
++{
+     // full and abbreviated month and weekday names
+     static SHORT_MONTHS: [&'static str; 12] =
+         ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+@@ -348,10 +354,13 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+     static LONG_WEEKDAYS: [&'static str; 7] =
+         ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+ 
++    use std::fmt::Write;
++    let mut result = String::new();
++
+     for item in items {
+         match item {
+-            Item::Literal(s) | Item::Space(s) => try!(write!(w, "{}", s)),
+-            Item::OwnedLiteral(ref s) | Item::OwnedSpace(ref s) => try!(write!(w, "{}", s)),
++            Item::Literal(s) | Item::Space(s) => result.push_str(s),
++            Item::OwnedLiteral(ref s) | Item::OwnedSpace(ref s) => result.push_str(s),
+ 
+             Item::Numeric(spec, pad) => {
+                 use self::Numeric::*;
+@@ -398,23 +407,26 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+                     Internal(ref int) => match int._dummy {},
+                 };
+ 
++
+                 if let Some(v) = v {
+-                    if (spec == Year || spec == IsoYear) && !(0 <= v && v < 10_000) {
+-                        // non-four-digit years require an explicit sign as per ISO 8601
+-                        match pad {
+-                            Pad::None => try!(write!(w, "{:+}", v)),
+-                            Pad::Zero => try!(write!(w, "{:+01$}", v, width + 1)),
+-                            Pad::Space => try!(write!(w, "{:+1$}", v, width + 1)),
+-                        }
+-                    } else {
+-                        match pad {
+-                            Pad::None => try!(write!(w, "{}", v)),
+-                            Pad::Zero => try!(write!(w, "{:01$}", v, width)),
+-                            Pad::Space => try!(write!(w, "{:1$}", v, width)),
++                    try!(
++                        if (spec == Year || spec == IsoYear) && !(0 <= v && v < 10_000) {
++                            // non-four-digit years require an explicit sign as per ISO 8601
++                            match pad {
++                                Pad::None => write!(result, "{:+}", v),
++                                Pad::Zero => write!(result, "{:+01$}", v, width + 1),
++                                Pad::Space => write!(result, "{:+1$}", v, width + 1),
++                            }
++                        } else {
++                            match pad {
++                                Pad::None => write!(result, "{}", v),
++                                Pad::Zero => write!(result, "{:01$}", v, width),
++                                Pad::Space => write!(result, "{:1$}", v, width),
++                            }
+                         }
+-                    }
++                    )
+                 } else {
+-                    return Err(fmt::Error); // insufficient arguments for given format
++                    return Err(fmt::Error) // insufficient arguments for given format
+                 }
+             },
+ 
+@@ -423,99 +435,130 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+ 
+                 /// Prints an offset from UTC in the format of `+HHMM` or `+HH:MM`.
+                 /// `Z` instead of `+00[:]00` is allowed when `allow_zulu` is true.
+-                fn write_local_minus_utc(w: &mut fmt::Formatter, off: FixedOffset,
+-                                         allow_zulu: bool, use_colon: bool) -> fmt::Result {
++                fn write_local_minus_utc(
++                    result: &mut String,
++                    off: FixedOffset,
++                    allow_zulu: bool,
++                    use_colon: bool,
++                ) -> fmt::Result {
+                     let off = off.local_minus_utc();
+                     if !allow_zulu || off != 0 {
+                         let (sign, off) = if off < 0 {('-', -off)} else {('+', off)};
+                         if use_colon {
+-                            write!(w, "{}{:02}:{:02}", sign, off / 3600, off / 60 % 60)
++                            write!(result, "{}{:02}:{:02}", sign, off / 3600, off / 60 % 60)
+                         } else {
+-                            write!(w, "{}{:02}{:02}", sign, off / 3600, off / 60 % 60)
++                            write!(result, "{}{:02}{:02}", sign, off / 3600, off / 60 % 60)
+                         }
+                     } else {
+-                        write!(w, "Z")
++                        result.push_str("Z");
++                        Ok(())
+                     }
+                 }
+ 
+                 let ret = match spec {
+                     ShortMonthName =>
+-                        date.map(|d| write!(w, "{}", SHORT_MONTHS[d.month0() as usize])),
++                        date.map(|d| {
++                            result.push_str(SHORT_MONTHS[d.month0() as usize]);
++                            Ok(())
++                        }),
+                     LongMonthName =>
+-                        date.map(|d| write!(w, "{}", LONG_MONTHS[d.month0() as usize])),
++                        date.map(|d| {
++                            result.push_str(LONG_MONTHS[d.month0() as usize]);
++                            Ok(())
++                        }),
+                     ShortWeekdayName =>
+-                        date.map(|d| write!(w, "{}",
+-                            SHORT_WEEKDAYS[d.weekday().num_days_from_monday() as usize])),
++                        date.map(|d| {
++                            result.push_str(
++                                SHORT_WEEKDAYS[d.weekday().num_days_from_monday() as usize]
++                            );
++                            Ok(())
++                        }),
+                     LongWeekdayName =>
+-                        date.map(|d| write!(w, "{}",
+-                            LONG_WEEKDAYS[d.weekday().num_days_from_monday() as usize])),
++                        date.map(|d| {
++                            result.push_str(
++                                LONG_WEEKDAYS[d.weekday().num_days_from_monday() as usize]
++                            );
++                            Ok(())
++                        }),
+                     LowerAmPm =>
+-                        time.map(|t| write!(w, "{}", if t.hour12().0 {"pm"} else {"am"})),
++                        time.map(|t| {
++                            result.push_str(if t.hour12().0 {"pm"} else {"am"});
++                            Ok(())
++                        }),
+                     UpperAmPm =>
+-                        time.map(|t| write!(w, "{}", if t.hour12().0 {"PM"} else {"AM"})),
++                        time.map(|t| {
++                            result.push_str(if t.hour12().0 {"PM"} else {"AM"});
++                            Ok(())
++                        }),
+                     Nanosecond =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+                             if nano == 0 {
+                                 Ok(())
+                             } else if nano % 1_000_000 == 0 {
+-                                write!(w, ".{:03}", nano / 1_000_000)
++                                write!(result, ".{:03}", nano / 1_000_000)
+                             } else if nano % 1_000 == 0 {
+-                                write!(w, ".{:06}", nano / 1_000)
++                                write!(result, ".{:06}", nano / 1_000)
+                             } else {
+-                                write!(w, ".{:09}", nano)
++                                write!(result, ".{:09}", nano)
+                             }
+                         }),
+                     Nanosecond3 =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, ".{:03}", nano / 1_000_000)
++                            write!(result, ".{:03}", nano / 1_000_000)
+                         }),
+                     Nanosecond6 =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, ".{:06}", nano / 1_000)
++                            write!(result, ".{:06}", nano / 1_000)
+                         }),
+                     Nanosecond9 =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, ".{:09}", nano)
++                            write!(result, ".{:09}", nano)
+                         }),
+                     Internal(InternalFixed { val: InternalInternal::Nanosecond3NoDot }) =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, "{:03}", nano / 1_000_000)
++                            write!(result, "{:03}", nano / 1_000_000)
+                         }),
+                     Internal(InternalFixed { val: InternalInternal::Nanosecond6NoDot }) =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, "{:06}", nano / 1_000)
++                            write!(result, "{:06}", nano / 1_000)
+                         }),
+                     Internal(InternalFixed { val: InternalInternal::Nanosecond9NoDot }) =>
+                         time.map(|t| {
+                             let nano = t.nanosecond() % 1_000_000_000;
+-                            write!(w, "{:09}", nano)
++                            write!(result, "{:09}", nano)
+                         }),
+                     TimezoneName =>
+-                        off.map(|&(ref name, _)| write!(w, "{}", *name)),
++                        off.map(|&(ref name, _)| {
++                            result.push_str(name);
++                            Ok(())
++                        }),
+                     TimezoneOffsetColon =>
+-                        off.map(|&(_, off)| write_local_minus_utc(w, off, false, true)),
++                        off.map(|&(_, off)| write_local_minus_utc(&mut result, off, false, true)),
+                     TimezoneOffsetColonZ =>
+-                        off.map(|&(_, off)| write_local_minus_utc(w, off, true, true)),
++                        off.map(|&(_, off)| write_local_minus_utc(&mut result, off, true, true)),
+                     TimezoneOffset =>
+-                        off.map(|&(_, off)| write_local_minus_utc(w, off, false, false)),
++                        off.map(|&(_, off)| write_local_minus_utc(&mut result, off, false, false)),
+                     TimezoneOffsetZ =>
+-                        off.map(|&(_, off)| write_local_minus_utc(w, off, true, false)),
++                        off.map(|&(_, off)| write_local_minus_utc(&mut result, off, true, false)),
+                     Internal(InternalFixed { val: InternalInternal::TimezoneOffsetPermissive }) =>
+                         panic!("Do not try to write %#z it is undefined"),
+                     RFC2822 => // same to `%a, %e %b %Y %H:%M:%S %z`
+                         if let (Some(d), Some(t), Some(&(_, off))) = (date, time, off) {
+                             let sec = t.second() + t.nanosecond() / 1_000_000_000;
+-                            try!(write!(w, "{}, {:2} {} {:04} {:02}:{:02}:{:02} ",
+-                                        SHORT_WEEKDAYS[d.weekday().num_days_from_monday() as usize],
+-                                        d.day(), SHORT_MONTHS[d.month0() as usize], d.year(),
+-                                        t.hour(), t.minute(), sec));
+-                            Some(write_local_minus_utc(w, off, false, false))
++                            try!(write!(
++                                result,
++                                "{}, {:2} {} {:04} {:02}:{:02}:{:02} ",
++                                SHORT_WEEKDAYS[d.weekday().num_days_from_monday() as usize],
++                                d.day(), SHORT_MONTHS[d.month0() as usize], d.year(),
++                                t.hour(), t.minute(), sec
++                            ));
++                            Some(write_local_minus_utc(&mut result, off, false, false))
+                         } else {
+                             None
+                         },
+@@ -523,8 +566,8 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+                         if let (Some(d), Some(t), Some(&(_, off))) = (date, time, off) {
+                             // reuse `Debug` impls which already print ISO 8601 format.
+                             // this is faster in this way.
+-                            try!(write!(w, "{:?}T{:?}", d, t));
+-                            Some(write_local_minus_utc(w, off, false, true))
++                            try!(write!(result, "{:?}T{:?}", d, t));
++                            Some(write_local_minus_utc(&mut result, off, false, true))
+                         } else {
+                             None
+                         },
+@@ -540,7 +583,7 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+         }
+     }
+ 
+-    Ok(())
++    w.pad(&result)
+ }
+ 
+ mod parsed;
+2026-04-17 08:57:10,525 - INFO - Grading answer for chronotope__chrono-320...
+2026-04-17 08:57:10,526 - INFO - report: {'chronotope__chrono-320': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['datetime::tests::test_datetime_format_alignment'], 'failure': []}, 'PASS_TO_PASS': {'success': ['datetime::rustc_serialize::test_encodable', 'datetime::rustc_serialize::test_decodable_timestamps', 'datetime::serde::test_serde_bincode', 'datetime::serde::test_serde_serialize', 'datetime::test_auto_conversion', 'datetime::tests::test_datetime_date_and_time', 'datetime::rustc_serialize::test_decodable', 'datetime::serde::test_serde_deserialize', 'datetime::tests::test_datetime_is_copy', 'datetime::tests::test_datetime_format_with_local', 'datetime::tests::test_datetime_from_str', 'datetime::tests::test_datetime_is_send', 'datetime::tests::test_datetime_offset', 'datetime::tests::test_datetime_parse_from_str', 'datetime::tests::test_datetime_with_timezone', 'datetime::tests::test_from_system_time', 'datetime::tests::test_subsecond_part', 'div::tests::test_div_mod_floor', 'div::tests::test_mod_floor', 'datetime::tests::test_datetime_rfc2822_and_rfc3339', 'datetime::tests::test_rfc3339_opts', 'datetime::tests::test_rfc3339_opts_nonexhaustive', 'format::parsed::tests::test_parsed_set_fields', 'format::parse::parse_rfc850', 'format::parse::test_rfc2822', 'format::parsed::tests::test_parsed_to_datetime_with_timezone', 'format::parsed::tests::test_parsed_to_datetime', 'format::parsed::tests::test_parsed_to_naive_time', 'format::parse::test_rfc3339', 'naive::date::rustc_serialize::test_encodable', 'format::strftime::test_strftime_items', 'naive::date::serde::test_serde_serialize', 'naive::date::serde::test_serde_bincode', 'naive::date::test_date_bounds', 'naive::date::tests::test_date_add', 'format::parsed::tests::test_parsed_to_naive_datetime_with_offset', 'naive::date::tests::test_date_addassignment', 'naive::date::rustc_serialize::test_decodable', 'naive::date::serde::test_serde_deserialize', 'naive::date::tests::test_date_fields', 'format::parsed::tests::test_parsed_to_naive_date', 'naive::date::tests::test_date_from_isoywd', 'naive::date::tests::test_date_fmt', 'naive::date::tests::test_date_from_ymd', 'naive::date::tests::test_date_from_yo', 'naive::date::tests::test_date_format', 'format::strftime::test_strftime_docs', 'naive::date::tests::test_date_from_str', 'naive::date::tests::test_date_sub', 'naive::date::tests::test_date_parse_from_str', 'naive::date::tests::test_date_pred', 'naive::date::tests::test_date_weekday', 'format::parse::test_parse', 'naive::date::tests::test_date_subassignment', 'naive::date::tests::test_date_succ', 'naive::date::tests::test_date_with_fields', 'naive::datetime::rustc_serialize::test_decodable_timestamps', 'naive::datetime::serde::test_serde_bincode', 'naive::datetime::rustc_serialize::test_encodable', 'naive::datetime::tests::test_datetime_add_sub_invariant', 'naive::datetime::serde::test_serde_serialize', 'naive::datetime::tests::test_datetime_add', 'naive::datetime::tests::test_datetime_addassignment', 'naive::datetime::tests::test_datetime_format', 'naive::datetime::tests::test_datetime_from_timestamp', 'naive::datetime::tests::test_datetime_from_str', 'naive::datetime::tests::test_datetime_sub', 'naive::datetime::serde::test_serde_deserialize', 'naive::datetime::tests::test_datetime_subassignment', 'naive::datetime::tests::test_datetime_timestamp', 'naive::datetime::tests::test_datetime_parse_from_str', 'naive::datetime::tests::test_nanosecond_range', 'naive::datetime::rustc_serialize::test_decodable', 'naive::internals::tests::test_of_isoweekdate_raw', 'naive::internals::tests::test_of_fields', 'naive::internals::tests::test_year_flags_ndays_from_year', 'naive::internals::tests::test_year_flags_nisoweeks', 'naive::isoweek::tests::test_iso_week_extremes', 'naive::internals::tests::test_mdf_fields', 'naive::time::rustc_serialize::test_encodable', 'naive::time::serde::test_serde_bincode', 'naive::time::rustc_serialize::test_decodable', 'naive::internals::tests::test_of', 'naive::time::serde::test_serde_serialize', 'naive::time::tests::test_time_addassignment', 'naive::time::tests::test_time_add', 'naive::internals::tests::test_of_weekday', 'naive::time::serde::test_serde_deserialize', 'naive::time::tests::test_time_from_hms_milli', 'naive::time::tests::test_time_fmt', 'naive::time::tests::test_date_from_str', 'naive::time::tests::test_time_from_hms_micro', 'naive::internals::tests::test_mdf_to_of', 'naive::time::tests::test_time_hms', 'naive::time::tests::test_time_format', 'naive::time::tests::test_time_overflowing_add', 'naive::time::tests::test_time_sub', 'naive::internals::tests::test_mdf_to_of_to_mdf', 'naive::time::tests::test_time_parse_from_str', 'naive::time::tests::test_time_subassignment', 'offset::fixed::tests::test_date_extreme_offset', 'naive::internals::tests::test_of_to_mdf', 'naive::internals::tests::test_of_to_mdf_to_of', 'offset::local::tests::test_leap_second', 'offset::local::tests::test_local_date_sanity_check', 'offset::tests::test_nanos_never_panics', 'offset::tests::test_negative_millis', 'offset::tests::test_negative_nanos', 'round::tests::test_round_leap_nanos', 'round::tests::test_round', 'round::tests::test_trunc', 'round::tests::test_trunc_leap_nanos', 'weekday_serde::test_serde_deserialize', 'weekday_serde::test_serde_serialize', 'naive::internals::tests::test_of_with_fields', 'naive::date::tests::test_date_from_num_days_from_ce', 'naive::date::tests::test_date_num_days_from_ce', 'naive::internals::tests::test_mdf_with_fields', 'naive::internals::tests::test_mdf_valid', 'naive::date::tests::test_date_from_isoywd_and_iso_week', 'test_readme_doomsday', 'src/lib.rs -  (line 44)', 'src/lib.rs -  (line 51)', 'src/lib.rs -  (line 114)', 'src/naive/date.rs - naive::date::NaiveDate::from_ymd_opt (line 172)', 'src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 447)', 'src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 438)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_nano_opt (line 660)', 'src/naive/date.rs - naive::date::NaiveDate::from_yo_opt (line 220)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_milli_opt (line 558)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_micro_opt (line 609)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_opt (line 510)', 'src/naive/date.rs - naive::date::NaiveDate::ordinal0 (line 1115)', 'src/naive/date.rs - naive::date::NaiveDate::ordinal (line 1076)', 'src/naive/date.rs - naive::date::NaiveDate::month0 (line 1002)', 'src/naive/date.rs - naive::date::NaiveDate::month (line 985)', 'src/naive/date.rs - naive::date::NaiveDate::from_isoywd_opt (line 271)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms (line 486)', 'src/datetime.rs - datetime::DateTime<Tz>::from_utc (line 69)', 'src/naive/date.rs - naive::date::NaiveDate::day0 (line 1059)', 'src/naive/date.rs - naive::date::NaiveDate::checked_sub_signed (line 826)', 'src/lib.rs - Datelike::num_days_from_ce (line 892)', 'src/naive/date.rs - naive::date::NaiveDate::day (line 1030)', 'src/naive/date.rs - naive::date::NaiveDate::from_num_days_from_ce (line 360)', 'src/naive/date.rs - naive::date::NaiveDate (line 1490)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_nano (line 635)', 'src/naive/date.rs - naive::date::NaiveDate (line 1399)', 'src/naive/date.rs - naive::date::NaiveDate::day (line 1019)', 'src/naive/date.rs - naive::date::NaiveDate::from_isoywd_opt (line 288)', 'src/naive/date.rs - naive::date::NaiveDate::pred_opt (line 771)', 'src/naive/date.rs - naive::date::NaiveDate::pred (line 753)', 'src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 429)', 'src/naive/date.rs - naive::date::NaiveDate::and_time (line 462)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_milli (line 533)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_micro (line 584)', 'src/naive/date.rs - naive::date::NaiveDate::ordinal (line 1087)', 'src/naive/date.rs - naive::date::NaiveDate::succ (line 716)', 'src/naive/date.rs - naive::date::NaiveDate::succ_opt (line 734)', 'src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 416)', 'src/naive/date.rs - naive::date::NaiveDate::from_num_days_from_ce_opt (line 388)', 'src/datetime.rs - datetime::DateTime<FixedOffset>::parse_from_str (line 348)', 'src/naive/date.rs - naive::date::NaiveDate (line 1476)', 'src/naive/date.rs - naive::date::NaiveDate (line 1431)', 'src/datetime.rs - datetime::DateTime<Tz>::timestamp_millis (line 111)', 'src/naive/date.rs - naive::date::NaiveDate (line 1441)', 'src/naive/date.rs - naive::date::NaiveDate::from_isoywd (line 246)', 'src/datetime.rs - datetime::DateTime<Tz>::timestamp_nanos (line 135)', 'src/naive/date.rs - naive::date::NaiveDate (line 1466)', 'src/naive/date.rs - naive::date::NaiveDate::checked_add_signed (line 790)', 'src/naive/date.rs - naive::date::NaiveDate (line 1355)', 'src/naive/date.rs - naive::date::NaiveDate::from_ymd (line 148)', 'src/naive/date.rs - naive::date::NaiveDate::with_day (line 1224)', 'src/naive/date.rs - naive::date::NaiveDate::from_yo (line 196)', 'src/naive/date.rs - naive::date::NaiveDate (line 1313)', 'src/naive/date.rs - naive::date::NaiveDate::from_num_days_from_ce (line 340)', 'src/lib.rs -  (line 126)', 'src/lib.rs -  (line 260)', 'src/naive/date.rs - naive::date::NaiveDate::signed_duration_since (line 864)', 'src/naive/date.rs - naive::date::NaiveDate::weekday (line 1130)', 'src/naive/date.rs - naive::date::NaiveDate::with_day0 (line 1243)', 'src/lib.rs -  (line 160)', 'src/datetime.rs - datetime::serde::ts_seconds::serialize (line 1276)', 'src/datetime.rs - datetime::serde::ts_nanoseconds::serialize (line 982)', 'src/naive/date.rs - naive::date::NaiveDate::with_ordinal (line 1262)', 'src/datetime.rs - datetime::serde::ts_milliseconds::serialize (line 1129)', 'src/naive/date.rs - naive::date::NaiveDate::with_year (line 1163)', 'src/datetime.rs - datetime::serde::ts_milliseconds::deserialize (line 1167)', 'src/datetime.rs - datetime::DateTime<Tz>::to_rfc3339_opts (line 384)', 'src/naive/date.rs - naive::date::NaiveDate::format (line 951)', 'src/lib.rs -  (line 304)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 31)', 'src/datetime.rs - datetime::serde::ts_nanoseconds::deserialize (line 1020)', 'src/lib.rs -  (line 323)', 'src/naive/date.rs - naive::date::NaiveDate::format (line 941)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::second (line 1051)', 'src/lib.rs -  (line 215)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 152)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::from_timestamp (line 94)', 'src/naive/date.rs - naive::date::NaiveDate::format_with_items (line 912)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 200)', 'src/naive/date.rs - naive::date::NaiveDate::format_with_items (line 900)', 'src/datetime.rs - datetime::serde::ts_seconds::deserialize (line 1314)', 'src/naive/date.rs - naive::date::NaiveDate::with_year (line 1152)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1408)', 'src/naive/date.rs - naive::date::NaiveDate::with_month0 (line 1205)', 'src/naive/date.rs - naive::date::NaiveDate::year (line 968)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_add_signed (line 416)', 'src/naive/date.rs - naive::date::NaiveDate::with_ordinal0 (line 1286)', 'src/datetime.rs - datetime::serde::ts_milliseconds (line 1084)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::time (line 232)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 165)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 176)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::signed_duration_since (line 605)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_subsec_nanos (line 391)', 'src/datetime.rs - datetime::serde::ts_nanoseconds (line 937)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::month0 (line 737)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::month (line 718)', 'src/naive/date.rs - naive::date::NaiveDate::with_month (line 1186)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 186)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::weekday (line 830)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_sub_signed (line 530)', 'src/datetime.rs - datetime::serde::ts_seconds (line 1231)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1455)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_sub_signed (line 502)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::from_timestamp_opt (line 122)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1345)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_add_signed (line 456)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1430)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::date (line 217)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1228)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::ordinal0 (line 813)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::day0 (line 775)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::day (line 756)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_millis (line 285)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::minute (line 1034)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 42)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_minute (line 1113)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1439)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_subsec_micros (line 370)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_subsec_millis (line 349)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_day (line 920)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp (line 250)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_month (line 876)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1399)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_add_signed (line 444)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::new (line 63)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::nanosecond (line 1071)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::format (line 680)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1365)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::hour (line 1017)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1300)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1274)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_nanos (line 320)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::format (line 670)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1202)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_sub_signed (line 542)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek::year (line 51)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_ordinal (line 962)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::ordinal (line 794)', 'src/naive/time.rs - naive::time::NaiveTime (line 1035)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek (line 123)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_nanosecond (line 1162)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_day0 (line 941)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek (line 113)', 'src/naive/time.rs - naive::time::NaiveTime (line 1107)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_second (line 1137)', 'src/naive/time.rs - naive::time::NaiveTime (line 1095)', 'src/naive/time.rs - naive::time::NaiveTime (line 1220)', 'src/naive/time.rs - naive::time::NaiveTime::from_num_seconds_from_midnight_opt (line 415)', 'src/naive/time.rs - naive::time::NaiveTime (line 1173)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_hour (line 1091)', 'src/naive/time.rs - naive::time::NaiveTime (line 1002)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_nano_opt (line 363)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_micro (line 289)', 'src/naive/time.rs - naive::time::NaiveTime (line 1209)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_opt (line 213)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::signed_duration_since (line 584)', 'src/naive/time.rs - naive::time::NaiveTime (line 1270)', 'src/naive/time.rs - naive::time::NaiveTime (line 1283)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms (line 190)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_month0 (line 898)', 'src/naive/time.rs - naive::time::NaiveTime (line 1077)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::format_with_items (line 641)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_milli_opt (line 261)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek::week (line 78)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek::week0 (line 95)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_milli (line 238)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek::year (line 61)', 'src/naive/time.rs - naive::time::NaiveTime::hour (line 784)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 488)', 'src/naive/time.rs - naive::time::NaiveTime (line 1259)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::year (line 699)', 'src/naive/time.rs - naive::time::NaiveTime (line 147)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_nano (line 340)', 'src/naive/time.rs - naive::time::NaiveTime (line 1022)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_micro_opt (line 312)', 'src/naive/datetime.rs - naive::datetime::serde::ts_nanoseconds::serialize (line 1764)', 'src/naive/time.rs - naive::time::NaiveTime::minute (line 799)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_year (line 855)', 'src/naive/time.rs - naive::time::NaiveTime::nanosecond (line 842)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_ordinal0 (line 990)', 'src/naive/time.rs - naive::time::NaiveTime::with_minute (line 890)', 'src/naive/time.rs - naive::time::NaiveTime::from_num_seconds_from_midnight (line 392)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 451)', 'src/naive/time.rs - naive::time::NaiveTime::num_seconds_from_midnight (line 964)', 'src/naive/time.rs - naive::time::NaiveTime::with_nanosecond (line 948)', 'src/naive/time.rs - naive::time::NaiveTime::with_nanosecond (line 934)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 462)', 'src/naive/time.rs - naive::time::NaiveTime::with_hour (line 870)', 'src/naive/datetime.rs - naive::datetime::serde::ts_milliseconds::serialize (line 1909)', 'src/naive/time.rs - naive::time::NaiveTime::second (line 814)', 'src/naive/time.rs - naive::time::NaiveTime (line 60)', 'src/offset/local.rs - offset::local::Local (line 74)', 'src/naive/time.rs - naive::time::NaiveTime::format (line 748)', 'src/offset/mod.rs - offset::TimeZone::timestamp_millis_opt (line 368)', 'src/naive/time.rs - naive::time::NaiveTime::overflowing_add_signed (line 506)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::format_with_items (line 629)', 'src/naive/time.rs - naive::time::NaiveTime::with_second (line 912)', 'src/naive/time.rs - naive::time::NaiveTime (line 1151)', 'src/offset/mod.rs - offset::TimeZone::timestamp_nanos (line 392)', 'src/naive/time.rs - naive::time::NaiveTime (line 161)', 'src/naive/time.rs - naive::time::NaiveTime::overflowing_sub_signed (line 592)', 'src/offset/mod.rs - offset::TimeZone::timestamp (line 319)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 438)', 'src/naive/time.rs - naive::time::NaiveTime::signed_duration_since (line 625)', 'src/offset/mod.rs - offset::TimeZone::timestamp_millis (line 349)', 'src/round.rs - round::SubsecRound::trunc_subsecs (line 32)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 472)', 'src/naive/datetime.rs - naive::datetime::serde::ts_seconds::deserialize (line 2094)', 'src/naive/time.rs - naive::time::NaiveTime::signed_duration_since (line 655)', 'src/offset/utc.rs - offset::utc::Utc (line 24)', 'src/offset/mod.rs - offset::TimeZone::ymd_opt (line 227)', 'src/naive/datetime.rs - naive::datetime::serde::ts_seconds::serialize (line 2054)', 'src/offset/mod.rs - offset::TimeZone::yo (line 250)', 'src/round.rs - round::SubsecRound::round_subsecs (line 20)', 'src/offset/mod.rs - offset::TimeZone::ymd (line 208)', 'src/naive/time.rs - naive::time::NaiveTime::format_with_items (line 707)', 'src/naive/datetime.rs - naive::datetime::serde::ts_nanoseconds::deserialize (line 1804)', 'src/offset/mod.rs - offset::TimeZone::isoywd (line 285)', 'src/naive/time.rs - naive::time::NaiveTime::format (line 759)', 'src/naive/time.rs - naive::time::NaiveTime::nanosecond (line 853)', 'src/naive/time.rs - naive::time::NaiveTime::format_with_items (line 719)', 'src/naive/time.rs - naive::time::NaiveTime::second (line 825)', 'src/naive/datetime.rs - naive::datetime::serde::ts_milliseconds::deserialize (line 1949)', 'src/naive/datetime.rs - naive::datetime::serde::ts_nanoseconds (line 1721)', 'src/offset/fixed.rs - offset::fixed::FixedOffset::east (line 35)', 'src/offset/fixed.rs - offset::fixed::FixedOffset::west (line 65)', 'src/naive/datetime.rs - naive::datetime::serde::ts_milliseconds (line 1866)', 'src/naive/datetime.rs - naive::datetime::serde::ts_seconds (line 2011)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for chronotope__chrono-320: resolved: True
+2026-04-17 08:57:10,526 - INFO - Attempting to stop container rustb.eval.chronotope__chrono-320.gold_run1...
+2026-04-17 08:57:26,862 - INFO - Attempting to remove container rustb.eval.chronotope__chrono-320.gold_run1...
+2026-04-17 08:57:27,410 - INFO - Container rustb.eval.chronotope__chrono-320.gold_run1 removed.
+2026-04-17 08:57:27,410 - INFO - Attempting to remove image rustbench/chronotope__chrono:pr-320...
+2026-04-17 08:57:29,373 - INFO - Image rustbench/chronotope__chrono:pr-320 removed.

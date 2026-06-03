@@ -1,0 +1,407 @@
+diff --git a/book/src/config.md b/book/src/config.md
+--- a/book/src/config.md
++++ b/book/src/config.md
+@@ -67,17 +67,19 @@ If you delete the key, generate-ci will just use the version of cargo-dist that'
+ 
+ ### rust-toolchain-version
+ 
+-> since 0.0.3
++> since 0.0.3 (deprecated in 0.1.0)
+ 
+ Example: `rust-toolchain-version = "1.67.1"` 
+ 
++> Deprecation reason: [rust-toolchain.toml](https://rust-lang.github.io/rustup/overrides.html#the-toolchain-file) is a more standard/universal mechanism for pinning toolchain versions for reproducibility. Teams without dedicated release engineers will likely benefit from unpinning their toolchain and letting the underlying CI vendor silently update them to "some recent stable toolchain", as they will get updates/improvements and are unlikely to have regressions.
++
+ **This can only be set globally**
+ 
+ This is added automatically by `cargo dist init`, recorded for the sake of reproducibility and documentation. It represents the "ideal" Rust toolchain to build your project with. This is in contrast to the builtin Cargo [rust-version][] which is used to specify the *minimum* supported Rust version. When you run [generate-ci][] the resulting CI scripts will install that version of the Rust toolchain with [rustup][]. There's nothing special about the chosen value, it's just a hardcoded "recent stable version".
+ 
+ The syntax must be a valid rustup toolchain like "1.60.0" or "stable" (should not specify the platform, we want to install this toolchain on all platforms).
+ 
+-If you delete the key, generate-ci will just use "stable" which will drift over time as new stable releases occur.
++If you delete the key, generate-ci won't explicitly setup a toolchain, so whatever's on the machine will be used (with things like rust-toolchain.toml behaving as normal). Before being deprecated the default was to `rustup update stable`, but this is no longer the case.
+ 
+ ### ci
+ 
+diff --git a/cargo-dist-schema/cargo-dist-json-schema.json b/cargo-dist-schema/cargo-dist-json-schema.json
+--- a/cargo-dist-schema/cargo-dist-json-schema.json
++++ b/cargo-dist-schema/cargo-dist-json-schema.json
+@@ -57,6 +57,17 @@
+       "items": {
+         "$ref": "#/definitions/Release"
+       }
++    },
++    "system_info": {
++      "description": "Info about the toolchain used to build this announcement",
++      "anyOf": [
++        {
++          "$ref": "#/definitions/SystemInfo"
++        },
++        {
++          "type": "null"
++        }
++      ]
+     }
+   },
+   "definitions": {
+diff --git a/cargo-dist-schema/src/lib.rs b/cargo-dist-schema/src/lib.rs
+--- a/cargo-dist-schema/src/lib.rs
++++ b/cargo-dist-schema/src/lib.rs
+@@ -53,6 +53,10 @@ pub struct DistManifest {
+     #[serde(default)]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub announcement_github_body: Option<String>,
++    /// Info about the toolchain used to build this announcement
++    #[serde(default)]
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub system_info: Option<SystemInfo>,
+     /// App releases we're distributing
+     #[serde(default)]
+     #[serde(skip_serializing_if = "Vec::is_empty")]
+diff --git a/cargo-dist-schema/src/lib.rs b/cargo-dist-schema/src/lib.rs
+--- a/cargo-dist-schema/src/lib.rs
++++ b/cargo-dist-schema/src/lib.rs
+@@ -247,6 +271,7 @@ impl DistManifest {
+             announcement_title: None,
+             announcement_changelog: None,
+             announcement_github_body: None,
++            system_info: None,
+             releases,
+             artifacts,
+         }
+diff --git a/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap b/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+--- a/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
++++ b/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+@@ -61,6 +61,17 @@ expression: json_schema
+       "items": {
+         "$ref": "#/definitions/Release"
+       }
++    },
++    "system_info": {
++      "description": "Info about the toolchain used to build this announcement",
++      "anyOf": [
++        {
++          "$ref": "#/definitions/SystemInfo"
++        },
++        {
++          "type": "null"
++        }
++      ]
+     }
+   },
+   "definitions": {
+diff --git a/cargo-dist/src/ci.rs b/cargo-dist/src/ci.rs
+--- a/cargo-dist/src/ci.rs
++++ b/cargo-dist/src/ci.rs
+@@ -39,7 +39,7 @@ pub fn generate_github_ci(dist: &DistGraph) -> Result<(), miette::Report> {
+ /// Write the Github CI to something
+ fn write_github_ci<W: std::io::Write>(f: &mut W, dist: &DistGraph) -> Result<(), std::io::Error> {
+     // If they don't specify a Rust version, just go for "stable"
+-    let rust_version = dist.desired_rust_toolchain.as_deref().unwrap_or("stable");
++    let rust_version = dist.desired_rust_toolchain.as_deref();
+ 
+     // If they don't specify a cargo-dist version, use this one
+     let self_dist_version = SELF_DIST_VERSION.parse().unwrap();
+diff --git a/cargo-dist/src/ci.rs b/cargo-dist/src/ci.rs
+--- a/cargo-dist/src/ci.rs
++++ b/cargo-dist/src/ci.rs
+@@ -58,14 +58,22 @@ fn write_github_ci<W: std::io::Write>(f: &mut W, dist: &DistGraph) -> Result<(),
+         local_targets.extend(release.targets.iter());
+     }
+ 
+-    // Install Rust with rustup
++    // Install Rust with rustup (deprecated, use rust-toolchain.toml)
+     //
+     // We pass --no-self-update to work around https://github.com/rust-lang/rustup/issues/2441
+     //
+-    // FIXME(#127): we get some warnings from Github about hardcoded rust tools being on PATH
+-    // that are shadowing the rustup ones? Look into this!
+-    let install_rust =
+-        format!("rustup update {rust_version} --no-self-update && rustup default {rust_version}");
++    // If not specified we just let default toolchains on the system be used
++    // (rust-toolchain.toml will override things automagically if the system uses rustup,
++    // because rustup intercepts all commands like `cargo` and `rustc` to reselect the toolchain)
++    let install_rust = rust_version
++        .map(|rust_version| {
++            format!(
++                r#"
++      - name: Install Rust
++        run: rustup update {rust_version} --no-self-update && rustup default {rust_version}"#
++            )
++        })
++        .unwrap_or(String::new());
+ 
+     // Get the platform-specific installation methods
+     let install_dist_sh = install_dist_sh_for_version(dist_version);
+diff --git a/cargo-dist/src/lib.rs b/cargo-dist/src/lib.rs
+--- a/cargo-dist/src/lib.rs
++++ b/cargo-dist/src/lib.rs
+@@ -125,6 +125,9 @@ fn build_manifest(cfg: &Config, dist: &DistGraph) -> DistManifest {
+     manifest.announcement_title = dist.announcement_title.clone();
+     manifest.announcement_changelog = dist.announcement_changelog.clone();
+     manifest.announcement_github_body = dist.announcement_github_body.clone();
++    manifest.system_info = Some(cargo_dist_schema::SystemInfo {
++        cargo_version_line: dist.tools.cargo.version_line.clone(),
++    });
+     manifest
+ }
+ 
+diff --git a/cargo-dist/src/lib.rs b/cargo-dist/src/lib.rs
+--- a/cargo-dist/src/lib.rs
++++ b/cargo-dist/src/lib.rs
+@@ -315,7 +318,7 @@ fn build_cargo_target(dist_graph: &DistGraph, target: &CargoBuildStep) -> Result
+         target.target_triple, target.profile
+     );
+ 
+-    let mut command = Command::new(&dist_graph.cargo);
++    let mut command = Command::new(&dist_graph.tools.cargo.cmd);
+     command
+         .arg("build")
+         .arg("--profile")
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -113,7 +113,7 @@ pub struct DistMetadata {
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub cargo_dist_version: Option<Version>,
+ 
+-    /// The intended version of Rust/Cargo to build with (rustup toolchain syntax)
++    /// (deprecated) The intended version of Rust/Cargo to build with (rustup toolchain syntax)
+     ///
+     /// When generating full tasks graphs (such as CI scripts) we will pick this version.
+     #[serde(rename = "rust-toolchain-version")]
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -352,9 +352,9 @@ pub struct DistGraph {
+     /// Whether it looks like `cargo dist init` has been run
+     pub is_init: bool,
+ 
+-    // Some simple global facts
+-    /// The executable cargo told us to find itself at.
+-    pub cargo: String,
++    /// Info about the tools we're using to build
++    pub tools: Tools,
++
+     /// The cargo target dir.
+     pub target_dir: Utf8PathBuf,
+     /// The root directory of the current cargo workspace.
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -365,11 +365,6 @@ pub struct DistGraph {
+     pub desired_cargo_dist_version: Option<Version>,
+     /// The desired rust toolchain for handling this project
+     pub desired_rust_toolchain: Option<String>,
+-    /// The desired ci backends for this project
+-    pub tools: Tools,
+-    /// The target triple of the current system
+-    pub host_target: String,
+-
+     /// Styles of CI we want to support
+     pub ci_style: Vec<CiStyle>,
+     /// The git tag used for the announcement (e.g. v1.0.0)
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -400,12 +395,25 @@ pub struct DistGraph {
+ }
+ 
+ /// Various tools we have found installed on the system
+-#[derive(Debug, Clone, Default)]
++#[derive(Debug, Clone)]
+ pub struct Tools {
++    /// Info on cargo, which must exist
++    pub cargo: CargoInfo,
+     /// rustup, useful for getting specific toolchains
+     pub rustup: Option<Tool>,
+ }
+ 
++/// Info about the cargo toolchain we're using
++#[derive(Debug, Clone)]
++pub struct CargoInfo {
++    /// The path/command used to refer to cargo (usually from the CARGO env var)
++    pub cmd: String,
++    /// The first line of running cargo with `-vV`, should be version info
++    pub version_line: Option<String>,
++    /// The host target triple (obtained from `-vV`)
++    pub host_target: String,
++}
++
+ /// A tool we have found installed on the system
+ #[derive(Debug, Clone, Default)]
+ pub struct Tool {
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -904,10 +912,9 @@ struct DistGraphBuilder<'pkg_graph> {
+ 
+ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+     fn new(
+-        cargo: String,
++        tools: Tools,
+         workspace: &'pkg_graph WorkspaceInfo,
+         artifact_mode: ArtifactMode,
+-        host_target: String,
+     ) -> Self {
+         let target_dir = workspace.target_dir.clone();
+         let workspace_dir = workspace.workspace_dir.clone();
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -918,6 +925,9 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         workspace_metadata.make_relative_to(&workspace.workspace_dir);
+         let desired_cargo_dist_version = workspace_metadata.cargo_dist_version.clone();
+         let desired_rust_toolchain = workspace_metadata.rust_toolchain_version.clone();
++        if desired_rust_toolchain.is_some() {
++            warn!("rust-toolchain-version is deprecated, use rust-toolchain.toml if you want pinned toolchains");
++        }
+ 
+         let mut package_metadata = vec![];
+         for package in &workspace.package_info {
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -942,14 +952,12 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         Self {
+             inner: DistGraph {
+                 is_init: dist_profile.is_some(),
+-                cargo,
+                 target_dir,
+                 workspace_dir,
+                 dist_dir,
+                 desired_cargo_dist_version,
+                 desired_rust_toolchain,
+-                tools: Tools::default(),
+-                host_target,
++                tools,
+                 announcement_tag: None,
+                 announcement_is_prerelease: false,
+                 announcement_changelog: None,
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -1678,8 +1686,8 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             // If we're trying to cross-compile on macOS, ensure the rustup toolchain
+             // is setup!
+             if target.ends_with("apple-darwin")
+-                && self.inner.host_target.ends_with("apple-darwin")
+-                && target != self.inner.host_target
++                && self.inner.tools.cargo.host_target.ends_with("apple-darwin")
++                && target != self.inner.tools.cargo.host_target
+             {
+                 if let Some(rustup) = self.inner.tools.rustup.clone() {
+                     builds.push(BuildStep::Rustup(RustupStep {
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -1960,11 +1968,9 @@ impl DistGraph {
+ /// Precompute all the work this invocation will need to do
+ pub fn gather_work(cfg: &Config) -> Result<DistGraph> {
+     eprintln!("analyzing workspace:");
+-    let cargo = cargo()?;
++    let tools = tool_info()?;
+     let workspace = crate::get_project()?;
+-    let host_target = get_host_target(&cargo)?;
+-    let mut graph = DistGraphBuilder::new(cargo, &workspace, cfg.artifact_mode, host_target);
+-    graph.inner.tools = tool_info();
++    let mut graph = DistGraphBuilder::new(tools, &workspace, cfg.artifact_mode);
+ 
+     // First thing's first: if they gave us an announcement tag then we should try to parse it
+     let mut announcing_package = None;
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -2021,7 +2027,7 @@ pub fn gather_work(cfg: &Config) -> Result<DistGraph> {
+     }
+ 
+     // If no targets were specified, just use the host target
+-    let host_target_triple = [graph.inner.host_target.clone()];
++    let host_target_triple = [graph.inner.tools.cargo.host_target.clone()];
+     // If all targets specified, union together the targets our packages support
+     // Note that this uses BTreeSet as an intermediate to make the order stable
+     let all_target_triples = graph
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -2314,8 +2320,8 @@ pub fn cargo() -> Result<String> {
+ }
+ 
+ /// Get the host target triple from cargo
+-pub fn get_host_target(cargo: &str) -> Result<String> {
+-    let mut command = Command::new(cargo);
++pub fn get_host_target(cargo: String) -> Result<CargoInfo> {
++    let mut command = Command::new(&cargo);
+     command.arg("-vV");
+     info!("exec: {:?}", command);
+     let output = command
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -2325,10 +2331,16 @@ pub fn get_host_target(cargo: &str) -> Result<String> {
+     let output = String::from_utf8(output.stdout)
+         .into_diagnostic()
+         .wrap_err("'cargo -vV' wasn't utf8? Really?")?;
+-    for line in output.lines() {
++    let mut lines = output.lines();
++    let version_line = lines.next().map(|s| s.to_owned());
++    for line in lines {
+         if let Some(target) = line.strip_prefix("host: ") {
+             info!("host target is {target}");
+-            return Ok(target.to_owned());
++            return Ok(CargoInfo {
++                cmd: cargo,
++                version_line,
++                host_target: target.to_owned(),
++            });
+         }
+     }
+     Err(miette!(
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -2461,10 +2473,13 @@ fn try_extract_changelog_unreleased(
+     Some((title, release_notes.notes.to_string()))
+ }
+ 
+-fn tool_info() -> Tools {
+-    Tools {
++fn tool_info() -> Result<Tools> {
++    let cargo_cmd = cargo()?;
++    let cargo = get_host_target(cargo_cmd)?;
++    Ok(Tools {
++        cargo,
+         rustup: find_tool("rustup"),
+-    }
++    })
+ }
+ 
+ fn find_tool(name: &str) -> Option<Tool> {
+diff --git a/cargo-dist/templates/ci.yml b/cargo-dist/templates/ci.yml
+--- a/cargo-dist/templates/ci.yml
++++ b/cargo-dist/templates/ci.yml
+@@ -52,9 +52,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v3
+         with:
+-          submodules: recursive
+-      - name: Install Rust
+-        run: {{{{INSTALL_RUST}}}}
++          submodules: recursive{{{{INSTALL_RUST}}}}
+       - name: Install cargo-dist
+         run: {{{{INSTALL_DIST_SH}}}}
+       - id: create-release
+diff --git a/cargo-dist/templates/ci.yml b/cargo-dist/templates/ci.yml
+--- a/cargo-dist/templates/ci.yml
++++ b/cargo-dist/templates/ci.yml
+@@ -94,9 +92,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v3
+         with:
+-          submodules: recursive
+-      - name: Install Rust
+-        run: {{{{INSTALL_RUST}}}}
++          submodules: recursive{{{{INSTALL_RUST}}}}
+       - name: Install cargo-dist
+         run: ${{ matrix.install-dist }}
+       - name: Run cargo-dist

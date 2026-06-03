@@ -1,0 +1,3544 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ chmod -R 755 /workspace
++ git apply -v -
+Checking patch src/dependency.rs...
+Checking patch tests/cmd/add/git_rev.in...
+Checking patch tests/cmd/add/git_rev.out/Cargo.toml...
+Checking patch tests/cmd/add/git_rev.toml...
+Checking patch tests/cmd/add/git_tag.in...
+Checking patch tests/cmd/add/git_tag.out/Cargo.toml...
+Checking patch tests/cmd/add/git_tag.toml...
+Checking patch tests/cmd/add/overwrite_git_with_path.in/primary/Cargo.toml...
+Applied patch src/dependency.rs cleanly.
+Applied patch tests/cmd/add/git_rev.in cleanly.
+Applied patch tests/cmd/add/git_rev.out/Cargo.toml cleanly.
+Applied patch tests/cmd/add/git_rev.toml cleanly.
+Applied patch tests/cmd/add/git_tag.in cleanly.
+Applied patch tests/cmd/add/git_tag.out/Cargo.toml cleanly.
+Applied patch tests/cmd/add/git_tag.toml cleanly.
+Applied patch tests/cmd/add/overwrite_git_with_path.in/primary/Cargo.toml cleanly.
++ git status
+On branch master
+Your branch is behind 'origin/master' by 576 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .editorconfig
+	modified:   .gitattributes
+	modified:   .github/workflows/build.yml
+	modified:   .gitignore
+	modified:   CHANGELOG.md
+	modified:   CONTRIBUTING.md
+	modified:   Cargo.lock
+	modified:   Cargo.toml
+	modified:   LICENSE
+	modified:   README.md
+	modified:   bors.toml
+	modified:   rustfmt.toml
+	modified:   src/bin/add/args.rs
+	modified:   src/bin/add/main.rs
+	modified:   src/bin/add/manifest_test.rs
+	modified:   src/bin/rm/main.rs
+	modified:   src/bin/set-version/args.rs
+	modified:   src/bin/set-version/errors.rs
+	modified:   src/bin/set-version/main.rs
+	modified:   src/bin/set-version/version.rs
+	modified:   src/bin/upgrade/main.rs
+	modified:   src/crate_name.rs
+	modified:   src/dependency.rs
+	modified:   src/errors.rs
+	modified:   src/fetch.rs
+	modified:   src/lib.rs
+	modified:   src/manifest.rs
+	modified:   src/metadata.rs
+	modified:   src/registry.rs
+	modified:   src/util.rs
+	modified:   src/version.rs
+	modified:   tests/cargo-add.rs
+	modified:   tests/cargo-rm.rs
+	modified:   tests/cargo-set-version.rs
+	modified:   tests/cargo-upgrade.rs
+	modified:   tests/cmd/add/add-basic.in/Cargo.toml
+	modified:   tests/cmd/add/add-basic.in/src/lib.rs
+	modified:   tests/cmd/add/add_basic.out/Cargo.toml
+	modified:   tests/cmd/add/add_basic.toml
+	modified:   tests/cmd/add/add_multiple.out/Cargo.toml
+	modified:   tests/cmd/add/add_multiple.toml
+	modified:   tests/cmd/add/add_normalized_name_external.out/Cargo.toml
+	modified:   tests/cmd/add/add_normalized_name_external.toml
+	modified:   tests/cmd/add/at_version.out/Cargo.toml
+	modified:   tests/cmd/add/at_version.toml
+	modified:   tests/cmd/add/build.out/Cargo.toml
+	modified:   tests/cmd/add/build.toml
+	modified:   tests/cmd/add/cargo_config_source_empty.in/.cargo/config
+	modified:   tests/cmd/add/cargo_config_source_empty.in/Cargo.toml
+	modified:   tests/cmd/add/cargo_config_source_empty.in/src/lib.rs
+	modified:   tests/cmd/add/cargo_config_source_empty.out/Cargo.toml
+	modified:   tests/cmd/add/cargo_config_source_empty.toml
+	modified:   tests/cmd/add/dev.out/Cargo.toml
+	modified:   tests/cmd/add/dev.toml
+	modified:   tests/cmd/add/dev_build_conflict.out/Cargo.toml
+	modified:   tests/cmd/add/dev_build_conflict.toml
+	modified:   tests/cmd/add/features.out/Cargo.toml
+	modified:   tests/cmd/add/features.toml
+	modified:   tests/cmd/add/features_empty.out/Cargo.toml
+	modified:   tests/cmd/add/features_empty.toml
+	modified:   tests/cmd/add/features_multiple_occurrences.out/Cargo.toml
+	modified:   tests/cmd/add/features_multiple_occurrences.toml
+	modified:   tests/cmd/add/features_preserve.in/Cargo.toml
+	modified:   tests/cmd/add/features_preserve.in/src/lib.rs
+	modified:   tests/cmd/add/features_preserve.out/Cargo.toml
+	modified:   tests/cmd/add/features_preserve.toml
+	modified:   tests/cmd/add/features_spaced_values.out/Cargo.toml
+	modified:   tests/cmd/add/features_spaced_values.toml
+	modified:   tests/cmd/add/features_unknown.out/Cargo.toml
+	modified:   tests/cmd/add/features_unknown.toml
+	modified:   tests/cmd/add/git.out/Cargo.toml
+	modified:   tests/cmd/add/git.toml
+	modified:   tests/cmd/add/git_branch.out/Cargo.toml
+	modified:   tests/cmd/add/git_branch.toml
+	modified:   tests/cmd/add/git_conflicts_at_version.out/Cargo.toml
+	modified:   tests/cmd/add/git_conflicts_at_version.toml
+	modified:   tests/cmd/add/git_conflicts_path.out/Cargo.toml
+	modified:   tests/cmd/add/git_conflicts_path.toml
+	modified:   tests/cmd/add/git_conflicts_registry.out/Cargo.toml
+	modified:   tests/cmd/add/git_conflicts_registry.toml
+	modified:   tests/cmd/add/git_conflicts_vers.out/Cargo.toml
+	modified:   tests/cmd/add/git_conflicts_vers.toml
+	modified:   tests/cmd/add/git_dev.out/Cargo.toml
+	modified:   tests/cmd/add/git_dev.toml
+	modified:   tests/cmd/add/git_external.out/Cargo.toml
+	modified:   tests/cmd/add/git_external.toml
+	modified:   tests/cmd/add/implicit_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/implicit_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/implicit_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/implicit_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/implicit_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/implicit_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/implicit_path.toml
+	modified:   tests/cmd/add/invalid_arg.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_arg.toml
+	modified:   tests/cmd/add/invalid_git_external.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_git_external.toml
+	modified:   tests/cmd/add/invalid_implicit_path.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_implicit_path.toml
+	modified:   tests/cmd/add/invalid_name_external.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_name_external.toml
+	modified:   tests/cmd/add/invalid_op.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_op.toml
+	modified:   tests/cmd/add/invalid_optional_dev.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_optional_dev.toml
+	modified:   tests/cmd/add/invalid_path_self.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_path_self.toml
+	modified:   tests/cmd/add/invalid_target_empty.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_target_empty.toml
+	modified:   tests/cmd/add/invalid_vers.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_vers.toml
+	modified:   tests/cmd/add/list_features.out/Cargo.toml
+	modified:   tests/cmd/add/list_features.toml
+	modified:   tests/cmd/add/list_features_path.in/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/list_features_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/list_features_path.out/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_features.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_features.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_git.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_git.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_path.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_path.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_rename.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_rename.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_vers.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_vers.toml
+	modified:   tests/cmd/add/no_args.out/Cargo.toml
+	modified:   tests/cmd/add/no_args.toml
+	modified:   tests/cmd/add/no_default_features.out/Cargo.toml
+	modified:   tests/cmd/add/no_default_features.toml
+	modified:   tests/cmd/add/op_caret.out/Cargo.toml
+	modified:   tests/cmd/add/op_caret.toml
+	modified:   tests/cmd/add/op_equal.out/Cargo.toml
+	modified:   tests/cmd/add/op_equal.toml
+	modified:   tests/cmd/add/op_greater_eq.out/Cargo.toml
+	modified:   tests/cmd/add/op_greater_eq.toml
+	modified:   tests/cmd/add/op_tilde.out/Cargo.toml
+	modified:   tests/cmd/add/op_tilde.toml
+	modified:   tests/cmd/add/optional.out/Cargo.toml
+	modified:   tests/cmd/add/optional.toml
+	modified:   tests/cmd/add/overwrite_features.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_features.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_features.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_features.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/overwrite_git_with_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/overwrite_git_with_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/overwrite_path_with_version.in/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.in/primary/src/lib.rs
+	modified:   tests/cmd/add/overwrite_path_with_version.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.out/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.toml
+	modified:   tests/cmd/add/overwrite_rename_with_no_rename.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_no_rename.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_rename_with_no_rename.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_no_rename.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_rename_with_rename.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename_noop.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename_noop.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_rename_with_rename_noop.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename_noop.toml
+	modified:   tests/cmd/add/overwrite_version.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_version.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version.toml
+	modified:   tests/cmd/add/overwrite_version_with_git.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_git.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_version_with_git.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_git.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/overwrite_version_with_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/overwrite_version_with_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.toml
+	modified:   tests/cmd/add/overwrite_with_rename.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_with_rename.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_with_rename.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_with_rename.toml
+	modified:   tests/cmd/add/path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/path.toml
+	modified:   tests/cmd/add/path_dev.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/path_dev.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/path_dev.in/primary/Cargo.toml
+	modified:   tests/cmd/add/path_dev.in/primary/src/lib.rs
+	modified:   tests/cmd/add/path_dev.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/path_dev.out/primary/Cargo.toml
+	modified:   tests/cmd/add/path_dev.toml
+	modified:   tests/cmd/add/prerelease.out/Cargo.toml
+	modified:   tests/cmd/add/prerelease.toml
+	modified:   tests/cmd/add/preserve_sorted.in/Cargo.toml
+	modified:   tests/cmd/add/preserve_sorted.in/src/lib.rs
+	modified:   tests/cmd/add/preserve_sorted.out/Cargo.toml
+	modified:   tests/cmd/add/preserve_sorted.toml
+	modified:   tests/cmd/add/preserve_unsorted.in/Cargo.toml
+	modified:   tests/cmd/add/preserve_unsorted.in/src/lib.rs
+	modified:   tests/cmd/add/preserve_unsorted.out/Cargo.toml
+	modified:   tests/cmd/add/pr+ git diff
+eserve_unsorted.toml
+	modified:   tests/cmd/add/registry.in/.cargo/config
+	modified:   tests/cmd/add/registry.in/Cargo.toml
+	modified:   tests/cmd/add/registry.in/src/lib.rs
+	modified:   tests/cmd/add/registry.out/Cargo.toml
+	modified:   tests/cmd/add/registry.toml
+	modified:   tests/cmd/add/registry_conflicts_path.out/Cargo.toml
+	modified:   tests/cmd/add/registry_conflicts_path.toml
+	modified:   tests/cmd/add/rename.out/Cargo.toml
+	modified:   tests/cmd/add/rename.toml
+	modified:   tests/cmd/add/sort.in/Cargo.toml
+	modified:   tests/cmd/add/sort.in/src/lib.rs
+	modified:   tests/cmd/add/sort.out/Cargo.toml
+	modified:   tests/cmd/add/sort.toml
+	modified:   tests/cmd/add/target.out/Cargo.toml
+	modified:   tests/cmd/add/target.toml
+	modified:   tests/cmd/add/target_cfg.out/Cargo.toml
+	modified:   tests/cmd/add/target_cfg.toml
+	modified:   tests/cmd/add/vers.out/Cargo.toml
+	modified:   tests/cmd/add/vers.toml
+	modified:   tests/cmd/add/workspace_implicit_path.in/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/workspace_implicit_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/workspace_implicit_path.out/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.toml
+	modified:   tests/cmd/add/workspace_name.in/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/workspace_name.in/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.in/primary/src/lib.rs
+	modified:   tests/cmd/add/workspace_name.out/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.out/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.toml
+	modified:   tests/cmd/add/workspace_path.in/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/workspace_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/workspace_path.out/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.toml
+	modified:   tests/cmd/add/workspace_path_dev.in/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/workspace_path_dev.in/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.in/primary/src/lib.rs
+	modified:   tests/cmd/add/workspace_path_dev.out/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.out/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.toml
+	modified:   tests/cmd/rm/invalid_arg.out/Cargo.toml
+	modified:   tests/cmd/rm/invalid_arg.toml
+	modified:   tests/cmd/rm/invalid_dep.out/Cargo.toml
+	modified:   tests/cmd/rm/invalid_dep.toml
+	modified:   tests/cmd/rm/invalid_section.in/Cargo.toml
+	modified:   tests/cmd/rm/invalid_section.in/src/lib.rs
+	modified:   tests/cmd/rm/invalid_section.out/Cargo.toml
+	modified:   tests/cmd/rm/invalid_section.toml
+	modified:   tests/cmd/rm/invalid_section_dep.out/Cargo.toml
+	modified:   tests/cmd/rm/invalid_section_dep.toml
+	modified:   tests/cmd/rm/no_arg.out/Cargo.toml
+	modified:   tests/cmd/rm/no_arg.toml
+	modified:   tests/cmd/rm/rm-basic.in/Cargo.toml
+	modified:   tests/cmd/rm/rm-basic.in/src/lib.rs
+	modified:   tests/cmd/rm/rm_avoid_empty_tables.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_avoid_empty_tables.toml
+	modified:   tests/cmd/rm/rm_build.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_build.toml
+	modified:   tests/cmd/rm/rm_dev.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_dev.toml
+	modified:   tests/cmd/rm/rm_existing.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_existing.toml
+	modified:   tests/cmd/rm/rm_multiple_deps.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_multiple_deps.toml
+	modified:   tests/cmd/rm/rm_multiple_dev.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_multiple_dev.toml
+	modified:   tests/cmd/rm/rm_optional_feature.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_optional_feature.toml
+	modified:   tests/cmd/set-version/downgrade_error.out/Cargo.toml
+	modified:   tests/cmd/set-version/downgrade_error.toml
+	modified:   tests/cmd/set-version/ignore_dependent.out/Cargo.toml
+	modified:   tests/cmd/set-version/ignore_dependent.out/dependency/Cargo.toml
+	modified:   tests/cmd/set-version/ignore_dependent.out/primary/Cargo.toml
+	modified:   tests/cmd/set-version/ignore_dependent.toml
+	modified:   tests/cmd/set-version/relative_absolute_conflict.out/Cargo.toml
+	modified:   tests/cmd/set-version/relative_absolute_conflict.toml
+	modified:   tests/cmd/set-version/set-version-basic.in/Cargo.toml
+	modified:   tests/cmd/set-version/set-version-basic.in/src/lib.rs
+	modified:   tests/cmd/set-version/set-version-workspace.in/Cargo.toml
+	modified:   tests/cmd/set-version/set-version-workspace.in/dependency/Cargo.toml
+	modified:   tests/cmd/set-version/set-version-workspace.in/dependency/src/lib.rs
+	modified:   tests/cmd/set-version/set-version-workspace.in/primary/Cargo.toml
+	modified:   tests/cmd/set-version/set-version-workspace.in/primary/src/lib.rs
+	modified:   tests/cmd/set-version/set_absolute_version.out/Cargo.toml
+	modified:   tests/cmd/set-version/set_absolute_version.toml
+	modified:   tests/cmd/set-version/set_relative_version.out/Cargo.toml
+	modified:   tests/cmd/set-version/set_relative_version.toml
+	modified:   tests/cmd/set-version/upgrade_compatible_dependency.out/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_compatible_dependency.out/dependency/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_compatible_dependency.out/primary/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_compatible_dependency.toml
+	modified:   tests/cmd/set-version/upgrade_incompatible_dependency.out/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_incompatible_dependency.out/dependency/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_incompatible_dependency.out/primary/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_incompatible_dependency.toml
+	modified:   tests/cmd/upgrade/alt_registry.out/Cargo.toml
+	modified:   tests/cmd/upgrade/alt_registry.out/src/lib.rs
+	modified:   tests/cmd/upgrade/alt_registry.toml
+	modified:   tests/cmd/upgrade/dry_run.in/Cargo.toml
+	modified:   tests/cmd/upgrade/dry_run.in/src/lib.rs
+	modified:   tests/cmd/upgrade/dry_run.out/Cargo.toml
+	modified:   tests/cmd/upgrade/dry_run.out/src/lib.rs
+	modified:   tests/cmd/upgrade/dry_run.toml
+	modified:   tests/cmd/upgrade/dry_run_prerelease.in/Cargo.toml
+	modified:   tests/cmd/upgrade/dry_run_prerelease.in/src/lib.rs
+	modified:   tests/cmd/upgrade/dry_run_prerelease.out/Cargo.toml
+	modified:   tests/cmd/upgrade/dry_run_prerelease.out/src/lib.rs
+	modified:   tests/cmd/upgrade/dry_run_prerelease.toml
+	modified:   tests/cmd/upgrade/exclude_dep.in/Cargo.toml
+	modified:   tests/cmd/upgrade/exclude_dep.in/src/lib.rs
+	modified:   tests/cmd/upgrade/exclude_dep.out/Cargo.toml
+	modified:   tests/cmd/upgrade/exclude_dep.toml
+	modified:   tests/cmd/upgrade/exclude_renamed.out/Cargo.toml
+	modified:   tests/cmd/upgrade/exclude_renamed.out/src/lib.rs
+	modified:   tests/cmd/upgrade/exclude_renamed.toml
+	modified:   tests/cmd/upgrade/implicit_prerelease.in/Cargo.toml
+	modified:   tests/cmd/upgrade/implicit_prerelease.in/src/lib.rs
+	modified:   tests/cmd/upgrade/implicit_prerelease.out/Cargo.toml
+	modified:   tests/cmd/upgrade/implicit_prerelease.out/src/lib.rs
+	modified:   tests/cmd/upgrade/implicit_prerelease.toml
+	modified:   tests/cmd/upgrade/invalid_dep.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_dep.out/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_dep.toml
+	modified:   tests/cmd/upgrade/invalid_flag.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_flag.out/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_flag.toml
+	modified:   tests/cmd/upgrade/invalid_manifest.in/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_manifest.in/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_manifest.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_manifest.out/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_manifest.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/Cargo.lock
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/dummy.rs
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.toml
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.in/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.in/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.out/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.toml
+	modified:   tests/cmd/upgrade/optional_dep.in/Cargo.toml
+	modified:   tests/cmd/upgrade/optional_dep.in/src/lib.rs
+	modified:   tests/cmd/upgrade/optional_dep.out/Cargo.toml
+	modified:   tests/cmd/upgrade/optional_dep.out/src/lib.rs
+	modified:   tests/cmd/upgrade/optional_dep.toml
+	modified:   tests/cmd/upgrade/prerelease.in/Cargo.toml
+	modified:   tests/cmd/upgrade/prerelease.in/src/lib.rs
+	modified:   tests/cmd/upgrade/prerelease.out/Cargo.toml
+	modified:   tests/cmd/upgrade/prerelease.out/src/lib.rs
+	modified:   tests/cmd/upgrade/prerelease.toml
+	modified:   tests/cmd/upgrade/single_dep.in/Cargo.toml
+	modified:   tests/cmd/upgrade/single_dep.in/src/lib.rs
+	modified:   tests/cmd/upgrade/single_dep.out/Cargo.toml
+	modified:   tests/cmd/upgrade/single_dep.out/src/lib.rs
+	modified:   tests/cmd/upgrade/single_dep.toml
+	modified:   tests/cmd/upgrade/skip_compatible.in/Cargo.toml
+	modified:   tests/cmd/upgrade/skip_compatible.in/src/lib.rs
+	modified:   tests/cmd/upgrade/skip_compatible.out/Cargo.toml
+	modified:   tests/cmd/upgrade/skip_compatible.out/src/lib.rs
+	modified:   tests/cmd/upgrade/skip_compatible.toml
+	modified:   tests/cmd/upgrade/specified.in/Cargo.toml
+	modified:   tests/cmd/upgrade/specified.in/src/lib.rs
+	modified:   tests/cmd/upgrade/specified.out/Cargo.toml
+	modified:   tests/cmd/upgrade/specified.out/src/lib.rs
+	modified:   tests/cmd/upgrade/specified.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/Cargo.lock
+	modified:   tests/cmd/upgrade/to_lockfile.out/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/dummy.rs
+	modified:   tests/cmd/upgrade/to_lockfile.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.toml
+	modified:   tests/cmd/upgrade/to_version.in/Cargo.toml
+	modified:   tests/cmd/upgrade/to_version.in/src/lib.rs
+	modified:   tests/cmd/upgrade/to_version.out/Cargo.toml
+	modified:   tests/cmd/upgrade/to_version.out/src/lib.rs
+	modified:   tests/cmd/upgrade/to_version.toml
+	modified:   tests/cmd/upgrade/upgrade-alt-registry.in/.cargo/config
+	modified:   tests/cmd/upgrade/upgrade-alt-registry.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-alt-registry.in/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade-basic.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-basic.in/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade-renamed.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-renamed.in/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/Cargo.lock
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/dummy.rs
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/one/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/two/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/Cargo.lock
+	modified:   tests/cmd/upgrade/upgrade_all.out/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/dummy.rs
+	modified:   tests/cmd/upgrade/upgrade_all.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.toml
+	modified:   tests/cmd/upgrade/upgrade_everything.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_everything.in/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade_everything.out/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_everything.toml
+	modified:   tests/cmd/upgrade/upgrade_renamed.out/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_renamed.out/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade_renamed.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/Cargo.lock
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/dummy.rs
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/Cargo.lock
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/dummy.rs
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.toml
+	modified:   tests/fixtures/add/Cargo.toml.features
+	modified:   tests/fixtures/add/Cargo.toml.sample
+	modified:   tests/fixtures/add/Cargo.toml.sorted
+	modified:   tests/fixtures/add/Cargo.toml.unsorted
+	modified:   tests/fixtures/add/local/Cargo.toml.sample
+	modified:   tests/fixtures/alt-registry-cargo-config
+	modified:   tests/fixtures/manifest-invalid/Cargo.toml.sample
+	modified:   tests/fixtures/rm/Cargo.toml.no_features.sample
+	modified:   tests/fixtures/rm/Cargo.toml.sample
+	modified:   tests/fixtures/upgrade/Cargo.lock
+	modified:   tests/fixtures/upgrade/Cargo.toml.alt_registry
+	modified:   tests/fixtures/upgrade/Cargo.toml.invalid
+	modified:   tests/fixtures/upgrade/Cargo.toml.lockfile_source
+	modified:   tests/fixtures/upgrade/Cargo.toml.lockfile_target
+	modified:   tests/fixtures/upgrade/Cargo.toml.renamed_dep
+	modified:   tests/fixtures/upgrade/Cargo.toml.source
+	modified:   tests/fixtures/upgrade/Cargo.toml.target
+	modified:   tests/fixtures/workspace/Cargo.lock
+	modified:   tests/fixtures/workspace/Cargo.toml
+	modified:   tests/fixtures/workspace/Cargo.toml.lockfile_target
+	modified:   tests/fixtures/workspace/dummy.rs
+	modified:   tests/fixtures/workspace/explicit/four/Cargo.toml
+	modified:   tests/fixtures/workspace/implicit/three/Cargo.toml
+	modified:   tests/fixtures/workspace/one/Cargo.toml
+	modified:   tests/fixtures/workspace/one/Cargo.toml.lockfile_target
+	modified:   tests/fixtures/workspace/two/Cargo.toml
+	modified:   tests/fixtures/workspace/two/Cargo.toml.lockfile_target
+	modified:   tests/test_manifest.rs
+	modified:   tests/utils.rs
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.cargo/
+	tests/cmd/add/git_rev.in
+	tests/cmd/add/git_rev.out/
+	tests/cmd/add/git_rev.toml
+	tests/cmd/add/git_tag.in
+	tests/cmd/add/git_tag.out/
+	tests/cmd/add/git_tag.toml
+
+no changes added to commit (use "git add" and/or "git commit -a")
+diff --git a/.editorconfig b/.editorconfig
+old mode 100644
+new mode 100755
+diff --git a/.gitattributes b/.gitattributes
+old mode 100644
+new mode 100755
+diff --git a/.github/workflows/build.yml b/.github/workflows/build.yml
+old mode 100644
+new mode 100755
+diff --git a/.gitignore b/.gitignore
+old mode 100644
+new mode 100755
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+old mode 100644
+new mode 100755
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+old mode 100644
+new mode 100755
+diff --git a/Cargo.lock b/Cargo.lock
+old mode 100644
+new mode 100755
+index d488a64d..ce982862
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -301,9 +301,9 @@ checksum = "d6417fe6fc03a8b533fd2177742eeb39a90c7233eedec7bac96d4d6b69a09449"
+ 
+ [[package]]
+ name = "crates-index"
+-version = "0.18.1"
++version = "0.18.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "87c1041763543466e437ad3212f1dbfd73c0ae4f7323e44ff584c5273d1b39c8"
++checksum = "f28b64abfb970bb50a2ba0653aee8429dbbbbaf52445bc732e911e0f222b485c"
+ dependencies = [
+  "git2",
+  "hex",
+@@ -443,9 +443,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "fastrand"
+-version = "1.6.0"
++version = "1.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "779d043b6a0b90cc4c0ed7ee380a6504394cee7efd7db050e3774eee387324b2"
++checksum = "c3fcf0cee53519c866c09b5de1f6c56ff9d647101f81c1964fa632e148896cdf"
+ dependencies = [
+  "instant",
+ ]
+@@ -666,9 +666,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "js-sys"
+-version = "0.3.55"
++version = "0.3.56"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7cc9ffccd38c451a86bf13657df244e9c3f37493cce8e5e21e940963777acc84"
++checksum = "a38fc24e30fd564ce974c02bf1d337caddff65be6cc4735a1f7eab22a7440f04"
+ dependencies = [
+  "wasm-bindgen",
+ ]
+@@ -690,9 +690,9 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.112"
++version = "0.2.113"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1b03d17f364a3a042d5e5d46b053bbbf82c92c9430c592dd4c064dc6ee997125"
++checksum = "eef78b64d87775463c549fbd80e19249ef436ea3bf1de2a1eb7e717ec7fab1e9"
+ 
+ [[package]]
+ name = "libgit2-sys"
+@@ -977,9 +977,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "quote"
+-version = "1.0.14"
++version = "1.0.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "47aa80447ce4daf1717500037052af176af5d38cc3e571d9ec1c7353fc10c87d"
++checksum = "864d3e96a899863136fc6e99f3d7cae289dafe43bf2c5ac19b70df7210c0a145"
+ dependencies = [
+  "proc-macro2",
+ ]
+@@ -1136,18 +1136,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.133"
++version = "1.0.135"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "97565067517b60e2d1ea8b268e59ce036de907ac523ad83a0475da04e818989a"
++checksum = "2cf9235533494ea2ddcdb794665461814781c53f19d87b76e571a1c35acbad2b"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.133"
++version = "1.0.135"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ed201699328568d8d08208fdd080e3ff594e6c422e438b6705905da01005d537"
++checksum = "8dcde03d87d4c973c04be249e7d8f0b35db1c848c487bd43032808e59dd8328d"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1156,9 +1156,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.75"
++version = "1.0.78"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c059c05b48c5c0067d4b4b2b4f0732dd65feb52daf7e0ea09cd87e7dadc1af79"
++checksum = "d23c1ba4cf0efd44be32017709280b32d1cea5c3f1275c3b6d9e8bc54f758085"
+ dependencies = [
+  "itoa",
+  "ryu",
+@@ -1223,9 +1223,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "syn"
+-version = "1.0.85"
++version = "1.0.86"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a684ac3dcd8913827e18cd09a68384ee66c1de24157e3c556c9ab16d85695fb7"
++checksum = "8a65b3f4ffa0092e9887669db0eae07941f023991ab58ea44da8fe8e2d511c6b"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1282,9 +1282,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "thread_local"
+-version = "1.1.3"
++version = "1.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8018d24e04c95ac8790716a5987d0fec4f8b27249ffa0f7d33f1369bdfb88cbd"
++checksum = "5516c27b78311c50bf42c071425c560ac799b11c30b31f87e3081965fe5e0180"
+ dependencies = [
+  "once_cell",
+ ]
+@@ -1447,15 +1447,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasi"
+-version = "0.10.3+wasi-snapshot-preview1"
++version = "0.10.2+wasi-snapshot-preview1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "46a2e384a3f170b0c7543787a91411175b71afd56ba4d3a0ae5678d4e2243c0e"
++checksum = "fd6fbd9a79829dd1ad0cc20627bf1ed606756a7f77edff7b66b7064f9cb327c6"
+ 
+ [[package]]
+ name = "wasm-bindgen"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "632f73e236b219150ea279196e54e610f5dbafa5d61786303d4da54f84e47fce"
++checksum = "25f1af7423d8588a3d840681122e72e6a24ddbcb3f0ec385cac0d12d24256c06"
+ dependencies = [
+  "cfg-if",
+  "wasm-bindgen-macro",
+@@ -1463,9 +1463,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-backend"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a317bf8f9fba2476b4b2c85ef4c4af8ff39c3c7f0cdfeed4f82c34a880aa837b"
++checksum = "8b21c0df030f5a177f3cba22e9bc4322695ec43e7257d865302900290bcdedca"
+ dependencies = [
+  "bumpalo",
+  "lazy_static",
+@@ -1478,9 +1478,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d56146e7c495528bf6587663bea13a8eb588d39b36b679d83972e1a2dbbdacf9"
++checksum = "2f4203d69e40a52ee523b2529a773d5ffc1dc0071801c87b3d270b471b80ed01"
+ dependencies = [
+  "quote",
+  "wasm-bindgen-macro-support",
+@@ -1488,9 +1488,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro-support"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7803e0eea25835f8abdc585cd3021b3deb11543c6fe226dcd30b228857c5c5ab"
++checksum = "bfa8a30d46208db204854cadbb5d4baf5fcf8071ba5bf48190c3e59937962ebc"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1501,15 +1501,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-shared"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0237232789cf037d5480773fe568aac745bfe2afbc11a863e97901780a6b47cc"
++checksum = "3d958d035c4438e28c70e4321a2911302f10135ce78a9c7834c0cab4123d06a2"
+ 
+ [[package]]
+ name = "web-sys"
+-version = "0.3.55"
++version = "0.3.56"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "38eb105f1c59d9eaa6b5cdc92b859d85b926e82cb2e0945cd0c9259faa6fe9fb"
++checksum = "c060b319f29dd25724f09a2ba1418f142f539b2be99fbf4d2d5a8f7330afb8eb"
+ dependencies = [
+  "js-sys",
+  "wasm-bindgen",
+diff --git a/Cargo.toml b/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/LICENSE b/LICENSE
+old mode 100644
+new mode 100755
+diff --git a/README.md b/README.md
+old mode 100644
+new mode 100755
+diff --git a/bors.toml b/bors.toml
+old mode 100644
+new mode 100755
+diff --git a/rustfmt.toml b/rustfmt.toml
+old mode 100644
+new mode 100755
+diff --git a/src/bin/add/args.rs b/src/bin/add/args.rs
+old mode 100644
+new mode 100755
+index ea3e72c9..7e00a229
+--- a/src/bin/add/args.rs
++++ b/src/bin/add/args.rs
+@@ -44,13 +44,17 @@ pub struct Args {
+     pub rename: Option<String>,
+ 
+     /// Add crate as development dependency.
+-    #[clap(long, short = 'D', conflicts_with = "build")]
++    #[clap(long, short = 'D', group = "section")]
+     pub dev: bool,
+ 
+     /// Add crate as build dependency.
+-    #[clap(long, short = 'B', conflicts_with = "dev")]
++    #[clap(long, short = 'B', group = "section")]
+     pub build: bool,
+ 
++    /// Add as dependency to the given target platform.
++    #[clap(long, forbid_empty_values = true, group = "section")]
++    pub target: Option<String>,
++
+     /// Specify the version to grab from the registry(crates.io).
+     /// You can also specify version as part of name, e.g
+     /// `cargo add bitflags@0.3.2`.
+@@ -67,27 +71,21 @@ pub struct Args {
+     pub git: Option<String>,
+ 
+     /// Specify a git branch to download the crate from.
+-    #[clap(
+-        long,
+-        value_name = "BRANCH",
+-        conflicts_with = "vers",
+-        conflicts_with = "path"
+-    )]
++    #[clap(long, value_name = "BRANCH", requires = "git", group = "git-ref")]
+     pub branch: Option<String>,
+ 
++    /// Specify a git branch to download the crate from.
++    #[clap(long, value_name = "TAG", requires = "git", group = "git-ref")]
++    pub tag: Option<String>,
++
++    /// Specify a git branch to download the crate from.
++    #[clap(long, value_name = "REV", requires = "git", group = "git-ref")]
++    pub rev: Option<String>,
++
+     /// Specify the path the crate should be loaded from.
+     #[clap(long, parse(from_os_str), conflicts_with = "git")]
+     pub path: Option<PathBuf>,
+ 
+-    /// Add as dependency to the given target platform.
+-    #[clap(
+-        long,
+-        conflicts_with = "dev",
+-        conflicts_with = "build",
+-        forbid_empty_values = true
+-    )]
+-    pub target: Option<String>,
+-
+     /// Add as an optional dependency (for use in features).
+     #[clap(long, conflicts_with = "dev")]
+     pub optional: bool,
+@@ -249,7 +247,12 @@ impl Args {
+                     .unwrap_or_else(Vec::new);
+ 
+                 dependency = dependency
+-                    .set_git(repo, self.branch.clone())
++                    .set_git(
++                        repo,
++                        self.branch.clone(),
++                        self.tag.clone(),
++                        self.rev.clone(),
++                    )
+                     .set_available_features(features);
+             } else {
+                 if let Some(path) = &self.path {
+@@ -378,6 +381,8 @@ impl Default for Args {
+             vers: None,
+             git: None,
+             branch: None,
++            tag: None,
++            rev: None,
+             path: None,
+             target: None,
+             optional: false,
+diff --git a/src/bin/add/main.rs b/src/bin/add/main.rs
+old mode 100644
+new mode 100755
+diff --git a/src/bin/add/manifest_test.rs b/src/bin/add/manifest_test.rs
+old mode 100644
+new mode 100755
+diff --git a/src/bin/rm/main.rs b/src/bin/rm/main.rs
+old mode 100644
+new mode 100755
+diff --git a/src/bin/set-version/args.rs b/src/bin/set-version/args.rs
+old mode 100644
+new mode 100755
+diff --git a/src/bin/set-version/errors.rs b/src/bin/set-version/errors.rs
+old mode 100644
+new mode 100755
+diff --git a/src/bin/set-version/main.rs b/src/bin/set-version/main.rs
+old mode 100644
+new mode 100755
+diff --git a/src/bin/set-version/version.rs b/src/bin/set-version/version.rs
+old mode 100644
+new mode 100755
+diff --git a/src/bin/upgrade/main.rs b/src/bin/upgrade/main.rs
+old mode 100644
+new mode 100755
+diff --git a/src/crate_name.rs b/src/crate_name.rs
+old mode 100644
+new mode 100755
+index 3796e7e3..b6d0b94f
+--- a/src/crate_name.rs
++++ b/src/crate_name.rs
+@@ -45,7 +45,7 @@ impl<'a> CrateName<'a> {
+             let available_features = manifest.features()?;
+             Ok(Some(
+                 Dependency::new(crate_name)
+-                    .set_git(self.0, None)
++                    .set_git(self.0, None, None, None)
+                     .set_available_features(available_features),
+             ))
+         } else if self.is_path() {
+diff --git a/src/dependency.rs b/src/dependency.rs
+old mode 100644
+new mode 100755
+index 5abba24d..532c4021
+--- a/src/dependency.rs
++++ b/src/dependency.rs
+@@ -52,10 +52,18 @@ impl Dependency {
+     }
+ 
+     /// Set dependency to a given repository
+-    pub fn set_git(mut self, repo: &str, branch: Option<String>) -> Dependency {
++    pub fn set_git(
++        mut self,
++        repo: &str,
++        branch: Option<String>,
++        tag: Option<String>,
++        rev: Option<String>,
++    ) -> Dependency {
+         self.source = DependencySource::Git {
+             repo: repo.into(),
+             branch,
++            tag,
++            rev,
+         };
+         self
+     }
+@@ -216,9 +224,22 @@ impl Dependency {
+                             data.get_or_insert("registry", r);
+                         }
+                     }
+-                    DependencySource::Git { repo, branch } => {
++                    DependencySource::Git {
++                        repo,
++                        branch,
++                        tag,
++                        rev,
++                    } => {
+                         data.get_or_insert("git", repo);
+-                        branch.map(|branch| data.get_or_insert("branch", branch));
++                        if let Some(branch) = branch {
++                            data.get_or_insert("branch", branch);
++                        }
++                        if let Some(tag) = tag {
++                            data.get_or_insert("tag", tag);
++                        }
++                        if let Some(rev) = rev {
++                            data.get_or_insert("rev", rev);
++                        }
+                     }
+                 }
+                 if self.optional {
+@@ -272,6 +293,8 @@ enum DependencySource {
+     Git {
+         repo: String,
+         branch: Option<String>,
++        tag: Option<String>,
++        rev: Option<String>,
+     },
+ }
+ 
+@@ -346,7 +369,7 @@ mod tests {
+     fn to_toml_dep_with_git_source() {
+         let crate_root = dunce::canonicalize(Path::new("/")).expect("root exists");
+         let toml = Dependency::new("dep")
+-            .set_git("https://foor/bar.git", None)
++            .set_git("https://foor/bar.git", None, None, None)
+             .to_toml(&crate_root);
+ 
+         assert_eq!(toml.0, "dep".to_owned());
+diff --git a/src/errors.rs b/src/errors.rs
+old mode 100644
+new mode 100755
+diff --git a/src/fetch.rs b/src/fetch.rs
+old mode 100644
+new mode 100755
+diff --git a/src/lib.rs b/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/src/manifest.rs b/src/manifest.rs
+old mode 100644
+new mode 100755
+index 3148a6f5..f34c4671
+--- a/src/manifest.rs
++++ b/src/manifest.rs
+@@ -463,7 +463,7 @@ fn merge_dependencies(old_dep: &mut toml_edit::Item, new_toml: toml_edit::Item)
+         // The old dependency is just a version/git/path. We are safe to overwrite.
+         *old_dep = new_toml;
+     } else if old_dep.is_table_like() {
+-        for key in &["version", "path", "git"] {
++        for key in &["version", "path", "git", "branch", "tag", "rev"] {
+             // remove this key/value pairs
+             old_dep[key] = toml_edit::Item::None;
+         }
+diff --git a/src/metadata.rs b/src/metadata.rs
+old mode 100644
+new mode 100755
+diff --git a/src/registry.rs b/src/registry.rs
+old mode 100644
+new mode 100755
+diff --git a/src/util.rs b/src/util.rs
+old mode 100644
+new mode 100755
+diff --git a/src/version.rs b/src/version.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cargo-add.rs b/tests/cargo-add.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cargo-rm.rs b/tests/cargo-rm.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cargo-set-version.rs b/tests/cargo-set-version.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cargo-upgrade.rs b/tests/cargo-upgrade.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/add-basic.in/Cargo.toml b/tests/cmd/add/add-basic.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/add-basic.in/src/lib.rs b/tests/cmd/add/add-basic.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/add_basic.out/Cargo.toml b/tests/cmd/add/add_basic.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/add_basic.toml b/tests/cmd/add/add_basic.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/add_multiple.out/Cargo.toml b/tests/cmd/add/add_multiple.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/add_multiple.toml b/tests/cmd/add/add_multiple.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/add_normalized_name_external.out/Cargo.toml b/tests/cmd/add/add_normalized_name_external.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/add_normalized_name_external.toml b/tests/cmd/add/add_normalized_name_external.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/at_version.out/Cargo.toml b/tests/cmd/add/at_version.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/at_version.toml b/tests/cmd/add/at_version.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/build.out/Cargo.toml b/tests/cmd/add/build.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/build.toml b/tests/cmd/add/build.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/cargo_config_source_empty.in/.cargo/config b/tests/cmd/add/cargo_config_source_empty.in/.cargo/config
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/cargo_config_source_empty.in/Cargo.toml b/tests/cmd/add/cargo_config_source_empty.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/cargo_config_source_empty.in/src/lib.rs b/tests/cmd/add/cargo_config_source_empty.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/cargo_config_source_empty.out/Cargo.toml b/tests/cmd/add/cargo_config_source_empty.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/cargo_config_source_empty.toml b/tests/cmd/add/cargo_config_source_empty.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/dev.out/Cargo.toml b/tests/cmd/add/dev.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/dev.toml b/tests/cmd/add/dev.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/dev_build_conflict.out/Cargo.toml b/tests/cmd/add/dev_build_conflict.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/dev_build_conflict.toml b/tests/cmd/add/dev_build_conflict.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features.out/Cargo.toml b/tests/cmd/add/features.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features.toml b/tests/cmd/add/features.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_empty.out/Cargo.toml b/tests/cmd/add/features_empty.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_empty.toml b/tests/cmd/add/features_empty.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_multiple_occurrences.out/Cargo.toml b/tests/cmd/add/features_multiple_occurrences.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_multiple_occurrences.toml b/tests/cmd/add/features_multiple_occurrences.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_preserve.in/Cargo.toml b/tests/cmd/add/features_preserve.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_preserve.in/src/lib.rs b/tests/cmd/add/features_preserve.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_preserve.out/Cargo.toml b/tests/cmd/add/features_preserve.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_preserve.toml b/tests/cmd/add/features_preserve.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_spaced_values.out/Cargo.toml b/tests/cmd/add/features_spaced_values.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_spaced_values.toml b/tests/cmd/add/features_spaced_values.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_unknown.out/Cargo.toml b/tests/cmd/add/features_unknown.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/features_unknown.toml b/tests/cmd/add/features_unknown.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git.out/Cargo.toml b/tests/cmd/add/git.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git.toml b/tests/cmd/add/git.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_branch.out/Cargo.toml b/tests/cmd/add/git_branch.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_branch.toml b/tests/cmd/add/git_branch.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_conflicts_at_version.out/Cargo.toml b/tests/cmd/add/git_conflicts_at_version.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_conflicts_at_version.toml b/tests/cmd/add/git_conflicts_at_version.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_conflicts_path.out/Cargo.toml b/tests/cmd/add/git_conflicts_path.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_conflicts_path.toml b/tests/cmd/add/git_conflicts_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_conflicts_registry.out/Cargo.toml b/tests/cmd/add/git_conflicts_registry.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_conflicts_registry.toml b/tests/cmd/add/git_conflicts_registry.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_conflicts_vers.out/Cargo.toml b/tests/cmd/add/git_conflicts_vers.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_conflicts_vers.toml b/tests/cmd/add/git_conflicts_vers.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_dev.out/Cargo.toml b/tests/cmd/add/git_dev.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_dev.toml b/tests/cmd/add/git_dev.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_external.out/Cargo.toml b/tests/cmd/add/git_external.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/git_external.toml b/tests/cmd/add/git_external.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/implicit_path.in/dependency/Cargo.toml b/tests/cmd/add/implicit_path.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/implicit_path.in/dependency/src/lib.rs b/tests/cmd/add/implicit_path.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/implicit_path.in/primary/Cargo.toml b/tests/cmd/add/implicit_path.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/implicit_path.in/primary/src/lib.rs b/tests/cmd/add/implicit_path.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/implicit_path.out/dependency/Cargo.toml b/tests/cmd/add/implicit_path.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/implicit_path.out/primary/Cargo.toml b/tests/cmd/add/implicit_path.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/implicit_path.toml b/tests/cmd/add/implicit_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_arg.out/Cargo.toml b/tests/cmd/add/invalid_arg.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_arg.toml b/tests/cmd/add/invalid_arg.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_git_external.out/Cargo.toml b/tests/cmd/add/invalid_git_external.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_git_external.toml b/tests/cmd/add/invalid_git_external.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_implicit_path.out/Cargo.toml b/tests/cmd/add/invalid_implicit_path.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_implicit_path.toml b/tests/cmd/add/invalid_implicit_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_name_external.out/Cargo.toml b/tests/cmd/add/invalid_name_external.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_name_external.toml b/tests/cmd/add/invalid_name_external.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_op.out/Cargo.toml b/tests/cmd/add/invalid_op.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_op.toml b/tests/cmd/add/invalid_op.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_optional_dev.out/Cargo.toml b/tests/cmd/add/invalid_optional_dev.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_optional_dev.toml b/tests/cmd/add/invalid_optional_dev.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_path_self.out/Cargo.toml b/tests/cmd/add/invalid_path_self.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_path_self.toml b/tests/cmd/add/invalid_path_self.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_target_empty.out/Cargo.toml b/tests/cmd/add/invalid_target_empty.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_target_empty.toml b/tests/cmd/add/invalid_target_empty.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_vers.out/Cargo.toml b/tests/cmd/add/invalid_vers.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/invalid_vers.toml b/tests/cmd/add/invalid_vers.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features.out/Cargo.toml b/tests/cmd/add/list_features.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features.toml b/tests/cmd/add/list_features.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features_path.in/Cargo.toml b/tests/cmd/add/list_features_path.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features_path.in/dependency/Cargo.toml b/tests/cmd/add/list_features_path.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features_path.in/dependency/src/lib.rs b/tests/cmd/add/list_features_path.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features_path.in/primary/Cargo.toml b/tests/cmd/add/list_features_path.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features_path.in/primary/src/lib.rs b/tests/cmd/add/list_features_path.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features_path.out/Cargo.toml b/tests/cmd/add/list_features_path.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features_path.out/dependency/Cargo.toml b/tests/cmd/add/list_features_path.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features_path.out/primary/Cargo.toml b/tests/cmd/add/list_features_path.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/list_features_path.toml b/tests/cmd/add/list_features_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_features.out/Cargo.toml b/tests/cmd/add/multiple_conflicts_with_features.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_features.toml b/tests/cmd/add/multiple_conflicts_with_features.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_git.out/Cargo.toml b/tests/cmd/add/multiple_conflicts_with_git.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_git.toml b/tests/cmd/add/multiple_conflicts_with_git.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_path.out/Cargo.toml b/tests/cmd/add/multiple_conflicts_with_path.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_path.toml b/tests/cmd/add/multiple_conflicts_with_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_rename.out/Cargo.toml b/tests/cmd/add/multiple_conflicts_with_rename.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_rename.toml b/tests/cmd/add/multiple_conflicts_with_rename.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_vers.out/Cargo.toml b/tests/cmd/add/multiple_conflicts_with_vers.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/multiple_conflicts_with_vers.toml b/tests/cmd/add/multiple_conflicts_with_vers.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/no_args.out/Cargo.toml b/tests/cmd/add/no_args.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/no_args.toml b/tests/cmd/add/no_args.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/no_default_features.out/Cargo.toml b/tests/cmd/add/no_default_features.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/no_default_features.toml b/tests/cmd/add/no_default_features.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/op_caret.out/Cargo.toml b/tests/cmd/add/op_caret.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/op_caret.toml b/tests/cmd/add/op_caret.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/op_equal.out/Cargo.toml b/tests/cmd/add/op_equal.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/op_equal.toml b/tests/cmd/add/op_equal.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/op_greater_eq.out/Cargo.toml b/tests/cmd/add/op_greater_eq.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/op_greater_eq.toml b/tests/cmd/add/op_greater_eq.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/op_tilde.out/Cargo.toml b/tests/cmd/add/op_tilde.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/op_tilde.toml b/tests/cmd/add/op_tilde.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/optional.out/Cargo.toml b/tests/cmd/add/optional.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/optional.toml b/tests/cmd/add/optional.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_features.in/Cargo.toml b/tests/cmd/add/overwrite_features.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_features.in/src/lib.rs b/tests/cmd/add/overwrite_features.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_features.out/Cargo.toml b/tests/cmd/add/overwrite_features.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_features.toml b/tests/cmd/add/overwrite_features.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_git_with_path.in/dependency/Cargo.toml b/tests/cmd/add/overwrite_git_with_path.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_git_with_path.in/dependency/src/lib.rs b/tests/cmd/add/overwrite_git_with_path.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_git_with_path.in/primary/Cargo.toml b/tests/cmd/add/overwrite_git_with_path.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+index 3df19fcb..6cb4d6a7
+--- a/tests/cmd/add/overwrite_git_with_path.in/primary/Cargo.toml
++++ b/tests/cmd/add/overwrite_git_with_path.in/primary/Cargo.toml
+@@ -5,4 +5,4 @@ name = "cargo-list-test-fixture"
+ version = "0.0.0"
+ 
+ [dependencies]
+-cargo-list-test-fixture-dependency = { git = "git://git.git", optional = true }
++cargo-list-test-fixture-dependency = { git = "git://git.git", branch = "main", optional = true }
+diff --git a/tests/cmd/add/overwrite_git_with_path.in/primary/src/lib.rs b/tests/cmd/add/overwrite_git_with_path.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_git_with_path.out/dependency/Cargo.toml b/tests/cmd/add/overwrite_git_with_path.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_git_with_path.out/primary/Cargo.toml b/tests/cmd/add/overwrite_git_with_path.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_git_with_path.toml b/tests/cmd/add/overwrite_git_with_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_path_with_version.in/dependency/Cargo.toml b/tests/cmd/add/overwrite_path_with_version.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_path_with_version.in/dependency/src/lib.rs b/tests/cmd/add/overwrite_path_with_version.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_path_with_version.in/primary/Cargo.toml b/tests/cmd/add/overwrite_path_with_version.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_path_with_version.in/primary/src/lib.rs b/tests/cmd/add/overwrite_path_with_version.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_path_with_version.out/dependency/Cargo.toml b/tests/cmd/add/overwrite_path_with_version.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_path_with_version.out/primary/Cargo.toml b/tests/cmd/add/overwrite_path_with_version.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_path_with_version.toml b/tests/cmd/add/overwrite_path_with_version.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_no_rename.in/Cargo.toml b/tests/cmd/add/overwrite_rename_with_no_rename.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_no_rename.in/src/lib.rs b/tests/cmd/add/overwrite_rename_with_no_rename.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_no_rename.out/Cargo.toml b/tests/cmd/add/overwrite_rename_with_no_rename.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_no_rename.toml b/tests/cmd/add/overwrite_rename_with_no_rename.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_rename.in/Cargo.toml b/tests/cmd/add/overwrite_rename_with_rename.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_rename.in/src/lib.rs b/tests/cmd/add/overwrite_rename_with_rename.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_rename.out/Cargo.toml b/tests/cmd/add/overwrite_rename_with_rename.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_rename.toml b/tests/cmd/add/overwrite_rename_with_rename.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_rename_noop.in/Cargo.toml b/tests/cmd/add/overwrite_rename_with_rename_noop.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_rename_noop.in/src/lib.rs b/tests/cmd/add/overwrite_rename_with_rename_noop.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_rename_noop.out/Cargo.toml b/tests/cmd/add/overwrite_rename_with_rename_noop.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_rename_with_rename_noop.toml b/tests/cmd/add/overwrite_rename_with_rename_noop.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version.in/Cargo.toml b/tests/cmd/add/overwrite_version.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version.in/src/lib.rs b/tests/cmd/add/overwrite_version.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version.out/Cargo.toml b/tests/cmd/add/overwrite_version.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version.toml b/tests/cmd/add/overwrite_version.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_git.in/Cargo.toml b/tests/cmd/add/overwrite_version_with_git.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_git.in/src/lib.rs b/tests/cmd/add/overwrite_version_with_git.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_git.out/Cargo.toml b/tests/cmd/add/overwrite_version_with_git.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_git.toml b/tests/cmd/add/overwrite_version_with_git.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_path.in/dependency/Cargo.toml b/tests/cmd/add/overwrite_version_with_path.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_path.in/dependency/src/lib.rs b/tests/cmd/add/overwrite_version_with_path.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_path.in/primary/Cargo.toml b/tests/cmd/add/overwrite_version_with_path.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_path.in/primary/src/lib.rs b/tests/cmd/add/overwrite_version_with_path.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_path.out/dependency/Cargo.toml b/tests/cmd/add/overwrite_version_with_path.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_path.out/primary/Cargo.toml b/tests/cmd/add/overwrite_version_with_path.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_version_with_path.toml b/tests/cmd/add/overwrite_version_with_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_with_rename.in/Cargo.toml b/tests/cmd/add/overwrite_with_rename.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_with_rename.in/src/lib.rs b/tests/cmd/add/overwrite_with_rename.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_with_rename.out/Cargo.toml b/tests/cmd/add/overwrite_with_rename.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/overwrite_with_rename.toml b/tests/cmd/add/overwrite_with_rename.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path.in/dependency/Cargo.toml b/tests/cmd/add/path.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path.in/dependency/src/lib.rs b/tests/cmd/add/path.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path.in/primary/Cargo.toml b/tests/cmd/add/path.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path.in/primary/src/lib.rs b/tests/cmd/add/path.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path.out/dependency/Cargo.toml b/tests/cmd/add/path.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path.out/primary/Cargo.toml b/tests/cmd/add/path.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path.toml b/tests/cmd/add/path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path_dev.in/dependency/Cargo.toml b/tests/cmd/add/path_dev.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path_dev.in/dependency/src/lib.rs b/tests/cmd/add/path_dev.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path_dev.in/primary/Cargo.toml b/tests/cmd/add/path_dev.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path_dev.in/primary/src/lib.rs b/tests/cmd/add/path_dev.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path_dev.out/dependency/Cargo.toml b/tests/cmd/add/path_dev.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path_dev.out/primary/Cargo.toml b/tests/cmd/add/path_dev.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/path_dev.toml b/tests/cmd/add/path_dev.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/prerelease.out/Cargo.toml b/tests/cmd/add/prerelease.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/prerelease.toml b/tests/cmd/add/prerelease.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/preserve_sorted.in/Cargo.toml b/tests/cmd/add/preserve_sorted.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/preserve_sorted.in/src/lib.rs b/tests/cmd/add/preserve_sorted.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/preserve_sorted.out/Cargo.toml b/tests/cmd/add/preserve_sorted.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/preserve_sorted.toml b/tests/cmd/add/preserve_sorted.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/preserve_unsorted.in/Cargo.toml b/tests/cmd/add/preserve_unsorted.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/preserve_unsorted.in/src/lib.rs b/tests/cmd/add/preserve_unsorted.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/preserve_unsorted.out/Cargo.toml b/tests/cmd/add/preserve_unsorted.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/preserve_unsorted.toml b/tests/cmd/add/preserve_unsorted.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/registry.in/.cargo/config b/tests/cmd/add/registry.in/.cargo/config
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/registry.in/Cargo.toml b/tests/cmd/add/registry.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/registry.in/src/lib.rs b/tests/cmd/add/registry.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/registry.out/Cargo.toml b/tests/cmd/add/registry.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/registry.toml b/tests/cmd/add/registry.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/registry_conflicts_path.out/Cargo.toml b/tests/cmd/add/registry_conflicts_path.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/registry_conflicts_path.toml b/tests/cmd/add/registry_conflicts_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/rename.out/Cargo.toml b/tests/cmd/add/rename.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/rename.toml b/tests/cmd/add/rename.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/sort.in/Cargo.toml b/tests/cmd/add/sort.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/sort.in/src/lib.rs b/tests/cmd/add/sort.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/sort.out/Cargo.toml b/tests/cmd/add/sort.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/sort.toml b/tests/cmd/add/sort.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/target.out/Cargo.toml b/tests/cmd/add/target.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/target.toml b/tests/cmd/add/target.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/target_cfg.out/Cargo.toml b/tests/cmd/add/target_cfg.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/target_cfg.toml b/tests/cmd/add/target_cfg.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/vers.out/Cargo.toml b/tests/cmd/add/vers.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/vers.toml b/tests/cmd/add/vers.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_implicit_path.in/Cargo.toml b/tests/cmd/add/workspace_implicit_path.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_implicit_path.in/dependency/Cargo.toml b/tests/cmd/add/workspace_implicit_path.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_implicit_path.in/dependency/src/lib.rs b/tests/cmd/add/workspace_implicit_path.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_implicit_path.in/primary/Cargo.toml b/tests/cmd/add/workspace_implicit_path.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_implicit_path.in/primary/src/lib.rs b/tests/cmd/add/workspace_implicit_path.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_implicit_path.out/Cargo.toml b/tests/cmd/add/workspace_implicit_path.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_implicit_path.out/dependency/Cargo.toml b/tests/cmd/add/workspace_implicit_path.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_implicit_path.out/primary/Cargo.toml b/tests/cmd/add/workspace_implicit_path.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_implicit_path.toml b/tests/cmd/add/workspace_implicit_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_name.in/Cargo.toml b/tests/cmd/add/workspace_name.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_name.in/dependency/Cargo.toml b/tests/cmd/add/workspace_name.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_name.in/dependency/src/lib.rs b/tests/cmd/add/workspace_name.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_name.in/primary/Cargo.toml b/tests/cmd/add/workspace_name.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_name.in/primary/src/lib.rs b/tests/cmd/add/workspace_name.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_name.out/Cargo.toml b/tests/cmd/add/workspace_name.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_name.out/dependency/Cargo.toml b/tests/cmd/add/workspace_name.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_name.out/primary/Cargo.toml b/tests/cmd/add/workspace_name.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_name.toml b/tests/cmd/add/workspace_name.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path.in/Cargo.toml b/tests/cmd/add/workspace_path.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path.in/dependency/Cargo.toml b/tests/cmd/add/workspace_path.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path.in/dependency/src/lib.rs b/tests/cmd/add/workspace_path.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path.in/primary/Cargo.toml b/tests/cmd/add/workspace_path.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path.in/primary/src/lib.rs b/tests/cmd/add/workspace_path.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path.out/Cargo.toml b/tests/cmd/add/workspace_path.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path.out/dependency/Cargo.toml b/tests/cmd/add/workspace_path.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path.out/primary/Cargo.toml b/tests/cmd/add/workspace_path.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path.toml b/tests/cmd/add/workspace_path.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path_dev.in/Cargo.toml b/tests/cmd/add/workspace_path_dev.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path_dev.in/dependency/Cargo.toml b/tests/cmd/add/workspace_path_dev.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path_dev.in/dependency/src/lib.rs b/tests/cmd/add/workspace_path_dev.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path_dev.in/primary/Cargo.toml b/tests/cmd/add/workspace_path_dev.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path_dev.in/primary/src/lib.rs b/tests/cmd/add/workspace_path_dev.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path_dev.out/Cargo.toml b/tests/cmd/add/workspace_path_dev.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path_dev.out/dependency/Cargo.toml b/tests/cmd/add/workspace_path_dev.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path_dev.out/primary/Cargo.toml b/tests/cmd/add/workspace_path_dev.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/add/workspace_path_dev.toml b/tests/cmd/add/workspace_path_dev.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_arg.out/Cargo.toml b/tests/cmd/rm/invalid_arg.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_arg.toml b/tests/cmd/rm/invalid_arg.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_dep.out/Cargo.toml b/tests/cmd/rm/invalid_dep.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_dep.toml b/tests/cmd/rm/invalid_dep.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_section.in/Cargo.toml b/tests/cmd/rm/invalid_section.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_section.in/src/lib.rs b/tests/cmd/rm/invalid_section.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_section.out/Cargo.toml b/tests/cmd/rm/invalid_section.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_section.toml b/tests/cmd/rm/invalid_section.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_section_dep.out/Cargo.toml b/tests/cmd/rm/invalid_section_dep.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/invalid_section_dep.toml b/tests/cmd/rm/invalid_section_dep.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/no_arg.out/Cargo.toml b/tests/cmd/rm/no_arg.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/no_arg.toml b/tests/cmd/rm/no_arg.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm-basic.in/Cargo.toml b/tests/cmd/rm/rm-basic.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm-basic.in/src/lib.rs b/tests/cmd/rm/rm-basic.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_avoid_empty_tables.out/Cargo.toml b/tests/cmd/rm/rm_avoid_empty_tables.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_avoid_empty_tables.toml b/tests/cmd/rm/rm_avoid_empty_tables.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_build.out/Cargo.toml b/tests/cmd/rm/rm_build.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_build.toml b/tests/cmd/rm/rm_build.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_dev.out/Cargo.toml b/tests/cmd/rm/rm_dev.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_dev.toml b/tests/cmd/rm/rm_dev.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_existing.out/Cargo.toml b/tests/cmd/rm/rm_existing.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_existing.toml b/tests/cmd/rm/rm_existing.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_multiple_deps.out/Cargo.toml b/tests/cmd/rm/rm_multiple_deps.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_multiple_deps.toml b/tests/cmd/rm/rm_multiple_deps.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_multiple_dev.out/Cargo.toml b/tests/cmd/rm/rm_multiple_dev.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_multiple_dev.toml b/tests/cmd/rm/rm_multiple_dev.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_optional_feature.out/Cargo.toml b/tests/cmd/rm/rm_optional_feature.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/rm/rm_optional_feature.toml b/tests/cmd/rm/rm_optional_feature.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/downgrade_error.out/Cargo.toml b/tests/cmd/set-version/downgrade_error.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/downgrade_error.toml b/tests/cmd/set-version/downgrade_error.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/ignore_dependent.out/Cargo.toml b/tests/cmd/set-version/ignore_dependent.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/ignore_dependent.out/dependency/Cargo.toml b/tests/cmd/set-version/ignore_dependent.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/ignore_dependent.out/primary/Cargo.toml b/tests/cmd/set-version/ignore_dependent.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/ignore_dependent.toml b/tests/cmd/set-version/ignore_dependent.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/relative_absolute_conflict.out/Cargo.toml b/tests/cmd/set-version/relative_absolute_conflict.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/relative_absolute_conflict.toml b/tests/cmd/set-version/relative_absolute_conflict.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set-version-basic.in/Cargo.toml b/tests/cmd/set-version/set-version-basic.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set-version-basic.in/src/lib.rs b/tests/cmd/set-version/set-version-basic.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set-version-workspace.in/Cargo.toml b/tests/cmd/set-version/set-version-workspace.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set-version-workspace.in/dependency/Cargo.toml b/tests/cmd/set-version/set-version-workspace.in/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set-version-workspace.in/dependency/src/lib.rs b/tests/cmd/set-version/set-version-workspace.in/dependency/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set-version-workspace.in/primary/Cargo.toml b/tests/cmd/set-version/set-version-workspace.in/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set-version-workspace.in/primary/src/lib.rs b/tests/cmd/set-version/set-version-workspace.in/primary/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set_absolute_version.out/Cargo.toml b/tests/cmd/set-version/set_absolute_version.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set_absolute_version.toml b/tests/cmd/set-version/set_absolute_version.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set_relative_version.out/Cargo.toml b/tests/cmd/set-version/set_relative_version.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/set_relative_version.toml b/tests/cmd/set-version/set_relative_version.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/upgrade_compatible_dependency.out/Cargo.toml b/tests/cmd/set-version/upgrade_compatible_dependency.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/upgrade_compatible_dependency.out/dependency/Cargo.toml b/tests/cmd/set-version/upgrade_compatible_dependency.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/upgrade_compatible_dependency.out/primary/Cargo.toml b/tests/cmd/set-version/upgrade_compatible_dependency.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/upgrade_compatible_dependency.toml b/tests/cmd/set-version/upgrade_compatible_dependency.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/upgrade_incompatible_dependency.out/Cargo.toml b/tests/cmd/set-version/upgrade_incompatible_dependency.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/upgrade_incompatible_dependency.out/dependency/Cargo.toml b/tests/cmd/set-version/upgrade_incompatible_dependency.out/dependency/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/upgrade_incompatible_dependency.out/primary/Cargo.toml b/tests/cmd/set-version/upgrade_incompatible_dependency.out/primary/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/set-version/upgrade_incompatible_dependency.toml b/tests/cmd/set-version/upgrade_incompatible_dependency.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/alt_registry.out/Cargo.toml b/tests/cmd/upgrade/alt_registry.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/alt_registry.out/src/lib.rs b/tests/cmd/upgrade/alt_registry.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/alt_registry.toml b/tests/cmd/upgrade/alt_registry.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run.in/Cargo.toml b/tests/cmd/upgrade/dry_run.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run.in/src/lib.rs b/tests/cmd/upgrade/dry_run.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run.out/Cargo.toml b/tests/cmd/upgrade/dry_run.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run.out/src/lib.rs b/tests/cmd/upgrade/dry_run.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run.toml b/tests/cmd/upgrade/dry_run.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run_prerelease.in/Cargo.toml b/tests/cmd/upgrade/dry_run_prerelease.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run_prerelease.in/src/lib.rs b/tests/cmd/upgrade/dry_run_prerelease.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run_prerelease.out/Cargo.toml b/tests/cmd/upgrade/dry_run_prerelease.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run_prerelease.out/src/lib.rs b/tests/cmd/upgrade/dry_run_prerelease.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/dry_run_prerelease.toml b/tests/cmd/upgrade/dry_run_prerelease.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/exclude_dep.in/Cargo.toml b/tests/cmd/upgrade/exclude_dep.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/exclude_dep.in/src/lib.rs b/tests/cmd/upgrade/exclude_dep.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/exclude_dep.out/Cargo.toml b/tests/cmd/upgrade/exclude_dep.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/exclude_dep.toml b/tests/cmd/upgrade/exclude_dep.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/exclude_renamed.out/Cargo.toml b/tests/cmd/upgrade/exclude_renamed.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/exclude_renamed.out/src/lib.rs b/tests/cmd/upgrade/exclude_renamed.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/exclude_renamed.toml b/tests/cmd/upgrade/exclude_renamed.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/implicit_prerelease.in/Cargo.toml b/tests/cmd/upgrade/implicit_prerelease.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/implicit_prerelease.in/src/lib.rs b/tests/cmd/upgrade/implicit_prerelease.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/implicit_prerelease.out/Cargo.toml b/tests/cmd/upgrade/implicit_prerelease.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/implicit_prerelease.out/src/lib.rs b/tests/cmd/upgrade/implicit_prerelease.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/implicit_prerelease.toml b/tests/cmd/upgrade/implicit_prerelease.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_dep.out/Cargo.toml b/tests/cmd/upgrade/invalid_dep.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_dep.out/src/lib.rs b/tests/cmd/upgrade/invalid_dep.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_dep.toml b/tests/cmd/upgrade/invalid_dep.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_flag.out/Cargo.toml b/tests/cmd/upgrade/invalid_flag.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_flag.out/src/lib.rs b/tests/cmd/upgrade/invalid_flag.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_flag.toml b/tests/cmd/upgrade/invalid_flag.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_manifest.in/Cargo.toml b/tests/cmd/upgrade/invalid_manifest.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_manifest.in/src/lib.rs b/tests/cmd/upgrade/invalid_manifest.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_manifest.out/Cargo.toml b/tests/cmd/upgrade/invalid_manifest.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_manifest.out/src/lib.rs b/tests/cmd/upgrade/invalid_manifest.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_manifest.toml b/tests/cmd/upgrade/invalid_manifest.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_virtual_manifest.out/Cargo.lock b/tests/cmd/upgrade/invalid_virtual_manifest.out/Cargo.lock
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_virtual_manifest.out/Cargo.toml b/tests/cmd/upgrade/invalid_virtual_manifest.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_virtual_manifest.out/dummy.rs b/tests/cmd/upgrade/invalid_virtual_manifest.out/dummy.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_virtual_manifest.out/explicit/four/Cargo.toml b/tests/cmd/upgrade/invalid_virtual_manifest.out/explicit/four/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_virtual_manifest.out/implicit/three/Cargo.toml b/tests/cmd/upgrade/invalid_virtual_manifest.out/implicit/three/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_virtual_manifest.out/one/Cargo.toml b/tests/cmd/upgrade/invalid_virtual_manifest.out/one/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_virtual_manifest.out/two/Cargo.toml b/tests/cmd/upgrade/invalid_virtual_manifest.out/two/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_virtual_manifest.toml b/tests/cmd/upgrade/invalid_virtual_manifest.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_workspace_root_manifest.in/Cargo.toml b/tests/cmd/upgrade/invalid_workspace_root_manifest.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_workspace_root_manifest.in/src/lib.rs b/tests/cmd/upgrade/invalid_workspace_root_manifest.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_workspace_root_manifest.out/Cargo.toml b/tests/cmd/upgrade/invalid_workspace_root_manifest.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_workspace_root_manifest.out/src/lib.rs b/tests/cmd/upgrade/invalid_workspace_root_manifest.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/invalid_workspace_root_manifest.toml b/tests/cmd/upgrade/invalid_workspace_root_manifest.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/optional_dep.in/Cargo.toml b/tests/cmd/upgrade/optional_dep.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/optional_dep.in/src/lib.rs b/tests/cmd/upgrade/optional_dep.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/optional_dep.out/Cargo.toml b/tests/cmd/upgrade/optional_dep.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/optional_dep.out/src/lib.rs b/tests/cmd/upgrade/optional_dep.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/optional_dep.toml b/tests/cmd/upgrade/optional_dep.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/prerelease.in/Cargo.toml b/tests/cmd/upgrade/prerelease.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/prerelease.in/src/lib.rs b/tests/cmd/upgrade/prerelease.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/prerelease.out/Cargo.toml b/tests/cmd/upgrade/prerelease.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/prerelease.out/src/lib.rs b/tests/cmd/upgrade/prerelease.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/prerelease.toml b/tests/cmd/upgrade/prerelease.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/single_dep.in/Cargo.toml b/tests/cmd/upgrade/single_dep.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/single_dep.in/src/lib.rs b/tests/cmd/upgrade/single_dep.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/single_dep.out/Cargo.toml b/tests/cmd/upgrade/single_dep.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/single_dep.out/src/lib.rs b/tests/cmd/upgrade/single_dep.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/single_dep.toml b/tests/cmd/upgrade/single_dep.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/skip_compatible.in/Cargo.toml b/tests/cmd/upgrade/skip_compatible.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/skip_compatible.in/src/lib.rs b/tests/cmd/upgrade/skip_compatible.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/skip_compatible.out/Cargo.toml b/tests/cmd/upgrade/skip_compatible.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/skip_compatible.out/src/lib.rs b/tests/cmd/upgrade/skip_compatible.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/skip_compatible.toml b/tests/cmd/upgrade/skip_compatible.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/specified.in/Cargo.toml b/tests/cmd/upgrade/specified.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/specified.in/src/lib.rs b/tests/cmd/upgrade/specified.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/specified.out/Cargo.toml b/tests/cmd/upgrade/specified.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/specified.out/src/lib.rs b/tests/cmd/upgrade/specified.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/specified.toml b/tests/cmd/upgrade/specified.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_lockfile.out/Cargo.lock b/tests/cmd/upgrade/to_lockfile.out/Cargo.lock
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_lockfile.out/Cargo.toml b/tests/cmd/upgrade/to_lockfile.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_lockfile.out/dummy.rs b/tests/cmd/upgrade/to_lockfile.out/dummy.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_lockfile.out/explicit/four/Cargo.toml b/tests/cmd/upgrade/to_lockfile.out/explicit/four/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_lockfile.out/implicit/three/Cargo.toml b/tests/cmd/upgrade/to_lockfile.out/implicit/three/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_lockfile.out/one/Cargo.toml b/tests/cmd/upgrade/to_lockfile.out/one/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_lockfile.out/two/Cargo.toml b/tests/cmd/upgrade/to_lockfile.out/two/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_lockfile.toml b/tests/cmd/upgrade/to_lockfile.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_version.in/Cargo.toml b/tests/cmd/upgrade/to_version.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_version.in/src/lib.rs b/tests/cmd/upgrade/to_version.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_version.out/Cargo.toml b/tests/cmd/upgrade/to_version.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_version.out/src/lib.rs b/tests/cmd/upgrade/to_version.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/to_version.toml b/tests/cmd/upgrade/to_version.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-alt-registry.in/.cargo/config b/tests/cmd/upgrade/upgrade-alt-registry.in/.cargo/config
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-alt-registry.in/Cargo.toml b/tests/cmd/upgrade/upgrade-alt-registry.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-alt-registry.in/src/lib.rs b/tests/cmd/upgrade/upgrade-alt-registry.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-basic.in/Cargo.toml b/tests/cmd/upgrade/upgrade-basic.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-basic.in/src/lib.rs b/tests/cmd/upgrade/upgrade-basic.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-renamed.in/Cargo.toml b/tests/cmd/upgrade/upgrade-renamed.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-renamed.in/src/lib.rs b/tests/cmd/upgrade/upgrade-renamed.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-workspace.in/Cargo.lock b/tests/cmd/upgrade/upgrade-workspace.in/Cargo.lock
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-workspace.in/Cargo.toml b/tests/cmd/upgrade/upgrade-workspace.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-workspace.in/dummy.rs b/tests/cmd/upgrade/upgrade-workspace.in/dummy.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-workspace.in/explicit/four/Cargo.toml b/tests/cmd/upgrade/upgrade-workspace.in/explicit/four/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-workspace.in/implicit/three/Cargo.toml b/tests/cmd/upgrade/upgrade-workspace.in/implicit/three/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-workspace.in/one/Cargo.toml b/tests/cmd/upgrade/upgrade-workspace.in/one/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade-workspace.in/two/Cargo.toml b/tests/cmd/upgrade/upgrade-workspace.in/two/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_all.out/Cargo.lock b/tests/cmd/upgrade/upgrade_all.out/Cargo.lock
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_all.out/Cargo.toml b/tests/cmd/upgrade/upgrade_all.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_all.out/dummy.rs b/tests/cmd/upgrade/upgrade_all.out/dummy.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_all.out/explicit/four/Cargo.toml b/tests/cmd/upgrade/upgrade_all.out/explicit/four/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_all.out/implicit/three/Cargo.toml b/tests/cmd/upgrade/upgrade_all.out/implicit/three/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_all.out/one/Cargo.toml b/tests/cmd/upgrade/upgrade_all.out/one/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_all.out/two/Cargo.toml b/tests/cmd/upgrade/upgrade_all.out/two/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_all.toml b/tests/cmd/upgrade/upgrade_all.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_everything.in/Cargo.toml b/tests/cmd/upgrade/upgrade_everything.in/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_everything.in/src/lib.rs b/tests/cmd/upgrade/upgrade_everything.in/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_everything.out/Cargo.toml b/tests/cmd/upgrade/upgrade_everything.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_everything.toml b/tests/cmd/upgrade/upgrade_everything.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_renamed.out/Cargo.toml b/tests/cmd/upgrade/upgrade_renamed.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_renamed.out/src/lib.rs b/tests/cmd/upgrade/upgrade_renamed.out/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_renamed.toml b/tests/cmd/upgrade/upgrade_renamed.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_workspace.out/Cargo.lock b/tests/cmd/upgrade/upgrade_workspace.out/Cargo.lock
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_workspace.out/Cargo.toml b/tests/cmd/upgrade/upgrade_workspace.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_workspace.out/dummy.rs b/tests/cmd/upgrade/upgrade_workspace.out/dummy.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_workspace.out/explicit/four/Cargo.toml b/tests/cmd/upgrade/upgrade_workspace.out/explicit/four/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_workspace.out/implicit/three/Cargo.toml b/tests/cmd/upgrade/upgrade_workspace.out/implicit/three/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_workspace.out/one/Cargo.toml b/tests/cmd/upgrade/upgrade_workspace.out/one/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_workspace.out/two/Cargo.toml b/tests/cmd/upgrade/upgrade_workspace.out/two/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/upgrade_workspace.toml b/tests/cmd/upgrade/upgrade_workspace.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/workspace_member_cwd.out/Cargo.lock b/tests/cmd/upgrade/workspace_member_cwd.out/Cargo.lock
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/workspace_member_cwd.out/Cargo.toml b/tests/cmd/upgrade/workspace_member_cwd.out/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/workspace_member_cwd.out/dummy.rs b/tests/cmd/upgrade/workspace_member_cwd.out/dummy.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/workspace_member_cwd.out/explicit/four/Cargo.toml b/tests/cmd/upgrade/workspace_member_cwd.out/explicit/four/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/workspace_member_cwd.out/implicit/three/Cargo.toml b/tests/cmd/upgrade/workspace_member_cwd.out/implicit/three/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/workspace_member_cwd.out/one/Cargo.toml b/tests/cmd/upgrade/workspace_member_cwd.out/one/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/workspace_member_cwd.out/two/Cargo.toml b/tests/cmd/upgrade/workspace_member_cwd.out/two/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/cmd/upgrade/workspace_member_cwd.toml b/tests/cmd/upgrade/workspace_member_cwd.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/add/Cargo.toml.features b/tests/fixtures/add/Cargo.toml.features
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/add/Cargo.toml.sample b/tests/fixtures/add/Cargo.toml.sample
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/add/Cargo.toml.sorted b/tests/fixtures/add/Cargo.toml.sorted
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/add/Cargo.toml.unsorted b/tests/fixtures/add/Cargo.toml.unsorted
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/add/local/Cargo.toml.sample b/tests/fixtures/add/local/Cargo.toml.sample
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/alt-registry-cargo-config b/tests/fixtures/alt-registry-cargo-config
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/manifest-invalid/Cargo.toml.sample b/tests/fixtures/manifest-invalid/Cargo.toml.sample
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/rm/Cargo.toml.no_features.sample b/tests/fixtures/rm/Cargo.toml.no_features.sample
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/rm/Cargo.toml.sample b/tests/fixtures/rm/Cargo.toml.sample
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/upgrade/Cargo.lock b/tests/fixtures/upgrade/Cargo.lock
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/upgrade/Cargo.toml.alt_registry b/tests/fixtures/upgrade/Cargo.toml.alt_registry
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/upgrade/Cargo.toml.invalid b/tests/fixtures/upgrade/Cargo.toml.invalid
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/upgrade/Cargo.toml.lockfile_source b/tests/fixtures/upgrade/Cargo.toml.lockfile_source
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/upgrade/Cargo.toml.lockfile_target b/tests/fixtures/upgrade/Cargo.toml.lockfile_target
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/upgrade/Cargo.toml.renamed_dep b/tests/fixtures/upgrade/Cargo.toml.renamed_dep
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/upgrade/Cargo.toml.source b/tests/fixtures/upgrade/Cargo.toml.source
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/upgrade/Cargo.toml.target b/tests/fixtures/upgrade/Cargo.toml.target
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/Cargo.lock b/tests/fixtures/workspace/Cargo.lock
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/Cargo.toml b/tests/fixtures/workspace/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/Cargo.toml.lockfile_target b/tests/fixtures/workspace/Cargo.toml.lockfile_target
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/dummy.rs b/tests/fixtures/workspace/dummy.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/explicit/four/Cargo.toml b/tests/fixtures/workspace/explicit/four/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/implicit/three/Cargo.toml b/tests/fixtures/workspace/implicit/three/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/one/Cargo.toml b/tests/fixtures/workspace/one/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/one/Cargo.toml.lockfile_target b/tests/fixtures/workspace/one/Cargo.toml.lockfile_target
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/two/Cargo.toml b/tests/fixtures/workspace/two/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/tests/fixtures/workspace/two/Cargo.toml.lockfile_target b/tests/fixtures/workspace/two/Cargo.toml.lockfile_target
+old mode 100644
+new mode 100755
+diff --git a/tests/test_manifest.rs b/tests/test_manifest.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/utils.rs b/tests/utils.rs
+old mode 100644
+new mode 100755
++ cargo test --no-fail-fast
+ Downloading crates ...
+  Downloaded tempfile v3.3.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded termtree v0.2.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded trycmd v0.12.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded ansi_term v0.11.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded hex v0.4.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded yansi v0.5.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded indexmap v1.8.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded addr2line v0.17.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded assert_cmd v2.0.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded aho-corasick v0.7.18 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded libc v0.2.113 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded autocfg v1.0.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded ignore v0.4.18 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded assert_fs v1.0.7 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded scopeguard v1.1.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded globset v0.4.8 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded humantime v2.1.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded libgit2-sys v0.12.26+1.3.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded idna v0.2.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded kstring v1.0.6 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded ryu v1.0.9 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded ureq v1.5.5 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded unicode-normalization v0.1.19 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded libz-sys v1.1.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded adler v1.0.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded subprocess v0.2.8 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded tinyvec v1.5.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded textwrap v0.14.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded itertools v0.10.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded libssh2-sys v0.2.23 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded home v0.5.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded glob v0.3.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded heck v0.4.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded error-chain v0.12.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded wait-timeout v0.2.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded terminal_size v0.1.17 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded chunked_transfer v1.4.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded form_urlencoded v1.0.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded dunce v1.0.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded fastrand v1.7.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded walkdir v2.3.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded webpki v0.21.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded socks v0.3.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded pathdiff v0.2.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded doc-comment v0.3.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded webpki-roots v0.21.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded rustc-demangle v0.1.21 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded unicode-xid v0.2.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded rustls v0.19.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded humantime-serde v1.0.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded regex-syntax v0.6.25 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded gimli v0.26.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded tinyvec_macros v0.1.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded dirs-next v2.0.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded spin v0.5.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded untrusted v0.7.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded static_assertions v1.1.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded thread_local v1.1.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded strsim v0.10.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded termcolor v1.1.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded smartstring v0.2.9 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded sct v0.6.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded shlex v1.1.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded ring v0.16.20 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded unicode-bidi v0.3.7 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded crates-index v0.18.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded git2 v0.13.25 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded serde_derive v1.0.135 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded url v2.2.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded semver v1.0.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded serde_json v1.0.78 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded syn v1.0.86 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded cargo-platform v0.1.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded rayon v1.5.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded predicates-core v1.0.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded percent-encoding v2.1.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded fnv v1.0.7 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded bstr v0.2.17 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded either v1.6.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded quote v1.0.15 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded log v0.4.14 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded concolor v0.0.8 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded openssl-probe v0.1.5 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded normalize-line-endings v0.3.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded globwalk v0.8.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded serde v1.0.135 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded memoffset v0.6.5 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded difflib v0.4.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded pkg-config v0.3.24 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded proc-macro2 v1.0.36 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded proc-macro-error v1.0.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded once_cell v1.9.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded num-traits v0.2.14 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded jobserver v0.1.24 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded concolor-query v0.0.5 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded rayon-core v1.9.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded miniz_oxide v0.4.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded bytes v1.1.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded base64 v0.13.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded crossbeam-channel v0.5.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded regex-automata v0.1.10 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded toml_edit v0.12.6 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded remove_dir_all v0.5.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded num_cpus v1.13.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded concolor-control v0.0.7 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded matches v0.1.9 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded predicates v2.1.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded combine v4.6.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded float-cmp v0.9.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded env_proxy v0.4.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded qstring v0.7.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded proc-macro-error-attr v1.0.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded atty v0.2.14 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded pretty_assertions v0.6.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded os_str_bytes v6.0.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded difference v2.0.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded camino v1.0.7 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded itoa v1.0.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded predicates-tree v1.0.5 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded hashbrown v0.11.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded crossbeam-utils v0.8.6 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded object v0.27.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded cc v1.0.72 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded concolor-query v0.0.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded byteorder v1.4.3 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded crossbeam-deque v0.8.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded cargo_metadata v0.14.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded crossbeam-epoch v0.9.6 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded dirs-sys-next v0.1.2 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded openssl-sys v0.9.72 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded backtrace v0.3.63 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded clap_derive v3.0.6 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded memchr v2.4.1 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded toml_edit v0.13.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded os_pipe v1.0.0 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded regex v1.5.4 (registry `lts-repo-at-1ef18d9e5c`)
+  Downloaded clap v3.0.10 (registry `lts-repo-at-1ef18d9e5c`)
+   Compiling libc v0.2.113
+   Compiling autocfg v1.0.1
+   Compiling proc-macro2 v1.0.36
+   Compiling unicode-xid v0.2.2
+   Compiling memchr v2.4.1
+   Compiling cfg-if v1.0.0
+   Compiling syn v1.0.86
+   Compiling serde_derive v1.0.135
+   Compiling serde v1.0.135
+   Compiling lazy_static v1.4.0
+   Compiling pkg-config v0.3.24
+   Compiling version_check v0.9.4
+   Compiling log v0.4.14
+   Compiling bitflags v1.3.2
+   Compiling once_cell v1.9.0
+   Compiling tinyvec_macros v0.1.0
+   Compiling either v1.6.1
+   Compiling percent-encoding v2.1.0
+   Compiling regex-syntax v0.6.25
+   Compiling matches v0.1.9
+   Compiling spin v0.5.2
+   Compiling crossbeam-utils v0.8.6
+   Compiling unicode-bidi v0.3.7
+   Compiling untrusted v0.7.1
+   Compiling hashbrown v0.11.2
+   Compiling serde_json v1.0.78
+   Compiling ryu v1.0.9
+   Compiling bytes v1.1.0
+   Compiling itoa v1.0.1
+   Compiling semver v1.0.4
+   Compiling camino v1.0.7
+   Compiling gimli v0.26.1
+   Compiling adler v1.0.2
+   Compiling openssl-probe v0.1.5
+   Compiling heck v0.4.0
+   Compiling byteorder v1.4.3
+   Compiling base64 v0.13.0
+   Compiling static_assertions v1.1.0
+   Compiling rustc-demangle v0.1.21
+   Compiling regex-automata v0.1.10
+   Compiling home v0.5.3
+   Compiling crossbeam-epoch v0.9.6
+   Compiling termcolor v1.1.2
+   Compiling concolor-query v0.0.4
+   Compiling strsim v0.10.0
+   Compiling chunked_transfer v1.4.0
+   Compiling dunce v1.0.2
+   Compiling concolor-query v0.0.5
+   Compiling scopeguard v1.1.0
+   Compiling rayon-core v1.9.1
+   Compiling pathdiff v0.2.1
+   Compiling same-file v1.0.6
+   Compiling difflib v0.4.0
+   Compiling predicates-core v1.0.3
+   Compiling doc-comment v0.3.3
+   Compiling yansi v0.5.0
+   Compiling fnv v1.0.7
+   Compiling normalize-line-endings v0.3.0
+   Compiling fastrand v1.7.0
+   Compiling remove_dir_all v0.5.3
+   Compiling termtree v0.2.4
+   Compiling humantime v2.1.0
+   Compiling ansi_term v0.11.0
+   Compiling difference v2.0.0
+   Compiling shlex v1.1.0
+   Compiling glob v0.3.0
+   Compiling tinyvec v1.5.1
+   Compiling itertools v0.10.3
+   Compiling form_urlencoded v1.0.1
+   Compiling qstring v0.7.2
+   Compiling thread_local v1.1.4
+   Compiling walkdir v2.3.2
+   Compiling predicates-tree v1.0.5
+   Compiling pretty_assertions v0.6.1
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling error-chain v0.12.4
+   Compiling indexmap v1.8.0
+   Compiling miniz_oxide v0.4.4
+   Compiling memoffset v0.6.5
+   Compiling num-traits v0.2.14
+   Compiling rayon v1.5.1
+   Compiling crossbeam-channel v0.5.2
+   Compiling aho-corasick v0.7.18
+   Compiling combine v4.6.3
+   Compiling object v0.27.1
+   Compiling os_str_bytes v6.0.0
+   Compiling bstr v0.2.17
+   Compiling quote v1.0.15
+   Compiling jobserver v0.1.24
+   Compiling atty v0.2.14
+   Compiling terminal_size v0.1.17
+   Compiling socks v0.3.3
+   Compiling dirs-sys-next v0.1.2
+   Compiling subprocess v0.2.8
+   Compiling num_cpus v1.13.1
+   Compiling tempfile v3.3.0
+   Compiling wait-timeout v0.2.0
+   Compiling os_pipe v1.0.0
+   Compiling concolor-control v0.0.7
+   Compiling concolor v0.0.8
+   Compiling textwrap v0.14.2
+   Compiling dirs-next v2.0.0
+   Compiling crossbeam-deque v0.8.1
+   Compiling cc v1.0.72
+   Compiling unicode-normalization v0.1.19
+   Compiling float-cmp v0.9.0
+   Compiling regex v1.5.4
+   Compiling libz-sys v1.1.3
+   Compiling openssl-sys v0.9.72
+   Compiling ring v0.16.20
+   Compiling libssh2-sys v0.2.23
+   Compiling libgit2-sys v0.12.26+1.3.0
+   Compiling backtrace v0.3.63
+   Compiling addr2line v0.17.0
+   Compiling idna v0.2.3
+   Compiling url v2.2.2
+   Compiling globset v0.4.8
+   Compiling predicates v2.1.1
+   Compiling ignore v0.4.18
+   Compiling assert_cmd v2.0.4
+   Compiling env_proxy v0.4.1
+   Compiling globwalk v0.8.1
+   Compiling assert_fs v1.0.7
+   Compiling clap_derive v3.0.6
+   Compiling git2 v0.13.25
+   Compiling webpki v0.21.4
+   Compiling sct v0.6.1
+   Compiling rustls v0.19.1
+   Compiling webpki-roots v0.21.1
+   Compiling clap v3.0.10
+   Compiling kstring v1.0.6
+   Compiling smartstring v0.2.9
+   Compiling hex v0.4.3
+   Compiling cargo-platform v0.1.2
+   Compiling humantime-serde v1.0.1
+   Compiling toml_edit v0.13.0
+   Compiling toml_edit v0.12.6
+   Compiling ureq v1.5.5
+   Compiling cargo_metadata v0.14.1
+   Compiling crates-index v0.18.2
+   Compiling trycmd v0.12.1
+   Compiling cargo-edit v0.8.0 (/workspace)
+    Finished test [unoptimized + debuginfo] target(s) in 33.60s
+     Running unittests (target/debug/deps/cargo_edit-850b21a763e39fc0)
+
+running 40 tests
+    Upgrading cargo-edit v0.1.0 -> v0.2.0
+test dependency::tests::paths_with_forward_slashes_are_left_as_is ... ok
+test dependency::tests::to_toml_dep_without_default_features ... ok
+test dependency::tests::to_toml_complex_dep ... ok
+test dependency::tests::to_toml_dep_with_git_source ... ok
+test dependency::tests::to_toml_dep_from_alt_registry ... ok
+test dependency::tests::to_toml_dep_with_path_source ... ok
+test dependency::tests::to_toml_optional_dep ... ok
+test dependency::tests::to_toml_simple_dep ... ok
+test dependency::tests::to_toml_simple_dep_with_version ... ok
+test dependency::tests::to_toml_renamed_dep ... ok
+test fetch::get_latest_stable_version ... ok
+test fetch::get_latest_unstable_or_stable_version ... ok
+test fetch::get_latest_version_with_yanked ... ok
+test fetch::get_no_latest_version_from_json_when_all_are_yanked ... ok
+test fetch::test_gen_fuzzy_crate_names ... ok
+test manifest::tests::old_incompatible_with_invalid ... ok
+test manifest::tests::add_remove_dependency ... ok
+test manifest::tests::old_incompatible_with_missing_new_version ... ok
+test manifest::tests::old_version_is_compatible ... ok
+test manifest::tests::remove_dependency_no_section ... ok
+test manifest::tests::remove_dependency_non_existent ... ok
+test version::test::increment::alpha ... ok
+test manifest::tests::update_dependency ... ok
+test version::test::increment::beta ... ok
+test manifest::tests::update_wrong_dependency ... ok
+test version::test::increment::metadata ... ok
+test version::test::increment::rc ... ok
+test version::test::upgrade_requirement::caret_major ... ok
+test version::test::upgrade_requirement::caret_minor ... ok
+test version::test::upgrade_requirement::equal_major ... ok
+test version::test::upgrade_requirement::caret_patch ... ok
+test version::test::upgrade_requirement::equal_minor ... ok
+test version::test::upgrade_requirement::equal_patch ... ok
+test version::test::upgrade_requirement::tilde_major ... ok
+test version::test::upgrade_requirement::tilde_minor ... ok
+test version::test::upgrade_requirement::tilde_patch ... ok
+test version::test::upgrade_requirement::wildcard_major ... ok
+test manifest::tests::set_package_version_overrides ... ok
+test version::test::upgrade_requirement::wildcard_minor ... ok
+test version::test::upgrade_requirement::wildcard_patch ... ok
+
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests (target/debug/deps/cargo_add-462bd11bd3962019)
+
+running 3 tests
+test args::tests::verify_app ... ok
+test args::tests::test_dependency_parsing ... ok
+test args::tests::test_path_as_arg_parsing ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests (target/debug/deps/cargo_rm-d5430676bc57a3c4)
+
+running 1 test
+test verify_app ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests (target/debug/deps/cargo_set_version-40553522aaa6f89d)
+
+running 1 test
+test args::verify_app ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests (target/debug/deps/cargo_upgrade-8460e34f2c172d98)
+
+running 1 test
+test verify_app ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/cargo-add.rs (target/debug/deps/cargo_add-b38c612d3cf01760)
+
+running 1 test
+Testing tests/cmd/add/git_external.toml ... ignored
+Testing tests/cmd/add/add_normalized_name_external.toml ... ignored
+Testing tests/cmd/add/multiple_conflicts_with_path.toml ... ok
+Testing tests/cmd/add/multiple_conflicts_with_path.toml:teardown ... ok
+Testing tests/cmd/add/invalid_name_external.toml ... ignored
+Testing tests/cmd/add/multiple_conflicts_with_git.toml ... ok
+Testing tests/cmd/add/multiple_conflicts_with_git.toml:teardown ... ok
+Testing tests/cmd/add/op_greater_eq.toml ... ok
+Testing tests/cmd/add/op_greater_eq.toml:teardown ... ok
+Testing tests/cmd/add/git_dev.toml ... ok
+Testing tests/cmd/add/git_dev.toml:teardown ... ok
+Testing tests/cmd/add/implicit_path.toml ... ok
+Testing tests/cmd/add/implicit_path.toml:teardown ... ok
+Testing tests/cmd/add/invalid_git_external.toml ... ignored
+Testing tests/cmd/add/add_multiple.toml ... ok
+Testing tests/cmd/add/add_multiple.toml:teardown ... ok
+Testing tests/cmd/add/git_tag.toml ... ok
+Testing tests/cmd/add/git_tag.toml:teardown ... ok
+Testing tests/cmd/add/dev.toml ... ok
+Testing tests/cmd/add/dev.toml:teardown ... ok
+Testing tests/cmd/add/registry_conflicts_path.toml ... ok
+Testing tests/cmd/add/registry_conflicts_path.toml:teardown ... ok
+Testing tests/cmd/add/git_branch.toml ... ok
+Testing tests/cmd/add/git_branch.toml:teardown ... ok
+Testing tests/cmd/add/features_unknown.toml ... ok
+Testing tests/cmd/add/features_unknown.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_with_rename.toml ... ok
+Testing tests/cmd/add/overwrite_with_rename.toml:teardown ... ok
+Testing tests/cmd/add/path_dev.toml ... ok
+Testing tests/cmd/add/path_dev.toml:teardown ... ok
+Testing tests/cmd/add/git_conflicts_at_version.toml ... ok
+Testing tests/cmd/add/git_conflicts_at_version.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_path_with_version.toml ... ok
+Testing tests/cmd/add/overwrite_path_with_version.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_version_with_path.toml ... ok
+Testing tests/cmd/add/overwrite_version_with_path.toml:teardown ... ok
+Testing tests/cmd/add/rename.toml ... ok
+Testing tests/cmd/add/rename.toml:teardown ... ok
+Testing tests/cmd/add/invalid_vers.toml ... ok
+Testing tests/cmd/add/invalid_vers.toml:teardown ... ok
+Testing tests/cmd/add/prerelease.toml ... ok
+Testing tests/cmd/add/prerelease.toml:teardown ... ok
+Testing tests/cmd/add/path.toml ... ok
+Testing tests/cmd/add/path.toml:teardown ... ok
+Testing tests/cmd/add/git.toml ... ok
+Testing tests/cmd/add/git.toml:teardown ... ok
+Testing tests/cmd/add/multiple_conflicts_with_features.toml ... ok
+Testing tests/cmd/add/multiple_conflicts_with_features.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_rename_with_no_rename.toml ... ok
+Testing tests/cmd/add/overwrite_rename_with_no_rename.toml:teardown ... ok
+Testing tests/cmd/add/sort.toml ... ok
+Testing tests/cmd/add/sort.toml:teardown ... ok
+Testing tests/cmd/add/features_spaced_values.toml ... ok
+Testing tests/cmd/add/features_spaced_values.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_rename_with_rename_noop.toml ... ok
+Testing tests/cmd/add/overwrite_rename_with_rename_noop.toml:teardown ... ok
+Testing tests/cmd/add/features_preserve.toml ... ok
+Testing tests/cmd/add/features_preserve.toml:teardown ... ok
+Testing tests/cmd/add/preserve_sorted.toml ... ok
+Testing tests/cmd/add/preserve_sorted.toml:teardown ... ok
+Testing tests/cmd/add/target.toml ... ok
+Testing tests/cmd/add/target.toml:teardown ... ok
+Testing tests/cmd/add/invalid_path_self.toml ... ok
+Testing tests/cmd/add/invalid_path_self.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_version.toml ... ok
+Testing tests/cmd/add/overwrite_version.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_features.toml ... ok
+Testing tests/cmd/add/overwrite_features.toml:teardown ... ok
+Testing tests/cmd/add/preserve_unsorted.toml ... ok
+Testing tests/cmd/add/preserve_unsorted.toml:teardown ... ok
+Testing tests/cmd/add/target_cfg.toml ... ok
+Testing tests/cmd/add/target_cfg.toml:teardown ... ok
+Testing tests/cmd/add/vers.toml ... ok
+Testing tests/cmd/add/vers.toml:teardown ... ok
+Testing tests/cmd/add/features_multiple_occurrences.toml ... ok
+Testing tests/cmd/add/features_multiple_occurrences.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_git_with_path.toml ... ok
+Testing tests/cmd/add/overwrite_git_with_path.toml:teardown ... ok
+Testing tests/cmd/add/registry.toml ... ok
+Testing tests/cmd/add/registry.toml:teardown ... ok
+Testing tests/cmd/add/workspace_name.toml ... ok
+Testing tests/cmd/add/workspace_name.toml:teardown ... ok
+Testing tests/cmd/add/optional.toml ... ok
+Testing tests/cmd/add/optional.toml:teardown ... ok
+Testing tests/cmd/add/workspace_implicit_path.toml ... ok
+Testing tests/cmd/add/workspace_implicit_path.toml:teardown ... ok
+Testing tests/cmd/add/workspace_path_dev.toml ... ok
+Testing tests/cmd/add/workspace_path_dev.toml:teardown ... ok
+Testing tests/cmd/add/workspace_path.toml ... ok
+Testing tests/cmd/add/workspace_path.toml:teardown ... ok
+Testing tests/cmd/add/git_conflicts_path.toml ... ok
+Testing tests/cmd/add/git_conflicts_path.toml:teardown ... ok
+Testing tests/cmd/add/invalid_optional_dev.toml ... ok
+Testing tests/cmd/add/invalid_optional_dev.toml:teardown ... ok
+Testing tests/cmd/add/dev_build_conflict.toml ... ok
+Testing tests/cmd/add/dev_build_conflict.toml:teardown ... ok
+Testing tests/cmd/add/invalid_target_empty.toml ... ok
+Testing tests/cmd/add/invalid_target_empty.toml:teardown ... ok
+Testing tests/cmd/add/no_args.toml ... ok
+Testing tests/cmd/add/no_args.toml:teardown ... ok
+Testing tests/cmd/add/invalid_arg.toml ... ok
+Testing tests/cmd/add/invalid_arg.toml:teardown ... ok
+Testing tests/cmd/add/git_conflicts_registry.toml ... ok
+Testing tests/cmd/add/git_conflicts_registry.toml:teardown ... ok
+Testing tests/cmd/add/git_conflicts_vers.toml ... ok
+Testing tests/cmd/add/git_conflicts_vers.toml:teardown ... ok
+Testing tests/cmd/add/invalid_op.toml ... ok
+Testing tests/cmd/add/invalid_op.toml:teardown ... ok
+Testing tests/cmd/add/multiple_conflicts_with_vers.toml ... ok
+Testing tests/cmd/add/multiple_conflicts_with_vers.toml:teardown ... ok
+Testing tests/cmd/add/op_equal.toml ... ok
+Testing tests/cmd/add/op_equal.toml:teardown ... ok
+Testing tests/cmd/add/features_empty.toml ... ok
+Testing tests/cmd/add/features_empty.toml:teardown ... ok
+Testing tests/cmd/add/op_tilde.toml ... ok
+Testing tests/cmd/add/op_tilde.toml:teardown ... ok
+Testing tests/cmd/add/list_features.toml ... ok
+Testing tests/cmd/add/list_features.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_version_with_git.toml ... ok
+Testing tests/cmd/add/overwrite_version_with_git.toml:teardown ... ok
+Testing tests/cmd/add/build.toml ... ok
+Testing tests/cmd/add/build.toml:teardown ... ok
+Testing tests/cmd/add/multiple_conflicts_with_rename.toml ... ok
+Testing tests/cmd/add/multiple_conflicts_with_rename.toml:teardown ... ok
+Testing tests/cmd/add/git_rev.toml ... ok
+Testing tests/cmd/add/git_rev.toml:teardown ... ok
+Testing tests/cmd/add/no_default_features.toml ... ok
+Testing tests/cmd/add/no_default_features.toml:teardown ... ok
+Testing tests/cmd/add/at_version.toml ... ok
+Testing tests/cmd/add/at_version.toml:teardown ... ok
+Testing tests/cmd/add/op_caret.toml ... ok
+Testing tests/cmd/add/op_caret.toml:teardown ... ok
+Testing tests/cmd/add/overwrite_rename_with_rename.toml ... ok
+Testing tests/cmd/add/overwrite_rename_with_rename.toml:teardown ... ok
+Testing tests/cmd/add/add_basic.toml ... ok
+Testing tests/cmd/add/add_basic.toml:teardown ... ok
+Testing tests/cmd/add/invalid_implicit_path.toml ... ok
+Testing tests/cmd/add/invalid_implicit_path.toml:teardown ... ok
+Testing tests/cmd/add/features.toml ... ok
+Testing tests/cmd/add/features.toml:teardown ... ok
+Testing tests/cmd/add/cargo_config_source_empty.toml ... ok
+Testing tests/cmd/add/cargo_config_source_empty.toml:teardown ... ok
+Testing tests/cmd/add/list_features_path.toml ... ok
+Testing tests/cmd/add/list_features_path.toml:teardown ... ok
+test cli_tests ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+
+     Running tests/cargo-rm.rs (target/debug/deps/cargo_rm-009e66ff21399e23)
+
+running 1 test
+Testing tests/cmd/rm/no_arg.toml ... ok
+Testing tests/cmd/rm/no_arg.toml:teardown ... ok
+Testing tests/cmd/rm/invalid_arg.toml ... ok
+Testing tests/cmd/rm/invalid_arg.toml:teardown ... ok
+Testing tests/cmd/rm/rm_build.toml ... ok
+Testing tests/cmd/rm/rm_build.toml:teardown ... ok
+Testing tests/cmd/rm/rm_multiple_dev.toml ... ok
+Testing tests/cmd/rm/rm_multiple_dev.toml:teardown ... ok
+Testing tests/cmd/rm/rm_dev.toml ... ok
+Testing tests/cmd/rm/rm_dev.toml:teardown ... ok
+Testing tests/cmd/rm/invalid_dep.toml ... ok
+Testing tests/cmd/rm/invalid_dep.toml:teardown ... ok
+Testing tests/cmd/rm/rm_avoid_empty_tables.toml ... ok
+Testing tests/cmd/rm/rm_avoid_empty_tables.toml:teardown ... ok
+Testing tests/cmd/rm/rm_existing.toml ... ok
+Testing tests/cmd/rm/rm_existing.toml:teardown ... ok
+Testing tests/cmd/rm/invalid_section_dep.toml ... ok
+Testing tests/cmd/rm/invalid_section_dep.toml:teardown ... ok
+Testing tests/cmd/rm/invalid_section.toml ... ok
+Testing tests/cmd/rm/invalid_section.toml:teardown ... ok
+Testing tests/cmd/rm/rm_optional_feature.toml ... ok
+Testing tests/cmd/rm/rm_optional_feature.toml:teardown ... ok
+Testing tests/cmd/rm/rm_multiple_deps.toml ... ok
+Testing tests/cmd/rm/rm_multiple_deps.toml:teardown ... ok
+test cli_tests ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/cargo-set-version.rs (target/debug/deps/cargo_set_version-be4e8ba89a14c39b)
+
+running 1 test
+Testing tests/cmd/set-version/relative_absolute_conflict.toml ... ok
+Testing tests/cmd/set-version/relative_absolute_conflict.toml:teardown ... ok
+Testing tests/cmd/set-version/downgrade_error.toml ... ok
+Testing tests/cmd/set-version/downgrade_error.toml:teardown ... ok
+Testing tests/cmd/set-version/set_absolute_version.toml ... ok
+Testing tests/cmd/set-version/set_absolute_version.toml:teardown ... ok
+Testing tests/cmd/set-version/set_relative_version.toml ... ok
+Testing tests/cmd/set-version/set_relative_version.toml:teardown ... ok
+Testing tests/cmd/set-version/upgrade_compatible_dependency.toml ... ok
+Testing tests/cmd/set-version/upgrade_compatible_dependency.toml:teardown ... ok
+Testing tests/cmd/set-version/ignore_dependent.toml ... ok
+Testing tests/cmd/set-version/ignore_dependent.toml:teardown ... ok
+Testing tests/cmd/set-version/upgrade_incompatible_dependency.toml ... ok
+Testing tests/cmd/set-version/upgrade_incompatible_dependency.toml:teardown ... ok
+test cli_tests ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/cargo-upgrade.rs (target/debug/deps/cargo_upgrade-9c22c52c00b86756)
+
+running 1 test
+Testing tests/cmd/upgrade/invalid_flag.toml ... ok
+Testing tests/cmd/upgrade/invalid_flag.toml:teardown ... ok
+Testing tests/cmd/upgrade/invalid_workspace_root_manifest.toml ... ok
+Testing tests/cmd/upgrade/invalid_workspace_root_manifest.toml:teardown ... ok
+Testing tests/cmd/upgrade/invalid_dep.toml ... ok
+Testing tests/cmd/upgrade/invalid_dep.toml:teardown ... ok
+Testing tests/cmd/upgrade/dry_run.toml ... ok
+Testing tests/cmd/upgrade/dry_run.toml:teardown ... ok
+Testing tests/cmd/upgrade/specified.toml ... ok
+Testing tests/cmd/upgrade/specified.toml:teardown ... ok
+Testing tests/cmd/upgrade/optional_dep.toml ... ok
+Testing tests/cmd/upgrade/optional_dep.toml:teardown ... ok
+Testing tests/cmd/upgrade/prerelease.toml ... ok
+Testing tests/cmd/upgrade/prerelease.toml:teardown ... ok
+Testing tests/cmd/upgrade/skip_compatible.toml ... ok
+Testing tests/cmd/upgrade/skip_compatible.toml:teardown ... ok
+Testing tests/cmd/upgrade/upgrade_renamed.toml ... ok
+Testing tests/cmd/upgrade/upgrade_renamed.toml:teardown ... ok
+Testing tests/cmd/upgrade/workspace_member_cwd.toml ... ok
+Testing tests/cmd/upgrade/workspace_member_cwd.toml:teardown ... ok
+Testing tests/cmd/upgrade/invalid_manifest.toml ... ok
+Testing tests/cmd/upgrade/invalid_manifest.toml:teardown ... ok
+Testing tests/cmd/upgrade/invalid_virtual_manifest.toml ... ok
+Testing tests/cmd/upgrade/invalid_virtual_manifest.toml:teardown ... ok
+Testing tests/cmd/upgrade/exclude_renamed.toml ... ok
+Testing tests/cmd/upgrade/exclude_renamed.toml:teardown ... ok
+Testing tests/cmd/upgrade/single_dep.toml ... ok
+Testing tests/cmd/upgrade/single_dep.toml:teardown ... ok
+Testing tests/cmd/upgrade/dry_run_prerelease.toml ... ok
+Testing tests/cmd/upgrade/dry_run_prerelease.toml:teardown ... ok
+Testing tests/cmd/upgrade/implicit_prerelease.toml ... ok
+Testing tests/cmd/upgrade/implicit_prerelease.toml:teardown ... ok
+Testing tests/cmd/upgrade/to_version.toml ... ok
+Testing tests/cmd/upgrade/to_version.toml:teardown ... ok
+Testing tests/cmd/upgrade/alt_registry.toml ... ok
+Testing tests/cmd/upgrade/alt_registry.toml:teardown ... ok
+Testing tests/cmd/upgrade/upgrade_workspace.toml ... ok
+Testing tests/cmd/upgrade/upgrade_workspace.toml:teardown ... ok
+Testing tests/cmd/upgrade/upgrade_all.toml ... ok
+Testing tests/cmd/upgrade/upgrade_all.toml:teardown ... ok
+Testing tests/cmd/upgrade/exclude_dep.toml ... ok
+Testing tests/cmd/upgrade/exclude_dep.toml:teardown ... ok
+Testing tests/cmd/upgrade/upgrade_everything.toml ... ok
+Testing tests/cmd/upgrade/upgrade_everything.toml:teardown ... ok
+test cli_tests has been running for over 60 seconds
+Testing tests/cmd/upgrade/to_lockfile.toml ... ok
+Testing tests/cmd/upgrade/to_lockfile.toml:teardown ... ok
+test cli_tests ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 746.13s
+
+     Running tests/test_manifest.rs (target/debug/deps/test_manifest-1bc642fca6f41aab)
+
+running 1 test
+test invalid_manifest ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/utils.rs (target/debug/deps/utils-1e513469ab9fe267)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests cargo-edit
+
+running 1 test
+test src/manifest.rs - manifest::LocalManifest::remove_from_table (line 317) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.49s
+
++ git status
+On branch master
+Your branch is behind 'origin/master' by 576 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .editorconfig
+	modified:   .gitattributes
+	modified:   .github/workflows/build.yml
+	modified:   .gitignore
+	modified:   CHANGELOG.md
+	modified:   CONTRIBUTING.md
+	modified:   Cargo.lock
+	modified:   Cargo.toml
+	modified:   LICENSE
+	modified:   README.md
+	modified:   bors.toml
+	modified:   rustfmt.toml
+	modified:   src/bin/add/args.rs
+	modified:   src/bin/add/main.rs
+	modified:   src/bin/add/manifest_test.rs
+	modified:   src/bin/rm/main.rs
+	modified:   src/bin/set-version/args.rs
+	modified:   src/bin/set-version/errors.rs
+	modified:   src/bin/set-version/main.rs
+	modified:   src/bin/set-version/version.rs
+	modified:   src/bin/upgrade/main.rs
+	modified:   src/crate_name.rs
+	modified:   src/dependency.rs
+	modified:   src/errors.rs
+	modified:   src/fetch.rs
+	modified:   src/lib.rs
+	modified:   src/manifest.rs
+	modified:   src/metadata.rs
+	modified:   src/registry.rs
+	modified:   src/util.rs
+	modified:   src/version.rs
+	modified:   tests/cargo-add.rs
+	modified:   tests/cargo-rm.rs
+	modified:   tests/cargo-set-version.rs
+	modified:   tests/cargo-upgrade.rs
+	modified:   tests/cmd/add/add-basic.in/Cargo.toml
+	modified:   tests/cmd/add/add-basic.in/src/lib.rs
+	modified:   tests/cmd/add/add_basic.out/Cargo.toml
+	modified:   tests/cmd/add/add_basic.toml
+	modified:   tests/cmd/add/add_multiple.out/Cargo.toml
+	modified:   tests/cmd/add/add_multiple.toml
+	modified:   tests/cmd/add/add_normalized_name_external.out/Cargo.toml
+	modified:   tests/cmd/add/add_normalized_name_external.toml
+	modified:   tests/cmd/add/at_version.out/Cargo.toml
+	modified:   tests/cmd/add/at_version.toml
+	modified:   tests/cmd/add/build.out/Cargo.toml
+	modified:   tests/cmd/add/build.toml
+	modified:   tests/cmd/add/cargo_config_source_empty.in/.cargo/config
+	modified:   tests/cmd/add/cargo_config_source_empty.in/Cargo.toml
+	modified:   tests/cmd/add/cargo_config_source_empty.in/src/lib.rs
+	modified:   tests/cmd/add/cargo_config_source_empty.out/Cargo.toml
+	modified:   tests/cmd/add/cargo_config_source_empty.toml
+	modified:   tests/cmd/add/dev.out/Cargo.toml
+	modified:   tests/cmd/add/dev.toml
+	modified:   tests/cmd/add/dev_build_conflict.out/Cargo.toml
+	modified:   tests/cmd/add/dev_build_conflict.toml
+	modified:   tests/cmd/add/features.out/Cargo.toml
+	modified:   tests/cmd/add/features.toml
+	modified:   tests/cmd/add/features_empty.out/Cargo.toml
+	modified:   tests/cmd/add/features_empty.toml
+	modified:   tests/cmd/add/features_multiple_occurrences.out/Cargo.toml
+	modified:   tests/cmd/add/features_multiple_occurrences.toml
+	modified:   tests/cmd/add/features_preserve.in/Cargo.toml
+	modified:   tests/cmd/add/features_preserve.in/src/lib.rs
+	modified:   tests/cmd/add/features_preserve.out/Cargo.toml
+	modified:   tests/cmd/add/features_preserve.toml
+	modified:   tests/cmd/add/features_spaced_values.out/Cargo.toml
+	modified:   tests/cmd/add/features_spaced_values.toml
+	modified:   tests/cmd/add/features_unknown.out/Cargo.toml
+	modified:   tests/cmd/add/features_unknown.toml
+	modified:   tests/cmd/add/git.out/Cargo.toml
+	modified:   tests/cmd/add/git.toml
+	modified:   tests/cmd/add/git_branch.out/Cargo.toml
+	modified:   tests/cmd/add/git_branch.toml
+	modified:   tests/cmd/add/git_conflicts_at_version.out/Cargo.toml
+	modified:   tests/cmd/add/git_conflicts_at_version.toml
+	modified:   tests/cmd/add/git_conflicts_path.out/Cargo.toml
+	modified:   tests/cmd/add/git_conflicts_path.toml
+	modified:   tests/cmd/add/git_conflicts_registry.out/Cargo.toml
+	modified:   tests/cmd/add/git_conflicts_registry.toml
+	modified:   tests/cmd/add/git_conflicts_vers.out/Cargo.toml
+	modified:   tests/cmd/add/git_conflicts_vers.toml
+	modified:   tests/cmd/add/git_dev.out/Cargo.toml
+	modified:   tests/cmd/add/git_dev.toml
+	modified:   tests/cmd/add/git_external.out/Cargo.toml
+	modified:   tests/cmd/add/git_external.toml
+	modified:   tests/cmd/add/implicit_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/implicit_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/implicit_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/implicit_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/implicit_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/implicit_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/implicit_path.toml
+	modified:   tests/cmd/add/invalid_arg.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_arg.toml
+	modified:   tests/cmd/add/invalid_git_external.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_git_external.toml
+	modified:   tests/cmd/add/invalid_implicit_path.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_implicit_path.toml
+	modified:   tests/cmd/add/invalid_name_external.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_name_external.toml
+	modified:   tests/cmd/add/invalid_op.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_op.toml
+	modified:   tests/cmd/add/invalid_optional_dev.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_optional_dev.toml
+	modified:   tests/cmd/add/invalid_path_self.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_path_self.toml
+	modified:   tests/cmd/add/invalid_target_empty.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_target_empty.toml
+	modified:   tests/cmd/add/invalid_vers.out/Cargo.toml
+	modified:   tests/cmd/add/invalid_vers.toml
+	modified:   tests/cmd/add/list_features.out/Cargo.toml
+	modified:   tests/cmd/add/list_features.toml
+	modified:   tests/cmd/add/list_features_path.in/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/list_features_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/list_features_path.out/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/list_features_path.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_features.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_features.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_git.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_git.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_path.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_path.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_rename.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_rename.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_vers.out/Cargo.toml
+	modified:   tests/cmd/add/multiple_conflicts_with_vers.toml
+	modified:   tests/cmd/add/no_args.out/Cargo.toml
+	modified:   tests/cmd/add/no_args.toml
+	modified:   tests/cmd/add/no_default_features.out/Cargo.toml
+	modified:   tests/cmd/add/no_default_features.toml
+	modified:   tests/cmd/add/op_caret.out/Cargo.toml
+	modified:   tests/cmd/add/op_caret.toml
+	modified:   tests/cmd/add/op_equal.out/Cargo.toml
+	modified:   tests/cmd/add/op_equal.toml
+	modified:   tests/cmd/add/op_greater_eq.out/Cargo.toml
+	modified:   tests/cmd/add/op_greater_eq.toml
+	modified:   tests/cmd/add/op_tilde.out/Cargo.toml
+	modified:   tests/cmd/add/op_tilde.toml
+	modified:   tests/cmd/add/optional.out/Cargo.toml
+	modified:   tests/cmd/add/optional.toml
+	modified:   tests/cmd/add/overwrite_features.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_features.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_features.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_features.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/overwrite_git_with_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/overwrite_git_with_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_git_with_path.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/overwrite_path_with_version.in/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.in/primary/src/lib.rs
+	modified:   tests/cmd/add/overwrite_path_with_version.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.out/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_path_with_version.toml
+	modified:   tests/cmd/add/overwrite_rename_with_no_rename.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_no_rename.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_rename_with_no_rename.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_no_rename.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_rename_with_rename.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename_noop.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename_noop.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_rename_with_rename_noop.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_rename_with_rename_noop.toml
+	modified:   tests/cmd/add/overwrite_version.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_version.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version.toml
+	modified:   tests/cmd/add/overwrite_version_with_git.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_git.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_version_with_git.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_git.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/overwrite_version_with_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/overwrite_version_with_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/overwrite_version_with_path.toml
+	modified:   tests/cmd/add/overwrite_with_rename.in/Cargo.toml
+	modified:   tests/cmd/add/overwrite_with_rename.in/src/lib.rs
+	modified:   tests/cmd/add/overwrite_with_rename.out/Cargo.toml
+	modified:   tests/cmd/add/overwrite_with_rename.toml
+	modified:   tests/cmd/add/path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/path.toml
+	modified:   tests/cmd/add/path_dev.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/path_dev.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/path_dev.in/primary/Cargo.toml
+	modified:   tests/cmd/add/path_dev.in/primary/src/lib.rs
+	modified:   tests/cmd/add/path_dev.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/path_dev.out/primary/Cargo.toml
+	modified:   tests/cmd/add/path_dev.toml
+	modified:   tests/cmd/add/prerelease.out/Cargo.toml
+	modified:   tests/cmd/add/prerelease.toml
+	modified:   tests/cmd/add/preserve_sorted.in/Cargo.toml
+	modified:   tests/cmd/add/preserve_sorted.in/src/lib.rs
+	modified:   tests/cmd/add/preserve_sorted.out/Cargo.toml
+	modified:   tests/cmd/add/preserve_sorted.toml
+	modified:   tests/cmd/add/preserve_unsorted.in/Cargo.toml
+	modified:   tests/cmd/add/preserve_unsorted.in/src/lib.rs
+	modified:   tests/cmd/add/preserve_unsorted.out/Cargo.toml
+	modified:   tests/cmd/add/preserve_unsorted.toml
+	modified:   tests/cmd/add/registry.in/.cargo/config
+	modified:   tests/cmd/add/registry.in/Cargo.toml
+	modified:   tests/cmd/add/registry.in/src/lib.rs
+	modified:   tests/cmd/add/registry.out/Cargo.toml
+	modified:   tests/cmd/add/registry.toml
+	modified:   tests/cmd/add/registry_conflicts_path.out/Cargo.toml
+	modified:   tests/cmd/add/registry_conflicts_path.toml
+	modified:   tests/cmd/add/rename.out/Cargo.toml
+	modified:   tests/cmd/add/rename.toml
+	modified:   tests/cmd/add/sort.in/Cargo.toml
+	modified:   tests/cmd/add/sort.in/src/lib.rs
+	modified:   tests/cmd/add/sort.out/Cargo.toml
+	modified:   tests/cmd/add/sort.toml
+	modified:   tests/cmd/add/target.out/Cargo.toml
+	modified:   tests/cmd/add/target.toml
+	modified:   tests/cmd/add/target_cfg.out/Cargo.toml
+	modified:   tests/cmd/add/target_cfg.toml
+	modified:   tests/cmd/add/vers.out/Cargo.toml
+	modified:   tests/cmd/add/vers.toml
+	modified:   tests/cmd/add/workspace_implicit_path.in/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/workspace_implicit_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/workspace_implicit_path.out/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_implicit_path.toml
+	modified:   tests/cmd/add/workspace_name.in/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/workspace_name.in/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.in/primary/src/lib.rs
+	modified:   tests/cmd/add/workspace_name.out/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.out/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_name.toml
+	modified:   tests/cmd/add/workspace_path.in/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/workspace_path.in/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.in/primary/src/lib.rs
+	modified:   tests/cmd/add/workspace_path.out/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.out/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_path.toml
+	modified:   tests/cmd/add/workspace_path_dev.in/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.in/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.in/dependency/src/lib.rs
+	modified:   tests/cmd/add/workspace_path_dev.in/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.in/primary/src/lib.rs
+	modified:   tests/cmd/add/workspace_path_dev.out/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.out/dependency/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.out/primary/Cargo.toml
+	modified:   tests/cmd/add/workspace_path_dev.toml
+	modified:   tests/cmd/rm/invalid_arg.out/Cargo.toml
+	modified:   tests/cmd/rm/invalid_arg.toml
+	modified:   tests/cmd/rm/invalid_dep.out/Cargo.toml
+	modified:   tests/cmd/rm/invalid_dep.toml
+	modified:   tests/cmd/rm/invalid_section.in/Cargo.toml
+	modified:   tests/cmd/rm/invalid_section.in/src/lib.rs
+	modified:   tests/cmd/rm/invalid_section.out/Cargo.toml
+	modified:   tests/cmd/rm/invalid_section.toml
+	modified:   tests/cmd/rm/invalid_section_dep.out/Cargo.toml
+	modified:   tests/cmd/rm/invalid_section_dep.toml
+	modified:   tests/cmd/rm/no_arg.out/Cargo.toml
+	modified:   tests/cmd/rm/no_arg.toml
+	modified:   tests/cmd/rm/rm-basic.in/Cargo.toml
+	modified:   tests/cmd/rm/rm-basic.in/src/lib.rs
+	modified:   tests/cmd/rm/rm_avoid_empty_tables.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_avoid_empty_tables.toml
+	modified:   tests/cmd/rm/rm_build.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_build.toml
+	modified:   tests/cmd/rm/rm_dev.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_dev.toml
+	modified:   tests/cmd/rm/rm_existing.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_existing.toml
+	modified:   tests/cmd/rm/rm_multiple_deps.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_multiple_deps.toml
+	modified:   tests/cmd/rm/rm_multiple_dev.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_multiple_dev.toml
+	modified:   tests/cmd/rm/rm_optional_feature.out/Cargo.toml
+	modified:   tests/cmd/rm/rm_optional_feature.toml
+	modified:   tests/cmd/set-version/downgrade_error.out/Cargo.toml
+	modified:   tests/cmd/set-version/downgrade_error.toml
+	modified:   tests/cmd/set-version/ignore_dependent.out/Cargo.toml
+	modified:   tests/cmd/set-version/ignore_dependent.out/dependency/Cargo.toml
+	modified:   tests/cmd/set-version/ignore_dependent.out/primary/Cargo.toml
+	modified:   tests/cmd/set-version/ignore_dependent.toml
+	modified:   tests/cmd/set-version/relative_absolute_conflict.out/Cargo.toml
+	modified:   tests/cmd/set-version/relative_absolute_conflict.toml
+	modified:   tests/cmd/set-version/set-version-basic.in/Cargo.toml
+	modified:   tests/cmd/set-version/set-version-basic.in/src/lib.rs
+	modified:   tests/cmd/set-version/set-version-workspace.in/Cargo.toml
+	modified:   tests/cmd/set-version/set-version-workspace.in/dependency/Cargo.toml
+	modified:   tests/cmd/set-version/set-version-workspace.in/dependency/src/lib.rs
+	modified:   tests/cmd/set-version/set-version-workspace.in/primary/Cargo.toml
+	modified:   tests/cmd/set-version/set-version-workspace.in/primary/src/lib.rs
+	modified:   tests/cmd/set-version/set_absolute_version.out/Cargo.toml
+	modified:   tests/cmd/set-version/set_absolute_version.toml
+	modified:   tests/cmd/set-version/set_relative_version.out/Cargo.toml
+	modified:   tests/cmd/set-version/set_relative_version.toml
+	modified:   tests/cmd/set-version/upgrade_compatible_dependency.out/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_compatible_dependency.out/dependency/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_compatible_dependency.out/primary/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_compatible_dependency.toml
+	modified:   tests/cmd/set-version/upgrade_incompatible_dependency.out/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_incompatible_dependency.out/dependency/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_incompatible_dependency.out/primary/Cargo.toml
+	modified:   tests/cmd/set-version/upgrade_incompatible_dependency.toml
+	modified:   tests/cmd/upgrade/alt_registry.out/Cargo.toml
+	modified:   tests/cmd/upgrade/alt_registry.out/src/lib.rs
+	modified:   tests/cmd/upgrade/alt_registry.toml
+	modified:   tests/cmd/upgrade/dry_run.in/Cargo.toml
+	modified:   tests/cmd/upgrade/dry_run.in/src/lib.rs
+	modified:   tests/cmd/upgrade/dry_run.out/Cargo.toml
+	modified:   tests/cmd/upgrade/dry_run.out/src/lib.rs
+	modified:   tests/cmd/upgrade/dry_run.toml
+	modified:   tests/cmd/upgrade/dry_run_prerelease.in/Cargo.toml
+	modified:   tests/cmd/upgrade/dry_run_prerelease.in/src/lib.rs
+	modified:   tests/cmd/upgrade/dry_run_prerelease.out/Cargo.toml
+	modified:   tests/cmd/upgrade/dry_run_prerelease.out/src/lib.rs
+	modified:   tests/cmd/upgrade/dry_run_prerelease.toml
+	modified:   tests/cmd/upgrade/exclude_dep.in/Cargo.toml
+	modified:   tests/cmd/upgrade/exclude_dep.in/src/lib.rs
+	modified:   tests/cmd/upgrade/exclude_dep.out/Cargo.toml
+	modified:   tests/cmd/upgrade/exclude_dep.toml
+	modified:   tests/cmd/upgrade/exclude_renamed.out/Cargo.toml
+	modified:   tests/cmd/upgrade/exclude_renamed.out/src/lib.rs
+	modified:   tests/cmd/upgrade/exclude_renamed.toml
+	modified:   tests/cmd/upgrade/implicit_prerelease.in/Cargo.toml
+	modified:   tests/cmd/upgrade/implicit_prerelease.in/src/lib.rs
+	modified:   tests/cmd/upgrade/implicit_prerelease.out/Cargo.toml
+	modified:   tests/cmd/upgrade/implicit_prerelease.out/src/lib.rs
+	modified:   tests/cmd/upgrade/implicit_prerelease.toml
+	modified:   tests/cmd/upgrade/invalid_dep.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_dep.out/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_dep.toml
+	modified:   tests/cmd/upgrade/invalid_flag.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_flag.out/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_flag.toml
+	modified:   tests/cmd/upgrade/invalid_manifest.in/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_manifest.in/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_manifest.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_manifest.out/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_manifest.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/Cargo.lock
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/dummy.rs
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_virtual_manifest.toml
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.in/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.in/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.out/Cargo.toml
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.out/src/lib.rs
+	modified:   tests/cmd/upgrade/invalid_workspace_root_manifest.toml
+	modified:   tests/cmd/upgrade/optional_dep.in/Cargo.toml
+	modified:   tests/cmd/upgrade/optional_dep.in/src/lib.rs
+	modified:   tests/cmd/upgrade/optional_dep.out/Cargo.toml
+	modified:   tests/cmd/upgrade/optional_dep.out/src/lib.rs
+	modified:   tests/cmd/upgrade/optional_dep.toml
+	modified:   tests/cmd/upgrade/prerelease.in/Cargo.toml
+	modified:   tests/cmd/upgrade/prerelease.in/src/lib.rs
+	modified:   tests/cmd/upgrade/prerelease.out/Cargo.toml
+	modified:   tests/cmd/upgrade/prerelease.out/src/lib.rs
+	modified:   tests/cmd/upgrade/prerelease.toml
+	modified:   tests/cmd/upgrade/single_dep.in/Cargo.toml
+	modified:   tests/cmd/upgrade/single_dep.in/src/lib.rs
+	modified:   tests/cmd/upgrade/single_dep.out/Cargo.toml
+	modified:   tests/cmd/upgrade/single_dep.out/src/lib.rs
+	modified:   tests/cmd/upgrade/single_dep.toml
+	modified:   tests/cmd/upgrade/skip_compatible.in/Cargo.toml
+	modified:   tests/cmd/upgrade/skip_compatible.in/src/lib.rs
+	modified:   tests/cmd/upgrade/skip_compatible.out/Cargo.toml
+	modified:   tests/cmd/upgrade/skip_compatible.out/src/lib.rs
+	modified:   tests/cmd/upgrade/skip_compatible.toml
+	modified:   tests/cmd/upgrade/specified.in/Cargo.toml
+	modified:   tests/cmd/upgrade/specified.in/src/lib.rs
+	modified:   tests/cmd/upgrade/specified.out/Cargo.toml
+	modified:   tests/cmd/upgrade/specified.out/src/lib.rs
+	modified:   tests/cmd/upgrade/specified.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/Cargo.lock
+	modified:   tests/cmd/upgrade/to_lockfile.out/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/dummy.rs
+	modified:   tests/cmd/upgrade/to_lockfile.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/to_lockfile.toml
+	modified:   tests/cmd/upgrade/to_version.in/Cargo.toml
+	modified:   tests/cmd/upgrade/to_version.in/src/lib.rs
+	modified:   tests/cmd/upgrade/to_version.out/Cargo.toml
+	modified:   tests/cmd/upgrade/to_version.out/src/lib.rs
+	modified:   tests/cmd/upgrade/to_version.toml
+	modified:   tests/cmd/upgrade/upgrade-alt-registry.in/.cargo/config
+	modified:   tests/cmd/upgrade/upgrade-alt-registry.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-alt-registry.in/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade-basic.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-basic.in/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade-renamed.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-renamed.in/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/Cargo.lock
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/dummy.rs
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/one/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade-workspace.in/two/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/Cargo.lock
+	modified:   tests/cmd/upgrade/upgrade_all.out/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/dummy.rs
+	modified:   tests/cmd/upgrade/upgrade_all.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_all.toml
+	modified:   tests/cmd/upgrade/upgrade_everything.in/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_everything.in/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade_everything.out/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_everything.toml
+	modified:   tests/cmd/upgrade/upgrade_renamed.out/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_renamed.out/src/lib.rs
+	modified:   tests/cmd/upgrade/upgrade_renamed.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/Cargo.lock
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/dummy.rs
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/upgrade_workspace.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/Cargo.lock
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/dummy.rs
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/explicit/four/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/implicit/three/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/one/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.out/two/Cargo.toml
+	modified:   tests/cmd/upgrade/workspace_member_cwd.toml
+	modified:   tests/fixtures/add/Cargo.toml.features
+	modified:   tests/fixtures/add/Cargo.toml.sample
+	modified:   tests/fixtures/add/Cargo.toml.sorted
+	modified:   tests/fixtures/add/Cargo.toml.unsorted
+	modified:   tests/fixtures/add/local/Cargo.toml.sample
+	modified:   tests/fixtures/alt-registry-cargo-config
+	modified:   tests/fixtures/manifest-invalid/Cargo.toml.sample
+	modified:   tests/fixtures/rm/Cargo.toml.no_features.sample
+	modified:   tests/fixtures/rm/Cargo.toml.sample
+	modified:   tests/fixtures/upgrade/Cargo.lock
+	modified:   tests/fixtures/upgrade/Cargo.toml.alt_registry
+	modified:   tests/fixtures/upgrade/Cargo.toml.invalid
+	modified:   tests/fixtures/upgrade/Cargo.toml.lockfile_source
+	modified:   tests/fixtures/upgrade/Cargo.toml.lockfile_target
+	modified:   tests/fixtures/upgrade/Cargo.toml.renamed_dep
+	modified:   tests/fixtures/upgrade/Cargo.toml.source
+	modified:   tests/fixtures/upgrade/Cargo.toml.target
+	modified:   tests/fixtures/workspace/Cargo.lock
+	modified:   tests/fixtures/workspace/Cargo.toml
+	modified:   tests/fixtures/workspace/Cargo.toml.lockfile_target
+	modified:   tests/fixtures/workspace/dummy.rs
+	modified:   tests/fixtures/workspace/explicit/four/Cargo.toml
+	modified:   tests/fixtures/workspace/implicit/three/Cargo.toml
+	modified:   tests/fixtures/workspace/one/Cargo.toml
+	modified:   tests/fixtures/workspace/one/Cargo.toml.lockfile_target
+	modified:   tests/fixtures/workspace/two/Cargo.toml
+	modified:   tests/fixtures/workspace/two/Cargo.toml.lockfile_target
+	modified:   tests/test_manifest.rs
+	modified:   tests/utils.rs
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.cargo/
+	tests/cmd/add/git_rev.in
+	tests/cmd/add/git_rev.out/
+	tests/cmd/add/git_rev.toml
+	tests/cmd/add/git_tag.in
+	tests/cmd/add/git_tag.out/
+	tests/cmd/add/git_tag.toml
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git reset --hard 95ec0eedfec9bd9d5cbb1cb6076d8646abd29f81
+HEAD is now at 95ec0eed fix(add): Hande empty cargo config source table
++ git clean -fd
+Removing .cargo/
+Removing tests/cmd/add/git_rev.in
+Removing tests/cmd/add/git_rev.out/
+Removing tests/cmd/add/git_rev.toml
+Removing tests/cmd/add/git_tag.in
+Removing tests/cmd/add/git_tag.out/
+Removing tests/cmd/add/git_tag.toml

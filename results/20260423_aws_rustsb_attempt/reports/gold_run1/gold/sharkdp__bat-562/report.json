@@ -1,0 +1,98 @@
+{
+    "sharkdp__bat-562": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "does_not_print_unwanted_file_named_cache"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "config::empty",
+                    "config::comments",
+                    "config::multi_line",
+                    "config::quotes",
+                    "config::multiple",
+                    "inputfile::utf16le",
+                    "inputfile::basic",
+                    "config::single",
+                    "line_range::test_parse_fail",
+                    "line_range::test_parse_partial_max",
+                    "line_range::test_parse_full",
+                    "line_range::test_parse_partial_min",
+                    "line_range::test_ranges_advanced",
+                    "line_range::test_ranges_empty",
+                    "line_range::test_ranges_open_high",
+                    "line_range::test_ranges_open_low",
+                    "line_range::test_ranges_simple",
+                    "util::tests::basic",
+                    "syntax_mapping::basic",
+                    "config_location_test",
+                    "tabs_8",
+                    "concatenate_empty_between",
+                    "tabs_passthrough",
+                    "tabs_8_wrapped",
+                    "concatenate",
+                    "tabs_4",
+                    "concatenate_stdin",
+                    "concatenate_empty_both",
+                    "do_not_exit_directory",
+                    "fail_non_existing",
+                    "stdin",
+                    "pager_basic",
+                    "fail_directory",
+                    "can_print_file_named_cache",
+                    "tabs_numbers",
+                    "line_range_first_two",
+                    "line_range_multiple",
+                    "line_range_last_3",
+                    "concatenate_single_line",
+                    "utf16",
+                    "concatenate_single_line_empty",
+                    "basic",
+                    "line_range_2_3",
+                    "concatenate_empty_first_and_last",
+                    "pager_overwrite",
+                    "config_read_arguments_from_file",
+                    "line_numbers",
+                    "tabs_passthrough_wrapped",
+                    "concatenate_empty_last",
+                    "pager_disable",
+                    "concatenate_empty_first",
+                    "tabs_4_wrapped",
+                    "grid",
+                    "grid_header",
+                    "changes_grid_header",
+                    "numbers",
+                    "changes_grid_numbers",
+                    "grid_header_numbers",
+                    "changes",
+                    "full",
+                    "changes_header_numbers",
+                    "plain",
+                    "changes_grid_header_numbers",
+                    "changes_numbers",
+                    "header_numbers",
+                    "grid_numbers",
+                    "changes_grid",
+                    "header",
+                    "changes_header"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

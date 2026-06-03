@@ -1,0 +1,34 @@
+{
+    "google__autocxx-74": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "byvalue_checker::tests::test_primitive_by_itself",
+                    "byvalue_checker::tests::test_with_cxxstring",
+                    "byvalue_checker::tests::test_primitives",
+                    "byvalue_checker::tests::test_nested_primitives",
+                    "byvalue_checker::tests::test_with_up",
+                    "integration_tests::test_negative_rs_nonsense::f",
+                    "types::tests::test_ints"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

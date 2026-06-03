@@ -1,0 +1,366 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ chmod -R 755 /workspace
++ git apply -v -
+Checking patch tests/test.rs...
+Applied patch tests/test.rs cleanly.
++ git status
+On branch master
+Your branch is behind 'origin/master' by 472 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .github/workflows/ci.yml
+	modified:   .gitignore
+	modified:   Cargo.toml
+	modified:   LICENSE-APACHE
+	modified:   LICENSE-MIT
+	modified:   README.md
+	modified:   src/args.rs
+	modified:   src/expand.rs
+	modified:   src/lib.rs
+	modified:   src/lifetime.rs
+	modified:   src/parse.rs
+	modified:   src/receiver.rs
+	modified:   src/respan.rs
+	modified:   tests/compiletest.rs
+	modified:   tests/executor/mod.rs
+	modified:   tests/test.rs
+	modified:   tests/ui/bare-trait-object.rs
+	modified:   tests/ui/bare-trait-object.stderr
+	modified:   tests/ui/delimiter-span.rs
+	modified:   tests/ui/delimiter-span.stderr
+	modified:   tests/ui/missing-body.rs
+	modified:   tests/ui/missing-body.stderr
+	modified:   tests/ui/must-use.rs
+	modified:   tests/ui/must-use.stderr
+	modified:   tests/ui/self-span.rs
+	modified:   tests/ui/self-span.stderr
+	modified:   tests/ui/send-not-implemented.rs
+	modified:   tests/ui/send-not-implemented.stderr
+	modified:   tests/ui/unsupported-self.rs
+	modified:   tests/ui/unsupported-self.stderr
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.cargo/
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+old mode 100644
+new mode 100755
+diff --git a/.gitignore b/.gitignore
+old mode 100644
+new mode 100755
+diff --git a/Cargo.toml b/Cargo.toml
+old mode 100644
+new mode 100755
+diff --git a/LICENSE-APACHE b/LICENSE-APACHE
+old mode 100644
+new mode 100755
+diff --git a/LICENSE-MIT b/LICENSE-MIT
+old mode 100644
+new mode 100755
+diff --git a/README.md b/README.md
+old mode 100644
+new mode 100755
+diff --git a/src/args.rs b/src/args.rs
+old mode 100644
+new mode 100755
+diff --git a/src/expand.rs b/src/expand.rs
+old mode 100644
+new mode 100755
+index 3222389..db45fd5
+--- a/src/expand.rs
++++ b/src/expand.rs
+@@ -81,6 +81,13 @@ pub fn expand(input: &mut Item, is_local: bool) {
+             }
+         }
+         Item::Impl(input) => {
++            let mut lifetimes = CollectLifetimes::with("'impl_life");
++            lifetimes.visit_type_mut(&mut *input.self_ty);
++            lifetimes.visit_path_mut(&mut input.trait_.as_mut().unwrap().1);
++            let params = &input.generics.params;
++            let elided = lifetimes.elided;
++            input.generics.params = parse_quote!( #(#elided,)* #params );
++
+             let context = Context::Impl {
+                 impl_generics: &input.generics,
+                 receiver: &input.self_ty,
+diff --git a/src/lib.rs b/src/lib.rs
+old mode 100644
+new mode 100755
+diff --git a/src/lifetime.rs b/src/lifetime.rs
+old mode 100644
+new mode 100755
+index d15a4fc..304c322
+--- a/src/lifetime.rs
++++ b/src/lifetime.rs
+@@ -24,6 +24,7 @@ impl VisitMut for HasAsyncLifetime {
+ pub struct CollectLifetimes {
+     pub elided: Vec<Lifetime>,
+     pub explicit: Vec<Lifetime>,
++    pub name: &'static str,
+ }
+ 
+ impl CollectLifetimes {
+@@ -31,6 +32,15 @@ impl CollectLifetimes {
+         CollectLifetimes {
+             elided: Vec::new(),
+             explicit: Vec::new(),
++            name: "'life",
++        }
++    }
++
++    pub fn with(name: &'static str) -> Self {
++        CollectLifetimes {
++            elided: Vec::new(),
++            explicit: Vec::new(),
++            name,
+         }
+     }
+ 
+@@ -50,7 +60,7 @@ impl CollectLifetimes {
+     }
+ 
+     fn next_lifetime(&mut self) -> Lifetime {
+-        let name = format!("'life{}", self.elided.len());
++        let name = format!("{}{}", self.name, self.elided.len());
+         let life = Lifetime::new(&name, Span::call_site());
+         self.elided.push(life.clone());
+         life
+diff --git a/src/parse.rs b/src/parse.rs
+old mode 100644
+new mode 100755
+diff --git a/src/receiver.rs b/src/receiver.rs
+old mode 100644
+new mode 100755
+diff --git a/src/respan.rs b/src/respan.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/compiletest.rs b/tests/compiletest.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/executor/mod.rs b/tests/executor/mod.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/test.rs b/tests/test.rs
+old mode 100644
+new mode 100755
+index 494d1a6..2d1ac92
+--- a/tests/test.rs
++++ b/tests/test.rs
+@@ -905,3 +905,35 @@ mod issue104 {
+ 
+     impl_t1!(Foo, 1);
+ }
++
++// https://github.com/dtolnay/async-trait/issues/106
++mod issue106 {
++    use async_trait::async_trait;
++    use std::future::Future;
++
++    #[async_trait]
++    pub trait ProcessPool: Send + Sync {
++        type ThreadPool;
++
++        async fn spawn<F, Fut, T>(&self, work: F) -> T
++        where
++            F: FnOnce(&Self::ThreadPool) -> Fut + Send,
++            Fut: Future<Output = T> + 'static;
++    }
++
++    #[async_trait]
++    impl<P: ?Sized> ProcessPool for &P
++    where
++        P: ProcessPool,
++    {
++        type ThreadPool = P::ThreadPool;
++
++        async fn spawn<F, Fut, T>(&self, work: F) -> T
++        where
++            F: FnOnce(&Self::ThreadPool) -> Fut + Send,
++            Fut: Future<Output = T> + 'static,
++        {
++            (*self).spawn(work).await
++        }
++    }
++}
+diff --git a/tests/ui/bare-trait-object.rs b/tests/ui/bare-trait-object.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/bare-trait-object.stderr b/tests/ui/bare-trait-object.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/delimiter-span.rs b/tests/ui/delimiter-span.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/delimiter-span.stderr b/tests/ui/delimiter-span.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/missing-body.rs b/tests/ui/missing-body.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/missing-body.stderr b/tests/ui/missing-body.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/must-use.rs b/tests/ui/must-use.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/must-use.stderr b/tests/ui/must-use.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/self-span.rs b/tests/ui/self-span.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/self-span.stderr b/tests/ui/self-span.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/send-not-implemented.rs b/tests/ui/send-not-implemented.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/send-not-implemented.stderr b/tests/ui/send-not-implemented.stderr
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/unsupported-self.rs b/tests/ui/unsupported-self.rs
+old mode 100644
+new mode 100755
+diff --git a/tests/ui/unsupported-self.stderr b/tests/ui/unsupported-self.stderr
+old mode 100644
+new mode 100755
++ cargo test --no-fail-fast
+ Downloading crates ...
+  Downloaded toml v0.5.6 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded tracing-attributes v0.1.8 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded rustversion v1.0.2 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded cfg-if v0.1.10 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded quote v1.0.7 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded dissimilar v1.0.1 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded syn v1.0.30 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded serde_derive v1.0.111 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded serde v1.0.111 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded unicode-xid v0.2.0 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded tracing-futures v0.2.4 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded proc-macro2 v1.0.18 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded itoa v0.4.5 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded trybuild v1.0.28 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded tracing-core v0.1.10 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded termcolor v1.1.0 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded pin-project v0.4.20 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded serde_json v1.0.53 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded pin-project-internal v0.4.20 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+  Downloaded tracing v0.1.15 (registry `/testbed/.cargo/lts-repo-at-70be70af0c`)
+   Compiling proc-macro2 v1.0.18
+   Compiling unicode-xid v0.2.0
+   Compiling syn v1.0.30
+   Compiling serde v1.0.111
+   Compiling ryu v1.0.5
+   Compiling lazy_static v1.4.0
+   Compiling rustversion v1.0.2
+   Compiling cfg-if v0.1.10
+   Compiling itoa v0.4.5
+   Compiling glob v0.3.0
+   Compiling termcolor v1.1.0
+   Compiling dissimilar v1.0.1
+   Compiling tracing-core v0.1.10
+   Compiling quote v1.0.7
+   Compiling serde_derive v1.0.111
+   Compiling tracing-attributes v0.1.8
+   Compiling pin-project-internal v0.4.20
+   Compiling async-trait v0.1.34 (/workspace)
+   Compiling tracing v0.1.15
+   Compiling pin-project v0.4.20
+   Compiling tracing-futures v0.2.4
+   Compiling serde_json v1.0.53
+   Compiling toml v0.5.6
+   Compiling trybuild v1.0.28
+    Finished test [unoptimized + debuginfo] target(s) in 22.65s
+     Running target/debug/deps/async_trait-f3997454c782585c
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/compiletest-15f1595cad9556e7
+
+running 1 test
+test ui ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test-0d3ce15499a22963
+
+running 1 test
+test issue45::tracing ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests async-trait
+
+running 8 tests
+test src/lib.rs -  (line 15) ... ok
+test src/lib.rs -  (line 165) ... ok
+test src/lib.rs -  (line 126) ... ok
+test src/lib.rs -  (line 186) ... ok
+test src/lib.rs -  (line 286) ... ok
+test src/lib.rs -  (line 265) ... ok
+test src/lib.rs -  (line 211) ... ok
+test src/lib.rs -  (line 47) ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ git status
+On branch master
+Your branch is behind 'origin/master' by 472 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .github/workflows/ci.yml
+	modified:   .gitignore
+	modified:   Cargo.toml
+	modified:   LICENSE-APACHE
+	modified:   LICENSE-MIT
+	modified:   README.md
+	modified:   src/args.rs
+	modified:   src/expand.rs
+	modified:   src/lib.rs
+	modified:   src/lifetime.rs
+	modified:   src/parse.rs
+	modified:   src/receiver.rs
+	modified:   src/respan.rs
+	modified:   tests/compiletest.rs
+	modified:   tests/executor/mod.rs
+	modified:   tests/test.rs
+	modified:   tests/ui/bare-trait-object.rs
+	modified:   tests/ui/bare-trait-object.stderr
+	modified:   tests/ui/delimiter-span.rs
+	modified:   tests/ui/delimiter-span.stderr
+	modified:   tests/ui/missing-body.rs
+	modified:   tests/ui/missing-body.stderr
+	modified:   tests/ui/must-use.rs
+	modified:   tests/ui/must-use.stderr
+	modified:   tests/ui/self-span.rs
+	modified:   tests/ui/self-span.stderr
+	modified:   tests/ui/send-not-implemented.rs
+	modified:   tests/ui/send-not-implemented.stderr
+	modified:   tests/ui/unsupported-self.rs
+	modified:   tests/ui/unsupported-self.stderr
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.cargo/
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git reset --hard 7c746b6ee601c51c557c9f4c32230f5c9a9934be
+HEAD is now at 7c746b6 Release 0.1.34
++ git clean -fd
+Removing .cargo/

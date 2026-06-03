@@ -1,0 +1,116 @@
+diff --git a/docs.md b/docs.md
+--- a/docs.md
++++ b/docs.md
+@@ -589,6 +589,13 @@ swift_name_macro = "CF_SWIFT_NAME"
+ # default: "None"
+ rename_args = "PascalCase"
+ 
++# This rule specifies if the order of functions will be sorted in some way.
++#
++# "Name": sort by the name of the function
++# "None": keep order in which the functions have been parsed
++#
++# default: "Name"
++sort_by = "None"
+ 
+ [struct]
+ # A rule to use to rename struct field names. The renaming assumes the input is
+diff --git a/src/bindgen/config.rs b/src/bindgen/config.rs
+--- a/src/bindgen/config.rs
++++ b/src/bindgen/config.rs
+@@ -201,6 +201,28 @@ impl FromStr for ItemType {
+ 
+ deserialize_enum_str!(ItemType);
+ 
++/// Type which specifies the sort order of functions
++#[derive(Debug, Clone, PartialEq)]
++pub enum SortKey {
++    Name,
++    None,
++}
++
++impl FromStr for SortKey {
++    type Err = String;
++
++    fn from_str(s: &str) -> Result<Self, Self::Err> {
++        use self::SortKey::*;
++        Ok(match &*s.to_lowercase() {
++            "name" => Name,
++            "none" => None,
++            _ => return Err(format!("Unrecognized sort option: '{}'.", s)),
++        })
++    }
++}
++
++deserialize_enum_str!(SortKey);
++
+ /// Settings to apply when exporting items.
+ #[derive(Debug, Clone, Deserialize, Default)]
+ #[serde(rename_all = "snake_case")]
+diff --git a/src/bindgen/config.rs b/src/bindgen/config.rs
+--- a/src/bindgen/config.rs
++++ b/src/bindgen/config.rs
+@@ -293,6 +315,8 @@ pub struct FunctionConfig {
+     pub rename_args: Option<RenameRule>,
+     /// An optional macro to use when generating Swift function name attributes
+     pub swift_name_macro: Option<String>,
++    /// Sort key for function names
++    pub sort_by: SortKey,
+ }
+ 
+ impl Default for FunctionConfig {
+diff --git a/src/bindgen/config.rs b/src/bindgen/config.rs
+--- a/src/bindgen/config.rs
++++ b/src/bindgen/config.rs
+@@ -304,6 +328,7 @@ impl Default for FunctionConfig {
+             args: Layout::Auto,
+             rename_args: None,
+             swift_name_macro: None,
++            sort_by: SortKey::Name,
+         }
+     }
+ }
+diff --git a/src/bindgen/library.rs b/src/bindgen/library.rs
+--- a/src/bindgen/library.rs
++++ b/src/bindgen/library.rs
+@@ -6,7 +6,7 @@ use std::collections::HashMap;
+ use std::mem;
+ 
+ use crate::bindgen::bindings::Bindings;
+-use crate::bindgen::config::{Config, Language};
++use crate::bindgen::config::{Config, Language, SortKey};
+ use crate::bindgen::declarationtyperesolver::DeclarationTypeResolver;
+ use crate::bindgen::dependencies::Dependencies;
+ use crate::bindgen::error::Error;
+diff --git a/src/bindgen/library.rs b/src/bindgen/library.rs
+--- a/src/bindgen/library.rs
++++ b/src/bindgen/library.rs
+@@ -55,10 +55,16 @@ impl Library {
+ 
+     pub fn generate(mut self) -> Result<Bindings, Error> {
+         self.remove_excluded();
+-        self.functions.sort_by(|x, y| x.path.cmp(&y.path));
+         self.transfer_annotations();
+         self.simplify_standard_types();
+ 
++        match self.config.function.sort_by {
++            SortKey::Name => {
++                self.functions.sort_by(|x, y| x.path.cmp(&y.path));
++            }
++            SortKey::None => { /* keep input order */ }
++        }
++
+         if self.config.language == Language::C {
+             self.instantiate_monomorphs();
+             self.resolve_declaration_types();
+diff --git a/template.toml b/template.toml
+--- a/template.toml
++++ b/template.toml
+@@ -74,6 +74,7 @@ rename_args = "None"
+ # prefix = "START_FUNC"
+ # postfix = "END_FUNC"
+ args = "auto"
++sort_by = "Name"
+ 
+ 
+ 

@@ -1,0 +1,63 @@
+{
+    "rust-lang__cc-rs-227": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "asm_here",
+                    "foo_here",
+                    "bar_here",
+                    "baz_here",
+                    "opt_linkage",
+                    "main",
+                    "msvc_opt_level_0",
+                    "msvc_static_crt",
+                    "msvc_debug",
+                    "msvc_define",
+                    "msvc_include",
+                    "gnu_include",
+                    "msvc_no_static_crt",
+                    "gnu_shared",
+                    "gnu_opt_level_s",
+                    "gnu_opt_level_1",
+                    "gnu_smoke",
+                    "msvc_smoke",
+                    "gnu_set_stdlib",
+                    "gnu_debug",
+                    "gnu_static",
+                    "gnu_compile_assembly",
+                    "gnu_define",
+                    "gnu_x86_64",
+                    "gnu_i686",
+                    "gnu_x86_64_no_pic",
+                    "gnu_flag_if_supported",
+                    "gnu_i686_pic",
+                    "src/lib.rs - compile_library (line 166)",
+                    "src/lib.rs - Config::include (line 216)",
+                    "src/lib.rs - Config::flag (line 258)",
+                    "src/lib.rs - Config::static_flag (line 340)",
+                    "src/lib.rs - Config::define (line 236)",
+                    "src/lib.rs - Config::shared_flag (line 321)",
+                    "src/lib.rs -  (line 29)",
+                    "src/lib.rs - Config::flag_if_supported (line 299)"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

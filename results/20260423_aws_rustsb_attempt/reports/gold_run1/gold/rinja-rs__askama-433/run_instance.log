@@ -1,0 +1,57 @@
+2026-04-17 09:42:41,453 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-433
+Building instance image rustbench/rinja-rs__askama:pr-433 for rinja-rs__askama-433
+2026-04-17 09:53:00,909 - INFO - Creating container for rinja-rs__askama-433...
+2026-04-17 09:53:01,061 - INFO - Container for rinja-rs__askama-433 created: 1ef0f0da763ada0e101e4da010b821813c549efc59efdfd1b84d042ef325cdc4
+2026-04-17 09:53:01,520 - INFO - Container for rinja-rs__askama-433 started: 1ef0f0da763ada0e101e4da010b821813c549efc59efdfd1b84d042ef325cdc4
+2026-04-17 09:53:01,520 - INFO - Intermediate patch for rinja-rs__askama-433 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-433/patch.diff, now applying to container...
+2026-04-17 09:53:01,996 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/generator.rs...
+Applied patch askama_shared/src/generator.rs cleanly.
+
+2026-04-17 09:53:02,062 - INFO - Git diff before:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index 801db37..866fd7b 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -1721,8 +1721,11 @@ impl MapChain<'_, &str, LocalMeta> {
+     }
+ 
+     fn resolve_or_self(&self, name: &str) -> String {
+-        self.resolve(name)
+-            .unwrap_or_else(|| format!("self.{}", name))
++        match self.resolve(name) {
++            Some(name) => name,
++            None if name.chars().any(char::is_uppercase) => name.to_string(),
++            None => format!("self.{}", name),
++        }
+     }
+ }
+2026-04-17 09:53:02,062 - INFO - Eval script for rinja-rs__askama-433 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-433/eval.sh; copying to container...
+2026-04-17 09:54:38,233 - INFO - Test runtime: 95.96 seconds
+2026-04-17 09:54:38,233 - INFO - Test output for rinja-rs__askama-433 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-433/test_output.txt
+2026-04-17 09:54:38,284 - INFO - Git diff after:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index 801db37..866fd7b 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -1721,8 +1721,11 @@ impl MapChain<'_, &str, LocalMeta> {
+     }
+ 
+     fn resolve_or_self(&self, name: &str) -> String {
+-        self.resolve(name)
+-            .unwrap_or_else(|| format!("self.{}", name))
++        match self.resolve(name) {
++            Some(name) => name,
++            None if name.chars().any(char::is_uppercase) => name.to_string(),
++            None => format!("self.{}", name),
++        }
+     }
+ }
+2026-04-17 09:54:38,284 - INFO - Grading answer for rinja-rs__askama-433...
+2026-04-17 09:54:38,284 - INFO - report: {'rinja-rs__askama-433': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_attr', 'test_comment', 'test_composition', 'test_define_string_var', 'test_else', 'test_else_if', 'test_empty', 'test_escape', 'test_func_ref_call', 'test_generics', 'test_if', 'test_index', 'test_literals', 'test_minus', 'test_literals_escape', 'test_nested_attr', 'test_negation', 'test_path_compare', 'test_option', 'test_path_func_call', 'test_raw_complex', 'test_root_path_func_call', 'test_raw_simple', 'test_slice_literal', 'test_tuple_attr', 'test_variables_no_escape', 'test_variables', 'without_import_on_derive::test_without_import'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-433: resolved: True
+2026-04-17 09:54:38,284 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-433.gold_run1...
+2026-04-17 09:56:18,926 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-433.gold_run1...
+2026-04-17 09:56:19,121 - INFO - Container rustb.eval.rinja-rs__askama-433.gold_run1 removed.
+2026-04-17 09:56:19,121 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-433...
+2026-04-17 09:56:21,558 - INFO - Image rustbench/rinja-rs__askama:pr-433 removed.

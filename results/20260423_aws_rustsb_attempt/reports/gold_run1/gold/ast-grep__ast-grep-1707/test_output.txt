@@ -1,0 +1,567 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch crates/config/src/combined.rs...
+Checking patch crates/config/src/combined.rs...
+Checking patch crates/config/src/combined.rs...
+Applied patch crates/config/src/combined.rs cleanly.
+Applied patch crates/config/src/combined.rs cleanly.
+Applied patch crates/config/src/combined.rs cleanly.
++ cd crates/config
++ cargo test --no-fail-fast --all-features
+warning: both `/workspace/.cargo/config` and `/workspace/.cargo/config.toml` exist. Using `/workspace/.cargo/config`
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+ Downloading crates ...
+  Downloaded bit-vec v0.8.0 (registry `lts-repo-at-40ff796d83`)
+  Downloaded dyn-clone v1.0.17 (registry `lts-repo-at-40ff796d83`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-40ff796d83`)
+  Downloaded bit-set v0.8.0 (registry `lts-repo-at-40ff796d83`)
+  Downloaded itoa v1.0.14 (registry `lts-repo-at-40ff796d83`)
+  Downloaded equivalent v1.0.1 (registry `lts-repo-at-40ff796d83`)
+  Downloaded tree-sitter-facade-sg v0.24.5 (registry `lts-repo-at-40ff796d83`)
+  Downloaded wasm-bindgen-shared v0.2.99 (registry `lts-repo-at-40ff796d83`)
+  Downloaded tree-sitter-language v0.1.3 (registry `lts-repo-at-40ff796d83`)
+  Downloaded wasm-bindgen-macro v0.2.99 (registry `lts-repo-at-40ff796d83`)
+  Downloaded shlex v1.3.0 (registry `lts-repo-at-40ff796d83`)
+  Downloaded wasm-bindgen-macro-support v0.2.99 (registry `lts-repo-at-40ff796d83`)
+  Downloaded wasm-bindgen v0.2.99 (registry `lts-repo-at-40ff796d83`)
+  Downloaded unsafe-libyaml v0.2.11 (registry `lts-repo-at-40ff796d83`)
+  Downloaded serde v1.0.217 (registry `lts-repo-at-40ff796d83`)
+  Downloaded indexmap v2.7.0 (registry `lts-repo-at-40ff796d83`)
+  Downloaded memchr v2.7.4 (registry `lts-repo-at-40ff796d83`)
+  Downloaded cc v1.2.6 (registry `lts-repo-at-40ff796d83`)
+  Downloaded hashbrown v0.15.2 (registry `lts-repo-at-40ff796d83`)
+  Downloaded serde_json v1.0.134 (registry `lts-repo-at-40ff796d83`)
+  Downloaded tree-sitter v0.24.6 (registry `lts-repo-at-40ff796d83`)
+  Downloaded aho-corasick v1.1.3 (registry `lts-repo-at-40ff796d83`)
+  Downloaded unicode-ident v1.0.14 (registry `lts-repo-at-40ff796d83`)
+  Downloaded regex v1.11.1 (registry `lts-repo-at-40ff796d83`)
+  Downloaded serde_yaml v0.9.34+deprecated (registry `lts-repo-at-40ff796d83`)
+  Downloaded syn v2.0.93 (registry `lts-repo-at-40ff796d83`)
+  Downloaded serde_derive v1.0.217 (registry `lts-repo-at-40ff796d83`)
+  Downloaded schemars v0.8.21 (registry `lts-repo-at-40ff796d83`)
+  Downloaded proc-macro2 v1.0.92 (registry `lts-repo-at-40ff796d83`)
+  Downloaded bstr v1.11.1 (registry `lts-repo-at-40ff796d83`)
+  Downloaded bumpalo v3.16.0 (registry `lts-repo-at-40ff796d83`)
+  Downloaded regex-syntax v0.8.5 (registry `lts-repo-at-40ff796d83`)
+  Downloaded ryu v1.0.18 (registry `lts-repo-at-40ff796d83`)
+  Downloaded once_cell v1.20.2 (registry `lts-repo-at-40ff796d83`)
+  Downloaded log v0.4.22 (registry `lts-repo-at-40ff796d83`)
+  Downloaded wasm-bindgen-backend v0.2.99 (registry `lts-repo-at-40ff796d83`)
+  Downloaded thiserror-impl v2.0.9 (registry `lts-repo-at-40ff796d83`)
+  Downloaded thiserror v2.0.9 (registry `lts-repo-at-40ff796d83`)
+  Downloaded streaming-iterator v0.1.9 (registry `lts-repo-at-40ff796d83`)
+  Downloaded serde_derive_internals v0.29.1 (registry `lts-repo-at-40ff796d83`)
+  Downloaded schemars_derive v0.8.21 (registry `lts-repo-at-40ff796d83`)
+  Downloaded regex-automata v0.4.9 (registry `lts-repo-at-40ff796d83`)
+  Downloaded quote v1.0.38 (registry `lts-repo-at-40ff796d83`)
+  Downloaded globset v0.4.15 (registry `lts-repo-at-40ff796d83`)
+  Downloaded anyhow v1.0.95 (registry `lts-repo-at-40ff796d83`)
+  Downloaded tree-sitter-typescript v0.21.2 (registry `lts-repo-at-40ff796d83`)
+   Compiling proc-macro2 v1.0.92
+   Compiling unicode-ident v1.0.14
+   Compiling memchr v2.7.4
+   Compiling shlex v1.3.0
+   Compiling wasm-bindgen-shared v0.2.99
+   Compiling log v0.4.22
+   Compiling regex-syntax v0.8.5
+   Compiling bumpalo v3.16.0
+   Compiling serde v1.0.217
+   Compiling streaming-iterator v0.1.9
+   Compiling tree-sitter-language v0.1.3
+   Compiling wasm-bindgen v0.2.99
+   Compiling serde_json v1.0.134
+   Compiling cfg-if v1.0.0
+   Compiling thiserror v2.0.9
+   Compiling once_cell v1.20.2
+   Compiling ryu v1.0.18
+   Compiling itoa v1.0.14
+   Compiling equivalent v1.0.1
+   Compiling anyhow v1.0.95
+   Compiling schemars v0.8.21
+   Compiling bit-vec v0.8.0
+   Compiling hashbrown v0.15.2
+   Compiling dyn-clone v1.0.17
+   Compiling unsafe-libyaml v0.2.11
+   Compiling cc v1.2.6
+   Compiling bit-set v0.8.0
+   Compiling aho-corasick v1.1.3
+   Compiling bstr v1.11.1
+   Compiling indexmap v2.7.0
+   Compiling quote v1.0.38
+   Compiling syn v2.0.93
+   Compiling tree-sitter v0.24.6
+   Compiling tree-sitter-typescript v0.21.2
+   Compiling regex-automata v0.4.9
+   Compiling regex v1.11.1
+   Compiling globset v0.4.15
+   Compiling wasm-bindgen-backend v0.2.99
+   Compiling serde_derive_internals v0.29.1
+   Compiling serde_derive v1.0.217
+   Compiling thiserror-impl v2.0.9
+   Compiling schemars_derive v0.8.21
+   Compiling wasm-bindgen-macro-support v0.2.99
+   Compiling wasm-bindgen-macro v0.2.99
+   Compiling tree-sitter-facade-sg v0.24.5
+   Compiling ast-grep-core v0.32.2 (/workspace/crates/core)
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/core/src/lib.rs:43:15
+   |
+43 |   pub fn root(&self) -> Node<D> {
+   |               ^^^^^     ^^^^^^^ the same lifetime is hidden here
+   |               |
+   |               the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+43 |   pub fn root(&self) -> Node<'_, D> {
+   |                              +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/core/src/matcher/pattern.rs:50:23
+   |
+50 |   pub fn fixed_string(&self) -> Cow<str> {
+   |                       ^^^^^     ^^^^^^^^ the same lifetime is hidden here
+   |                       |
+   |                       the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+50 |   pub fn fixed_string(&self) -> Cow<'_, str> {
+   |                                     +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/matcher/pattern.rs:159:23
+    |
+159 |   pub fn fixed_string(&self) -> Cow<str> {
+    |                       ^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |                       |
+    |                       the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+159 |   pub fn fixed_string(&self) -> Cow<'_, str> {
+    |                                     +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/matcher/pattern.rs:246:35
+    |
+246 |   fn single_matcher<D: Doc>(root: &Root<D>) -> Node<D> {
+    |                                   ^^^^^^^^     ^^^^^^^ the same lifetime is hidden here
+    |                                   |
+    |                                   the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+246 |   fn single_matcher<D: Doc>(root: &Root<D>) -> Node<'_, D> {
+    |                                                     +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/replacer/indent.rs:138:51
+    |
+138 | pub fn extract_with_deindent<C: Content>(content: &C, range: Range<usize>) -> DeindentedExtract<C> {
+    |                                                   ^^                          ^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                                                   |
+    |                                                   the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+138 | pub fn extract_with_deindent<C: Content>(content: &C, range: Range<usize>) -> DeindentedExtract<'_, C> {
+    |                                                                                                 +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/source.rs:145:22
+    |
+145 |   fn decode_str(src: &str) -> Cow<[Self::Underlying]>;
+    |                      ^^^^     ^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                      |
+    |                      the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+145 |   fn decode_str(src: &str) -> Cow<'_, [Self::Underlying]>;
+    |                                   +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/source.rs:148:26
+    |
+148 |   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<str>;
+    |                          ^^^^^^^^^^^^^^^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |                          |
+    |                          the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+148 |   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<'_, str>;
+    |                                                      +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/source.rs:188:22
+    |
+188 |   fn decode_str(src: &str) -> Cow<[Self::Underlying]> {
+    |                      ^^^^     ^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                      |
+    |                      the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+188 |   fn decode_str(src: &str) -> Cow<'_, [Self::Underlying]> {
+    |                                   +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/source.rs:191:26
+    |
+191 |   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<str> {
+    |                          ^^^^^^^^^^^^^^^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |                          |
+    |                          the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+191 |   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<'_, str> {
+    |                                                      +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/core/src/traversal.rs:75:36
+   |
+75 |   pub fn visit<D: Doc>(self, node: Node<D>) -> Visit<'_, D, A::Traversal<'_, D>, M>
+   |                                    ^^^^^^^           ^^                  ^^ the same lifetime is elided here
+   |                                    |                 |
+   |                                    |                 the same lifetime is elided here
+   |                                    the lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'_`
+   |
+75 |   pub fn visit<D: Doc>(self, node: Node<'_, D>) -> Visit<'_, D, A::Traversal<'_, D>, M>
+   |                                         +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/traversal.rs:135:29
+    |
+135 |   fn traverse<D: Doc>(node: Node<D>) -> Self::Traversal<'_, D>;
+    |                             ^^^^^^^                     ^^ the same lifetime is elided here
+    |                             |
+    |                             the lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'_`
+    |
+135 |   fn traverse<D: Doc>(node: Node<'_, D>) -> Self::Traversal<'_, D>;
+    |                                  +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/traversal.rs:141:29
+    |
+141 |   fn traverse<D: Doc>(node: Node<D>) -> Self::Traversal<'_, D> {
+    |                             ^^^^^^^                     ^^ the same lifetime is elided here
+    |                             |
+    |                             the lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'_`
+    |
+141 |   fn traverse<D: Doc>(node: Node<'_, D>) -> Self::Traversal<'_, D> {
+    |                                  +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/traversal.rs:148:29
+    |
+148 |   fn traverse<D: Doc>(node: Node<D>) -> Self::Traversal<'_, D> {
+    |                             ^^^^^^^                     ^^ the same lifetime is elided here
+    |                             |
+    |                             the lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'_`
+    |
+148 |   fn traverse<D: Doc>(node: Node<'_, D>) -> Self::Traversal<'_, D> {
+    |                                  +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/core/src/node.rs:88:15
+   |
+88 |   pub fn root(&self) -> Node<D> {
+   |               ^^^^^     ^^^^^^^ the same lifetime is hidden here
+   |               |
+   |               the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+88 |   pub fn root(&self) -> Node<'_, D> {
+   |                              +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/node.rs:201:15
+    |
+201 |   pub fn kind(&self) -> Cow<str> {
+    |               ^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |               |
+    |               the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+201 |   pub fn kind(&self) -> Cow<'_, str> {
+    |                             +++
+
+warning: `ast-grep-core` (lib) generated 15 warnings (run `cargo fix --lib -p ast-grep-core` to apply 15 suggestions)
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling ast-grep-config v0.32.2 (/workspace/crates/config)
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/combined.rs:83:32
+   |
+83 |   fn check_suppression<D: Doc>(&mut self, node: &Node<D>) -> MaySuppressed {
+   |                                ^^^^^^^^^                     ^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                                |
+   |                                the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+83 |   fn check_suppression<D: Doc>(&mut self, node: &Node<D>) -> MaySuppressed<'_> {
+   |                                                                           ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/rule/referent_rule.rs:24:22
+   |
+24 |   pub(crate) fn read(&self) -> RwLockReadGuard<HashMap<String, R>> {
+   |                      ^^^^^     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                      |
+   |                      the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+24 |   pub(crate) fn read(&self) -> RwLockReadGuard<'_, HashMap<String, R>> {
+   |                                                +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/rule/referent_rule.rs:27:12
+   |
+27 |   fn write(&self) -> RwLockWriteGuard<HashMap<String, R>> {
+   |            ^^^^^     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |            |
+   |            the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+27 |   fn write(&self) -> RwLockWriteGuard<'_, HashMap<String, R>> {
+   |                                       +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/rule/referent_rule.rs:68:16
+   |
+68 |   fn get_local(&self) -> RwLockReadGuard<HashMap<String, Rule<L>>> {
+   |                ^^^^^     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                |
+   |                the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+68 |   fn get_local(&self) -> RwLockReadGuard<'_, HashMap<String, Rule<L>>> {
+   |                                          +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/rule/referent_rule.rs:72:17
+   |
+72 |   fn get_global(&self) -> RwLockReadGuard<HashMap<String, RuleCore<L>>> {
+   |                 ^^^^^     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+72 |   fn get_global(&self) -> RwLockReadGuard<'_, HashMap<String, RuleCore<L>>> {
+   |                                           +++
+
+warning: `ast-grep-config` (lib) generated 5 warnings (run `cargo fix --lib -p ast-grep-config` to apply 5 suggestions)
+warning: `ast-grep-config` (lib test) generated 5 warnings (5 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.63s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/ast_grep_config-ebdcbafdf7c2437a)
+
+running 151 tests
+test check_var::test::test_undefined_vars_in_constraints ... ok
+test check_var::test::test_transform_already_defined ... ok
+test check_var::test::test_defined_vars_in_utils ... ok
+test check_var::test::test_defined_vars_cyclic ... ok
+test check_var::test::test_defined_vars ... ok
+test check_var::test::test_undefined_vars_in_fix ... ok
+test check_var::test::test_use_vars_in_utils ... ok
+test check_var::test::test_undefined_vars_in_transform ... ok
+test fixer::test::test_parse_config ... ok
+test fixer::test::test_parse ... ok
+test fixer::test::test_parse_str ... ok
+test combined::test::test_non_used_suppression ... ok
+test fixer::test::test_deserialize_object ... ok
+test maybe::test::test_de_correct_err ... ok
+test maybe::test::test_de_correct_ok ... ok
+test maybe::test::test_from_optio ... ok
+test maybe::test::test_de_wrong_err ... ok
+test combined::test::test_ignore_node_same_line ... ok
+test fixer::test::test_relace_range ... ok
+test combined::test::test_ignore_node ... ok
+test maybe::test::test_unwrap_absent - should panic ... ok
+test fixer::test::test_replace_fixer ... ok
+test rule::deserialize_env::test::test_cyclic_not ... ok
+test rule::deserialize_env::test::test_using_cyclic_local ... ok
+test rule::deserialize_env::test::test_using_global_rule_in_local ... ok
+test rule::deserialize_env::test::test_using_transitive_cycle ... ok
+test rule::nth_child::test::test_error ... ok
+test rule::deserialize_env::test::test_local_util_matches ... ok
+test rule::nth_child::test::test_defined_vars ... ok
+test rule::nth_child::test::test_parse_selector ... ok
+test rule::nth_child::test::test_positional ... ok
+test rule::nth_child::test::test_positional_an_b ... ok
+test rule::nth_child::test::test_find_index_reverse ... ok
+test rule::nth_child::test::test_find_index_simple ... ok
+test rule::range::test::test_invalid_range ... ok
+test rule::nth_child::test::test_verify_util ... ok
+test rule::range::test::test_range_match ... ok
+test rule::referent_rule::test::test_cyclic_all ... ok
+test rule::referent_rule::test::test_cyclic_error ... ok
+test rule::range::test::test_multiline_range ... ok
+test rule::range::test::test_range_non_match ... ok
+test rule::nth_child::test::test_find_of_rule ... ok
+test rule::referent_rule::test::test_cyclic_not ... ok
+test rule::range::test::test_unicode_range ... ok
+test rule::relational_rule::test::test_defined_vars ... ok
+test rule::referent_rule::test::test_success_rule ... ok
+test rule::relational_rule::test::test_has_field ... ok
+test rule::nth_child::test::test_serialize ... ok
+test rule::relational_rule::test::test_inside_field ... ok
+test rule::relational_rule::test::test_invalid_field ... ok
+test rule::deserialize_env::test::test_local_util_kinds ... ok
+test rule::test::test_augmentation ... ok
+test rule::relational_rule::test::test_has_until_should_not_abort_prematurely ... ok
+test rule::test::test_deserialize_rule ... ok
+test rule::test::test_defined_vars ... ok
+test rule::test::test_deserialize_order ... ok
+test rule::stop_by::test::test_relational ... ok
+test rule::test::test_maybe_not ... ok
+test rule::test::test_nested_augmentation ... ok
+test rule_collection::test::test_rules_for_path ... ignored
+test rule::relational_rule::test::test_has_until_should_be_inclusive ... ok
+test rule::test::test_issue_1225 ... ok
+test rule::stop_by::test::test_stop_by_err ... ok
+test rule::relational_rule::test::test_precedes_operator ... ok
+test rule::relational_rule::test::test_inside_immediate ... ok
+test rule::relational_rule::test::test_has_rule ... ok
+test rule::relational_rule::test::test_inside_rule ... ok
+test rule::test::test_pattern ... ok
+test rule_collection::test::test_rule_collection_get_tenured_rule ... ok
+test rule::relational_rule::test::test_follows_operator ... ok
+test rule::test::test_precedes_follows ... ok
+test rule::stop_by::test::test_stop_by_ok ... ok
+test rule::relational_rule::test::test_inside_inclusive ... ok
+test rule::relational_rule::test::test_precedes_immediate ... ok
+test rule::relational_rule::test::test_has_immediate ... ok
+test rule::test::test_multi_augmentation ... ok
+test rule_config::test::test_rewriter_should_have_fix ... ok
+test rule::stop_by::test::test_stop_by_no_defined_vars ... ok
+test rule_collection::test::test_rule_collection_get_contingent_rule ... ok
+test rule_config::test::test_multiple_augment_rule ... ok
+test rule_config::test::test_get_fixer ... ok
+test rule::test::test_issue_1164 ... ok
+test rule::stop_by::test::test_stop_by_defined_vars ... ok
+test rule_config::test::test_add_rewriters ... ok
+test rule::relational_rule::test::test_follows_immediate ... ok
+test rule_config::test::test_get_message_transform ... ok
+test rule_collection::test::test_files_rule ... ok
+test rule_config::test::test_augmented_rule ... ok
+test rule_config::test::test_rewriter_use_undefined_var ... ok
+test rule_config::test::test_rewriter_use_upper_var ... ok
+test rule_config::test::test_rewriter_utils_should_not_pollute_registration ... ok
+test rule_config::test::test_rule_message ... ok
+test rule_config::test::test_rewriters_access_utils ... ok
+test rule_core::test::test_rule_error ... ok
+test rule_config::test::test_wrong_rewriter ... ok
+test rule_config::test::test_transform ... ok
+test rule_config::test::test_rule_env ... ok
+test rule_core::test::test_utils_error ... ok
+test rule_core::test::test_rule_reg_with_utils ... ok
+test rule_config::test::test_utils_rule ... ok
+test rule_config::test::test_undefined_rewriter_in_transform ... ok
+test rule_config::test::test_utils_in_rewriter_should_work ... ok
+test rule_core::test::test_cyclic_transform_error ... ok
+test rule_collection::test::test_ignore_rule ... ok
+test rule_core::test::test_constraints_writing_to_env ... ok
+test rule_core::test::test_rule_with_constraints ... ok
+test rule_config::test::test_undefined_rewriter ... ok
+test rule_core::test::test_undefined_utils_error ... ok
+test rule_config::test::test_use_rewriter_recursive ... ok
+test rule_core::test::test_rewriter_writing_to_env ... ok
+test test::test_util_rule_with_vaargs ... ok
+test transform::rewrite::test::test_node_not_found ... ok
+test test::test_deserialize_rule_config ... ok
+test rule_core::test::test_constraints_inheriting_env ... ok
+test transform::rewrite::test::test_ignore_unused_rewriters ... ok
+test rule_collection::test::test_files_with_ignores_rule ... ok
+test transform::rewrite::test::test_rewriters_join_by ... ok
+test transform::rewrite::test::test_perform_one_rewrite ... ok
+test test::test_deserialize_not_inside ... ok
+test transform::rewrite::test::test_perform_multiple_rewriters ... ok
+test transform::test::test_single_cyclic_transform ... ok
+test transform::string_case::test::test_case_conversions ... ok
+test test::test_deserialize_kind ... ok
+test transform::test::test_cyclic_transform ... ok
+test transform::rewrite::test::test_rewrite_use_enclosing_env ... ok
+test test::test_deserialize_inside ... ok
+test transform::test::test_transform_use_matched ... ok
+test transform::rewrite::test::test_rewriters_overlapping ... ok
+test transform::string_case::test::test_format ... ok
+test transform::transformation::test::test_capitalize_convert ... ok
+test test::test_deserialize_meta_var ... ok
+test transform::string_case::test::test_split ... ok
+test transform::string_case::test::test_split_by_separator ... ok
+test transform::test::test_transform_indentation ... ok
+test test::test_deserialize_nested ... ok
+test transform::transformation::test::test_simple_replace ... ok
+test transform::rewrite::test::test_rewriters_order ... ok
+test transform::rewrite::test::test_should_inherit_match_env ... ok
+test transform::transformation::test::test_lowercase_convert ... ok
+test transform::transformation::test::test_no_start_char ... ok
+test transform::transformation::test::test_no_end_char ... ok
+test transform::transformation::test::test_transform_indentation_with_insertion ... ok
+test transform::transformation::test::test_wrong_rule ... ok
+test test::test_deserialize_constraints ... ok
+test transform::rewrite::test::test_recursive_rewriters ... ok
+test transform::transformation::test::test_separation_convert ... ok
+test transform::transformation::test::test_transform_parse_error ... ok
+test transform::transformation::test::test_uppercase_convert ... ok
+test transform::transformation::test::test_replace ... ok
+test transform::transformation::test::test_insert_env ... ok
+test transform::transformation::test::test_dependent_trans ... ok
+
+test result: ok. 150 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests ast_grep_config
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../../
++ git reset --hard 1c68280bfb9fd2614cab19b4cda47d2bf6570626
+HEAD is now at 1c68280b fix(deps): update dependency @swc/core to v1.10.1
++ git clean -fd
+Removing .cargo/config
+Removing .cargo/lts-repo-at-40ff796d83/

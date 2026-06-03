@@ -1,0 +1,95 @@
+{
+    "rinja-rs__askama-393": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "parser::tests::test_parse_root_path",
+                    "test_attr",
+                    "test_composition",
+                    "test_comment",
+                    "test_define_string_var",
+                    "test_else",
+                    "test_else_if",
+                    "test_empty",
+                    "test_escape",
+                    "test_func_ref_call",
+                    "test_generics",
+                    "test_if",
+                    "test_literals_escape",
+                    "test_index",
+                    "test_literals",
+                    "test_nested_attr",
+                    "test_option",
+                    "test_path_compare",
+                    "test_path_func_call",
+                    "test_minus",
+                    "test_raw_simple",
+                    "test_negation",
+                    "test_raw_complex",
+                    "test_slice_literal",
+                    "test_tuple_attr",
+                    "test_variables",
+                    "without_import_on_derive::test_without_import",
+                    "test_variables_no_escape"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "filters::tests::test_abs",
+                    "filters::json::tests::test_json",
+                    "filters::tests::test_capitalize",
+                    "filters::tests::test_center",
+                    "filters::tests::test_filesizeformat",
+                    "filters::tests::test_into_f64",
+                    "filters::tests::test_into_isize",
+                    "filters::tests::test_indent",
+                    "filters::tests::test_join",
+                    "filters::tests::test_linebreaks",
+                    "filters::tests::test_linebreaksbr",
+                    "filters::tests::test_lower",
+                    "filters::tests::test_trim",
+                    "filters::tests::test_truncate",
+                    "filters::tests::test_upper",
+                    "filters::tests::test_wordcount",
+                    "filters::tests::test_urlencoding",
+                    "filters::yaml::tests::test_yaml",
+                    "parser::tests::change_delimiters_parse_filter",
+                    "parser::tests::test_invalid_block",
+                    "parser::tests::test_ws_splitter",
+                    "parser::tests::test_parse_filter",
+                    "tests::duplicated_syntax_name_on_list",
+                    "tests::find_absolute",
+                    "tests::find_relative",
+                    "tests::find_relative_nonexistent",
+                    "tests::add_syntax_two",
+                    "tests::get_source",
+                    "tests::escape_modes",
+                    "tests::find_relative_sub",
+                    "parser::tests::test_parse_path_call",
+                    "tests::test_default_config",
+                    "tests::is_not_exist_default_syntax",
+                    "parser::tests::test_parse_var_call",
+                    "tests::add_syntax",
+                    "tests::use_default_at_syntax_name",
+                    "tests::test_config_dirs",
+                    "parser::tests::test_associativity",
+                    "parser::tests::test_precedence"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

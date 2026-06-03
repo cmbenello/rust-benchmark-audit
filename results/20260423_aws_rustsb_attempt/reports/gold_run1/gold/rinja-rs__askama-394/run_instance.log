@@ -1,0 +1,93 @@
+2026-04-17 09:31:20,046 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-394
+Building instance image rustbench/rinja-rs__askama:pr-394 for rinja-rs__askama-394
+2026-04-17 09:39:22,010 - INFO - Creating container for rinja-rs__askama-394...
+2026-04-17 09:39:22,118 - INFO - Container for rinja-rs__askama-394 created: e3a0d99c098cec5347f7fe351bda165c546222274d27df6e48b060769f191431
+2026-04-17 09:39:22,328 - INFO - Container for rinja-rs__askama-394 started: e3a0d99c098cec5347f7fe351bda165c546222274d27df6e48b060769f191431
+2026-04-17 09:39:22,329 - INFO - Intermediate patch for rinja-rs__askama-394 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-394/patch.diff, now applying to container...
+2026-04-17 09:39:22,617 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/generator.rs...
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/generator.rs cleanly.
+
+2026-04-17 09:39:22,690 - INFO - Git diff before:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index ad086a3..6a185c1 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -505,8 +505,9 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+         let mut has_else = false;
+         for (i, &(cws, ref cond, ref nodes)) in conds.iter().enumerate() {
+             self.handle_ws(cws);
+-            if arm_sizes.is_empty() {
+-                flushed += self.write_buf_writable(buf)?;
++            flushed += self.write_buf_writable(buf)?;
++            if i > 0 {
++                self.locals.pop();
+             }
+ 
+             let mut arm_size = 0;
+@@ -539,14 +540,14 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+             self.locals.push();
+ 
+             arm_size += self.handle(ctx, nodes, buf, AstLevel::Nested)?;
+-            arm_size += self.write_buf_writable(buf)?;
+             arm_sizes.push(arm_size);
+-
+-            self.locals.pop();
+         }
+         self.handle_ws(ws);
++        flushed += self.write_buf_writable(buf)?;
+         buf.writeln("}")?;
+ 
++        self.locals.pop();
++
+         if !has_else {
+             arm_sizes.push(0);
+         }
+2026-04-17 09:39:22,690 - INFO - Eval script for rinja-rs__askama-394 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-394/eval.sh; copying to container...
+2026-04-17 09:40:47,483 - INFO - Test runtime: 84.65 seconds
+2026-04-17 09:40:47,483 - INFO - Test output for rinja-rs__askama-394 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-394/test_output.txt
+2026-04-17 09:40:47,544 - INFO - Git diff after:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index ad086a3..6a185c1 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -505,8 +505,9 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+         let mut has_else = false;
+         for (i, &(cws, ref cond, ref nodes)) in conds.iter().enumerate() {
+             self.handle_ws(cws);
+-            if arm_sizes.is_empty() {
+-                flushed += self.write_buf_writable(buf)?;
++            flushed += self.write_buf_writable(buf)?;
++            if i > 0 {
++                self.locals.pop();
+             }
+ 
+             let mut arm_size = 0;
+@@ -539,14 +540,14 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+             self.locals.push();
+ 
+             arm_size += self.handle(ctx, nodes, buf, AstLevel::Nested)?;
+-            arm_size += self.write_buf_writable(buf)?;
+             arm_sizes.push(arm_size);
+-
+-            self.locals.pop();
+         }
+         self.handle_ws(ws);
++        flushed += self.write_buf_writable(buf)?;
+         buf.writeln("}")?;
+ 
++        self.locals.pop();
++
+         if !has_else {
+             arm_sizes.push(0);
+         }
+2026-04-17 09:40:47,544 - INFO - Grading answer for rinja-rs__askama-394...
+2026-04-17 09:40:47,544 - INFO - report: {'rinja-rs__askama-394': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_cond_ws'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-394: resolved: True
+2026-04-17 09:40:47,544 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-394.gold_run1...
+2026-04-17 09:42:40,681 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-394.gold_run1...
+2026-04-17 09:42:41,937 - INFO - Container rustb.eval.rinja-rs__askama-394.gold_run1 removed.
+2026-04-17 09:42:41,937 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-394...
+2026-04-17 09:42:42,445 - INFO - Image rustbench/rinja-rs__askama:pr-394 removed.

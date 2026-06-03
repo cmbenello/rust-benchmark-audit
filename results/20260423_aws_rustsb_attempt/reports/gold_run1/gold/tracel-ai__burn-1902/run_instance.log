@@ -1,0 +1,2 @@
+2026-04-17 09:56:21,559 - INFO - Environment image rustb.env.x86_64.tracel-ai_burn:latest found for tracel-ai__burn-1902
+Building instance image rustbench/tracel-ai__burn:pr-1902 for tracel-ai__burn-1902

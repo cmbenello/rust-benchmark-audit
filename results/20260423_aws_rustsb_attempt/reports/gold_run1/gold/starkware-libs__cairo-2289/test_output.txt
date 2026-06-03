@@ -1,0 +1,220 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch crates/cairo-lang-parser/src/parser_test.rs...
+Checking patch crates/cairo-lang-parser/src/parser_test.rs...
+Checking patch crates/cairo-lang-parser/src/parser_test.rs...
+Checking patch crates/cairo-lang-parser/src/parser_test_data/path_with_trivia...
+Checking patch crates/cairo-lang-parser/src/parser_test_data/path_with_trivia...
+Checking patch crates/cairo-lang-parser/src/parser_test_data/path_with_trivia...
+Checking patch crates/cairo-lang-parser/src/parser_test_data/path_with_trivia_compat...
+Checking patch crates/cairo-lang-parser/test_data/cairo_files/test3.cairo...
+Checking patch crates/cairo-lang-parser/test_data/expected_results/test1_tree_no_trivia...
+Checking patch crates/cairo-lang-parser/test_data/expected_results/test1_tree_no_trivia...
+Checking patch crates/cairo-lang-parser/test_data/expected_results/test1_tree_with_trivia...
+Checking patch crates/cairo-lang-parser/test_data/expected_results/test3_tree_no_trivia...
+Checking patch crates/cairo-lang-parser/test_data/expected_results/test3_tree_with_trivia...
+Checking patch crates/cairo-lang-semantic/src/diagnostic_test_data/tests...
+Applied patch crates/cairo-lang-parser/src/parser_test.rs cleanly.
+Applied patch crates/cairo-lang-parser/src/parser_test.rs cleanly.
+Applied patch crates/cairo-lang-parser/src/parser_test.rs cleanly.
+Applied patch crates/cairo-lang-parser/src/parser_test_data/path_with_trivia cleanly.
+Applied patch crates/cairo-lang-parser/src/parser_test_data/path_with_trivia cleanly.
+Applied patch crates/cairo-lang-parser/src/parser_test_data/path_with_trivia cleanly.
+Applied patch crates/cairo-lang-parser/src/parser_test_data/path_with_trivia_compat cleanly.
+Applied patch crates/cairo-lang-parser/test_data/cairo_files/test3.cairo cleanly.
+Applied patch crates/cairo-lang-parser/test_data/expected_results/test1_tree_no_trivia cleanly.
+Applied patch crates/cairo-lang-parser/test_data/expected_results/test1_tree_no_trivia cleanly.
+Applied patch crates/cairo-lang-parser/test_data/expected_results/test1_tree_with_trivia cleanly.
+Applied patch crates/cairo-lang-parser/test_data/expected_results/test3_tree_no_trivia cleanly.
+Applied patch crates/cairo-lang-parser/test_data/expected_results/test3_tree_with_trivia cleanly.
+Applied patch crates/cairo-lang-semantic/src/diagnostic_test_data/tests cleanly.
++ cd crates/cairo-lang-parser
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded path-clean v0.1.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded oorandom v11.1.3 (registry `lts-repo-at-e40a85a006`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded parking_lot_core v0.8.6 (registry `lts-repo-at-e40a85a006`)
+  Downloaded env_logger v0.9.3 (registry `lts-repo-at-e40a85a006`)
+  Downloaded atty v0.2.14 (registry `lts-repo-at-e40a85a006`)
+  Downloaded instant v0.1.12 (registry `lts-repo-at-e40a85a006`)
+  Downloaded smol_str v0.1.24 (registry `lts-repo-at-e40a85a006`)
+  Downloaded heck v0.3.3 (registry `lts-repo-at-e40a85a006`)
+  Downloaded either v1.8.1 (registry `lts-repo-at-e40a85a006`)
+  Downloaded proc-macro-error-attr v1.0.4 (registry `lts-repo-at-e40a85a006`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-e40a85a006`)
+  Downloaded scopeguard v1.1.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded rustc-hash v1.1.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded salsa-macros v0.16.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded xshell-macros v0.2.3 (registry `lts-repo-at-e40a85a006`)
+  Downloaded test-log v0.2.11 (registry `lts-repo-at-e40a85a006`)
+  Downloaded test-case-macros v2.2.2 (registry `lts-repo-at-e40a85a006`)
+  Downloaded test-case v2.2.2 (registry `lts-repo-at-e40a85a006`)
+  Downloaded num-integer v0.1.45 (registry `lts-repo-at-e40a85a006`)
+  Downloaded termcolor v1.2.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded iana-time-zone v0.1.53 (registry `lts-repo-at-e40a85a006`)
+  Downloaded time v0.1.45 (registry `lts-repo-at-e40a85a006`)
+  Downloaded smallvec v1.10.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded humantime v2.1.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded colored v2.0.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded proc-macro-error v1.0.4 (registry `lts-repo-at-e40a85a006`)
+  Downloaded xshell v0.2.3 (registry `lts-repo-at-e40a85a006`)
+  Downloaded genco-macros v0.17.3 (registry `lts-repo-at-e40a85a006`)
+  Downloaded lock_api v0.4.9 (registry `lts-repo-at-e40a85a006`)
+  Downloaded proc-macro2 v1.0.51 (registry `lts-repo-at-e40a85a006`)
+  Downloaded parking_lot v0.11.2 (registry `lts-repo-at-e40a85a006`)
+  Downloaded hashbrown v0.12.3 (registry `lts-repo-at-e40a85a006`)
+  Downloaded yansi v0.5.1 (registry `lts-repo-at-e40a85a006`)
+  Downloaded relative-path v1.7.3 (registry `lts-repo-at-e40a85a006`)
+  Downloaded diff v0.1.13 (registry `lts-repo-at-e40a85a006`)
+  Downloaded unicode-ident v1.0.6 (registry `lts-repo-at-e40a85a006`)
+  Downloaded log v0.4.17 (registry `lts-repo-at-e40a85a006`)
+  Downloaded quote v1.0.23 (registry `lts-repo-at-e40a85a006`)
+  Downloaded genco v0.17.3 (registry `lts-repo-at-e40a85a006`)
+  Downloaded crossbeam-utils v0.8.14 (registry `lts-repo-at-e40a85a006`)
+  Downloaded indexmap v1.9.2 (registry `lts-repo-at-e40a85a006`)
+  Downloaded serde v1.0.152 (registry `lts-repo-at-e40a85a006`)
+  Downloaded num-traits v0.2.15 (registry `lts-repo-at-e40a85a006`)
+  Downloaded memchr v2.5.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded unicode-segmentation v1.10.1 (registry `lts-repo-at-e40a85a006`)
+  Downloaded pretty_assertions v1.3.0 (registry `lts-repo-at-e40a85a006`)
+  Downloaded itertools v0.10.5 (registry `lts-repo-at-e40a85a006`)
+  Downloaded aho-corasick v0.7.20 (registry `lts-repo-at-e40a85a006`)
+  Downloaded chrono v0.4.23 (registry `lts-repo-at-e40a85a006`)
+  Downloaded regex v1.7.1 (registry `lts-repo-at-e40a85a006`)
+  Downloaded syn v1.0.109 (registry `lts-repo-at-e40a85a006`)
+  Downloaded regex-syntax v0.6.28 (registry `lts-repo-at-e40a85a006`)
+  Downloaded salsa v0.16.1 (registry `lts-repo-at-e40a85a006`)
+  Downloaded libc v0.2.139 (registry `lts-repo-at-e40a85a006`)
+   Compiling autocfg v1.1.0
+   Compiling proc-macro2 v1.0.51
+   Compiling unicode-ident v1.0.6
+   Compiling quote v1.0.23
+   Compiling libc v0.2.139
+   Compiling cfg-if v1.0.0
+   Compiling syn v1.0.109
+   Compiling memchr v2.5.0
+   Compiling log v0.4.17
+   Compiling hashbrown v0.12.3
+   Compiling regex-syntax v0.6.28
+   Compiling smallvec v1.10.0
+   Compiling humantime v2.1.0
+   Compiling either v1.8.1
+   Compiling version_check v0.9.4
+   Compiling parking_lot_core v0.8.6
+   Compiling iana-time-zone v0.1.53
+   Compiling termcolor v1.2.0
+   Compiling unicode-segmentation v1.10.1
+   Compiling serde v1.0.152
+   Compiling crossbeam-utils v0.8.14
+   Compiling scopeguard v1.1.0
+   Compiling oorandom v11.1.3
+   Compiling rustc-hash v1.1.0
+   Compiling path-clean v0.1.0
+   Compiling cairo-lang-debug v1.0.0-alpha.3 (/workspace/crates/cairo-lang-debug)
+   Compiling relative-path v1.7.3
+   Compiling xshell-macros v0.2.3
+   Compiling diff v0.1.13
+   Compiling lazy_static v1.4.0
+   Compiling yansi v0.5.1
+   Compiling instant v0.1.12
+   Compiling itertools v0.10.5
+   Compiling heck v0.3.3
+   Compiling pretty_assertions v1.3.0
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling num-traits v0.2.15
+   Compiling indexmap v1.9.2
+   Compiling num-integer v0.1.45
+   Compiling lock_api v0.4.9
+   Compiling xshell v0.2.3
+   Compiling aho-corasick v0.7.20
+   Compiling atty v0.2.14
+   Compiling time v0.1.45
+   Compiling colored v2.0.0
+   Compiling parking_lot v0.11.2
+   Compiling regex v1.7.1
+   Compiling chrono v0.4.23
+   Compiling env_logger v0.9.3
+   Compiling cairo-lang-utils v1.0.0-alpha.3 (/workspace/crates/cairo-lang-utils)
+   Compiling cairo-lang-test-utils v1.0.0-alpha.3 (/workspace/crates/cairo-lang-test-utils)
+   Compiling smol_str v0.1.24
+   Compiling salsa-macros v0.16.0
+   Compiling genco-macros v0.17.3
+   Compiling test-case-macros v2.2.2
+   Compiling test-log v0.2.11
+   Compiling genco v0.17.3
+   Compiling salsa v0.16.1
+   Compiling test-case v2.2.2
+   Compiling cairo-lang-syntax-codegen v1.0.0-alpha.3 (/workspace/crates/cairo-lang-syntax-codegen)
+   Compiling cairo-lang-filesystem v1.0.0-alpha.3 (/workspace/crates/cairo-lang-filesystem)
+   Compiling cairo-lang-syntax v1.0.0-alpha.3 (/workspace/crates/cairo-lang-syntax)
+   Compiling cairo-lang-diagnostics v1.0.0-alpha.3 (/workspace/crates/cairo-lang-diagnostics)
+   Compiling cairo-lang-parser v1.0.0-alpha.3 (/workspace/crates/cairo-lang-parser)
+    Finished test [unoptimized + debuginfo] target(s) in 39.06s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/cairo_lang_parser-bc77c6b41e3b0268)
+
+running 41 tests
+test lexer::test::test_bad_character ... ok
+test lexer::test::test_cases ... ok
+test lexer::test::test_lex_single_token ... ok
+test db::db_test::test_parser ... ok
+test parser::test::diagnostic::fn_ ... ok
+test parser::test::diagnostic::pattern ... ok
+test parser::test::diagnostic::semicolon ... ok
+test parser::test::diagnostic::match_ ... ok
+test parser::test::diagnostic::module_diagnostics ... ok
+test parser::test::diagnostic::exprs ... ok
+test parser::test::diagnostic::if_ ... ok
+test parser::test::diagnostic::question_mark ... ok
+test parser::test::parse_and_compare_tree::short_tree_uncolored ... ok
+test parser::test::parse_and_compare_colored::colored ... ok
+test parser::test::parse_and_compare_colored::colored_verbose ... ok
+test parser::test::parse_and_compare_tree::short_tree_colored ... ok
+test parser::test::partial_parser_tree::constant ... ok
+test parser::test::partial_parser_tree::literal ... ok
+test parser::test::partial_parser_tree_with_trivia::path ... ok
+test parser::test::partial_parser_tree::if_else ... ok
+test parser::test::partial_parser_tree::let_statement ... ok
+test parser::test::partial_parser_tree::module ... ok
+test parser::test::partial_parser_tree::unary_only_operators ... ok
+test parser::test::partial_parser_tree::item_free_function ... ok
+test parser::test::partial_parser_tree::enum_ ... ok
+test parser::test::partial_parser_tree::function_call ... ok
+test parser::test::diagnostic::reserved_identifier ... ok
+test parser::test::diagnostic::underscore_not_supported ... ok
+test parser::test::partial_parser_tree::op_eq ... ok
+test parser::test::partial_parser_tree_with_trivia::path_compat ... ok
+test parser::test::partial_parser_tree::function_signature ... ok
+test parser::test::partial_parser_tree::item_trait ... ok
+test parser::test::parse_and_compare_tree::test2_tree_no_trivia ... ok
+test parser::test::parse_and_compare_tree::test3_tree_no_trivia ... ok
+test parser::test::parse_and_compare_tree::test3_tree_with_trivia ... ok
+test parser::test::parse_and_compare_tree::test2_tree_with_trivia ... ok
+test parser::test::parse_and_compare_tree::test1_tree_no_trivia ... ok
+test lexer::test::test_lex_token_with_trivia ... ok
+test parser::test::parse_and_compare_tree::test1_tree_with_trivia ... ok
+test parser::test::fix_parser_tests ... ok
+test lexer::test::test_lex_double_token ... ok
+
+test result: ok. 41 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+   Doc-tests cairo-lang-parser
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
++ cd ../../
++ git reset --hard 8f433e752a78afc017d0f08c9e21b966acfe1c11
+HEAD is now at 8f433e752 Added bookkeep and validation of known stack. (#2288)
++ git clean -fd
+Removing .cargo/
+Removing crates/cairo-lang-parser/src/parser_test_data/path_with_trivia_compat
+Removing crates/cairo-lang-parser/test_data/cairo_files/test3.cairo
+Removing crates/cairo-lang-parser/test_data/expected_results/test3_tree_no_trivia
+Removing crates/cairo-lang-parser/test_data/expected_results/test3_tree_with_trivia

@@ -1,0 +1,32 @@
+diff --git a/src/offset/mod.rs b/src/offset/mod.rs
+--- a/src/offset/mod.rs
++++ b/src/offset/mod.rs
+@@ -381,6 +381,28 @@ pub trait TimeZone: Sized + Clone {
+         self.timestamp_opt(secs, millis as u32 * 1_000_000)
+     }
+ 
++    /// Makes a new `DateTime` from the number of non-leap nanoseconds
++    /// since January 1, 1970 0:00:00 UTC (aka "UNIX timestamp").
++    ///
++    /// Unlike [`timestamp_millis`](#method.timestamp_millis), this never
++    /// panics.
++    ///
++    /// # Example
++    ///
++    /// ~~~~
++    /// use chrono::{Utc, TimeZone};
++    ///
++    /// assert_eq!(Utc.timestamp_nanos(1431648000000000).timestamp(), 1431648);
++    /// ~~~~
++    fn timestamp_nanos(&self, nanos: i64) -> DateTime<Self> {
++        let (mut secs, mut nanos) = (nanos / 1_000_000_000, nanos % 1_000_000_000);
++        if nanos < 0 {
++            secs -= 1;
++            nanos += 1_000_000_000;
++        }
++        self.timestamp_opt(secs, nanos as u32).unwrap()
++    }
++
+     /// Parses a string with the specified format string and
+     /// returns a `DateTime` with the current offset.
+     /// See the [`format::strftime` module](../format/strftime/index.html)

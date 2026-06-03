@@ -1,0 +1,123 @@
+2026-04-17 09:18:12,380 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-911
+Building instance image rustbench/rinja-rs__askama:pr-911 for rinja-rs__askama-911
+2026-04-17 09:29:01,948 - INFO - Creating container for rinja-rs__askama-911...
+2026-04-17 09:29:02,147 - INFO - Container for rinja-rs__askama-911 created: b877e1d559c91cfb92ade359f8ec10a361e3477bb1f222c9e6a39f077fed86dc
+2026-04-17 09:29:02,308 - INFO - Container for rinja-rs__askama-911 started: b877e1d559c91cfb92ade359f8ec10a361e3477bb1f222c9e6a39f077fed86dc
+2026-04-17 09:29:02,308 - INFO - Intermediate patch for rinja-rs__askama-911 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-911/patch.diff, now applying to container...
+2026-04-17 09:29:02,524 - INFO - >>>>> Applied Patch:
+Checking patch askama_derive/src/generator.rs...
+Checking patch askama_parser/src/node.rs...
+Applied patch askama_derive/src/generator.rs cleanly.
+Applied patch askama_parser/src/node.rs cleanly.
+
+2026-04-17 09:29:02,581 - INFO - Git diff before:
+diff --git a/askama_derive/src/generator.rs b/askama_derive/src/generator.rs
+index eb293b0..3e4801f 100644
+--- a/askama_derive/src/generator.rs
++++ b/askama_derive/src/generator.rs
+@@ -1575,6 +1575,16 @@ impl<'a> Generator<'a> {
+                 }
+                 buf.write(name);
+             }
++            Target::OrChain(targets) => match targets.first() {
++                None => buf.write("_"),
++                Some(first_target) => {
++                    self.visit_target(buf, initialized, first_level, first_target);
++                    for target in &targets[1..] {
++                        buf.write(" | ");
++                        self.visit_target(buf, initialized, first_level, target);
++                    }
++                }
++            },
+             Target::Tuple(path, targets) => {
+                 buf.write(&path.join("::"));
+                 buf.write("(");
+diff --git a/askama_parser/src/node.rs b/askama_parser/src/node.rs
+index 4da1742..ba117c5 100644
+--- a/askama_parser/src/node.rs
++++ b/askama_parser/src/node.rs
+@@ -128,10 +128,23 @@ pub enum Target<'a> {
+     CharLit(&'a str),
+     BoolLit(&'a str),
+     Path(Vec<&'a str>),
++    OrChain(Vec<Target<'a>>),
+ }
+ 
+ impl<'a> Target<'a> {
++    /// Parses multiple targets with `or` separating them
+     pub(super) fn parse(i: &'a str) -> ParseResult<'a, Self> {
++        map(
++            separated_list1(ws(tag("or")), Self::parse_one),
++            |mut opts| match opts.len() {
++                1 => opts.pop().unwrap(),
++                _ => Self::OrChain(opts),
++            },
++        )(i)
++    }
++
++    /// Parses a single target without an `or`, unless it is wrapped in parentheses.
++    fn parse_one(i: &'a str) -> ParseResult<'a, Self> {
+         let mut opt_opening_paren = map(opt(ws(char('('))), |o| o.is_some());
+         let mut opt_closing_paren = map(opt(ws(char(')'))), |o| o.is_some());
+         let mut opt_opening_brace = map(opt(ws(char('{'))), |o| o.is_some());
+2026-04-17 09:29:02,581 - INFO - Eval script for rinja-rs__askama-911 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-911/eval.sh; copying to container...
+2026-04-17 09:31:09,416 - INFO - Test runtime: 126.71 seconds
+2026-04-17 09:31:09,416 - INFO - Test output for rinja-rs__askama-911 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-911/test_output.txt
+2026-04-17 09:31:09,471 - INFO - Git diff after:
+diff --git a/askama_derive/src/generator.rs b/askama_derive/src/generator.rs
+index eb293b0..3e4801f 100644
+--- a/askama_derive/src/generator.rs
++++ b/askama_derive/src/generator.rs
+@@ -1575,6 +1575,16 @@ impl<'a> Generator<'a> {
+                 }
+                 buf.write(name);
+             }
++            Target::OrChain(targets) => match targets.first() {
++                None => buf.write("_"),
++                Some(first_target) => {
++                    self.visit_target(buf, initialized, first_level, first_target);
++                    for target in &targets[1..] {
++                        buf.write(" | ");
++                        self.visit_target(buf, initialized, first_level, target);
++                    }
++                }
++            },
+             Target::Tuple(path, targets) => {
+                 buf.write(&path.join("::"));
+                 buf.write("(");
+diff --git a/askama_parser/src/node.rs b/askama_parser/src/node.rs
+index 4da1742..ba117c5 100644
+--- a/askama_parser/src/node.rs
++++ b/askama_parser/src/node.rs
+@@ -128,10 +128,23 @@ pub enum Target<'a> {
+     CharLit(&'a str),
+     BoolLit(&'a str),
+     Path(Vec<&'a str>),
++    OrChain(Vec<Target<'a>>),
+ }
+ 
+ impl<'a> Target<'a> {
++    /// Parses multiple targets with `or` separating them
+     pub(super) fn parse(i: &'a str) -> ParseResult<'a, Self> {
++        map(
++            separated_list1(ws(tag("or")), Self::parse_one),
++            |mut opts| match opts.len() {
++                1 => opts.pop().unwrap(),
++                _ => Self::OrChain(opts),
++            },
++        )(i)
++    }
++
++    /// Parses a single target without an `or`, unless it is wrapped in parentheses.
++    fn parse_one(i: &'a str) -> ParseResult<'a, Self> {
+         let mut opt_opening_paren = map(opt(ws(char('('))), |o| o.is_some());
+         let mut opt_closing_paren = map(opt(ws(char(')'))), |o| o.is_some());
+         let mut opt_opening_brace = map(opt(ws(char('{'))), |o| o.is_some());
+2026-04-17 09:31:09,471 - INFO - Grading answer for rinja-rs__askama-911...
+2026-04-17 09:31:09,472 - INFO - report: {'rinja-rs__askama-911': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_match_custom_enum', 'test_match_literal_char', 'test_match_literal', 'test_match_literal_num', 'test_match_no_whitespace', 'test_match_option', 'test_match_option_bool', 'test_match_option_result_option', 'test_match_ref_deref', 'test_match_without_with_keyword', 'test_match_with_comment'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-911: resolved: True
+2026-04-17 09:31:09,472 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-911.gold_run1...
+2026-04-17 09:31:25,447 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-911.gold_run1...
+2026-04-17 09:31:25,592 - INFO - Container rustb.eval.rinja-rs__askama-911.gold_run1 removed.
+2026-04-17 09:31:25,592 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-911...
+2026-04-17 09:31:28,603 - INFO - Image rustbench/rinja-rs__askama:pr-911 removed.

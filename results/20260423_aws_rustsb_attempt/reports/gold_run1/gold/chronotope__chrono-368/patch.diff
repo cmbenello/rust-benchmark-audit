@@ -1,0 +1,45 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -10,6 +10,11 @@ Versions with only mechanical changes will be omitted from the following list.
+ 
+ ## next
+ 
++### Improvements
++
++* Support "negative UTC" in `parse_from_rfc2822` (@quodlibetor #368 reported in
++  #102)
++
+ ### Internal improvements
+ 
+ * Use Criterion for benchmarks (@quodlibetor)
+diff --git a/src/format/parse.rs b/src/format/parse.rs
+--- a/src/format/parse.rs
++++ b/src/format/parse.rs
+@@ -73,10 +73,6 @@ fn parse_rfc2822<'a>(parsed: &mut Parsed, mut s: &'a str) -> ParseResult<(&'a st
+     //   by adding 1900. note that four-or-more-digit years less than 1000
+     //   are *never* affected by this rule.
+     //
+-    // - zone of `-0000` and any unrecognized legacy time zones (including
+-    //   *every* one-letter military time zones) are considered "missing",
+-    //   in such that we don't actually know what time zone is being used.
+-    //
+     // - mismatching day-of-week is always an error, which is consistent to
+     //   Chrono's own rules.
+     //
+diff --git a/src/format/scan.rs b/src/format/scan.rs
+--- a/src/format/scan.rs
++++ b/src/format/scan.rs
+@@ -308,11 +308,7 @@ pub fn timezone_offset_2822(s: &str) -> ParseResult<(&str, Option<i32>)> {
+         }
+     } else {
+         let (s_, offset) = timezone_offset(s, |s| Ok(s))?;
+-        if offset == 0 && s.starts_with('-') { // -0000 is not same to +0000
+-            Ok((s_, None))
+-        } else {
+-            Ok((s_, Some(offset)))
+-        }
++        Ok((s_, Some(offset)))
+     }
+ }
+ 

@@ -1,0 +1,214 @@
+diff --git a/src/app_config.rs b/src/app_config.rs
+--- a/src/app_config.rs
++++ b/src/app_config.rs
+@@ -29,6 +29,7 @@ pub struct FavoriteConfig {
+     pub description: Option<String>,
+     pub git: Option<String>,
+     pub branch: Option<String>,
++    pub tag: Option<String>,
+     pub subfolder: Option<String>,
+     pub path: Option<PathBuf>,
+     pub values: Option<HashMap<String, toml::Value>>,
+diff --git a/src/args.rs b/src/args.rs
+--- a/src/args.rs
++++ b/src/args.rs
+@@ -136,9 +136,13 @@ pub struct TemplatePath {
+     pub git: Option<String>,
+ 
+     /// Branch to use when installing from git
+-    #[clap(short, long)]
++    #[clap(short, long, conflicts_with = "tag")]
+     pub branch: Option<String>,
+ 
++    /// Tag to use when installing from git
++    #[clap(short, long, conflicts_with = "branch")]
++    pub tag: Option<String>,
++
+     /// Local path to copy the template from. Can not be specified together with --git.
+     #[clap(short, long, group("SpecificPath"))]
+     pub path: Option<String>,
+diff --git a/src/args.rs b/src/args.rs
+--- a/src/args.rs
++++ b/src/args.rs
+@@ -170,6 +174,10 @@ impl TemplatePath {
+         self.branch.as_ref()
+     }
+ 
++    pub const fn tag(&self) -> Option<&(impl AsRef<str> + '_)> {
++        self.tag.as_ref()
++    }
++
+     pub const fn path(&self) -> Option<&(impl AsRef<str> + '_)> {
+         self.path.as_ref()
+     }
+diff --git a/src/git/mod.rs b/src/git/mod.rs
+--- a/src/git/mod.rs
++++ b/src/git/mod.rs
+@@ -68,16 +68,16 @@ impl<'cb> RepoCloneBuilder<'cb> {
+     }
+ 
+     pub fn new_with(url: &str, branch: Option<&str>, identity_path: Option<&Path>) -> Result<Self> {
+-        let mut builer = Self::new(url)?;
++        let mut builder = Self::new(url)?;
+         if let Some(branch) = branch {
+-            builer.set_branch(branch);
++            builder.set_branch(branch);
+         }
+ 
+         if let Some(identity_path) = identity_path {
+-            builer.set_identity(identity_path);
++            builder.set_identity(identity_path);
+         }
+ 
+-        Ok(builer)
++        Ok(builder)
+     }
+ 
+     pub fn set_identity(&mut self, identity_path: &Path) {
+diff --git a/src/git/utils.rs b/src/git/utils.rs
+--- a/src/git/utils.rs
++++ b/src/git/utils.rs
+@@ -31,6 +31,7 @@ pub fn home() -> Result<PathBuf> {
+ pub fn clone_git_template_into_temp(
+     git: &str,
+     branch: Option<&str>,
++    tag: Option<&str>,
+     identity: Option<&Path>,
+ ) -> anyhow::Result<(TempDir, String)> {
+     let git_clone_dir = tempfile::tempdir()?;
+diff --git a/src/git/utils.rs b/src/git/utils.rs
+--- a/src/git/utils.rs
++++ b/src/git/utils.rs
+@@ -42,6 +43,15 @@ pub fn clone_git_template_into_temp(
+         .context("Please check if the Git user / repository exists.")?;
+     let branch = get_branch_name_repo(&repo)?;
+ 
++    if let Some(tag) = tag {
++        let (object, reference) = repo.revparse_ext(tag)?;
++        repo.checkout_tree(&object, None)?;
++        match reference {
++            Some(gref) => repo.set_head(gref.name().unwrap()),
++            None => repo.set_head_detached(object.id()),
++        }?;
++    }
++
+     Ok((git_clone_dir, branch))
+ }
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -173,8 +173,12 @@ fn get_source_template_into_temp(
+     let branch: String;
+     match template_location {
+         TemplateLocation::Git(git) => {
+-            let (temp_dir2, branch2) =
+-                git::clone_git_template_into_temp(git.url(), git.branch(), git.identity())?;
++            let (temp_dir2, branch2) = git::clone_git_template_into_temp(
++                git.url(),
++                git.branch(),
++                git.tag(),
++                git.identity(),
++            )?;
+             temp_dir = temp_dir2;
+             branch = branch2;
+         }
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -58,6 +58,7 @@ impl UserParsedInput {
+             let git_user_in = GitUserInput::new(
+                 git_url,
+                 args.template_path.branch(),
++                args.template_path.tag(),
+                 ssh_identity,
+                 args.force_git_init,
+             );
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -87,9 +88,15 @@ impl UserParsedInput {
+                         .branch()
+                         .map(|s| s.as_ref().to_owned())
+                         .or_else(|| fav_cfg.branch.clone());
++                    let tag = args
++                        .template_path
++                        .tag()
++                        .map(|s| s.as_ref().to_owned())
++                        .or_else(|| fav_cfg.tag.clone());
+                     let git_user_input = GitUserInput::new(
+                         git_url,
+                         branch.as_ref(),
++                        tag.as_ref(),
+                         ssh_identity,
+                         args.force_git_init,
+                     );
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -138,6 +145,7 @@ impl UserParsedInput {
+             let git_user_in = GitUserInput::new(
+                 &fav_name,
+                 args.template_path.branch(),
++                args.template_path.tag(),
+                 ssh_identity,
+                 args.force_git_init,
+             );
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -217,24 +225,28 @@ pub fn local_path(fav: &str) -> Option<PathBuf> {
+ pub struct GitUserInput {
+     url: String,
+     branch: Option<String>,
++    tag: Option<String>,
+     identity: Option<PathBuf>,
+     _force_init: bool,
+ }
+ 
+ impl GitUserInput {
+-    fn new<T1, T2>(
++    fn new<T1, T2, T3>(
+         url: &T1,
+         branch: Option<&T2>,
++        tag: Option<&T3>,
+         identity: Option<PathBuf>,
+         force_init: bool,
+     ) -> Self
+     where
+         T1: AsRef<str>,
+         T2: AsRef<str>,
++        T3: AsRef<str>,
+     {
+         Self {
+             url: url.as_ref().to_owned(),
+             branch: branch.map(|s| s.as_ref().to_owned()),
++            tag: tag.map(|s| s.as_ref().to_owned()),
+             identity,
+             _force_init: force_init,
+         }
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -248,6 +260,7 @@ impl GitUserInput {
+         Self::new(
+             url,
+             args.template_path.branch(),
++            args.template_path.tag(),
+             args.ssh_identity.clone(),
+             args.force_git_init,
+         )
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -261,6 +274,10 @@ impl GitUserInput {
+         self.branch.as_deref()
+     }
+ 
++    pub fn tag(&self) -> Option<&str> {
++        self.tag.as_deref()
++    }
++
+     pub fn identity(&self) -> Option<&Path> {
+         self.identity.as_deref()
+     }

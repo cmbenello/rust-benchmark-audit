@@ -1,0 +1,773 @@
+2026-04-17 08:06:24,638 - INFO - Environment image rustb.env.x86_64.killercup_cargo-edit:latest found for killercup__cargo-edit-572
+Building instance image rustbench/killercup__cargo-edit:pr-572 for killercup__cargo-edit-572
+2026-04-17 08:18:06,980 - INFO - Creating container for killercup__cargo-edit-572...
+2026-04-17 08:18:07,136 - INFO - Container for killercup__cargo-edit-572 created: 5ad039b24363404aaa2b0dab9f5feb2918898415d2f2b190dcd1c2952817b68d
+2026-04-17 08:18:07,325 - INFO - Container for killercup__cargo-edit-572 started: 5ad039b24363404aaa2b0dab9f5feb2918898415d2f2b190dcd1c2952817b68d
+2026-04-17 08:18:07,325 - INFO - Intermediate patch for killercup__cargo-edit-572 written to logs/run_evaluation/gold_run1/gold/killercup__cargo-edit-572/patch.diff, now applying to container...
+2026-04-17 08:18:07,569 - INFO - >>>>> Applied Patch:
+Checking patch src/bin/add/args.rs...
+Checking patch src/bin/add/args.rs...
+Checking patch src/bin/add/args.rs...
+Checking patch src/bin/add/args.rs...
+Checking patch src/crate_name.rs...
+Checking patch src/dependency.rs...
+Checking patch src/dependency.rs...
+Checking patch src/dependency.rs...
+Checking patch src/manifest.rs...
+Applied patch src/bin/add/args.rs cleanly.
+Applied patch src/bin/add/args.rs cleanly.
+Applied patch src/bin/add/args.rs cleanly.
+Applied patch src/bin/add/args.rs cleanly.
+Applied patch src/crate_name.rs cleanly.
+Applied patch src/dependency.rs cleanly.
+Applied patch src/dependency.rs cleanly.
+Applied patch src/dependency.rs cleanly.
+Applied patch src/manifest.rs cleanly.
+
+2026-04-17 08:18:07,709 - INFO - Git diff before:
+diff --git a/Cargo.lock b/Cargo.lock
+index d488a64d..ce982862 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -301,9 +301,9 @@ checksum = "d6417fe6fc03a8b533fd2177742eeb39a90c7233eedec7bac96d4d6b69a09449"
+ 
+ [[package]]
+ name = "crates-index"
+-version = "0.18.1"
++version = "0.18.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "87c1041763543466e437ad3212f1dbfd73c0ae4f7323e44ff584c5273d1b39c8"
++checksum = "f28b64abfb970bb50a2ba0653aee8429dbbbbaf52445bc732e911e0f222b485c"
+ dependencies = [
+  "git2",
+  "hex",
+@@ -443,9 +443,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "fastrand"
+-version = "1.6.0"
++version = "1.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "779d043b6a0b90cc4c0ed7ee380a6504394cee7efd7db050e3774eee387324b2"
++checksum = "c3fcf0cee53519c866c09b5de1f6c56ff9d647101f81c1964fa632e148896cdf"
+ dependencies = [
+  "instant",
+ ]
+@@ -666,9 +666,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "js-sys"
+-version = "0.3.55"
++version = "0.3.56"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7cc9ffccd38c451a86bf13657df244e9c3f37493cce8e5e21e940963777acc84"
++checksum = "a38fc24e30fd564ce974c02bf1d337caddff65be6cc4735a1f7eab22a7440f04"
+ dependencies = [
+  "wasm-bindgen",
+ ]
+@@ -690,9 +690,9 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.112"
++version = "0.2.113"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1b03d17f364a3a042d5e5d46b053bbbf82c92c9430c592dd4c064dc6ee997125"
++checksum = "eef78b64d87775463c549fbd80e19249ef436ea3bf1de2a1eb7e717ec7fab1e9"
+ 
+ [[package]]
+ name = "libgit2-sys"
+@@ -977,9 +977,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "quote"
+-version = "1.0.14"
++version = "1.0.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "47aa80447ce4daf1717500037052af176af5d38cc3e571d9ec1c7353fc10c87d"
++checksum = "864d3e96a899863136fc6e99f3d7cae289dafe43bf2c5ac19b70df7210c0a145"
+ dependencies = [
+  "proc-macro2",
+ ]
+@@ -1136,18 +1136,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.133"
++version = "1.0.135"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "97565067517b60e2d1ea8b268e59ce036de907ac523ad83a0475da04e818989a"
++checksum = "2cf9235533494ea2ddcdb794665461814781c53f19d87b76e571a1c35acbad2b"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.133"
++version = "1.0.135"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ed201699328568d8d08208fdd080e3ff594e6c422e438b6705905da01005d537"
++checksum = "8dcde03d87d4c973c04be249e7d8f0b35db1c848c487bd43032808e59dd8328d"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1156,9 +1156,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.75"
++version = "1.0.78"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c059c05b48c5c0067d4b4b2b4f0732dd65feb52daf7e0ea09cd87e7dadc1af79"
++checksum = "d23c1ba4cf0efd44be32017709280b32d1cea5c3f1275c3b6d9e8bc54f758085"
+ dependencies = [
+  "itoa",
+  "ryu",
+@@ -1223,9 +1223,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "syn"
+-version = "1.0.85"
++version = "1.0.86"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a684ac3dcd8913827e18cd09a68384ee66c1de24157e3c556c9ab16d85695fb7"
++checksum = "8a65b3f4ffa0092e9887669db0eae07941f023991ab58ea44da8fe8e2d511c6b"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1282,9 +1282,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "thread_local"
+-version = "1.1.3"
++version = "1.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8018d24e04c95ac8790716a5987d0fec4f8b27249ffa0f7d33f1369bdfb88cbd"
++checksum = "5516c27b78311c50bf42c071425c560ac799b11c30b31f87e3081965fe5e0180"
+ dependencies = [
+  "once_cell",
+ ]
+@@ -1447,15 +1447,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasi"
+-version = "0.10.3+wasi-snapshot-preview1"
++version = "0.10.2+wasi-snapshot-preview1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "46a2e384a3f170b0c7543787a91411175b71afd56ba4d3a0ae5678d4e2243c0e"
++checksum = "fd6fbd9a79829dd1ad0cc20627bf1ed606756a7f77edff7b66b7064f9cb327c6"
+ 
+ [[package]]
+ name = "wasm-bindgen"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "632f73e236b219150ea279196e54e610f5dbafa5d61786303d4da54f84e47fce"
++checksum = "25f1af7423d8588a3d840681122e72e6a24ddbcb3f0ec385cac0d12d24256c06"
+ dependencies = [
+  "cfg-if",
+  "wasm-bindgen-macro",
+@@ -1463,9 +1463,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-backend"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a317bf8f9fba2476b4b2c85ef4c4af8ff39c3c7f0cdfeed4f82c34a880aa837b"
++checksum = "8b21c0df030f5a177f3cba22e9bc4322695ec43e7257d865302900290bcdedca"
+ dependencies = [
+  "bumpalo",
+  "lazy_static",
+@@ -1478,9 +1478,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d56146e7c495528bf6587663bea13a8eb588d39b36b679d83972e1a2dbbdacf9"
++checksum = "2f4203d69e40a52ee523b2529a773d5ffc1dc0071801c87b3d270b471b80ed01"
+ dependencies = [
+  "quote",
+  "wasm-bindgen-macro-support",
+@@ -1488,9 +1488,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro-support"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7803e0eea25835f8abdc585cd3021b3deb11543c6fe226dcd30b228857c5c5ab"
++checksum = "bfa8a30d46208db204854cadbb5d4baf5fcf8071ba5bf48190c3e59937962ebc"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1501,15 +1501,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-shared"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0237232789cf037d5480773fe568aac745bfe2afbc11a863e97901780a6b47cc"
++checksum = "3d958d035c4438e28c70e4321a2911302f10135ce78a9c7834c0cab4123d06a2"
+ 
+ [[package]]
+ name = "web-sys"
+-version = "0.3.55"
++version = "0.3.56"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "38eb105f1c59d9eaa6b5cdc92b859d85b926e82cb2e0945cd0c9259faa6fe9fb"
++checksum = "c060b319f29dd25724f09a2ba1418f142f539b2be99fbf4d2d5a8f7330afb8eb"
+ dependencies = [
+  "js-sys",
+  "wasm-bindgen",
+diff --git a/src/bin/add/args.rs b/src/bin/add/args.rs
+index ea3e72c9..7e00a229 100644
+--- a/src/bin/add/args.rs
++++ b/src/bin/add/args.rs
+@@ -44,13 +44,17 @@ pub struct Args {
+     pub rename: Option<String>,
+ 
+     /// Add crate as development dependency.
+-    #[clap(long, short = 'D', conflicts_with = "build")]
++    #[clap(long, short = 'D', group = "section")]
+     pub dev: bool,
+ 
+     /// Add crate as build dependency.
+-    #[clap(long, short = 'B', conflicts_with = "dev")]
++    #[clap(long, short = 'B', group = "section")]
+     pub build: bool,
+ 
++    /// Add as dependency to the given target platform.
++    #[clap(long, forbid_empty_values = true, group = "section")]
++    pub target: Option<String>,
++
+     /// Specify the version to grab from the registry(crates.io).
+     /// You can also specify version as part of name, e.g
+     /// `cargo add bitflags@0.3.2`.
+@@ -67,27 +71,21 @@ pub struct Args {
+     pub git: Option<String>,
+ 
+     /// Specify a git branch to download the crate from.
+-    #[clap(
+-        long,
+-        value_name = "BRANCH",
+-        conflicts_with = "vers",
+-        conflicts_with = "path"
+-    )]
++    #[clap(long, value_name = "BRANCH", requires = "git", group = "git-ref")]
+     pub branch: Option<String>,
+ 
++    /// Specify a git branch to download the crate from.
++    #[clap(long, value_name = "TAG", requires = "git", group = "git-ref")]
++    pub tag: Option<String>,
++
++    /// Specify a git branch to download the crate from.
++    #[clap(long, value_name = "REV", requires = "git", group = "git-ref")]
++    pub rev: Option<String>,
++
+     /// Specify the path the crate should be loaded from.
+     #[clap(long, parse(from_os_str), conflicts_with = "git")]
+     pub path: Option<PathBuf>,
+ 
+-    /// Add as dependency to the given target platform.
+-    #[clap(
+-        long,
+-        conflicts_with = "dev",
+-        conflicts_with = "build",
+-        forbid_empty_values = true
+-    )]
+-    pub target: Option<String>,
+-
+     /// Add as an optional dependency (for use in features).
+     #[clap(long, conflicts_with = "dev")]
+     pub optional: bool,
+@@ -249,7 +247,12 @@ impl Args {
+                     .unwrap_or_else(Vec::new);
+ 
+                 dependency = dependency
+-                    .set_git(repo, self.branch.clone())
++                    .set_git(
++                        repo,
++                        self.branch.clone(),
++                        self.tag.clone(),
++                        self.rev.clone(),
++                    )
+                     .set_available_features(features);
+             } else {
+                 if let Some(path) = &self.path {
+@@ -378,6 +381,8 @@ impl Default for Args {
+             vers: None,
+             git: None,
+             branch: None,
++            tag: None,
++            rev: None,
+             path: None,
+             target: None,
+             optional: false,
+diff --git a/src/crate_name.rs b/src/crate_name.rs
+index 3796e7e3..b6d0b94f 100644
+--- a/src/crate_name.rs
++++ b/src/crate_name.rs
+@@ -45,7 +45,7 @@ impl<'a> CrateName<'a> {
+             let available_features = manifest.features()?;
+             Ok(Some(
+                 Dependency::new(crate_name)
+-                    .set_git(self.0, None)
++                    .set_git(self.0, None, None, None)
+                     .set_available_features(available_features),
+             ))
+         } else if self.is_path() {
+diff --git a/src/dependency.rs b/src/dependency.rs
+index 5abba24d..af44fbb4 100644
+--- a/src/dependency.rs
++++ b/src/dependency.rs
+@@ -52,10 +52,18 @@ impl Dependency {
+     }
+ 
+     /// Set dependency to a given repository
+-    pub fn set_git(mut self, repo: &str, branch: Option<String>) -> Dependency {
++    pub fn set_git(
++        mut self,
++        repo: &str,
++        branch: Option<String>,
++        tag: Option<String>,
++        rev: Option<String>,
++    ) -> Dependency {
+         self.source = DependencySource::Git {
+             repo: repo.into(),
+             branch,
++            tag,
++            rev,
+         };
+         self
+     }
+@@ -216,9 +224,22 @@ impl Dependency {
+                             data.get_or_insert("registry", r);
+                         }
+                     }
+-                    DependencySource::Git { repo, branch } => {
++                    DependencySource::Git {
++                        repo,
++                        branch,
++                        tag,
++                        rev,
++                    } => {
+                         data.get_or_insert("git", repo);
+-                        branch.map(|branch| data.get_or_insert("branch", branch));
++                        if let Some(branch) = branch {
++                            data.get_or_insert("branch", branch);
++                        }
++                        if let Some(tag) = tag {
++                            data.get_or_insert("tag", tag);
++                        }
++                        if let Some(rev) = rev {
++                            data.get_or_insert("rev", rev);
++                        }
+                     }
+                 }
+                 if self.optional {
+@@ -272,6 +293,8 @@ enum DependencySource {
+     Git {
+         repo: String,
+         branch: Option<String>,
++        tag: Option<String>,
++        rev: Option<String>,
+     },
+ }
+ 
+diff --git a/src/manifest.rs b/src/manifest.rs
+index 3148a6f5..f34c4671 100644
+--- a/src/manifest.rs
++++ b/src/manifest.rs
+@@ -463,7 +463,7 @@ fn merge_dependencies(old_dep: &mut toml_edit::Item, new_toml: toml_edit::Item)
+         // The old dependency is just a version/git/path. We are safe to overwrite.
+         *old_dep = new_toml;
+     } else if old_dep.is_table_like() {
+-        for key in &["version", "path", "git"] {
++        for key in &["version", "path", "git", "branch", "tag", "rev"] {
+             // remove this key/value pairs
+             old_dep[key] = toml_edit::Item::None;
+         }
+2026-04-17 08:18:07,710 - INFO - Eval script for killercup__cargo-edit-572 written to logs/run_evaluation/gold_run1/gold/killercup__cargo-edit-572/eval.sh; copying to container...
+2026-04-17 08:32:07,266 - INFO - Test runtime: 839.38 seconds
+2026-04-17 08:32:07,266 - INFO - Test output for killercup__cargo-edit-572 written to logs/run_evaluation/gold_run1/gold/killercup__cargo-edit-572/test_output.txt
+2026-04-17 08:32:07,577 - INFO - Git diff after:
+diff --git a/Cargo.lock b/Cargo.lock
+index d488a64d..ce982862 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -301,9 +301,9 @@ checksum = "d6417fe6fc03a8b533fd2177742eeb39a90c7233eedec7bac96d4d6b69a09449"
+ 
+ [[package]]
+ name = "crates-index"
+-version = "0.18.1"
++version = "0.18.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "87c1041763543466e437ad3212f1dbfd73c0ae4f7323e44ff584c5273d1b39c8"
++checksum = "f28b64abfb970bb50a2ba0653aee8429dbbbbaf52445bc732e911e0f222b485c"
+ dependencies = [
+  "git2",
+  "hex",
+@@ -443,9 +443,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "fastrand"
+-version = "1.6.0"
++version = "1.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "779d043b6a0b90cc4c0ed7ee380a6504394cee7efd7db050e3774eee387324b2"
++checksum = "c3fcf0cee53519c866c09b5de1f6c56ff9d647101f81c1964fa632e148896cdf"
+ dependencies = [
+  "instant",
+ ]
+@@ -666,9 +666,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "js-sys"
+-version = "0.3.55"
++version = "0.3.56"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7cc9ffccd38c451a86bf13657df244e9c3f37493cce8e5e21e940963777acc84"
++checksum = "a38fc24e30fd564ce974c02bf1d337caddff65be6cc4735a1f7eab22a7440f04"
+ dependencies = [
+  "wasm-bindgen",
+ ]
+@@ -690,9 +690,9 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.112"
++version = "0.2.113"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1b03d17f364a3a042d5e5d46b053bbbf82c92c9430c592dd4c064dc6ee997125"
++checksum = "eef78b64d87775463c549fbd80e19249ef436ea3bf1de2a1eb7e717ec7fab1e9"
+ 
+ [[package]]
+ name = "libgit2-sys"
+@@ -977,9 +977,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "quote"
+-version = "1.0.14"
++version = "1.0.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "47aa80447ce4daf1717500037052af176af5d38cc3e571d9ec1c7353fc10c87d"
++checksum = "864d3e96a899863136fc6e99f3d7cae289dafe43bf2c5ac19b70df7210c0a145"
+ dependencies = [
+  "proc-macro2",
+ ]
+@@ -1136,18 +1136,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.133"
++version = "1.0.135"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "97565067517b60e2d1ea8b268e59ce036de907ac523ad83a0475da04e818989a"
++checksum = "2cf9235533494ea2ddcdb794665461814781c53f19d87b76e571a1c35acbad2b"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.133"
++version = "1.0.135"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ed201699328568d8d08208fdd080e3ff594e6c422e438b6705905da01005d537"
++checksum = "8dcde03d87d4c973c04be249e7d8f0b35db1c848c487bd43032808e59dd8328d"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1156,9 +1156,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.75"
++version = "1.0.78"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c059c05b48c5c0067d4b4b2b4f0732dd65feb52daf7e0ea09cd87e7dadc1af79"
++checksum = "d23c1ba4cf0efd44be32017709280b32d1cea5c3f1275c3b6d9e8bc54f758085"
+ dependencies = [
+  "itoa",
+  "ryu",
+@@ -1223,9 +1223,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "syn"
+-version = "1.0.85"
++version = "1.0.86"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a684ac3dcd8913827e18cd09a68384ee66c1de24157e3c556c9ab16d85695fb7"
++checksum = "8a65b3f4ffa0092e9887669db0eae07941f023991ab58ea44da8fe8e2d511c6b"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1282,9 +1282,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "thread_local"
+-version = "1.1.3"
++version = "1.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8018d24e04c95ac8790716a5987d0fec4f8b27249ffa0f7d33f1369bdfb88cbd"
++checksum = "5516c27b78311c50bf42c071425c560ac799b11c30b31f87e3081965fe5e0180"
+ dependencies = [
+  "once_cell",
+ ]
+@@ -1447,15 +1447,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasi"
+-version = "0.10.3+wasi-snapshot-preview1"
++version = "0.10.2+wasi-snapshot-preview1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "46a2e384a3f170b0c7543787a91411175b71afd56ba4d3a0ae5678d4e2243c0e"
++checksum = "fd6fbd9a79829dd1ad0cc20627bf1ed606756a7f77edff7b66b7064f9cb327c6"
+ 
+ [[package]]
+ name = "wasm-bindgen"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "632f73e236b219150ea279196e54e610f5dbafa5d61786303d4da54f84e47fce"
++checksum = "25f1af7423d8588a3d840681122e72e6a24ddbcb3f0ec385cac0d12d24256c06"
+ dependencies = [
+  "cfg-if",
+  "wasm-bindgen-macro",
+@@ -1463,9 +1463,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-backend"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a317bf8f9fba2476b4b2c85ef4c4af8ff39c3c7f0cdfeed4f82c34a880aa837b"
++checksum = "8b21c0df030f5a177f3cba22e9bc4322695ec43e7257d865302900290bcdedca"
+ dependencies = [
+  "bumpalo",
+  "lazy_static",
+@@ -1478,9 +1478,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d56146e7c495528bf6587663bea13a8eb588d39b36b679d83972e1a2dbbdacf9"
++checksum = "2f4203d69e40a52ee523b2529a773d5ffc1dc0071801c87b3d270b471b80ed01"
+ dependencies = [
+  "quote",
+  "wasm-bindgen-macro-support",
+@@ -1488,9 +1488,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-macro-support"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7803e0eea25835f8abdc585cd3021b3deb11543c6fe226dcd30b228857c5c5ab"
++checksum = "bfa8a30d46208db204854cadbb5d4baf5fcf8071ba5bf48190c3e59937962ebc"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1501,15 +1501,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "wasm-bindgen-shared"
+-version = "0.2.78"
++version = "0.2.79"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0237232789cf037d5480773fe568aac745bfe2afbc11a863e97901780a6b47cc"
++checksum = "3d958d035c4438e28c70e4321a2911302f10135ce78a9c7834c0cab4123d06a2"
+ 
+ [[package]]
+ name = "web-sys"
+-version = "0.3.55"
++version = "0.3.56"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "38eb105f1c59d9eaa6b5cdc92b859d85b926e82cb2e0945cd0c9259faa6fe9fb"
++checksum = "c060b319f29dd25724f09a2ba1418f142f539b2be99fbf4d2d5a8f7330afb8eb"
+ dependencies = [
+  "js-sys",
+  "wasm-bindgen",
+diff --git a/src/bin/add/args.rs b/src/bin/add/args.rs
+index ea3e72c9..7e00a229 100644
+--- a/src/bin/add/args.rs
++++ b/src/bin/add/args.rs
+@@ -44,13 +44,17 @@ pub struct Args {
+     pub rename: Option<String>,
+ 
+     /// Add crate as development dependency.
+-    #[clap(long, short = 'D', conflicts_with = "build")]
++    #[clap(long, short = 'D', group = "section")]
+     pub dev: bool,
+ 
+     /// Add crate as build dependency.
+-    #[clap(long, short = 'B', conflicts_with = "dev")]
++    #[clap(long, short = 'B', group = "section")]
+     pub build: bool,
+ 
++    /// Add as dependency to the given target platform.
++    #[clap(long, forbid_empty_values = true, group = "section")]
++    pub target: Option<String>,
++
+     /// Specify the version to grab from the registry(crates.io).
+     /// You can also specify version as part of name, e.g
+     /// `cargo add bitflags@0.3.2`.
+@@ -67,27 +71,21 @@ pub struct Args {
+     pub git: Option<String>,
+ 
+     /// Specify a git branch to download the crate from.
+-    #[clap(
+-        long,
+-        value_name = "BRANCH",
+-        conflicts_with = "vers",
+-        conflicts_with = "path"
+-    )]
++    #[clap(long, value_name = "BRANCH", requires = "git", group = "git-ref")]
+     pub branch: Option<String>,
+ 
++    /// Specify a git branch to download the crate from.
++    #[clap(long, value_name = "TAG", requires = "git", group = "git-ref")]
++    pub tag: Option<String>,
++
++    /// Specify a git branch to download the crate from.
++    #[clap(long, value_name = "REV", requires = "git", group = "git-ref")]
++    pub rev: Option<String>,
++
+     /// Specify the path the crate should be loaded from.
+     #[clap(long, parse(from_os_str), conflicts_with = "git")]
+     pub path: Option<PathBuf>,
+ 
+-    /// Add as dependency to the given target platform.
+-    #[clap(
+-        long,
+-        conflicts_with = "dev",
+-        conflicts_with = "build",
+-        forbid_empty_values = true
+-    )]
+-    pub target: Option<String>,
+-
+     /// Add as an optional dependency (for use in features).
+     #[clap(long, conflicts_with = "dev")]
+     pub optional: bool,
+@@ -249,7 +247,12 @@ impl Args {
+                     .unwrap_or_else(Vec::new);
+ 
+                 dependency = dependency
+-                    .set_git(repo, self.branch.clone())
++                    .set_git(
++                        repo,
++                        self.branch.clone(),
++                        self.tag.clone(),
++                        self.rev.clone(),
++                    )
+                     .set_available_features(features);
+             } else {
+                 if let Some(path) = &self.path {
+@@ -378,6 +381,8 @@ impl Default for Args {
+             vers: None,
+             git: None,
+             branch: None,
++            tag: None,
++            rev: None,
+             path: None,
+             target: None,
+             optional: false,
+diff --git a/src/crate_name.rs b/src/crate_name.rs
+index 3796e7e3..b6d0b94f 100644
+--- a/src/crate_name.rs
++++ b/src/crate_name.rs
+@@ -45,7 +45,7 @@ impl<'a> CrateName<'a> {
+             let available_features = manifest.features()?;
+             Ok(Some(
+                 Dependency::new(crate_name)
+-                    .set_git(self.0, None)
++                    .set_git(self.0, None, None, None)
+                     .set_available_features(available_features),
+             ))
+         } else if self.is_path() {
+diff --git a/src/dependency.rs b/src/dependency.rs
+index 5abba24d..af44fbb4 100644
+--- a/src/dependency.rs
++++ b/src/dependency.rs
+@@ -52,10 +52,18 @@ impl Dependency {
+     }
+ 
+     /// Set dependency to a given repository
+-    pub fn set_git(mut self, repo: &str, branch: Option<String>) -> Dependency {
++    pub fn set_git(
++        mut self,
++        repo: &str,
++        branch: Option<String>,
++        tag: Option<String>,
++        rev: Option<String>,
++    ) -> Dependency {
+         self.source = DependencySource::Git {
+             repo: repo.into(),
+             branch,
++            tag,
++            rev,
+         };
+         self
+     }
+@@ -216,9 +224,22 @@ impl Dependency {
+                             data.get_or_insert("registry", r);
+                         }
+                     }
+-                    DependencySource::Git { repo, branch } => {
++                    DependencySource::Git {
++                        repo,
++                        branch,
++                        tag,
++                        rev,
++                    } => {
+                         data.get_or_insert("git", repo);
+-                        branch.map(|branch| data.get_or_insert("branch", branch));
++                        if let Some(branch) = branch {
++                            data.get_or_insert("branch", branch);
++                        }
++                        if let Some(tag) = tag {
++                            data.get_or_insert("tag", tag);
++                        }
++                        if let Some(rev) = rev {
++                            data.get_or_insert("rev", rev);
++                        }
+                     }
+                 }
+                 if self.optional {
+@@ -272,6 +293,8 @@ enum DependencySource {
+     Git {
+         repo: String,
+         branch: Option<String>,
++        tag: Option<String>,
++        rev: Option<String>,
+     },
+ }
+ 
+diff --git a/src/manifest.rs b/src/manifest.rs
+index 3148a6f5..f34c4671 100644
+--- a/src/manifest.rs
++++ b/src/manifest.rs
+@@ -463,7 +463,7 @@ fn merge_dependencies(old_dep: &mut toml_edit::Item, new_toml: toml_edit::Item)
+         // The old dependency is just a version/git/path. We are safe to overwrite.
+         *old_dep = new_toml;
+     } else if old_dep.is_table_like() {
+-        for key in &["version", "path", "git"] {
++        for key in &["version", "path", "git", "branch", "tag", "rev"] {
+             // remove this key/value pairs
+             old_dep[key] = toml_edit::Item::None;
+         }
+2026-04-17 08:32:07,577 - INFO - Grading answer for killercup__cargo-edit-572...
+2026-04-17 08:32:07,584 - INFO - report: {'killercup__cargo-edit-572': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['dependency::tests::paths_with_forward_slashes_are_left_as_is', 'dependency::tests::to_toml_dep_with_git_source', 'dependency::tests::to_toml_dep_from_alt_registry', 'dependency::tests::to_toml_complex_dep', 'dependency::tests::to_toml_dep_with_path_source', 'dependency::tests::to_toml_dep_without_default_features', 'dependency::tests::to_toml_optional_dep', 'dependency::tests::to_toml_simple_dep', 'dependency::tests::to_toml_renamed_dep', 'dependency::tests::to_toml_simple_dep_with_version', 'fetch::get_latest_stable_version', 'fetch::get_latest_unstable_or_stable_version', 'fetch::get_latest_version_with_yanked', 'fetch::get_no_latest_version_from_json_when_all_are_yanked', 'manifest::tests::old_incompatible_with_invalid', 'fetch::test_gen_fuzzy_crate_names', 'manifest::tests::old_incompatible_with_missing_new_version', 'manifest::tests::add_remove_dependency', 'manifest::tests::old_version_is_compatible', 'manifest::tests::remove_dependency_no_section', 'manifest::tests::remove_dependency_non_existent', 'manifest::tests::update_dependency', 'version::test::increment::alpha', 'manifest::tests::update_wrong_dependency', 'version::test::increment::beta', 'version::test::increment::metadata', 'version::test::increment::rc', 'version::test::upgrade_requirement::caret_major', 'version::test::upgrade_requirement::caret_patch', 'version::test::upgrade_requirement::equal_major', 'version::test::upgrade_requirement::caret_minor', 'version::test::upgrade_requirement::equal_minor', 'version::test::upgrade_requirement::equal_patch', 'version::test::upgrade_requirement::tilde_major', 'version::test::upgrade_requirement::tilde_minor', 'version::test::upgrade_requirement::wildcard_major', 'version::test::upgrade_requirement::tilde_patch', 'version::test::upgrade_requirement::wildcard_minor', 'version::test::upgrade_requirement::wildcard_patch', 'manifest::tests::set_package_version_overrides', 'args::tests::verify_app', 'args::tests::test_dependency_parsing', 'args::tests::test_path_as_arg_parsing', 'verify_app', 'args::verify_app', 'cli_tests', 'invalid_manifest', 'src/manifest.rs - manifest::LocalManifest::remove_from_table (line 317)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for killercup__cargo-edit-572: resolved: True
+2026-04-17 08:32:07,585 - INFO - Attempting to stop container rustb.eval.killercup__cargo-edit-572.gold_run1...
+2026-04-17 08:33:37,670 - INFO - Attempting to remove container rustb.eval.killercup__cargo-edit-572.gold_run1...
+2026-04-17 08:33:42,058 - INFO - Container rustb.eval.killercup__cargo-edit-572.gold_run1 removed.
+2026-04-17 08:33:42,059 - INFO - Attempting to remove image rustbench/killercup__cargo-edit:pr-572...
+2026-04-17 08:34:00,677 - INFO - Image rustbench/killercup__cargo-edit:pr-572 removed.

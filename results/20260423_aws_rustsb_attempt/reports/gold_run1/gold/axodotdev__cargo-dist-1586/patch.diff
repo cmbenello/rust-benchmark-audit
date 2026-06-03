@@ -1,0 +1,151 @@
+diff --git a/cargo-dist/src/platform.rs b/cargo-dist/src/platform.rs
+--- a/cargo-dist/src/platform.rs
++++ b/cargo-dist/src/platform.rs
+@@ -246,7 +246,8 @@ use crate::{
+ };
+ 
+ use targets::{
+-    TARGET_ARM64_MAC, TARGET_ARM64_WINDOWS, TARGET_X64_MAC, TARGET_X64_WINDOWS, TARGET_X86_WINDOWS,
++    TARGET_ARM64_MAC, TARGET_ARM64_MINGW, TARGET_ARM64_WINDOWS, TARGET_X64_MAC, TARGET_X64_MINGW,
++    TARGET_X64_WINDOWS, TARGET_X86_MINGW, TARGET_X86_WINDOWS,
+ };
+ 
+ /// values of the form `min-glibc-version = { some-target-triple = "2.8" }
+diff --git a/cargo-dist/src/platform.rs b/cargo-dist/src/platform.rs
+--- a/cargo-dist/src/platform.rs
++++ b/cargo-dist/src/platform.rs
+@@ -763,6 +764,16 @@ fn supports(
+                 },
+             ));
+         }
++        if target == TARGET_X86_MINGW {
++            res.push((
++                TARGET_X64_MINGW.to_owned(),
++                PlatformEntry {
++                    quality: SupportQuality::ImperfectNative,
++                    runtime_conditions: archive.native_runtime_conditions.clone(),
++                    archive_idx,
++                },
++            ));
++        }
+ 
+         // Windows' equivalent to Rosetta2 (CHPE) is in fact installed-by-default so no need to detect!
+         if target == TARGET_X64_WINDOWS || target == TARGET_X86_WINDOWS {
+diff --git a/cargo-dist/src/platform.rs b/cargo-dist/src/platform.rs
+--- a/cargo-dist/src/platform.rs
++++ b/cargo-dist/src/platform.rs
+@@ -781,14 +792,24 @@ fn supports(
+                 },
+             ));
+         }
++        if target == TARGET_X64_MINGW || target == TARGET_X86_MINGW {
++            // prefer x64 over x86 if we have the option
++            let quality = if target == TARGET_X86_MINGW {
++                SupportQuality::Hellmulated
++            } else {
++                SupportQuality::Emulated
++            };
++            res.push((
++                TARGET_ARM64_MINGW.to_owned(),
++                PlatformEntry {
++                    quality,
++                    runtime_conditions: archive.native_runtime_conditions.clone(),
++                    archive_idx,
++                },
++            ));
++        }
+ 
+         // windows-msvc binaries should always be acceptable on windows-gnu (mingw)
+-        //
+-        // FIXME: in theory x64-pc-windows-msvc and i686-pc-windows-msvc can run on
+-        // aarch64-pc-windows-gnu, as a hybrid of this rules and the CHPE rule above.
+-        // I don't want to think about computing the transitive closure of platform
+-        // support and how to do all the tie breaking ("HighwayToHellmulated"?), so
+-        // for now all 5 arm64 mingw users can be a little sad.
+         if let Some(system) = target.as_str().strip_suffix("windows-msvc") {
+             res.push((
+                 TripleName::new(format!("{system}windows-gnu")),
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -2228,7 +2228,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             .platform_support
+             .fragments()
+             .into_iter()
+-            .filter(|a| a.target_triple.is_windows_msvc())
++            .filter(|a| a.target_triple.is_windows())
+             .collect::<Vec<_>>();
+         let target_triples = artifacts
+             .iter()
+diff --git a/cargo-dist/templates/installer/installer.ps1.j2 b/cargo-dist/templates/installer/installer.ps1.j2
+--- a/cargo-dist/templates/installer/installer.ps1.j2
++++ b/cargo-dist/templates/installer/installer.ps1.j2
+@@ -158,7 +158,16 @@ $_
+   }
+ }
+ 
+-function Get-TargetTriple() {
++function Get-TargetTriple($platforms) {
++  $double = Get-Arch
++  if ($platforms.Contains("$double-msvc")) {
++    return "$double-msvc"
++  } else {
++    return "$double-gnu"
++  }
++}
++
++function Get-Arch() {
+   try {
+     # NOTE: this might return X64 on ARM64 Windows, which is OK since emulation is available.
+     # It works correctly starting in PowerShell Core 7.3 and Windows PowerShell in Win 11 22H2.
+diff --git a/cargo-dist/templates/installer/installer.ps1.j2 b/cargo-dist/templates/installer/installer.ps1.j2
+--- a/cargo-dist/templates/installer/installer.ps1.j2
++++ b/cargo-dist/templates/installer/installer.ps1.j2
+@@ -172,10 +181,10 @@ function Get-TargetTriple() {
+     # Rust supported platforms: https://doc.rust-lang.org/stable/rustc/platform-support.html
+     switch ($p.GetValue($null).ToString())
+     {
+-      "X86" { return "i686-pc-windows-msvc" }
+-      "X64" { return "x86_64-pc-windows-msvc" }
+-      "Arm" { return "thumbv7a-pc-windows-msvc" }
+-      "Arm64" { return "aarch64-pc-windows-msvc" }
++      "X86" { return "i686-pc-windows" }
++      "X64" { return "x86_64-pc-windows" }
++      "Arm" { return "thumbv7a-pc-windows" }
++      "Arm64" { return "aarch64-pc-windows" }
+     }
+   } catch {
+     # The above was added in .NET 4.7.1, so Windows PowerShell in versions of Windows
+diff --git a/cargo-dist/templates/installer/installer.ps1.j2 b/cargo-dist/templates/installer/installer.ps1.j2
+--- a/cargo-dist/templates/installer/installer.ps1.j2
++++ b/cargo-dist/templates/installer/installer.ps1.j2
+@@ -187,14 +196,14 @@ function Get-TargetTriple() {
+   # This is available in .NET 4.0. We already checked for PS 5, which requires .NET 4.5.
+   Write-Verbose("Get-TargetTriple: falling back to Is64BitOperatingSystem.")
+   if ([System.Environment]::Is64BitOperatingSystem) {
+-    return "x86_64-pc-windows-msvc"
++    return "x86_64-pc-windows"
+   } else {
+-    return "i686-pc-windows-msvc"
++    return "i686-pc-windows"
+   }
+ }
+ 
+ function Download($download_url, $platforms) {
+-  $arch = Get-TargetTriple
++  $arch = Get-TargetTriple $platforms
+ 
+   if (-not $platforms.ContainsKey($arch)) {
+     $platforms_json = ConvertTo-Json $platforms
+diff --git a/cargo-dist/templates/installer/installer.ps1.j2 b/cargo-dist/templates/installer/installer.ps1.j2
+--- a/cargo-dist/templates/installer/installer.ps1.j2
++++ b/cargo-dist/templates/installer/installer.ps1.j2
+@@ -277,7 +286,7 @@ function Download($download_url, $platforms) {
+ 
+ function Invoke-Installer($artifacts, $platforms) {
+   # Replaces the placeholder binary entry with the actual list of binaries
+-  $arch = Get-TargetTriple
++  $arch = Get-TargetTriple $platforms
+ 
+   if (-not $platforms.ContainsKey($arch)) {
+     $platforms_json = ConvertTo-Json $platforms

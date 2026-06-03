@@ -1,0 +1,73 @@
+{
+    "rinja-rs__askama-359": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "filters::tests::test_abs",
+                    "filters::tests::test_filesizeformat",
+                    "filters::tests::test_center",
+                    "filters::tests::test_capitalize",
+                    "filters::json::tests::test_json",
+                    "filters::tests::test_into_f64",
+                    "filters::tests::test_indent",
+                    "filters::tests::test_into_isize",
+                    "filters::tests::test_lower",
+                    "filters::tests::test_join",
+                    "filters::tests::test_linebreaksbr",
+                    "filters::tests::test_linebreaks",
+                    "filters::tests::test_trim",
+                    "filters::tests::test_truncate",
+                    "filters::tests::test_upper",
+                    "filters::tests::test_wordcount",
+                    "filters::tests::test_urlencoding",
+                    "filters::yaml::tests::test_yaml",
+                    "parser::tests::change_delimiters_parse_filter",
+                    "parser::tests::test_invalid_block",
+                    "parser::tests::test_ws_splitter",
+                    "parser::tests::test_parse_filter",
+                    "tests::find_absolute",
+                    "tests::add_syntax_two",
+                    "tests::duplicated_syntax_name_on_list",
+                    "tests::add_syntax",
+                    "tests::find_relative",
+                    "tests::find_relative_nonexistent",
+                    "tests::find_relative_sub",
+                    "tests::is_not_exist_default_syntax",
+                    "tests::get_source",
+                    "tests::escape_modes",
+                    "tests::test_default_config",
+                    "tests::use_default_at_syntax_name",
+                    "parser::tests::test_parse_path_call",
+                    "tests::test_config_dirs",
+                    "parser::tests::test_parse_var_call",
+                    "filter_fmt",
+                    "filter_escape",
+                    "filter_format",
+                    "test_filter_let_filter",
+                    "test_join",
+                    "test_filter_truncate",
+                    "test_my_filter",
+                    "test_nested_filter_ref",
+                    "test_vec_join"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

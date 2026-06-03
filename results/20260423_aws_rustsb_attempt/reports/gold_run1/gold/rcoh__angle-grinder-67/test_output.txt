@@ -1,0 +1,489 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/integration.rs...
+Checking patch tests/structured_tests/fields_after_agg.toml...
+Applied patch tests/integration.rs cleanly.
+Applied patch tests/structured_tests/fields_after_agg.toml cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded quicli v0.4.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded lazy_static v1.3.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded structopt v0.2.15 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded serde v1.0.89 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded toml v0.4.10 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded failure v0.1.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded nom_locate v0.3.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded num-derive v0.2.4 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded nom v4.2.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded atty v0.2.11 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded num-traits v0.2.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded human-panic v1.0.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded annotate-snippets v0.5.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded serde_derive v1.0.89 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded self_update v0.5.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded regex v1.1.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded maplit v1.0.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded strsim v0.8.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded ordered-float v1.0.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded quantiles v0.7.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded pulldown-cmark v0.2.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded itertools v0.8.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded crossbeam-channel v0.3.8 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded terminal_size v0.1.8 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded serde_json v1.0.39 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded assert_cli v0.6.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded getopts v0.2.18 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded proc-macro2 v0.4.27 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded either v1.5.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded libc v0.2.50 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded os_type v2.2.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rayon v1.0.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tar v0.4.21 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded bytecount v0.3.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded reqwest v0.9.11 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded thread_local v0.3.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded structopt-derive v0.2.15 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded backtrace v0.3.14 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded aho-corasick v0.6.10 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded remove_dir_all v0.5.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded syn v0.15.29 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded clap v2.32.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded exitfailure v0.5.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded semver v0.9.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded zip v0.5.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded quote v0.6.11 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded flate2 v1.0.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded regex-syntax v0.6.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded ansi_term v0.11.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded uuid v0.6.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded bitflags v1.0.4 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded utf8-ranges v1.0.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded failure_derive v0.1.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded pbr v1.0.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tempdir v0.3.7 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded log v0.4.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded hyper-old-types v0.11.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded globwalk v0.3.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded memchr v2.2.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded termcolor v0.3.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded clap-verbosity-flag v0.2.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded textwrap v0.10.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded podio v0.1.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded time v0.1.42 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded mime_guess v2.0.0-alpha.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded heck v0.3.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded crc32fast v1.2.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded base64 v0.9.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded unicase v2.3.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rustc-demangle v0.1.13 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded environment v0.1.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded crossbeam-utils v0.6.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rayon-core v1.4.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded backtrace-sys v0.1.28 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded semver-parser v0.7.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded percent-encoding v1.0.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded httparse v1.3.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tokio-io v0.1.12 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded ucd-util v0.1.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tokio-threadpool v0.1.12 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded autocfg v0.1.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded hyper-tls v0.3.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded http v0.1.16 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded synstructure v0.10.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded difference v2.0.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded bzip2 v0.3.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded unicode-xid v0.1.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded native-tls v0.2.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded ryu v0.2.7 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded smallvec v0.6.9 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded miniz-sys v0.1.11 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded url v1.7.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded libflate v0.1.21 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded vec_map v0.8.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded language-tags v0.2.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded filetime v0.2.4 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded unicode-width v0.1.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded cfg-if v0.1.7 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand v0.4.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded hyper v0.12.25 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded xattr v0.2.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded serde_urlencoded v0.5.4 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tokio-executor v0.1.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tokio-timer v0.2.10 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded futures v0.1.25 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded bytes v0.4.12 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded crossbeam-deque v0.2.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tokio v0.1.16 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded uuid v0.7.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded base64 v0.10.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded itoa v0.4.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded colored v1.7.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded encoding_rs v0.8.17 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded mime v0.3.13 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded strsim v0.7.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded cc v1.0.30 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded idna v0.1.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded phf v0.7.24 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded dtoa v0.4.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded slab v0.4.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded adler32 v1.0.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded version_check v0.1.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded matches v0.1.8 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded openssl-probe v0.1.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded fnv v1.0.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded safemem v0.3.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tokio-tcp v0.1.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded net2 v0.2.33 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded crossbeam-queue v0.1.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded crossbeam-deque v0.7.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded byteorder v1.3.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded num_cpus v1.10.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded futures-cpupool v0.1.8 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded iovec v0.1.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded unicode-segmentation v1.2.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded bzip2-sys v0.1.7 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded openssl v0.10.19 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tokio-reactor v0.1.9 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded phf_codegen v0.7.24 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded crossbeam-utils v0.2.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded h2 v0.1.16 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded ignore v0.4.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded walkdir v2.2.7 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded env_logger v0.5.13 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded mio v0.6.16 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tokio-current-thread v0.1.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded openssl-sys v0.9.42 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand v0.6.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded unicase v1.4.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded want v0.0.6 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded crossbeam-epoch v0.3.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded crossbeam-epoch v0.7.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded foreign-types v0.3.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded termcolor v1.0.4 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded phf_shared v0.7.24 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rustc_version v0.2.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded parking_lot v0.7.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded globset v0.4.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded unicode-bidi v0.3.4 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded indexmap v1.0.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded phf_generator v0.7.24 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded string v0.1.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded humantime v1.2.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded unicode-normalization v0.1.8 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded lazycell v1.2.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded tokio-sync v0.1.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded same-file v1.0.4 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded pkg-config v0.3.14 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand_chacha v0.1.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded scopeguard v0.3.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded siphasher v0.2.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded try-lock v0.2.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand_hc v0.1.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand_jitter v0.1.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand_xorshift v0.1.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded parking_lot_core v0.4.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded lock_api v0.1.5 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand_pcg v0.1.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded nodrop v0.1.13 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded quick-error v1.2.2 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand_isaac v0.1.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand_core v0.4.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand_os v0.1.3 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded memoffset v0.2.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded arrayvec v0.4.10 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded foreign-types-shared v0.1.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded owning_ref v0.4.0 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded rand_core v0.3.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+  Downloaded stable_deref_trait v1.1.1 (registry `/testbed/.cargo/lts-repo-at-0f9b553858`)
+   Compiling semver-parser v0.7.0
+   Compiling autocfg v0.1.2
+   Compiling libc v0.2.50
+   Compiling rand_core v0.4.0
+   Compiling version_check v0.1.5
+   Compiling byteorder v1.3.1
+   Compiling arrayvec v0.4.10
+   Compiling lazy_static v1.3.0
+   Compiling nodrop v0.1.13
+   Compiling proc-macro2 v0.4.27
+   Compiling cfg-if v0.1.7
+   Compiling stable_deref_trait v1.1.1
+   Compiling cc v1.0.30
+   Compiling siphasher v0.2.3
+   Compiling smallvec v0.6.9
+   Compiling pkg-config v0.3.14
+   Compiling unicode-xid v0.1.0
+   Compiling memoffset v0.2.1
+   Compiling memchr v2.2.0
+   Compiling scopeguard v0.3.3
+   Compiling syn v0.15.29
+   Compiling lazycell v1.2.1
+   Compiling futures v0.1.25
+   Compiling fnv v1.0.6
+   Compiling slab v0.4.2
+   Compiling httparse v1.3.3
+   Compiling openssl v0.10.19
+   Compiling ucd-util v0.1.3
+   Compiling matches v0.1.8
+   Compiling itoa v0.4.3
+   Compiling foreign-types-shared v0.1.1
+   Compiling regex v1.1.2
+   Compiling utf8-ranges v1.0.2
+   Compiling crc32fast v1.2.0
+   Compiling serde v1.0.89
+   Compiling bitflags v1.0.4
+   Compiling unicode-width v0.1.5
+   Compiling indexmap v1.0.2
+   Compiling unicode-segmentation v1.2.1
+   Compiling native-tls v0.2.2
+   Compiling ryu v0.2.7
+   Compiling failure_derive v0.1.5
+   Compiling string v0.1.3
+   Compiling try-lock v0.2.2
+   Compiling rayon-core v1.4.1
+   Compiling rustc-demangle v0.1.13
+   Compiling strsim v0.7.0
+   Compiling percent-encoding v1.0.1
+   Compiling encoding_rs v0.8.17
+   Compiling same-file v1.0.4
+   Compiling openssl-probe v0.1.2
+   Compiling vec_map v0.8.1
+   Compiling quick-error v1.2.2
+   Compiling ansi_term v0.11.0
+   Compiling termcolor v1.0.4
+   Compiling num-traits v0.2.6
+   Compiling rayon v1.0.3
+   Compiling safemem v0.3.0
+   Compiling dtoa v0.4.3
+   Compiling adler32 v1.0.3
+   Compiling either v1.5.1
+   Compiling num-derive v0.2.4
+   Compiling podio v0.1.6
+   Compiling remove_dir_all v0.5.1
+   Compiling language-tags v0.2.2
+   Compiling termcolor v0.3.6
+   Compiling bytecount v0.3.2
+   Compiling pulldown-cmark v0.2.0
+   Compiling quantiles v0.7.1
+   Compiling strsim v0.8.0
+   Compiling difference v2.0.0
+   Compiling environment v0.1.1
+   Compiling maplit v1.0.1
+   Compiling unicode-bidi v0.3.4
+   Compiling log v0.4.6
+   Compiling crossbeam-utils v0.2.2
+   Compiling owning_ref v0.4.0
+   Compiling foreign-types v0.3.2
+   Compiling crossbeam-utils v0.6.5
+   Compiling thread_local v0.3.6
+   Compiling colored v1.7.0
+   Compiling textwrap v0.10.0
+   Compiling getopts v0.2.18
+   Compiling regex-syntax v0.6.5
+   Compiling rand_core v0.3.1
+   Compiling rand_jitter v0.1.3
+   Compiling unicode-normalization v0.1.8
+   Compiling unicase v1.4.2
+   Compiling unicase v2.3.0
+   Compiling rand_pcg v0.1.2
+   Compiling rand_chacha v0.1.1
+   Compiling rand v0.6.5
+   Compiling backtrace v0.3.14
+   Compiling heck v0.3.1
+   Compiling semver v0.9.0
+   Compiling humantime v1.2.0
+   Compiling walkdir v2.2.7
+   Compiling itertools v0.8.0
+   Compiling annotate-snippets v0.5.0
+   Compiling lock_api v0.1.5
+   Compiling rand_isaac v0.1.1
+   Compiling rand_hc v0.1.0
+   Compiling rand_xorshift v0.1.1
+   Compiling backtrace-sys v0.1.28
+   Compiling bzip2-sys v0.1.7
+   Compiling miniz-sys v0.1.11
+   Compiling crossbeam-queue v0.1.2
+   Compiling crossbeam-channel v0.3.8
+   Compiling rustc_version v0.2.3
+   Compiling phf_shared v0.7.24
+   Compiling parking_lot_core v0.4.0
+   Compiling openssl-sys v0.9.42
+   Compiling libflate v0.1.21
+   Compiling base64 v0.10.1
+   Compiling base64 v0.9.3
+   Compiling phf v0.7.24
+   Compiling rand_os v0.1.3
+   Compiling iovec v0.1.2
+   Compiling net2 v0.2.33
+   Compiling num_cpus v1.10.0
+   Compiling time v0.1.42
+   Compiling atty v0.2.11
+   Compiling rand v0.4.6
+   Compiling filetime v0.2.4
+   Compiling xattr v0.2.2
+   Compiling terminal_size v0.1.8
+   Compiling crossbeam-epoch v0.7.1
+   Compiling crossbeam-epoch v0.3.1
+   Compiling aho-corasick v0.6.10
+   Compiling nom v4.2.2
+   Compiling clap v2.32.0
+   Compiling bytes v0.4.12
+   Compiling quote v0.6.11
+   Compiling mio v0.6.16
+   Compiling tar v0.4.21
+   Compiling tokio-executor v0.1.6
+   Compiling tokio-sync v0.1.3
+   Compiling want v0.0.6
+   Compiling flate2 v1.0.6
+   Compiling bzip2 v0.3.3
+   Compiling futures-cpupool v0.1.8
+   Compiling crossbeam-deque v0.7.1
+   Compiling crossbeam-deque v0.2.0
+   Compiling mime v0.3.13
+   Compiling tokio-current-thread v0.1.5
+   Compiling tokio-timer v0.2.10
+   Compiling pbr v1.0.1
+   Compiling ordered-float v1.0.1
+   Compiling tempdir v0.3.7
+   Compiling uuid v0.6.5
+   Compiling tokio-io v0.1.12
+   Compiling http v0.1.16
+   Compiling hyper-old-types v0.11.0
+   Compiling zip v0.5.1
+   Compiling nom_locate v0.3.1
+   Compiling phf_generator v0.7.24
+   Compiling tokio-threadpool v0.1.12
+   Compiling uuid v0.7.2
+   Compiling phf_codegen v0.7.24
+   Compiling mime_guess v2.0.0-alpha.6
+   Compiling parking_lot v0.7.1
+   Compiling tokio-reactor v0.1.9
+   Compiling tokio v0.1.16
+   Compiling tokio-tcp v0.1.3
+   Compiling idna v0.1.5
+   Compiling h2 v0.1.16
+   Compiling synstructure v0.10.1
+   Compiling structopt-derive v0.2.15
+   Compiling serde_derive v1.0.89
+   Compiling globset v0.4.2
+   Compiling env_logger v0.5.13
+   Compiling os_type v2.2.0
+   Compiling serde_json v1.0.39
+   Compiling toml v0.4.10
+   Compiling url v1.7.2
+   Compiling ignore v0.4.6
+   Compiling structopt v0.2.15
+   Compiling serde_urlencoded v0.5.4
+   Compiling failure v0.1.5
+   Compiling exitfailure v0.5.1
+   Compiling clap-verbosity-flag v0.2.0
+   Compiling assert_cli v0.6.3
+   Compiling globwalk v0.3.1
+   Compiling hyper v0.12.25
+   Compiling quicli v0.4.0
+   Compiling human-panic v1.0.1
+   Compiling hyper-tls v0.3.1
+   Compiling reqwest v0.9.11
+   Compiling self_update v0.5.1
+   Compiling ag v0.9.0 (/workspace)
+    Finished dev [unoptimized + debuginfo] target(s) in 34.23s
+     Running target/debug/deps/ag-30ffdd5936f1bc67
+
+running 41 tests
+test data::tests::record_put_get ... ok
+test data::tests::from_string ... ok
+test data::tests::agg ... ok
+test data::tests::ordering ... ok
+test data::tests::panic_on_invalid_row ... ok
+test lang::tests::parse_expr ... ok
+test lang::tests::parse_expr_ident ... ok
+test lang::tests::parse_ident ... ok
+test lang::tests::parse_expr_value ... ok
+test errors::tests::did_you_mean ... ok
+test lang::tests::parse_keyword_string ... ok
+test lang::tests::parse_agg_operator ... ok
+test lang::tests::parse_operator ... ok
+test lang::tests::parse_quoted_string ... ok
+test lang::tests::parse_var_list ... ok
+test lang::tests::parse_limit ... ok
+test lang::tests::parse_percentile ... ok
+test lang::tests::parse_parses ... ok
+test operator::tests::fields_except ... ok
+test operator::tests::fields_only ... ok
+test lang::tests::query_no_operators ... ok
+test operator::tests::count_no_groups ... ok
+test operator::tests::json ... ok
+test operator::tests::sort_raw ... ok
+test lang::tests::query_operators ... ok
+test operator::tests::sort_aggregate ... ok
+test operator::tests::test_agg_adapter ... ok
+test operator::tests::count_groups ... ok
+test render::tests::print_raw ... ok
+test render::tests::test_format_with_ellipsis ... ok
+test render::tests::pretty_print_record_too_long ... ok
+test render::tests::pretty_print_aggregate ... ok
+test operator::tests::test_total ... ok
+test render::tests::pretty_print_record ... ok
+test render::tests::pretty_print_aggregate_too_long ... ok
+test operator::tests::multi_grouper ... ok
+test operator::tests::parse_drop ... ok
+test operator::tests::parse_nodrop_preserve_existing ... ok
+test operator::tests::parse_from_field ... ok
+test operator::tests::parse_nodrop ... ok
+test operator::tests::parse ... ok
+
+test result: ok. 41 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/agrind-e28ed696f53fcaac
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/code_blocks-318cb4c936d536cd
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/integration-bf53e060016145b4
+
+running 23 tests
+test integration::validate_readme_examples ... ok
+test integration::fields_after_agg_bug ... ok
+test integration::aggregate_of_aggregate ... ok
+test integration::file_input ... ok
+test integration::no_args ... ok
+test integration::test_where_typecheck ... ok
+test integration::fields ... ok
+test integration::basic_count ... ok
+test integration::parse_failure ... ok
+test integration::json_from ... ok
+test integration::sort_order ... ok
+test integration::sum_operator ... ok
+test integration::test_limit ... ok
+test integration::parse_plain_text ... ok
+test integration::long_aggregate_values ... ok
+test integration::count_distinct_operator ... ok
+test integration::filter_wildcard ... ok
+test integration::test_limit_typecheck ... ok
+test integration::total ... ok
+test integration::limit ... ok
+test integration::parse_operator ... ok
+test integration::suggest_alternatives ... ok
+test integration::where_operator ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests ag
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ git reset --hard b264366cb68b0f649486d70b8522b43bb3392865
+HEAD is now at b264366 Merge pull request #65 from rcoh/embed-js-docs
++ git clean -fd
+Removing .cargo/
+Removing tests/structured_tests/fields_after_agg.toml

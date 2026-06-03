@@ -1,0 +1,209 @@
+diff --git a/src/registry/export_sdl.rs b/src/registry/export_sdl.rs
+--- a/src/registry/export_sdl.rs
++++ b/src/registry/export_sdl.rs
+@@ -95,15 +95,6 @@ impl Registry {
+     pub(crate) fn export_sdl(&self, options: SDLExportOptions) -> String {
+         let mut sdl = String::new();
+ 
+-        let has_oneof = self
+-            .types
+-            .values()
+-            .any(|ty| matches!(ty, MetaType::InputObject { oneof: true, .. }));
+-
+-        if has_oneof {
+-            sdl.write_str("directive @oneOf on INPUT_OBJECT\n\n").ok();
+-        }
+-
+         for ty in self.types.values() {
+             if ty.name().starts_with("__") {
+                 continue;
+diff --git a/src/registry/export_sdl.rs b/src/registry/export_sdl.rs
+--- a/src/registry/export_sdl.rs
++++ b/src/registry/export_sdl.rs
+@@ -121,6 +112,46 @@ impl Registry {
+         }
+ 
+         self.directives.values().for_each(|directive| {
++            // Filter out deprecated directive from SDL if it is not used
++            if directive.name == "deprecated"
++                && !self.types.values().any(|ty| match ty {
++                    MetaType::Object { fields, .. } => fields
++                        .values()
++                        .any(|field| field.deprecation.is_deprecated()),
++                    MetaType::Enum { enum_values, .. } => enum_values
++                        .values()
++                        .any(|value| value.deprecation.is_deprecated()),
++                    _ => false,
++                })
++            {
++                return;
++            }
++
++            // Filter out specifiedBy directive from SDL if it is not used
++            if directive.name == "specifiedBy"
++                && !self.types.values().any(|ty| {
++                    matches!(
++                        ty,
++                        MetaType::Scalar {
++                            specified_by_url: Some(_),
++                            ..
++                        }
++                    )
++                })
++            {
++                return;
++            }
++
++            // Filter out oneOf directive from SDL if it is not used
++            if directive.name == "oneOf"
++                && !self
++                    .types
++                    .values()
++                    .any(|ty| matches!(ty, MetaType::InputObject { oneof: true, .. }))
++            {
++                return;
++            }
++
+             writeln!(sdl, "{}", directive.sdl()).ok();
+         });
+ 
+diff --git a/src/registry/mod.rs b/src/registry/mod.rs
+--- a/src/registry/mod.rs
++++ b/src/registry/mod.rs
+@@ -769,8 +769,8 @@ pub struct Registry {
+ impl Registry {
+     pub(crate) fn add_system_types(&mut self) {
+         self.add_directive(MetaDirective {
+-            name: "include".into(),
+-            description: Some("Directs the executor to include this field or fragment only when the `if` argument is true.".to_string()),
++            name: "skip".into(),
++            description: Some("Directs the executor to skip this field or fragment when the `if` argument is true.".to_string()),
+             locations: vec![
+                 __DirectiveLocation::FIELD,
+                 __DirectiveLocation::FRAGMENT_SPREAD,
+diff --git a/src/registry/mod.rs b/src/registry/mod.rs
+--- a/src/registry/mod.rs
++++ b/src/registry/mod.rs
+@@ -780,7 +780,7 @@ impl Registry {
+                 let mut args = IndexMap::new();
+                 args.insert("if".to_string(), MetaInputValue {
+                     name: "if".to_string(),
+-                    description: Some("Included when true.".to_string()),
++                    description: Some("Skipped when true.".to_string()),
+                     ty: "Boolean!".to_string(),
+                     default_value: None,
+                     visible: None,
+diff --git a/src/registry/mod.rs b/src/registry/mod.rs
+--- a/src/registry/mod.rs
++++ b/src/registry/mod.rs
+@@ -797,8 +797,8 @@ impl Registry {
+         });
+ 
+         self.add_directive(MetaDirective {
+-            name: "skip".into(),
+-            description: Some("Directs the executor to skip this field or fragment when the `if` argument is true.".to_string()),
++            name: "include".into(),
++            description: Some("Directs the executor to include this field or fragment only when the `if` argument is true.".to_string()),
+             locations: vec![
+                 __DirectiveLocation::FIELD,
+                 __DirectiveLocation::FRAGMENT_SPREAD,
+diff --git a/src/registry/mod.rs b/src/registry/mod.rs
+--- a/src/registry/mod.rs
++++ b/src/registry/mod.rs
+@@ -808,7 +808,7 @@ impl Registry {
+                 let mut args = IndexMap::new();
+                 args.insert("if".to_string(), MetaInputValue {
+                     name: "if".to_string(),
+-                    description: Some("Skipped when true.".to_string()),
++                    description: Some("Included when true.".to_string()),
+                     ty: "Boolean!".to_string(),
+                     default_value: None,
+                     visible: None,
+diff --git a/src/registry/mod.rs b/src/registry/mod.rs
+--- a/src/registry/mod.rs
++++ b/src/registry/mod.rs
+@@ -824,6 +824,84 @@ impl Registry {
+             composable: None,
+         });
+ 
++        self.add_directive(MetaDirective {
++            name: "deprecated".into(),
++            description: Some(
++                "Marks an element of a GraphQL schema as no longer supported.".into(),
++            ),
++            locations: vec![
++                __DirectiveLocation::FIELD_DEFINITION,
++                __DirectiveLocation::ARGUMENT_DEFINITION,
++                __DirectiveLocation::INPUT_FIELD_DEFINITION,
++                __DirectiveLocation::ENUM_VALUE,
++            ],
++            args: {
++                let mut args = IndexMap::new();
++                args.insert(
++                    "reason".into(),
++                    MetaInputValue {
++                        name: "reason".into(),
++                        description: Some(
++                            "A reason for why it is deprecated, formatted using Markdown syntax"
++                                .into(),
++                        ),
++                        ty: "String".into(),
++                        default_value: Some(r#""No longer supported""#.into()),
++                        visible: None,
++                        inaccessible: false,
++                        tags: Default::default(),
++                        is_secret: false,
++                        directive_invocations: vec![],
++                    },
++                );
++                args
++            },
++            is_repeatable: false,
++            visible: None,
++            composable: None,
++        });
++
++        self.add_directive(MetaDirective {
++            name: "specifiedBy".into(),
++            description: Some("Provides a scalar specification URL for specifying the behavior of custom scalar types.".into()),
++            locations: vec![__DirectiveLocation::SCALAR],
++            args: {
++                let mut args = IndexMap::new();
++                args.insert(
++                    "url".into(),
++                    MetaInputValue {
++                        name: "url".into(),
++                        description: Some("URL that specifies the behavior of this scalar.".into()),
++                        ty: "String!".into(),
++                        default_value: None,
++                        visible: None,
++                        inaccessible: false,
++                        tags: Default::default(),
++                        is_secret: false,
++                        directive_invocations: vec![],
++                    },
++                );
++                args
++            },
++            is_repeatable: false,
++            visible: None,
++            composable: None,
++        });
++
++        self.add_directive(MetaDirective {
++            name: "oneOf".into(),
++            description: Some(
++                "Indicates that an Input Object is a OneOf Input Object (and thus requires
++                        exactly one of its field be provided)"
++                    .to_string(),
++            ),
++            locations: vec![__DirectiveLocation::INPUT_OBJECT],
++            args: Default::default(),
++            is_repeatable: false,
++            visible: None,
++            composable: None,
++        });
++
+         // create system scalars
+         <bool as InputType>::create_type_info(self);
+         <i32 as InputType>::create_type_info(self);

@@ -1,0 +1,3474 @@
+2026-04-17 07:04:47,937 - INFO - Environment image rustb.env.x86_64.mozilla_cbindgen:latest found for mozilla__cbindgen-293
+Building instance image rustbench/mozilla__cbindgen:pr-293 for mozilla__cbindgen-293
+2026-04-17 07:15:29,357 - INFO - Creating container for mozilla__cbindgen-293...
+2026-04-17 07:15:29,548 - INFO - Container for mozilla__cbindgen-293 created: 2a6c4f80dcdfa4e952f5d89eb6e552f1d8fed27f659dfb2f5ca1a4c2422f4c35
+2026-04-17 07:15:30,048 - INFO - Container for mozilla__cbindgen-293 started: 2a6c4f80dcdfa4e952f5d89eb6e552f1d8fed27f659dfb2f5ca1a4c2422f4c35
+2026-04-17 07:15:30,048 - INFO - Intermediate patch for mozilla__cbindgen-293 written to logs/run_evaluation/gold_run1/gold/mozilla__cbindgen-293/patch.diff, now applying to container...
+2026-04-17 07:15:30,331 - INFO - Failed to apply patch to container, trying again...
+2026-04-17 07:15:30,528 - INFO - >>>>> Applied Patch:
+patching file Cargo.lock
+Hunk #1 succeeded at 34 with fuzz 3.
+patching file Cargo.toml
+patching file src/bindgen/bindings.rs
+patching file src/bindgen/bindings.rs
+Hunk #1 succeeded at 28 (offset 5 lines).
+patching file src/bindgen/bindings.rs
+Hunk #1 succeeded at 140 (offset 14 lines).
+patching file src/bindgen/bindings.rs
+Hunk #1 succeeded at 156 (offset 14 lines).
+patching file src/bindgen/bindings.rs
+Hunk #1 succeeded at 172 (offset 14 lines).
+patching file src/bindgen/bindings.rs
+Hunk #1 succeeded at 187 (offset 14 lines).
+patching file src/bindgen/bitflags.rs
+patching file src/bindgen/config.rs
+patching file src/bindgen/config.rs
+Hunk #1 succeeded at 300 (offset 3 lines).
+patching file src/bindgen/ir/cfg.rs
+patching file src/bindgen/ir/constant.rs
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 11 (offset 1 line).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 38 (offset 8 lines).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 65 (offset 13 lines).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 74 (offset 13 lines).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 142 (offset 40 lines).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 168 (offset 40 lines).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 187 (offset 40 lines).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 239 (offset 4 lines).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 250 (offset 5 lines).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 260 (offset 6 lines).
+patching file src/bindgen/ir/constant.rs
+Hunk #1 succeeded at 285 (offset 10 lines).
+patching file src/bindgen/ir/enumeration.rs
+patching file src/bindgen/ir/enumeration.rs
+patching file src/bindgen/ir/enumeration.rs
+patching file src/bindgen/ir/function.rs
+patching file src/bindgen/ir/global.rs
+patching file src/bindgen/ir/global.rs
+patching file src/bindgen/ir/item.rs
+patching file src/bindgen/ir/item.rs
+patching file src/bindgen/ir/opaque.rs
+patching file src/bindgen/ir/opaque.rs
+patching file src/bindgen/ir/structure.rs
+patching file src/bindgen/ir/structure.rs
+patching file src/bindgen/ir/structure.rs
+Hunk #1 succeeded at 46 (offset 1 line).
+patching file src/bindgen/ir/structure.rs
+Hunk #1 succeeded at 123 (offset 5 lines).
+patching file src/bindgen/ir/structure.rs
+Hunk #1 succeeded at 184 (offset 6 lines).
+patching file src/bindgen/ir/structure.rs
+Hunk #1 succeeded at 272 (offset 6 lines).
+patching file src/bindgen/ir/structure.rs
+Hunk #1 succeeded at 289 (offset 10 lines).
+patching file src/bindgen/ir/structure.rs
+Hunk #1 succeeded at 341 (offset 14 lines).
+patching file src/bindgen/ir/structure.rs
+Hunk #1 succeeded at 503 (offset 19 lines).
+patching file src/bindgen/ir/structure.rs
+Hunk #1 succeeded at 520 (offset 29 lines).
+patching file src/bindgen/ir/typedef.rs
+patching file src/bindgen/ir/typedef.rs
+patching file src/bindgen/ir/union.rs
+patching file src/bindgen/ir/union.rs
+patching file src/bindgen/library.rs
+patching file src/bindgen/library.rs
+Hunk #1 succeeded at 115 (offset 3 lines).
+patching file src/bindgen/mod.rs
+patching file src/bindgen/parser.rs
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 203 (offset 1 line).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 228 (offset 1 line).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 312 (offset 1 line).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 375 (offset 1 line).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 488 (offset 1 line).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 531 (offset 1 line).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 577 (offset 14 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 611 (offset 14 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 658 (offset 14 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 683 (offset -20 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 691 (offset -26 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 728 (offset -18 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 740 (offset -18 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 760 (offset -19 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 797 (offset -19 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 814 (offset -20 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 832 (offset -20 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 857 (offset -20 lines).
+patching file src/bindgen/parser.rs
+Hunk #1 succeeded at 873 (offset -20 lines).
+patching file src/bindgen/writer.rs
+patching file src/bindgen/writer.rs
+Hunk #1 succeeded at 58 (offset 1 line).
+patching file src/bindgen/writer.rs
+Hunk #1 succeeded at 68 (offset 1 line).
+patching file src/bindgen/writer.rs
+Hunk #1 succeeded at 80 (offset 1 line).
+patching file src/bindgen/writer.rs
+Hunk #1 succeeded at 92 (offset 5 lines).
+patching file src/bindgen/writer.rs
+Hunk #1 succeeded at 122 (offset 5 lines).
+patching file src/bindgen/writer.rs
+Hunk #1 succeeded at 146 (offset 5 lines).
+patching file src/bindgen/writer.rs
+Hunk #1 succeeded at 191 (offset 5 lines).
+patching file src/bindgen/writer.rs
+Hunk #1 succeeded at 214 (offset 5 lines).
+patching file src/lib.rs
+patching file src/main.rs
+
+2026-04-17 07:15:30,585 - INFO - Git diff before:
+diff --git a/Cargo.lock b/Cargo.lock
+index 395db9e..946f182 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -13,7 +13,7 @@ name = "atty"
+ version = "0.2.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
+  "termion 1.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+@@ -34,11 +34,13 @@ version = "0.8.0"
+ dependencies = [
+  "clap 2.32.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde_json 1.0.36 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_derive 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_json 1.0.38 (registry+https://github.com/rust-lang/crates.io-index)",
+  "syn 0.15.26 (registry+https://github.com/rust-lang/crates.io-index)",
+- "tempfile 3.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
++ "tempfile 3.0.7 (registry+https://github.com/rust-lang/crates.io-index)",
+  "toml 0.4.10 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+@@ -70,17 +72,8 @@ dependencies = [
+ ]
+ 
+ [[package]]
+-name = "fuchsia-zircon"
+-version = "0.3.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "bitflags 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "fuchsia-zircon-sys 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "fuchsia-zircon-sys"
+-version = "0.3.3"
++name = "fuchsia-cprng"
++version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -90,7 +83,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.47"
++version = "0.2.49"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -103,7 +96,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "0.4.25"
++version = "0.4.27"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "unicode-xid 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+@@ -111,25 +104,26 @@ dependencies = [
+ 
+ [[package]]
+ name = "quote"
+-version = "0.6.10"
++version = "0.6.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 0.4.27 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand"
+-version = "0.6.4"
++version = "0.6.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "autocfg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rand_chacha 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rand_hc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rand_isaac 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_os 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_pcg 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_jitter 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_os 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_pcg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rand_xorshift 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+@@ -140,12 +134,20 @@ version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "autocfg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_core"
+-version = "0.3.0"
++version = "0.3.1"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++dependencies = [
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
++]
++
++[[package]]
++name = "rand_core"
++version = "0.4.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -153,7 +155,7 @@ name = "rand_hc"
+ version = "0.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -161,29 +163,39 @@ name = "rand_isaac"
+ version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
++]
++
++[[package]]
++name = "rand_jitter"
++version = "0.1.3"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++dependencies = [
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_os"
+-version = "0.1.1"
++version = "0.1.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "fuchsia-zircon 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_pcg"
+-version = "0.1.1"
++version = "0.1.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
++ "autocfg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -191,7 +203,7 @@ name = "rand_xorshift"
+ version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -199,12 +211,12 @@ name = "rdrand"
+ version = "0.4.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "redox_syscall"
+-version = "0.1.50"
++version = "0.1.51"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -212,7 +224,7 @@ name = "redox_termios"
+ version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "redox_syscall 0.1.50 (registry+https://github.com/rust-lang/crates.io-index)",
++ "redox_syscall 0.1.51 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -223,58 +235,37 @@ dependencies = [
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+-[[package]]
+-name = "rustc_version"
+-version = "0.2.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "semver 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+ [[package]]
+ name = "ryu"
+ version = "0.2.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+-[[package]]
+-name = "semver"
+-version = "0.9.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "semver-parser 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "semver-parser"
+-version = "0.7.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-
+ [[package]]
+ name = "serde"
+-version = "1.0.84"
++version = "1.0.88"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_derive 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.84"
++version = "1.0.88"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 0.4.27 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 0.6.11 (registry+https://github.com/rust-lang/crates.io-index)",
+  "syn 0.15.26 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.36"
++version = "1.0.38"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "itoa 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
+  "ryu 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -287,20 +278,20 @@ name = "syn"
+ version = "0.15.26"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 0.4.27 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 0.6.11 (registry+https://github.com/rust-lang/crates.io-index)",
+  "unicode-xid 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "tempfile"
+-version = "3.0.5"
++version = "3.0.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "cfg-if 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand 0.6.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_syscall 0.1.50 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
++ "redox_syscall 0.1.51 (registry+https://github.com/rust-lang/crates.io-index)",
+  "remove_dir_all 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+@@ -310,8 +301,8 @@ name = "termion"
+ version = "1.5.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_syscall 0.1.50 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
++ "redox_syscall 0.1.51 (registry+https://github.com/rust-lang/crates.io-index)",
+  "redox_termios 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+@@ -328,7 +319,7 @@ name = "toml"
+ version = "0.4.10"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -373,35 +364,33 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ "checksum cfg-if 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "082bb9b28e00d3c9d39cc03e64ce4cea0f1bb9b3fde493f0cbc008472d22bdf4"
+ "checksum clap 2.32.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b957d88f4b6a63b9d70d5f454ac8011819c6efa7727858f458ab71c756ce2d3e"
+ "checksum cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "ddfc5b9aa5d4507acaf872de71051dfd0e309860e88966e1051e462a077aac4f"
+-"checksum fuchsia-zircon 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "2e9763c69ebaae630ba35f74888db465e49e259ba1bc0eda7d06f4a067615d82"
+-"checksum fuchsia-zircon-sys 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "3dcaa9ae7725d12cdb85b3ad99a434db70b468c09ded17e012d86b5c1010f7a7"
++"checksum fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
+ "checksum itoa 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = "1306f3464951f30e30d12373d31c79fbd52d236e5e896fd92f96ec7babbbe60b"
+-"checksum libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)" = "48450664a984b25d5b479554c29cc04e3150c97aa4c01da5604a2d4ed9151476"
++"checksum libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)" = "413f3dfc802c5dc91dc570b05125b6cda9855edfaa9825c9849807876376e70e"
+ "checksum log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)" = "c84ec4b527950aa83a329754b01dbe3f58361d1c5efacd1f6d68c494d08a17c6"
+-"checksum proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)" = "d3797b7142c9aa74954e351fc089bbee7958cebbff6bf2815e7ffff0b19f547d"
+-"checksum quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)" = "53fa22a1994bd0f9372d7a816207d8a2677ad0325b073f5c5332760f0fb62b5c"
+-"checksum rand 0.6.4 (registry+https://github.com/rust-lang/crates.io-index)" = "3906503e80ac6cbcacb2c2973fa8e473f24d7e2747c8c92bb230c2441cad96b5"
++"checksum proc-macro2 0.4.27 (registry+https://github.com/rust-lang/crates.io-index)" = "4d317f9caece796be1980837fd5cb3dfec5613ebdb04ad0956deea83ce168915"
++"checksum quote 0.6.11 (registry+https://github.com/rust-lang/crates.io-index)" = "cdd8e04bd9c52e0342b406469d494fcb033be4bdbe5c606016defbb1681411e1"
++"checksum rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)" = "6d71dacdc3c88c1fde3885a3be3fbab9f35724e6ce99467f7d9c5026132184ca"
+ "checksum rand_chacha 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "556d3a1ca6600bfcbab7c7c91ccb085ac7fbbcd70e008a98742e7847f4f7bcef"
+-"checksum rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "0905b6b7079ec73b314d4c748701f6931eb79fd97c668caa3f1899b22b32c6db"
++"checksum rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6fdeb83b075e8266dcc8762c22776f6877a63111121f5f8c7411e5be7eed4b"
++"checksum rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d0e7a549d590831370895ab7ba4ea0c1b6b011d106b5ff2da6eee112615e6dc0"
+ "checksum rand_hc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7b40677c7be09ae76218dc623efbf7b18e34bced3f38883af07bb75630a21bc4"
+ "checksum rand_isaac 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "ded997c9d5f13925be2a6fd7e66bf1872597f759fd9dd93513dd7e92e5a5ee08"
+-"checksum rand_os 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "f46fbd5550acf75b0c2730f5dd1873751daf9beb8f11b44027778fae50d7feca"
+-"checksum rand_pcg 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "086bd09a33c7044e56bb44d5bdde5a60e7f119a9e95b0775f545de759a32fe05"
++"checksum rand_jitter 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)" = "7b9ea758282efe12823e0d952ddb269d2e1897227e464919a554f2a03ef1b832"
++"checksum rand_os 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b7c690732391ae0abafced5015ffb53656abfaec61b342290e5eb56b286a679d"
++"checksum rand_pcg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "abf9b09b01790cfe0364f52bf32995ea3c39f4d2dd011eac241d2914146d0b44"
+ "checksum rand_xorshift 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cbf7e9e623549b0e21f6e97cf8ecf247c1a8fd2e8a992ae265314300b2455d5c"
+ "checksum rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "678054eb77286b51581ba43620cc911abf02758c91f93f479767aed0f90458b2"
+-"checksum redox_syscall 0.1.50 (registry+https://github.com/rust-lang/crates.io-index)" = "52ee9a534dc1301776eff45b4fa92d2c39b1d8c3d3357e6eb593e0d795506fc2"
++"checksum redox_syscall 0.1.51 (registry+https://github.com/rust-lang/crates.io-index)" = "423e376fffca3dfa06c9e9790a9ccd282fafb3cc6e6397d01dbf64f9bacc6b85"
+ "checksum redox_termios 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7e891cfe48e9100a70a3b6eb652fef28920c117d366339687bd5576160db0f76"
+ "checksum remove_dir_all 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "3488ba1b9a2084d38645c4c08276a1752dcbf2c7130d74f1569681ad5d2799c5"
+-"checksum rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "138e3e0acb6c9fb258b19b67cb8abd63c00679d2851805ea151465464fe9030a"
+ "checksum ryu 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)" = "eb9e9b8cde282a9fe6a42dd4681319bfb63f121b8a8ee9439c6f4107e58a46f7"
+-"checksum semver 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = "1d7eb9ef2c18661902cc47e535f9bc51b78acd254da71d375c2f6720d9a40403"
+-"checksum semver-parser 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "388a1df253eca08550bef6c72392cfe7c30914bf41df5269b68cbd6ff8f570a3"
+-"checksum serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)" = "0e732ed5a5592c17d961555e3b552985baf98d50ce418b7b655f31f6ba7eb1b7"
+-"checksum serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)" = "b4d6115a3ca25c224e409185325afc16a0d5aaaabc15c42b09587d6f1ba39a5b"
+-"checksum serde_json 1.0.36 (registry+https://github.com/rust-lang/crates.io-index)" = "574378d957d6dcdf1bbb5d562a15cbd5e644159432f84634b94e485267abbcc7"
++"checksum serde 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)" = "9f301d728f2b94c9a7691c90f07b0b4e8a4517181d9461be94c04bddeb4bd850"
++"checksum serde_derive 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)" = "beed18e6f5175aef3ba670e57c60ef3b1b74d250d962a26604bff4c80e970dd4"
++"checksum serde_json 1.0.38 (registry+https://github.com/rust-lang/crates.io-index)" = "27dce848e7467aa0e2fcaf0a413641499c0b745452aaca1194d24dedde9e13c9"
+ "checksum strsim 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "bb4f380125926a99e52bc279241539c018323fab05ad6368b56f93d9369ff550"
+ "checksum syn 0.15.26 (registry+https://github.com/rust-lang/crates.io-index)" = "f92e629aa1d9c827b2bb8297046c1ccffc57c99b947a680d3ccff1f136a3bee9"
+-"checksum tempfile 3.0.5 (registry+https://github.com/rust-lang/crates.io-index)" = "7e91405c14320e5c79b3d148e1c86f40749a36e490642202a31689cb1a3452b2"
++"checksum tempfile 3.0.7 (registry+https://github.com/rust-lang/crates.io-index)" = "b86c784c88d98c801132806dadd3819ed29d8600836c4088e855cdf3e178ed8a"
+ "checksum termion 1.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "689a3bdfaab439fd92bc87df5c4c78417d3cbe537487274e9b0b2dce76e92096"
+ "checksum textwrap 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = "307686869c93e71f94da64286f9a9524c0f308a9e1c87a583de8e9c9039ad3f6"
+ "checksum toml 0.4.10 (registry+https://github.com/rust-lang/crates.io-index)" = "758664fc71a3a69038656bee8b6be6477d2a6c315a6b81f7081f591bffa4111f"
+diff --git a/Cargo.toml b/Cargo.toml
+index 96e24e3..c84c92b 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -21,11 +21,13 @@ serde_json = "1.0"
+ serde_derive = "1.0"
+ tempfile = "3.0"
+ toml = "0.4"
++proc-macro2 = "0.4"
++quote = "0.6"
+ 
+ [dependencies.syn]
+ version = "0.15.0"
+ default-features = false
+-features = ["clone-impls", "derive", "extra-traits", "full", "parsing", "printing"]
++features = ["clone-impls", "extra-traits", "full", "parsing", "printing"]
+ 
+ [[bin]]
+ name = "cbindgen"
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+index b429ce4..57be813 100644
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -8,12 +8,17 @@ use std::io::{Read, Write};
+ use std::path;
+ 
+ use bindgen::config::{Config, Language};
+-use bindgen::ir::{Constant, Function, ItemContainer, Static};
++use bindgen::ir::{
++    Constant, Function, ItemContainer, ItemMap, Path as BindgenPath, Static, Struct,
++};
+ use bindgen::writer::{Source, SourceWriter};
+ 
+ /// A bindings header that can be written.
+ pub struct Bindings {
+-    config: Config,
++    pub config: Config,
++    /// The map from path to struct, used to lookup whether a given type is a
++    /// transparent struct. This is needed to generate code for constants.
++    struct_map: ItemMap<Struct>,
+     globals: Vec<Static>,
+     constants: Vec<Constant>,
+     items: Vec<ItemContainer>,
+@@ -23,20 +28,29 @@ pub struct Bindings {
+ impl Bindings {
+     pub(crate) fn new(
+         config: Config,
++        struct_map: ItemMap<Struct>,
+         constants: Vec<Constant>,
+         globals: Vec<Static>,
+         items: Vec<ItemContainer>,
+         functions: Vec<Function>,
+     ) -> Bindings {
+         Bindings {
+-            config: config,
+-            globals: globals,
+-            constants: constants,
+-            items: items,
+-            functions: functions,
++            config,
++            struct_map,
++            globals,
++            constants,
++            items,
++            functions,
+         }
+     }
+ 
++    // FIXME(emilio): What to do when the configuration doesn't match?
++    pub fn struct_is_transparent(&self, path: &BindgenPath) -> bool {
++        let mut any = false;
++        self.struct_map.for_items(path, |s| any |= s.is_transparent);
++        any
++    }
++
+     pub fn write_to_file<P: AsRef<path::Path>>(&self, path: P) -> bool {
+         // Don't compare files if we've never written this file before
+         if !path.as_ref().is_file() {
+@@ -126,7 +140,7 @@ impl Bindings {
+     }
+ 
+     pub fn write<F: Write>(&self, file: F) {
+-        let mut out = SourceWriter::new(file, &self.config);
++        let mut out = SourceWriter::new(file, self);
+ 
+         if !self.config.no_includes
+             || !self.config.includes.is_empty()
+@@ -142,7 +156,7 @@ impl Bindings {
+         for constant in &self.constants {
+             if constant.ty.is_primitive_or_ptr_primitive() {
+                 out.new_line_if_not_start();
+-                constant.write(&self.config, &mut out);
++                constant.write(&self.config, &mut out, None);
+                 out.new_line();
+             }
+         }
+@@ -158,14 +172,14 @@ impl Bindings {
+             }
+ 
+             out.new_line_if_not_start();
+-            match item {
+-                &ItemContainer::Constant(..) => unreachable!(),
+-                &ItemContainer::Static(..) => unreachable!(),
+-                &ItemContainer::Enum(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::Struct(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::Union(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::OpaqueItem(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::Typedef(ref x) => x.write(&self.config, &mut out),
++            match *item {
++                ItemContainer::Constant(..) => unreachable!(),
++                ItemContainer::Static(..) => unreachable!(),
++                ItemContainer::Enum(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::Struct(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::Union(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::OpaqueItem(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::Typedef(ref x) => x.write(&self.config, &mut out),
+             }
+             out.new_line();
+         }
+@@ -173,7 +187,7 @@ impl Bindings {
+         for constant in &self.constants {
+             if !constant.ty.is_primitive_or_ptr_primitive() {
+                 out.new_line_if_not_start();
+-                constant.write(&self.config, &mut out);
++                constant.write(&self.config, &mut out, None);
+                 out.new_line();
+             }
+         }
+diff --git a/src/bindgen/config.rs b/src/bindgen/config.rs
+index 609d1fd..efb6e8a 100644
+--- a/src/bindgen/config.rs
++++ b/src/bindgen/config.rs
+@@ -284,6 +284,9 @@ pub struct StructConfig {
+     pub derive_gt: bool,
+     /// Whether to generate a greater than or equal to operator on structs with one field
+     pub derive_gte: bool,
++    /// Whether associated constants should be in the body. Only applicable to
++    /// non-transparent structs, and in C++-only.
++    pub associated_constants_in_body: bool,
+ }
+ 
+ impl Default for StructConfig {
+@@ -297,6 +300,7 @@ impl Default for StructConfig {
+             derive_lte: false,
+             derive_gt: false,
+             derive_gte: false,
++            associated_constants_in_body: false,
+         }
+     }
+ }
+diff --git a/src/bindgen/ir/cfg.rs b/src/bindgen/ir/cfg.rs
+index 3d4eb1d..d28c5ec 100644
+--- a/src/bindgen/ir/cfg.rs
++++ b/src/bindgen/ir/cfg.rs
+@@ -93,14 +93,12 @@ impl Cfg {
+         }
+     }
+ 
+-    pub fn append(parent: &Option<Cfg>, child: Option<Cfg>) -> Option<Cfg> {
++    pub fn append(parent: Option<&Cfg>, child: Option<Cfg>) -> Option<Cfg> {
+         match (parent, child) {
+-            (&None, None) => None,
+-            (&None, Some(child)) => Some(child),
+-            (&Some(ref parent), None) => Some(parent.clone()),
+-            (&Some(ref parent), Some(ref child)) => {
+-                Some(Cfg::All(vec![parent.clone(), child.clone()]))
+-            }
++            (None, None) => None,
++            (None, Some(child)) => Some(child),
++            (Some(parent), None) => Some(parent.clone()),
++            (Some(parent), Some(child)) => Some(Cfg::All(vec![parent.clone(), child])),
+         }
+     }
+ 
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+index 794e899..afb171d 100644
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -2,6 +2,7 @@
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
++use std::borrow::Cow;
+ use std::fmt;
+ use std::io::Write;
+ use std::mem;
+@@ -10,17 +11,24 @@ use syn;
+ 
+ use bindgen::config::{Config, Language};
+ use bindgen::declarationtyperesolver::DeclarationTypeResolver;
++use bindgen::dependencies::Dependencies;
+ use bindgen::ir::{
+     AnnotationSet, Cfg, ConditionWrite, Documentation, GenericParams, Item, ItemContainer, Path,
+-    ToCondition, Type,
++    Struct, ToCondition, Type,
+ };
++use bindgen::library::Library;
+ use bindgen::writer::{Source, SourceWriter};
+ 
+ #[derive(Debug, Clone)]
+ pub enum Literal {
+     Expr(String),
++    BinOp {
++        left: Box<Literal>,
++        op: &'static str,
++        right: Box<Literal>,
++    },
+     Struct {
+-        name: String,
++        path: Path,
+         export_name: String,
+         fields: Vec<(String, Literal)>,
+     },
+@@ -30,8 +38,13 @@ impl fmt::Display for Literal {
+     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+         match self {
+             Literal::Expr(v) => write!(f, "{}", v),
++            Literal::BinOp {
++                ref left,
++                op,
++                ref right,
++            } => write!(f, "{} {} {}", left, op, right),
+             Literal::Struct {
+-                name: _,
++                path: _,
+                 export_name,
+                 fields,
+             } => write!(
+@@ -52,7 +65,7 @@ impl Literal {
+     pub fn rename_for_config(&mut self, config: &Config) {
+         match self {
+             Literal::Struct {
+-                name: _,
++                path: _,
+                 ref mut export_name,
+                 fields,
+             } => {
+@@ -61,25 +74,52 @@ impl Literal {
+                     lit.rename_for_config(config);
+                 }
+             }
++            Literal::BinOp {
++                ref mut left,
++                ref mut right,
++                ..
++            } => {
++                left.rename_for_config(config);
++                right.rename_for_config(config);
++            }
+             Literal::Expr(_) => {}
+         }
+     }
+ 
+     pub fn load(expr: &syn::Expr) -> Result<Literal, String> {
+-        match expr {
+-            &syn::Expr::Lit(syn::ExprLit {
++        match *expr {
++            syn::Expr::Binary(ref bin_expr) => {
++                let l = Self::load(&bin_expr.left)?;
++                let r = Self::load(&bin_expr.right)?;
++                let op = match bin_expr.op {
++                    syn::BinOp::Add(..) => "+",
++                    syn::BinOp::Sub(..) => "-",
++                    syn::BinOp::Mul(..) => "*",
++                    syn::BinOp::Div(..) => "/",
++                    syn::BinOp::Rem(..) => "%",
++                    syn::BinOp::Shl(..) => "<<",
++                    syn::BinOp::Shr(..) => ">>",
++                    _ => return Err(format!("Unsupported binary op {:?}", bin_expr.op)),
++                };
++                Ok(Literal::BinOp {
++                    left: Box::new(l),
++                    op,
++                    right: Box::new(r),
++                })
++            }
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Str(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("u8\"{}\"", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Byte(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Char(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Int(ref value),
+                 ..
+             }) => match value.suffix() {
+@@ -102,16 +142,16 @@ impl Literal {
+                     )))
+                 },
+             },
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Float(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Bool(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value))),
+ 
+-            &syn::Expr::Struct(syn::ExprStruct {
++            syn::Expr::Struct(syn::ExprStruct {
+                 ref path,
+                 ref fields,
+                 ..
+@@ -128,7 +168,7 @@ impl Literal {
+                     field_pairs.push((key, value));
+                 }
+                 Ok(Literal::Struct {
+-                    name: struct_name.clone(),
++                    path: Path::new(struct_name.clone()),
+                     export_name: struct_name,
+                     fields: field_pairs,
+                 })
+@@ -147,84 +187,48 @@ pub struct Constant {
+     pub cfg: Option<Cfg>,
+     pub annotations: AnnotationSet,
+     pub documentation: Documentation,
++    pub associated_to: Option<Path>,
++}
++
++fn can_handle(ty: &Type, expr: &syn::Expr) -> bool {
++    if ty.is_primitive_or_ptr_primitive() {
++        return true;
++    }
++    match *expr {
++        syn::Expr::Struct(_) => true,
++        _ => false,
++    }
+ }
+ 
+ impl Constant {
+     pub fn load(
+         path: Path,
+-        item: &syn::ItemConst,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
++        ty: &syn::Type,
++        expr: &syn::Expr,
++        attrs: &[syn::Attribute],
++        associated_to: Option<Path>,
+     ) -> Result<Constant, String> {
+-        let ty = Type::load(&item.ty)?;
+-
+-        if ty.is_none() {
+-            return Err("Cannot have a zero sized const definition.".to_owned());
+-        }
+-
+-        let ty = ty.unwrap();
+-
+-        if !ty.is_primitive_or_ptr_primitive()
+-            && match *item.expr {
+-                syn::Expr::Struct(_) => false,
+-                _ => true,
++        let ty = Type::load(ty)?;
++        let ty = match ty {
++            Some(ty) => ty,
++            None => {
++                return Err("Cannot have a zero sized const definition.".to_owned());
+             }
+-        {
+-            return Err("Unhanded const definition".to_owned());
+-        }
+-
+-        Ok(Constant::new(
+-            path,
+-            ty,
+-            Literal::load(&item.expr)?,
+-            Cfg::append(mod_cfg, Cfg::load(&item.attrs)),
+-            AnnotationSet::load(&item.attrs)?,
+-            Documentation::load(&item.attrs),
+-        ))
+-    }
+-
+-    pub fn load_assoc(
+-        name: String,
+-        item: &syn::ImplItemConst,
+-        mod_cfg: &Option<Cfg>,
+-        is_transparent: bool,
+-        struct_path: &Path,
+-    ) -> Result<Constant, String> {
+-        let ty = Type::load(&item.ty)?;
+-
+-        if ty.is_none() {
+-            return Err("Cannot have a zero sized const definition.".to_owned());
+-        }
+-        let ty = ty.unwrap();
+-
+-        let can_handle_const_expr = match item.expr {
+-            syn::Expr::Struct(_) => true,
+-            _ => false,
+         };
+ 
+-        if !ty.is_primitive_or_ptr_primitive() && !can_handle_const_expr {
+-            return Err("Unhandled const definition".to_owned());
++        if !can_handle(&ty, expr) {
++            return Err("Unhanded const definition".to_owned());
+         }
+ 
+-        let expr = Literal::load(match item.expr {
+-            syn::Expr::Struct(syn::ExprStruct { ref fields, .. }) => {
+-                if is_transparent && fields.len() == 1 {
+-                    &fields[0].expr
+-                } else {
+-                    &item.expr
+-                }
+-            }
+-            _ => &item.expr,
+-        })?;
+-
+-        let full_name = Path::new(format!("{}_{}", struct_path, name));
+-
+         Ok(Constant::new(
+-            full_name,
++            path,
+             ty,
+-            expr,
+-            Cfg::append(mod_cfg, Cfg::load(&item.attrs)),
+-            AnnotationSet::load(&item.attrs)?,
+-            Documentation::load(&item.attrs),
++            Literal::load(&expr)?,
++            Cfg::append(mod_cfg, Cfg::load(attrs)),
++            AnnotationSet::load(attrs)?,
++            Documentation::load(attrs),
++            associated_to,
+         ))
+     }
+ 
+@@ -235,6 +239,7 @@ impl Constant {
+         cfg: Option<Cfg>,
+         annotations: AnnotationSet,
+         documentation: Documentation,
++        associated_to: Option<Path>,
+     ) -> Self {
+         let export_name = path.name().to_owned();
+         Self {
+@@ -245,6 +250,7 @@ impl Constant {
+             cfg,
+             annotations,
+             documentation,
++            associated_to,
+         }
+     }
+ }
+@@ -254,12 +260,16 @@ impl Item for Constant {
+         &self.path
+     }
+ 
++    fn add_dependencies(&self, library: &Library, out: &mut Dependencies) {
++        self.ty.add_dependencies(library, out);
++    }
++
+     fn export_name(&self) -> &str {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+@@ -275,7 +285,9 @@ impl Item for Constant {
+     }
+ 
+     fn rename_for_config(&mut self, config: &Config) {
+-        config.export.rename(&mut self.export_name);
++        if self.associated_to.is_none() {
++            config.export.rename(&mut self.export_name);
++        }
+         self.value.rename_for_config(config);
+         self.ty.rename_for_config(config, &GenericParams::default()); // FIXME: should probably propagate something here
+     }
+diff --git a/src/bindgen/ir/enumeration.rs b/src/bindgen/ir/enumeration.rs
+index 3ea3f4f..a4324c7 100644
+--- a/src/bindgen/ir/enumeration.rs
++++ b/src/bindgen/ir/enumeration.rs
+@@ -54,7 +54,7 @@ impl EnumVariant {
+         is_tagged: bool,
+         variant: &syn::Variant,
+         generic_params: GenericParams,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+     ) -> Result<Self, String> {
+         let discriminant = match variant.discriminant {
+             Some((_, ref expr)) => match value_from_expr(expr) {
+@@ -250,7 +250,7 @@ impl Enum {
+         }
+     }
+ 
+-    pub fn load(item: &syn::ItemEnum, mod_cfg: &Option<Cfg>) -> Result<Enum, String> {
++    pub fn load(item: &syn::ItemEnum, mod_cfg: Option<&Cfg>) -> Result<Enum, String> {
+         let repr = Repr::load(&item.attrs)?;
+         if repr == Repr::RUST {
+             return Err("Enum not marked with a valid repr(prim) or repr(C).".to_owned());
+@@ -332,8 +332,8 @@ impl Item for Enum {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/function.rs b/src/bindgen/ir/function.rs
+index 8f83a5b..c3fa4c9 100644
+--- a/src/bindgen/ir/function.rs
++++ b/src/bindgen/ir/function.rs
+@@ -37,7 +37,7 @@ impl Function {
+         decl: &syn::FnDecl,
+         extern_decl: bool,
+         attrs: &[syn::Attribute],
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+     ) -> Result<Function, String> {
+         let args = decl.inputs.iter().try_skip_map(|x| x.as_ident_and_type())?;
+         let ret = match decl.output {
+diff --git a/src/bindgen/ir/global.rs b/src/bindgen/ir/global.rs
+index 6fc261b..975e7e8 100644
+--- a/src/bindgen/ir/global.rs
++++ b/src/bindgen/ir/global.rs
+@@ -25,7 +25,7 @@ pub struct Static {
+ }
+ 
+ impl Static {
+-    pub fn load(item: &syn::ItemStatic, mod_cfg: &Option<Cfg>) -> Result<Static, String> {
++    pub fn load(item: &syn::ItemStatic, mod_cfg: Option<&Cfg>) -> Result<Static, String> {
+         let ty = Type::load(&item.ty)?;
+ 
+         if ty.is_none() {
+@@ -76,8 +76,8 @@ impl Item for Static {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/item.rs b/src/bindgen/ir/item.rs
+index e63a68b..0b83f9d 100644
+--- a/src/bindgen/ir/item.rs
++++ b/src/bindgen/ir/item.rs
+@@ -23,7 +23,7 @@ pub trait Item {
+     fn export_name(&self) -> &str {
+         self.name()
+     }
+-    fn cfg(&self) -> &Option<Cfg>;
++    fn cfg(&self) -> Option<&Cfg>;
+     fn annotations(&self) -> &AnnotationSet;
+     fn annotations_mut(&mut self) -> &mut AnnotationSet;
+ 
+@@ -206,7 +206,6 @@ impl<T: Item + Clone> ItemMap<T> {
+         }
+     }
+ 
+-    #[allow(dead_code)]
+     pub fn for_items<F>(&self, path: &Path, mut callback: F)
+     where
+         F: FnMut(&T),
+diff --git a/src/bindgen/ir/opaque.rs b/src/bindgen/ir/opaque.rs
+index 0db02bc..055ffa5 100644
+--- a/src/bindgen/ir/opaque.rs
++++ b/src/bindgen/ir/opaque.rs
+@@ -33,7 +33,7 @@ impl OpaqueItem {
+         path: Path,
+         generics: &syn::Generics,
+         attrs: &[syn::Attribute],
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+     ) -> Result<OpaqueItem, String> {
+         Ok(Self::new(
+             path,
+@@ -72,8 +72,8 @@ impl Item for OpaqueItem {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+index 3845e0e..fc1295c 100644
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -10,8 +10,8 @@ use bindgen::config::{Config, Language};
+ use bindgen::declarationtyperesolver::DeclarationTypeResolver;
+ use bindgen::dependencies::Dependencies;
+ use bindgen::ir::{
+-    AnnotationSet, Cfg, ConditionWrite, Documentation, GenericParams, Item, ItemContainer, Path,
+-    Repr, ToCondition, Type, Typedef,
++    AnnotationSet, Cfg, ConditionWrite, Constant, Documentation, GenericParams, Item,
++    ItemContainer, Path, Repr, ToCondition, Type, Typedef,
+ };
+ use bindgen::library::Library;
+ use bindgen::mangle;
+@@ -37,6 +37,7 @@ pub struct Struct {
+     pub cfg: Option<Cfg>,
+     pub annotations: AnnotationSet,
+     pub documentation: Documentation,
++    pub associated_constants: Vec<Constant>,
+ }
+ 
+ impl Struct {
+@@ -45,7 +46,11 @@ impl Struct {
+         !self.fields.is_empty() && self.fields.iter().all(|x| x.1.can_cmp_eq())
+     }
+ 
+-    pub fn load(item: &syn::ItemStruct, mod_cfg: &Option<Cfg>) -> Result<Self, String> {
++    pub fn add_associated_constant(&mut self, c: Constant) {
++        self.associated_constants.push(c);
++    }
++
++    pub fn load(item: &syn::ItemStruct, mod_cfg: Option<&Cfg>) -> Result<Self, String> {
+         let is_transparent = match Repr::load(&item.attrs)? {
+             Repr::C => false,
+             Repr::TRANSPARENT => true,
+@@ -118,6 +123,7 @@ impl Struct {
+             cfg,
+             annotations,
+             documentation,
++            associated_constants: vec![],
+         }
+     }
+ 
+@@ -178,8 +184,8 @@ impl Item for Struct {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+@@ -266,6 +272,10 @@ impl Item for Struct {
+         for field in &mut self.fields {
+             reserved::escape(&mut field.0);
+         }
++
++        for c in self.associated_constants.iter_mut() {
++            c.rename_for_config(config);
++        }
+     }
+ 
+     fn add_dependencies(&self, library: &Library, out: &mut Dependencies) {
+@@ -279,6 +289,10 @@ impl Item for Struct {
+         for &(_, ref ty, _) in fields {
+             ty.add_dependencies_ignoring_generics(&self.generic_params, library, out);
+         }
++
++        for c in &self.associated_constants {
++            c.add_dependencies(library, out);
++        }
+     }
+ 
+     fn instantiate_monomorph(
+@@ -327,7 +341,12 @@ impl Source for Struct {
+                 annotations: self.annotations.clone(),
+                 documentation: self.documentation.clone(),
+             };
+-            return typedef.write(config, out);
++            typedef.write(config, out);
++            for constant in &self.associated_constants {
++                out.new_line();
++                constant.write(config, out, Some(self));
++            }
++            return;
+         }
+ 
+         let condition = (&self.cfg).to_condition(config);
+@@ -484,6 +503,16 @@ impl Source for Struct {
+             out.write_raw_block(body);
+         }
+ 
++        if config.language == Language::Cxx
++            && config.structure.associated_constants_in_body
++            && config.constant.allow_static_const
++        {
++            for constant in &self.associated_constants {
++                out.new_line();
++                constant.write_declaration(config, out, self);
++            }
++        }
++
+         if config.language == Language::C && config.style.generate_typedef() {
+             out.close_brace(false);
+             write!(out, " {};", self.export_name());
+@@ -491,6 +520,11 @@ impl Source for Struct {
+             out.close_brace(true);
+         }
+ 
++        for constant in &self.associated_constants {
++            out.new_line();
++            constant.write(config, out, Some(self));
++        }
++
+         condition.write_after(config, out);
+     }
+ }
+diff --git a/src/bindgen/ir/typedef.rs b/src/bindgen/ir/typedef.rs
+index a11e41c..28d26c2 100644
+--- a/src/bindgen/ir/typedef.rs
++++ b/src/bindgen/ir/typedef.rs
+@@ -32,7 +32,7 @@ pub struct Typedef {
+ }
+ 
+ impl Typedef {
+-    pub fn load(item: &syn::ItemType, mod_cfg: &Option<Cfg>) -> Result<Typedef, String> {
++    pub fn load(item: &syn::ItemType, mod_cfg: Option<&Cfg>) -> Result<Typedef, String> {
+         if let Some(x) = Type::load(&item.ty)? {
+             let path = Path::new(item.ident.to_string());
+             Ok(Typedef::new(
+@@ -122,8 +122,8 @@ impl Item for Typedef {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/union.rs b/src/bindgen/ir/union.rs
+index 58d128d..9178eda 100644
+--- a/src/bindgen/ir/union.rs
++++ b/src/bindgen/ir/union.rs
+@@ -34,7 +34,7 @@ pub struct Union {
+ }
+ 
+ impl Union {
+-    pub fn load(item: &syn::ItemUnion, mod_cfg: &Option<Cfg>) -> Result<Union, String> {
++    pub fn load(item: &syn::ItemUnion, mod_cfg: Option<&Cfg>) -> Result<Union, String> {
+         if Repr::load(&item.attrs)? != Repr::C {
+             return Err("Union is not marked #[repr(C)].".to_owned());
+         }
+@@ -119,8 +119,8 @@ impl Item for Union {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/library.rs b/src/bindgen/library.rs
+index 3409c4d..1b057a0 100644
+--- a/src/bindgen/library.rs
++++ b/src/bindgen/library.rs
+@@ -74,6 +74,9 @@ impl Library {
+         self.globals.for_all_items(|global| {
+             global.add_dependencies(&self, &mut dependencies);
+         });
++        self.constants.for_all_items(|constant| {
++            constant.add_dependencies(&self, &mut dependencies);
++        });
+         for name in &self.config.export.include {
+             let path = Path::new(name.clone());
+             if let Some(items) = self.get_items(&path) {
+@@ -112,6 +115,7 @@ impl Library {
+ 
+         Ok(Bindings::new(
+             self.config,
++            self.structs,
+             constants,
+             globals,
+             items,
+diff --git a/src/bindgen/mod.rs b/src/bindgen/mod.rs
+index e27b178..85b3f22 100644
+--- a/src/bindgen/mod.rs
++++ b/src/bindgen/mod.rs
+@@ -37,6 +37,7 @@ macro_rules! deserialize_enum_str {
+ }
+ 
+ mod bindings;
++mod bitflags;
+ mod builder;
+ mod cargo;
+ mod cdecl;
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+index b90fde6..b2e3dd4 100644
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -9,11 +9,12 @@ use std::path::{Path as FilePath, PathBuf as FilePathBuf};
+ 
+ use syn;
+ 
++use bindgen::bitflags;
+ use bindgen::cargo::{Cargo, PackageRef};
+ use bindgen::error::Error;
+ use bindgen::ir::{
+-    AnnotationSet, Cfg, Constant, Documentation, Enum, Function, GenericParams, ItemContainer,
+-    ItemMap, OpaqueItem, Path, Static, Struct, Type, Typedef, Union,
++    AnnotationSet, Cfg, Constant, Documentation, Enum, Function, GenericParams, ItemMap,
++    OpaqueItem, Path, Static, Struct, Type, Typedef, Union,
+ };
+ use bindgen::utilities::{SynAbiHelpers, SynItemHelpers};
+ 
+@@ -202,7 +203,7 @@ impl Parser {
+         self.out.load_syn_crate_mod(
+             &self.binding_crate_name,
+             &pkg.name,
+-            &Cfg::join(&self.cfg_stack),
++            Cfg::join(&self.cfg_stack).as_ref(),
+             items,
+         );
+ 
+@@ -227,7 +228,7 @@ impl Parser {
+                         self.cfg_stack.pop();
+                     }
+                 }
+-                &syn::Item::ExternCrate(ref item) => {
++                syn::Item::ExternCrate(ref item) => {
+                     let dep_pkg_name = item.ident.to_string();
+ 
+                     let cfg = Cfg::load(&item.attrs);
+@@ -311,7 +312,7 @@ impl Parser {
+         self.out.load_syn_crate_mod(
+             &self.binding_crate_name,
+             &pkg.name,
+-            &Cfg::join(&self.cfg_stack),
++            Cfg::join(&self.cfg_stack).as_ref(),
+             items,
+         );
+ 
+@@ -374,7 +375,7 @@ impl Parser {
+                         self.cfg_stack.pop();
+                     }
+                 }
+-                &syn::Item::ExternCrate(ref item) => {
++                syn::Item::ExternCrate(ref item) => {
+                     let dep_pkg_name = item.ident.to_string();
+ 
+                     let cfg = Cfg::load(&item.attrs);
+@@ -487,7 +488,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         items: &[syn::Item],
+     ) {
+         let mut impls_with_assoc_consts = Vec::new();
+@@ -530,31 +531,44 @@ impl Parse {
+                         impls_with_assoc_consts.push(item_impl);
+                     }
+                 }
++                syn::Item::Macro(ref item) => {
++                    self.load_builtin_macro(binding_crate_name, crate_name, mod_cfg, item)
++                }
+                 _ => {}
+             }
+         }
+ 
+         for item_impl in impls_with_assoc_consts {
+-            let associated_constants = item_impl.items.iter().filter_map(|item| match item {
+-                syn::ImplItem::Const(ref associated_constant) => Some(associated_constant),
+-                _ => None,
+-            });
+-            self.load_syn_assoc_consts(
+-                binding_crate_name,
+-                crate_name,
+-                mod_cfg,
+-                &item_impl.self_ty,
+-                associated_constants,
+-            );
++            self.load_syn_assoc_consts_from_impl(binding_crate_name, crate_name, mod_cfg, item_impl)
+         }
+     }
+ 
++    fn load_syn_assoc_consts_from_impl(
++        &mut self,
++        binding_crate_name: &str,
++        crate_name: &str,
++        mod_cfg: Option<&Cfg>,
++        item_impl: &syn::ItemImpl,
++    ) {
++        let associated_constants = item_impl.items.iter().filter_map(|item| match item {
++            syn::ImplItem::Const(ref associated_constant) => Some(associated_constant),
++            _ => None,
++        });
++        self.load_syn_assoc_consts(
++            binding_crate_name,
++            crate_name,
++            mod_cfg,
++            &item_impl.self_ty,
++            associated_constants,
++        );
++    }
++
+     /// Enters a `extern "C" { }` declaration and loads function declarations.
+     fn load_syn_foreign_mod(
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemForeignMod,
+     ) {
+         if !item.abi.is_c() {
+@@ -563,8 +577,8 @@ impl Parse {
+         }
+ 
+         for foreign_item in &item.items {
+-            match foreign_item {
+-                &syn::ForeignItem::Fn(ref function) => {
++            match *foreign_item {
++                syn::ForeignItem::Fn(ref function) => {
+                     if crate_name != binding_crate_name {
+                         info!(
+                             "Skip {}::{} - (fn's outside of the binding crate are not used).",
+@@ -597,7 +611,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemFn,
+     ) {
+         if crate_name != binding_crate_name {
+@@ -644,46 +658,12 @@ impl Parse {
+         }
+     }
+ 
+-    fn is_assoc_const_of_transparent_struct(
+-        &self,
+-        const_item: &syn::ImplItemConst,
+-    ) -> Result<bool, ()> {
+-        let ty = match Type::load(&const_item.ty) {
+-            Ok(Some(t)) => t,
+-            _ => return Ok(false),
+-        };
+-        let path = match ty.get_root_path() {
+-            Some(p) => p,
+-            _ => return Ok(false),
+-        };
+-
+-        match self.structs.get_items(&path) {
+-            Some(items) => {
+-                if items.len() != 1 {
+-                    error!(
+-                        "Expected one struct to match path {}, but found {}",
+-                        path,
+-                        items.len(),
+-                    );
+-                    return Err(());
+-                }
+-
+-                Ok(if let ItemContainer::Struct(ref s) = items[0] {
+-                    s.is_transparent
+-                } else {
+-                    false
+-                })
+-            }
+-            _ => Ok(false),
+-        }
+-    }
+-
+     /// Loads associated `const` declarations
+     fn load_syn_assoc_consts<'a, I>(
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         impl_ty: &syn::Type,
+         items: I,
+     ) where
+@@ -703,12 +683,6 @@ impl Parse {
+         let impl_path = ty.unwrap().get_root_path().unwrap();
+ 
+         for item in items.into_iter() {
+-            let is_assoc_const_of_transparent_struct =
+-                match self.is_assoc_const_of_transparent_struct(&item) {
+-                    Ok(b) => b,
+-                    Err(_) => continue,
+-                };
+-
+             if crate_name != binding_crate_name {
+                 info!(
+                     "Skip {}::{} - (const's outside of the binding crate are not used).",
+@@ -717,21 +691,29 @@ impl Parse {
+                 continue;
+             }
+ 
+-            let const_name = item.ident.to_string();
+-
+-            match Constant::load_assoc(
+-                const_name,
+-                item,
++            let path = Path::new(item.ident.to_string());
++            match Constant::load(
++                path,
+                 mod_cfg,
+-                is_assoc_const_of_transparent_struct,
+-                &impl_path,
++                &item.ty,
++                &item.expr,
++                &item.attrs,
++                Some(impl_path.clone()),
+             ) {
+                 Ok(constant) => {
+-                    info!("Take {}::{}.", crate_name, &item.ident);
+-
+-                    let full_name = constant.path.clone();
+-                    if !self.constants.try_insert(constant) {
+-                        error!("Conflicting name for constant {}", full_name);
++                    info!("Take {}::{}::{}.", crate_name, impl_path, &item.ident);
++                    let mut any = false;
++                    self.structs.for_items_mut(&impl_path, |item| {
++                        any = true;
++                        item.add_associated_constant(constant.clone());
++                    });
++                    // Handle associated constants to other item types that are
++                    // not structs like enums or such as regular constants.
++                    if !any && !self.constants.try_insert(constant) {
++                        error!(
++                            "Conflicting name for constant {}::{}::{}.",
++                            crate_name, impl_path, &item.ident,
++                        );
+                     }
+                 }
+                 Err(msg) => {
+@@ -746,7 +728,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemConst,
+     ) {
+         if crate_name != binding_crate_name {
+@@ -758,8 +740,7 @@ impl Parse {
+         }
+ 
+         let path = Path::new(item.ident.to_string());
+-
+-        match Constant::load(path, item, mod_cfg) {
++        match Constant::load(path, mod_cfg, &item.ty, &item.expr, &item.attrs, None) {
+             Ok(constant) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+ 
+@@ -779,7 +760,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemStatic,
+     ) {
+         if crate_name != binding_crate_name {
+@@ -816,11 +797,10 @@ impl Parse {
+     }
+ 
+     /// Loads a `struct` declaration
+-    fn load_syn_struct(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemStruct) {
++    fn load_syn_struct(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemStruct) {
+         match Struct::load(item, mod_cfg) {
+             Ok(st) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+-
+                 self.structs.try_insert(st);
+             }
+             Err(msg) => {
+@@ -834,7 +814,7 @@ impl Parse {
+     }
+ 
+     /// Loads a `union` declaration
+-    fn load_syn_union(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemUnion) {
++    fn load_syn_union(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemUnion) {
+         match Union::load(item, mod_cfg) {
+             Ok(st) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+@@ -852,7 +832,7 @@ impl Parse {
+     }
+ 
+     /// Loads a `enum` declaration
+-    fn load_syn_enum(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemEnum) {
++    fn load_syn_enum(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemEnum) {
+         if item.generics.lifetimes().count() > 0 {
+             info!(
+                 "Skip {}::{} - (has generics or lifetimes or where bounds).",
+@@ -877,7 +857,7 @@ impl Parse {
+     }
+ 
+     /// Loads a `type` declaration
+-    fn load_syn_ty(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemType) {
++    fn load_syn_ty(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemType) {
+         match Typedef::load(item, mod_cfg) {
+             Ok(st) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+@@ -893,4 +873,36 @@ impl Parse {
+             }
+         }
+     }
++
++    fn load_builtin_macro(
++        &mut self,
++        binding_crate_name: &str,
++        crate_name: &str,
++        mod_cfg: Option<&Cfg>,
++        item: &syn::ItemMacro,
++    ) {
++        let name = match item.mac.path.segments.last() {
++            Some(ref n) => n.value().ident.to_string(),
++            None => return,
++        };
++
++        if name != "bitflags" {
++            return;
++        }
++
++        let bitflags = match bitflags::parse(item.mac.tts.clone()) {
++            Ok(b) => b,
++            Err(e) => {
++                warn!("Failed to parse bitflags invocation: {:?}", e);
++                return;
++            }
++        };
++
++        let (struct_, impl_) = bitflags.expand();
++        self.load_syn_struct(crate_name, mod_cfg, &struct_);
++        // We know that the expansion will only reference `struct_`, so it's
++        // fine to just do it here instead of deferring it like we do with the
++        // other calls to this function.
++        self.load_syn_assoc_consts_from_impl(binding_crate_name, crate_name, mod_cfg, &impl_);
++    }
+ }
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+index dde7a5b..2a061b5 100644
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -7,6 +7,7 @@ use std::io;
+ use std::io::Write;
+ 
+ use bindgen::config::{Braces, Config};
++use bindgen::Bindings;
+ 
+ /// A type of way to format a list.
+ pub enum ListType<'a> {
+@@ -57,7 +58,7 @@ impl<'a, 'b, F: Write> Write for InnerWriter<'a, 'b, F> {
+ /// A utility writer for generating code easier.
+ pub struct SourceWriter<'a, F: Write> {
+     out: F,
+-    config: &'a Config,
++    bindings: &'a Bindings,
+     spaces: Vec<usize>,
+     line_started: bool,
+     line_length: usize,
+@@ -67,10 +68,10 @@ pub struct SourceWriter<'a, F: Write> {
+ pub type MeasureWriter<'a> = SourceWriter<'a, NullFile>;
+ 
+ impl<'a, F: Write> SourceWriter<'a, F> {
+-    pub fn new(out: F, config: &'a Config) -> SourceWriter<'a, F> {
++    pub fn new(out: F, bindings: &'a Bindings) -> Self {
+         SourceWriter {
+-            out: out,
+-            config: config,
++            out,
++            bindings,
+             spaces: vec![0],
+             line_started: false,
+             line_length: 0,
+@@ -79,6 +80,10 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+         }
+     }
+ 
++    pub fn bindings(&self) -> &Bindings {
++        &self.bindings
++    }
++
+     /// Takes a function that writes source and returns the maximum line length
+     /// written.
+     pub fn measure<T>(&self, func: T) -> usize
+@@ -87,7 +92,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     {
+         let mut measurer = SourceWriter {
+             out: NullFile,
+-            config: self.config,
++            bindings: self.bindings,
+             spaces: self.spaces.clone(),
+             line_started: self.line_started,
+             line_length: self.line_length,
+@@ -117,8 +122,8 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     }
+ 
+     pub fn push_tab(&mut self) {
+-        let spaces =
+-            self.spaces() - (self.spaces() % self.config.tab_width) + self.config.tab_width;
++        let spaces = self.spaces() - (self.spaces() % self.bindings.config.tab_width)
++            + self.bindings.config.tab_width;
+         self.spaces.push(spaces);
+     }
+ 
+@@ -141,7 +146,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     }
+ 
+     pub fn open_brace(&mut self) {
+-        match self.config.braces {
++        match self.bindings.config.braces {
+             Braces::SameLine => {
+                 self.write(" {");
+                 self.push_tab();
+@@ -186,7 +191,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+         list_type: ListType<'b>,
+     ) {
+         for (i, ref item) in items.iter().enumerate() {
+-            item.write(self.config, self);
++            item.write(&self.bindings.config, self);
+ 
+             match list_type {
+                 ListType::Join(text) => {
+@@ -209,7 +214,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+         let align_length = self.line_length_for_align();
+         self.push_set_spaces(align_length);
+         for (i, ref item) in items.iter().enumerate() {
+-            item.write(self.config, self);
++            item.write(&self.bindings.config, self);
+ 
+             match list_type {
+                 ListType::Join(text) => {
+diff --git a/src/lib.rs b/src/lib.rs
+index 0530e6a..9c0f35c 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -4,9 +4,13 @@
+ 
+ #[macro_use]
+ extern crate log;
++extern crate proc_macro2;
+ #[macro_use]
+ extern crate serde;
+ extern crate serde_json;
++#[macro_use]
++extern crate quote;
++#[macro_use]
+ extern crate syn;
+ extern crate toml;
+ 
+diff --git a/src/main.rs b/src/main.rs
+index efc6ec0..aaaa4f9 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -9,9 +9,13 @@ use std::path::{Path, PathBuf};
+ extern crate clap;
+ #[macro_use]
+ extern crate log;
++extern crate proc_macro2;
+ #[macro_use]
+ extern crate serde;
+ extern crate serde_json;
++#[macro_use]
++extern crate quote;
++#[macro_use]
+ extern crate syn;
+ extern crate toml;
+2026-04-17 07:15:30,585 - INFO - Eval script for mozilla__cbindgen-293 written to logs/run_evaluation/gold_run1/gold/mozilla__cbindgen-293/eval.sh; copying to container...
+2026-04-17 07:17:03,068 - INFO - Test runtime: 92.35 seconds
+2026-04-17 07:17:03,068 - INFO - Test output for mozilla__cbindgen-293 written to logs/run_evaluation/gold_run1/gold/mozilla__cbindgen-293/test_output.txt
+2026-04-17 07:17:03,122 - INFO - Git diff after:
+diff --git a/Cargo.lock b/Cargo.lock
+index 395db9e..946f182 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -13,7 +13,7 @@ name = "atty"
+ version = "0.2.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
+  "termion 1.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+@@ -34,11 +34,13 @@ version = "0.8.0"
+ dependencies = [
+  "clap 2.32.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde_json 1.0.36 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_derive 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_json 1.0.38 (registry+https://github.com/rust-lang/crates.io-index)",
+  "syn 0.15.26 (registry+https://github.com/rust-lang/crates.io-index)",
+- "tempfile 3.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
++ "tempfile 3.0.7 (registry+https://github.com/rust-lang/crates.io-index)",
+  "toml 0.4.10 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+@@ -70,17 +72,8 @@ dependencies = [
+ ]
+ 
+ [[package]]
+-name = "fuchsia-zircon"
+-version = "0.3.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "bitflags 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "fuchsia-zircon-sys 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "fuchsia-zircon-sys"
+-version = "0.3.3"
++name = "fuchsia-cprng"
++version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -90,7 +83,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.47"
++version = "0.2.49"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -103,7 +96,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "0.4.25"
++version = "0.4.27"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "unicode-xid 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+@@ -111,25 +104,26 @@ dependencies = [
+ 
+ [[package]]
+ name = "quote"
+-version = "0.6.10"
++version = "0.6.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 0.4.27 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand"
+-version = "0.6.4"
++version = "0.6.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "autocfg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rand_chacha 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rand_hc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rand_isaac 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_os 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_pcg 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_jitter 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_os 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_pcg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rand_xorshift 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+@@ -140,12 +134,20 @@ version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "autocfg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_core"
+-version = "0.3.0"
++version = "0.3.1"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++dependencies = [
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
++]
++
++[[package]]
++name = "rand_core"
++version = "0.4.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -153,7 +155,7 @@ name = "rand_hc"
+ version = "0.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -161,29 +163,39 @@ name = "rand_isaac"
+ version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
++]
++
++[[package]]
++name = "rand_jitter"
++version = "0.1.3"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++dependencies = [
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_os"
+-version = "0.1.1"
++version = "0.1.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "fuchsia-zircon 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "rand_pcg"
+-version = "0.1.1"
++version = "0.1.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
++ "autocfg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -191,7 +203,7 @@ name = "rand_xorshift"
+ version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -199,12 +211,12 @@ name = "rdrand"
+ version = "0.4.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "redox_syscall"
+-version = "0.1.50"
++version = "0.1.51"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+ [[package]]
+@@ -212,7 +224,7 @@ name = "redox_termios"
+ version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "redox_syscall 0.1.50 (registry+https://github.com/rust-lang/crates.io-index)",
++ "redox_syscall 0.1.51 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -223,58 +235,37 @@ dependencies = [
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+-[[package]]
+-name = "rustc_version"
+-version = "0.2.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "semver 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+ [[package]]
+ name = "ryu"
+ version = "0.2.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ 
+-[[package]]
+-name = "semver"
+-version = "0.9.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-dependencies = [
+- "semver-parser 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
+-]
+-
+-[[package]]
+-name = "semver-parser"
+-version = "0.7.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-
+ [[package]]
+ name = "serde"
+-version = "1.0.84"
++version = "1.0.88"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde_derive 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.84"
++version = "1.0.88"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 0.4.27 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 0.6.11 (registry+https://github.com/rust-lang/crates.io-index)",
+  "syn 0.15.26 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.36"
++version = "1.0.38"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "itoa 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
+  "ryu 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
+- "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -287,20 +278,20 @@ name = "syn"
+ version = "0.15.26"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)",
+- "quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 0.4.27 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 0.6.11 (registry+https://github.com/rust-lang/crates.io-index)",
+  "unicode-xid 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+ name = "tempfile"
+-version = "3.0.5"
++version = "3.0.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+  "cfg-if 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
+- "rand 0.6.4 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_syscall 0.1.50 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
++ "rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
++ "redox_syscall 0.1.51 (registry+https://github.com/rust-lang/crates.io-index)",
+  "remove_dir_all 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+  "winapi 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+@@ -310,8 +301,8 @@ name = "termion"
+ version = "1.5.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)",
+- "redox_syscall 0.1.50 (registry+https://github.com/rust-lang/crates.io-index)",
++ "libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)",
++ "redox_syscall 0.1.51 (registry+https://github.com/rust-lang/crates.io-index)",
+  "redox_termios 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+@@ -328,7 +319,7 @@ name = "toml"
+ version = "0.4.10"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ dependencies = [
+- "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
++ "serde 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)",
+ ]
+ 
+ [[package]]
+@@ -373,35 +364,33 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ "checksum cfg-if 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "082bb9b28e00d3c9d39cc03e64ce4cea0f1bb9b3fde493f0cbc008472d22bdf4"
+ "checksum clap 2.32.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b957d88f4b6a63b9d70d5f454ac8011819c6efa7727858f458ab71c756ce2d3e"
+ "checksum cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "ddfc5b9aa5d4507acaf872de71051dfd0e309860e88966e1051e462a077aac4f"
+-"checksum fuchsia-zircon 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "2e9763c69ebaae630ba35f74888db465e49e259ba1bc0eda7d06f4a067615d82"
+-"checksum fuchsia-zircon-sys 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "3dcaa9ae7725d12cdb85b3ad99a434db70b468c09ded17e012d86b5c1010f7a7"
++"checksum fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
+ "checksum itoa 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = "1306f3464951f30e30d12373d31c79fbd52d236e5e896fd92f96ec7babbbe60b"
+-"checksum libc 0.2.47 (registry+https://github.com/rust-lang/crates.io-index)" = "48450664a984b25d5b479554c29cc04e3150c97aa4c01da5604a2d4ed9151476"
++"checksum libc 0.2.49 (registry+https://github.com/rust-lang/crates.io-index)" = "413f3dfc802c5dc91dc570b05125b6cda9855edfaa9825c9849807876376e70e"
+ "checksum log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)" = "c84ec4b527950aa83a329754b01dbe3f58361d1c5efacd1f6d68c494d08a17c6"
+-"checksum proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)" = "d3797b7142c9aa74954e351fc089bbee7958cebbff6bf2815e7ffff0b19f547d"
+-"checksum quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)" = "53fa22a1994bd0f9372d7a816207d8a2677ad0325b073f5c5332760f0fb62b5c"
+-"checksum rand 0.6.4 (registry+https://github.com/rust-lang/crates.io-index)" = "3906503e80ac6cbcacb2c2973fa8e473f24d7e2747c8c92bb230c2441cad96b5"
++"checksum proc-macro2 0.4.27 (registry+https://github.com/rust-lang/crates.io-index)" = "4d317f9caece796be1980837fd5cb3dfec5613ebdb04ad0956deea83ce168915"
++"checksum quote 0.6.11 (registry+https://github.com/rust-lang/crates.io-index)" = "cdd8e04bd9c52e0342b406469d494fcb033be4bdbe5c606016defbb1681411e1"
++"checksum rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)" = "6d71dacdc3c88c1fde3885a3be3fbab9f35724e6ce99467f7d9c5026132184ca"
+ "checksum rand_chacha 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "556d3a1ca6600bfcbab7c7c91ccb085ac7fbbcd70e008a98742e7847f4f7bcef"
+-"checksum rand_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "0905b6b7079ec73b314d4c748701f6931eb79fd97c668caa3f1899b22b32c6db"
++"checksum rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6fdeb83b075e8266dcc8762c22776f6877a63111121f5f8c7411e5be7eed4b"
++"checksum rand_core 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d0e7a549d590831370895ab7ba4ea0c1b6b011d106b5ff2da6eee112615e6dc0"
+ "checksum rand_hc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7b40677c7be09ae76218dc623efbf7b18e34bced3f38883af07bb75630a21bc4"
+ "checksum rand_isaac 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "ded997c9d5f13925be2a6fd7e66bf1872597f759fd9dd93513dd7e92e5a5ee08"
+-"checksum rand_os 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "f46fbd5550acf75b0c2730f5dd1873751daf9beb8f11b44027778fae50d7feca"
+-"checksum rand_pcg 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "086bd09a33c7044e56bb44d5bdde5a60e7f119a9e95b0775f545de759a32fe05"
++"checksum rand_jitter 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)" = "7b9ea758282efe12823e0d952ddb269d2e1897227e464919a554f2a03ef1b832"
++"checksum rand_os 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b7c690732391ae0abafced5015ffb53656abfaec61b342290e5eb56b286a679d"
++"checksum rand_pcg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "abf9b09b01790cfe0364f52bf32995ea3c39f4d2dd011eac241d2914146d0b44"
+ "checksum rand_xorshift 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cbf7e9e623549b0e21f6e97cf8ecf247c1a8fd2e8a992ae265314300b2455d5c"
+ "checksum rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "678054eb77286b51581ba43620cc911abf02758c91f93f479767aed0f90458b2"
+-"checksum redox_syscall 0.1.50 (registry+https://github.com/rust-lang/crates.io-index)" = "52ee9a534dc1301776eff45b4fa92d2c39b1d8c3d3357e6eb593e0d795506fc2"
++"checksum redox_syscall 0.1.51 (registry+https://github.com/rust-lang/crates.io-index)" = "423e376fffca3dfa06c9e9790a9ccd282fafb3cc6e6397d01dbf64f9bacc6b85"
+ "checksum redox_termios 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7e891cfe48e9100a70a3b6eb652fef28920c117d366339687bd5576160db0f76"
+ "checksum remove_dir_all 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "3488ba1b9a2084d38645c4c08276a1752dcbf2c7130d74f1569681ad5d2799c5"
+-"checksum rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "138e3e0acb6c9fb258b19b67cb8abd63c00679d2851805ea151465464fe9030a"
+ "checksum ryu 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)" = "eb9e9b8cde282a9fe6a42dd4681319bfb63f121b8a8ee9439c6f4107e58a46f7"
+-"checksum semver 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = "1d7eb9ef2c18661902cc47e535f9bc51b78acd254da71d375c2f6720d9a40403"
+-"checksum semver-parser 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "388a1df253eca08550bef6c72392cfe7c30914bf41df5269b68cbd6ff8f570a3"
+-"checksum serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)" = "0e732ed5a5592c17d961555e3b552985baf98d50ce418b7b655f31f6ba7eb1b7"
+-"checksum serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)" = "b4d6115a3ca25c224e409185325afc16a0d5aaaabc15c42b09587d6f1ba39a5b"
+-"checksum serde_json 1.0.36 (registry+https://github.com/rust-lang/crates.io-index)" = "574378d957d6dcdf1bbb5d562a15cbd5e644159432f84634b94e485267abbcc7"
++"checksum serde 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)" = "9f301d728f2b94c9a7691c90f07b0b4e8a4517181d9461be94c04bddeb4bd850"
++"checksum serde_derive 1.0.88 (registry+https://github.com/rust-lang/crates.io-index)" = "beed18e6f5175aef3ba670e57c60ef3b1b74d250d962a26604bff4c80e970dd4"
++"checksum serde_json 1.0.38 (registry+https://github.com/rust-lang/crates.io-index)" = "27dce848e7467aa0e2fcaf0a413641499c0b745452aaca1194d24dedde9e13c9"
+ "checksum strsim 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "bb4f380125926a99e52bc279241539c018323fab05ad6368b56f93d9369ff550"
+ "checksum syn 0.15.26 (registry+https://github.com/rust-lang/crates.io-index)" = "f92e629aa1d9c827b2bb8297046c1ccffc57c99b947a680d3ccff1f136a3bee9"
+-"checksum tempfile 3.0.5 (registry+https://github.com/rust-lang/crates.io-index)" = "7e91405c14320e5c79b3d148e1c86f40749a36e490642202a31689cb1a3452b2"
++"checksum tempfile 3.0.7 (registry+https://github.com/rust-lang/crates.io-index)" = "b86c784c88d98c801132806dadd3819ed29d8600836c4088e855cdf3e178ed8a"
+ "checksum termion 1.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "689a3bdfaab439fd92bc87df5c4c78417d3cbe537487274e9b0b2dce76e92096"
+ "checksum textwrap 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = "307686869c93e71f94da64286f9a9524c0f308a9e1c87a583de8e9c9039ad3f6"
+ "checksum toml 0.4.10 (registry+https://github.com/rust-lang/crates.io-index)" = "758664fc71a3a69038656bee8b6be6477d2a6c315a6b81f7081f591bffa4111f"
+diff --git a/Cargo.toml b/Cargo.toml
+index 96e24e3..c84c92b 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -21,11 +21,13 @@ serde_json = "1.0"
+ serde_derive = "1.0"
+ tempfile = "3.0"
+ toml = "0.4"
++proc-macro2 = "0.4"
++quote = "0.6"
+ 
+ [dependencies.syn]
+ version = "0.15.0"
+ default-features = false
+-features = ["clone-impls", "derive", "extra-traits", "full", "parsing", "printing"]
++features = ["clone-impls", "extra-traits", "full", "parsing", "printing"]
+ 
+ [[bin]]
+ name = "cbindgen"
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+index b429ce4..57be813 100644
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -8,12 +8,17 @@ use std::io::{Read, Write};
+ use std::path;
+ 
+ use bindgen::config::{Config, Language};
+-use bindgen::ir::{Constant, Function, ItemContainer, Static};
++use bindgen::ir::{
++    Constant, Function, ItemContainer, ItemMap, Path as BindgenPath, Static, Struct,
++};
+ use bindgen::writer::{Source, SourceWriter};
+ 
+ /// A bindings header that can be written.
+ pub struct Bindings {
+-    config: Config,
++    pub config: Config,
++    /// The map from path to struct, used to lookup whether a given type is a
++    /// transparent struct. This is needed to generate code for constants.
++    struct_map: ItemMap<Struct>,
+     globals: Vec<Static>,
+     constants: Vec<Constant>,
+     items: Vec<ItemContainer>,
+@@ -23,20 +28,29 @@ pub struct Bindings {
+ impl Bindings {
+     pub(crate) fn new(
+         config: Config,
++        struct_map: ItemMap<Struct>,
+         constants: Vec<Constant>,
+         globals: Vec<Static>,
+         items: Vec<ItemContainer>,
+         functions: Vec<Function>,
+     ) -> Bindings {
+         Bindings {
+-            config: config,
+-            globals: globals,
+-            constants: constants,
+-            items: items,
+-            functions: functions,
++            config,
++            struct_map,
++            globals,
++            constants,
++            items,
++            functions,
+         }
+     }
+ 
++    // FIXME(emilio): What to do when the configuration doesn't match?
++    pub fn struct_is_transparent(&self, path: &BindgenPath) -> bool {
++        let mut any = false;
++        self.struct_map.for_items(path, |s| any |= s.is_transparent);
++        any
++    }
++
+     pub fn write_to_file<P: AsRef<path::Path>>(&self, path: P) -> bool {
+         // Don't compare files if we've never written this file before
+         if !path.as_ref().is_file() {
+@@ -126,7 +140,7 @@ impl Bindings {
+     }
+ 
+     pub fn write<F: Write>(&self, file: F) {
+-        let mut out = SourceWriter::new(file, &self.config);
++        let mut out = SourceWriter::new(file, self);
+ 
+         if !self.config.no_includes
+             || !self.config.includes.is_empty()
+@@ -142,7 +156,7 @@ impl Bindings {
+         for constant in &self.constants {
+             if constant.ty.is_primitive_or_ptr_primitive() {
+                 out.new_line_if_not_start();
+-                constant.write(&self.config, &mut out);
++                constant.write(&self.config, &mut out, None);
+                 out.new_line();
+             }
+         }
+@@ -158,14 +172,14 @@ impl Bindings {
+             }
+ 
+             out.new_line_if_not_start();
+-            match item {
+-                &ItemContainer::Constant(..) => unreachable!(),
+-                &ItemContainer::Static(..) => unreachable!(),
+-                &ItemContainer::Enum(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::Struct(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::Union(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::OpaqueItem(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::Typedef(ref x) => x.write(&self.config, &mut out),
++            match *item {
++                ItemContainer::Constant(..) => unreachable!(),
++                ItemContainer::Static(..) => unreachable!(),
++                ItemContainer::Enum(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::Struct(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::Union(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::OpaqueItem(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::Typedef(ref x) => x.write(&self.config, &mut out),
+             }
+             out.new_line();
+         }
+@@ -173,7 +187,7 @@ impl Bindings {
+         for constant in &self.constants {
+             if !constant.ty.is_primitive_or_ptr_primitive() {
+                 out.new_line_if_not_start();
+-                constant.write(&self.config, &mut out);
++                constant.write(&self.config, &mut out, None);
+                 out.new_line();
+             }
+         }
+diff --git a/src/bindgen/config.rs b/src/bindgen/config.rs
+index 609d1fd..efb6e8a 100644
+--- a/src/bindgen/config.rs
++++ b/src/bindgen/config.rs
+@@ -284,6 +284,9 @@ pub struct StructConfig {
+     pub derive_gt: bool,
+     /// Whether to generate a greater than or equal to operator on structs with one field
+     pub derive_gte: bool,
++    /// Whether associated constants should be in the body. Only applicable to
++    /// non-transparent structs, and in C++-only.
++    pub associated_constants_in_body: bool,
+ }
+ 
+ impl Default for StructConfig {
+@@ -297,6 +300,7 @@ impl Default for StructConfig {
+             derive_lte: false,
+             derive_gt: false,
+             derive_gte: false,
++            associated_constants_in_body: false,
+         }
+     }
+ }
+diff --git a/src/bindgen/ir/cfg.rs b/src/bindgen/ir/cfg.rs
+index 3d4eb1d..d28c5ec 100644
+--- a/src/bindgen/ir/cfg.rs
++++ b/src/bindgen/ir/cfg.rs
+@@ -93,14 +93,12 @@ impl Cfg {
+         }
+     }
+ 
+-    pub fn append(parent: &Option<Cfg>, child: Option<Cfg>) -> Option<Cfg> {
++    pub fn append(parent: Option<&Cfg>, child: Option<Cfg>) -> Option<Cfg> {
+         match (parent, child) {
+-            (&None, None) => None,
+-            (&None, Some(child)) => Some(child),
+-            (&Some(ref parent), None) => Some(parent.clone()),
+-            (&Some(ref parent), Some(ref child)) => {
+-                Some(Cfg::All(vec![parent.clone(), child.clone()]))
+-            }
++            (None, None) => None,
++            (None, Some(child)) => Some(child),
++            (Some(parent), None) => Some(parent.clone()),
++            (Some(parent), Some(child)) => Some(Cfg::All(vec![parent.clone(), child])),
+         }
+     }
+ 
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+index 794e899..afb171d 100644
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -2,6 +2,7 @@
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
++use std::borrow::Cow;
+ use std::fmt;
+ use std::io::Write;
+ use std::mem;
+@@ -10,17 +11,24 @@ use syn;
+ 
+ use bindgen::config::{Config, Language};
+ use bindgen::declarationtyperesolver::DeclarationTypeResolver;
++use bindgen::dependencies::Dependencies;
+ use bindgen::ir::{
+     AnnotationSet, Cfg, ConditionWrite, Documentation, GenericParams, Item, ItemContainer, Path,
+-    ToCondition, Type,
++    Struct, ToCondition, Type,
+ };
++use bindgen::library::Library;
+ use bindgen::writer::{Source, SourceWriter};
+ 
+ #[derive(Debug, Clone)]
+ pub enum Literal {
+     Expr(String),
++    BinOp {
++        left: Box<Literal>,
++        op: &'static str,
++        right: Box<Literal>,
++    },
+     Struct {
+-        name: String,
++        path: Path,
+         export_name: String,
+         fields: Vec<(String, Literal)>,
+     },
+@@ -30,8 +38,13 @@ impl fmt::Display for Literal {
+     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+         match self {
+             Literal::Expr(v) => write!(f, "{}", v),
++            Literal::BinOp {
++                ref left,
++                op,
++                ref right,
++            } => write!(f, "{} {} {}", left, op, right),
+             Literal::Struct {
+-                name: _,
++                path: _,
+                 export_name,
+                 fields,
+             } => write!(
+@@ -52,7 +65,7 @@ impl Literal {
+     pub fn rename_for_config(&mut self, config: &Config) {
+         match self {
+             Literal::Struct {
+-                name: _,
++                path: _,
+                 ref mut export_name,
+                 fields,
+             } => {
+@@ -61,25 +74,52 @@ impl Literal {
+                     lit.rename_for_config(config);
+                 }
+             }
++            Literal::BinOp {
++                ref mut left,
++                ref mut right,
++                ..
++            } => {
++                left.rename_for_config(config);
++                right.rename_for_config(config);
++            }
+             Literal::Expr(_) => {}
+         }
+     }
+ 
+     pub fn load(expr: &syn::Expr) -> Result<Literal, String> {
+-        match expr {
+-            &syn::Expr::Lit(syn::ExprLit {
++        match *expr {
++            syn::Expr::Binary(ref bin_expr) => {
++                let l = Self::load(&bin_expr.left)?;
++                let r = Self::load(&bin_expr.right)?;
++                let op = match bin_expr.op {
++                    syn::BinOp::Add(..) => "+",
++                    syn::BinOp::Sub(..) => "-",
++                    syn::BinOp::Mul(..) => "*",
++                    syn::BinOp::Div(..) => "/",
++                    syn::BinOp::Rem(..) => "%",
++                    syn::BinOp::Shl(..) => "<<",
++                    syn::BinOp::Shr(..) => ">>",
++                    _ => return Err(format!("Unsupported binary op {:?}", bin_expr.op)),
++                };
++                Ok(Literal::BinOp {
++                    left: Box::new(l),
++                    op,
++                    right: Box::new(r),
++                })
++            }
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Str(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("u8\"{}\"", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Byte(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Char(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Int(ref value),
+                 ..
+             }) => match value.suffix() {
+@@ -102,16 +142,16 @@ impl Literal {
+                     )))
+                 },
+             },
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Float(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Bool(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value))),
+ 
+-            &syn::Expr::Struct(syn::ExprStruct {
++            syn::Expr::Struct(syn::ExprStruct {
+                 ref path,
+                 ref fields,
+                 ..
+@@ -128,7 +168,7 @@ impl Literal {
+                     field_pairs.push((key, value));
+                 }
+                 Ok(Literal::Struct {
+-                    name: struct_name.clone(),
++                    path: Path::new(struct_name.clone()),
+                     export_name: struct_name,
+                     fields: field_pairs,
+                 })
+@@ -147,84 +187,48 @@ pub struct Constant {
+     pub cfg: Option<Cfg>,
+     pub annotations: AnnotationSet,
+     pub documentation: Documentation,
++    pub associated_to: Option<Path>,
++}
++
++fn can_handle(ty: &Type, expr: &syn::Expr) -> bool {
++    if ty.is_primitive_or_ptr_primitive() {
++        return true;
++    }
++    match *expr {
++        syn::Expr::Struct(_) => true,
++        _ => false,
++    }
+ }
+ 
+ impl Constant {
+     pub fn load(
+         path: Path,
+-        item: &syn::ItemConst,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
++        ty: &syn::Type,
++        expr: &syn::Expr,
++        attrs: &[syn::Attribute],
++        associated_to: Option<Path>,
+     ) -> Result<Constant, String> {
+-        let ty = Type::load(&item.ty)?;
+-
+-        if ty.is_none() {
+-            return Err("Cannot have a zero sized const definition.".to_owned());
+-        }
+-
+-        let ty = ty.unwrap();
+-
+-        if !ty.is_primitive_or_ptr_primitive()
+-            && match *item.expr {
+-                syn::Expr::Struct(_) => false,
+-                _ => true,
++        let ty = Type::load(ty)?;
++        let ty = match ty {
++            Some(ty) => ty,
++            None => {
++                return Err("Cannot have a zero sized const definition.".to_owned());
+             }
+-        {
+-            return Err("Unhanded const definition".to_owned());
+-        }
+-
+-        Ok(Constant::new(
+-            path,
+-            ty,
+-            Literal::load(&item.expr)?,
+-            Cfg::append(mod_cfg, Cfg::load(&item.attrs)),
+-            AnnotationSet::load(&item.attrs)?,
+-            Documentation::load(&item.attrs),
+-        ))
+-    }
+-
+-    pub fn load_assoc(
+-        name: String,
+-        item: &syn::ImplItemConst,
+-        mod_cfg: &Option<Cfg>,
+-        is_transparent: bool,
+-        struct_path: &Path,
+-    ) -> Result<Constant, String> {
+-        let ty = Type::load(&item.ty)?;
+-
+-        if ty.is_none() {
+-            return Err("Cannot have a zero sized const definition.".to_owned());
+-        }
+-        let ty = ty.unwrap();
+-
+-        let can_handle_const_expr = match item.expr {
+-            syn::Expr::Struct(_) => true,
+-            _ => false,
+         };
+ 
+-        if !ty.is_primitive_or_ptr_primitive() && !can_handle_const_expr {
+-            return Err("Unhandled const definition".to_owned());
++        if !can_handle(&ty, expr) {
++            return Err("Unhanded const definition".to_owned());
+         }
+ 
+-        let expr = Literal::load(match item.expr {
+-            syn::Expr::Struct(syn::ExprStruct { ref fields, .. }) => {
+-                if is_transparent && fields.len() == 1 {
+-                    &fields[0].expr
+-                } else {
+-                    &item.expr
+-                }
+-            }
+-            _ => &item.expr,
+-        })?;
+-
+-        let full_name = Path::new(format!("{}_{}", struct_path, name));
+-
+         Ok(Constant::new(
+-            full_name,
++            path,
+             ty,
+-            expr,
+-            Cfg::append(mod_cfg, Cfg::load(&item.attrs)),
+-            AnnotationSet::load(&item.attrs)?,
+-            Documentation::load(&item.attrs),
++            Literal::load(&expr)?,
++            Cfg::append(mod_cfg, Cfg::load(attrs)),
++            AnnotationSet::load(attrs)?,
++            Documentation::load(attrs),
++            associated_to,
+         ))
+     }
+ 
+@@ -235,6 +239,7 @@ impl Constant {
+         cfg: Option<Cfg>,
+         annotations: AnnotationSet,
+         documentation: Documentation,
++        associated_to: Option<Path>,
+     ) -> Self {
+         let export_name = path.name().to_owned();
+         Self {
+@@ -245,6 +250,7 @@ impl Constant {
+             cfg,
+             annotations,
+             documentation,
++            associated_to,
+         }
+     }
+ }
+@@ -254,12 +260,16 @@ impl Item for Constant {
+         &self.path
+     }
+ 
++    fn add_dependencies(&self, library: &Library, out: &mut Dependencies) {
++        self.ty.add_dependencies(library, out);
++    }
++
+     fn export_name(&self) -> &str {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+@@ -275,7 +285,9 @@ impl Item for Constant {
+     }
+ 
+     fn rename_for_config(&mut self, config: &Config) {
+-        config.export.rename(&mut self.export_name);
++        if self.associated_to.is_none() {
++            config.export.rename(&mut self.export_name);
++        }
+         self.value.rename_for_config(config);
+         self.ty.rename_for_config(config, &GenericParams::default()); // FIXME: should probably propagate something here
+     }
+diff --git a/src/bindgen/ir/enumeration.rs b/src/bindgen/ir/enumeration.rs
+index 3ea3f4f..a4324c7 100644
+--- a/src/bindgen/ir/enumeration.rs
++++ b/src/bindgen/ir/enumeration.rs
+@@ -54,7 +54,7 @@ impl EnumVariant {
+         is_tagged: bool,
+         variant: &syn::Variant,
+         generic_params: GenericParams,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+     ) -> Result<Self, String> {
+         let discriminant = match variant.discriminant {
+             Some((_, ref expr)) => match value_from_expr(expr) {
+@@ -250,7 +250,7 @@ impl Enum {
+         }
+     }
+ 
+-    pub fn load(item: &syn::ItemEnum, mod_cfg: &Option<Cfg>) -> Result<Enum, String> {
++    pub fn load(item: &syn::ItemEnum, mod_cfg: Option<&Cfg>) -> Result<Enum, String> {
+         let repr = Repr::load(&item.attrs)?;
+         if repr == Repr::RUST {
+             return Err("Enum not marked with a valid repr(prim) or repr(C).".to_owned());
+@@ -332,8 +332,8 @@ impl Item for Enum {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/function.rs b/src/bindgen/ir/function.rs
+index 8f83a5b..c3fa4c9 100644
+--- a/src/bindgen/ir/function.rs
++++ b/src/bindgen/ir/function.rs
+@@ -37,7 +37,7 @@ impl Function {
+         decl: &syn::FnDecl,
+         extern_decl: bool,
+         attrs: &[syn::Attribute],
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+     ) -> Result<Function, String> {
+         let args = decl.inputs.iter().try_skip_map(|x| x.as_ident_and_type())?;
+         let ret = match decl.output {
+diff --git a/src/bindgen/ir/global.rs b/src/bindgen/ir/global.rs
+index 6fc261b..975e7e8 100644
+--- a/src/bindgen/ir/global.rs
++++ b/src/bindgen/ir/global.rs
+@@ -25,7 +25,7 @@ pub struct Static {
+ }
+ 
+ impl Static {
+-    pub fn load(item: &syn::ItemStatic, mod_cfg: &Option<Cfg>) -> Result<Static, String> {
++    pub fn load(item: &syn::ItemStatic, mod_cfg: Option<&Cfg>) -> Result<Static, String> {
+         let ty = Type::load(&item.ty)?;
+ 
+         if ty.is_none() {
+@@ -76,8 +76,8 @@ impl Item for Static {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/item.rs b/src/bindgen/ir/item.rs
+index e63a68b..0b83f9d 100644
+--- a/src/bindgen/ir/item.rs
++++ b/src/bindgen/ir/item.rs
+@@ -23,7 +23,7 @@ pub trait Item {
+     fn export_name(&self) -> &str {
+         self.name()
+     }
+-    fn cfg(&self) -> &Option<Cfg>;
++    fn cfg(&self) -> Option<&Cfg>;
+     fn annotations(&self) -> &AnnotationSet;
+     fn annotations_mut(&mut self) -> &mut AnnotationSet;
+ 
+@@ -206,7 +206,6 @@ impl<T: Item + Clone> ItemMap<T> {
+         }
+     }
+ 
+-    #[allow(dead_code)]
+     pub fn for_items<F>(&self, path: &Path, mut callback: F)
+     where
+         F: FnMut(&T),
+diff --git a/src/bindgen/ir/opaque.rs b/src/bindgen/ir/opaque.rs
+index 0db02bc..055ffa5 100644
+--- a/src/bindgen/ir/opaque.rs
++++ b/src/bindgen/ir/opaque.rs
+@@ -33,7 +33,7 @@ impl OpaqueItem {
+         path: Path,
+         generics: &syn::Generics,
+         attrs: &[syn::Attribute],
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+     ) -> Result<OpaqueItem, String> {
+         Ok(Self::new(
+             path,
+@@ -72,8 +72,8 @@ impl Item for OpaqueItem {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+index 3845e0e..fc1295c 100644
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -10,8 +10,8 @@ use bindgen::config::{Config, Language};
+ use bindgen::declarationtyperesolver::DeclarationTypeResolver;
+ use bindgen::dependencies::Dependencies;
+ use bindgen::ir::{
+-    AnnotationSet, Cfg, ConditionWrite, Documentation, GenericParams, Item, ItemContainer, Path,
+-    Repr, ToCondition, Type, Typedef,
++    AnnotationSet, Cfg, ConditionWrite, Constant, Documentation, GenericParams, Item,
++    ItemContainer, Path, Repr, ToCondition, Type, Typedef,
+ };
+ use bindgen::library::Library;
+ use bindgen::mangle;
+@@ -37,6 +37,7 @@ pub struct Struct {
+     pub cfg: Option<Cfg>,
+     pub annotations: AnnotationSet,
+     pub documentation: Documentation,
++    pub associated_constants: Vec<Constant>,
+ }
+ 
+ impl Struct {
+@@ -45,7 +46,11 @@ impl Struct {
+         !self.fields.is_empty() && self.fields.iter().all(|x| x.1.can_cmp_eq())
+     }
+ 
+-    pub fn load(item: &syn::ItemStruct, mod_cfg: &Option<Cfg>) -> Result<Self, String> {
++    pub fn add_associated_constant(&mut self, c: Constant) {
++        self.associated_constants.push(c);
++    }
++
++    pub fn load(item: &syn::ItemStruct, mod_cfg: Option<&Cfg>) -> Result<Self, String> {
+         let is_transparent = match Repr::load(&item.attrs)? {
+             Repr::C => false,
+             Repr::TRANSPARENT => true,
+@@ -118,6 +123,7 @@ impl Struct {
+             cfg,
+             annotations,
+             documentation,
++            associated_constants: vec![],
+         }
+     }
+ 
+@@ -178,8 +184,8 @@ impl Item for Struct {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+@@ -266,6 +272,10 @@ impl Item for Struct {
+         for field in &mut self.fields {
+             reserved::escape(&mut field.0);
+         }
++
++        for c in self.associated_constants.iter_mut() {
++            c.rename_for_config(config);
++        }
+     }
+ 
+     fn add_dependencies(&self, library: &Library, out: &mut Dependencies) {
+@@ -279,6 +289,10 @@ impl Item for Struct {
+         for &(_, ref ty, _) in fields {
+             ty.add_dependencies_ignoring_generics(&self.generic_params, library, out);
+         }
++
++        for c in &self.associated_constants {
++            c.add_dependencies(library, out);
++        }
+     }
+ 
+     fn instantiate_monomorph(
+@@ -327,7 +341,12 @@ impl Source for Struct {
+                 annotations: self.annotations.clone(),
+                 documentation: self.documentation.clone(),
+             };
+-            return typedef.write(config, out);
++            typedef.write(config, out);
++            for constant in &self.associated_constants {
++                out.new_line();
++                constant.write(config, out, Some(self));
++            }
++            return;
+         }
+ 
+         let condition = (&self.cfg).to_condition(config);
+@@ -484,6 +503,16 @@ impl Source for Struct {
+             out.write_raw_block(body);
+         }
+ 
++        if config.language == Language::Cxx
++            && config.structure.associated_constants_in_body
++            && config.constant.allow_static_const
++        {
++            for constant in &self.associated_constants {
++                out.new_line();
++                constant.write_declaration(config, out, self);
++            }
++        }
++
+         if config.language == Language::C && config.style.generate_typedef() {
+             out.close_brace(false);
+             write!(out, " {};", self.export_name());
+@@ -491,6 +520,11 @@ impl Source for Struct {
+             out.close_brace(true);
+         }
+ 
++        for constant in &self.associated_constants {
++            out.new_line();
++            constant.write(config, out, Some(self));
++        }
++
+         condition.write_after(config, out);
+     }
+ }
+diff --git a/src/bindgen/ir/typedef.rs b/src/bindgen/ir/typedef.rs
+index a11e41c..28d26c2 100644
+--- a/src/bindgen/ir/typedef.rs
++++ b/src/bindgen/ir/typedef.rs
+@@ -32,7 +32,7 @@ pub struct Typedef {
+ }
+ 
+ impl Typedef {
+-    pub fn load(item: &syn::ItemType, mod_cfg: &Option<Cfg>) -> Result<Typedef, String> {
++    pub fn load(item: &syn::ItemType, mod_cfg: Option<&Cfg>) -> Result<Typedef, String> {
+         if let Some(x) = Type::load(&item.ty)? {
+             let path = Path::new(item.ident.to_string());
+             Ok(Typedef::new(
+@@ -122,8 +122,8 @@ impl Item for Typedef {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/union.rs b/src/bindgen/ir/union.rs
+index 58d128d..9178eda 100644
+--- a/src/bindgen/ir/union.rs
++++ b/src/bindgen/ir/union.rs
+@@ -34,7 +34,7 @@ pub struct Union {
+ }
+ 
+ impl Union {
+-    pub fn load(item: &syn::ItemUnion, mod_cfg: &Option<Cfg>) -> Result<Union, String> {
++    pub fn load(item: &syn::ItemUnion, mod_cfg: Option<&Cfg>) -> Result<Union, String> {
+         if Repr::load(&item.attrs)? != Repr::C {
+             return Err("Union is not marked #[repr(C)].".to_owned());
+         }
+@@ -119,8 +119,8 @@ impl Item for Union {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/library.rs b/src/bindgen/library.rs
+index 3409c4d..1b057a0 100644
+--- a/src/bindgen/library.rs
++++ b/src/bindgen/library.rs
+@@ -74,6 +74,9 @@ impl Library {
+         self.globals.for_all_items(|global| {
+             global.add_dependencies(&self, &mut dependencies);
+         });
++        self.constants.for_all_items(|constant| {
++            constant.add_dependencies(&self, &mut dependencies);
++        });
+         for name in &self.config.export.include {
+             let path = Path::new(name.clone());
+             if let Some(items) = self.get_items(&path) {
+@@ -112,6 +115,7 @@ impl Library {
+ 
+         Ok(Bindings::new(
+             self.config,
++            self.structs,
+             constants,
+             globals,
+             items,
+diff --git a/src/bindgen/mod.rs b/src/bindgen/mod.rs
+index e27b178..85b3f22 100644
+--- a/src/bindgen/mod.rs
++++ b/src/bindgen/mod.rs
+@@ -37,6 +37,7 @@ macro_rules! deserialize_enum_str {
+ }
+ 
+ mod bindings;
++mod bitflags;
+ mod builder;
+ mod cargo;
+ mod cdecl;
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+index b90fde6..b2e3dd4 100644
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -9,11 +9,12 @@ use std::path::{Path as FilePath, PathBuf as FilePathBuf};
+ 
+ use syn;
+ 
++use bindgen::bitflags;
+ use bindgen::cargo::{Cargo, PackageRef};
+ use bindgen::error::Error;
+ use bindgen::ir::{
+-    AnnotationSet, Cfg, Constant, Documentation, Enum, Function, GenericParams, ItemContainer,
+-    ItemMap, OpaqueItem, Path, Static, Struct, Type, Typedef, Union,
++    AnnotationSet, Cfg, Constant, Documentation, Enum, Function, GenericParams, ItemMap,
++    OpaqueItem, Path, Static, Struct, Type, Typedef, Union,
+ };
+ use bindgen::utilities::{SynAbiHelpers, SynItemHelpers};
+ 
+@@ -202,7 +203,7 @@ impl Parser {
+         self.out.load_syn_crate_mod(
+             &self.binding_crate_name,
+             &pkg.name,
+-            &Cfg::join(&self.cfg_stack),
++            Cfg::join(&self.cfg_stack).as_ref(),
+             items,
+         );
+ 
+@@ -227,7 +228,7 @@ impl Parser {
+                         self.cfg_stack.pop();
+                     }
+                 }
+-                &syn::Item::ExternCrate(ref item) => {
++                syn::Item::ExternCrate(ref item) => {
+                     let dep_pkg_name = item.ident.to_string();
+ 
+                     let cfg = Cfg::load(&item.attrs);
+@@ -311,7 +312,7 @@ impl Parser {
+         self.out.load_syn_crate_mod(
+             &self.binding_crate_name,
+             &pkg.name,
+-            &Cfg::join(&self.cfg_stack),
++            Cfg::join(&self.cfg_stack).as_ref(),
+             items,
+         );
+ 
+@@ -374,7 +375,7 @@ impl Parser {
+                         self.cfg_stack.pop();
+                     }
+                 }
+-                &syn::Item::ExternCrate(ref item) => {
++                syn::Item::ExternCrate(ref item) => {
+                     let dep_pkg_name = item.ident.to_string();
+ 
+                     let cfg = Cfg::load(&item.attrs);
+@@ -487,7 +488,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         items: &[syn::Item],
+     ) {
+         let mut impls_with_assoc_consts = Vec::new();
+@@ -530,31 +531,44 @@ impl Parse {
+                         impls_with_assoc_consts.push(item_impl);
+                     }
+                 }
++                syn::Item::Macro(ref item) => {
++                    self.load_builtin_macro(binding_crate_name, crate_name, mod_cfg, item)
++                }
+                 _ => {}
+             }
+         }
+ 
+         for item_impl in impls_with_assoc_consts {
+-            let associated_constants = item_impl.items.iter().filter_map(|item| match item {
+-                syn::ImplItem::Const(ref associated_constant) => Some(associated_constant),
+-                _ => None,
+-            });
+-            self.load_syn_assoc_consts(
+-                binding_crate_name,
+-                crate_name,
+-                mod_cfg,
+-                &item_impl.self_ty,
+-                associated_constants,
+-            );
++            self.load_syn_assoc_consts_from_impl(binding_crate_name, crate_name, mod_cfg, item_impl)
+         }
+     }
+ 
++    fn load_syn_assoc_consts_from_impl(
++        &mut self,
++        binding_crate_name: &str,
++        crate_name: &str,
++        mod_cfg: Option<&Cfg>,
++        item_impl: &syn::ItemImpl,
++    ) {
++        let associated_constants = item_impl.items.iter().filter_map(|item| match item {
++            syn::ImplItem::Const(ref associated_constant) => Some(associated_constant),
++            _ => None,
++        });
++        self.load_syn_assoc_consts(
++            binding_crate_name,
++            crate_name,
++            mod_cfg,
++            &item_impl.self_ty,
++            associated_constants,
++        );
++    }
++
+     /// Enters a `extern "C" { }` declaration and loads function declarations.
+     fn load_syn_foreign_mod(
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemForeignMod,
+     ) {
+         if !item.abi.is_c() {
+@@ -563,8 +577,8 @@ impl Parse {
+         }
+ 
+         for foreign_item in &item.items {
+-            match foreign_item {
+-                &syn::ForeignItem::Fn(ref function) => {
++            match *foreign_item {
++                syn::ForeignItem::Fn(ref function) => {
+                     if crate_name != binding_crate_name {
+                         info!(
+                             "Skip {}::{} - (fn's outside of the binding crate are not used).",
+@@ -597,7 +611,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemFn,
+     ) {
+         if crate_name != binding_crate_name {
+@@ -644,46 +658,12 @@ impl Parse {
+         }
+     }
+ 
+-    fn is_assoc_const_of_transparent_struct(
+-        &self,
+-        const_item: &syn::ImplItemConst,
+-    ) -> Result<bool, ()> {
+-        let ty = match Type::load(&const_item.ty) {
+-            Ok(Some(t)) => t,
+-            _ => return Ok(false),
+-        };
+-        let path = match ty.get_root_path() {
+-            Some(p) => p,
+-            _ => return Ok(false),
+-        };
+-
+-        match self.structs.get_items(&path) {
+-            Some(items) => {
+-                if items.len() != 1 {
+-                    error!(
+-                        "Expected one struct to match path {}, but found {}",
+-                        path,
+-                        items.len(),
+-                    );
+-                    return Err(());
+-                }
+-
+-                Ok(if let ItemContainer::Struct(ref s) = items[0] {
+-                    s.is_transparent
+-                } else {
+-                    false
+-                })
+-            }
+-            _ => Ok(false),
+-        }
+-    }
+-
+     /// Loads associated `const` declarations
+     fn load_syn_assoc_consts<'a, I>(
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         impl_ty: &syn::Type,
+         items: I,
+     ) where
+@@ -703,12 +683,6 @@ impl Parse {
+         let impl_path = ty.unwrap().get_root_path().unwrap();
+ 
+         for item in items.into_iter() {
+-            let is_assoc_const_of_transparent_struct =
+-                match self.is_assoc_const_of_transparent_struct(&item) {
+-                    Ok(b) => b,
+-                    Err(_) => continue,
+-                };
+-
+             if crate_name != binding_crate_name {
+                 info!(
+                     "Skip {}::{} - (const's outside of the binding crate are not used).",
+@@ -717,21 +691,29 @@ impl Parse {
+                 continue;
+             }
+ 
+-            let const_name = item.ident.to_string();
+-
+-            match Constant::load_assoc(
+-                const_name,
+-                item,
++            let path = Path::new(item.ident.to_string());
++            match Constant::load(
++                path,
+                 mod_cfg,
+-                is_assoc_const_of_transparent_struct,
+-                &impl_path,
++                &item.ty,
++                &item.expr,
++                &item.attrs,
++                Some(impl_path.clone()),
+             ) {
+                 Ok(constant) => {
+-                    info!("Take {}::{}.", crate_name, &item.ident);
+-
+-                    let full_name = constant.path.clone();
+-                    if !self.constants.try_insert(constant) {
+-                        error!("Conflicting name for constant {}", full_name);
++                    info!("Take {}::{}::{}.", crate_name, impl_path, &item.ident);
++                    let mut any = false;
++                    self.structs.for_items_mut(&impl_path, |item| {
++                        any = true;
++                        item.add_associated_constant(constant.clone());
++                    });
++                    // Handle associated constants to other item types that are
++                    // not structs like enums or such as regular constants.
++                    if !any && !self.constants.try_insert(constant) {
++                        error!(
++                            "Conflicting name for constant {}::{}::{}.",
++                            crate_name, impl_path, &item.ident,
++                        );
+                     }
+                 }
+                 Err(msg) => {
+@@ -746,7 +728,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemConst,
+     ) {
+         if crate_name != binding_crate_name {
+@@ -758,8 +740,7 @@ impl Parse {
+         }
+ 
+         let path = Path::new(item.ident.to_string());
+-
+-        match Constant::load(path, item, mod_cfg) {
++        match Constant::load(path, mod_cfg, &item.ty, &item.expr, &item.attrs, None) {
+             Ok(constant) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+ 
+@@ -779,7 +760,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemStatic,
+     ) {
+         if crate_name != binding_crate_name {
+@@ -816,11 +797,10 @@ impl Parse {
+     }
+ 
+     /// Loads a `struct` declaration
+-    fn load_syn_struct(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemStruct) {
++    fn load_syn_struct(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemStruct) {
+         match Struct::load(item, mod_cfg) {
+             Ok(st) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+-
+                 self.structs.try_insert(st);
+             }
+             Err(msg) => {
+@@ -834,7 +814,7 @@ impl Parse {
+     }
+ 
+     /// Loads a `union` declaration
+-    fn load_syn_union(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemUnion) {
++    fn load_syn_union(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemUnion) {
+         match Union::load(item, mod_cfg) {
+             Ok(st) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+@@ -852,7 +832,7 @@ impl Parse {
+     }
+ 
+     /// Loads a `enum` declaration
+-    fn load_syn_enum(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemEnum) {
++    fn load_syn_enum(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemEnum) {
+         if item.generics.lifetimes().count() > 0 {
+             info!(
+                 "Skip {}::{} - (has generics or lifetimes or where bounds).",
+@@ -877,7 +857,7 @@ impl Parse {
+     }
+ 
+     /// Loads a `type` declaration
+-    fn load_syn_ty(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemType) {
++    fn load_syn_ty(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemType) {
+         match Typedef::load(item, mod_cfg) {
+             Ok(st) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+@@ -893,4 +873,36 @@ impl Parse {
+             }
+         }
+     }
++
++    fn load_builtin_macro(
++        &mut self,
++        binding_crate_name: &str,
++        crate_name: &str,
++        mod_cfg: Option<&Cfg>,
++        item: &syn::ItemMacro,
++    ) {
++        let name = match item.mac.path.segments.last() {
++            Some(ref n) => n.value().ident.to_string(),
++            None => return,
++        };
++
++        if name != "bitflags" {
++            return;
++        }
++
++        let bitflags = match bitflags::parse(item.mac.tts.clone()) {
++            Ok(b) => b,
++            Err(e) => {
++                warn!("Failed to parse bitflags invocation: {:?}", e);
++                return;
++            }
++        };
++
++        let (struct_, impl_) = bitflags.expand();
++        self.load_syn_struct(crate_name, mod_cfg, &struct_);
++        // We know that the expansion will only reference `struct_`, so it's
++        // fine to just do it here instead of deferring it like we do with the
++        // other calls to this function.
++        self.load_syn_assoc_consts_from_impl(binding_crate_name, crate_name, mod_cfg, &impl_);
++    }
+ }
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+index dde7a5b..2a061b5 100644
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -7,6 +7,7 @@ use std::io;
+ use std::io::Write;
+ 
+ use bindgen::config::{Braces, Config};
++use bindgen::Bindings;
+ 
+ /// A type of way to format a list.
+ pub enum ListType<'a> {
+@@ -57,7 +58,7 @@ impl<'a, 'b, F: Write> Write for InnerWriter<'a, 'b, F> {
+ /// A utility writer for generating code easier.
+ pub struct SourceWriter<'a, F: Write> {
+     out: F,
+-    config: &'a Config,
++    bindings: &'a Bindings,
+     spaces: Vec<usize>,
+     line_started: bool,
+     line_length: usize,
+@@ -67,10 +68,10 @@ pub struct SourceWriter<'a, F: Write> {
+ pub type MeasureWriter<'a> = SourceWriter<'a, NullFile>;
+ 
+ impl<'a, F: Write> SourceWriter<'a, F> {
+-    pub fn new(out: F, config: &'a Config) -> SourceWriter<'a, F> {
++    pub fn new(out: F, bindings: &'a Bindings) -> Self {
+         SourceWriter {
+-            out: out,
+-            config: config,
++            out,
++            bindings,
+             spaces: vec![0],
+             line_started: false,
+             line_length: 0,
+@@ -79,6 +80,10 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+         }
+     }
+ 
++    pub fn bindings(&self) -> &Bindings {
++        &self.bindings
++    }
++
+     /// Takes a function that writes source and returns the maximum line length
+     /// written.
+     pub fn measure<T>(&self, func: T) -> usize
+@@ -87,7 +92,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     {
+         let mut measurer = SourceWriter {
+             out: NullFile,
+-            config: self.config,
++            bindings: self.bindings,
+             spaces: self.spaces.clone(),
+             line_started: self.line_started,
+             line_length: self.line_length,
+@@ -117,8 +122,8 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     }
+ 
+     pub fn push_tab(&mut self) {
+-        let spaces =
+-            self.spaces() - (self.spaces() % self.config.tab_width) + self.config.tab_width;
++        let spaces = self.spaces() - (self.spaces() % self.bindings.config.tab_width)
++            + self.bindings.config.tab_width;
+         self.spaces.push(spaces);
+     }
+ 
+@@ -141,7 +146,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     }
+ 
+     pub fn open_brace(&mut self) {
+-        match self.config.braces {
++        match self.bindings.config.braces {
+             Braces::SameLine => {
+                 self.write(" {");
+                 self.push_tab();
+@@ -186,7 +191,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+         list_type: ListType<'b>,
+     ) {
+         for (i, ref item) in items.iter().enumerate() {
+-            item.write(self.config, self);
++            item.write(&self.bindings.config, self);
+ 
+             match list_type {
+                 ListType::Join(text) => {
+@@ -209,7 +214,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+         let align_length = self.line_length_for_align();
+         self.push_set_spaces(align_length);
+         for (i, ref item) in items.iter().enumerate() {
+-            item.write(self.config, self);
++            item.write(&self.bindings.config, self);
+ 
+             match list_type {
+                 ListType::Join(text) => {
+diff --git a/src/lib.rs b/src/lib.rs
+index 0530e6a..9c0f35c 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -4,9 +4,13 @@
+ 
+ #[macro_use]
+ extern crate log;
++extern crate proc_macro2;
+ #[macro_use]
+ extern crate serde;
+ extern crate serde_json;
++#[macro_use]
++extern crate quote;
++#[macro_use]
+ extern crate syn;
+ extern crate toml;
+ 
+diff --git a/src/main.rs b/src/main.rs
+index efc6ec0..aaaa4f9 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -9,9 +9,13 @@ use std::path::{Path, PathBuf};
+ extern crate clap;
+ #[macro_use]
+ extern crate log;
++extern crate proc_macro2;
+ #[macro_use]
+ extern crate serde;
+ extern crate serde_json;
++#[macro_use]
++extern crate quote;
++#[macro_use]
+ extern crate syn;
+ extern crate toml;
+2026-04-17 07:17:03,122 - INFO - Grading answer for mozilla__cbindgen-293...
+2026-04-17 07:17:03,122 - INFO - report: {'mozilla__cbindgen-293': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['bindgen::mangle::generics'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for mozilla__cbindgen-293: resolved: True
+2026-04-17 07:17:03,123 - INFO - Attempting to stop container rustb.eval.mozilla__cbindgen-293.gold_run1...
+2026-04-17 07:17:33,724 - INFO - Attempting to remove container rustb.eval.mozilla__cbindgen-293.gold_run1...
+2026-04-17 07:17:33,758 - INFO - Container rustb.eval.mozilla__cbindgen-293.gold_run1 removed.
+2026-04-17 07:17:33,758 - INFO - Attempting to remove image rustbench/mozilla__cbindgen:pr-293...
+2026-04-17 07:17:35,681 - INFO - Image rustbench/mozilla__cbindgen:pr-293 removed.

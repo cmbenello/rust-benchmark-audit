@@ -1,0 +1,382 @@
+diff --git a/derive/src/args.rs b/derive/src/args.rs
+--- a/derive/src/args.rs
++++ b/derive/src/args.rs
+@@ -207,6 +207,8 @@ pub struct SimpleObject {
+     pub shareable: bool,
+     #[darling(default)]
+     pub inaccessible: bool,
++    #[darling(default)]
++    pub interface_object: bool,
+     #[darling(default, multiple, rename = "tag")]
+     pub tags: Vec<String>,
+     #[darling(default)]
+diff --git a/derive/src/args.rs b/derive/src/args.rs
+--- a/derive/src/args.rs
++++ b/derive/src/args.rs
+@@ -254,6 +256,7 @@ pub struct Object {
+     pub extends: bool,
+     pub shareable: bool,
+     pub inaccessible: bool,
++    pub interface_object: bool,
+     #[darling(multiple, rename = "tag")]
+     pub tags: Vec<String>,
+     pub use_type_description: bool,
+diff --git a/derive/src/args.rs b/derive/src/args.rs
+--- a/derive/src/args.rs
++++ b/derive/src/args.rs
+@@ -672,6 +675,8 @@ pub struct MergedObject {
+     pub shareable: bool,
+     #[darling(default)]
+     pub inaccessible: bool,
++    #[darling(default)]
++    pub interface_object: bool,
+     #[darling(default, multiple, rename = "tag")]
+     pub tags: Vec<String>,
+     #[darling(default)]
+diff --git a/derive/src/merged_object.rs b/derive/src/merged_object.rs
+--- a/derive/src/merged_object.rs
++++ b/derive/src/merged_object.rs
+@@ -16,6 +16,7 @@ pub fn generate(object_args: &args::MergedObject) -> GeneratorResult<TokenStream
+     let extends = object_args.extends;
+     let shareable = object_args.shareable;
+     let inaccessible = object_args.inaccessible;
++    let interface_object = object_args.interface_object;
+     let tags = object_args
+         .tags
+         .iter()
+diff --git a/derive/src/merged_object.rs b/derive/src/merged_object.rs
+--- a/derive/src/merged_object.rs
++++ b/derive/src/merged_object.rs
+@@ -119,6 +120,7 @@ pub fn generate(object_args: &args::MergedObject) -> GeneratorResult<TokenStream
+                         extends: #extends,
+                         shareable: #shareable,
+                         inaccessible: #inaccessible,
++                        interface_object: #interface_object,
+                         tags: ::std::vec![ #(#tags),* ],
+                         keys: ::std::option::Option::None,
+                         visible: #visible,
+diff --git a/derive/src/merged_subscription.rs b/derive/src/merged_subscription.rs
+--- a/derive/src/merged_subscription.rs
++++ b/derive/src/merged_subscription.rs
+@@ -82,6 +82,7 @@ pub fn generate(object_args: &args::MergedSubscription) -> GeneratorResult<Token
+                         visible: #visible,
+                         shareable: false,
+                         inaccessible: false,
++                        interface_object: false,
+                         tags: ::std::default::Default::default(),
+                         is_subscription: true,
+                         rust_typename: ::std::option::Option::Some(::std::any::type_name::<Self>()),
+diff --git a/derive/src/object.rs b/derive/src/object.rs
+--- a/derive/src/object.rs
++++ b/derive/src/object.rs
+@@ -29,6 +29,7 @@ pub fn generate(
+     let extends = object_args.extends;
+     let shareable = object_args.shareable;
+     let inaccessible = object_args.inaccessible;
++    let interface_object = object_args.interface_object;
+     let tags = object_args
+         .tags
+         .iter()
+diff --git a/derive/src/object.rs b/derive/src/object.rs
+--- a/derive/src/object.rs
++++ b/derive/src/object.rs
+@@ -682,6 +683,7 @@ pub fn generate(
+                         extends: #extends,
+                         shareable: #shareable,
+                         inaccessible: #inaccessible,
++                        interface_object: #interface_object,
+                         tags: ::std::vec![ #(#tags),* ],
+                         keys: ::std::option::Option::None,
+                         visible: #visible,
+diff --git a/derive/src/object.rs b/derive/src/object.rs
+--- a/derive/src/object.rs
++++ b/derive/src/object.rs
+@@ -725,6 +727,7 @@ pub fn generate(
+                         extends: #extends,
+                         shareable: #shareable,
+                         inaccessible: #inaccessible,
++                        interface_object: #interface_object,
+                         tags: ::std::vec![ #(#tags),* ],
+                         keys: ::std::option::Option::None,
+                         visible: #visible,
+diff --git a/derive/src/simple_object.rs b/derive/src/simple_object.rs
+--- a/derive/src/simple_object.rs
++++ b/derive/src/simple_object.rs
+@@ -33,6 +33,7 @@ pub fn generate(object_args: &args::SimpleObject) -> GeneratorResult<TokenStream
+     let extends = object_args.extends;
+     let shareable = object_args.shareable;
+     let inaccessible = object_args.inaccessible;
++    let interface_object = object_args.interface_object;
+     let tags = object_args
+         .tags
+         .iter()
+diff --git a/derive/src/simple_object.rs b/derive/src/simple_object.rs
+--- a/derive/src/simple_object.rs
++++ b/derive/src/simple_object.rs
+@@ -370,6 +371,7 @@ pub fn generate(object_args: &args::SimpleObject) -> GeneratorResult<TokenStream
+                         extends: #extends,
+                         shareable: #shareable,
+                         inaccessible: #inaccessible,
++                        interface_object: #interface_object,
+                         tags: ::std::vec![ #(#tags),* ],
+                         keys: ::std::option::Option::None,
+                         visible: #visible,
+diff --git a/derive/src/simple_object.rs b/derive/src/simple_object.rs
+--- a/derive/src/simple_object.rs
++++ b/derive/src/simple_object.rs
+@@ -438,6 +440,7 @@ pub fn generate(object_args: &args::SimpleObject) -> GeneratorResult<TokenStream
+                         extends: #extends,
+                         shareable: #shareable,
+                         inaccessible: #inaccessible,
++                        interface_object: #interface_object,
+                         tags: ::std::vec![ #(#tags),* ],
+                         keys: ::std::option::Option::None,
+                         visible: #visible,
+diff --git a/derive/src/subscription.rs b/derive/src/subscription.rs
+--- a/derive/src/subscription.rs
++++ b/derive/src/subscription.rs
+@@ -410,6 +410,7 @@ pub fn generate(
+                     visible: #visible,
+                     shareable: false,
+                     inaccessible: false,
++                    interface_object: false,
+                     tags: ::std::default::Default::default(),
+                     is_subscription: true,
+                     rust_typename: ::std::option::Option::Some(::std::any::type_name::<Self>()),
+diff --git a/src/dynamic/macros.rs b/src/dynamic/macros.rs
+--- a/src/dynamic/macros.rs
++++ b/src/dynamic/macros.rs
+@@ -56,6 +56,23 @@ macro_rules! impl_set_inaccessible {
+     };
+ }
+ 
++macro_rules! impl_set_interface_object {
++    () => {
++        /// During composition, the fields of every `@interfaceObject` are added
++        /// both to their corresponding interface definition and to all
++        /// entity types that implement that interface.
++        ///
++        /// Reference: <https://www.apollographql.com/docs/federation/federated-types/federated-directives/#interfaceobject>
++        #[inline]
++        pub fn interface_object(self) -> Self {
++            Self {
++                interface_object: true,
++                ..self
++            }
++        }
++    };
++}
++
+ macro_rules! impl_set_tags {
+     () => {
+         /// Arbitrary string metadata that will be propagated to the supergraph
+diff --git a/src/dynamic/object.rs b/src/dynamic/object.rs
+--- a/src/dynamic/object.rs
++++ b/src/dynamic/object.rs
+@@ -45,6 +45,7 @@ pub struct Object {
+     extends: bool,
+     shareable: bool,
+     inaccessible: bool,
++    interface_object: bool,
+     tags: Vec<String>,
+ }
+ 
+diff --git a/src/dynamic/object.rs b/src/dynamic/object.rs
+--- a/src/dynamic/object.rs
++++ b/src/dynamic/object.rs
+@@ -61,6 +62,7 @@ impl Object {
+             extends: false,
+             shareable: false,
+             inaccessible: false,
++            interface_object: false,
+             tags: Vec::new(),
+         }
+     }
+diff --git a/src/dynamic/object.rs b/src/dynamic/object.rs
+--- a/src/dynamic/object.rs
++++ b/src/dynamic/object.rs
+@@ -69,6 +71,7 @@ impl Object {
+     impl_set_extends!();
+     impl_set_shareable!();
+     impl_set_inaccessible!();
++    impl_set_interface_object!();
+     impl_set_tags!();
+ 
+     /// Add an field to the object
+diff --git a/src/dynamic/object.rs b/src/dynamic/object.rs
+--- a/src/dynamic/object.rs
++++ b/src/dynamic/object.rs
+@@ -176,6 +179,7 @@ impl Object {
+                 },
+                 visible: None,
+                 inaccessible: self.inaccessible,
++                interface_object: self.interface_object,
+                 tags: self.tags.clone(),
+                 is_subscription: false,
+                 rust_typename: None,
+diff --git a/src/dynamic/subscription.rs b/src/dynamic/subscription.rs
+--- a/src/dynamic/subscription.rs
++++ b/src/dynamic/subscription.rs
+@@ -179,6 +179,7 @@ impl Subscription {
+                 keys: None,
+                 visible: None,
+                 inaccessible: false,
++                interface_object: false,
+                 tags: vec![],
+                 is_subscription: true,
+                 rust_typename: None,
+diff --git a/src/registry/export_sdl.rs b/src/registry/export_sdl.rs
+--- a/src/registry/export_sdl.rs
++++ b/src/registry/export_sdl.rs
+@@ -122,8 +122,8 @@ impl Registry {
+ 
+         if options.federation {
+             writeln!(sdl, "extend schema @link(").ok();
+-            writeln!(sdl, "\turl: \"https://specs.apollo.dev/federation/v2.1\",").ok();
+-            writeln!(sdl, "\timport: [\"@key\", \"@tag\", \"@shareable\", \"@inaccessible\", \"@override\", \"@external\", \"@provides\", \"@requires\", \"@composeDirective\"]").ok();
++            writeln!(sdl, "\turl: \"https://specs.apollo.dev/federation/v2.3\",").ok();
++            writeln!(sdl, "\timport: [\"@key\", \"@tag\", \"@shareable\", \"@inaccessible\", \"@override\", \"@external\", \"@provides\", \"@requires\", \"@composeDirective\", \"@interfaceObject\"]").ok();
+             writeln!(sdl, ")").ok();
+ 
+             if options.compose_directive {
+diff --git a/src/registry/export_sdl.rs b/src/registry/export_sdl.rs
+--- a/src/registry/export_sdl.rs
++++ b/src/registry/export_sdl.rs
+@@ -306,6 +306,7 @@ impl Registry {
+                 description,
+                 shareable,
+                 inaccessible,
++                interface_object,
+                 tags,
+                 directive_invocations: raw_directives,
+                 ..
+diff --git a/src/registry/export_sdl.rs b/src/registry/export_sdl.rs
+--- a/src/registry/export_sdl.rs
++++ b/src/registry/export_sdl.rs
+@@ -359,6 +360,10 @@ impl Registry {
+                         write!(sdl, " @inaccessible").ok();
+                     }
+ 
++                    if *interface_object {
++                        write!(sdl, " @interfaceObject").ok();
++                    }
++
+                     for tag in tags {
+                         write!(sdl, " @tag(name: \"{}\")", tag.replace('"', "\\\"")).ok();
+                     }
+diff --git a/src/registry/mod.rs b/src/registry/mod.rs
+--- a/src/registry/mod.rs
++++ b/src/registry/mod.rs
+@@ -278,6 +278,7 @@ impl MetaTypeId {
+                 extends: false,
+                 shareable: false,
+                 inaccessible: false,
++                interface_object: false,
+                 tags: vec![],
+                 keys: None,
+                 visible: None,
+diff --git a/src/registry/mod.rs b/src/registry/mod.rs
+--- a/src/registry/mod.rs
++++ b/src/registry/mod.rs
+@@ -415,6 +416,12 @@ pub enum MetaType {
+         ///
+         /// Reference: <https://www.apollographql.com/docs/federation/federated-types/federated-directives/#inaccessible>
+         inaccessible: bool,
++        /// During composition, the fields of every `@interfaceObject` are added
++        /// both to their corresponding interface definition and to all
++        /// entity types that implement that interface.
++        ///
++        /// Reference: <https://www.apollographql.com/docs/federation/federated-types/federated-directives/#interfaceobject>
++        interface_object: bool,
+         /// Arbitrary string metadata that will be propagated to the supergraph
+         /// when using Apollo Federation. This attribute is repeatable
+         ///
+diff --git a/src/registry/mod.rs b/src/registry/mod.rs
+--- a/src/registry/mod.rs
++++ b/src/registry/mod.rs
+@@ -1152,6 +1159,7 @@ impl Registry {
+                 cache_control: Default::default(),
+                 extends: false,
+                 shareable: false,
++                interface_object: false,
+                 keys: None,
+                 visible: None,
+                 inaccessible: false,
+diff --git a/src/types/connection/cursor.rs b/src/types/connection/cursor.rs
+--- a/src/types/connection/cursor.rs
++++ b/src/types/connection/cursor.rs
+@@ -121,7 +121,7 @@ impl CursorType for chrono::DateTime<chrono::Utc> {
+     type Error = chrono::ParseError;
+ 
+     fn decode_cursor(s: &str) -> Result<Self, Self::Error> {
+-        Ok(chrono::DateTime::parse_from_rfc3339(s)?.with_timezone::<chrono::Utc>(&chrono::Utc{}))
++        Ok(chrono::DateTime::parse_from_rfc3339(s)?.with_timezone::<chrono::Utc>(&chrono::Utc {}))
+     }
+ 
+     fn encode_cursor(&self) -> String {
+diff --git a/src/types/connection/cursor.rs b/src/types/connection/cursor.rs
+--- a/src/types/connection/cursor.rs
++++ b/src/types/connection/cursor.rs
+@@ -129,7 +129,6 @@ impl CursorType for chrono::DateTime<chrono::Utc> {
+     }
+ }
+ 
+-
+ #[cfg(feature = "uuid")]
+ impl CursorType for uuid::Uuid {
+     type Error = uuid::Error;
+diff --git a/src/types/empty_mutation.rs b/src/types/empty_mutation.rs
+--- a/src/types/empty_mutation.rs
++++ b/src/types/empty_mutation.rs
+@@ -58,6 +58,7 @@ impl OutputType for EmptyMutation {
+             keys: None,
+             visible: None,
+             inaccessible: false,
++            interface_object: false,
+             tags: Default::default(),
+             is_subscription: false,
+             rust_typename: Some(std::any::type_name::<Self>()),
+diff --git a/src/types/empty_subscription.rs b/src/types/empty_subscription.rs
+--- a/src/types/empty_subscription.rs
++++ b/src/types/empty_subscription.rs
+@@ -27,6 +27,7 @@ impl SubscriptionType for EmptySubscription {
+             keys: None,
+             visible: None,
+             inaccessible: false,
++            interface_object: false,
+             tags: Default::default(),
+             is_subscription: true,
+             rust_typename: Some(std::any::type_name::<Self>()),
+diff --git a/src/types/merged_object.rs b/src/types/merged_object.rs
+--- a/src/types/merged_object.rs
++++ b/src/types/merged_object.rs
+@@ -81,6 +81,7 @@ where
+                 keys: None,
+                 visible: None,
+                 inaccessible: false,
++                interface_object: false,
+                 tags: Default::default(),
+                 is_subscription: false,
+                 rust_typename: Some(std::any::type_name::<Self>()),
+diff --git a/src/types/merged_object.rs b/src/types/merged_object.rs
+--- a/src/types/merged_object.rs
++++ b/src/types/merged_object.rs
+@@ -143,6 +144,7 @@ where
+                 keys: None,
+                 visible: None,
+                 inaccessible: false,
++                interface_object: false,
+                 tags: Default::default(),
+                 is_subscription: false,
+                 rust_typename: Some(std::any::type_name::<Self>()),
+diff --git a/src/types/merged_object.rs b/src/types/merged_object.rs
+--- a/src/types/merged_object.rs
++++ b/src/types/merged_object.rs
+@@ -180,6 +182,7 @@ impl SubscriptionType for MergedObjectTail {
+             keys: None,
+             visible: None,
+             inaccessible: false,
++            interface_object: false,
+             tags: Default::default(),
+             is_subscription: false,
+             rust_typename: Some(std::any::type_name::<Self>()),

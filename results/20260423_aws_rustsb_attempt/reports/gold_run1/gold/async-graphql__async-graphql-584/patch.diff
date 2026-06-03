@@ -1,0 +1,60 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
+ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+ 
++## [Unreleased]
++
++- Change `GraphQLPlaygroundConfig::with_setting` to accept `impl Into<Value>` [#583](https://github.com/async-graphql/async-graphql/issues/583)
++
+ ## [2.9.9] 2021-07-20
+ 
+ - Add binary types to `ConstValue` and `Value`. [#569](https://github.com/async-graphql/async-graphql/issues/569)
+diff --git a/src/http/playground_source.rs b/src/http/playground_source.rs
+--- a/src/http/playground_source.rs
++++ b/src/http/playground_source.rs
+@@ -2,6 +2,8 @@ use std::collections::HashMap;
+ 
+ use serde::Serialize;
+ 
++use crate::Value;
++
+ /// Generate the page for GraphQL Playground
+ ///
+ /// # Example
+diff --git a/src/http/playground_source.rs b/src/http/playground_source.rs
+--- a/src/http/playground_source.rs
++++ b/src/http/playground_source.rs
+@@ -564,7 +566,7 @@ pub struct GraphQLPlaygroundConfig<'a> {
+     endpoint: &'a str,
+     subscription_endpoint: Option<&'a str>,
+     headers: Option<HashMap<&'a str, &'a str>>,
+-    settings: Option<HashMap<&'a str, &'a str>>,
++    settings: Option<HashMap<&'a str, Value>>,
+ }
+ 
+ impl<'a> GraphQLPlaygroundConfig<'a> {
+diff --git a/src/http/playground_source.rs b/src/http/playground_source.rs
+--- a/src/http/playground_source.rs
++++ b/src/http/playground_source.rs
+@@ -597,7 +599,17 @@ impl<'a> GraphQLPlaygroundConfig<'a> {
+     }
+ 
+     /// Set Playground setting for per query.
+-    pub fn with_setting(mut self, name: &'a str, value: &'a str) -> Self {
++    ///
++    /// ```
++    /// # use async_graphql::Value;
++    /// # use async_graphql::http::GraphQLPlaygroundConfig;
++    /// GraphQLPlaygroundConfig::new("/api/graphql")
++    ///     .with_setting("setting", false)
++    ///     .with_setting("other", Value::Null);
++    /// ```
++    pub fn with_setting(mut self, name: &'a str, value: impl Into<Value>) -> Self {
++        let value = value.into();
++
+         if let Some(settings) = &mut self.settings {
+             settings.insert(name, value);
+         } else {

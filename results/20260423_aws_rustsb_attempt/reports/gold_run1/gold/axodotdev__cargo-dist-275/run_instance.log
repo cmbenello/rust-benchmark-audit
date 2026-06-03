@@ -1,0 +1,1804 @@
+2026-04-17 07:36:49,511 - INFO - Environment image rustb.env.x86_64.axodotdev_cargo-dist:latest found for axodotdev__cargo-dist-275
+Building instance image rustbench/axodotdev__cargo-dist:pr-275 for axodotdev__cargo-dist-275
+2026-04-17 07:49:47,425 - INFO - Creating container for axodotdev__cargo-dist-275...
+2026-04-17 07:49:47,521 - INFO - Container for axodotdev__cargo-dist-275 created: 079527a60618b749fa60b41b0eb63f63f0eb73cd5decf5aab68a831d3728777a
+2026-04-17 07:49:47,664 - INFO - Container for axodotdev__cargo-dist-275 started: 079527a60618b749fa60b41b0eb63f63f0eb73cd5decf5aab68a831d3728777a
+2026-04-17 07:49:47,664 - INFO - Intermediate patch for axodotdev__cargo-dist-275 written to logs/run_evaluation/gold_run1/gold/axodotdev__cargo-dist-275/patch.diff, now applying to container...
+2026-04-17 07:49:48,002 - INFO - >>>>> Applied Patch:
+Checking patch book/src/config.md...
+Checking patch cargo-dist-schema/cargo-dist-json-schema.json...
+Checking patch cargo-dist-schema/src/lib.rs...
+Checking patch cargo-dist-schema/src/lib.rs...
+Hunk #1 succeeded at 251 (offset -20 lines).
+Checking patch cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap...
+Checking patch cargo-dist/src/ci.rs...
+Checking patch cargo-dist/src/ci.rs...
+Checking patch cargo-dist/src/lib.rs...
+Checking patch cargo-dist/src/lib.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/src/tasks.rs...
+Checking patch cargo-dist/templates/ci.yml...
+Checking patch cargo-dist/templates/ci.yml...
+Applied patch book/src/config.md cleanly.
+Applied patch cargo-dist-schema/cargo-dist-json-schema.json cleanly.
+Applied patch cargo-dist-schema/src/lib.rs cleanly.
+Applied patch cargo-dist-schema/src/lib.rs cleanly.
+Applied patch cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap cleanly.
+Applied patch cargo-dist/src/ci.rs cleanly.
+Applied patch cargo-dist/src/ci.rs cleanly.
+Applied patch cargo-dist/src/lib.rs cleanly.
+Applied patch cargo-dist/src/lib.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/src/tasks.rs cleanly.
+Applied patch cargo-dist/templates/ci.yml cleanly.
+Applied patch cargo-dist/templates/ci.yml cleanly.
+
+2026-04-17 07:49:48,084 - INFO - Git diff before:
+diff --git a/Cargo.lock b/Cargo.lock
+index e0fd7f86..579eaefe 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -287,9 +287,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "camino"
+-version = "1.1.4"
++version = "1.1.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c530edf18f37068ac2d977409ed5cd50d53d73bc653c7647b48eb78976ac9ae2"
++checksum = "c59e92b5a388f549b863a7bea62612c09f24c8393560709a54558a9abdfb3b9c"
+ dependencies = [
+  "serde",
+ ]
+@@ -340,9 +340,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "cargo-platform"
+-version = "0.1.2"
++version = "0.1.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cbdb825da8a5df079a43676dbe042702f1707b1109f713a01420fbb4cc71fa27"
++checksum = "2cfa25e60aea747ec7e1124f238816749faa93759c6ff5b31f1ccdda137f4479"
+ dependencies = [
+  "serde",
+ ]
+@@ -398,9 +398,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap"
+-version = "4.3.10"
++version = "4.3.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "384e169cc618c613d5e3ca6404dda77a8685a63e08660dcc64abaf7da7cb0c7a"
++checksum = "8f644d0dac522c8b05ddc39aaaccc5b136d5dc4ff216610c5641e3be5becf56c"
+ dependencies = [
+  "clap_builder",
+  "clap_derive",
+@@ -419,9 +419,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap_builder"
+-version = "4.3.10"
++version = "4.3.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ef137bbe35aab78bdb468ccfba75a5f4d8321ae011d34063770780545176af2d"
++checksum = "af410122b9778e024f9e0fb35682cc09cc3f85cad5e8d3ba8f47a9702df6e73d"
+ dependencies = [
+  "anstream",
+  "anstyle",
+@@ -431,14 +431,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap_derive"
+-version = "4.3.2"
++version = "4.3.12"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b8cd2b2a819ad6eec39e8f1d6b53001af1e5469f8c177579cdaeb313115b825f"
++checksum = "54a9bb5758fc5dfe728d1019941681eccaf0cf8a4189b692a0ee2f2ecf90a050"
+ dependencies = [
+  "heck",
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -506,9 +506,9 @@ checksum = "e496a50fda8aacccc86d7529e2c1e0892dbd0f898a6b5645b5561b89c3210efa"
+ 
+ [[package]]
+ name = "cpufeatures"
+-version = "0.2.8"
++version = "0.2.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "03e69e28e9f7f77debdedbaafa2866e1de9ba56df55a8bd7cfc724c25a09987c"
++checksum = "a17b76ff3a4162b0b27f354a0c87015ddad39d35f9c0c36607a3bdd175dde1f1"
+ dependencies = [
+  "libc",
+ ]
+@@ -618,9 +618,9 @@ checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
+ 
+ [[package]]
+ name = "dyn-clone"
+-version = "1.0.11"
++version = "1.0.12"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "68b0cf012f1230e43cd00ebb729c6bb58707ecfa8ad08b52ef3a4ccd2697fc30"
++checksum = "304e6508efa593091e97a9abbc10f90aa7ca635b6d2784feff3c89d41dd12272"
+ 
+ [[package]]
+ name = "either"
+@@ -666,9 +666,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "exr"
+-version = "1.6.5"
++version = "1.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "85a7b44a196573e272e0cf0bcf130281c71e9a0c67062954b3323fd364bfdac9"
++checksum = "d1e481eb11a482815d3e9d618db8c42a93207134662873809335a92327440c18"
+ dependencies = [
+  "bit_field",
+  "flume",
+@@ -924,9 +924,9 @@ checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
+ 
+ [[package]]
+ name = "hermit-abi"
+-version = "0.3.1"
++version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fed44880c466736ef9a5c5b5facefb5ed0785676d0c02d612db14e54f0d84286"
++checksum = "443144c8cdadd93ebf52ddb4056d257f5b52c04d3c804e657d19eb73fc33668b"
+ 
+ [[package]]
+ name = "hmac"
+@@ -1058,9 +1058,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "insta"
+-version = "1.30.0"
++version = "1.31.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "28491f7753051e5704d4d0ae7860d45fae3238d7d235bc4289dcd45c48d3cec3"
++checksum = "a0770b0a3d4c70567f0d58331f3088b0e4c4f56c9b8d764efe654b4a5d46de3a"
+ dependencies = [
+  "console",
+  "lazy_static",
+@@ -1098,12 +1098,12 @@ checksum = "28b29a3cd74f0f4598934efe3aeba42bae0eb4680554128851ebbecb02af14e6"
+ 
+ [[package]]
+ name = "is-terminal"
+-version = "0.4.8"
++version = "0.4.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "24fddda5af7e54bf7da53067d6e802dbcc381d0a8eef629df528e3ebf68755cb"
++checksum = "cb0889898416213fab133e1d33a0e5858a48177452750691bde3666d0fdbaf8b"
+ dependencies = [
+  "hermit-abi",
+- "rustix 0.38.2",
++ "rustix 0.38.4",
+  "windows-sys 0.48.0",
+ ]
+ 
+@@ -1124,9 +1124,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "itoa"
+-version = "1.0.7"
++version = "1.0.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c0aa48fab2893d8a49caa94082ae8488f4e1050d73b367881dcd2198f4199fd8"
++checksum = "af150ab688ff2122fcef229be89cb50dd66af9e01a4ff320cc137eecc9bacc38"
+ 
+ [[package]]
+ name = "jobserver"
+@@ -1235,9 +1235,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "miette"
+-version = "5.9.0"
++version = "5.10.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a236ff270093b0b67451bc50a509bd1bad302cb1d3c7d37d5efe931238581fa9"
++checksum = "59bb584eaeeab6bd0226ccf3509a69d7936d148cf3d036ad350abe35e8c6856e"
+ dependencies = [
+  "backtrace",
+  "backtrace-ext",
+@@ -1256,13 +1256,13 @@ dependencies = [
+ 
+ [[package]]
+ name = "miette-derive"
+-version = "5.9.0"
++version = "5.10.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4901771e1d44ddb37964565c654a3223ba41a594d02b8da471cc4464912b5cfa"
++checksum = "49e7bc1560b95a3c4a25d03de42fe76ca718ab92d1a22a55b9b4cf67b3ae635c"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -1422,7 +1422,7 @@ checksum = "a948666b637a0f465e8564c73e89d4dde00d72d4d473cc972f390fc3dcee7d9c"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -1532,7 +1532,7 @@ checksum = "ec2e072ecce94ec471b13398d5402c188e76ac03cf74dd1a975161b23a3f6d9c"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -1568,9 +1568,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.63"
++version = "1.0.66"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7b368fba921b0dce7e60f5e04ec15e565b3303972b42bcfde1d0713b881959eb"
++checksum = "18fb31db3f9bddb2ea821cde30a9f70117e3f119938b5ee630b7403aa6e2ead9"
+ dependencies = [
+  "unicode-ident",
+ ]
+@@ -1586,9 +1586,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "quote"
+-version = "1.0.29"
++version = "1.0.31"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "573015e8ab27661678357f27dc26460738fd2b6c86e46f386fde94cb5d913105"
++checksum = "5fe8a65d69dd0808184ebb5f836ab526bb259db23c657efa38711b1072ee47f0"
+ dependencies = [
+  "proc-macro2",
+ ]
+@@ -1641,9 +1641,21 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex"
+-version = "1.8.4"
++version = "1.9.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d0ab3ca65655bb1e41f2a8c8cd662eb4fb035e67c3f78da1d61dffe89d07300f"
++checksum = "b2eae68fc220f7cf2532e4494aded17545fce192d59cd996e0fe7887f4ceb575"
++dependencies = [
++ "aho-corasick",
++ "memchr",
++ "regex-automata",
++ "regex-syntax",
++]
++
++[[package]]
++name = "regex-automata"
++version = "0.3.3"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "39354c10dd07468c2e73926b23bb9c2caca74c5501e38a35da70406f1d923310"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -1652,9 +1664,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-syntax"
+-version = "0.7.2"
++version = "0.7.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "436b050e76ed2903236f032a59761c1eb99e1b0aead2c257922771dab1fc8c78"
++checksum = "e5ea92a5b6195c6ef2a0295ea818b312502c6fc94dde986c5553242e18fd4ce2"
+ 
+ [[package]]
+ name = "reqwest"
+@@ -1701,9 +1713,9 @@ checksum = "d626bb9dae77e28219937af045c257c28bfd3f69333c512553507f5f9798cb76"
+ 
+ [[package]]
+ name = "rustix"
+-version = "0.37.22"
++version = "0.37.23"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8818fa822adcc98b18fedbb3632a6a33213c070556b5aa7c4c8cc21cff565c4c"
++checksum = "4d69718bf81c6127a49dc64e44a742e8bb9213c0ff8869a22c308f84c1d4ab06"
+ dependencies = [
+  "bitflags 1.3.2",
+  "errno",
+@@ -1715,9 +1727,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "rustix"
+-version = "0.38.2"
++version = "0.38.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "aabcb0461ebd01d6b79945797c27f8529082226cb630a9865a71870ff63532a4"
++checksum = "0a962918ea88d644592894bc6dc55acc6c0956488adcebbfb6e273506b7fd6e5"
+ dependencies = [
+  "bitflags 2.3.3",
+  "errno",
+@@ -1728,9 +1740,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "ryu"
+-version = "1.0.13"
++version = "1.0.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f91339c0467de62360649f8d3e185ca8de4224ff281f66000de5eb2a77a79041"
++checksum = "1ad4cc8da4ef723ed60bced201181d83791ad433213d8c24efffda1eec85d741"
+ 
+ [[package]]
+ name = "schannel"
+@@ -1767,9 +1779,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "scopeguard"
+-version = "1.1.0"
++version = "1.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d29ab0c6d3fc0ee92fe66e2d99f700eab17a8d57d1c1d3b748380fb20baa78cd"
++checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
+ 
+ [[package]]
+ name = "security-framework"
+@@ -1796,31 +1808,31 @@ dependencies = [
+ 
+ [[package]]
+ name = "semver"
+-version = "1.0.17"
++version = "1.0.18"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bebd363326d05ec3e2f532ab7660680f3b02130d780c299bca73469d521bc0ed"
++checksum = "b0293b4b29daaf487284529cc2f5675b8e57c61f70167ba415a463651fd6a918"
+ dependencies = [
+  "serde",
+ ]
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.165"
++version = "1.0.171"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c939f902bb7d0ccc5bce4f03297e161543c2dcb30914faf032c2bd0b7a0d48fc"
++checksum = "30e27d1e4fd7659406c492fd6cfaf2066ba8773de45ca75e855590f856dc34a9"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.165"
++version = "1.0.171"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6eaae920e25fffe4019b75ff65e7660e72091e59dd204cb5849bbd6a3fd343d7"
++checksum = "389894603bd18c46fa56231694f8d827779c0951a667087194cf9de94ed24682"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -1836,9 +1848,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.99"
++version = "1.0.103"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "46266871c240a00b8f503b877622fe33430b3c7d963bdc0f2adc511e54a1eae3"
++checksum = "d03b412469450d4404fe8499a268edd7f8b79fecb074b0d812ad64ca21f4031b"
+ dependencies = [
+  "itoa",
+  "ryu",
+@@ -1917,9 +1929,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "smallvec"
+-version = "1.10.0"
++version = "1.11.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a507befe795404456341dfab10cef66ead4c041f62b8b11bbb92bffe5d0953e0"
++checksum = "62bb4feee49fdd9f707ef802e22365a35de4b7b299de4763d44bfea899442ff9"
+ 
+ [[package]]
+ name = "smawk"
+@@ -2005,9 +2017,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "syn"
+-version = "2.0.23"
++version = "2.0.26"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "59fb7d6d8281a51045d62b8eb3a7d1ce347b76f312af50cd3dc0af39c87c1737"
++checksum = "45c3457aacde3c65315de5031ec191ce46604304d2446e803d71ade03308d970"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -2016,9 +2028,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "tar"
+-version = "0.4.38"
++version = "0.4.39"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4b55807c0344e1e6c04d7c965f5289c39a8d94ae23ed5c0b57aabac549f871c6"
++checksum = "ec96d2ffad078296368d46ff1cb309be1c23c513b4ab0e22a45de0185275ac96"
+ dependencies = [
+  "filetime",
+  "libc",
+@@ -2027,9 +2039,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "target-lexicon"
+-version = "0.12.8"
++version = "0.12.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1b1c7f239eb94671427157bd93b3694320f3668d4e1eff08c7285366fd777fac"
++checksum = "df8e77cb757a61f51b947ec4a7e3646efd825b73561db1c232a8ccb639e611a0"
+ 
+ [[package]]
+ name = "target-spec"
+@@ -2052,7 +2064,7 @@ dependencies = [
+  "cfg-if",
+  "fastrand",
+  "redox_syscall 0.3.5",
+- "rustix 0.37.22",
++ "rustix 0.37.23",
+  "windows-sys 0.48.0",
+ ]
+ 
+@@ -2079,22 +2091,22 @@ dependencies = [
+ 
+ [[package]]
+ name = "thiserror"
+-version = "1.0.40"
++version = "1.0.43"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "978c9a314bd8dc99be594bc3c175faaa9794be04a5a5e153caba6915336cebac"
++checksum = "a35fc5b8971143ca348fa6df4f024d4d55264f3468c71ad1c2f365b0a4d58c42"
+ dependencies = [
+  "thiserror-impl",
+ ]
+ 
+ [[package]]
+ name = "thiserror-impl"
+-version = "1.0.40"
++version = "1.0.43"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f9456a42c5b0d803c8cd86e73dd7cc9edd429499f37a3550d286d5e86720569f"
++checksum = "463fe12d7993d3b327787537ce8dd4dfa058de32fc2b195ef3cde03dc4771e8f"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -2120,9 +2132,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "time"
+-version = "0.3.22"
++version = "0.3.23"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ea9e1b3cf1243ae005d9e74085d4d542f3125458f3a81af210d901dcd7411efd"
++checksum = "59e399c068f43a5d116fedaf73b203fa4f9c519f17e2b34f63221d3792f81446"
+ dependencies = [
+  "serde",
+  "time-core",
+@@ -2234,7 +2246,7 @@ checksum = "5f4f31f56159e98206da9efd823404b79b6ef3143b4a7ab76e67b1751b25a4ab"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -2292,9 +2304,9 @@ checksum = "92888ba5573ff080736b3648696b70cafad7d250551175acbaa4e0385b3e1460"
+ 
+ [[package]]
+ name = "unicode-ident"
+-version = "1.0.9"
++version = "1.0.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b15811caf2415fb889178633e7724bad2509101cde276048e013b9def5e51fa0"
++checksum = "301abaae475aa91687eb82514b328ab47a211a533026cb25fc3e519b86adfc3c"
+ 
+ [[package]]
+ name = "unicode-linebreak"
+@@ -2398,7 +2410,7 @@ dependencies = [
+  "once_cell",
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+  "wasm-bindgen-shared",
+ ]
+ 
+@@ -2432,7 +2444,7 @@ checksum = "54681b18a46765f095758388f2d0cf16eb8d4169b639ab575a8f5693af210c7b"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+  "wasm-bindgen-backend",
+  "wasm-bindgen-shared",
+ ]
+diff --git a/book/src/config.md b/book/src/config.md
+index dec62fb0..80d99221 100644
+--- a/book/src/config.md
++++ b/book/src/config.md
+@@ -67,17 +67,19 @@ If you delete the key, generate-ci will just use the version of cargo-dist that'
+ 
+ ### rust-toolchain-version
+ 
+-> since 0.0.3
++> since 0.0.3 (deprecated in 0.1.0)
+ 
+ Example: `rust-toolchain-version = "1.67.1"` 
+ 
++> Deprecation reason: [rust-toolchain.toml](https://rust-lang.github.io/rustup/overrides.html#the-toolchain-file) is a more standard/universal mechanism for pinning toolchain versions for reproducibility. Teams without dedicated release engineers will likely benefit from unpinning their toolchain and letting the underlying CI vendor silently update them to "some recent stable toolchain", as they will get updates/improvements and are unlikely to have regressions.
++
+ **This can only be set globally**
+ 
+ This is added automatically by `cargo dist init`, recorded for the sake of reproducibility and documentation. It represents the "ideal" Rust toolchain to build your project with. This is in contrast to the builtin Cargo [rust-version][] which is used to specify the *minimum* supported Rust version. When you run [generate-ci][] the resulting CI scripts will install that version of the Rust toolchain with [rustup][]. There's nothing special about the chosen value, it's just a hardcoded "recent stable version".
+ 
+ The syntax must be a valid rustup toolchain like "1.60.0" or "stable" (should not specify the platform, we want to install this toolchain on all platforms).
+ 
+-If you delete the key, generate-ci will just use "stable" which will drift over time as new stable releases occur.
++If you delete the key, generate-ci won't explicitly setup a toolchain, so whatever's on the machine will be used (with things like rust-toolchain.toml behaving as normal). Before being deprecated the default was to `rustup update stable`, but this is no longer the case.
+ 
+ ### ci
+ 
+diff --git a/cargo-dist-schema/cargo-dist-json-schema.json b/cargo-dist-schema/cargo-dist-json-schema.json
+index 88fcf59d..cdd86acd 100644
+--- a/cargo-dist-schema/cargo-dist-json-schema.json
++++ b/cargo-dist-schema/cargo-dist-json-schema.json
+@@ -57,6 +57,17 @@
+       "items": {
+         "$ref": "#/definitions/Release"
+       }
++    },
++    "system_info": {
++      "description": "Info about the toolchain used to build this announcement",
++      "anyOf": [
++        {
++          "$ref": "#/definitions/SystemInfo"
++        },
++        {
++          "type": "null"
++        }
++      ]
+     }
+   },
+   "definitions": {
+diff --git a/cargo-dist-schema/src/lib.rs b/cargo-dist-schema/src/lib.rs
+index 92f595e8..1f433416 100644
+--- a/cargo-dist-schema/src/lib.rs
++++ b/cargo-dist-schema/src/lib.rs
+@@ -53,6 +53,10 @@ pub struct DistManifest {
+     #[serde(default)]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub announcement_github_body: Option<String>,
++    /// Info about the toolchain used to build this announcement
++    #[serde(default)]
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub system_info: Option<SystemInfo>,
+     /// App releases we're distributing
+     #[serde(default)]
+     #[serde(skip_serializing_if = "Vec::is_empty")]
+@@ -247,6 +251,7 @@ impl DistManifest {
+             announcement_title: None,
+             announcement_changelog: None,
+             announcement_github_body: None,
++            system_info: None,
+             releases,
+             artifacts,
+         }
+diff --git a/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap b/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+index 8b8fde0e..9e0ea89f 100644
+--- a/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
++++ b/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+@@ -61,6 +61,17 @@ expression: json_schema
+       "items": {
+         "$ref": "#/definitions/Release"
+       }
++    },
++    "system_info": {
++      "description": "Info about the toolchain used to build this announcement",
++      "anyOf": [
++        {
++          "$ref": "#/definitions/SystemInfo"
++        },
++        {
++          "type": "null"
++        }
++      ]
+     }
+   },
+   "definitions": {
+diff --git a/cargo-dist/src/ci.rs b/cargo-dist/src/ci.rs
+index d0c0477e..3b87f12f 100644
+--- a/cargo-dist/src/ci.rs
++++ b/cargo-dist/src/ci.rs
+@@ -39,7 +39,7 @@ pub fn generate_github_ci(dist: &DistGraph) -> Result<(), miette::Report> {
+ /// Write the Github CI to something
+ fn write_github_ci<W: std::io::Write>(f: &mut W, dist: &DistGraph) -> Result<(), std::io::Error> {
+     // If they don't specify a Rust version, just go for "stable"
+-    let rust_version = dist.desired_rust_toolchain.as_deref().unwrap_or("stable");
++    let rust_version = dist.desired_rust_toolchain.as_deref();
+ 
+     // If they don't specify a cargo-dist version, use this one
+     let self_dist_version = SELF_DIST_VERSION.parse().unwrap();
+@@ -58,14 +58,22 @@ fn write_github_ci<W: std::io::Write>(f: &mut W, dist: &DistGraph) -> Result<(),
+         local_targets.extend(release.targets.iter());
+     }
+ 
+-    // Install Rust with rustup
++    // Install Rust with rustup (deprecated, use rust-toolchain.toml)
+     //
+     // We pass --no-self-update to work around https://github.com/rust-lang/rustup/issues/2441
+     //
+-    // FIXME(#127): we get some warnings from Github about hardcoded rust tools being on PATH
+-    // that are shadowing the rustup ones? Look into this!
+-    let install_rust =
+-        format!("rustup update {rust_version} --no-self-update && rustup default {rust_version}");
++    // If not specified we just let default toolchains on the system be used
++    // (rust-toolchain.toml will override things automagically if the system uses rustup,
++    // because rustup intercepts all commands like `cargo` and `rustc` to reselect the toolchain)
++    let install_rust = rust_version
++        .map(|rust_version| {
++            format!(
++                r#"
++      - name: Install Rust
++        run: rustup update {rust_version} --no-self-update && rustup default {rust_version}"#
++            )
++        })
++        .unwrap_or(String::new());
+ 
+     // Get the platform-specific installation methods
+     let install_dist_sh = install_dist_sh_for_version(dist_version);
+diff --git a/cargo-dist/src/lib.rs b/cargo-dist/src/lib.rs
+index f27a5f63..5bb5ffa1 100644
+--- a/cargo-dist/src/lib.rs
++++ b/cargo-dist/src/lib.rs
+@@ -125,6 +125,9 @@ fn build_manifest(cfg: &Config, dist: &DistGraph) -> DistManifest {
+     manifest.announcement_title = dist.announcement_title.clone();
+     manifest.announcement_changelog = dist.announcement_changelog.clone();
+     manifest.announcement_github_body = dist.announcement_github_body.clone();
++    manifest.system_info = Some(cargo_dist_schema::SystemInfo {
++        cargo_version_line: dist.tools.cargo.version_line.clone(),
++    });
+     manifest
+ }
+ 
+@@ -315,7 +318,7 @@ fn build_cargo_target(dist_graph: &DistGraph, target: &CargoBuildStep) -> Result
+         target.target_triple, target.profile
+     );
+ 
+-    let mut command = Command::new(&dist_graph.cargo);
++    let mut command = Command::new(&dist_graph.tools.cargo.cmd);
+     command
+         .arg("build")
+         .arg("--profile")
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+index ca8f3271..91a6884a 100644
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -113,7 +113,7 @@ pub struct DistMetadata {
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub cargo_dist_version: Option<Version>,
+ 
+-    /// The intended version of Rust/Cargo to build with (rustup toolchain syntax)
++    /// (deprecated) The intended version of Rust/Cargo to build with (rustup toolchain syntax)
+     ///
+     /// When generating full tasks graphs (such as CI scripts) we will pick this version.
+     #[serde(rename = "rust-toolchain-version")]
+@@ -352,9 +352,9 @@ pub struct DistGraph {
+     /// Whether it looks like `cargo dist init` has been run
+     pub is_init: bool,
+ 
+-    // Some simple global facts
+-    /// The executable cargo told us to find itself at.
+-    pub cargo: String,
++    /// Info about the tools we're using to build
++    pub tools: Tools,
++
+     /// The cargo target dir.
+     pub target_dir: Utf8PathBuf,
+     /// The root directory of the current cargo workspace.
+@@ -365,11 +365,6 @@ pub struct DistGraph {
+     pub desired_cargo_dist_version: Option<Version>,
+     /// The desired rust toolchain for handling this project
+     pub desired_rust_toolchain: Option<String>,
+-    /// The desired ci backends for this project
+-    pub tools: Tools,
+-    /// The target triple of the current system
+-    pub host_target: String,
+-
+     /// Styles of CI we want to support
+     pub ci_style: Vec<CiStyle>,
+     /// The git tag used for the announcement (e.g. v1.0.0)
+@@ -400,12 +395,25 @@ pub struct DistGraph {
+ }
+ 
+ /// Various tools we have found installed on the system
+-#[derive(Debug, Clone, Default)]
++#[derive(Debug, Clone)]
+ pub struct Tools {
++    /// Info on cargo, which must exist
++    pub cargo: CargoInfo,
+     /// rustup, useful for getting specific toolchains
+     pub rustup: Option<Tool>,
+ }
+ 
++/// Info about the cargo toolchain we're using
++#[derive(Debug, Clone)]
++pub struct CargoInfo {
++    /// The path/command used to refer to cargo (usually from the CARGO env var)
++    pub cmd: String,
++    /// The first line of running cargo with `-vV`, should be version info
++    pub version_line: Option<String>,
++    /// The host target triple (obtained from `-vV`)
++    pub host_target: String,
++}
++
+ /// A tool we have found installed on the system
+ #[derive(Debug, Clone, Default)]
+ pub struct Tool {
+@@ -904,10 +912,9 @@ struct DistGraphBuilder<'pkg_graph> {
+ 
+ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+     fn new(
+-        cargo: String,
++        tools: Tools,
+         workspace: &'pkg_graph WorkspaceInfo,
+         artifact_mode: ArtifactMode,
+-        host_target: String,
+     ) -> Self {
+         let target_dir = workspace.target_dir.clone();
+         let workspace_dir = workspace.workspace_dir.clone();
+@@ -918,6 +925,9 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         workspace_metadata.make_relative_to(&workspace.workspace_dir);
+         let desired_cargo_dist_version = workspace_metadata.cargo_dist_version.clone();
+         let desired_rust_toolchain = workspace_metadata.rust_toolchain_version.clone();
++        if desired_rust_toolchain.is_some() {
++            warn!("rust-toolchain-version is deprecated, use rust-toolchain.toml if you want pinned toolchains");
++        }
+ 
+         let mut package_metadata = vec![];
+         for package in &workspace.package_info {
+@@ -942,14 +952,12 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         Self {
+             inner: DistGraph {
+                 is_init: dist_profile.is_some(),
+-                cargo,
+                 target_dir,
+                 workspace_dir,
+                 dist_dir,
+                 desired_cargo_dist_version,
+                 desired_rust_toolchain,
+-                tools: Tools::default(),
+-                host_target,
++                tools,
+                 announcement_tag: None,
+                 announcement_is_prerelease: false,
+                 announcement_changelog: None,
+@@ -1678,8 +1686,8 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             // If we're trying to cross-compile on macOS, ensure the rustup toolchain
+             // is setup!
+             if target.ends_with("apple-darwin")
+-                && self.inner.host_target.ends_with("apple-darwin")
+-                && target != self.inner.host_target
++                && self.inner.tools.cargo.host_target.ends_with("apple-darwin")
++                && target != self.inner.tools.cargo.host_target
+             {
+                 if let Some(rustup) = self.inner.tools.rustup.clone() {
+                     builds.push(BuildStep::Rustup(RustupStep {
+@@ -1960,11 +1968,9 @@ impl DistGraph {
+ /// Precompute all the work this invocation will need to do
+ pub fn gather_work(cfg: &Config) -> Result<DistGraph> {
+     eprintln!("analyzing workspace:");
+-    let cargo = cargo()?;
++    let tools = tool_info()?;
+     let workspace = crate::get_project()?;
+-    let host_target = get_host_target(&cargo)?;
+-    let mut graph = DistGraphBuilder::new(cargo, &workspace, cfg.artifact_mode, host_target);
+-    graph.inner.tools = tool_info();
++    let mut graph = DistGraphBuilder::new(tools, &workspace, cfg.artifact_mode);
+ 
+     // First thing's first: if they gave us an announcement tag then we should try to parse it
+     let mut announcing_package = None;
+@@ -2021,7 +2027,7 @@ pub fn gather_work(cfg: &Config) -> Result<DistGraph> {
+     }
+ 
+     // If no targets were specified, just use the host target
+-    let host_target_triple = [graph.inner.host_target.clone()];
++    let host_target_triple = [graph.inner.tools.cargo.host_target.clone()];
+     // If all targets specified, union together the targets our packages support
+     // Note that this uses BTreeSet as an intermediate to make the order stable
+     let all_target_triples = graph
+@@ -2314,8 +2320,8 @@ pub fn cargo() -> Result<String> {
+ }
+ 
+ /// Get the host target triple from cargo
+-pub fn get_host_target(cargo: &str) -> Result<String> {
+-    let mut command = Command::new(cargo);
++pub fn get_host_target(cargo: String) -> Result<CargoInfo> {
++    let mut command = Command::new(&cargo);
+     command.arg("-vV");
+     info!("exec: {:?}", command);
+     let output = command
+@@ -2325,10 +2331,16 @@ pub fn get_host_target(cargo: &str) -> Result<String> {
+     let output = String::from_utf8(output.stdout)
+         .into_diagnostic()
+         .wrap_err("'cargo -vV' wasn't utf8? Really?")?;
+-    for line in output.lines() {
++    let mut lines = output.lines();
++    let version_line = lines.next().map(|s| s.to_owned());
++    for line in lines {
+         if let Some(target) = line.strip_prefix("host: ") {
+             info!("host target is {target}");
+-            return Ok(target.to_owned());
++            return Ok(CargoInfo {
++                cmd: cargo,
++                version_line,
++                host_target: target.to_owned(),
++            });
+         }
+     }
+     Err(miette!(
+@@ -2461,10 +2473,13 @@ fn try_extract_changelog_unreleased(
+     Some((title, release_notes.notes.to_string()))
+ }
+ 
+-fn tool_info() -> Tools {
+-    Tools {
++fn tool_info() -> Result<Tools> {
++    let cargo_cmd = cargo()?;
++    let cargo = get_host_target(cargo_cmd)?;
++    Ok(Tools {
++        cargo,
+         rustup: find_tool("rustup"),
+-    }
++    })
+ }
+ 
+ fn find_tool(name: &str) -> Option<Tool> {
+diff --git a/cargo-dist/templates/ci.yml b/cargo-dist/templates/ci.yml
+index c5b999e8..344328b8 100644
+--- a/cargo-dist/templates/ci.yml
++++ b/cargo-dist/templates/ci.yml
+@@ -52,9 +52,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v3
+         with:
+-          submodules: recursive
+-      - name: Install Rust
+-        run: {{{{INSTALL_RUST}}}}
++          submodules: recursive{{{{INSTALL_RUST}}}}
+       - name: Install cargo-dist
+         run: {{{{INSTALL_DIST_SH}}}}
+       - id: create-release
+@@ -94,9 +92,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v3
+         with:
+-          submodules: recursive
+-      - name: Install Rust
+-        run: {{{{INSTALL_RUST}}}}
++          submodules: recursive{{{{INSTALL_RUST}}}}
+       - name: Install cargo-dist
+         run: ${{ matrix.install-dist }}
+       - name: Run cargo-dist
+2026-04-17 07:49:48,084 - INFO - Eval script for axodotdev__cargo-dist-275 written to logs/run_evaluation/gold_run1/gold/axodotdev__cargo-dist-275/eval.sh; copying to container...
+2026-04-17 07:50:56,470 - INFO - Test runtime: 68.22 seconds
+2026-04-17 07:50:56,470 - INFO - Test output for axodotdev__cargo-dist-275 written to logs/run_evaluation/gold_run1/gold/axodotdev__cargo-dist-275/test_output.txt
+2026-04-17 07:50:56,629 - INFO - Git diff after:
+diff --git a/Cargo.lock b/Cargo.lock
+index e0fd7f86..579eaefe 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -287,9 +287,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "camino"
+-version = "1.1.4"
++version = "1.1.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c530edf18f37068ac2d977409ed5cd50d53d73bc653c7647b48eb78976ac9ae2"
++checksum = "c59e92b5a388f549b863a7bea62612c09f24c8393560709a54558a9abdfb3b9c"
+ dependencies = [
+  "serde",
+ ]
+@@ -340,9 +340,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "cargo-platform"
+-version = "0.1.2"
++version = "0.1.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cbdb825da8a5df079a43676dbe042702f1707b1109f713a01420fbb4cc71fa27"
++checksum = "2cfa25e60aea747ec7e1124f238816749faa93759c6ff5b31f1ccdda137f4479"
+ dependencies = [
+  "serde",
+ ]
+@@ -398,9 +398,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap"
+-version = "4.3.10"
++version = "4.3.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "384e169cc618c613d5e3ca6404dda77a8685a63e08660dcc64abaf7da7cb0c7a"
++checksum = "8f644d0dac522c8b05ddc39aaaccc5b136d5dc4ff216610c5641e3be5becf56c"
+ dependencies = [
+  "clap_builder",
+  "clap_derive",
+@@ -419,9 +419,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap_builder"
+-version = "4.3.10"
++version = "4.3.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ef137bbe35aab78bdb468ccfba75a5f4d8321ae011d34063770780545176af2d"
++checksum = "af410122b9778e024f9e0fb35682cc09cc3f85cad5e8d3ba8f47a9702df6e73d"
+ dependencies = [
+  "anstream",
+  "anstyle",
+@@ -431,14 +431,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap_derive"
+-version = "4.3.2"
++version = "4.3.12"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b8cd2b2a819ad6eec39e8f1d6b53001af1e5469f8c177579cdaeb313115b825f"
++checksum = "54a9bb5758fc5dfe728d1019941681eccaf0cf8a4189b692a0ee2f2ecf90a050"
+ dependencies = [
+  "heck",
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -506,9 +506,9 @@ checksum = "e496a50fda8aacccc86d7529e2c1e0892dbd0f898a6b5645b5561b89c3210efa"
+ 
+ [[package]]
+ name = "cpufeatures"
+-version = "0.2.8"
++version = "0.2.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "03e69e28e9f7f77debdedbaafa2866e1de9ba56df55a8bd7cfc724c25a09987c"
++checksum = "a17b76ff3a4162b0b27f354a0c87015ddad39d35f9c0c36607a3bdd175dde1f1"
+ dependencies = [
+  "libc",
+ ]
+@@ -618,9 +618,9 @@ checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
+ 
+ [[package]]
+ name = "dyn-clone"
+-version = "1.0.11"
++version = "1.0.12"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "68b0cf012f1230e43cd00ebb729c6bb58707ecfa8ad08b52ef3a4ccd2697fc30"
++checksum = "304e6508efa593091e97a9abbc10f90aa7ca635b6d2784feff3c89d41dd12272"
+ 
+ [[package]]
+ name = "either"
+@@ -666,9 +666,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "exr"
+-version = "1.6.5"
++version = "1.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "85a7b44a196573e272e0cf0bcf130281c71e9a0c67062954b3323fd364bfdac9"
++checksum = "d1e481eb11a482815d3e9d618db8c42a93207134662873809335a92327440c18"
+ dependencies = [
+  "bit_field",
+  "flume",
+@@ -924,9 +924,9 @@ checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
+ 
+ [[package]]
+ name = "hermit-abi"
+-version = "0.3.1"
++version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fed44880c466736ef9a5c5b5facefb5ed0785676d0c02d612db14e54f0d84286"
++checksum = "443144c8cdadd93ebf52ddb4056d257f5b52c04d3c804e657d19eb73fc33668b"
+ 
+ [[package]]
+ name = "hmac"
+@@ -1058,9 +1058,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "insta"
+-version = "1.30.0"
++version = "1.31.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "28491f7753051e5704d4d0ae7860d45fae3238d7d235bc4289dcd45c48d3cec3"
++checksum = "a0770b0a3d4c70567f0d58331f3088b0e4c4f56c9b8d764efe654b4a5d46de3a"
+ dependencies = [
+  "console",
+  "lazy_static",
+@@ -1098,12 +1098,12 @@ checksum = "28b29a3cd74f0f4598934efe3aeba42bae0eb4680554128851ebbecb02af14e6"
+ 
+ [[package]]
+ name = "is-terminal"
+-version = "0.4.8"
++version = "0.4.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "24fddda5af7e54bf7da53067d6e802dbcc381d0a8eef629df528e3ebf68755cb"
++checksum = "cb0889898416213fab133e1d33a0e5858a48177452750691bde3666d0fdbaf8b"
+ dependencies = [
+  "hermit-abi",
+- "rustix 0.38.2",
++ "rustix 0.38.4",
+  "windows-sys 0.48.0",
+ ]
+ 
+@@ -1124,9 +1124,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "itoa"
+-version = "1.0.7"
++version = "1.0.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c0aa48fab2893d8a49caa94082ae8488f4e1050d73b367881dcd2198f4199fd8"
++checksum = "af150ab688ff2122fcef229be89cb50dd66af9e01a4ff320cc137eecc9bacc38"
+ 
+ [[package]]
+ name = "jobserver"
+@@ -1235,9 +1235,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "miette"
+-version = "5.9.0"
++version = "5.10.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a236ff270093b0b67451bc50a509bd1bad302cb1d3c7d37d5efe931238581fa9"
++checksum = "59bb584eaeeab6bd0226ccf3509a69d7936d148cf3d036ad350abe35e8c6856e"
+ dependencies = [
+  "backtrace",
+  "backtrace-ext",
+@@ -1256,13 +1256,13 @@ dependencies = [
+ 
+ [[package]]
+ name = "miette-derive"
+-version = "5.9.0"
++version = "5.10.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4901771e1d44ddb37964565c654a3223ba41a594d02b8da471cc4464912b5cfa"
++checksum = "49e7bc1560b95a3c4a25d03de42fe76ca718ab92d1a22a55b9b4cf67b3ae635c"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -1422,7 +1422,7 @@ checksum = "a948666b637a0f465e8564c73e89d4dde00d72d4d473cc972f390fc3dcee7d9c"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -1532,7 +1532,7 @@ checksum = "ec2e072ecce94ec471b13398d5402c188e76ac03cf74dd1a975161b23a3f6d9c"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -1568,9 +1568,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.63"
++version = "1.0.66"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7b368fba921b0dce7e60f5e04ec15e565b3303972b42bcfde1d0713b881959eb"
++checksum = "18fb31db3f9bddb2ea821cde30a9f70117e3f119938b5ee630b7403aa6e2ead9"
+ dependencies = [
+  "unicode-ident",
+ ]
+@@ -1586,9 +1586,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "quote"
+-version = "1.0.29"
++version = "1.0.31"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "573015e8ab27661678357f27dc26460738fd2b6c86e46f386fde94cb5d913105"
++checksum = "5fe8a65d69dd0808184ebb5f836ab526bb259db23c657efa38711b1072ee47f0"
+ dependencies = [
+  "proc-macro2",
+ ]
+@@ -1641,9 +1641,21 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex"
+-version = "1.8.4"
++version = "1.9.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d0ab3ca65655bb1e41f2a8c8cd662eb4fb035e67c3f78da1d61dffe89d07300f"
++checksum = "b2eae68fc220f7cf2532e4494aded17545fce192d59cd996e0fe7887f4ceb575"
++dependencies = [
++ "aho-corasick",
++ "memchr",
++ "regex-automata",
++ "regex-syntax",
++]
++
++[[package]]
++name = "regex-automata"
++version = "0.3.3"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "39354c10dd07468c2e73926b23bb9c2caca74c5501e38a35da70406f1d923310"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -1652,9 +1664,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-syntax"
+-version = "0.7.2"
++version = "0.7.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "436b050e76ed2903236f032a59761c1eb99e1b0aead2c257922771dab1fc8c78"
++checksum = "e5ea92a5b6195c6ef2a0295ea818b312502c6fc94dde986c5553242e18fd4ce2"
+ 
+ [[package]]
+ name = "reqwest"
+@@ -1701,9 +1713,9 @@ checksum = "d626bb9dae77e28219937af045c257c28bfd3f69333c512553507f5f9798cb76"
+ 
+ [[package]]
+ name = "rustix"
+-version = "0.37.22"
++version = "0.37.23"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8818fa822adcc98b18fedbb3632a6a33213c070556b5aa7c4c8cc21cff565c4c"
++checksum = "4d69718bf81c6127a49dc64e44a742e8bb9213c0ff8869a22c308f84c1d4ab06"
+ dependencies = [
+  "bitflags 1.3.2",
+  "errno",
+@@ -1715,9 +1727,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "rustix"
+-version = "0.38.2"
++version = "0.38.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "aabcb0461ebd01d6b79945797c27f8529082226cb630a9865a71870ff63532a4"
++checksum = "0a962918ea88d644592894bc6dc55acc6c0956488adcebbfb6e273506b7fd6e5"
+ dependencies = [
+  "bitflags 2.3.3",
+  "errno",
+@@ -1728,9 +1740,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "ryu"
+-version = "1.0.13"
++version = "1.0.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f91339c0467de62360649f8d3e185ca8de4224ff281f66000de5eb2a77a79041"
++checksum = "1ad4cc8da4ef723ed60bced201181d83791ad433213d8c24efffda1eec85d741"
+ 
+ [[package]]
+ name = "schannel"
+@@ -1767,9 +1779,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "scopeguard"
+-version = "1.1.0"
++version = "1.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d29ab0c6d3fc0ee92fe66e2d99f700eab17a8d57d1c1d3b748380fb20baa78cd"
++checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
+ 
+ [[package]]
+ name = "security-framework"
+@@ -1796,31 +1808,31 @@ dependencies = [
+ 
+ [[package]]
+ name = "semver"
+-version = "1.0.17"
++version = "1.0.18"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bebd363326d05ec3e2f532ab7660680f3b02130d780c299bca73469d521bc0ed"
++checksum = "b0293b4b29daaf487284529cc2f5675b8e57c61f70167ba415a463651fd6a918"
+ dependencies = [
+  "serde",
+ ]
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.165"
++version = "1.0.171"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c939f902bb7d0ccc5bce4f03297e161543c2dcb30914faf032c2bd0b7a0d48fc"
++checksum = "30e27d1e4fd7659406c492fd6cfaf2066ba8773de45ca75e855590f856dc34a9"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.165"
++version = "1.0.171"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6eaae920e25fffe4019b75ff65e7660e72091e59dd204cb5849bbd6a3fd343d7"
++checksum = "389894603bd18c46fa56231694f8d827779c0951a667087194cf9de94ed24682"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -1836,9 +1848,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.99"
++version = "1.0.103"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "46266871c240a00b8f503b877622fe33430b3c7d963bdc0f2adc511e54a1eae3"
++checksum = "d03b412469450d4404fe8499a268edd7f8b79fecb074b0d812ad64ca21f4031b"
+ dependencies = [
+  "itoa",
+  "ryu",
+@@ -1917,9 +1929,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "smallvec"
+-version = "1.10.0"
++version = "1.11.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a507befe795404456341dfab10cef66ead4c041f62b8b11bbb92bffe5d0953e0"
++checksum = "62bb4feee49fdd9f707ef802e22365a35de4b7b299de4763d44bfea899442ff9"
+ 
+ [[package]]
+ name = "smawk"
+@@ -2005,9 +2017,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "syn"
+-version = "2.0.23"
++version = "2.0.26"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "59fb7d6d8281a51045d62b8eb3a7d1ce347b76f312af50cd3dc0af39c87c1737"
++checksum = "45c3457aacde3c65315de5031ec191ce46604304d2446e803d71ade03308d970"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -2016,9 +2028,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "tar"
+-version = "0.4.38"
++version = "0.4.39"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4b55807c0344e1e6c04d7c965f5289c39a8d94ae23ed5c0b57aabac549f871c6"
++checksum = "ec96d2ffad078296368d46ff1cb309be1c23c513b4ab0e22a45de0185275ac96"
+ dependencies = [
+  "filetime",
+  "libc",
+@@ -2027,9 +2039,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "target-lexicon"
+-version = "0.12.8"
++version = "0.12.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1b1c7f239eb94671427157bd93b3694320f3668d4e1eff08c7285366fd777fac"
++checksum = "df8e77cb757a61f51b947ec4a7e3646efd825b73561db1c232a8ccb639e611a0"
+ 
+ [[package]]
+ name = "target-spec"
+@@ -2052,7 +2064,7 @@ dependencies = [
+  "cfg-if",
+  "fastrand",
+  "redox_syscall 0.3.5",
+- "rustix 0.37.22",
++ "rustix 0.37.23",
+  "windows-sys 0.48.0",
+ ]
+ 
+@@ -2079,22 +2091,22 @@ dependencies = [
+ 
+ [[package]]
+ name = "thiserror"
+-version = "1.0.40"
++version = "1.0.43"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "978c9a314bd8dc99be594bc3c175faaa9794be04a5a5e153caba6915336cebac"
++checksum = "a35fc5b8971143ca348fa6df4f024d4d55264f3468c71ad1c2f365b0a4d58c42"
+ dependencies = [
+  "thiserror-impl",
+ ]
+ 
+ [[package]]
+ name = "thiserror-impl"
+-version = "1.0.40"
++version = "1.0.43"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f9456a42c5b0d803c8cd86e73dd7cc9edd429499f37a3550d286d5e86720569f"
++checksum = "463fe12d7993d3b327787537ce8dd4dfa058de32fc2b195ef3cde03dc4771e8f"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -2120,9 +2132,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "time"
+-version = "0.3.22"
++version = "0.3.23"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ea9e1b3cf1243ae005d9e74085d4d542f3125458f3a81af210d901dcd7411efd"
++checksum = "59e399c068f43a5d116fedaf73b203fa4f9c519f17e2b34f63221d3792f81446"
+ dependencies = [
+  "serde",
+  "time-core",
+@@ -2234,7 +2246,7 @@ checksum = "5f4f31f56159e98206da9efd823404b79b6ef3143b4a7ab76e67b1751b25a4ab"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+ ]
+ 
+ [[package]]
+@@ -2292,9 +2304,9 @@ checksum = "92888ba5573ff080736b3648696b70cafad7d250551175acbaa4e0385b3e1460"
+ 
+ [[package]]
+ name = "unicode-ident"
+-version = "1.0.9"
++version = "1.0.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b15811caf2415fb889178633e7724bad2509101cde276048e013b9def5e51fa0"
++checksum = "301abaae475aa91687eb82514b328ab47a211a533026cb25fc3e519b86adfc3c"
+ 
+ [[package]]
+ name = "unicode-linebreak"
+@@ -2398,7 +2410,7 @@ dependencies = [
+  "once_cell",
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+  "wasm-bindgen-shared",
+ ]
+ 
+@@ -2432,7 +2444,7 @@ checksum = "54681b18a46765f095758388f2d0cf16eb8d4169b639ab575a8f5693af210c7b"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.23",
++ "syn 2.0.26",
+  "wasm-bindgen-backend",
+  "wasm-bindgen-shared",
+ ]
+diff --git a/book/src/config.md b/book/src/config.md
+index dec62fb0..80d99221 100644
+--- a/book/src/config.md
++++ b/book/src/config.md
+@@ -67,17 +67,19 @@ If you delete the key, generate-ci will just use the version of cargo-dist that'
+ 
+ ### rust-toolchain-version
+ 
+-> since 0.0.3
++> since 0.0.3 (deprecated in 0.1.0)
+ 
+ Example: `rust-toolchain-version = "1.67.1"` 
+ 
++> Deprecation reason: [rust-toolchain.toml](https://rust-lang.github.io/rustup/overrides.html#the-toolchain-file) is a more standard/universal mechanism for pinning toolchain versions for reproducibility. Teams without dedicated release engineers will likely benefit from unpinning their toolchain and letting the underlying CI vendor silently update them to "some recent stable toolchain", as they will get updates/improvements and are unlikely to have regressions.
++
+ **This can only be set globally**
+ 
+ This is added automatically by `cargo dist init`, recorded for the sake of reproducibility and documentation. It represents the "ideal" Rust toolchain to build your project with. This is in contrast to the builtin Cargo [rust-version][] which is used to specify the *minimum* supported Rust version. When you run [generate-ci][] the resulting CI scripts will install that version of the Rust toolchain with [rustup][]. There's nothing special about the chosen value, it's just a hardcoded "recent stable version".
+ 
+ The syntax must be a valid rustup toolchain like "1.60.0" or "stable" (should not specify the platform, we want to install this toolchain on all platforms).
+ 
+-If you delete the key, generate-ci will just use "stable" which will drift over time as new stable releases occur.
++If you delete the key, generate-ci won't explicitly setup a toolchain, so whatever's on the machine will be used (with things like rust-toolchain.toml behaving as normal). Before being deprecated the default was to `rustup update stable`, but this is no longer the case.
+ 
+ ### ci
+ 
+diff --git a/cargo-dist-schema/cargo-dist-json-schema.json b/cargo-dist-schema/cargo-dist-json-schema.json
+index 88fcf59d..cdd86acd 100644
+--- a/cargo-dist-schema/cargo-dist-json-schema.json
++++ b/cargo-dist-schema/cargo-dist-json-schema.json
+@@ -57,6 +57,17 @@
+       "items": {
+         "$ref": "#/definitions/Release"
+       }
++    },
++    "system_info": {
++      "description": "Info about the toolchain used to build this announcement",
++      "anyOf": [
++        {
++          "$ref": "#/definitions/SystemInfo"
++        },
++        {
++          "type": "null"
++        }
++      ]
+     }
+   },
+   "definitions": {
+diff --git a/cargo-dist-schema/src/lib.rs b/cargo-dist-schema/src/lib.rs
+index 92f595e8..1f433416 100644
+--- a/cargo-dist-schema/src/lib.rs
++++ b/cargo-dist-schema/src/lib.rs
+@@ -53,6 +53,10 @@ pub struct DistManifest {
+     #[serde(default)]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub announcement_github_body: Option<String>,
++    /// Info about the toolchain used to build this announcement
++    #[serde(default)]
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub system_info: Option<SystemInfo>,
+     /// App releases we're distributing
+     #[serde(default)]
+     #[serde(skip_serializing_if = "Vec::is_empty")]
+@@ -247,6 +251,7 @@ impl DistManifest {
+             announcement_title: None,
+             announcement_changelog: None,
+             announcement_github_body: None,
++            system_info: None,
+             releases,
+             artifacts,
+         }
+diff --git a/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap b/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+index 8b8fde0e..9e0ea89f 100644
+--- a/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
++++ b/cargo-dist-schema/src/snapshots/cargo_dist_schema__emit.snap
+@@ -61,6 +61,17 @@ expression: json_schema
+       "items": {
+         "$ref": "#/definitions/Release"
+       }
++    },
++    "system_info": {
++      "description": "Info about the toolchain used to build this announcement",
++      "anyOf": [
++        {
++          "$ref": "#/definitions/SystemInfo"
++        },
++        {
++          "type": "null"
++        }
++      ]
+     }
+   },
+   "definitions": {
+diff --git a/cargo-dist/src/ci.rs b/cargo-dist/src/ci.rs
+index d0c0477e..3b87f12f 100644
+--- a/cargo-dist/src/ci.rs
++++ b/cargo-dist/src/ci.rs
+@@ -39,7 +39,7 @@ pub fn generate_github_ci(dist: &DistGraph) -> Result<(), miette::Report> {
+ /// Write the Github CI to something
+ fn write_github_ci<W: std::io::Write>(f: &mut W, dist: &DistGraph) -> Result<(), std::io::Error> {
+     // If they don't specify a Rust version, just go for "stable"
+-    let rust_version = dist.desired_rust_toolchain.as_deref().unwrap_or("stable");
++    let rust_version = dist.desired_rust_toolchain.as_deref();
+ 
+     // If they don't specify a cargo-dist version, use this one
+     let self_dist_version = SELF_DIST_VERSION.parse().unwrap();
+@@ -58,14 +58,22 @@ fn write_github_ci<W: std::io::Write>(f: &mut W, dist: &DistGraph) -> Result<(),
+         local_targets.extend(release.targets.iter());
+     }
+ 
+-    // Install Rust with rustup
++    // Install Rust with rustup (deprecated, use rust-toolchain.toml)
+     //
+     // We pass --no-self-update to work around https://github.com/rust-lang/rustup/issues/2441
+     //
+-    // FIXME(#127): we get some warnings from Github about hardcoded rust tools being on PATH
+-    // that are shadowing the rustup ones? Look into this!
+-    let install_rust =
+-        format!("rustup update {rust_version} --no-self-update && rustup default {rust_version}");
++    // If not specified we just let default toolchains on the system be used
++    // (rust-toolchain.toml will override things automagically if the system uses rustup,
++    // because rustup intercepts all commands like `cargo` and `rustc` to reselect the toolchain)
++    let install_rust = rust_version
++        .map(|rust_version| {
++            format!(
++                r#"
++      - name: Install Rust
++        run: rustup update {rust_version} --no-self-update && rustup default {rust_version}"#
++            )
++        })
++        .unwrap_or(String::new());
+ 
+     // Get the platform-specific installation methods
+     let install_dist_sh = install_dist_sh_for_version(dist_version);
+diff --git a/cargo-dist/src/lib.rs b/cargo-dist/src/lib.rs
+index f27a5f63..5bb5ffa1 100644
+--- a/cargo-dist/src/lib.rs
++++ b/cargo-dist/src/lib.rs
+@@ -125,6 +125,9 @@ fn build_manifest(cfg: &Config, dist: &DistGraph) -> DistManifest {
+     manifest.announcement_title = dist.announcement_title.clone();
+     manifest.announcement_changelog = dist.announcement_changelog.clone();
+     manifest.announcement_github_body = dist.announcement_github_body.clone();
++    manifest.system_info = Some(cargo_dist_schema::SystemInfo {
++        cargo_version_line: dist.tools.cargo.version_line.clone(),
++    });
+     manifest
+ }
+ 
+@@ -315,7 +318,7 @@ fn build_cargo_target(dist_graph: &DistGraph, target: &CargoBuildStep) -> Result
+         target.target_triple, target.profile
+     );
+ 
+-    let mut command = Command::new(&dist_graph.cargo);
++    let mut command = Command::new(&dist_graph.tools.cargo.cmd);
+     command
+         .arg("build")
+         .arg("--profile")
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+index ca8f3271..91a6884a 100644
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -113,7 +113,7 @@ pub struct DistMetadata {
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub cargo_dist_version: Option<Version>,
+ 
+-    /// The intended version of Rust/Cargo to build with (rustup toolchain syntax)
++    /// (deprecated) The intended version of Rust/Cargo to build with (rustup toolchain syntax)
+     ///
+     /// When generating full tasks graphs (such as CI scripts) we will pick this version.
+     #[serde(rename = "rust-toolchain-version")]
+@@ -352,9 +352,9 @@ pub struct DistGraph {
+     /// Whether it looks like `cargo dist init` has been run
+     pub is_init: bool,
+ 
+-    // Some simple global facts
+-    /// The executable cargo told us to find itself at.
+-    pub cargo: String,
++    /// Info about the tools we're using to build
++    pub tools: Tools,
++
+     /// The cargo target dir.
+     pub target_dir: Utf8PathBuf,
+     /// The root directory of the current cargo workspace.
+@@ -365,11 +365,6 @@ pub struct DistGraph {
+     pub desired_cargo_dist_version: Option<Version>,
+     /// The desired rust toolchain for handling this project
+     pub desired_rust_toolchain: Option<String>,
+-    /// The desired ci backends for this project
+-    pub tools: Tools,
+-    /// The target triple of the current system
+-    pub host_target: String,
+-
+     /// Styles of CI we want to support
+     pub ci_style: Vec<CiStyle>,
+     /// The git tag used for the announcement (e.g. v1.0.0)
+@@ -400,12 +395,25 @@ pub struct DistGraph {
+ }
+ 
+ /// Various tools we have found installed on the system
+-#[derive(Debug, Clone, Default)]
++#[derive(Debug, Clone)]
+ pub struct Tools {
++    /// Info on cargo, which must exist
++    pub cargo: CargoInfo,
+     /// rustup, useful for getting specific toolchains
+     pub rustup: Option<Tool>,
+ }
+ 
++/// Info about the cargo toolchain we're using
++#[derive(Debug, Clone)]
++pub struct CargoInfo {
++    /// The path/command used to refer to cargo (usually from the CARGO env var)
++    pub cmd: String,
++    /// The first line of running cargo with `-vV`, should be version info
++    pub version_line: Option<String>,
++    /// The host target triple (obtained from `-vV`)
++    pub host_target: String,
++}
++
+ /// A tool we have found installed on the system
+ #[derive(Debug, Clone, Default)]
+ pub struct Tool {
+@@ -904,10 +912,9 @@ struct DistGraphBuilder<'pkg_graph> {
+ 
+ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+     fn new(
+-        cargo: String,
++        tools: Tools,
+         workspace: &'pkg_graph WorkspaceInfo,
+         artifact_mode: ArtifactMode,
+-        host_target: String,
+     ) -> Self {
+         let target_dir = workspace.target_dir.clone();
+         let workspace_dir = workspace.workspace_dir.clone();
+@@ -918,6 +925,9 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         workspace_metadata.make_relative_to(&workspace.workspace_dir);
+         let desired_cargo_dist_version = workspace_metadata.cargo_dist_version.clone();
+         let desired_rust_toolchain = workspace_metadata.rust_toolchain_version.clone();
++        if desired_rust_toolchain.is_some() {
++            warn!("rust-toolchain-version is deprecated, use rust-toolchain.toml if you want pinned toolchains");
++        }
+ 
+         let mut package_metadata = vec![];
+         for package in &workspace.package_info {
+@@ -942,14 +952,12 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+         Self {
+             inner: DistGraph {
+                 is_init: dist_profile.is_some(),
+-                cargo,
+                 target_dir,
+                 workspace_dir,
+                 dist_dir,
+                 desired_cargo_dist_version,
+                 desired_rust_toolchain,
+-                tools: Tools::default(),
+-                host_target,
++                tools,
+                 announcement_tag: None,
+                 announcement_is_prerelease: false,
+                 announcement_changelog: None,
+@@ -1678,8 +1686,8 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             // If we're trying to cross-compile on macOS, ensure the rustup toolchain
+             // is setup!
+             if target.ends_with("apple-darwin")
+-                && self.inner.host_target.ends_with("apple-darwin")
+-                && target != self.inner.host_target
++                && self.inner.tools.cargo.host_target.ends_with("apple-darwin")
++                && target != self.inner.tools.cargo.host_target
+             {
+                 if let Some(rustup) = self.inner.tools.rustup.clone() {
+                     builds.push(BuildStep::Rustup(RustupStep {
+@@ -1960,11 +1968,9 @@ impl DistGraph {
+ /// Precompute all the work this invocation will need to do
+ pub fn gather_work(cfg: &Config) -> Result<DistGraph> {
+     eprintln!("analyzing workspace:");
+-    let cargo = cargo()?;
++    let tools = tool_info()?;
+     let workspace = crate::get_project()?;
+-    let host_target = get_host_target(&cargo)?;
+-    let mut graph = DistGraphBuilder::new(cargo, &workspace, cfg.artifact_mode, host_target);
+-    graph.inner.tools = tool_info();
++    let mut graph = DistGraphBuilder::new(tools, &workspace, cfg.artifact_mode);
+ 
+     // First thing's first: if they gave us an announcement tag then we should try to parse it
+     let mut announcing_package = None;
+@@ -2021,7 +2027,7 @@ pub fn gather_work(cfg: &Config) -> Result<DistGraph> {
+     }
+ 
+     // If no targets were specified, just use the host target
+-    let host_target_triple = [graph.inner.host_target.clone()];
++    let host_target_triple = [graph.inner.tools.cargo.host_target.clone()];
+     // If all targets specified, union together the targets our packages support
+     // Note that this uses BTreeSet as an intermediate to make the order stable
+     let all_target_triples = graph
+@@ -2314,8 +2320,8 @@ pub fn cargo() -> Result<String> {
+ }
+ 
+ /// Get the host target triple from cargo
+-pub fn get_host_target(cargo: &str) -> Result<String> {
+-    let mut command = Command::new(cargo);
++pub fn get_host_target(cargo: String) -> Result<CargoInfo> {
++    let mut command = Command::new(&cargo);
+     command.arg("-vV");
+     info!("exec: {:?}", command);
+     let output = command
+@@ -2325,10 +2331,16 @@ pub fn get_host_target(cargo: &str) -> Result<String> {
+     let output = String::from_utf8(output.stdout)
+         .into_diagnostic()
+         .wrap_err("'cargo -vV' wasn't utf8? Really?")?;
+-    for line in output.lines() {
++    let mut lines = output.lines();
++    let version_line = lines.next().map(|s| s.to_owned());
++    for line in lines {
+         if let Some(target) = line.strip_prefix("host: ") {
+             info!("host target is {target}");
+-            return Ok(target.to_owned());
++            return Ok(CargoInfo {
++                cmd: cargo,
++                version_line,
++                host_target: target.to_owned(),
++            });
+         }
+     }
+     Err(miette!(
+@@ -2461,10 +2473,13 @@ fn try_extract_changelog_unreleased(
+     Some((title, release_notes.notes.to_string()))
+ }
+ 
+-fn tool_info() -> Tools {
+-    Tools {
++fn tool_info() -> Result<Tools> {
++    let cargo_cmd = cargo()?;
++    let cargo = get_host_target(cargo_cmd)?;
++    Ok(Tools {
++        cargo,
+         rustup: find_tool("rustup"),
+-    }
++    })
+ }
+ 
+ fn find_tool(name: &str) -> Option<Tool> {
+diff --git a/cargo-dist/templates/ci.yml b/cargo-dist/templates/ci.yml
+index c5b999e8..344328b8 100644
+--- a/cargo-dist/templates/ci.yml
++++ b/cargo-dist/templates/ci.yml
+@@ -52,9 +52,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v3
+         with:
+-          submodules: recursive
+-      - name: Install Rust
+-        run: {{{{INSTALL_RUST}}}}
++          submodules: recursive{{{{INSTALL_RUST}}}}
+       - name: Install cargo-dist
+         run: {{{{INSTALL_DIST_SH}}}}
+       - id: create-release
+@@ -94,9 +92,7 @@ jobs:
+     steps:
+       - uses: actions/checkout@v3
+         with:
+-          submodules: recursive
+-      - name: Install Rust
+-        run: {{{{INSTALL_RUST}}}}
++          submodules: recursive{{{{INSTALL_RUST}}}}
+       - name: Install cargo-dist
+         run: ${{ matrix.install-dist }}
+       - name: Run cargo-dist
+2026-04-17 07:50:56,629 - INFO - Grading answer for axodotdev__cargo-dist-275...
+2026-04-17 07:50:56,631 - INFO - report: {'axodotdev__cargo-dist-275': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['emit', 'test_error_manifest', 'test_lib_manifest', 'test_manifest'], 'failure': []}, 'PASS_TO_PASS': {'success': ['tests::test_some_op', 'test_version', 'test_short_help', 'test_long_help', 'test_markdown_help'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for axodotdev__cargo-dist-275: resolved: True
+2026-04-17 07:50:56,631 - INFO - Attempting to stop container rustb.eval.axodotdev__cargo-dist-275.gold_run1...
+2026-04-17 07:51:51,950 - INFO - Attempting to remove container rustb.eval.axodotdev__cargo-dist-275.gold_run1...
+2026-04-17 07:51:52,126 - INFO - Container rustb.eval.axodotdev__cargo-dist-275.gold_run1 removed.
+2026-04-17 07:51:52,126 - INFO - Attempting to remove image rustbench/axodotdev__cargo-dist:pr-275...
+2026-04-17 07:51:53,990 - INFO - Image rustbench/axodotdev__cargo-dist:pr-275 removed.

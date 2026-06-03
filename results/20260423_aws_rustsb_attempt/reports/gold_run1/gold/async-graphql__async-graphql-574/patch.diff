@@ -1,0 +1,64 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
+ ## [Unreleased]
+ 
+ - Add binary types to `ConstValue` and `Value`. [#569](https://github.com/async-graphql/async-graphql/issues/569)
++- Changed Lookahead to support multiple fields. [#574](https://github.com/async-graphql/async-graphql/issues/547)
+ 
+ ## [2.9.8] 2021-07-12
+ 
+diff --git a/src/look_ahead.rs b/src/look_ahead.rs
+--- a/src/look_ahead.rs
++++ b/src/look_ahead.rs
+@@ -6,7 +6,7 @@ use crate::{Name, Positioned, SelectionField};
+ /// A selection performed by a query.
+ pub struct Lookahead<'a> {
+     fragments: &'a HashMap<Name, Positioned<FragmentDefinition>>,
+-    field: Option<&'a Field>,
++    fields: Vec<&'a Field>,
+ }
+ 
+ impl<'a> Lookahead<'a> {
+diff --git a/src/look_ahead.rs b/src/look_ahead.rs
+--- a/src/look_ahead.rs
++++ b/src/look_ahead.rs
+@@ -16,28 +16,31 @@ impl<'a> Lookahead<'a> {
+     ) -> Self {
+         Self {
+             fragments,
+-            field: Some(field),
++            fields: vec![field],
+         }
+     }
+ 
+-    /// Get the first subfield of the selection set with the specified name. This will ignore
++    /// Get the field of the selection set with the specified name. This will ignore
+     /// aliases.
+     ///
+     /// For example, calling `.field("a")` on `{ a { b } }` will return a lookahead that
+     /// represents `{ b }`.
+     pub fn field(&self, name: &str) -> Self {
++        let mut fields = Vec::new();
++        for field in &self.fields {
++            filter(&mut fields, self.fragments, &field.selection_set.node, name)
++        }
++
+         Self {
+             fragments: self.fragments,
+-            field: self
+-                .field
+-                .and_then(|field| find(self.fragments, &field.selection_set.node, name)),
++            fields,
+         }
+     }
+ 
+     /// Returns true if field exists otherwise return false.
+     #[inline]
+     pub fn exists(&self) -> bool {
+-        self.field.is_some()
++        !self.fields.is_empty()
+     }
+ }
+ 

@@ -1,0 +1,74 @@
+{
+    "rust-lang__cc-rs-1181": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "gnu_test_parse_shell_escaped_flags"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "tests::test_android_clang_compiler_uses_target_arg_internally",
+                    "main",
+                    "gnu_no_warnings_if_cflags",
+                    "gnu_no_warnings_if_cxxflags",
+                    "msvc_static_crt",
+                    "msvc_define",
+                    "msvc_debug",
+                    "msvc_include",
+                    "clang_android",
+                    "msvc_std_c",
+                    "msvc_no_dash_dash",
+                    "msvc_smoke",
+                    "msvc_no_static_crt",
+                    "msvc_opt_level_0",
+                    "gnu_compile_assembly",
+                    "gnu_warnings",
+                    "gnu_debug_fp",
+                    "gnu_std_c",
+                    "gnu_include",
+                    "gnu_no_dash_dash",
+                    "gnu_set_stdlib",
+                    "gnu_extra_warnings1",
+                    "gnu_extra_warnings0",
+                    "gnu_warnings_overridable",
+                    "gnu_warnings_into_errors",
+                    "gnu_static",
+                    "gnu_opt_level_1",
+                    "gnu_x86_64_no_plt",
+                    "gnu_define",
+                    "gnu_opt_level_s",
+                    "gnu_shared",
+                    "gnu_debug_fp_auto",
+                    "gnu_smoke",
+                    "gnu_flag_if_supported_cpp",
+                    "gnu_x86_64_no_pic",
+                    "gnu_i686_pic",
+                    "gnu_apple_darwin",
+                    "gnu_i686",
+                    "gnu_x86_64",
+                    "gnu_debug_nofp",
+                    "gnu_debug",
+                    "gnu_flag_if_supported",
+                    "compile_intermediates",
+                    "src/lib.rs - (line 45) - compile",
+                    "src/lib.rs - (line 20) - compile"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

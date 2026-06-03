@@ -1,0 +1,83 @@
+2026-04-17 09:31:28,605 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-393
+Building instance image rustbench/rinja-rs__askama:pr-393 for rinja-rs__askama-393
+2026-04-17 09:42:42,614 - INFO - Creating container for rinja-rs__askama-393...
+2026-04-17 09:42:42,895 - INFO - Container for rinja-rs__askama-393 created: fc64e45d6e2e6dead1992630b052d1dfd27376c96e9da5c7db5caf0a07446036
+2026-04-17 09:42:43,051 - INFO - Container for rinja-rs__askama-393 started: fc64e45d6e2e6dead1992630b052d1dfd27376c96e9da5c7db5caf0a07446036
+2026-04-17 09:42:43,054 - INFO - Intermediate patch for rinja-rs__askama-393 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-393/patch.diff, now applying to container...
+2026-04-17 09:42:43,359 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/parser.rs...
+Checking patch askama_shared/src/parser.rs...
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+
+2026-04-17 09:42:43,480 - INFO - Git diff before:
+diff --git a/askama_shared/src/parser.rs b/askama_shared/src/parser.rs
+index 7224d02..3c889d9 100644
+--- a/askama_shared/src/parser.rs
++++ b/askama_shared/src/parser.rs
+@@ -1,7 +1,7 @@
+ use nom::branch::alt;
+ use nom::bytes::complete::{escaped, is_not, tag, take_until};
+ use nom::character::complete::{anychar, char, digit1};
+-use nom::combinator::{complete, map, opt};
++use nom::combinator::{complete, map, opt, value};
+ use nom::error::ParseError;
+ use nom::multi::{many0, many1, separated_list0, separated_list1};
+ use nom::sequence::{delimited, pair, tuple};
+@@ -312,10 +312,12 @@ fn expr_var_call(i: &[u8]) -> IResult<&[u8], Expr> {
+ }
+ 
+ fn path(i: &[u8]) -> IResult<&[u8], Vec<&str>> {
++    let root = opt(value("", ws(tag("::"))));
+     let tail = separated_list1(ws(tag("::")), identifier);
+-    let (i, (start, _, rest)) = tuple((identifier, ws(tag("::")), tail))(i)?;
+-
+-    let mut path = vec![start];
++    let (i, (root, start, _, rest)) = tuple((root, identifier, ws(tag("::")), tail))(i)?;
++    let mut path = Vec::new();
++    path.extend(root);
++    path.push(start);
+     path.extend(rest);
+     Ok((i, path))
+ }
+2026-04-17 09:42:43,480 - INFO - Eval script for rinja-rs__askama-393 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-393/eval.sh; copying to container...
+2026-04-17 09:43:44,816 - INFO - Test runtime: 61.20 seconds
+2026-04-17 09:43:44,817 - INFO - Test output for rinja-rs__askama-393 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-393/test_output.txt
+2026-04-17 09:43:44,866 - INFO - Git diff after:
+diff --git a/askama_shared/src/parser.rs b/askama_shared/src/parser.rs
+index 7224d02..3c889d9 100644
+--- a/askama_shared/src/parser.rs
++++ b/askama_shared/src/parser.rs
+@@ -1,7 +1,7 @@
+ use nom::branch::alt;
+ use nom::bytes::complete::{escaped, is_not, tag, take_until};
+ use nom::character::complete::{anychar, char, digit1};
+-use nom::combinator::{complete, map, opt};
++use nom::combinator::{complete, map, opt, value};
+ use nom::error::ParseError;
+ use nom::multi::{many0, many1, separated_list0, separated_list1};
+ use nom::sequence::{delimited, pair, tuple};
+@@ -312,10 +312,12 @@ fn expr_var_call(i: &[u8]) -> IResult<&[u8], Expr> {
+ }
+ 
+ fn path(i: &[u8]) -> IResult<&[u8], Vec<&str>> {
++    let root = opt(value("", ws(tag("::"))));
+     let tail = separated_list1(ws(tag("::")), identifier);
+-    let (i, (start, _, rest)) = tuple((identifier, ws(tag("::")), tail))(i)?;
+-
+-    let mut path = vec![start];
++    let (i, (root, start, _, rest)) = tuple((root, identifier, ws(tag("::")), tail))(i)?;
++    let mut path = Vec::new();
++    path.extend(root);
++    path.push(start);
+     path.extend(rest);
+     Ok((i, path))
+ }
+2026-04-17 09:43:44,866 - INFO - Grading answer for rinja-rs__askama-393...
+2026-04-17 09:43:44,866 - INFO - report: {'rinja-rs__askama-393': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['parser::tests::test_parse_root_path', 'test_attr', 'test_composition', 'test_comment', 'test_define_string_var', 'test_else', 'test_else_if', 'test_empty', 'test_escape', 'test_func_ref_call', 'test_generics', 'test_if', 'test_literals_escape', 'test_index', 'test_literals', 'test_nested_attr', 'test_option', 'test_path_compare', 'test_path_func_call', 'test_minus', 'test_raw_simple', 'test_negation', 'test_raw_complex', 'test_slice_literal', 'test_tuple_attr', 'test_variables', 'without_import_on_derive::test_without_import', 'test_variables_no_escape'], 'failure': []}, 'PASS_TO_PASS': {'success': ['filters::tests::test_abs', 'filters::json::tests::test_json', 'filters::tests::test_capitalize', 'filters::tests::test_center', 'filters::tests::test_filesizeformat', 'filters::tests::test_into_f64', 'filters::tests::test_into_isize', 'filters::tests::test_indent', 'filters::tests::test_join', 'filters::tests::test_linebreaks', 'filters::tests::test_linebreaksbr', 'filters::tests::test_lower', 'filters::tests::test_trim', 'filters::tests::test_truncate', 'filters::tests::test_upper', 'filters::tests::test_wordcount', 'filters::tests::test_urlencoding', 'filters::yaml::tests::test_yaml', 'parser::tests::change_delimiters_parse_filter', 'parser::tests::test_invalid_block', 'parser::tests::test_ws_splitter', 'parser::tests::test_parse_filter', 'tests::duplicated_syntax_name_on_list', 'tests::find_absolute', 'tests::find_relative', 'tests::find_relative_nonexistent', 'tests::add_syntax_two', 'tests::get_source', 'tests::escape_modes', 'tests::find_relative_sub', 'parser::tests::test_parse_path_call', 'tests::test_default_config', 'tests::is_not_exist_default_syntax', 'parser::tests::test_parse_var_call', 'tests::add_syntax', 'tests::use_default_at_syntax_name', 'tests::test_config_dirs', 'parser::tests::test_associativity', 'parser::tests::test_precedence'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-393: resolved: True
+2026-04-17 09:43:44,866 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-393.gold_run1...
+2026-04-17 09:44:03,602 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-393.gold_run1...
+2026-04-17 09:44:03,680 - INFO - Container rustb.eval.rinja-rs__askama-393.gold_run1 removed.
+2026-04-17 09:44:03,681 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-393...
+2026-04-17 09:44:04,312 - INFO - Image rustbench/rinja-rs__askama:pr-393 removed.

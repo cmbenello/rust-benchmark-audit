@@ -1,0 +1,212 @@
+diff --git a/Cargo.lock b/Cargo.lock
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -175,7 +175,6 @@ dependencies = [
+  "assert_cmd",
+  "auth-git2",
+  "bstr",
+- "cargo-husky",
+  "clap",
+  "console",
+  "dialoguer",
+diff --git a/Cargo.lock b/Cargo.lock
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -212,12 +211,6 @@ dependencies = [
+  "walkdir",
+ ]
+ 
+-[[package]]
+-name = "cargo-husky"
+-version = "1.5.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7b02b629252fe8ef6460461409564e2c21d0c8e77e0944f3d189ff06c4e932ad"
+-
+ [[package]]
+ name = "cc"
+ version = "1.0.90"
+diff --git a/guide/src/templates/builtin_placeholders.md b/guide/src/templates/builtin_placeholders.md
+--- a/guide/src/templates/builtin_placeholders.md
++++ b/guide/src/templates/builtin_placeholders.md
+@@ -3,37 +3,47 @@
+ `cargo-generate` supports a number of builtin placeholders for use in templates.
+ 
+ These placeholders can be used directly in files using the [Liquid language][liquid], or from
+-[Rhai scripts][rhai] using the syntax: `variable::get("placeholder name")`.
+-
+-The current supported builtin placeholders are:
+-
+-* `{{authors}}`
+-
+-  this will be filled in by a function borrowed from Cargo's source code, that determines your information from Cargo's configuration. It will either be on the form `username <email>` or just plain `username`.
+-* `{{project-name}}`
+-
+-  this is supplied by either passing the `--name` flag to the command or working with the interactive CLI to supply a name.
+-* `{{crate_name}}`
+-
+-  the snake_case_version of `project-name`
+-* `{{crate_type}}`
+-
+-  this is supplied by either passing the `--bin` or `--lib` flag to the command line, contains either `bin` or `lib`, `--bin` is the default
+-* `{{os-arch}}`
+-
+-  contains the current operating system and architecture ex: `linux-x86_64`
+-* `{{username}}`
+-
+-  this will be filled in by a function borrowed from Cargo's source code, that determines your information from Cargo's configuration.
+-
+-* `{{within_cargo_project}}`
+-
+-  A boolean with the value `true` if the template is being expanded inside a `Cargo` project. It's 
+-  a simple matter of whether `Cargo.toml` is present in any parent folder.
+-
+-* `{{is_init}}`
+-
+-  A boolean that reflects the value of the `--init` parameter of `cargo-generate`.
++[Rhai scripts][rhai] using the syntax:
++
++```rhai
++variable::get("placeholder name")
++````
++
++Builtin placeholders are:
++
++* `authors`
++    * this will be filled in by a function borrowed from Cargo's source code, that determines your information from
++      Cargo's configuration. It will either be on the form `username <email>` or just plain `username`.
++* `project-name`
++    * this is supplied by either passing the `--name` flag to the command or working with the interactive CLI to supply
++      a name. It can be provided in snake_case or dash-case, in all other cases it is converted to dash-case.
++    * it can also be supplied via the environment variable `CARGO_GENERATE_VALUE_PROJECT_NAME` when running in `--silent` mode 
++      > ⚠️ Note: the `--force` flag allows you to use the project name as it is given, without adjusting. Please use it carefully.
++* `crate_name`
++    * the snake_case_version of `project-name`
++* `crate_type`
++    * this is supplied by either passing the `--bin` or `--lib` flag to the command line, contains either `bin`
++      or `lib`, `--bin` is the default
++* `os-arch`
++    * contains the current operating system and architecture ex: `linux-x86_64`
++* `username`
++    * this will be filled in by a function borrowed from Cargo's source code, that determines your information from
++      Cargo's
++      configuration.
++* `within_cargo_project`
++    * A boolean with the value `true` if the template is being expanded inside a `Cargo` project. It's
++      a simple matter of whether `Cargo.toml` is present in any parent folder.
++* `is_init`
++    * A boolean that reflects the value of the `--init` parameter of `cargo-generate`.
++
++## Usage example
++
++```markdown
++// README.md
++
++This awesome crate `{{ crate_name }}` is brought to you by {{ authors }}.
++```
+ 
+ [liquid]: https://shopify.github.io/liquid
++
+ [Rhai]: https://rhai.rs/book/
+diff --git a/guide/src/templates/scripting.hook-types.md b/guide/src/templates/scripting.hook-types.md
+--- a/guide/src/templates/scripting.hook-types.md
++++ b/guide/src/templates/scripting.hook-types.md
+@@ -2,7 +2,7 @@
+ 
+ ### Init
+ 
+-- Init hooks are run before anything else.
++- Init hooks are executed before anything else.
+ - The variables `crate_type`/`authors`/`username`/`os-arch` and `is_init` are available.
+ - The variable `project-name` *may* be available.
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -521,8 +521,8 @@ fn expand_template(
+     )?;
+ 
+     let project_name_input = ProjectNameInput::try_from((&liquid_object, user_parsed_input))?;
+-    let destination = ProjectDir::try_from((&project_name_input, user_parsed_input))?;
+     let project_name = ProjectName::from((&project_name_input, user_parsed_input));
++    let destination = ProjectDir::try_from((&project_name_input, user_parsed_input))?;
+     let crate_name = CrateName::from(&project_name_input);
+     set_project_name_variables(&liquid_object, &destination, &project_name, &crate_name)?;
+ 
+diff --git a/src/template_variables/project_dir.rs b/src/template_variables/project_dir.rs
+--- a/src/template_variables/project_dir.rs
++++ b/src/template_variables/project_dir.rs
+@@ -5,8 +5,8 @@ use std::{
+ 
+ use anyhow::bail;
+ use console::style;
+-use heck::ToKebabCase;
+ 
++use crate::template_variables::project_name::sanitize_project_name;
+ use crate::{emoji, user_parsed_input::UserParsedInput};
+ use log::warn;
+ 
+diff --git a/src/template_variables/project_dir.rs b/src/template_variables/project_dir.rs
+--- a/src/template_variables/project_dir.rs
++++ b/src/template_variables/project_dir.rs
+@@ -14,6 +14,7 @@ use super::project_name_input::ProjectNameInput;
+ 
+ /// Stores user inputted name and provides convenience methods
+ /// for handling casing.
++#[derive(Debug, PartialEq)]
+ pub struct ProjectDir(PathBuf);
+ 
+ impl AsRef<Path> for ProjectDir {
+diff --git a/src/template_variables/project_dir.rs b/src/template_variables/project_dir.rs
+--- a/src/template_variables/project_dir.rs
++++ b/src/template_variables/project_dir.rs
+@@ -48,7 +49,7 @@ impl TryFrom<(&ProjectNameInput, &UserParsedInput)> for ProjectDir {
+             .force()
+             .then(|| name.clone())
+             .unwrap_or_else(|| {
+-                let renamed_project_name = name.to_kebab_case();
++                let renamed_project_name = sanitize_project_name(name.as_str());
+                 if renamed_project_name != name {
+                     warn!(
+                         "{} `{}` {} `{}`{}",
+diff --git a/src/template_variables/project_name.rs b/src/template_variables/project_name.rs
+--- a/src/template_variables/project_name.rs
++++ b/src/template_variables/project_name.rs
+@@ -1,12 +1,12 @@
+ use std::fmt::Display;
+ 
+-use heck::ToKebabCase;
++use heck::{ToKebabCase, ToSnakeCase};
+ 
+ use crate::user_parsed_input::UserParsedInput;
+ 
+ use super::ProjectNameInput;
+ 
+-#[derive(Debug)]
++#[derive(Debug, PartialEq)]
+ pub struct ProjectName(String);
+ 
+ impl From<(&ProjectNameInput, &UserParsedInput)> for ProjectName {
+diff --git a/src/template_variables/project_name.rs b/src/template_variables/project_name.rs
+--- a/src/template_variables/project_name.rs
++++ b/src/template_variables/project_name.rs
+@@ -17,7 +17,7 @@ impl From<(&ProjectNameInput, &UserParsedInput)> for ProjectName {
+             user_parsed_input
+                 .force()
+                 .then(|| project_name_input.as_ref().to_owned())
+-                .unwrap_or_else(|| project_name_input.as_ref().to_kebab_case()),
++                .unwrap_or_else(|| sanitize_project_name(project_name_input.as_ref())),
+         )
+     }
+ }
+diff --git a/src/template_variables/project_name_input.rs b/src/template_variables/project_name_input.rs
+--- a/src/template_variables/project_name_input.rs
++++ b/src/template_variables/project_name_input.rs
+@@ -10,7 +10,7 @@ use crate::{
+ use log::warn;
+ 
+ #[derive(Debug)]
+-pub struct ProjectNameInput(String);
++pub struct ProjectNameInput(pub(crate) String);
+ 
+ impl TryFrom<(&LiquidObjectResource, &UserParsedInput)> for ProjectNameInput {
+     type Error = anyhow::Error;

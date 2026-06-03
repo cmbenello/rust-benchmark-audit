@@ -1,0 +1,240 @@
+diff --git a/book/src/installers/homebrew.md b/book/src/installers/homebrew.md
+--- a/book/src/installers/homebrew.md
++++ b/book/src/installers/homebrew.md
+@@ -11,6 +11,26 @@ tap = "axodotdev/homebrew-formulae"
+ publish-jobs = ["homebrew"]
+ ```
+ 
++Since 0.11.0, cargo-dist can, optionally, also customize your Homebrew formula name.
++By default, your formula will be named using the app name (in Rust, this is the crate
++name). If you are overriding the bin name, you may want to make your Homebrew formula
++match- you can do so with config like this:
++
++```toml
++[package]
++name = "myappname"
++version = "0.666.0"
++default-run = "mybinname"
++
++[[bin]]
++name = "mybinname"
++path = "src/main.rs"
++
++tap = "axodotdev/homebrew-formulae"
++publish-jobs = ["homebrew"]
++formula = "mybinname"
++```
++
+ In order to write to a tap GitHub repository, cargo-dist needs a [personal access token](https://github.com/settings/tokens/new?scopes=repo) with the `repo` scope exposed as `HOMEBREW_TAP_TOKEN`. For more information on GitHub Actions secrets, [consult this documentation](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
+ 
+ Limitations/Caveats:
+diff --git a/book/src/reference/config.md b/book/src/reference/config.md
+--- a/book/src/reference/config.md
++++ b/book/src/reference/config.md
+@@ -345,6 +345,17 @@ For instance for packages that are a library and a CLI binary, some developers p
+ If you use this you *probably* want to set it on `[package.metadata.dist]` and
+ not `[workspace.metadata.dist]`. See ["inferring precise-builds"](#inferring-precise-builds) for details.
+ 
++### formula
++
++> since 0.11.0
++
++Example: `formula = "axolotlbrew"`
++
++Specifies a string to override the default Homebrew formula name (the app name). This works
++well specifically for folks who are customizing their bin name and would like the Homebrew
++formula to match the bin name as opposed to the app name (which, in Rust, is the crate name).
++
++You must set this on `[package.metadata.dist]` and not `[workspace.metadata.dist]`.
+ 
+ ### github-custom-runners
+ 
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -94,6 +94,8 @@ pub struct DistMetadata {
+ 
+     /// A Homebrew tap to push the Homebrew formula to, if built
+     pub tap: Option<String>,
++    /// Customize the name of the Homebrew formula
++    pub formula: Option<String>,
+ 
+     /// A set of packages to install before building
+     #[serde(rename = "dependencies")]
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -344,6 +346,7 @@ impl DistMetadata {
+             ci: _,
+             installers: _,
+             tap: _,
++            formula: _,
+             system_dependencies: _,
+             targets: _,
+             include,
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -399,6 +402,7 @@ impl DistMetadata {
+             ci,
+             installers,
+             tap,
++            formula,
+             system_dependencies,
+             targets,
+             include,
+diff --git a/cargo-dist/src/config.rs b/cargo-dist/src/config.rs
+--- a/cargo-dist/src/config.rs
++++ b/cargo-dist/src/config.rs
+@@ -544,6 +548,9 @@ impl DistMetadata {
+         if tap.is_none() {
+             *tap = workspace_config.tap.clone();
+         }
++        if formula.is_none() {
++            *formula = workspace_config.formula.clone();
++        }
+         if system_dependencies.is_none() {
+             *system_dependencies = workspace_config.system_dependencies.clone();
+         }
+diff --git a/cargo-dist/src/init.rs b/cargo-dist/src/init.rs
+--- a/cargo-dist/src/init.rs
++++ b/cargo-dist/src/init.rs
+@@ -229,6 +229,7 @@ fn get_new_dist_metadata(
+             ci: None,
+             installers: None,
+             tap: None,
++            formula: None,
+             system_dependencies: None,
+             targets: None,
+             dist: None,
+diff --git a/cargo-dist/src/init.rs b/cargo-dist/src/init.rs
+--- a/cargo-dist/src/init.rs
++++ b/cargo-dist/src/init.rs
+@@ -763,6 +764,7 @@ fn apply_dist_to_metadata(metadata: &mut toml_edit::Item, meta: &DistMetadata) {
+         ci,
+         installers,
+         tap,
++        formula,
+         system_dependencies: _,
+         targets,
+         include,
+diff --git a/cargo-dist/src/init.rs b/cargo-dist/src/init.rs
+--- a/cargo-dist/src/init.rs
++++ b/cargo-dist/src/init.rs
+@@ -828,6 +830,13 @@ fn apply_dist_to_metadata(metadata: &mut toml_edit::Item, meta: &DistMetadata) {
+         tap.clone(),
+     );
+ 
++    apply_optional_value(
++        table,
++        "formula",
++        "# Customize the Homebrew formula name\n",
++        formula.clone(),
++    );
++
+     apply_string_list(
+         table,
+         "targets",
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -601,6 +601,8 @@ pub struct Release {
+     pub install_path: InstallPathStrategy,
+     /// GitHub repository to push the Homebrew formula to, if built
+     pub tap: Option<String>,
++    /// Customize the name of the Homebrew formula
++    pub formula: Option<String>,
+     /// Packages to install from a system package manager
+     pub system_dependencies: SystemDependencies,
+ }
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -737,6 +739,8 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             // Only the final value merged into a package_config matters
+             tap: _,
+             // Only the final value merged into a package_config matters
++            formula: _,
++            // Only the final value merged into a package_config matters
+             system_dependencies: _,
+             // Only the final value merged into a package_config matters
+             windows_archive: _,
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -1027,6 +1031,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             .clone()
+             .unwrap_or(InstallPathStrategy::CargoHome);
+         let tap = package_config.tap.clone();
++        let formula = package_config.formula.clone();
+ 
+         let windows_archive = package_config.windows_archive.unwrap_or(ZipStyle::Zip);
+         let unix_archive = package_config
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -1085,6 +1090,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             npm_scope,
+             install_path,
+             tap,
++            formula,
+             system_dependencies,
+         });
+         idx
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -1733,21 +1739,25 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             return;
+         }
+         let release = self.release(to_release);
+-        let release_id = &release.id;
++        let formula = if let Some(formula) = &release.formula {
++            formula
++        } else {
++            &release.id
++        };
+         let Some(download_url) = self
+             .manifest
+-            .release_by_name(&release.app_name)
++            .release_by_name(&release.id)
+             .and_then(|r| r.artifact_download_url())
+         else {
+             warn!("skipping Homebrew formula: couldn't compute a URL to download artifacts from");
+             return;
+         };
+ 
+-        let artifact_name = format!("{release_id}.rb");
++        let artifact_name = format!("{formula}.rb");
+         let artifact_path = self.inner.dist_dir.join(&artifact_name);
+ 
+         // If tap is specified, include that in the `brew install` message
+-        let mut install_target = release.app_name.clone();
++        let mut install_target = formula.clone();
+         if let Some(tap) = &self.inner.tap {
+             install_target = format!("{tap}/{install_target}").to_owned();
+         }
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -1928,8 +1938,6 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+             warn!("The Homebrew publish job is enabled but no tap was specified\n  consider setting the tap field in Cargo.toml");
+         }
+ 
+-        let formula_name = to_class_case(&app_name);
+-
+         let dependencies: Vec<String> = release
+             .system_dependencies
+             .homebrew
+diff --git a/cargo-dist/src/tasks.rs b/cargo-dist/src/tasks.rs
+--- a/cargo-dist/src/tasks.rs
++++ b/cargo-dist/src/tasks.rs
+@@ -1956,7 +1964,7 @@ impl<'pkg_graph> DistGraphBuilder<'pkg_graph> {
+                 x86_64_linux,
+                 x86_64_linux_sha256: None,
+                 name: app_name,
+-                formula_class: formula_name,
++                formula_class: to_class_case(formula),
+                 desc: app_desc,
+                 license: app_license,
+                 homepage: app_homepage_url,

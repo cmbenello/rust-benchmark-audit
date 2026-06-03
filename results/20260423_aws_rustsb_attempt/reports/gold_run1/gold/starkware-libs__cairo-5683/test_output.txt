@@ -1,0 +1,324 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch crates/cairo-lang-semantic/src/expr/compute.rs...
+Checking patch crates/cairo-lang-semantic/src/expr/test_data/coupon...
+Checking patch tests/bug_samples/issue5680.cairo...
+Checking patch tests/bug_samples/lib.cairo...
+Applied patch crates/cairo-lang-semantic/src/expr/compute.rs cleanly.
+Applied patch crates/cairo-lang-semantic/src/expr/test_data/coupon cleanly.
+Applied patch tests/bug_samples/issue5680.cairo cleanly.
+Applied patch tests/bug_samples/lib.cairo cleanly.
++ cd crates/cairo-lang-semantic
++ cargo test --no-fail-fast --all-features
+warning: `/workspace/.cargo/config` is deprecated in favor of `config.toml`
+note: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+note: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+ Downloading crates ...
+  Downloaded anstyle-query v1.1.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded anstyle v1.0.7 (registry `lts-repo-at-6a8684df97`)
+  Downloaded anstyle-parse v0.2.4 (registry `lts-repo-at-6a8684df97`)
+  Downloaded anstream v0.6.14 (registry `lts-repo-at-6a8684df97`)
+  Downloaded ahash v0.8.11 (registry `lts-repo-at-6a8684df97`)
+  Downloaded tracing-log v0.2.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded thiserror-impl v1.0.61 (registry `lts-repo-at-6a8684df97`)
+  Downloaded smol_str v0.2.2 (registry `lts-repo-at-6a8684df97`)
+  Downloaded relative-path v1.9.3 (registry `lts-repo-at-6a8684df97`)
+  Downloaded num-integer v0.1.46 (registry `lts-repo-at-6a8684df97`)
+  Downloaded matchers v0.1.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded instant v0.1.13 (registry `lts-repo-at-6a8684df97`)
+  Downloaded humantime v2.1.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded xshell-macros v0.2.6 (registry `lts-repo-at-6a8684df97`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded colored v2.1.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded yansi v0.5.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded xshell v0.2.6 (registry `lts-repo-at-6a8684df97`)
+  Downloaded unicode-segmentation v1.11.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded zerocopy v0.7.34 (registry `lts-repo-at-6a8684df97`)
+  Downloaded regex-syntax v0.8.4 (registry `lts-repo-at-6a8684df97`)
+  Downloaded salsa v0.16.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded libc v0.2.155 (registry `lts-repo-at-6a8684df97`)
+  Downloaded regex-automata v0.4.7 (registry `lts-repo-at-6a8684df97`)
+  Downloaded regex-syntax v0.6.29 (registry `lts-repo-at-6a8684df97`)
+  Downloaded bstr v1.9.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded winnow v0.6.13 (registry `lts-repo-at-6a8684df97`)
+  Downloaded tracing-subscriber v0.3.18 (registry `lts-repo-at-6a8684df97`)
+  Downloaded syn v2.0.66 (registry `lts-repo-at-6a8684df97`)
+  Downloaded syn v1.0.109 (registry `lts-repo-at-6a8684df97`)
+  Downloaded regex v1.10.5 (registry `lts-repo-at-6a8684df97`)
+  Downloaded unicode-ident v1.0.12 (registry `lts-repo-at-6a8684df97`)
+  Downloaded tracing-core v0.1.32 (registry `lts-repo-at-6a8684df97`)
+  Downloaded tracing v0.1.40 (registry `lts-repo-at-6a8684df97`)
+  Downloaded toml_edit v0.22.14 (registry `lts-repo-at-6a8684df97`)
+  Downloaded toml v0.8.14 (registry `lts-repo-at-6a8684df97`)
+  Downloaded smallvec v1.13.2 (registry `lts-repo-at-6a8684df97`)
+  Downloaded sharded-slab v0.1.7 (registry `lts-repo-at-6a8684df97`)
+  Downloaded serde_derive v1.0.203 (registry `lts-repo-at-6a8684df97`)
+  Downloaded serde v1.0.203 (registry `lts-repo-at-6a8684df97`)
+  Downloaded regex-automata v0.1.10 (registry `lts-repo-at-6a8684df97`)
+  Downloaded proc-macro2 v1.0.85 (registry `lts-repo-at-6a8684df97`)
+  Downloaded pretty_assertions v1.4.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded parking_lot v0.11.2 (registry `lts-repo-at-6a8684df97`)
+  Downloaded once_cell v1.19.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded num-traits v0.2.19 (registry `lts-repo-at-6a8684df97`)
+  Downloaded num-bigint v0.4.5 (registry `lts-repo-at-6a8684df97`)
+  Downloaded memchr v2.7.2 (registry `lts-repo-at-6a8684df97`)
+  Downloaded log v0.4.21 (registry `lts-repo-at-6a8684df97`)
+  Downloaded itertools v0.12.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded indexmap v2.2.6 (registry `lts-repo-at-6a8684df97`)
+  Downloaded ignore v0.4.22 (registry `lts-repo-at-6a8684df97`)
+  Downloaded hashbrown v0.14.5 (registry `lts-repo-at-6a8684df97`)
+  Downloaded hashbrown v0.12.3 (registry `lts-repo-at-6a8684df97`)
+  Downloaded genco v0.17.9 (registry `lts-repo-at-6a8684df97`)
+  Downloaded diffy v0.3.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded diff v0.1.13 (registry `lts-repo-at-6a8684df97`)
+  Downloaded crossbeam-utils v0.8.20 (registry `lts-repo-at-6a8684df97`)
+  Downloaded crossbeam-deque v0.8.5 (registry `lts-repo-at-6a8684df97`)
+  Downloaded aho-corasick v1.1.3 (registry `lts-repo-at-6a8684df97`)
+  Downloaded walkdir v2.5.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded toml_datetime v0.6.6 (registry `lts-repo-at-6a8684df97`)
+  Downloaded thread_local v1.1.8 (registry `lts-repo-at-6a8684df97`)
+  Downloaded serde_spanned v0.6.6 (registry `lts-repo-at-6a8684df97`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded quote v1.0.36 (registry `lts-repo-at-6a8684df97`)
+  Downloaded pin-project-lite v0.2.14 (registry `lts-repo-at-6a8684df97`)
+  Downloaded path-clean v1.0.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded parking_lot_core v0.8.6 (registry `lts-repo-at-6a8684df97`)
+  Downloaded overload v0.1.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded oorandom v11.1.3 (registry `lts-repo-at-6a8684df97`)
+  Downloaded nu-ansi-term v0.46.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded is_terminal_polyfill v1.70.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded indexmap v1.9.3 (registry `lts-repo-at-6a8684df97`)
+  Downloaded indent v0.1.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded globset v0.4.14 (registry `lts-repo-at-6a8684df97`)
+  Downloaded env_logger v0.11.3 (registry `lts-repo-at-6a8684df97`)
+  Downloaded either v1.12.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded crossbeam-epoch v0.9.18 (registry `lts-repo-at-6a8684df97`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded indoc v2.0.5 (registry `lts-repo-at-6a8684df97`)
+  Downloaded equivalent v1.0.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-6a8684df97`)
+  Downloaded utf8parse v0.2.2 (registry `lts-repo-at-6a8684df97`)
+  Downloaded unescaper v0.1.4 (registry `lts-repo-at-6a8684df97`)
+  Downloaded thiserror v1.0.61 (registry `lts-repo-at-6a8684df97`)
+  Downloaded test-log-macros v0.2.16 (registry `lts-repo-at-6a8684df97`)
+  Downloaded test-log v0.2.16 (registry `lts-repo-at-6a8684df97`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-6a8684df97`)
+  Downloaded salsa-macros v0.16.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded rustc-hash v1.1.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded lock_api v0.4.12 (registry `lts-repo-at-6a8684df97`)
+  Downloaded id-arena v2.2.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded genco-macros v0.17.9 (registry `lts-repo-at-6a8684df97`)
+  Downloaded colorchoice v1.0.1 (registry `lts-repo-at-6a8684df97`)
+  Downloaded heck v0.3.3 (registry `lts-repo-at-6a8684df97`)
+  Downloaded autocfg v1.3.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded env_filter v0.1.0 (registry `lts-repo-at-6a8684df97`)
+  Downloaded anyhow v1.0.86 (registry `lts-repo-at-6a8684df97`)
+  Downloaded allocator-api2 v0.2.18 (registry `lts-repo-at-6a8684df97`)
+   Compiling proc-macro2 v1.0.85
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.3.0
+   Compiling cfg-if v1.0.0
+   Compiling version_check v0.9.4
+   Compiling zerocopy v0.7.34
+   Compiling serde v1.0.203
+   Compiling allocator-api2 v0.2.18
+   Compiling equivalent v1.0.1
+   Compiling once_cell v1.19.0
+   Compiling crossbeam-utils v0.8.20
+   Compiling log v0.4.21
+   Compiling smallvec v1.13.2
+   Compiling libc v0.2.155
+   Compiling syn v1.0.109
+   Compiling parking_lot_core v0.8.6
+   Compiling unicode-segmentation v1.11.0
+   Compiling memchr v2.7.2
+   Compiling scopeguard v1.2.0
+   Compiling either v1.12.0
+   Compiling hashbrown v0.12.3
+   Compiling thiserror v1.0.61
+   Compiling rustc-hash v1.1.0
+   Compiling genco-macros v0.17.9
+   Compiling oorandom v11.1.3
+   Compiling regex-syntax v0.8.4
+   Compiling path-clean v1.0.1
+   Compiling relative-path v1.9.3
+   Compiling xshell-macros v0.2.6
+   Compiling lazy_static v1.4.0
+   Compiling instant v0.1.13
+   Compiling colored v2.1.0
+   Compiling same-file v1.0.6
+   Compiling overload v0.1.1
+   Compiling anyhow v1.0.86
+   Compiling utf8parse v0.2.2
+   Compiling winnow v0.6.13
+   Compiling walkdir v2.5.0
+   Compiling nu-ansi-term v0.46.0
+   Compiling itertools v0.12.1
+   Compiling is_terminal_polyfill v1.70.0
+   Compiling colorchoice v1.0.1
+   Compiling anstyle-query v1.1.0
+   Compiling anstyle v1.0.7
+   Compiling anstyle-parse v0.2.4
+   Compiling yansi v0.5.1
+   Compiling diff v0.1.13
+   Compiling humantime v2.1.0
+   Compiling indoc v2.0.5
+   Compiling ahash v0.8.11
+   Compiling heck v0.3.3
+   Compiling diffy v0.3.0
+   Compiling anstream v0.6.14
+   Compiling pretty_assertions v1.4.0
+   Compiling indent v0.1.1
+   Compiling num-traits v0.2.19
+   Compiling lock_api v0.4.12
+   Compiling indexmap v1.9.3
+   Compiling id-arena v2.2.1
+   Compiling aho-corasick v1.1.3
+   Compiling bstr v1.9.1
+   Compiling xshell v0.2.6
+   Compiling crossbeam-epoch v0.9.18
+   Compiling quote v1.0.36
+   Compiling crossbeam-deque v0.8.5
+   Compiling syn v2.0.66
+   Compiling parking_lot v0.11.2
+   Compiling num-integer v0.1.46
+   Compiling regex-automata v0.4.7
+   Compiling num-bigint v0.4.5
+   Compiling hashbrown v0.14.5
+   Compiling indexmap v2.2.6
+   Compiling cairo-lang-utils v2.6.3 (/workspace/crates/cairo-lang-utils)
+   Compiling globset v0.4.14
+   Compiling regex v1.10.5
+   Compiling cairo-lang-debug v2.6.3 (/workspace/crates/cairo-lang-debug)
+   Compiling ignore v0.4.22
+   Compiling env_filter v0.1.0
+   Compiling env_logger v0.11.3
+   Compiling serde_derive v1.0.203
+   Compiling thiserror-impl v1.0.61
+   Compiling cairo-lang-proc-macros v2.6.3 (/workspace/crates/cairo-lang-proc-macros)
+   Compiling test-log-macros v0.2.16
+   Compiling salsa-macros v0.16.0
+   Compiling test-log v0.2.16
+   Compiling genco v0.17.9
+   Compiling unescaper v0.1.4
+   Compiling salsa v0.16.1
+   Compiling cairo-lang-syntax-codegen v2.6.3 (/workspace/crates/cairo-lang-syntax-codegen)
+   Compiling smol_str v0.2.2
+   Compiling serde_spanned v0.6.6
+   Compiling toml_datetime v0.6.6
+   Compiling toml_edit v0.22.14
+   Compiling cairo-lang-filesystem v2.6.3 (/workspace/crates/cairo-lang-filesystem)
+   Compiling cairo-lang-diagnostics v2.6.3 (/workspace/crates/cairo-lang-diagnostics)
+   Compiling cairo-lang-syntax v2.6.3 (/workspace/crates/cairo-lang-syntax)
+   Compiling toml v0.8.14
+   Compiling cairo-lang-parser v2.6.3 (/workspace/crates/cairo-lang-parser)
+   Compiling cairo-lang-formatter v2.6.3 (/workspace/crates/cairo-lang-formatter)
+   Compiling cairo-lang-defs v2.6.3 (/workspace/crates/cairo-lang-defs)
+   Compiling cairo-lang-test-utils v2.6.3 (/workspace/crates/cairo-lang-test-utils)
+   Compiling cairo-lang-plugins v2.6.3 (/workspace/crates/cairo-lang-plugins)
+   Compiling cairo-lang-semantic v2.6.3 (/workspace/crates/cairo-lang-semantic)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 55.04s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/cairo_lang_semantic-a27950546e78b461)
+
+running 83 tests
+test diagnostic::test::test_missing_module_file ... ok
+test diagnostic::test::test_inline_module_diagnostics ... ok
+test diagnostic::test::test_inline_inline_module_diagnostics ... ok
+test diagnostic::test::diagnostics::not_found ... ok
+test diagnostic::test::test_analyzer_diagnostics ... ok
+test expr::test::expr_diagnostics::logical_operator ... ok
+test diagnostic::test::diagnostics::inline ... ok
+test expr::test::expr_diagnostics::coupon ... ok
+test expr::test::expr_diagnostics::snapshot ... ok
+test expr::test::expr_diagnostics::constructor ... ok
+test expr::test::expr_diagnostics::attributes ... ok
+test expr::test::expr_diagnostics::enum_ ... ok
+test expr::test::expr_semantics::call ... ok
+test expr::test::expr_diagnostics::literal ... ok
+test expr::test::expr_semantics::assignment ... ok
+test expr::test::expr_semantics::block ... ok
+test expr::test::expr_diagnostics::assignment ... ok
+test expr::test::expr_diagnostics::structure ... ok
+test expr::test::expr_semantics::coupon ... ok
+test expr::test::expr_diagnostics::while_ ... ok
+test expr::test::expr_semantics::let_statement ... ok
+test diagnostic::test::diagnostics::missing ... ok
+test expr::test::test_expr_call_failures ... ok
+test expr::test::expr_diagnostics::pattern ... ok
+test expr::test::expr_semantics::tuple ... ok
+test expr::test::expr_diagnostics::let_statement ... ok
+test expr::test::expr_semantics::loop_ ... ok
+test expr::test::test_function_with_param ... ok
+test expr::test::test_expr_var ... ok
+test expr::test::test_function_body ... ok
+test expr::test::expr_diagnostics::if_ ... ok
+test expr::test::test_function_with_return_type ... ok
+test expr::test::expr_diagnostics::return_ ... ok
+test items::extern_function::test::test_extern_function ... ok
+test expr::test::test_tuple_type ... ok
+test items::extern_type::test::test_extern_type ... ok
+test diagnostic::test::diagnostics::neg_impl ... ok
+test expr::test::expr_semantics::if_ ... ok
+test expr::test::expr_semantics::while_ ... ok
+test items::imp::test::test_impl ... ok
+test items::test::diagnostics::extern_func ... ok
+test expr::test::expr_diagnostics::function_call ... ok
+test items::enm::test::test_enum ... ok
+test items::free_function::test::test_expr_lookup ... ok
+test items::structure::test::test_struct ... ok
+test items::test::diagnostics::free_function ... ok
+test diagnostic::test::diagnostics::plus_eq ... ok
+test expr::test::expr_semantics::structure ... ok
+test expr::test::expr_semantics::literals ... ok
+test items::trt::test::test_trait ... ok
+test items::test::diagnostics::panicable ... ok
+test expr::test::expr_diagnostics::statements ... ok
+test test::test_resolve ... ok
+test items::test::diagnostics::module ... ok
+test resolve::test::test_resolve_path_trait_impl ... ok
+test expr::test::expr_semantics::operator ... ok
+test resolve::test::test_resolve_path ... ok
+test items::test::diagnostics::enum_ ... ok
+test items::test::diagnostics::use_ ... ok
+test expr::test::expr_semantics::inline_macros ... ok
+test items::test::diagnostics::struct_ ... ok
+test expr::test::expand_inline_macros::inline_macros ... ok
+test expr::test::expr_diagnostics::error_propagate ... ok
+test expr::test::expr_diagnostics::neg_impl ... ok
+test expr::test::expr_diagnostics::loop_ ... ok
+test items::test::diagnostics::type_mismatch_diagnostics ... ok
+test items::test::diagnostics::impl_alias ... ok
+test expr::test::expr_diagnostics::match_ ... ok
+test items::test::diagnostics::trait_default_fn ... ok
+test expr::test::expr_diagnostics::operators ... ok
+test items::test::diagnostics::type_alias ... ok
+test expr::test::expr_diagnostics::fixed_size_array ... ok
+test expr::test::expr_semantics::match_ ... ok
+test expr::test::expr_diagnostics::method ... ok
+test diagnostic::test::diagnostics::tests ... ok
+test expr::test::expr_diagnostics::constant ... ok
+test expr::test::expr_diagnostics::generics ... ok
+test expr::test::expr_diagnostics::inference ... ok
+test items::test::diagnostics::trait_ ... ok
+test expr::test::expr_diagnostics::inline_macros ... ok
+test resolve::test::test_resolve_path_super ... ok
+test items::test::diagnostics::early_conform ... ok
+test items::test::diagnostics::trait_type ... ok
+
+test result: ok. 83 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.94s
+
+   Doc-tests cairo-lang-semantic
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../../
++ git reset --hard 576ddd1b38abe25af1e204cb77ea039b7c46d05e
+HEAD is now at 576ddd1b3 VSCode: Use red Cairo icon in dark themes (#5685)
++ git clean -fd
+Removing .cargo/
+Removing tests/bug_samples/issue5680.cairo

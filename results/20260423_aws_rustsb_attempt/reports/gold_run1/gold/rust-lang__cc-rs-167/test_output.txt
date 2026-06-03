@@ -1,0 +1,88 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/test.rs...
+Applied patch tests/test.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading tempdir v0.3.5 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+ Downloading rayon v0.7.1 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+ Downloading rand v0.3.15 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+ Downloading libc v0.2.23 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+ Downloading rayon-core v1.1.0 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+ Downloading num_cpus v1.5.1 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+ Downloading lazy_static v0.2.8 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+ Downloading coco v0.1.1 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+ Downloading scopeguard v0.3.2 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+ Downloading either v1.1.0 (registry file:///testbed/.cargo/lts-repo-at-013744d75c)
+   Compiling lazy_static v0.2.8
+   Compiling scopeguard v0.3.2
+   Compiling libc v0.2.23
+   Compiling either v1.1.0
+   Compiling rayon-core v1.1.0
+   Compiling coco v0.1.1
+   Compiling num_cpus v1.5.1
+   Compiling rand v0.3.15
+   Compiling tempdir v0.3.5
+   Compiling rayon v0.7.1
+   Compiling gcc v0.3.50 (file:///workspace)
+    Finished dev [unoptimized + debuginfo] target(s) in 6.71 secs
+     Running target/debug/deps/gcc-3c7c9711dbcd5995
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured
+
+     Running target/debug/deps/gcc_shim-486230e27ec66747
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured
+
+     Running target/debug/deps/cc_env-ed1e4f9ba3497053
+
+running 1 test
+test main ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured
+
+     Running target/debug/deps/test-85387b8b229d4a2d
+
+running 21 tests
+test gnu_opt_level_1 ... ok
+test gnu_compile_assembly ... ok
+test gnu_opt_level_s ... ok
+test gnu_set_stdlib ... ok
+test gnu_include ... ok
+test gnu_shared ... ok
+test msvc_define ... ok
+test gnu_define ... ok
+test gnu_smoke ... ok
+test gnu_static ... ok
+test msvc_debug ... ok
+test msvc_no_static_crt ... ok
+test msvc_opt_level_0 ... ok
+test msvc_static_crt ... ok
+test msvc_include ... ok
+test gnu_i686_pic ... ok
+test gnu_x86_64 ... ok
+test gnu_i686 ... ok
+test gnu_x86_64_no_pic ... ok
+test gnu_debug ... ok
+test msvc_smoke ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured
+
+   Doc-tests gcc
+
+running 3 tests
+test src/lib.rs -  (line 24) ... ok
+test src/lib.rs -  (line 35) ... ok
+test src/lib.rs - compile_library (line 168) ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured
+
++ git reset --hard 0f6c1424aec4994cb6736226b400e88f56fd829e
+HEAD is now at 0f6c142 Bump to 0.3.50
++ git clean -fd
+Removing .cargo/

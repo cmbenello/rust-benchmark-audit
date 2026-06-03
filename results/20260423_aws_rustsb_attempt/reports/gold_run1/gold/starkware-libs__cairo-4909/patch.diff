@@ -1,0 +1,434 @@
+diff --git a/crates/cairo-lang-plugins/src/plugins/config.rs b/crates/cairo-lang-plugins/src/plugins/config.rs
+--- a/crates/cairo-lang-plugins/src/plugins/config.rs
++++ b/crates/cairo-lang-plugins/src/plugins/config.rs
+@@ -9,7 +9,7 @@ use cairo_lang_syntax::attribute::structured::{
+     Attribute, AttributeArg, AttributeArgVariant, AttributeStructurize,
+ };
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::QueryAttrs;
++use cairo_lang_syntax::node::helpers::{BodyItems, QueryAttrs};
+ use cairo_lang_syntax::node::{ast, Terminal, TypedSyntaxNode};
+ use cairo_lang_utils::try_extract_matches;
+ 
+diff --git a/crates/cairo-lang-plugins/src/plugins/config.rs b/crates/cairo-lang-plugins/src/plugins/config.rs
+--- a/crates/cairo-lang-plugins/src/plugins/config.rs
++++ b/crates/cairo-lang-plugins/src/plugins/config.rs
+@@ -56,6 +56,41 @@ impl MacroPlugin for ConfigPlugin {
+     }
+ }
+ 
++/// Iterator over the items that are included in the given config set, among the given items in
++/// `iterator`.
++pub struct ItemsInCfg<'a, Item: QueryAttrs> {
++    db: &'a dyn SyntaxGroup,
++    cfg_set: &'a CfgSet,
++    iterator: <Vec<Item> as IntoIterator>::IntoIter,
++}
++
++impl<'a, Item: QueryAttrs> Iterator for ItemsInCfg<'a, Item> {
++    type Item = Item;
++
++    fn next(&mut self) -> Option<Self::Item> {
++        self.iterator.find(|item| !should_drop(self.db, self.cfg_set, item, &mut vec![]))
++    }
++}
++
++/// Extension trait for `BodyItems` filtering out items that are not included in the cfg.
++pub trait HasItemsInCfgEx<Item: QueryAttrs>: BodyItems<Item = Item> {
++    fn iter_items_in_cfg<'a>(
++        &self,
++        db: &'a dyn SyntaxGroup,
++        cfg_set: &'a CfgSet,
++    ) -> ItemsInCfg<'a, Item>;
++}
++
++impl<Item: QueryAttrs, Body: BodyItems<Item = Item>> HasItemsInCfgEx<Item> for Body {
++    fn iter_items_in_cfg<'a>(
++        &self,
++        db: &'a dyn SyntaxGroup,
++        cfg_set: &'a CfgSet,
++    ) -> ItemsInCfg<'a, Item> {
++        ItemsInCfg { db, cfg_set, iterator: self.items_vec(db).into_iter() }
++    }
++}
++
+ /// Handles an item that is not dropped from the AST completely due to not matching the config.
+ /// In case it includes dropped elements and needs to be rewritten, it returns the appropriate
+ /// PatchBuilder. Otherwise returns `None`, and it won't be rewritten or dropped.
+diff --git a/crates/cairo-lang-plugins/src/plugins/config.rs b/crates/cairo-lang-plugins/src/plugins/config.rs
+--- a/crates/cairo-lang-plugins/src/plugins/config.rs
++++ b/crates/cairo-lang-plugins/src/plugins/config.rs
+@@ -68,8 +103,7 @@ fn handle_undropped_item<'a>(
+     match item_ast {
+         ast::ModuleItem::Trait(trait_item) => {
+             let body = try_extract_matches!(trait_item.body(db), ast::MaybeTraitBody::Some)?;
+-            let items =
+-                get_kept_items_nodes(db, cfg_set, &body.items(db).elements(db), diagnostics)?;
++            let items = get_kept_items_nodes(db, cfg_set, &body.items_vec(db), diagnostics)?;
+             let mut builder = PatchBuilder::new(db);
+             builder.add_node(trait_item.attributes(db).as_syntax_node());
+             builder.add_node(trait_item.trait_kw(db).as_syntax_node());
+diff --git a/crates/cairo-lang-plugins/src/plugins/config.rs b/crates/cairo-lang-plugins/src/plugins/config.rs
+--- a/crates/cairo-lang-plugins/src/plugins/config.rs
++++ b/crates/cairo-lang-plugins/src/plugins/config.rs
+@@ -84,8 +118,7 @@ fn handle_undropped_item<'a>(
+         }
+         ast::ModuleItem::Impl(impl_item) => {
+             let body = try_extract_matches!(impl_item.body(db), ast::MaybeImplBody::Some)?;
+-            let items =
+-                get_kept_items_nodes(db, cfg_set, &body.items(db).elements(db), diagnostics)?;
++            let items = get_kept_items_nodes(db, cfg_set, &body.items_vec(db), diagnostics)?;
+             let mut builder = PatchBuilder::new(db);
+             builder.add_node(impl_item.attributes(db).as_syntax_node());
+             builder.add_node(impl_item.impl_kw(db).as_syntax_node());
+diff --git a/crates/cairo-lang-plugins/src/plugins/generate_trait.rs b/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
+--- a/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
++++ b/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
+@@ -6,7 +6,7 @@ use cairo_lang_defs::plugin::{
+ };
+ use cairo_lang_syntax::attribute::structured::{AttributeArgVariant, AttributeStructurize};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::{GenericParamEx, QueryAttrs};
++use cairo_lang_syntax::node::helpers::{BodyItems, GenericParamEx, QueryAttrs};
+ use cairo_lang_syntax::node::kind::SyntaxKind;
+ use cairo_lang_syntax::node::{ast, Terminal, TypedSyntaxNode};
+ 
+diff --git a/crates/cairo-lang-plugins/src/plugins/generate_trait.rs b/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
+--- a/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
++++ b/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
+@@ -147,7 +147,7 @@ fn generate_trait_for_impl(db: &dyn SyntaxGroup, impl_ast: ast::ItemImpl) -> Plu
+         ast::MaybeImplBody::Some(body) => {
+             builder.add_node(impl_generic_params.as_syntax_node());
+             builder.add_node(body.lbrace(db).as_syntax_node());
+-            for item in body.items(db).elements(db) {
++            for item in body.items_vec(db) {
+                 let ast::ImplItem::Function(item) = item else {
+                     // Only functions are supported as trait items for now.
+                     continue;
+diff --git a/crates/cairo-lang-starknet/Cargo.toml b/crates/cairo-lang-starknet/Cargo.toml
+--- a/crates/cairo-lang-starknet/Cargo.toml
++++ b/crates/cairo-lang-starknet/Cargo.toml
+@@ -15,6 +15,7 @@ cairo-lang-defs = { path = "../cairo-lang-defs", version = "2.5.0" }
+ cairo-lang-diagnostics = { path = "../cairo-lang-diagnostics", version = "2.5.0" }
+ cairo-lang-filesystem = { path = "../cairo-lang-filesystem", version = "2.5.0" }
+ cairo-lang-lowering = { path = "../cairo-lang-lowering", version = "2.5.0" }
++cairo-lang-plugins = { path = "../cairo-lang-plugins", version = "2.5.0" }
+ cairo-lang-semantic = { path = "../cairo-lang-semantic", version = "2.5.0" }
+ cairo-lang-sierra = { path = "../cairo-lang-sierra", version = "2.5.0" }
+ cairo-lang-sierra-generator = { path = "../cairo-lang-sierra-generator", version = "2.5.0" }
+diff --git a/crates/cairo-lang-starknet/src/plugin/dispatcher.rs b/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
+--- a/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
++++ b/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
+@@ -2,7 +2,7 @@ use cairo_lang_defs::patcher::{PatchBuilder, RewriteNode};
+ use cairo_lang_defs::plugin::{PluginDiagnostic, PluginGeneratedFile, PluginResult};
+ use cairo_lang_syntax::node::ast::{self, MaybeTraitBody, OptionReturnTypeClause};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::QueryAttrs;
++use cairo_lang_syntax::node::helpers::{BodyItems, QueryAttrs};
+ use cairo_lang_syntax::node::{Terminal, TypedSyntaxNode};
+ use indoc::formatdoc;
+ use itertools::Itertools;
+diff --git a/crates/cairo-lang-starknet/src/plugin/dispatcher.rs b/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
+--- a/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
++++ b/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
+@@ -83,7 +83,7 @@ pub fn handle_trait(db: &dyn SyntaxGroup, trait_ast: ast::ItemTrait) -> PluginRe
+     let safe_contract_caller_name = format!("{base_name}SafeDispatcher");
+     let library_caller_name = format!("{base_name}LibraryDispatcher");
+     let safe_library_caller_name = format!("{base_name}SafeLibraryDispatcher");
+-    for item_ast in body.items(db).elements(db) {
++    for item_ast in body.items_vec(db) {
+         match item_ast {
+             ast::TraitItem::Function(func) => {
+                 let declaration = func.declaration(db);
+diff --git a/crates/cairo-lang-starknet/src/plugin/embeddable.rs b/crates/cairo-lang-starknet/src/plugin/embeddable.rs
+--- a/crates/cairo-lang-starknet/src/plugin/embeddable.rs
++++ b/crates/cairo-lang-starknet/src/plugin/embeddable.rs
+@@ -1,7 +1,7 @@
+ use cairo_lang_defs::patcher::{PatchBuilder, RewriteNode};
+ use cairo_lang_defs::plugin::{PluginDiagnostic, PluginGeneratedFile, PluginResult};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::GenericParamEx;
++use cairo_lang_syntax::node::helpers::{BodyItems, GenericParamEx};
+ use cairo_lang_syntax::node::{ast, Terminal, TypedSyntaxNode};
+ use cairo_lang_utils::try_extract_matches;
+ use indoc::formatdoc;
+diff --git a/crates/cairo-lang-starknet/src/plugin/embeddable.rs b/crates/cairo-lang-starknet/src/plugin/embeddable.rs
+--- a/crates/cairo-lang-starknet/src/plugin/embeddable.rs
++++ b/crates/cairo-lang-starknet/src/plugin/embeddable.rs
+@@ -111,7 +111,7 @@ pub fn handle_embeddable(db: &dyn SyntaxGroup, item_impl: ast::ItemImpl) -> Plug
+         return PluginResult { code: None, diagnostics, remove_original_item: false };
+     };
+     let mut data = EntryPointsGenerationData::default();
+-    for item in body.items(db).elements(db) {
++    for item in body.items_vec(db) {
+         // TODO(yuval): do the same in embeddable_As, to get a better diagnostic.
+         forbid_attributes_in_impl(db, &mut diagnostics, &item, "#[embeddable]");
+         let ast::ImplItem::Function(item_function) = item else {
+diff --git a/crates/cairo-lang-starknet/src/plugin/mod.rs b/crates/cairo-lang-starknet/src/plugin/mod.rs
+--- a/crates/cairo-lang-starknet/src/plugin/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/mod.rs
+@@ -34,7 +34,7 @@ impl MacroPlugin for StarkNetPlugin {
+         &self,
+         db: &dyn SyntaxGroup,
+         item_ast: ast::ModuleItem,
+-        _metadata: &MacroPluginMetadata<'_>,
++        metadata: &MacroPluginMetadata<'_>,
+     ) -> PluginResult {
+         match item_ast {
+             ast::ModuleItem::Module(module_ast) => handle_module(db, module_ast),
+diff --git a/crates/cairo-lang-starknet/src/plugin/mod.rs b/crates/cairo-lang-starknet/src/plugin/mod.rs
+--- a/crates/cairo-lang-starknet/src/plugin/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/mod.rs
+@@ -43,7 +43,7 @@ impl MacroPlugin for StarkNetPlugin {
+                 handle_embeddable(db, impl_ast)
+             }
+             ast::ModuleItem::Struct(struct_ast) if struct_ast.has_attr(db, STORAGE_ATTR) => {
+-                handle_module_by_storage(db, struct_ast).unwrap_or_default()
++                handle_module_by_storage(db, struct_ast, metadata).unwrap_or_default()
+             }
+             ast::ModuleItem::Struct(_) | ast::ModuleItem::Enum(_)
+                 if derive_needed(&item_ast, db) =>
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+@@ -1,5 +1,6 @@
+ use cairo_lang_defs::patcher::RewriteNode;
+-use cairo_lang_defs::plugin::PluginDiagnostic;
++use cairo_lang_defs::plugin::{MacroPluginMetadata, PluginDiagnostic};
++use cairo_lang_plugins::plugins::HasItemsInCfgEx;
+ use cairo_lang_syntax::attribute::structured::{AttributeArg, AttributeArgVariant};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+ use cairo_lang_syntax::node::helpers::{PathSegmentEx, QueryAttrs};
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+@@ -53,11 +54,12 @@ pub(super) fn generate_component_specific_code(
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     common_data: StarknetModuleCommonGenerationData,
+     body: &ast::ModuleBody,
++    metadata: &MacroPluginMetadata<'_>,
+ ) -> RewriteNode {
+     let mut generation_data = ComponentGenerationData { common: common_data, ..Default::default() };
+     generate_has_component_trait_code(&mut generation_data.specific);
+-    for item in body.items(db).elements(db) {
+-        handle_component_item(db, diagnostics, &item, &mut generation_data);
++    for item in body.iter_items_in_cfg(db, metadata.cfg_set) {
++        handle_component_item(db, diagnostics, &item, metadata, &mut generation_data);
+     }
+     generation_data.into_rewrite_node(db, diagnostics)
+ }
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+@@ -67,11 +69,12 @@ fn handle_component_item(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     item: &ast::ModuleItem,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut ComponentGenerationData,
+ ) {
+     match &item {
+         ast::ModuleItem::Impl(item_impl) => {
+-            handle_component_impl(db, diagnostics, item_impl, data);
++            handle_component_impl(db, diagnostics, item_impl, metadata, data);
+         }
+         ast::ModuleItem::Struct(item_struct)
+             if item_struct.name(db).text(db) == STORAGE_STRUCT_NAME =>
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+@@ -217,6 +220,7 @@ fn handle_component_impl(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     item_impl: &ast::ItemImpl,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut ComponentGenerationData,
+ ) {
+     let Some(attr) = item_impl.find_attr(db, EMBEDDABLE_AS_ATTR) else {
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+@@ -245,7 +249,7 @@ fn handle_component_impl(
+     let trait_path_without_generics = remove_generics_from_path(db, &params.trait_path);
+ 
+     let mut impl_functions = vec![];
+-    for item in params.impl_body.items(db).elements(db) {
++    for item in params.impl_body.iter_items_in_cfg(db, metadata.cfg_set) {
+         let Some(impl_function) = handle_component_embeddable_as_impl_item(
+             db,
+             diagnostics,
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+@@ -1,5 +1,6 @@
+ use cairo_lang_defs::patcher::RewriteNode;
+-use cairo_lang_defs::plugin::{PluginDiagnostic, PluginResult};
++use cairo_lang_defs::plugin::{MacroPluginMetadata, PluginDiagnostic, PluginResult};
++use cairo_lang_plugins::plugins::HasItemsInCfgEx;
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+ use cairo_lang_syntax::node::helpers::{
+     is_single_arg_attr, GetIdentifier, PathSegmentEx, QueryAttrs,
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+@@ -229,6 +230,7 @@ fn handle_contract_item(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     item: &ast::ModuleItem,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut ContractGenerationData,
+ ) {
+     match item {
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+@@ -241,7 +243,13 @@ fn handle_contract_item(
+             );
+         }
+         ast::ModuleItem::Impl(item_impl) => {
+-            handle_contract_impl(db, diagnostics, item_impl, &mut data.specific.entry_points_code);
++            handle_contract_impl(
++                db,
++                diagnostics,
++                item_impl,
++                metadata,
++                &mut data.specific.entry_points_code,
++            );
+         }
+         ast::ModuleItem::Struct(item_struct)
+             if item_struct.name(db).text(db) == STORAGE_STRUCT_NAME =>
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+@@ -379,6 +388,7 @@ fn handle_contract_impl(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     imp: &ast::ItemImpl,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut EntryPointsGenerationData,
+ ) {
+     let abi_config = impl_abi_config(db, diagnostics, imp);
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+@@ -390,7 +400,7 @@ fn handle_contract_impl(
+     };
+     let impl_name = imp.name(db);
+     let impl_name_node = RewriteNode::new_trimmed(impl_name.as_syntax_node());
+-    for item in impl_body.items(db).elements(db) {
++    for item in impl_body.iter_items_in_cfg(db, metadata.cfg_set) {
+         if abi_config == ImplAbiConfig::Embed {
+             forbid_attributes_in_impl(db, diagnostics, &item, "#[abi(embed_v0)]");
+         } else if abi_config == ImplAbiConfig::External {
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+@@ -3,11 +3,13 @@ use std::vec;
+ use cairo_lang_defs::db::get_all_path_leafs;
+ use cairo_lang_defs::patcher::{PatchBuilder, RewriteNode};
+ use cairo_lang_defs::plugin::{
+-    DynGeneratedFileAuxData, PluginDiagnostic, PluginGeneratedFile, PluginResult,
++    DynGeneratedFileAuxData, MacroPluginMetadata, PluginDiagnostic, PluginGeneratedFile,
++    PluginResult,
+ };
++use cairo_lang_plugins::plugins::HasItemsInCfgEx;
+ use cairo_lang_syntax::node::ast::MaybeModuleBody;
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::{GetIdentifier, QueryAttrs};
++use cairo_lang_syntax::node::helpers::{BodyItems, GetIdentifier, QueryAttrs};
+ use cairo_lang_syntax::node::kind::SyntaxKind;
+ use cairo_lang_syntax::node::{ast, SyntaxNode, Terminal, TypedSyntaxNode};
+ use cairo_lang_utils::extract_matches;
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+@@ -127,7 +129,7 @@ fn validate_module(
+             remove_original_item: false,
+         };
+     };
+-    let Some(storage_struct_ast) = body.items(db).elements(db).into_iter().find(|item| {
++    let Some(storage_struct_ast) = body.items_vec(db).into_iter().find(|item| {
+         matches!(item, ast::ModuleItem::Struct(struct_ast) if struct_ast.name(db).text(db) == STORAGE_STRUCT_NAME)
+     }) else {
+         return PluginResult {
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+@@ -159,6 +161,7 @@ fn validate_module(
+ pub(super) fn handle_module_by_storage(
+     db: &dyn SyntaxGroup,
+     struct_ast: ast::ItemStruct,
++    metadata: &MacroPluginMetadata<'_>,
+ ) -> Option<PluginResult> {
+     let (module_ast, module_kind) =
+         grand_grand_parent_starknet_module(struct_ast.as_syntax_node(), db)?;
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+@@ -172,7 +175,7 @@ pub(super) fn handle_module_by_storage(
+     let mut event_variants = vec![];
+     // Use declarations to add to the internal submodules. Mapping from 'use' items to their path.
+     let mut extra_uses = OrderedHashMap::default();
+-    for item in body.items(db).elements(db) {
++    for item in body.iter_items_in_cfg(db, metadata.cfg_set) {
+         if let Some(variants) =
+             get_starknet_event_variants(db, &mut diagnostics, &item, module_kind)
+         {
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+@@ -202,10 +205,11 @@ pub(super) fn handle_module_by_storage(
+             common_data,
+             &body,
+             &module_ast,
++            metadata,
+             event_variants,
+         ),
+         StarknetModuleKind::Component => {
+-            generate_component_specific_code(db, &mut diagnostics, common_data, &body)
++            generate_component_specific_code(db, &mut diagnostics, common_data, &body, metadata)
+         }
+     };
+ 
+diff --git a/crates/cairo-lang-syntax/src/node/helpers.rs b/crates/cairo-lang-syntax/src/node/helpers.rs
+--- a/crates/cairo-lang-syntax/src/node/helpers.rs
++++ b/crates/cairo-lang-syntax/src/node/helpers.rs
+@@ -560,3 +560,38 @@ impl OptionWrappedGenericParamListHelper for ast::OptionWrappedGenericParamList
+         }
+     }
+ }
++
++/// Trait for getting the items of a body-item (an item that contains items), as a vector.
++pub trait BodyItems {
++    /// The type of an Item.
++    type Item;
++    /// Returns the items of the body-item as a vector.
++    /// Use with caution, as this includes items that may be filtered out by plugins.
++    /// Do note that plugins that directly run on this body-item without going/checking up on the
++    /// syntax tree may assume that e.g. out-of-config items were already filtered out.
++    /// Don't use on an item that is not the original plugin's context, unless you are sure that
++    /// while traversing the AST to get to it from the original plugin's context, you did not go
++    /// through another submodule.
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<Self::Item>;
++}
++
++impl BodyItems for ast::ModuleBody {
++    type Item = ModuleItem;
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<ModuleItem> {
++        self.items(db).elements(db)
++    }
++}
++
++impl BodyItems for ast::TraitBody {
++    type Item = TraitItem;
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<TraitItem> {
++        self.items(db).elements(db)
++    }
++}
++
++impl BodyItems for ast::ImplBody {
++    type Item = ImplItem;
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<ImplItem> {
++        self.items(db).elements(db)
++    }
++}

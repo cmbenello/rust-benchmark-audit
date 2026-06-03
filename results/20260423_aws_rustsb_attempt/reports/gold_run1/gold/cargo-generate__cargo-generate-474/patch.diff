@@ -1,0 +1,49 @@
+diff --git a/src/hooks/variable_mod.rs b/src/hooks/variable_mod.rs
+--- a/src/hooks/variable_mod.rs
++++ b/src/hooks/variable_mod.rs
+@@ -1,7 +1,7 @@
+ use liquid::{Object, ValueView};
+ use liquid_core::Value;
+ use regex::Regex;
+-use rhai::{Dynamic, EvalAltResult, Module};
++use rhai::{Array, Dynamic, EvalAltResult, Module};
+ use std::cell::RefCell;
+ use std::rc::Rc;
+ 
+diff --git a/src/hooks/variable_mod.rs b/src/hooks/variable_mod.rs
+--- a/src/hooks/variable_mod.rs
++++ b/src/hooks/variable_mod.rs
+@@ -52,6 +52,8 @@ pub fn create_module(liquid_object: Rc<RefCell<Object>>) -> Module {
+     });
+ 
+     module.set_native_fn("set", {
++        let liquid_object = liquid_object.clone();
++
+         move |name: &str, value: bool| -> Result<()> {
+             match liquid_object.get_value(name) {
+                 NamedValue::NonExistant | NamedValue::Bool(_) => {
+diff --git a/src/hooks/variable_mod.rs b/src/hooks/variable_mod.rs
+--- a/src/hooks/variable_mod.rs
++++ b/src/hooks/variable_mod.rs
+@@ -65,6 +67,21 @@ pub fn create_module(liquid_object: Rc<RefCell<Object>>) -> Module {
+         }
+     });
+ 
++    module.set_native_fn("set", {
++        move |name: &str, value: Array| -> Result<()> {
++            match liquid_object.get_value(name) {
++                NamedValue::NonExistant => {
++                    let val = rhai_to_liquid_value(Dynamic::from(value))?;
++                    liquid_object
++                        .borrow_mut()
++                        .insert(name.to_string().into(), val);
++                    Ok(())
++                }
++                _ => Err(format!("Variable {} not an array", name).into()),
++            }
++        }
++    });
++
+     module.set_native_fn("prompt", {
+         move |prompt: &str, default_value: bool| -> Result<bool> {
+             let value = prompt_for_variable(&TemplateSlots {

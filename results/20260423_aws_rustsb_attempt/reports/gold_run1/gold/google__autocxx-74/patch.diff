@@ -1,0 +1,458 @@
+diff --git a/demo/src/input.h b/demo/src/input.h
+--- a/demo/src/input.h
++++ b/demo/src/input.h
+@@ -16,8 +16,6 @@
+ 
+ #include <cstdint>
+ 
+-uint32_t DoMath(uint32_t a);
+-
+ inline uint32_t DoMath(uint32_t a) {
+     return a * 3;
+ }
+diff --git a/demo/src/main.rs b/demo/src/main.rs
+--- a/demo/src/main.rs
++++ b/demo/src/main.rs
+@@ -20,8 +20,5 @@ include_cpp! {
+ }
+ 
+ fn main() {
+-    println!(
+-        "Hello, world! - C++ math should say 12={}",
+-        ffi::cxxbridge::DoMath(4)
+-    );
++    println!("Hello, world! - C++ math should say 12={}", ffi::DoMath(4));
+ }
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -293,9 +293,6 @@ impl<'a> BridgeConversion<'a> {
+                     output_items.push(item);
+                 }
+                 Item::Const(_) => {
+-                    // TODO consider what to do about constants in namespaces.
+-                    // Putting them in the root namespace is no good in case
+-                    // there's a conflict.
+                     self.all_items.push(item);
+                 }
+                 _ => {
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -403,6 +400,7 @@ impl<'a> BridgeConversion<'a> {
+                 type Kind = cxx::kind::#kind_item;
+             }
+         }));
++        self.add_use(&final_ident);
+         self.types_found.push(final_ident);
+         Ok(())
+     }
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -423,6 +421,12 @@ impl<'a> BridgeConversion<'a> {
+             .collect()
+     }
+ 
++    fn add_use(&mut self, id: &Ident) {
++        self.all_items.push(Item::Use(parse_quote!(
++            pub use cxxbridge:: #id;
++        )));
++    }
++
+     /// Adds items which we always add, cos they're useful.
+     fn generate_utilities(&mut self) {
+         // Unless we've been specifically asked not to do so, we always
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -433,6 +437,7 @@ impl<'a> BridgeConversion<'a> {
+         self.extern_c_mod_items.push(ForeignItem::Fn(parse_quote!(
+             fn make_string(str_: &str) -> UniquePtr<CxxString>;
+         )));
++        self.add_use(&make_ident("make_string"));
+         self.additional_cpp_needs
+             .push(AdditionalNeed::MakeStringConstructor);
+     }
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -466,6 +471,7 @@ impl<'a> BridgeConversion<'a> {
+             &format!("{}_make_unique", ty.to_string()),
+             Span::call_site(),
+         );
++        self.add_use(&call_name);
+         self.extern_c_mod_items.push(ForeignItem::Fn(parse_quote! {
+             pub fn #call_name ( #rs_args ) -> UniquePtr< #self_ty >;
+         }));
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -558,7 +564,8 @@ impl<'a> BridgeConversion<'a> {
+         // put something different into here if we have to do argument or
+         // return type conversion, so get some mutable variables ready.
+         let mut rust_name_attr = Vec::new();
+-        let mut cxxbridge_name = make_ident(&rust_name);
++        let rust_name_ident = make_ident(&rust_name);
++        let mut cxxbridge_name = rust_name_ident.clone();
+ 
+         // Analyze the return type, just as we previously did for the
+         // parameters.
+diff --git a/engine/src/bridge_converter.rs b/engine/src/bridge_converter.rs
+--- a/engine/src/bridge_converter.rs
++++ b/engine/src/bridge_converter.rs
+@@ -640,6 +647,9 @@ impl<'a> BridgeConversion<'a> {
+             #(#rust_name_attr)*
+             #vis fn #cxxbridge_name ( #params ) #ret_type;
+         )));
++        if !is_a_method || wrapper_function_needed {
++            self.add_use(&rust_name_ident);
++        }
+         Ok(())
+     }
+ 
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -17,7 +17,6 @@ mod bridge_converter;
+ mod byvalue_checker;
+ mod known_types;
+ mod parse;
+-mod preprocessor_parse_callbacks;
+ mod rust_pretty_printer;
+ mod types;
+ mod unqualify;
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -73,6 +69,12 @@ pub enum Error {
+     NoAutoCxxInc,
+     CouldNotCanoncalizeIncludeDir(PathBuf),
+     Conversion(bridge_converter::ConvertError),
++    /// No 'allow' or 'allow_pod' was specified.
++    /// It might be that in future we can simply let things work
++    /// without any allowlist, in which case bindgen should generate
++    /// bindings for everything. That just seems very unlikely to work
++    /// in the common case right now.
++    NoAllowlist,
+ }
+ 
+ pub type Result<T, E = Error> = std::result::Result<T, E>;
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -101,7 +103,6 @@ pub struct IncludeCpp {
+     pod_types: Vec<TypeName>,
+     preconfigured_inc_dirs: Option<std::ffi::OsString>,
+     exclude_utilities: bool,
+-    preprocessor_definitions: Rc<Mutex<PreprocessorDefinitions>>,
+     state: State,
+ }
+ 
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -140,10 +141,7 @@ impl IncludeCpp {
+             if input.parse::<Option<syn::Token![#]>>()?.is_some() {
+                 let ident: syn::Ident = input.parse()?;
+                 if ident != "include" {
+-                    return Err(syn::Error::new(
+-                        ident.span(),
+-                        "expected include",
+-                    ));
++                    return Err(syn::Error::new(ident.span(), "expected include"));
+                 }
+                 let hdr: syn::LitStr = input.parse()?;
+                 inclusions.push(CppInclusion::Header(hdr.value()));
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -180,7 +178,6 @@ impl IncludeCpp {
+             pod_types,
+             preconfigured_inc_dirs: None,
+             exclude_utilities,
+-            preprocessor_definitions: Rc::new(Mutex::new(PreprocessorDefinitions::new())),
+             state: if parse_only {
+                 State::ParseOnly
+             } else {
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -232,9 +229,6 @@ impl IncludeCpp {
+             .clang_args(&["-x", "c++", "-std=c++14"])
+             .derive_copy(false)
+             .derive_debug(false)
+-            .parse_callbacks(Box::new(PreprocessorParseCallbacks::new(
+-                self.preprocessor_definitions.clone(),
+-            )))
+             .default_enum_style(bindgen::EnumVariation::Rust {
+                 non_exhaustive: false,
+             })
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -280,12 +274,6 @@ impl IncludeCpp {
+         }
+     }
+ 
+-    fn get_preprocessor_defs_mod(&self) -> Option<ItemMod> {
+-        let another_ref = self.preprocessor_definitions.clone();
+-        let m = another_ref.try_lock().unwrap().to_mod();
+-        m
+-    }
+-
+     fn parse_bindings(&self, bindings: bindgen::Bindings) -> Result<ItemMod> {
+         // This bindings object is actually a TokenStream internally and we're wasting
+         // effort converting to and from string. We could enhance the bindgen API
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -333,6 +321,10 @@ impl IncludeCpp {
+             State::Generated(_, _) | State::NothingGenerated => panic!("Only call generate once"),
+         }
+ 
++        if self.allowlist.is_empty() {
++            return Err(Error::NoAllowlist);
++        }
++
+         let builder = self.make_bindgen_builder()?;
+         let bindings = self
+             .inject_header_into_bindgen(builder)
+diff --git a/engine/src/lib.rs b/engine/src/lib.rs
+--- a/engine/src/lib.rs
++++ b/engine/src/lib.rs
+@@ -351,9 +343,10 @@ impl IncludeCpp {
+         let mut additional_cpp_generator = AdditionalCppGenerator::new(self.build_header());
+         additional_cpp_generator.add_needs(conversion.additional_cpp_needs);
+         let mut items = conversion.items;
+-        if let Some(itemmod) = self.get_preprocessor_defs_mod() {
+-            items.push(syn::Item::Mod(itemmod));
+-        }
++        //{
++        //    let local_lock = self.preprocessor_definitions.try_lock().unwrap();
++        //    items.extend(local_lock.to_items());
++        //}
+         let mut new_bindings: ItemMod = parse_quote! {
+             #[allow(non_snake_case)]
+             #[allow(dead_code)]
+diff --git a/engine/src/preprocessor_parse_callbacks.rs /dev/null
+--- a/engine/src/preprocessor_parse_callbacks.rs
++++ /dev/null
+@@ -1,106 +0,0 @@
+-// Copyright 2020 Google LLC
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//    https://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
+-
+-use bindgen::callbacks::{IntKind, ParseCallbacks};
+-use proc_macro2::Span;
+-use quote::quote;
+-use std::collections::HashMap;
+-use std::rc::Rc;
+-use std::sync::Mutex;
+-use syn::{parse_quote, ItemMod};
+-
+-/// Keeps track of all known preprocessor invocations.
+-#[derive(Debug, Default)]
+-pub(crate) struct PreprocessorDefinitions {
+-    integral: HashMap<String, i64>,
+-    string: HashMap<String, Vec<u8>>,
+-}
+-
+-impl PreprocessorDefinitions {
+-    pub fn new() -> Self {
+-        PreprocessorDefinitions {
+-            integral: HashMap::new(),
+-            string: HashMap::new(),
+-        }
+-    }
+-
+-    fn insert_int_macro(&mut self, name: &str, val: i64) {
+-        self.integral.insert(name.to_string(), val);
+-    }
+-
+-    fn insert_str_macro(&mut self, name: &str, val: &[u8]) {
+-        self.string.insert(name.to_string(), val.to_vec());
+-    }
+-
+-    pub fn to_mod(&self) -> Option<ItemMod> {
+-        if self.integral.is_empty() && self.string.is_empty() {
+-            None
+-        } else {
+-            let span = Span::call_site();
+-            let idefs = self.integral.iter().map(|(k, v)| {
+-                let k = syn::Ident::new(k, span);
+-                quote! {
+-                    pub const #k: i64 = #v;
+-                }
+-            });
+-            let sdefs = self.string.iter().filter_map(|(k, v)| {
+-                let k = syn::Ident::new(k, span);
+-                // TODO _consider_ doing something with non-UTF8 string values. I'm not sure what.
+-                String::from_utf8(v.clone()).ok().map(|v| {
+-                    quote! {
+-                        pub const #k: &'static str = #v;
+-                    }
+-                })
+-            });
+-            Some(parse_quote! {
+-                pub mod defs {
+-                    #(#idefs)*
+-                    #(#sdefs)*
+-                }
+-            })
+-        }
+-    }
+-}
+-
+-/// Callbacks for bindgen.
+-#[derive(Debug)]
+-pub(crate) struct PreprocessorParseCallbacks {
+-    // We use a mutex rather than a RefCell not because we need thread
+-    // safety, but because we need poisoning in order to avoid problems
+-    // with UnwindSafe.
+-    definitions: Rc<Mutex<PreprocessorDefinitions>>,
+-}
+-
+-impl PreprocessorParseCallbacks {
+-    pub fn new(definitions: Rc<Mutex<PreprocessorDefinitions>>) -> Self {
+-        PreprocessorParseCallbacks { definitions }
+-    }
+-
+-    fn get_defs(&self) -> std::sync::MutexGuard<PreprocessorDefinitions> {
+-        self.definitions
+-            .try_lock()
+-            .expect("would block whilst adding macro")
+-    }
+-}
+-
+-impl ParseCallbacks for PreprocessorParseCallbacks {
+-    fn int_macro(&self, name: &str, value: i64) -> Option<IntKind> {
+-        self.get_defs().insert_int_macro(name, value);
+-        None
+-    }
+-
+-    fn str_macro(&self, name: &str, value: &[u8]) {
+-        self.get_defs().insert_str_macro(name, value)
+-    }
+-}
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -12,7 +12,6 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-
+ // The crazy macro_rules magic in this file is thanks to dtolnay@
+ // and is a way of attaching rustdoc to each of the possible directives
+ // within the include_cpp outer macro. None of the directives actually
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -42,9 +41,9 @@
+ ///     allow("do_math")
+ /// );
+ ///
+-/// # mod ffi { pub mod cxxbridge { pub fn do_math(a: u32) -> u32 { a+3 } } }
++/// # mod ffi { pub fn do_math(a: u32) -> u32 { a+3 } }
+ /// # fn main() {
+-/// ffi::cxxbridge::do_math(3);
++/// ffi::do_math(3);
+ /// # }
+ /// ```
+ ///
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -87,26 +86,72 @@
+ /// If there's a C++ function which takes a struct by value, but that struct
+ /// is not declared as POD-safe, then we'll generate wrapper functions to move
+ /// that type into and out of [UniquePtr][autocxx_engine::cxx::UniquePtr]s.
+-/// 
++///
+ ///
+ /// # Generated code
+ ///
+ /// You will find that this macro expands to the equivalent of:
+ ///
++/// ```no_run
++/// mod ffi {
++///     pub fn do_math(a: u32) -> u32
++/// #   { a+3 }
++///     pub const kMyCxxConst: i32 = 3;
++///     pub const MY_PREPROCESSOR_DEFINITION: i64 = 3i64;
++/// }
+ /// ```
++///
++/// # Built-in types
++///
++/// The generated code uses `cxx` for interop: see that crate for many important
++/// considerations including safety and the list of built-in types, for example
++/// [UniquePtr][autocxx_engine::cxx::UniquePtr] and
++/// [CxxString][autocxx_engine::cxx::CxxString].
++///
++/// # Making strings
++///
++/// Unless you use [exclude_utilities], you will find a function
++/// called `make_string` exists inside the generated `ffi` block:
++///
++/// ```no_run
+ /// mod ffi {
+-///     pub mod cxxbridge {
+-///         pub fn do_math(a: u32) -> u32
+-/// #       { a+3 }
+-///     }
++/// # use autocxx_engine::cxx::UniquePtr;
++/// # use autocxx_engine::cxx::CxxString;
++///     pub fn make_string(str_: &str) -> UniquePtr<CxxString>
++/// #   { unreachable!() }
++/// }
++/// ```
+ ///
+-///      pub const kMyCxxConst: i32 = 3;
++/// # Making other C++ types
+ ///
+-///      pub mod defs {
+-///          pub const MY_PREPROCESSOR_DEFINITION: i64 = 3i64;
+-///      }
++/// Types gain a `_make_unique` function. At present this is not
++/// an associated function; it's simply the type name followed by
++/// that suffix.
++///
++/// ```
++/// mod ffi {
++/// # struct UniquePtr<T>(T);
++///     struct Bob {
++///         a: u32,
++///     }
++///     pub fn Bob_make_unique() -> UniquePtr<Bob>
++/// #   { unreachable!() }
+ /// }
+ /// ```
++/// # Preprocessor symbols
++///
++/// `#define` and other preprocessor symbols will appear as constants.
++/// For integers this is straightforward; for strings they appear
++/// as `[u8]` with a null terminator. To get a string, do this:
++///
++/// ```cpp
++/// #define BOB "Hello"
++/// ```
++///
++/// ```
++/// # mod ffi { pub static BOB: [u8; 6] = [72u8, 101u8, 108u8, 108u8, 111u8, 0u8]; }
++/// assert_eq!(std::str::from_utf8(&ffi::BOB).unwrap().trim_end_matches(char::from(0)), "Hello");
++/// ```
+ ///
+ /// # Namespaces
+ ///

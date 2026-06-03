@@ -1,0 +1,420 @@
+diff --git a/guide/src/favorites.md b/guide/src/favorites.md
+--- a/guide/src/favorites.md
++++ b/guide/src/favorites.md
+@@ -13,10 +13,14 @@ description = "<optional description, visible with --list-favorites>"
+ git = "https://github.com/ashleygwilliams/wasm-pack-template"
+ branch = "<optional-branch>"
+ subfolder = "<optional-subfolder>"
++init = optional true|false
+ ```
+ 
+ Values may be overridden using the CLI arguments of the same names (e.g. `--subfolder` for the `subfolder` value).
+ 
++**Note:** Specifying `init = true` has the effect of forcing the template to exhibit behaviour as if `--init` is specified on the
++commandline, as there is no counter-option!
++
+ When favorites are available, they can be generated simply by invoking:
+ 
+ ```cli
+diff --git a/src/app_config.rs b/src/app_config.rs
+--- a/src/app_config.rs
++++ b/src/app_config.rs
+@@ -33,6 +33,7 @@ pub struct FavoriteConfig {
+     pub subfolder: Option<String>,
+     pub path: Option<PathBuf>,
+     pub values: Option<HashMap<String, toml::Value>>,
++    pub init: Option<bool>,
+ }
+ 
+ #[derive(Deserialize, Default)]
+diff --git a/src/args.rs b/src/args.rs
+--- a/src/args.rs
++++ b/src/args.rs
+@@ -97,11 +97,11 @@ pub struct GenerateArgs {
+     pub define: Vec<String>,
+ 
+     /// Generate the template directly into the current dir. No subfolder will be created and no vcs is initialized.
+-    #[clap(long, conflicts_with = "destination", action)]
++    #[clap(long, action)]
+     pub init: bool,
+ 
+     /// Generate the template directly at the given path.
+-    #[clap(long, conflicts_with = "init", value_parser)]
++    #[clap(long, value_parser)]
+     pub destination: Option<PathBuf>,
+ 
+     /// Will enforce a fresh git init on the generated project
+diff --git a/src/config.rs b/src/config.rs
+--- a/src/config.rs
++++ b/src/config.rs
+@@ -28,6 +28,7 @@ pub struct TemplateConfig {
+     pub include: Option<Vec<String>>,
+     pub exclude: Option<Vec<String>>,
+     pub ignore: Option<Vec<String>>,
++    pub init: Option<bool>,
+ }
+ 
+ #[derive(Deserialize, Debug, PartialEq, Clone)]
+diff --git a/src/hooks/mod.rs b/src/hooks/mod.rs
+--- a/src/hooks/mod.rs
++++ b/src/hooks/mod.rs
+@@ -33,14 +33,14 @@ impl<F: FnOnce()> Drop for CleanupJob<F> {
+ }
+ 
+ pub fn execute_pre_hooks(
+-    dir: &Path,
++    template_dir: &Path,
+     liquid_object: Rc<RefCell<liquid::Object>>,
+-    template_cfg: &mut config::Config,
++    template_cfg: &config::Config,
+     allow_commands: bool,
+     silent: bool,
+ ) -> Result<()> {
+-    let engine = create_rhai_engine(dir, liquid_object, allow_commands, silent);
+-    evaluate_scripts(dir, &template_cfg.get_pre_hooks(), engine)
++    let engine = create_rhai_engine(template_dir, liquid_object, allow_commands, silent);
++    evaluate_scripts(template_dir, &template_cfg.get_pre_hooks(), engine)
+ }
+ 
+ pub fn execute_post_hooks(
+diff --git a/src/hooks/mod.rs b/src/hooks/mod.rs
+--- a/src/hooks/mod.rs
++++ b/src/hooks/mod.rs
+@@ -54,12 +54,12 @@ pub fn execute_post_hooks(
+     evaluate_scripts(dir, &template_cfg.get_post_hooks(), engine)
+ }
+ 
+-fn evaluate_scripts(dir: &Path, scripts: &[String], engine: rhai::Engine) -> Result<()> {
++fn evaluate_scripts(template_dir: &Path, scripts: &[String], engine: rhai::Engine) -> Result<()> {
+     let cwd = env::current_dir()?;
+     let _ = CleanupJob::new(move || {
+         env::set_current_dir(cwd).ok();
+     });
+-    env::set_current_dir(dir)?;
++    env::set_current_dir(template_dir)?;
+ 
+     for script in scripts {
+         engine
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -102,16 +102,21 @@ pub fn generate(mut args: GenerateArgs) -> Result<PathBuf> {
+     )?
+     .unwrap_or_default();
+ 
++    source_template.init |= template_config
++        .template
++        .as_ref()
++        .and_then(|c| c.init)
++        .unwrap_or(false);
++
+     check_cargo_generate_version(&template_config)?;
+ 
+-    let base_dir = env::current_dir()?;
+     let project_name = resolve_project_name(&args)?;
+-    let project_dir = resolve_project_dir(&base_dir, &project_name, &args)?;
++    let project_dir = resolve_project_dir(&project_name, &args, &source_template)?;
+ 
+     println!(
+         "{} {} {}",
+         emoji::WRENCH,
+-        style(format!("Basedir: {}", base_dir.display())).bold(),
++        style(format!("Destination: {}", project_dir.display())).bold(),
+         style("...").bold()
+     );
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -123,10 +128,10 @@ pub fn generate(mut args: GenerateArgs) -> Result<PathBuf> {
+     );
+ 
+     expand_template(
++        &source_template,
+         &project_dir,
+         &project_name,
+         &template_folder,
+-        source_template.template_values(),
+         template_config,
+         &args,
+     )?;
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -140,7 +145,7 @@ pub fn generate(mut args: GenerateArgs) -> Result<PathBuf> {
+     );
+     copy_dir_all(&template_folder, &project_dir)?;
+ 
+-    if !args.vcs.is_none() && (!args.init || args.force_git_init) {
++    if !args.vcs.is_none() && (!source_template.init() || args.force_git_init) {
+         info!("{}", style("Initializing a fresh Git repository").bold());
+         args.vcs
+             .initialize(&project_dir, branch, args.force_git_init)?;
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -371,20 +376,20 @@ fn locate_template_file(
+ /// if `args.init == true` it returns the path of `$CWD` and if let some `args.destination`,
+ /// it returns the given path.
+ fn resolve_project_dir(
+-    base_dir: &Path,
+     name: &ProjectName,
+     args: &GenerateArgs,
++    source_template: &UserParsedInput,
+ ) -> Result<PathBuf> {
+-    if args.init {
+-        return Ok(base_dir.into());
+-    }
+-
+     let base_path = args
+         .destination
+         .as_ref()
+         .map(|p| p.to_path_buf())
+         .unwrap_or_else(|| env::current_dir().unwrap_or_else(|_| ".".into()));
+ 
++    if source_template.init() {
++        return Ok(base_path);
++    }
++
+     let dir_name = args.force.then(|| name.raw()).unwrap_or_else(|| {
+         rename_warning(name);
+         name.kebab_case()
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -406,15 +411,22 @@ fn resolve_project_dir(
+ }
+ 
+ fn expand_template(
++    source_template: &UserParsedInput,
+     project_dir: &Path,
+-    name: &ProjectName,
+-    dir: &Path,
+-    template_values: &HashMap<String, toml::Value>,
+-    mut template_config: Config,
++    project_name: &ProjectName,
++    template_dir: &Path,
++    template_config: Config,
+     args: &GenerateArgs,
+ ) -> Result<()> {
++    let template_values = source_template.template_values();
+     let crate_type: CrateType = args.into();
+-    let liquid_object = template::create_liquid_object(args, project_dir, name, &crate_type)?;
++    let liquid_object = template::create_liquid_object(
++        args,
++        project_dir,
++        project_name,
++        &crate_type,
++        source_template,
++    )?;
+     let liquid_object =
+         project_variables::fill_project_variables(liquid_object, &template_config, |slot| {
+             let provided_value = template_values.get(&slot.var_name).and_then(|v| v.as_str());
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -434,13 +446,13 @@ fn expand_template(
+     let mut liquid_object = Rc::new(RefCell::new(liquid_object));
+ 
+     execute_pre_hooks(
+-        dir,
++        template_dir,
+         Rc::clone(&liquid_object),
+-        &mut template_config,
++        &template_config,
+         args.allow_commands,
+         args.silent,
+     )?;
+-    ignore_me::remove_unneeded_files(dir, &template_cfg.ignore, args.verbose)?;
++    ignore_me::remove_unneeded_files(template_dir, &template_cfg.ignore, args.verbose)?;
+     let mut pbar = progressbar::new();
+ 
+     // SAFETY: We gave a clone of the Rc to `execute_pre_hooks` which by now has already been dropped. Therefore, there
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -448,7 +460,7 @@ fn expand_template(
+     let liquid_object_ref = Rc::get_mut(&mut liquid_object).unwrap().get_mut();
+ 
+     template::walk_dir(
+-        dir,
++        template_dir,
+         liquid_object_ref,
+         &mut template_cfg,
+         &all_hook_files,
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -457,7 +469,7 @@ fn expand_template(
+     pbar.join().unwrap();
+ 
+     execute_post_hooks(
+-        dir,
++        template_dir,
+         Rc::clone(&liquid_object),
+         &template_config,
+         args.allow_commands,
+diff --git a/src/template.rs b/src/template.rs
+--- a/src/template.rs
++++ b/src/template.rs
+@@ -13,6 +13,7 @@ use crate::include_exclude::*;
+ use crate::progressbar::spinner;
+ use crate::template_filters::*;
+ use crate::template_variables::{get_authors, get_os_arch, Authors, CrateType, ProjectName};
++use crate::user_parsed_input::UserParsedInput;
+ use crate::{emoji, GenerateArgs};
+ 
+ fn engine() -> liquid::Parser {
+diff --git a/src/template.rs b/src/template.rs
+--- a/src/template.rs
++++ b/src/template.rs
+@@ -34,6 +35,7 @@ pub fn create_liquid_object(
+     project_dir: &Path,
+     name: &ProjectName,
+     crate_type: &CrateType,
++    source_template: &UserParsedInput,
+ ) -> Result<Object> {
+     let authors: Authors = get_authors()?;
+     let os_arch = get_os_arch();
+diff --git a/src/template.rs b/src/template.rs
+--- a/src/template.rs
++++ b/src/template.rs
+@@ -57,7 +59,10 @@ pub fn create_liquid_object(
+         "within_cargo_project".into(),
+         Value::Scalar(is_within_cargo_project(project_dir).into()),
+     );
+-    liquid_object.insert("is_init".into(), Value::Scalar(args.init.into()));
++    liquid_object.insert(
++        "is_init".into(),
++        Value::Scalar(source_template.init().into()),
++    );
+ 
+     Ok(liquid_object)
+ }
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -11,6 +11,7 @@ use regex::Regex;
+ use crate::{app_config::AppConfig, warn, GenerateArgs};
+ 
+ // Contains parsed information from user.
++#[derive(Debug)]
+ pub struct UserParsedInput {
+     // from where clone or copy template?
+     template_location: TemplateLocation,
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -21,6 +22,7 @@ pub struct UserParsedInput {
+     // 2. configuration file
+     // 3. cli arguments --define
+     template_values: HashMap<String, toml::Value>,
++    pub init: bool,
+     //TODO:
+     // 1. This structure should be used instead of args
+     // 2. This struct can contains internaly args and app_config to not confuse
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -32,11 +34,13 @@ impl UserParsedInput {
+         template_location: impl Into<TemplateLocation>,
+         subfolder: Option<T>,
+         default_values: HashMap<String, toml::Value>,
++        init: bool,
+     ) -> Self {
+         Self {
+             template_location: template_location.into(),
+             subfolder: subfolder.map(|s| s.as_ref().to_owned()),
+             template_values: default_values,
++            init,
+         }
+     }
+ 
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -62,7 +66,12 @@ impl UserParsedInput {
+                 ssh_identity,
+                 args.force_git_init,
+             );
+-            return Self::new(git_user_in, args.template_path.subfolder(), default_values);
++            return Self::new(
++                git_user_in,
++                args.template_path.subfolder(),
++                default_values,
++                args.init,
++            );
+         }
+ 
+         // --path
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -71,6 +80,7 @@ impl UserParsedInput {
+                 path.as_ref(),
+                 args.template_path.subfolder(),
+                 default_values,
++                args.init,
+             );
+         }
+ 
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -116,6 +126,9 @@ impl UserParsedInput {
+                     .map(|s| s.as_ref().to_owned())
+                     .or_else(|| fav_cfg.subfolder.clone()),
+                 default_values,
++                args.init
++                    .then(|| true)
++                    .unwrap_or_else(|| fav_cfg.init.unwrap_or(false)),
+             );
+         }
+ 
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -173,6 +186,7 @@ impl UserParsedInput {
+                 .subfolder()
+                 .map(|s| s.as_ref().to_owned()),
+             default_values,
++            args.init,
+         )
+     }
+ 
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -191,6 +205,10 @@ impl UserParsedInput {
+     pub fn template_values_mut(&mut self) -> &mut HashMap<String, toml::Value> {
+         &mut self.template_values
+     }
++
++    pub const fn init(&self) -> bool {
++        self.init
++    }
+ }
+ 
+ // favorite can be in form with abbrevation what means that input is git repositoru
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -222,6 +240,7 @@ pub fn local_path(fav: &str) -> Option<PathBuf> {
+ }
+ 
+ // Template should be cloned with git
++#[derive(Debug)]
+ pub struct GitUserInput {
+     url: String,
+     branch: Option<String>,
+diff --git a/src/user_parsed_input.rs b/src/user_parsed_input.rs
+--- a/src/user_parsed_input.rs
++++ b/src/user_parsed_input.rs
+@@ -284,6 +303,7 @@ impl GitUserInput {
+ }
+ 
+ // Distinguish between plain copy and clone
++#[derive(Debug)]
+ pub enum TemplateLocation {
+     Git(GitUserInput),
+     Path(PathBuf),

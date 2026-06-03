@@ -1,0 +1,976 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch crates/cli/src/utils/inspect.rs...
+Checking patch crates/cli/src/utils/inspect.rs...
+Checking patch crates/cli/tests/run_test.rs...
+Applied patch crates/cli/src/utils/inspect.rs cleanly.
+Applied patch crates/cli/src/utils/inspect.rs cleanly.
+Applied patch crates/cli/tests/run_test.rs cleanly.
++ cd crates/cli
++ cargo test --no-fail-fast --all-features
+warning: both `/workspace/.cargo/config` and `/workspace/.cargo/config.toml` exist. Using `/workspace/.cargo/config`
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+ Downloading crates ...
+  Downloaded anstyle-query v1.1.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded predicates-tree v1.0.11 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded atty v0.2.14 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded ansi_term v0.12.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded async-trait v0.1.83 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded clap_lex v0.7.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded futures-sink v0.3.31 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded pin-utils v0.1.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-facade-sg v0.22.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tinystr v0.7.6 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded zerofrom v0.1.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded wasm-bindgen-shared v0.2.95 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded zerovec-derive v0.10.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded zerofrom-derive v0.1.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded wasm-bindgen-backend v0.2.95 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded wasm-bindgen v0.2.95 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded serde v1.0.214 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded hashbrown v0.14.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded zerovec v0.10.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-go v0.21.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded serde_json v1.0.132 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded unicode-segmentation v1.12.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-java v0.21.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-c v0.21.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-python v0.21.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-dart v0.0.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded regex v1.11.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded syn v2.0.87 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter v0.22.6 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded unicode-width v0.1.14 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded rustix v0.38.39 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded regex-syntax v0.8.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded bstr v1.10.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-rust v0.21.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_properties_data v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded url v2.5.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-yaml v0.6.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-bash v0.21.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-php v0.23.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-ruby v0.21.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-elixir v0.2.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-javascript v0.21.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded regex-automata v0.4.8 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tower v0.4.13 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tokio-util v0.7.12 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded idna v1.0.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded hashbrown v0.15.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded futures-util v0.3.31 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded aho-corasick v1.1.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded unicode-ident v1.0.13 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded libc v0.2.162 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tracing-core v0.1.32 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tracing v0.1.40 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tokio v1.41.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tower-lsp v0.20.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-sequel v0.3.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tempfile v3.14.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-haskell v0.21.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded crossterm v0.28.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-typescript v0.21.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-swift v0.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-cpp v0.22.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded clap_builder v4.5.20 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-lua v0.1.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-html v0.20.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-css v0.21.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded thiserror v1.0.68 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded smallvec v1.13.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded similar v2.6.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded serde_yaml v0.9.34+deprecated (registry `lts-repo-at-cadae21ca1`)
+  Downloaded schemars v0.8.21 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded crossterm v0.25.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded yoke-derive v0.7.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded yoke v0.7.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded writeable v0.5.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-scala v0.22.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded write16 v1.0.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded wasm-bindgen-macro-support v0.2.95 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded utf8parse v0.2.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-c-sharp v0.21.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded unsafe-libyaml v0.2.11 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded mio v1.0.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-kotlin v0.3.8 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded memchr v2.7.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded inquire v0.7.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded indexmap v2.6.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_collections v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded walkdir v2.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded wait-timeout v0.2.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tree-sitter-json v0.21.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tracing-attributes v0.1.27 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded thiserror-impl v1.0.68 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded synstructure v0.13.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded serde_derive v1.0.214 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded num-traits v0.2.19 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded mio v0.8.11 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded cc v1.0.106 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded bumpalo v3.16.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded wasm-bindgen-macro v0.2.95 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded utf16_iter v1.0.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded termcolor v1.4.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded slab v0.4.9 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded signal-hook-registry v1.4.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded signal-hook v0.3.17 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded schemars_derive v0.8.21 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded lsp-types v0.94.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_provider v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_properties v1.5.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_normalizer_data v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_normalizer v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded linux-raw-sys v0.4.14 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_locid_transform_data v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_locid v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded futures v0.3.31 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded crossbeam-utils v0.8.20 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded bytes v1.8.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded bitflags v2.6.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded utf8_iter v1.0.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tower-service v0.3.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tower-layer v0.3.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded termtree v0.4.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded strsim v0.11.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded signal-hook-mio v0.2.4 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded pin-project v1.1.7 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded lock_api v0.4.12 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded thread_local v1.1.8 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded stable_deref_trait v1.2.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded serde_repr v0.1.19 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded proc-macro2 v1.0.89 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded once_cell v1.20.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded litemap v0.7.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded libloading v0.8.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded ignore v0.4.23 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded globset v0.4.15 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded displaydoc v0.2.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded crossbeam-epoch v0.9.18 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded clap v4.5.20 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded bit-vec v0.8.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded tower-lsp-macros v0.9.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded serde_derive_internals v0.29.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded ryu v1.0.18 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded quote v1.0.37 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded predicates v3.1.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded pin-project-lite v0.2.15 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded pin-project-internal v1.1.7 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded parking_lot_core v0.9.10 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded parking_lot v0.12.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded log v0.4.22 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_provider_macros v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded icu_locid_transform v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded httparse v1.9.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded fuzzy-matcher v0.3.7 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded difflib v0.4.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded dashmap v6.1.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded dashmap v5.5.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded codespan-reporting v0.11.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded clap_complete v4.5.37 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded bit-set v0.8.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded percent-encoding v2.3.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded normalize-line-endings v0.3.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded itoa v1.0.11 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded idna_adapter v1.2.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded heck v0.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded fxhash v0.2.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded futures-macro v0.3.31 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded byteorder v1.5.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded auto_impl v1.2.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded anyhow v1.0.93 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded futures-channel v0.3.31 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded crossbeam-deque v0.8.5 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded clap_derive v4.5.18 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded autocfg v1.4.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded assert_cmd v2.0.16 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded predicates-core v1.0.8 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded newline-converter v0.3.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded is_terminal_polyfill v1.70.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded futures-io v0.3.31 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded futures-core v0.3.31 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded form_urlencoded v1.2.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded float-cmp v0.9.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded fastrand v2.2.0 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded errno v0.3.9 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded equivalent v1.0.1 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded dyn-clone v1.0.17 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded doc-comment v0.3.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded colorchoice v1.0.3 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded anstyle-parse v0.2.6 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded anstream v0.6.18 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded futures-task v0.3.31 (registry `lts-repo-at-cadae21ca1`)
+  Downloaded anstyle v1.0.10 (registry `lts-repo-at-cadae21ca1`)
+   Compiling cc v1.0.106
+   Compiling proc-macro2 v1.0.89
+   Compiling unicode-ident v1.0.13
+   Compiling memchr v2.7.4
+   Compiling regex-syntax v0.8.5
+   Compiling autocfg v1.4.0
+   Compiling once_cell v1.20.2
+   Compiling libc v0.2.162
+   Compiling cfg-if v1.0.0
+   Compiling log v0.4.22
+   Compiling stable_deref_trait v1.2.0
+   Compiling smallvec v1.13.2
+   Compiling wasm-bindgen-shared v0.2.95
+   Compiling serde v1.0.214
+   Compiling litemap v0.7.3
+   Compiling writeable v0.5.5
+   Compiling bumpalo v3.16.0
+   Compiling parking_lot_core v0.9.10
+   Compiling icu_locid_transform_data v1.5.0
+   Compiling crossbeam-utils v0.8.20
+   Compiling scopeguard v1.2.0
+   Compiling icu_properties_data v1.5.0
+   Compiling wasm-bindgen v0.2.95
+   Compiling pin-project-lite v0.2.15
+   Compiling write16 v1.0.0
+   Compiling utf8_iter v1.0.4
+   Compiling thiserror v1.0.68
+   Compiling icu_normalizer_data v1.5.0
+   Compiling futures-sink v0.3.31
+   Compiling futures-core v0.3.31
+   Compiling ryu v1.0.18
+   Compiling utf16_iter v1.0.5
+   Compiling itoa v1.0.11
+   Compiling serde_json v1.0.132
+   Compiling bit-vec v0.8.0
+   Compiling signal-hook v0.3.17
+   Compiling anstyle v1.0.10
+   Compiling utf8parse v0.2.2
+   Compiling futures-task v0.3.31
+   Compiling futures-io v0.3.31
+   Compiling bitflags v1.3.2
+   Compiling percent-encoding v2.3.1
+   Compiling futures-channel v0.3.31
+   Compiling pin-utils v0.1.0
+   Compiling anstyle-parse v0.2.6
+   Compiling colorchoice v1.0.3
+   Compiling bitflags v2.6.0
+   Compiling rustix v0.38.39
+   Compiling is_terminal_polyfill v1.70.1
+   Compiling dyn-clone v1.0.17
+   Compiling hashbrown v0.14.5
+   Compiling schemars v0.8.21
+   Compiling same-file v1.0.6
+   Compiling equivalent v1.0.1
+   Compiling anstyle-query v1.1.2
+   Compiling form_urlencoded v1.2.1
+   Compiling bit-set v0.8.0
+   Compiling anyhow v1.0.93
+   Compiling httparse v1.9.5
+   Compiling hashbrown v0.15.1
+   Compiling tracing-core v0.1.32
+   Compiling tokio v1.41.1
+   Compiling tower-service v0.3.3
+   Compiling bytes v1.8.0
+   Compiling tower-layer v0.3.3
+   Compiling anstream v0.6.18
+   Compiling walkdir v2.5.0
+   Compiling clap_lex v0.7.2
+   Compiling heck v0.5.0
+   Compiling strsim v0.11.1
+   Compiling unsafe-libyaml v0.2.11
+   Compiling linux-raw-sys v0.4.14
+   Compiling thread_local v1.1.8
+   Compiling unicode-segmentation v1.12.0
+   Compiling byteorder v1.5.0
+   Compiling unicode-width v0.1.14
+   Compiling libloading v0.8.5
+   Compiling termcolor v1.4.1
+   Compiling predicates-core v1.0.8
+   Compiling doc-comment v0.3.3
+   Compiling similar v2.6.0
+   Compiling lock_api v0.4.12
+   Compiling slab v0.4.9
+   Compiling aho-corasick v1.1.3
+   Compiling clap_builder v4.5.20
+   Compiling num-traits v0.2.19
+   Compiling fxhash v0.2.1
+   Compiling fuzzy-matcher v0.3.7
+   Compiling ansi_term v0.12.1
+   Compiling normalize-line-endings v0.3.0
+   Compiling difflib v0.4.0
+   Compiling codespan-reporting v0.11.1
+   Compiling assert_cmd v2.0.16
+   Compiling termtree v0.4.1
+   Compiling fastrand v2.2.0
+   Compiling crossbeam-epoch v0.9.18
+   Compiling newline-converter v0.3.0
+   Compiling quote v1.0.37
+   Compiling indexmap v2.6.0
+   Compiling predicates-tree v1.0.11
+   Compiling signal-hook-registry v1.4.2
+   Compiling mio v1.0.2
+   Compiling mio v0.8.11
+   Compiling atty v0.2.14
+   Compiling wait-timeout v0.2.0
+   Compiling syn v2.0.87
+   Compiling crossbeam-deque v0.8.5
+   Compiling parking_lot v0.12.3
+   Compiling dashmap v5.5.3
+   Compiling dashmap v6.1.0
+   Compiling tree-sitter v0.22.6
+   Compiling tree-sitter-java v0.21.0
+   Compiling tree-sitter-c v0.21.4
+   Compiling tree-sitter-lua v0.1.0
+   Compiling tree-sitter-html v0.20.4
+   Compiling tree-sitter-scala v0.22.1
+   Compiling tree-sitter-ruby v0.21.0
+   Compiling tree-sitter-c-sharp v0.21.3
+   Compiling tree-sitter-sequel v0.3.5
+   Compiling tree-sitter-kotlin v0.3.8
+   Compiling tree-sitter-typescript v0.21.2
+   Compiling tree-sitter-php v0.23.0
+   Compiling tree-sitter-swift v0.5.0
+   Compiling tree-sitter-haskell v0.21.0
+   Compiling tree-sitter-yaml v0.6.1
+   Compiling tree-sitter-css v0.21.1
+   Compiling tree-sitter-dart v0.0.4
+   Compiling signal-hook-mio v0.2.4
+   Compiling tree-sitter-bash v0.21.0
+   Compiling tree-sitter-json v0.21.0
+   Compiling tree-sitter-elixir v0.2.0
+   Compiling tree-sitter-cpp v0.22.3
+   Compiling tree-sitter-javascript v0.21.4
+   Compiling tree-sitter-python v0.21.0
+   Compiling tree-sitter-go v0.21.2
+   Compiling tree-sitter-rust v0.21.2
+   Compiling crossterm v0.25.0
+   Compiling float-cmp v0.9.0
+   Compiling regex-automata v0.4.8
+   Compiling inquire v0.7.5
+   Compiling tokio-util v0.7.12
+   Compiling crossterm v0.28.1
+   Compiling tempfile v3.14.0
+   Compiling synstructure v0.13.1
+   Compiling wasm-bindgen-backend v0.2.95
+   Compiling serde_derive_internals v0.29.1
+   Compiling regex v1.11.1
+   Compiling bstr v1.10.0
+   Compiling zerofrom-derive v0.1.4
+   Compiling yoke-derive v0.7.4
+   Compiling zerovec-derive v0.10.3
+   Compiling displaydoc v0.2.5
+   Compiling serde_derive v1.0.214
+   Compiling icu_provider_macros v1.5.0
+   Compiling thiserror-impl v1.0.68
+   Compiling futures-macro v0.3.31
+   Compiling pin-project-internal v1.1.7
+   Compiling serde_repr v0.1.19
+   Compiling tracing-attributes v0.1.27
+   Compiling tower-lsp-macros v0.9.0
+   Compiling async-trait v0.1.83
+   Compiling clap_derive v4.5.18
+   Compiling globset v0.4.15
+   Compiling auto_impl v1.2.0
+   Compiling predicates v3.1.2
+   Compiling ignore v0.4.23
+   Compiling schemars_derive v0.8.21
+   Compiling wasm-bindgen-macro-support v0.2.95
+   Compiling futures-util v0.3.31
+   Compiling zerofrom v0.1.4
+   Compiling pin-project v1.1.7
+   Compiling yoke v0.7.4
+   Compiling tracing v0.1.40
+   Compiling zerovec v0.10.4
+   Compiling clap v4.5.20
+   Compiling clap_complete v4.5.37
+   Compiling wasm-bindgen-macro v0.2.95
+   Compiling tinystr v0.7.6
+   Compiling icu_collections v1.5.0
+   Compiling tree-sitter-facade-sg v0.22.2
+   Compiling icu_locid v1.5.0
+   Compiling ast-grep-core v0.29.0 (/workspace/crates/core)
+   Compiling icu_provider v1.5.0
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/core/src/lib.rs:43:15
+   |
+43 |   pub fn root(&self) -> Node<D> {
+   |               ^^^^^     ^^^^^^^ the same lifetime is hidden here
+   |               |
+   |               the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+43 |   pub fn root(&self) -> Node<'_, D> {
+   |                              +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/core/src/matcher/pattern.rs:50:23
+   |
+50 |   pub fn fixed_string(&self) -> Cow<str> {
+   |                       ^^^^^     ^^^^^^^^ the same lifetime is hidden here
+   |                       |
+   |                       the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+50 |   pub fn fixed_string(&self) -> Cow<'_, str> {
+   |                                     +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/matcher/pattern.rs:159:23
+    |
+159 |   pub fn fixed_string(&self) -> Cow<str> {
+    |                       ^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |                       |
+    |                       the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+159 |   pub fn fixed_string(&self) -> Cow<'_, str> {
+    |                                     +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/matcher/pattern.rs:246:35
+    |
+246 |   fn single_matcher<D: Doc>(root: &Root<D>) -> Node<D> {
+    |                                   ^^^^^^^^     ^^^^^^^ the same lifetime is hidden here
+    |                                   |
+    |                                   the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+246 |   fn single_matcher<D: Doc>(root: &Root<D>) -> Node<'_, D> {
+    |                                                     +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/replacer/indent.rs:139:51
+    |
+139 | pub fn extract_with_deindent<C: Content>(content: &C, range: Range<usize>) -> DeindentedExtract<C> {
+    |                                                   ^^                          ^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                                                   |
+    |                                                   the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+139 | pub fn extract_with_deindent<C: Content>(content: &C, range: Range<usize>) -> DeindentedExtract<'_, C> {
+    |                                                                                                 +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/source.rs:145:22
+    |
+145 |   fn decode_str(src: &str) -> Cow<[Self::Underlying]>;
+    |                      ^^^^     ^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                      |
+    |                      the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+145 |   fn decode_str(src: &str) -> Cow<'_, [Self::Underlying]>;
+    |                                   +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/source.rs:148:26
+    |
+148 |   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<str>;
+    |                          ^^^^^^^^^^^^^^^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |                          |
+    |                          the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+148 |   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<'_, str>;
+    |                                                      +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/source.rs:186:22
+    |
+186 |   fn decode_str(src: &str) -> Cow<[Self::Underlying]> {
+    |                      ^^^^     ^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                      |
+    |                      the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+186 |   fn decode_str(src: &str) -> Cow<'_, [Self::Underlying]> {
+    |                                   +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/source.rs:189:26
+    |
+189 |   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<str> {
+    |                          ^^^^^^^^^^^^^^^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |                          |
+    |                          the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+189 |   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<'_, str> {
+    |                                                      +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/core/src/traversal.rs:75:36
+   |
+75 |   pub fn visit<D: Doc>(self, node: Node<D>) -> Visit<'_, D, A::Traversal<'_, D>, M>
+   |                                    ^^^^^^^           ^^                  ^^ the same lifetime is elided here
+   |                                    |                 |
+   |                                    |                 the same lifetime is elided here
+   |                                    the lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'_`
+   |
+75 |   pub fn visit<D: Doc>(self, node: Node<'_, D>) -> Visit<'_, D, A::Traversal<'_, D>, M>
+   |                                         +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/traversal.rs:135:29
+    |
+135 |   fn traverse<D: Doc>(node: Node<D>) -> Self::Traversal<'_, D>;
+    |                             ^^^^^^^                     ^^ the same lifetime is elided here
+    |                             |
+    |                             the lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'_`
+    |
+135 |   fn traverse<D: Doc>(node: Node<'_, D>) -> Self::Traversal<'_, D>;
+    |                                  +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/traversal.rs:141:29
+    |
+141 |   fn traverse<D: Doc>(node: Node<D>) -> Self::Traversal<'_, D> {
+    |                             ^^^^^^^                     ^^ the same lifetime is elided here
+    |                             |
+    |                             the lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'_`
+    |
+141 |   fn traverse<D: Doc>(node: Node<'_, D>) -> Self::Traversal<'_, D> {
+    |                                  +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/traversal.rs:148:29
+    |
+148 |   fn traverse<D: Doc>(node: Node<D>) -> Self::Traversal<'_, D> {
+    |                             ^^^^^^^                     ^^ the same lifetime is elided here
+    |                             |
+    |                             the lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'_`
+    |
+148 |   fn traverse<D: Doc>(node: Node<'_, D>) -> Self::Traversal<'_, D> {
+    |                                  +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/core/src/node.rs:52:15
+   |
+52 |   pub fn root(&self) -> Node<D> {
+   |               ^^^^^     ^^^^^^^ the same lifetime is hidden here
+   |               |
+   |               the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+52 |   pub fn root(&self) -> Node<'_, D> {
+   |                              +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/core/src/node.rs:165:15
+    |
+165 |   pub fn kind(&self) -> Cow<str> {
+    |               ^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |               |
+    |               the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+165 |   pub fn kind(&self) -> Cow<'_, str> {
+    |                             +++
+
+   Compiling icu_locid_transform v1.5.0
+warning: `ast-grep-core` (lib) generated 15 warnings (run `cargo fix --lib -p ast-grep-core` to apply 15 suggestions)
+   Compiling tower v0.4.13
+   Compiling futures v0.3.31
+   Compiling icu_properties v1.5.1
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling ast-grep-language v0.29.0 (/workspace/crates/language)
+   Compiling ast-grep-dynamic v0.29.0 (/workspace/crates/dynamic)
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/language/src/lib.rs:61:46
+   |
+61 | fn pre_process_pattern(expando: char, query: &str) -> std::borrow::Cow<str> {
+   |                                              ^^^^     ^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                                              |
+   |                                              the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+61 | fn pre_process_pattern(expando: char, query: &str) -> std::borrow::Cow<'_, str> {
+   |                                                                        +++
+
+warning: `ast-grep-language` (lib) generated 1 warning (run `cargo fix --lib -p ast-grep-language` to apply 1 suggestion)
+   Compiling icu_normalizer v1.5.0
+   Compiling idna_adapter v1.2.0
+   Compiling idna v1.0.3
+   Compiling url v2.5.3
+   Compiling ast-grep-config v0.29.0 (/workspace/crates/config)
+   Compiling lsp-types v0.94.1
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/combined.rs:41:32
+   |
+41 |   fn check_suppression<D: Doc>(&mut self, node: &Node<D>) -> MaySuppressed {
+   |                                ^^^^^^^^^                     ^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                                |
+   |                                the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+41 |   fn check_suppression<D: Doc>(&mut self, node: &Node<D>) -> MaySuppressed<'_> {
+   |                                                                           ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/rule/referent_rule.rs:24:22
+   |
+24 |   pub(crate) fn read(&self) -> RwLockReadGuard<HashMap<String, R>> {
+   |                      ^^^^^     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                      |
+   |                      the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+24 |   pub(crate) fn read(&self) -> RwLockReadGuard<'_, HashMap<String, R>> {
+   |                                                +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/rule/referent_rule.rs:27:12
+   |
+27 |   fn write(&self) -> RwLockWriteGuard<HashMap<String, R>> {
+   |            ^^^^^     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |            |
+   |            the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+27 |   fn write(&self) -> RwLockWriteGuard<'_, HashMap<String, R>> {
+   |                                       +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/rule/referent_rule.rs:68:16
+   |
+68 |   fn get_local(&self) -> RwLockReadGuard<HashMap<String, Rule<L>>> {
+   |                ^^^^^     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                |
+   |                the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+68 |   fn get_local(&self) -> RwLockReadGuard<'_, HashMap<String, Rule<L>>> {
+   |                                          +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/config/src/rule/referent_rule.rs:72:17
+   |
+72 |   fn get_global(&self) -> RwLockReadGuard<HashMap<String, RuleCore<L>>> {
+   |                 ^^^^^     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+72 |   fn get_global(&self) -> RwLockReadGuard<'_, HashMap<String, RuleCore<L>>> {
+   |                                           +++
+
+warning: `ast-grep-config` (lib) generated 5 warnings (run `cargo fix --lib -p ast-grep-config` to apply 5 suggestions)
+   Compiling tower-lsp v0.20.0
+   Compiling ast-grep-lsp v0.29.0 (/workspace/crates/lsp)
+   Compiling ast-grep v0.29.0 (/workspace/crates/cli)
+warning: struct `LabelJSON` is never constructed
+  --> crates/cli/src/print/json_print.rs:48:8
+   |
+48 | struct LabelJSON<'a> {
+   |        ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: creating a shared reference to mutable static
+  --> crates/cli/src/lang/lang_globs.rs:17:17
+   |
+17 |   debug_assert!(LANG_GLOBS.is_empty());
+   |                 ^^^^^^^^^^^^^^^^^^^^^ shared reference to mutable static
+   |
+   = note: shared references to mutable statics are dangerous; it's undefined behavior if the static is mutated or if a mutable reference is created for it while the shared reference lives
+   = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/static-mut-references.html>
+   = note: `#[warn(static_mut_refs)]` (part of `#[warn(rust_2024_compatibility)]`) on by default
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/cli/src/print/colored_print.rs:234:28
+    |
+234 | fn adjust_dir_separator(p: &Path) -> Cow<str> {
+    |                            ^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |                            |
+    |                            the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+234 | fn adjust_dir_separator(p: &Path) -> Cow<'_, str> {
+    |                                          +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/cli/src/verify/test_case.rs:25:22
+   |
+25 |   pub fn verify_rule(&self, rule_config: &RuleConfig<SgLang>) -> CaseResult {
+   |                      ^^^^^ the lifetime is elided here           ^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+25 |   pub fn verify_rule(&self, rule_config: &RuleConfig<SgLang>) -> CaseResult<'_> {
+   |                                                                            ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/cli/src/verify/test_case.rs:31:5
+   |
+31 |     &self,
+   |     ^^^^^ the lifetime is elided here
+...
+34 |   ) -> CaseResult {
+   |        ^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+34 |   ) -> CaseResult<'_> {
+   |                  ++++
+
+warning: creating a shared reference to mutable static
+   --> crates/cli/src/lang/lang_globs.rs:156:18
+    |
+156 |       assert_eq!(LANG_GLOBS.len(), 2);
+    |                  ^^^^^^^^^^^^^^^^ shared reference to mutable static
+    |
+    = note: shared references to mutable statics are dangerous; it's undefined behavior if the static is mutated or if a mutable reference is created for it while the shared reference lives
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/static-mut-references.html>
+
+warning: `ast-grep` (lib) generated 5 warnings (run `cargo fix --lib -p ast-grep` to apply 3 suggestions)
+warning: `ast-grep` (lib test) generated 6 warnings (5 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 29.13s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/ast_grep-a3c93fdc1f0e12ef)
+
+running 92 tests
+test lang::custom_lang::test::test_custom_lang ... ok
+test lsp::test::test_lsp_start ... ignored, test lsp later
+test lang::lang_globs::test::test_parse_globs ... ok
+test lang::injection::test::test_bad_inject ... ok
+test lang::test::test_sg_lang_size ... ok
+test lang::injection::test::test_deserialize ... ok
+test print::colored_print::test::test_empty_printer ... ok
+test lang::injection::test::test_good_injection ... ok
+test print::cloud_print::test::test_hint_output ... ok
+test print::cloud_print::test::test_info_output ... ok
+test print::cloud_print::test::test_warning_output ... ok
+test print::cloud_print::test::test_error_output ... ok
+test lang::lang_globs::test::test_invalid_language ... ok
+test print::cloud_print::test::test_no_match_output ... ok
+test print::interactive_print::test::test_rewrite_with_empty_lines ... ok
+test new::test::test_create_util ... ok
+test lang::lang_globs::test::test_merge_types ... ok
+test new::test::test_create_new ... ok
+test print::colored_print::test::test_overlap_print ... ok
+test print::interactive_print::test::test_apply_rewrite ... ok
+test print::interactive_print::test::test_rewrite_nested ... ok
+test lang::lang_globs::test::test_register ... ok
+test print::json_print::test::test_transform ... ok
+test print::json_print::test::test_empty_printer ... ok
+test print::json_print::test::test_multi_matched_json ... ok
+test print::colored_print::test::test_non_overlap_print ... ok
+test scan::test::test_scan_with_inline_rules_error ... ok
+test print::colored_print::test::test_print_rules ... ok
+test print::json_print::test::test_single_matched_json ... ok
+test print::colored_print::test::test_print_diffs ... ok
+test print::colored_print::test::test_print_matches ... ok
+test print::colored_print::test::test_print_matches_without_heading ... ok
+test print::json_print::test::test_rule_json ... ok
+test utils::debug_query::test::test_dump_node ... ok
+test print::json_print::test::test_streaming ... ok
+test utils::debug_query::test::test_missing_node ... ok
+test test_cli::test_no_arg_run ... ok
+test test_cli::test_default_subcommand ... ok
+test utils::error_context::test::test_bare_anyhow ... ok
+test utils::error_context::test::test_display_error ... ok
+test utils::error_context::test::test_display_warning ... ok
+test utils::inspect::test::test_tracing ... ok
+test print::colored_print::test::test_print_rule_diffs ... ok
+test print::json_print::test::test_invariant ... ok
+test utils::test::test_html_embedding_lang_not_found ... ok
+test verify::find_file::test::test_read_multi ... ok
+test print::json_print::test::test_replace_json ... ok
+test verify::find_file::test::test_read_snapshot ... ok
+test utils::args::test::test_build_globs ... ok
+test verify::case_result::test::test_snapshot ... ok
+test utils::inspect::test::test_tracing_nothing ... ok
+test test_cli::test_wrong_usage ... ok
+test verify::reporter::test::test_invalid_case_detail ... ok
+test utils::test::test_html_embedding ... ok
+test test_cli::test_version_and_help ... ok
+test verify::reporter::test::test_many_cases ... ok
+test verify::reporter::test::test_report_summary ... ok
+test verify::snapshot::tests::test_not_found ... ok
+test verify::reporter::test::test_valid_case_detail ... ok
+test verify::snapshot::tests::test_secondary_label ... ok
+test test_cli::test_test ... ok
+test verify::snapshot::tests::test_generate ... ok
+test print::colored_print::test::test_before_after ... ok
+test verify::test::test_no_such_rule ... ok
+test verify::test_case::tests::test_invalid ... ok
+test test_cli::test_shell ... ok
+test verify::test::test_verify_transform ... ok
+test verify::test::test_missing ... ok
+test verify::find_file::test::test_read_test ... ok
+test verify::test::test_noisy ... ok
+test test_cli::test_new ... ok
+test verify::test::test_run_verify_error ... ok
+test verify::test::test_validated ... ok
+test verify::test::test_reported ... ok
+test verify::test_case::tests::test_verify_snapshot_without_existing_2 ... ok
+test verify::test_case::tests::test_verify_snapshot_with_existing ... ok
+test verify::test_case::tests::test_verify_rule ... ok
+test verify::test_case::tests::test_verify_snapshot_without_existing ... ok
+test verify::snapshot::tests::test_snapshot_action ... ok
+test verify::test_case::tests::test_verify_snapshot_with_mismatch ... ok
+test completions::test::test_generate_command ... ok
+test verify::test_case::tests::test_unmatching_id - should panic ... ok
+test lang::lang_globs::test::test_merge_with_globs ... ok
+Cargo.toml +2
+test test_cli::test_scan ... ok
+test print::interactive_print::test::test_open_editor ... ok
+test test_cli::test_run ... ok
+test run::test::test_run_with_strictness ... ok
+test run::test::test_run_with_specific_lang ... ok
+test run::test::test_run_with_pattern ... ok
+test scan::test::test_scan_with_inline_rules ... ok
+test scan::test::test_run_with_config ... ok
+test scan::test::test_scan_with_inline_rules_diff ... ok
+
+test result: ok. 91 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.55s
+
+     Running unittests src/bin/ast-grep.rs (/workspace/target/debug/deps/ast_grep-bb0443f08151dc9e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/workspace/target/debug/deps/sg-2a4557ae2b784df1)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/run_test.rs (/workspace/target/debug/deps/run_test-3849554c53e2b855)
+
+running 4 tests
+test test_simple_specific_lang ... ok
+test test_simple_infer_lang ... ok
+test test_js_in_html ... ok
+test test_inspect ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/scan_test.rs (/workspace/target/debug/deps/scan_test-9078867c22af9d2e)
+
+running 8 tests
+test test_sg_scan_py_empty_text ... ok
+test test_sg_scan_inline_rules ... ok
+test test_sg_scan_html ... ok
+test test_sg_scan_multiple_rules_in_one_file ... ok
+test test_scan_unused_suppression ... ok
+test test_sg_rule_off ... ok
+test test_severity_override ... ok
+test test_sg_scan ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.65s
+
+     Running tests/verify_test.rs (/workspace/target/debug/deps/verify_test-7d6ab368b3e8930d)
+
+running 3 tests
+Running 1 tests
+
+----------- Case Details -----------
+PASS test-rule  ..
+
+test result: ok. 1 passed; 0 failed;
+test test_sg_test ... ok
+Running 1 tests
+Running 0 tests
+
+----------- Case Details -----------
+
+test result: ok. 0 passed; 0 failed;
+
+----------- Case Details -----------
+[Noisy] Expect test-rule to report no issue, but some issues found in:
+
+  Some(123)
+
+[Missing] Expect rule test-rule to report issues, but none found in:
+
+  None
+
+FAIL test-rule  NM
+
+test test_sg_test_error ... ok
+Running 1 tests
+
+----------- Case Details -----------
+[Noisy] Expect test-rule to report no issue, but some issues found in:
+
+  Some(123)
+
+[Missing] Expect rule test-rule to report issues, but none found in:
+
+  None
+
+FAIL test-rule  NM
+
+test test_sg_test_filter ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+   Doc-tests ast_grep
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../../
++ git reset --hard ccdc53168d6fbcff91e9ac095a3ef49eb847a410
+HEAD is now at ccdc5316 fix(deps): update dependency @swc/core to v1.9.1
++ git clean -fd
+Removing .cargo/config
+Removing .cargo/lts-repo-at-cadae21ca1/

@@ -1,0 +1,219 @@
+diff --git /dev/null b/examples/error_extensions.rs
+new file mode 100644
+--- /dev/null
++++ b/examples/error_extensions.rs
+@@ -0,0 +1,108 @@
++use actix_rt;
++use actix_web::{guard, web, App, HttpResponse, HttpServer};
++use async_graphql::http::{graphiql_source, playground_source, GQLRequest, GQLResponse};
++use async_graphql::*;
++use serde_json::json;
++
++#[derive(Debug)]
++pub enum MyError {
++    NotFound,
++    ServerError(String),
++    ErrorWithoutExtensions,
++}
++
++// Let's implement a mapping from our MyError to async_graphql::Error (anyhow::Error).
++// But instead of mapping to async_graphql::Error directly we map to async_graphql::ExtendedError,
++// which gives us the opportunity to provide custom extensions to our errors.
++// Note: Values which can't get serialized to JSON-Objects simply get ignored.
++impl From<MyError> for Error {
++    fn from(my_error: MyError) -> Error {
++        match my_error {
++            MyError::NotFound => {
++                let msg = "Could not find ressource".to_owned();
++                let extensions = json!({"code": "NOT_FOUND"});
++                ExtendedError(msg, extensions).into()
++            }
++            MyError::ServerError(reason) => {
++                ExtendedError("ServerError".to_owned(), json!({ "reason": reason })).into()
++            }
++
++            MyError::ErrorWithoutExtensions => ExtendedError(
++                "No Extensions".to_owned(),
++                json!("This will be ignored since it does not represent an object."),
++            )
++            .into(),
++        }
++    }
++}
++
++fn get_my_error() -> std::result::Result<String, MyError> {
++    Err(MyError::ServerError("The database is locked".to_owned()))
++}
++
++struct QueryRoot {}
++
++#[Object]
++impl QueryRoot {
++    #[field]
++    async fn do_not_find(&self) -> Result<i32> {
++        Err(MyError::NotFound)?
++    }
++
++    #[field]
++    async fn fail(&self) -> Result<String> {
++        Ok(get_my_error()?)
++    }
++
++    #[field]
++    async fn without_extensions(&self) -> Result<String> {
++        Err(MyError::ErrorWithoutExtensions)?
++    }
++
++    // Using the ResultExt trait, we can attach extensions on the fly capturing the execution
++    // environment. This method works on foreign types as well. The trait is implemented for all
++    // Results where the error variant implements Display.
++    #[field]
++    async fn parse_value(&self, val: String) -> Result<i32> {
++        val.parse().extend_err(|err| {
++            json!({ "description": format!("Could not parse value {}: {}", val, err) })
++        })
++    }
++}
++
++async fn index(
++    s: web::Data<Schema<QueryRoot, EmptyMutation, EmptySubscription>>,
++    req: web::Json<GQLRequest>,
++) -> web::Json<GQLResponse> {
++    web::Json(req.into_inner().execute(&s).await)
++}
++
++async fn gql_playgound() -> HttpResponse {
++    HttpResponse::Ok()
++        .content_type("text/html; charset=utf-8")
++        .body(playground_source("/", None))
++}
++
++async fn gql_graphiql() -> HttpResponse {
++    HttpResponse::Ok()
++        .content_type("text/html; charset=utf-8")
++        .body(graphiql_source("/"))
++}
++
++#[actix_rt::main]
++async fn main() -> std::io::Result<()> {
++    HttpServer::new(move || {
++        App::new()
++            .data(Schema::new(QueryRoot {}, EmptyMutation, EmptySubscription))
++            .service(web::resource("/").guard(guard::Post()).to(index))
++            .service(web::resource("/").guard(guard::Get()).to(gql_playgound))
++            .service(
++                web::resource("/graphiql")
++                    .guard(guard::Get())
++                    .to(gql_graphiql),
++            )
++    })
++    .bind("127.0.0.1:8000")?
++    .run()
++    .await
++}
+diff --git a/src/error.rs b/src/error.rs
+--- a/src/error.rs
++++ b/src/error.rs
+@@ -220,3 +220,39 @@ impl Display for RuleErrors {
+         Ok(())
+     }
+ }
++
++/// A wrapped Error with extensions.
++#[derive(Debug, Error)]
++pub struct ExtendedError(pub String, pub serde_json::Value);
++
++impl Display for ExtendedError {
++    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
++        write!(f, "{}", self.0)
++    }
++}
++
++#[allow(missing_docs)]
++pub trait ResultExt<T, E>
++where
++    Self: Sized,
++    E: std::fmt::Display + Sized,
++{
++    fn extend_err<CB>(self, cb: CB) -> crate::Result<T>
++    where
++        CB: FnOnce(&E) -> serde_json::Value;
++}
++
++impl<T, E> ResultExt<T, E> for std::result::Result<T, E>
++where
++    E: std::fmt::Display + Sized,
++{
++    fn extend_err<C>(self, cb: C) -> crate::Result<T>
++    where
++        C: FnOnce(&E) -> serde_json::Value,
++    {
++        match self {
++            Err(e) => Err(anyhow::anyhow!(ExtendedError(e.to_string(), cb(&e)))),
++            Ok(value) => Ok(value),
++        }
++    }
++}
+diff --git a/src/http/mod.rs b/src/http/mod.rs
+--- a/src/http/mod.rs
++++ b/src/http/mod.rs
+@@ -6,7 +6,7 @@ mod playground_source;
+ pub use graphiql_source::graphiql_source;
+ pub use playground_source::playground_source;
+ 
+-use crate::error::{RuleError, RuleErrors};
++use crate::error::{ExtendedError, RuleError, RuleErrors};
+ use crate::query::PreparedQuery;
+ use crate::{ObjectType, PositionError, QueryResult, Result, Schema, SubscriptionType, Variables};
+ use graphql_parser::Pos;
+diff --git a/src/http/mod.rs b/src/http/mod.rs
+--- a/src/http/mod.rs
++++ b/src/http/mod.rs
+@@ -129,9 +129,17 @@ impl<'a> Serialize for GQLError<'a> {
+             seq.end()
+         } else {
+             let mut seq = serializer.serialize_seq(None)?;
+-            seq.serialize_element(&serde_json::json!({
+-                "message": self.0.to_string(),
+-            }))?;
++            if let Some(extensions) = get_error_extensions(self.0) {
++                seq.serialize_element(&serde_json::json!({
++                    "message": self.0.to_string(),
++                    "extensions": extensions
++                }))?;
++            } else {
++                seq.serialize_element(&serde_json::json!({
++                    "message": self.0.to_string(),
++                }))?;
++            }
++
+             seq.end()
+         }
+     }
+diff --git a/src/http/mod.rs b/src/http/mod.rs
+--- a/src/http/mod.rs
++++ b/src/http/mod.rs
+@@ -164,6 +172,9 @@ impl<'a> Serialize for GQLPositionError<'a> {
+             "locations",
+             std::slice::from_ref(&GQLErrorPos(&self.0.position)),
+         )?;
++        if let Some(extensions) = get_error_extensions(&self.0.inner) {
++            map.serialize_entry("extensions", &extensions)?;
++        }
+         map.end()
+     }
+ }
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -99,7 +99,9 @@ pub mod http;
+ 
+ pub use base::{Scalar, Type};
+ pub use context::{Context, QueryPathSegment, Variables};
+-pub use error::{ErrorWithPosition, PositionError, QueryError, QueryParseError};
++pub use error::{
++    ErrorWithPosition, ExtendedError, PositionError, QueryError, QueryParseError, ResultExt,
++};
+ pub use graphql_parser::query::Value;
+ pub use query::{PreparedQuery, QueryBuilder, QueryResult};
+ pub use registry::CacheControl;

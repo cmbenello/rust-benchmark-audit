@@ -1,0 +1,261 @@
+diff --git a/crates/cli/src/config.rs b/crates/cli/src/config.rs
+--- a/crates/cli/src/config.rs
++++ b/crates/cli/src/config.rs
+@@ -90,9 +90,9 @@ impl ProjectConfig {
+     read_directory_yaml(self, global_rules, rule_overwrite)
+   }
+   // do not report error if no sgconfig.yml is found
+-  pub fn setup(config_path: Option<PathBuf>) -> Result<Option<Self>> {
++  pub fn setup(config_path: Option<PathBuf>) -> Result<Result<Self>> {
+     let Some((project_dir, mut sg_config)) = Self::discover_project(config_path)? else {
+-      return Ok(None);
++      return Ok(Err(anyhow::anyhow!(EC::ProjectNotExist)));
+     };
+     let config = ProjectConfig {
+       project_dir,
+diff --git a/crates/cli/src/lib.rs b/crates/cli/src/lib.rs
+--- a/crates/cli/src/lib.rs
++++ b/crates/cli/src/lib.rs
+@@ -39,6 +41,9 @@ Search and Rewrite code at large scale using AST pattern.
+ struct App {
+   #[clap(subcommand)]
+   command: Commands,
++  /// Path to ast-grep root config, default is sgconfig.yml.
++  #[clap(short, long, global = true, value_name = "CONFIG_FILE")]
++  config: Option<PathBuf>,
+ }
+ 
+ #[derive(Subcommand)]
+diff --git a/crates/cli/src/lsp.rs b/crates/cli/src/lsp.rs
+--- a/crates/cli/src/lsp.rs
++++ b/crates/cli/src/lsp.rs
+@@ -3,21 +3,14 @@ use crate::utils::ErrorContext as EC;
+ use anyhow::{Context, Result};
+ use ast_grep_lsp::{Backend, LspService, Server};
+ use clap::Args;
+-use std::path::PathBuf;
+ 
+ #[derive(Args)]
+-pub struct LspArg {
+-  /// Path to ast-grep root config, default is sgconfig.yml.
+-  #[clap(short, long, value_name = "CONFIG_FILE")]
+-  config: Option<PathBuf>,
+-}
++pub struct LspArg {}
+ 
+-async fn run_language_server_impl(arg: LspArg) -> Result<()> {
++async fn run_language_server_impl(_arg: LspArg, project: Result<ProjectConfig>) -> Result<()> {
+   // env_logger::init();
+   // TODO: move this error to client
+-  let Some(project_config) = ProjectConfig::setup(arg.config.clone())? else {
+-    return Err(anyhow::anyhow!(EC::ProjectNotExist));
+-  };
++  let project_config = project?;
+   let stdin = tokio::io::stdin();
+   let stdout = tokio::io::stdout();
+   let config_result = project_config.find_rules(Default::default());
+diff --git a/crates/cli/src/new.rs b/crates/cli/src/new.rs
+--- a/crates/cli/src/new.rs
++++ b/crates/cli/src/new.rs
+@@ -29,10 +29,6 @@ pub struct NewArg {
+   /// Please see the command description for the what arguments are required.
+   #[arg(short, long, global = true)]
+   yes: bool,
+-
+-  /// Path to ast-grep root config, default is sgconfig.yml.
+-  #[clap(short, long, global = true, value_name = "CONFIG_FILE")]
+-  config: Option<PathBuf>,
+ }
+ 
+ fn create_dir(project_dir: &Path, dir: &str) -> Result<PathBuf> {
+diff --git a/crates/cli/src/new.rs b/crates/cli/src/new.rs
+--- a/crates/cli/src/new.rs
++++ b/crates/cli/src/new.rs
+@@ -148,18 +144,17 @@ impl Display for Entity {
+   }
+ }
+ 
+-pub fn run_create_new(mut arg: NewArg) -> Result<()> {
+-  let project_config = ProjectConfig::setup(arg.config.clone())?;
++pub fn run_create_new(mut arg: NewArg, project: Result<ProjectConfig>) -> Result<()> {
+   if let Some(entity) = arg.entity.take() {
+-    run_create_entity(entity, arg, project_config)
++    run_create_entity(entity, arg, project)
+   } else {
+-    ask_entity_type(arg, project_config)
++    ask_entity_type(arg, project)
+   }
+ }
+ 
+-fn run_create_entity(entity: Entity, arg: NewArg, project: Option<ProjectConfig>) -> Result<()> {
++fn run_create_entity(entity: Entity, arg: NewArg, project: Result<ProjectConfig>) -> Result<()> {
+   // check if we are under a project dir
+-  if let Some(found) = project {
++  if let Ok(found) = project {
+     return do_create_entity(entity, found, arg);
+   }
+   // check if we creating a project
+diff --git a/crates/cli/src/new.rs b/crates/cli/src/new.rs
+--- a/crates/cli/src/new.rs
++++ b/crates/cli/src/new.rs
+@@ -181,9 +176,9 @@ fn do_create_entity(entity: Entity, found: ProjectConfig, arg: NewArg) -> Result
+   }
+ }
+ 
+-fn ask_entity_type(arg: NewArg, project: Option<ProjectConfig>) -> Result<()> {
++fn ask_entity_type(arg: NewArg, project: Result<ProjectConfig>) -> Result<()> {
+   // 1. check if we are under a sgconfig.yml
+-  if let Some(found) = project {
++  if let Ok(found) = project {
+     // 2. ask users what to create if yes
+     let entity = arg.ask_entity_type()?;
+     do_create_entity(entity, found, arg)
+diff --git a/crates/cli/src/run.rs b/crates/cli/src/run.rs
+--- a/crates/cli/src/run.rs
++++ b/crates/cli/src/run.rs
+@@ -7,7 +7,6 @@ use ast_grep_language::Language;
+ use clap::{builder::PossibleValue, Parser, ValueEnum};
+ use ignore::WalkParallel;
+ 
+-use crate::config::ProjectConfig;
+ use crate::lang::SgLang;
+ use crate::print::{ColoredPrinter, Diff, Heading, InteractivePrinter, JSONPrinter, Printer};
+ use crate::utils::ErrorContext as EC;
+diff --git a/crates/cli/src/run.rs b/crates/cli/src/run.rs
+--- a/crates/cli/src/run.rs
++++ b/crates/cli/src/run.rs
+@@ -15,18 +14,6 @@ use crate::utils::{filter_file_pattern, ContextArgs, InputArgs, MatchUnit, Outpu
+ use crate::utils::{DebugFormat, FileTrace, RunTrace};
+ use crate::utils::{Items, PathWorker, StdInWorker, Worker};
+ 
+-// NOTE: have to register custom lang before clap read arg
+-// RunArg has a field of SgLang
+-pub fn register_custom_language_if_is_run(args: &[String]) -> Result<()> {
+-  let Some(arg) = args.get(1) else {
+-    return Ok(());
+-  };
+-  if arg.starts_with('-') || arg == "run" {
+-    ProjectConfig::setup(None)?;
+-  }
+-  Ok(())
+-}
+-
+ fn lang_help() -> String {
+   format!(
+     "The language of the pattern. Supported languages are:\n{:?}",
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -25,10 +25,6 @@ type AstGrep = ast_grep_core::AstGrep<StrDoc<SgLang>>;
+ 
+ #[derive(Args)]
+ pub struct ScanArg {
+-  /// Path to ast-grep root config, default is sgconfig.yml.
+-  #[clap(short, long, value_name = "CONFIG_FILE")]
+-  config: Option<PathBuf>,
+-
+   /// Scan the codebase with the single rule located at the path RULE_FILE.
+   ///
+   /// It is useful to run single rule without project setup or sgconfig.yml.
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -67,15 +63,15 @@ pub struct ScanArg {
+   context: ContextArgs,
+ }
+ 
+-pub fn run_with_config(arg: ScanArg) -> Result<()> {
++pub fn run_with_config(arg: ScanArg, project: Result<ProjectConfig>) -> Result<()> {
+   let context = arg.context.get();
+   if let Some(_format) = &arg.format {
+     let printer = CloudPrinter::stdout();
+-    return run_scan(arg, printer);
++    return run_scan(arg, printer, project);
+   }
+   if let Some(json) = arg.output.json {
+     let printer = JSONPrinter::stdout(json);
+-    return run_scan(arg, printer);
++    return run_scan(arg, printer, project);
+   }
+   let printer = ColoredPrinter::stdout(arg.output.color)
+     .style(arg.report_style)
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -84,20 +80,23 @@ pub fn run_with_config(arg: ScanArg) -> Result<()> {
+   if interactive {
+     let from_stdin = arg.input.stdin;
+     let printer = InteractivePrinter::new(printer, arg.output.update_all, from_stdin)?;
+-    run_scan(arg, printer)
++    run_scan(arg, printer, project)
+   } else {
+-    run_scan(arg, printer)
++    run_scan(arg, printer, project)
+   }
+ }
+ 
+-fn run_scan<P: Printer + 'static>(arg: ScanArg, printer: P) -> Result<()> {
+-  let project_config = ProjectConfig::setup(arg.config.clone())?;
++fn run_scan<P: Printer + 'static>(
++  arg: ScanArg,
++  printer: P,
++  project: Result<ProjectConfig>,
++) -> Result<()> {
+   if arg.input.stdin {
+     let worker = ScanWithRule::try_new(arg, printer)?;
+     // TODO: report a soft error if rules have different languages
+     worker.run_std_in()
+   } else {
+-    let worker = ScanWithConfig::try_new(arg, printer, project_config)?;
++    let worker = ScanWithConfig::try_new(arg, printer, project)?;
+     worker.run_path()
+   }
+ }
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -109,7 +108,7 @@ struct ScanWithConfig<Printer> {
+   trace: ScanTrace,
+ }
+ impl<P: Printer> ScanWithConfig<P> {
+-  fn try_new(arg: ScanArg, printer: P, project: Option<ProjectConfig>) -> Result<Self> {
++  fn try_new(arg: ScanArg, printer: P, project: Result<ProjectConfig>) -> Result<Self> {
+     let mut rule_trace = RuleTrace::default();
+     let configs = if let Some(path) = &arg.rule {
+       let rules = read_rule_file(path, None)?;
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -119,7 +118,8 @@ impl<P: Printer> ScanWithConfig<P> {
+         .with_context(|| EC::ParseRule("INLINE_RULES".into()))?;
+       RuleCollection::try_new(rules).context(EC::GlobPattern)?
+     } else {
+-      let project_config = project.ok_or_else(|| anyhow::anyhow!(EC::ProjectNotExist))?;
++      // NOTE: only query project here since -r does not need project
++      let project_config = project?;
+       let overwrite = RuleOverwrite::new(&arg.overwrite)?;
+       let (configs, r_stats) = project_config.find_rules(overwrite)?;
+       rule_trace = r_stats;
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -356,7 +356,6 @@ rule:
+ 
+   fn default_scan_arg() -> ScanArg {
+     ScanArg {
+-      config: None,
+       rule: None,
+       inline_rules: None,
+       report_style: ReportStyle::Rich,
+diff --git a/crates/cli/src/scan.rs b/crates/cli/src/scan.rs
+--- a/crates/cli/src/scan.rs
++++ b/crates/cli/src/scan.rs
+@@ -439,7 +436,7 @@ rule:
+       inline_rules: Some(inline_rules),
+       ..default_scan_arg()
+     };
+-    let err = run_with_config(arg).expect_err("should error");
++    let err = run_with_config(arg, Err(anyhow::anyhow!("not found"))).expect_err("should error");
+     assert!(err.is::<EC>());
+     assert_eq!(err.to_string(), "Cannot parse rule INLINE_RULES");
+   }

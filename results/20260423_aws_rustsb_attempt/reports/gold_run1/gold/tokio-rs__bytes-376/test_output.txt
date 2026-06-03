@@ -1,0 +1,341 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/test_bytes.rs...
+Applied patch tests/test_bytes.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading crates ...
+  Downloaded loom v0.2.15 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded serde_test v1.0.105 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded serde v1.0.105 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded cfg-if v0.1.10 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded scoped-tls v0.1.2 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded generator v0.6.20 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded rustc_version v0.2.3 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded cc v1.0.50 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded log v0.4.8 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded semver v0.9.0 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded libc v0.2.68 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+  Downloaded semver-parser v0.7.0 (registry `/testbed/.cargo/lts-repo-at-43b4b4d740`)
+   Compiling semver-parser v0.7.0
+   Compiling serde v1.0.105
+   Compiling log v0.4.8
+   Compiling cc v1.0.50
+   Compiling libc v0.2.68
+   Compiling cfg-if v0.1.10
+   Compiling scoped-tls v0.1.2
+   Compiling semver v0.9.0
+   Compiling rustc_version v0.2.3
+   Compiling generator v0.6.20
+   Compiling loom v0.2.15
+   Compiling serde_test v1.0.105
+   Compiling bytes v0.5.4 (/workspace)
+    Finished test [unoptimized + debuginfo] target(s) in 10.67s
+     Running target/debug/deps/bytes-a4ca32ddd2f62f3a
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_buf-da0a0a07b95dd359
+
+running 7 tests
+test test_bufs_vec ... ok
+test test_deref_buf_forwards ... ok
+test test_fresh_cursor_vec ... ok
+test test_get_u16 ... ok
+test test_get_u8 ... ok
+test test_get_u16_buffer_underflow ... ok
+test test_vec_deque ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_buf_mut-5d10179fb0b1d746
+
+running 8 tests
+test test_bufs_vec_mut ... ok
+test test_clone ... ok
+test test_deref_bufmut_forwards ... ok
+test test_mut_slice ... ok
+test test_put_u16 ... ok
+test test_put_u8 ... ok
+test test_vec_advance_mut ... ok
+test test_vec_as_mut_buf ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_bytes-4ec88ca780e71326
+
+running 64 tests
+test advance_bytes_mut ... ok
+test advance_static ... ok
+test advance_past_len ... ok
+test advance_vec ... ok
+test bytes_buf_mut_advance ... ok
+test bytes_mut_unsplit_arc_different ... ok
+test bytes_mut_unsplit_arc_non_contiguous ... ok
+test bytes_mut_unsplit_basic ... ok
+test bytes_mut_unsplit_empty_other ... ok
+test bytes_mut_unsplit_empty_self ... ok
+test bytes_mut_unsplit_two_split_offs ... ok
+test bytes_with_capacity_but_empty ... ok
+test bytes_reserve_overflow ... ok
+test empty_slice_ref_not_an_empty_subset ... ok
+test extend_from_slice_mut ... ok
+test extend_mut ... ok
+test extend_mut_without_size_hint ... ok
+test fmt ... ok
+test fmt_write ... ok
+test fns_defined_for_bytes_mut ... ok
+test freeze_after_advance ... ok
+test freeze_after_advance_arc ... ok
+test freeze_after_split_off ... ok
+test freeze_after_split_to ... ok
+test freeze_after_truncate ... ok
+test freeze_after_truncate_arc ... ok
+test freeze_clone_shared ... ok
+test freeze_clone_unique ... ok
+test from_iter_no_size_hint ... ok
+test from_slice ... ok
+test from_static ... ok
+test index ... ok
+test len ... ok
+test partial_eq_bytesmut ... ok
+test reserve_convert ... ok
+test reserve_growth ... ok
+test reserve_in_arc_nonunique_does_not_overallocate ... ok
+test reserve_allocates_at_least_original_capacity ... ok
+test reserve_in_arc_unique_does_not_overallocate ... ok
+test reserve_in_arc_unique_doubles ... ok
+test reserve_vec_recycling ... ok
+test slice ... ok
+test slice_oob_1 ... ok
+test slice_oob_2 ... ok
+test slice_ref_catches_not_a_subset ... ok
+test slice_ref_empty ... ok
+test slice_ref_empty_subslice ... ok
+test slice_ref_not_an_empty_subset ... ok
+test slice_ref_works ... ok
+test split_off ... ok
+test split_off_oob ... ok
+test split_off_to_at_gt_len ... ok
+test split_off_uninitialized ... ok
+test split_to_1 ... ok
+test split_to_2 ... ok
+test split_to_oob ... ok
+test split_to_oob_mut ... ok
+test split_to_uninitialized ... ok
+test test_bounds ... ok
+test test_layout ... ok
+test split_off_to_loop ... ok
+test truncate ... ok
+test reserve_max_original_capacity_value ... ok
+test stress ... ok
+
+test result: ok. 64 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_bytes_odd_alloc-0b6673932df11521
+
+running 3 tests
+test sanity_check_odd_allocator ... ok
+test test_bytes_clone_drop ... ok
+test test_bytes_from_vec_drop ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_bytes_vec_alloc-c645eafe419f99f8
+
+running 3 tests
+test test_bytes_advance ... ok
+test test_bytes_truncate ... ok
+test test_bytes_truncate_and_advance ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_chain-baed3f6d5e57edc1
+
+running 4 tests
+test collect_two_bufs ... ok
+test iterating_two_bufs ... ok
+test vectored_read ... ok
+test writing_chained ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_debug-54d87c7a0462a6e2
+
+running 1 test
+test fmt ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_iter-1924ec967f91959c
+
+running 2 tests
+test empty_iter_len ... ok
+test iter_len ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_reader-c5c70b30ccbbb806
+
+running 2 tests
+test buf_read ... ok
+test read ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_serde-429207155fd2274f
+
+running 2 tests
+test test_ser_de ... ok
+test test_ser_de_empty ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/test_take-3c3bd312aa8dee68
+
+running 1 test
+test long_take ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests bytes
+
+running 128 tests
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::has_remaining (line 206) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i128 (line 596) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::advance (line 175) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i16_le (line 376) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_int (line 676) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u64 (line 476) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i8 (line 293) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u32_le (line 416) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f64 (line 759) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i16 (line 356) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i64 (line 516) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::bytes (line 108) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::remaining (line 80) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f32 (line 717) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u128_le (line 576) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::copy_to_slice (line 228) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f64_le (line 780) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf (line 57) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_uint_le (line 656) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u128 (line 556) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u16 (line 316) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u64_le (line 496) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u16_le (line 336) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i32 (line 436) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u32 (line 396) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_int_le (line 696) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_u8 (line 270) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_f32_le (line 738) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i64_le (line 536) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i128_le (line 616) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_i32_le (line 456) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::get_uint (line 636) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::advance_mut (line 66) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i128 (line 655) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i128_le (line 677) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i16 (line 391) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f64_le (line 857) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i32 (line 479) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i64_le (line 589) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i8 (line 324) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_int_le (line 765) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u16_le (line 369) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::bytes_mut (line 135) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i16_le (line 413) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put (line 214) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u16 (line 347) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i64 (line 567) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_slice (line 256) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f32 (line 788) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut (line 19) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f32_le (line 811) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::has_remaining_mut (line 108) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u32_le (line 457) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u32 (line 435) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_f64 (line 834) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u128 (line 611) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_i32_le (line 501) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u64 (line 523) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_int (line 743) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u128_le (line 633) ... ok
+test src/buf/buf_impl.rs - buf::buf_impl::Buf::to_bytes (line 798) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u64_le (line 545) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_u8 (line 301) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_uint (line 699) ... ok
+test src/buf/ext/chain.rs - buf::ext::chain::Chain<T, U>::first_ref (line 54) ... ok
+test src/buf/ext/take.rs - buf::ext::take::Take<T>::get_ref (line 52) ... ok
+test src/buf/ext/chain.rs - buf::ext::chain::Chain<T, U>::into_inner (line 124) ... ok
+test src/buf/ext/chain.rs - buf::ext::chain::Chain<T, U>::last_ref (line 89) ... ok
+test src/buf/ext/take.rs - buf::ext::take::Take<T>::limit (line 93) ... ok
+test src/buf/ext/reader.rs - buf::ext::reader::Reader<B>::get_ref (line 26) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::put_uint_le (line 721) ... ok
+test src/buf/ext/writer.rs - buf::ext::writer::Writer<B>::get_mut (line 43) ... ok
+test src/buf/buf_mut.rs - buf::buf_mut::BufMut::remaining_mut (line 37) ... ok
+test src/buf/ext/mod.rs - buf::ext::BufExt::reader (line 79) ... ok
+test src/buf/ext/reader.rs - buf::ext::reader::Reader<B>::into_inner (line 48) ... ok
+test src/buf/ext/chain.rs - buf::ext::chain::Chain (line 22) ... ok
+test src/buf/ext/mod.rs - buf::ext::BufMutExt::chain_mut (line 156) ... ok
+test src/buf/ext/take.rs - buf::ext::take::Take<T>::get_mut (line 69) ... ok
+test src/buf/ext/mod.rs - buf::ext::BufExt::chain (line 56) ... ok
+test src/buf/ext/chain.rs - buf::ext::chain::Chain<T, U>::first_mut (line 70) ... ok
+test src/buf/ext/mod.rs - buf::ext::BufExt::take (line 29) ... ok
+test src/buf/iter.rs - buf::iter::IntoIter (line 11) ... ok
+test src/buf/iter.rs - buf::iter::IntoIter<T>::get_mut (line 95) ... ok
+test src/buf/iter.rs - buf::iter::IntoIter<T>::get_ref (line 75) ... ok
+test src/buf/ext/chain.rs - buf::ext::chain::Chain<T, U>::last_mut (line 105) ... ok
+test src/buf/ext/mod.rs - buf::ext::BufMutExt::limit (line 107) ... ok
+test src/buf/ext/writer.rs - buf::ext::writer::Writer<B>::get_ref (line 26) ... ok
+test src/buf/ext/take.rs - buf::ext::take::Take<T>::into_inner (line 27) ... ok
+test src/buf/iter.rs - buf::iter::IntoIter<T>::into_inner (line 54) ... ok
+test src/buf/ext/writer.rs - buf::ext::writer::Writer<B>::into_inner (line 60) ... ok
+test src/bytes.rs - bytes::Bytes::clear (line 442) ... ok
+test src/bytes.rs - bytes::Bytes (line 22) ... ok
+test src/buf/ext/mod.rs - buf::ext::BufMutExt::writer (line 131) ... ok
+test src/buf/ext/take.rs - buf::ext::take::Take<T>::set_limit (line 115) ... ok
+test src/bytes.rs - bytes::_split_off_must_use (line 1052) ... ok
+test src/bytes.rs - bytes::_split_to_must_use (line 1042) ... ok
+test src/buf/iter.rs - buf::iter::IntoIter<T>::new (line 35) ... ok
+test src/bytes_mut.rs - bytes_mut::_split_must_use (line 1511) ... ok
+test src/bytes_mut.rs - bytes_mut::_split_off_must_use (line 1501) ... ok
+test src/bytes.rs - bytes::Bytes::from_static (line 119) ... ok
+test src/bytes_mut.rs - bytes_mut::_split_to_must_use (line 1491) ... ok
+test src/bytes.rs - bytes::Bytes::is_empty (line 165) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::reserve (line 494) ... ok
+test src/bytes.rs - bytes::Bytes::len (line 150) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::len (line 163) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::is_empty (line 178) ... ok
+test src/bytes.rs - bytes::Bytes::slice (line 191) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::split (line 307) ... ok
+test src/bytes.rs - bytes::Bytes::new (line 91) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::capacity (line 193) ... ok
+test src/bytes.rs - bytes::Bytes::slice_ref (line 258) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::clear (line 399) ... ok
+test src/bytes.rs - bytes::Bytes::split_off (line 315) ... ok
+test src/bytes.rs - bytes::Bytes::truncate (line 414) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::extend_from_slice (line 665) ... ok
+test src/bytes.rs - bytes::Bytes::split_to (line 364) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::resize (line 418) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::reserve (line 504) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::new (line 142) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::split_to (line 336) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::with_capacity (line 118) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::freeze (line 212) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::set_len (line 455) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::unsplit (line 703) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::split_off (line 263) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut::truncate (line 380) ... ok
+test src/bytes_mut.rs - bytes_mut::BytesMut (line 29) ... ok
+test src/lib.rs -  (line 29) ... ok
+
+test result: ok. 128 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ git reset --hard fe6e67386451715c5d609c90a41e98ef80f0e1d1
+HEAD is now at fe6e673 v0.5.4
++ git clean -fd
+Removing .cargo/

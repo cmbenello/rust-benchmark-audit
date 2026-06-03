@@ -1,0 +1,1861 @@
+2026-04-17 04:31:39,530 - INFO - Environment image rustb.env.x86_64.starkware-libs_cairo:latest found for starkware-libs__cairo-4909
+Building instance image rustbench/starkware-libs__cairo:pr-4909 for starkware-libs__cairo-4909
+2026-04-17 04:43:22,105 - INFO - Creating container for starkware-libs__cairo-4909...
+2026-04-17 04:43:22,279 - INFO - Container for starkware-libs__cairo-4909 created: 1b51bef29786b45cb24b5cc23d87ed6e47d5a2555e19fd2228e2ad24f9dede7b
+2026-04-17 04:43:22,425 - INFO - Container for starkware-libs__cairo-4909 started: 1b51bef29786b45cb24b5cc23d87ed6e47d5a2555e19fd2228e2ad24f9dede7b
+2026-04-17 04:43:22,425 - INFO - Intermediate patch for starkware-libs__cairo-4909 written to logs/run_evaluation/gold_run1/gold/starkware-libs__cairo-4909/patch.diff, now applying to container...
+2026-04-17 04:43:22,666 - INFO - >>>>> Applied Patch:
+Checking patch crates/cairo-lang-plugins/src/plugins/config.rs...
+Checking patch crates/cairo-lang-plugins/src/plugins/config.rs...
+Checking patch crates/cairo-lang-plugins/src/plugins/config.rs...
+Checking patch crates/cairo-lang-plugins/src/plugins/config.rs...
+Checking patch crates/cairo-lang-plugins/src/plugins/generate_trait.rs...
+Checking patch crates/cairo-lang-plugins/src/plugins/generate_trait.rs...
+Checking patch crates/cairo-lang-starknet/Cargo.toml...
+Checking patch crates/cairo-lang-starknet/src/plugin/dispatcher.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/dispatcher.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/embeddable.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/embeddable.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/mod.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/mod.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs...
+Hunk #1 succeeded at 387 (offset -1 lines).
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs...
+Hunk #1 succeeded at 399 (offset -1 lines).
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs...
+Checking patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs...
+Checking patch crates/cairo-lang-syntax/src/node/helpers.rs...
+Applied patch crates/cairo-lang-plugins/src/plugins/config.rs cleanly.
+Applied patch crates/cairo-lang-plugins/src/plugins/config.rs cleanly.
+Applied patch crates/cairo-lang-plugins/src/plugins/config.rs cleanly.
+Applied patch crates/cairo-lang-plugins/src/plugins/config.rs cleanly.
+Applied patch crates/cairo-lang-plugins/src/plugins/generate_trait.rs cleanly.
+Applied patch crates/cairo-lang-plugins/src/plugins/generate_trait.rs cleanly.
+Applied patch crates/cairo-lang-starknet/Cargo.toml cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/dispatcher.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/dispatcher.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/embeddable.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/embeddable.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/mod.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/mod.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs cleanly.
+Applied patch crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs cleanly.
+Applied patch crates/cairo-lang-syntax/src/node/helpers.rs cleanly.
+
+2026-04-17 04:43:22,914 - INFO - Git diff before:
+diff --git a/Cargo.lock b/Cargo.lock
+index 479385180..10aa59274 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -57,9 +57,9 @@ checksum = "0942ffc6dcaadf03badf6e6a2d0228460359d5e34b57ccdc720b7382dfbd5ec5"
+ 
+ [[package]]
+ name = "anstream"
+-version = "0.6.7"
++version = "0.6.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4cd2405b3ac1faab2990b74d728624cd9fd115651fcecc7c2d8daf01376275ba"
++checksum = "6e2e1ebcb11de5c03c67de28a7df593d32191b44939c482e97702baaaa6ab6a5"
+ dependencies = [
+  "anstyle",
+  "anstyle-parse",
+@@ -71,9 +71,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "anstyle"
+-version = "1.0.4"
++version = "1.0.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7079075b41f533b8c61d2a4d073c4676e1f8b249ff94a393b0595db304e0dd87"
++checksum = "2faccea4cc4ab4a667ce676a30e8ec13922a692c99bb8f5b11f1502c72e04220"
+ 
+ [[package]]
+ name = "anstyle-parse"
+@@ -271,14 +271,13 @@ dependencies = [
+ 
+ [[package]]
+ name = "auto_impl"
+-version = "1.1.0"
++version = "1.1.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fee3da8ef1276b0bee5dd1c7258010d8fffd31801447323115a25560e1327b89"
++checksum = "823b8bb275161044e2ac7a25879cb3e2480cb403e3943022c7c769c599b756aa"
+ dependencies = [
+- "proc-macro-error",
+  "proc-macro2",
+  "quote",
+- "syn 1.0.109",
++ "syn 2.0.48",
+ ]
+ 
+ [[package]]
+@@ -340,9 +339,9 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
+ 
+ [[package]]
+ name = "bitflags"
+-version = "2.4.1"
++version = "2.4.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "327762f6e5a765692301e5bb513e0d9fef63be86bbc14528052b1cd3e6f03e07"
++checksum = "ed570934406eb16438a4e976b1b4500774099c13b8cb96eec99f620f05090ddf"
+ 
+ [[package]]
+ name = "bitvec"
+@@ -1001,7 +1000,7 @@ version = "2.5.0"
+ dependencies = [
+  "env_logger",
+  "hashbrown 0.14.3",
+- "indexmap 2.1.0",
++ "indexmap 2.2.2",
+  "itertools 0.11.0",
+  "log",
+  "num-bigint",
+@@ -1105,9 +1104,9 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+ 
+ [[package]]
+ name = "clap"
+-version = "4.4.16"
++version = "4.4.18"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "58e54881c004cec7895b0068a0a954cd5d62da01aef83fa35b1e594497bf5445"
++checksum = "1e578d6ec4194633722ccf9544794b71b1385c3c027efe0c55db226fc880865c"
+ dependencies = [
+  "clap_builder",
+  "clap_derive",
+@@ -1115,9 +1114,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap_builder"
+-version = "4.4.16"
++version = "4.4.18"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "59cb82d7f531603d2fd1f507441cdd35184fa81beff7bd489570de7f773460bb"
++checksum = "4df4df40ec50c46000231c914968278b1eb05098cf8f1b3a518a95030e71d1c7"
+ dependencies = [
+  "anstream",
+  "anstyle",
+@@ -1377,9 +1376,9 @@ checksum = "a357d28ed41a50f9c765dbfe56cbc04a64e53e5fc58ba79fbc34c10ef3df831f"
+ 
+ [[package]]
+ name = "env_logger"
+-version = "0.10.1"
++version = "0.10.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "95b3f3e67048839cb0d0781f445682a35113da7121f7c949db0e2be96a4fbece"
++checksum = "4cd405aab171cb85d6735e5c8d9db038c17d3ca007a4d2c25f337935c3d90580"
+ dependencies = [
+  "humantime",
+  "is-terminal",
+@@ -1661,9 +1660,9 @@ checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
+ 
+ [[package]]
+ name = "hermit-abi"
+-version = "0.3.3"
++version = "0.3.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d77f7ec81a6d05a3abb01ab6eb7590f6083d08449fe5a1c8b1e620283546ccb7"
++checksum = "5d3d0e0f38255e7fa3cf31335b3a56f05febd18025f4db5ef7a0cfb4f8da651f"
+ 
+ [[package]]
+ name = "hex"
+@@ -1754,9 +1753,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "indexmap"
+-version = "2.1.0"
++version = "2.2.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d530e1a18b1cb4c484e6e34556a0d948706958449fca0cab753d649f2bce3d1f"
++checksum = "824b2ae422412366ba479e8111fd301f7b5faece8149317bb81925979a53f520"
+ dependencies = [
+  "equivalent",
+  "hashbrown 0.14.3",
+@@ -1887,9 +1886,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.152"
++version = "0.2.153"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "13e3bf6590cbc649f4d1a3eefc9d5d6eb746f5200ffb04e5e142700b8faa56e7"
++checksum = "9c198f91728a82281a64e1f4f9eeb25d82cb32a5de251c6bd1b5154d63a8e7bd"
+ 
+ [[package]]
+ name = "libmimalloc-sys"
+@@ -1907,16 +1906,16 @@ version = "0.0.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "85c833ca1e66078851dba29046874e38f08b2c883700aa29a03ddd3b23814ee8"
+ dependencies = [
+- "bitflags 2.4.1",
++ "bitflags 2.4.2",
+  "libc",
+  "redox_syscall 0.4.1",
+ ]
+ 
+ [[package]]
+ name = "linux-raw-sys"
+-version = "0.4.12"
++version = "0.4.13"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c4cd1a83af159aa67994778be9070f0ae1bd732942279cabb14f86f986a21456"
++checksum = "01cda141df6706de531b6c46c3a33ecca755538219bd484262fa09410c13539c"
+ 
+ [[package]]
+ name = "lock_api"
+@@ -1998,9 +1997,9 @@ checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
+ 
+ [[package]]
+ name = "miniz_oxide"
+-version = "0.7.1"
++version = "0.7.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e7810e0be55b428ada41041c41f32c9f1a42817901b4ccf45fa3d4b6561e74c7"
++checksum = "9d811f3e15f28568be3407c8e7fdb6514c1cda3cb30683f15b6a1a1dc4ea14a7"
+ dependencies = [
+  "adler",
+ ]
+@@ -2078,6 +2077,12 @@ dependencies = [
+  "num-traits 0.2.17",
+ ]
+ 
++[[package]]
++name = "num-conv"
++version = "0.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "51d515d32fb182ee37cda2ccdcb92950d6a3c2893aa280e540671c2cd0f3b1d9"
++
+ [[package]]
+ name = "num-integer"
+ version = "0.1.45"
+@@ -2284,7 +2289,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "e1d3afd2628e69da2be385eb6f2fd57c8ac7977ceeff6dc166ff1657b0e386a9"
+ dependencies = [
+  "fixedbitset",
+- "indexmap 2.1.0",
++ "indexmap 2.2.2",
+ ]
+ 
+ [[package]]
+@@ -2304,18 +2309,18 @@ checksum = "5be167a7af36ee22fe3115051bc51f6e6c7054c9348e28deb4f49bd6f705a315"
+ 
+ [[package]]
+ name = "pin-project"
+-version = "1.1.3"
++version = "1.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fda4ed1c6c173e3fc7a83629421152e01d7b1f9b7f65fb301e490e8cfc656422"
++checksum = "0302c4a0442c456bd56f841aee5c3bfd17967563f6fadc9ceb9f9c23cf3807e0"
+ dependencies = [
+  "pin-project-internal",
+ ]
+ 
+ [[package]]
+ name = "pin-project-internal"
+-version = "1.1.3"
++version = "1.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4359fd9c9171ec6e8c62926d6faaf553a8dc3f64e1507e76da7911b4f6a04405"
++checksum = "266c042b60c9c76b8d53061e52b2e0d1116abc57cefc8c5cd671619a56ac3690"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -2377,35 +2382,11 @@ dependencies = [
+  "toml_edit 0.20.7",
+ ]
+ 
+-[[package]]
+-name = "proc-macro-error"
+-version = "1.0.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
+-dependencies = [
+- "proc-macro-error-attr",
+- "proc-macro2",
+- "quote",
+- "syn 1.0.109",
+- "version_check",
+-]
+-
+-[[package]]
+-name = "proc-macro-error-attr"
+-version = "1.0.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "version_check",
+-]
+-
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.76"
++version = "1.0.78"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "95fc56cda0b5c3325f5fbbd7ff9fda9e02bb00bb3dac51252d2f1bfa1cb8cc8c"
++checksum = "e2422ad645d89c99f8f3e6b88a9fdeca7fabeac836b1002371c4367c8f984aae"
+ dependencies = [
+  "unicode-ident",
+ ]
+@@ -2463,9 +2444,9 @@ checksum = "60a357793950651c4ed0f3f52338f53b2f809f32d83a07f72909fa13e4c6c1e3"
+ 
+ [[package]]
+ name = "rayon"
+-version = "1.8.0"
++version = "1.8.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9c27db03db7734835b3f53954b534c91069375ce6ccaa2e065441e07d9b6cdb1"
++checksum = "fa7237101a77a10773db45d62004a272517633fbcc3df19d96455ede1122e051"
+ dependencies = [
+  "either",
+  "rayon-core",
+@@ -2473,9 +2454,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "rayon-core"
+-version = "1.12.0"
++version = "1.12.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5ce3fb6ad83f861aac485e76e1985cd109d9a3713802152be56c3b1f0e0658ed"
++checksum = "1465873a3dfdaa8ae7cb14b4383657caab0b3e8a0aa9ae8e04b044854c8dfce2"
+ dependencies = [
+  "crossbeam-deque",
+  "crossbeam-utils",
+@@ -2512,9 +2493,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex"
+-version = "1.10.2"
++version = "1.10.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "380b951a9c5e80ddfd6136919eef32310721aa4aacd4889a8d39124b026ab343"
++checksum = "b62dbe01f0b06f9d8dc7d49e05a0785f153b00b2c227856282f671e0318c9b15"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -2524,9 +2505,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-automata"
+-version = "0.4.3"
++version = "0.4.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5f804c7828047e88b2d32e2d7fe5a105da8ee3264f01902f796c8e067dc2483f"
++checksum = "5bb987efffd3c6d0d8f5f89510bb458559eab11e4f869acb20bf845e016259cd"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -2613,11 +2594,11 @@ dependencies = [
+ 
+ [[package]]
+ name = "rustix"
+-version = "0.38.30"
++version = "0.38.31"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "322394588aaf33c24007e8bb3238ee3e4c5c09c084ab32bc73890b99ff326bca"
++checksum = "6ea3e1a662af26cd7a3ba09c0297a31af215563ecf42817c98df621387f4e949"
+ dependencies = [
+- "bitflags 2.4.1",
++ "bitflags 2.4.2",
+  "errno",
+  "libc",
+  "linux-raw-sys",
+@@ -2676,9 +2657,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "scarb-metadata"
+-version = "1.10.0"
++version = "1.11.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bf68e81d9cb0b64c94e6c00e5124f27e3ecfc5d33d4cd7043a15f723be90ff9d"
++checksum = "662ffdd31cf7be3533c8658cf15a55105a6b21e6c06bcc50962be6c568a8964e"
+ dependencies = [
+  "camino",
+  "semver",
+@@ -2729,18 +2710,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.195"
++version = "1.0.196"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "63261df402c67811e9ac6def069e4786148c4563f4b50fd4bf30aa370d626b02"
++checksum = "870026e60fa08c69f064aa766c10f10b1d62db9ccd4d0abb206472bee0ce3b32"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.195"
++version = "1.0.196"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "46fe8f8603d81ba86327b23a2e9cdf49e1255fb94a4c5f297f6ee0547178ea2c"
++checksum = "33c85360c95e7d137454dc81d9a4ed2b8efd8fbe19cee57357b32b9771fccb67"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -2760,9 +2741,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.111"
++version = "1.0.113"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "176e46fa42316f18edd598015a5166857fc835ec732f5215eac6b7bdbf0a84f4"
++checksum = "69801b70b1c3dac963ecb03a364ba0ceda9cf60c71cfe475e99864759c8b8a79"
+ dependencies = [
+  "itoa",
+  "ryu",
+@@ -2849,15 +2830,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "smallvec"
+-version = "1.12.0"
++version = "1.13.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2593d31f82ead8df961d8bd23a64c2ccf2eb5dd34b0a34bfb4dd54011c72009e"
++checksum = "e6ecd384b10a64542d77071bd64bd7b231f4ed5940fba55e98c3de13824cf3d7"
+ 
+ [[package]]
+ name = "smol_str"
+-version = "0.2.0"
++version = "0.2.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "74212e6bbe9a4352329b2f68ba3130c15a3f26fe88ff22dbdc6cdd58fa85e99c"
++checksum = "e6845563ada680337a52d43bb0b29f396f2d911616f6573012645b9e3d048a49"
+ dependencies = [
+  "serde",
+ ]
+@@ -3191,13 +3172,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "time"
+-version = "0.3.31"
++version = "0.3.34"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f657ba42c3f86e7680e53c8cd3af8abbe56b5491790b46e22e19c0d57463583e"
++checksum = "c8248b6521bb14bc45b4067159b9b6ad792e2d6d754d6c41fb50e29fefe38749"
+ dependencies = [
+  "deranged",
+  "itoa",
+  "libc",
++ "num-conv",
+  "num_threads",
+  "powerfmt",
+  "serde",
+@@ -3213,10 +3195,11 @@ checksum = "ef927ca75afb808a4d64dd374f00a2adf8d0fcff8e7b184af886c3c87ec4a3f3"
+ 
+ [[package]]
+ name = "time-macros"
+-version = "0.2.16"
++version = "0.2.17"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "26197e33420244aeb70c3e8c78376ca46571bc4e701e4791c2cd9f57dcb3a43f"
++checksum = "7ba3a3ef41e6672a2f0f001392bb5dcd3ff0a9992d618ca761a11c3121547774"
+ dependencies = [
++ "num-conv",
+  "time-core",
+ ]
+ 
+@@ -3246,9 +3229,9 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
+ 
+ [[package]]
+ name = "tokio"
+-version = "1.35.1"
++version = "1.36.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c89b4efa943be685f629b149f53829423f8f5531ea21249408e8e2f8671ec104"
++checksum = "61285f6515fa018fb2d1e46eb21223fff441ee8db5d0f1435e8ab4f5cdb80931"
+ dependencies = [
+  "backtrace",
+  "bytes",
+@@ -3290,14 +3273,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "toml"
+-version = "0.8.8"
++version = "0.8.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a1a195ec8c9da26928f773888e0742ca3ca1040c6cd859c919c9f59c1954ab35"
++checksum = "c6a4b9e8023eb94392d3dca65d717c53abc5dad49c07cb65bb8fcd87115fa325"
+ dependencies = [
+  "serde",
+  "serde_spanned",
+  "toml_datetime",
+- "toml_edit 0.21.0",
++ "toml_edit 0.21.1",
+ ]
+ 
+ [[package]]
+@@ -3315,18 +3298,18 @@ version = "0.20.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "70f427fce4d84c72b5b732388bf4a9f4531b53f74e2887e3ecb2481f68f66d81"
+ dependencies = [
+- "indexmap 2.1.0",
++ "indexmap 2.2.2",
+  "toml_datetime",
+  "winnow",
+ ]
+ 
+ [[package]]
+ name = "toml_edit"
+-version = "0.21.0"
++version = "0.21.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d34d383cd00a163b4a5b85053df514d45bc330f6de7737edfe0a93311d1eaa03"
++checksum = "6a8534fd7f78b5405e860340ad6575217ce99f38d4d5c8f2442cb5ecb50090e1"
+ dependencies = [
+- "indexmap 2.1.0",
++ "indexmap 2.2.2",
+  "serde",
+  "serde_spanned",
+  "toml_datetime",
+@@ -3432,18 +3415,18 @@ checksum = "42ff0bf0c66b8238c6f3b578df37d0b7848e55df8577b3f74f92a69acceeb825"
+ 
+ [[package]]
+ name = "unescaper"
+-version = "0.1.3"
++version = "0.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d8f0f68e58d297ba8b22b8b5a96a87b863ba6bb46aaf51e19a4b02c5a6dd5b7f"
++checksum = "0adf6ad32eb5b3cadff915f7b770faaac8f7ff0476633aa29eb0d9584d889d34"
+ dependencies = [
+  "thiserror",
+ ]
+ 
+ [[package]]
+ name = "unicode-bidi"
+-version = "0.3.14"
++version = "0.3.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6f2528f27a9eb2b21e69c95319b30bd0efd85d09c379741b0f78ea1d86be2416"
++checksum = "08f95100a766bf4f8f28f90d77e0a5461bbdb219042e7679bebe79004fed8d75"
+ 
+ [[package]]
+ name = "unicode-ident"
+@@ -3737,9 +3720,9 @@ checksum = "dff9641d1cd4be8d1a070daf9e3773c5f67e78b4d9d42263020c057706765c04"
+ 
+ [[package]]
+ name = "winnow"
+-version = "0.5.34"
++version = "0.5.37"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b7cf47b659b318dccbd69cc4797a39ae128f533dce7902a1096044d1967b9c16"
++checksum = "a7cad8365489051ae9f054164e459304af2e7e9bb407c958076c8bf4aef52da5"
+ dependencies = [
+  "memchr",
+ ]
+diff --git a/crates/cairo-lang-plugins/src/plugins/config.rs b/crates/cairo-lang-plugins/src/plugins/config.rs
+index 05548ca8e..75e75295b 100644
+--- a/crates/cairo-lang-plugins/src/plugins/config.rs
++++ b/crates/cairo-lang-plugins/src/plugins/config.rs
+@@ -9,7 +9,7 @@ use cairo_lang_syntax::attribute::structured::{
+     Attribute, AttributeArg, AttributeArgVariant, AttributeStructurize,
+ };
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::QueryAttrs;
++use cairo_lang_syntax::node::helpers::{BodyItems, QueryAttrs};
+ use cairo_lang_syntax::node::{ast, Terminal, TypedSyntaxNode};
+ use cairo_lang_utils::try_extract_matches;
+ 
+@@ -56,6 +56,41 @@ impl MacroPlugin for ConfigPlugin {
+     }
+ }
+ 
++/// Iterator over the items that are included in the given config set, among the given items in
++/// `iterator`.
++pub struct ItemsInCfg<'a, Item: QueryAttrs> {
++    db: &'a dyn SyntaxGroup,
++    cfg_set: &'a CfgSet,
++    iterator: <Vec<Item> as IntoIterator>::IntoIter,
++}
++
++impl<'a, Item: QueryAttrs> Iterator for ItemsInCfg<'a, Item> {
++    type Item = Item;
++
++    fn next(&mut self) -> Option<Self::Item> {
++        self.iterator.find(|item| !should_drop(self.db, self.cfg_set, item, &mut vec![]))
++    }
++}
++
++/// Extension trait for `BodyItems` filtering out items that are not included in the cfg.
++pub trait HasItemsInCfgEx<Item: QueryAttrs>: BodyItems<Item = Item> {
++    fn iter_items_in_cfg<'a>(
++        &self,
++        db: &'a dyn SyntaxGroup,
++        cfg_set: &'a CfgSet,
++    ) -> ItemsInCfg<'a, Item>;
++}
++
++impl<Item: QueryAttrs, Body: BodyItems<Item = Item>> HasItemsInCfgEx<Item> for Body {
++    fn iter_items_in_cfg<'a>(
++        &self,
++        db: &'a dyn SyntaxGroup,
++        cfg_set: &'a CfgSet,
++    ) -> ItemsInCfg<'a, Item> {
++        ItemsInCfg { db, cfg_set, iterator: self.items_vec(db).into_iter() }
++    }
++}
++
+ /// Handles an item that is not dropped from the AST completely due to not matching the config.
+ /// In case it includes dropped elements and needs to be rewritten, it returns the appropriate
+ /// PatchBuilder. Otherwise returns `None`, and it won't be rewritten or dropped.
+@@ -68,8 +103,7 @@ fn handle_undropped_item<'a>(
+     match item_ast {
+         ast::ModuleItem::Trait(trait_item) => {
+             let body = try_extract_matches!(trait_item.body(db), ast::MaybeTraitBody::Some)?;
+-            let items =
+-                get_kept_items_nodes(db, cfg_set, &body.items(db).elements(db), diagnostics)?;
++            let items = get_kept_items_nodes(db, cfg_set, &body.items_vec(db), diagnostics)?;
+             let mut builder = PatchBuilder::new(db);
+             builder.add_node(trait_item.attributes(db).as_syntax_node());
+             builder.add_node(trait_item.trait_kw(db).as_syntax_node());
+@@ -84,8 +118,7 @@ fn handle_undropped_item<'a>(
+         }
+         ast::ModuleItem::Impl(impl_item) => {
+             let body = try_extract_matches!(impl_item.body(db), ast::MaybeImplBody::Some)?;
+-            let items =
+-                get_kept_items_nodes(db, cfg_set, &body.items(db).elements(db), diagnostics)?;
++            let items = get_kept_items_nodes(db, cfg_set, &body.items_vec(db), diagnostics)?;
+             let mut builder = PatchBuilder::new(db);
+             builder.add_node(impl_item.attributes(db).as_syntax_node());
+             builder.add_node(impl_item.impl_kw(db).as_syntax_node());
+diff --git a/crates/cairo-lang-plugins/src/plugins/generate_trait.rs b/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
+index 70e6262df..0e2377639 100644
+--- a/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
++++ b/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
+@@ -6,7 +6,7 @@ use cairo_lang_defs::plugin::{
+ };
+ use cairo_lang_syntax::attribute::structured::{AttributeArgVariant, AttributeStructurize};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::{GenericParamEx, QueryAttrs};
++use cairo_lang_syntax::node::helpers::{BodyItems, GenericParamEx, QueryAttrs};
+ use cairo_lang_syntax::node::kind::SyntaxKind;
+ use cairo_lang_syntax::node::{ast, Terminal, TypedSyntaxNode};
+ 
+@@ -147,7 +147,7 @@ fn generate_trait_for_impl(db: &dyn SyntaxGroup, impl_ast: ast::ItemImpl) -> Plu
+         ast::MaybeImplBody::Some(body) => {
+             builder.add_node(impl_generic_params.as_syntax_node());
+             builder.add_node(body.lbrace(db).as_syntax_node());
+-            for item in body.items(db).elements(db) {
++            for item in body.items_vec(db) {
+                 let ast::ImplItem::Function(item) = item else {
+                     // Only functions are supported as trait items for now.
+                     continue;
+diff --git a/crates/cairo-lang-starknet/Cargo.toml b/crates/cairo-lang-starknet/Cargo.toml
+index 1cdbf01e7..b103ffe30 100644
+--- a/crates/cairo-lang-starknet/Cargo.toml
++++ b/crates/cairo-lang-starknet/Cargo.toml
+@@ -15,6 +15,7 @@ cairo-lang-defs = { path = "../cairo-lang-defs", version = "2.5.0" }
+ cairo-lang-diagnostics = { path = "../cairo-lang-diagnostics", version = "2.5.0" }
+ cairo-lang-filesystem = { path = "../cairo-lang-filesystem", version = "2.5.0" }
+ cairo-lang-lowering = { path = "../cairo-lang-lowering", version = "2.5.0" }
++cairo-lang-plugins = { path = "../cairo-lang-plugins", version = "2.5.0" }
+ cairo-lang-semantic = { path = "../cairo-lang-semantic", version = "2.5.0" }
+ cairo-lang-sierra = { path = "../cairo-lang-sierra", version = "2.5.0" }
+ cairo-lang-sierra-generator = { path = "../cairo-lang-sierra-generator", version = "2.5.0" }
+diff --git a/crates/cairo-lang-starknet/src/plugin/dispatcher.rs b/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
+index bf2d57935..c92f7b255 100644
+--- a/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
++++ b/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
+@@ -2,7 +2,7 @@ use cairo_lang_defs::patcher::{PatchBuilder, RewriteNode};
+ use cairo_lang_defs::plugin::{PluginDiagnostic, PluginGeneratedFile, PluginResult};
+ use cairo_lang_syntax::node::ast::{self, MaybeTraitBody, OptionReturnTypeClause};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::QueryAttrs;
++use cairo_lang_syntax::node::helpers::{BodyItems, QueryAttrs};
+ use cairo_lang_syntax::node::{Terminal, TypedSyntaxNode};
+ use indoc::formatdoc;
+ use itertools::Itertools;
+@@ -83,7 +83,7 @@ pub fn handle_trait(db: &dyn SyntaxGroup, trait_ast: ast::ItemTrait) -> PluginRe
+     let safe_contract_caller_name = format!("{base_name}SafeDispatcher");
+     let library_caller_name = format!("{base_name}LibraryDispatcher");
+     let safe_library_caller_name = format!("{base_name}SafeLibraryDispatcher");
+-    for item_ast in body.items(db).elements(db) {
++    for item_ast in body.items_vec(db) {
+         match item_ast {
+             ast::TraitItem::Function(func) => {
+                 let declaration = func.declaration(db);
+diff --git a/crates/cairo-lang-starknet/src/plugin/embeddable.rs b/crates/cairo-lang-starknet/src/plugin/embeddable.rs
+index 48677e5fd..7db3c760d 100644
+--- a/crates/cairo-lang-starknet/src/plugin/embeddable.rs
++++ b/crates/cairo-lang-starknet/src/plugin/embeddable.rs
+@@ -1,7 +1,7 @@
+ use cairo_lang_defs::patcher::{PatchBuilder, RewriteNode};
+ use cairo_lang_defs::plugin::{PluginDiagnostic, PluginGeneratedFile, PluginResult};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::GenericParamEx;
++use cairo_lang_syntax::node::helpers::{BodyItems, GenericParamEx};
+ use cairo_lang_syntax::node::{ast, Terminal, TypedSyntaxNode};
+ use cairo_lang_utils::try_extract_matches;
+ use indoc::formatdoc;
+@@ -111,7 +111,7 @@ pub fn handle_embeddable(db: &dyn SyntaxGroup, item_impl: ast::ItemImpl) -> Plug
+         return PluginResult { code: None, diagnostics, remove_original_item: false };
+     };
+     let mut data = EntryPointsGenerationData::default();
+-    for item in body.items(db).elements(db) {
++    for item in body.items_vec(db) {
+         // TODO(yuval): do the same in embeddable_As, to get a better diagnostic.
+         forbid_attributes_in_impl(db, &mut diagnostics, &item, "#[embeddable]");
+         let ast::ImplItem::Function(item_function) = item else {
+diff --git a/crates/cairo-lang-starknet/src/plugin/mod.rs b/crates/cairo-lang-starknet/src/plugin/mod.rs
+index ef76085ef..1c066f1fd 100644
+--- a/crates/cairo-lang-starknet/src/plugin/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/mod.rs
+@@ -34,7 +34,7 @@ impl MacroPlugin for StarkNetPlugin {
+         &self,
+         db: &dyn SyntaxGroup,
+         item_ast: ast::ModuleItem,
+-        _metadata: &MacroPluginMetadata<'_>,
++        metadata: &MacroPluginMetadata<'_>,
+     ) -> PluginResult {
+         match item_ast {
+             ast::ModuleItem::Module(module_ast) => handle_module(db, module_ast),
+@@ -43,7 +43,7 @@ impl MacroPlugin for StarkNetPlugin {
+                 handle_embeddable(db, impl_ast)
+             }
+             ast::ModuleItem::Struct(struct_ast) if struct_ast.has_attr(db, STORAGE_ATTR) => {
+-                handle_module_by_storage(db, struct_ast).unwrap_or_default()
++                handle_module_by_storage(db, struct_ast, metadata).unwrap_or_default()
+             }
+             ast::ModuleItem::Struct(_) | ast::ModuleItem::Enum(_)
+                 if derive_needed(&item_ast, db) =>
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+index 30b64fa4e..bd52c63cb 100644
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+@@ -1,5 +1,6 @@
+ use cairo_lang_defs::patcher::RewriteNode;
+-use cairo_lang_defs::plugin::PluginDiagnostic;
++use cairo_lang_defs::plugin::{MacroPluginMetadata, PluginDiagnostic};
++use cairo_lang_plugins::plugins::HasItemsInCfgEx;
+ use cairo_lang_syntax::attribute::structured::{AttributeArg, AttributeArgVariant};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+ use cairo_lang_syntax::node::helpers::{PathSegmentEx, QueryAttrs};
+@@ -53,11 +54,12 @@ pub(super) fn generate_component_specific_code(
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     common_data: StarknetModuleCommonGenerationData,
+     body: &ast::ModuleBody,
++    metadata: &MacroPluginMetadata<'_>,
+ ) -> RewriteNode {
+     let mut generation_data = ComponentGenerationData { common: common_data, ..Default::default() };
+     generate_has_component_trait_code(&mut generation_data.specific);
+-    for item in body.items(db).elements(db) {
+-        handle_component_item(db, diagnostics, &item, &mut generation_data);
++    for item in body.iter_items_in_cfg(db, metadata.cfg_set) {
++        handle_component_item(db, diagnostics, &item, metadata, &mut generation_data);
+     }
+     generation_data.into_rewrite_node(db, diagnostics)
+ }
+@@ -67,11 +69,12 @@ fn handle_component_item(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     item: &ast::ModuleItem,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut ComponentGenerationData,
+ ) {
+     match &item {
+         ast::ModuleItem::Impl(item_impl) => {
+-            handle_component_impl(db, diagnostics, item_impl, data);
++            handle_component_impl(db, diagnostics, item_impl, metadata, data);
+         }
+         ast::ModuleItem::Struct(item_struct)
+             if item_struct.name(db).text(db) == STORAGE_STRUCT_NAME =>
+@@ -217,6 +220,7 @@ fn handle_component_impl(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     item_impl: &ast::ItemImpl,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut ComponentGenerationData,
+ ) {
+     let Some(attr) = item_impl.find_attr(db, EMBEDDABLE_AS_ATTR) else {
+@@ -245,7 +249,7 @@ fn handle_component_impl(
+     let trait_path_without_generics = remove_generics_from_path(db, &params.trait_path);
+ 
+     let mut impl_functions = vec![];
+-    for item in params.impl_body.items(db).elements(db) {
++    for item in params.impl_body.iter_items_in_cfg(db, metadata.cfg_set) {
+         let Some(impl_function) = handle_component_embeddable_as_impl_item(
+             db,
+             diagnostics,
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+index 9cf57df01..aa8bb3c82 100644
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+@@ -1,5 +1,6 @@
+ use cairo_lang_defs::patcher::RewriteNode;
+-use cairo_lang_defs::plugin::{PluginDiagnostic, PluginResult};
++use cairo_lang_defs::plugin::{MacroPluginMetadata, PluginDiagnostic, PluginResult};
++use cairo_lang_plugins::plugins::HasItemsInCfgEx;
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+ use cairo_lang_syntax::node::helpers::{
+     is_single_arg_attr, GetIdentifier, PathSegmentEx, QueryAttrs,
+@@ -229,6 +230,7 @@ fn handle_contract_item(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     item: &ast::ModuleItem,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut ContractGenerationData,
+ ) {
+     match item {
+@@ -241,7 +243,13 @@ fn handle_contract_item(
+             );
+         }
+         ast::ModuleItem::Impl(item_impl) => {
+-            handle_contract_impl(db, diagnostics, item_impl, &mut data.specific.entry_points_code);
++            handle_contract_impl(
++                db,
++                diagnostics,
++                item_impl,
++                metadata,
++                &mut data.specific.entry_points_code,
++            );
+         }
+         ast::ModuleItem::Struct(item_struct)
+             if item_struct.name(db).text(db) == STORAGE_STRUCT_NAME =>
+@@ -379,6 +387,7 @@ fn handle_contract_impl(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     imp: &ast::ItemImpl,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut EntryPointsGenerationData,
+ ) {
+     let abi_config = impl_abi_config(db, diagnostics, imp);
+@@ -390,7 +399,7 @@ fn handle_contract_impl(
+     };
+     let impl_name = imp.name(db);
+     let impl_name_node = RewriteNode::new_trimmed(impl_name.as_syntax_node());
+-    for item in impl_body.items(db).elements(db) {
++    for item in impl_body.iter_items_in_cfg(db, metadata.cfg_set) {
+         if abi_config == ImplAbiConfig::Embed {
+             forbid_attributes_in_impl(db, diagnostics, &item, "#[abi(embed_v0)]");
+         } else if abi_config == ImplAbiConfig::External {
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+index 127deaa8a..e86293bed 100644
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+@@ -3,11 +3,13 @@ use std::vec;
+ use cairo_lang_defs::db::get_all_path_leafs;
+ use cairo_lang_defs::patcher::{PatchBuilder, RewriteNode};
+ use cairo_lang_defs::plugin::{
+-    DynGeneratedFileAuxData, PluginDiagnostic, PluginGeneratedFile, PluginResult,
++    DynGeneratedFileAuxData, MacroPluginMetadata, PluginDiagnostic, PluginGeneratedFile,
++    PluginResult,
+ };
++use cairo_lang_plugins::plugins::HasItemsInCfgEx;
+ use cairo_lang_syntax::node::ast::MaybeModuleBody;
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::{GetIdentifier, QueryAttrs};
++use cairo_lang_syntax::node::helpers::{BodyItems, GetIdentifier, QueryAttrs};
+ use cairo_lang_syntax::node::kind::SyntaxKind;
+ use cairo_lang_syntax::node::{ast, SyntaxNode, Terminal, TypedSyntaxNode};
+ use cairo_lang_utils::extract_matches;
+@@ -127,7 +129,7 @@ fn validate_module(
+             remove_original_item: false,
+         };
+     };
+-    let Some(storage_struct_ast) = body.items(db).elements(db).into_iter().find(|item| {
++    let Some(storage_struct_ast) = body.items_vec(db).into_iter().find(|item| {
+         matches!(item, ast::ModuleItem::Struct(struct_ast) if struct_ast.name(db).text(db) == STORAGE_STRUCT_NAME)
+     }) else {
+         return PluginResult {
+@@ -159,6 +161,7 @@ fn validate_module(
+ pub(super) fn handle_module_by_storage(
+     db: &dyn SyntaxGroup,
+     struct_ast: ast::ItemStruct,
++    metadata: &MacroPluginMetadata<'_>,
+ ) -> Option<PluginResult> {
+     let (module_ast, module_kind) =
+         grand_grand_parent_starknet_module(struct_ast.as_syntax_node(), db)?;
+@@ -172,7 +175,7 @@ pub(super) fn handle_module_by_storage(
+     let mut event_variants = vec![];
+     // Use declarations to add to the internal submodules. Mapping from 'use' items to their path.
+     let mut extra_uses = OrderedHashMap::default();
+-    for item in body.items(db).elements(db) {
++    for item in body.iter_items_in_cfg(db, metadata.cfg_set) {
+         if let Some(variants) =
+             get_starknet_event_variants(db, &mut diagnostics, &item, module_kind)
+         {
+@@ -202,10 +205,11 @@ pub(super) fn handle_module_by_storage(
+             common_data,
+             &body,
+             &module_ast,
++            metadata,
+             event_variants,
+         ),
+         StarknetModuleKind::Component => {
+-            generate_component_specific_code(db, &mut diagnostics, common_data, &body)
++            generate_component_specific_code(db, &mut diagnostics, common_data, &body, metadata)
+         }
+     };
+ 
+diff --git a/crates/cairo-lang-syntax/src/node/helpers.rs b/crates/cairo-lang-syntax/src/node/helpers.rs
+index bb3485033..94fc22a4d 100644
+--- a/crates/cairo-lang-syntax/src/node/helpers.rs
++++ b/crates/cairo-lang-syntax/src/node/helpers.rs
+@@ -560,3 +560,38 @@ impl OptionWrappedGenericParamListHelper for ast::OptionWrappedGenericParamList
+         }
+     }
+ }
++
++/// Trait for getting the items of a body-item (an item that contains items), as a vector.
++pub trait BodyItems {
++    /// The type of an Item.
++    type Item;
++    /// Returns the items of the body-item as a vector.
++    /// Use with caution, as this includes items that may be filtered out by plugins.
++    /// Do note that plugins that directly run on this body-item without going/checking up on the
++    /// syntax tree may assume that e.g. out-of-config items were already filtered out.
++    /// Don't use on an item that is not the original plugin's context, unless you are sure that
++    /// while traversing the AST to get to it from the original plugin's context, you did not go
++    /// through another submodule.
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<Self::Item>;
++}
++
++impl BodyItems for ast::ModuleBody {
++    type Item = ModuleItem;
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<ModuleItem> {
++        self.items(db).elements(db)
++    }
++}
++
++impl BodyItems for ast::TraitBody {
++    type Item = TraitItem;
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<TraitItem> {
++        self.items(db).elements(db)
++    }
++}
++
++impl BodyItems for ast::ImplBody {
++    type Item = ImplItem;
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<ImplItem> {
++        self.items(db).elements(db)
++    }
++}
+2026-04-17 04:43:22,914 - INFO - Eval script for starkware-libs__cairo-4909 written to logs/run_evaluation/gold_run1/gold/starkware-libs__cairo-4909/eval.sh; copying to container...
+2026-04-17 04:44:58,209 - INFO - Test runtime: 95.15 seconds
+2026-04-17 04:44:58,212 - INFO - Test output for starkware-libs__cairo-4909 written to logs/run_evaluation/gold_run1/gold/starkware-libs__cairo-4909/test_output.txt
+2026-04-17 04:44:58,567 - INFO - Git diff after:
+diff --git a/Cargo.lock b/Cargo.lock
+index 479385180..10aa59274 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -57,9 +57,9 @@ checksum = "0942ffc6dcaadf03badf6e6a2d0228460359d5e34b57ccdc720b7382dfbd5ec5"
+ 
+ [[package]]
+ name = "anstream"
+-version = "0.6.7"
++version = "0.6.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4cd2405b3ac1faab2990b74d728624cd9fd115651fcecc7c2d8daf01376275ba"
++checksum = "6e2e1ebcb11de5c03c67de28a7df593d32191b44939c482e97702baaaa6ab6a5"
+ dependencies = [
+  "anstyle",
+  "anstyle-parse",
+@@ -71,9 +71,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "anstyle"
+-version = "1.0.4"
++version = "1.0.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7079075b41f533b8c61d2a4d073c4676e1f8b249ff94a393b0595db304e0dd87"
++checksum = "2faccea4cc4ab4a667ce676a30e8ec13922a692c99bb8f5b11f1502c72e04220"
+ 
+ [[package]]
+ name = "anstyle-parse"
+@@ -271,14 +271,13 @@ dependencies = [
+ 
+ [[package]]
+ name = "auto_impl"
+-version = "1.1.0"
++version = "1.1.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fee3da8ef1276b0bee5dd1c7258010d8fffd31801447323115a25560e1327b89"
++checksum = "823b8bb275161044e2ac7a25879cb3e2480cb403e3943022c7c769c599b756aa"
+ dependencies = [
+- "proc-macro-error",
+  "proc-macro2",
+  "quote",
+- "syn 1.0.109",
++ "syn 2.0.48",
+ ]
+ 
+ [[package]]
+@@ -340,9 +339,9 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
+ 
+ [[package]]
+ name = "bitflags"
+-version = "2.4.1"
++version = "2.4.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "327762f6e5a765692301e5bb513e0d9fef63be86bbc14528052b1cd3e6f03e07"
++checksum = "ed570934406eb16438a4e976b1b4500774099c13b8cb96eec99f620f05090ddf"
+ 
+ [[package]]
+ name = "bitvec"
+@@ -1001,7 +1000,7 @@ version = "2.5.0"
+ dependencies = [
+  "env_logger",
+  "hashbrown 0.14.3",
+- "indexmap 2.1.0",
++ "indexmap 2.2.2",
+  "itertools 0.11.0",
+  "log",
+  "num-bigint",
+@@ -1105,9 +1104,9 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+ 
+ [[package]]
+ name = "clap"
+-version = "4.4.16"
++version = "4.4.18"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "58e54881c004cec7895b0068a0a954cd5d62da01aef83fa35b1e594497bf5445"
++checksum = "1e578d6ec4194633722ccf9544794b71b1385c3c027efe0c55db226fc880865c"
+ dependencies = [
+  "clap_builder",
+  "clap_derive",
+@@ -1115,9 +1114,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap_builder"
+-version = "4.4.16"
++version = "4.4.18"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "59cb82d7f531603d2fd1f507441cdd35184fa81beff7bd489570de7f773460bb"
++checksum = "4df4df40ec50c46000231c914968278b1eb05098cf8f1b3a518a95030e71d1c7"
+ dependencies = [
+  "anstream",
+  "anstyle",
+@@ -1377,9 +1376,9 @@ checksum = "a357d28ed41a50f9c765dbfe56cbc04a64e53e5fc58ba79fbc34c10ef3df831f"
+ 
+ [[package]]
+ name = "env_logger"
+-version = "0.10.1"
++version = "0.10.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "95b3f3e67048839cb0d0781f445682a35113da7121f7c949db0e2be96a4fbece"
++checksum = "4cd405aab171cb85d6735e5c8d9db038c17d3ca007a4d2c25f337935c3d90580"
+ dependencies = [
+  "humantime",
+  "is-terminal",
+@@ -1661,9 +1660,9 @@ checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
+ 
+ [[package]]
+ name = "hermit-abi"
+-version = "0.3.3"
++version = "0.3.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d77f7ec81a6d05a3abb01ab6eb7590f6083d08449fe5a1c8b1e620283546ccb7"
++checksum = "5d3d0e0f38255e7fa3cf31335b3a56f05febd18025f4db5ef7a0cfb4f8da651f"
+ 
+ [[package]]
+ name = "hex"
+@@ -1754,9 +1753,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "indexmap"
+-version = "2.1.0"
++version = "2.2.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d530e1a18b1cb4c484e6e34556a0d948706958449fca0cab753d649f2bce3d1f"
++checksum = "824b2ae422412366ba479e8111fd301f7b5faece8149317bb81925979a53f520"
+ dependencies = [
+  "equivalent",
+  "hashbrown 0.14.3",
+@@ -1887,9 +1886,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.152"
++version = "0.2.153"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "13e3bf6590cbc649f4d1a3eefc9d5d6eb746f5200ffb04e5e142700b8faa56e7"
++checksum = "9c198f91728a82281a64e1f4f9eeb25d82cb32a5de251c6bd1b5154d63a8e7bd"
+ 
+ [[package]]
+ name = "libmimalloc-sys"
+@@ -1907,16 +1906,16 @@ version = "0.0.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "85c833ca1e66078851dba29046874e38f08b2c883700aa29a03ddd3b23814ee8"
+ dependencies = [
+- "bitflags 2.4.1",
++ "bitflags 2.4.2",
+  "libc",
+  "redox_syscall 0.4.1",
+ ]
+ 
+ [[package]]
+ name = "linux-raw-sys"
+-version = "0.4.12"
++version = "0.4.13"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c4cd1a83af159aa67994778be9070f0ae1bd732942279cabb14f86f986a21456"
++checksum = "01cda141df6706de531b6c46c3a33ecca755538219bd484262fa09410c13539c"
+ 
+ [[package]]
+ name = "lock_api"
+@@ -1998,9 +1997,9 @@ checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
+ 
+ [[package]]
+ name = "miniz_oxide"
+-version = "0.7.1"
++version = "0.7.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e7810e0be55b428ada41041c41f32c9f1a42817901b4ccf45fa3d4b6561e74c7"
++checksum = "9d811f3e15f28568be3407c8e7fdb6514c1cda3cb30683f15b6a1a1dc4ea14a7"
+ dependencies = [
+  "adler",
+ ]
+@@ -2078,6 +2077,12 @@ dependencies = [
+  "num-traits 0.2.17",
+ ]
+ 
++[[package]]
++name = "num-conv"
++version = "0.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "51d515d32fb182ee37cda2ccdcb92950d6a3c2893aa280e540671c2cd0f3b1d9"
++
+ [[package]]
+ name = "num-integer"
+ version = "0.1.45"
+@@ -2284,7 +2289,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "e1d3afd2628e69da2be385eb6f2fd57c8ac7977ceeff6dc166ff1657b0e386a9"
+ dependencies = [
+  "fixedbitset",
+- "indexmap 2.1.0",
++ "indexmap 2.2.2",
+ ]
+ 
+ [[package]]
+@@ -2304,18 +2309,18 @@ checksum = "5be167a7af36ee22fe3115051bc51f6e6c7054c9348e28deb4f49bd6f705a315"
+ 
+ [[package]]
+ name = "pin-project"
+-version = "1.1.3"
++version = "1.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fda4ed1c6c173e3fc7a83629421152e01d7b1f9b7f65fb301e490e8cfc656422"
++checksum = "0302c4a0442c456bd56f841aee5c3bfd17967563f6fadc9ceb9f9c23cf3807e0"
+ dependencies = [
+  "pin-project-internal",
+ ]
+ 
+ [[package]]
+ name = "pin-project-internal"
+-version = "1.1.3"
++version = "1.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4359fd9c9171ec6e8c62926d6faaf553a8dc3f64e1507e76da7911b4f6a04405"
++checksum = "266c042b60c9c76b8d53061e52b2e0d1116abc57cefc8c5cd671619a56ac3690"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -2377,35 +2382,11 @@ dependencies = [
+  "toml_edit 0.20.7",
+ ]
+ 
+-[[package]]
+-name = "proc-macro-error"
+-version = "1.0.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
+-dependencies = [
+- "proc-macro-error-attr",
+- "proc-macro2",
+- "quote",
+- "syn 1.0.109",
+- "version_check",
+-]
+-
+-[[package]]
+-name = "proc-macro-error-attr"
+-version = "1.0.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "version_check",
+-]
+-
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.76"
++version = "1.0.78"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "95fc56cda0b5c3325f5fbbd7ff9fda9e02bb00bb3dac51252d2f1bfa1cb8cc8c"
++checksum = "e2422ad645d89c99f8f3e6b88a9fdeca7fabeac836b1002371c4367c8f984aae"
+ dependencies = [
+  "unicode-ident",
+ ]
+@@ -2463,9 +2444,9 @@ checksum = "60a357793950651c4ed0f3f52338f53b2f809f32d83a07f72909fa13e4c6c1e3"
+ 
+ [[package]]
+ name = "rayon"
+-version = "1.8.0"
++version = "1.8.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9c27db03db7734835b3f53954b534c91069375ce6ccaa2e065441e07d9b6cdb1"
++checksum = "fa7237101a77a10773db45d62004a272517633fbcc3df19d96455ede1122e051"
+ dependencies = [
+  "either",
+  "rayon-core",
+@@ -2473,9 +2454,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "rayon-core"
+-version = "1.12.0"
++version = "1.12.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5ce3fb6ad83f861aac485e76e1985cd109d9a3713802152be56c3b1f0e0658ed"
++checksum = "1465873a3dfdaa8ae7cb14b4383657caab0b3e8a0aa9ae8e04b044854c8dfce2"
+ dependencies = [
+  "crossbeam-deque",
+  "crossbeam-utils",
+@@ -2512,9 +2493,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex"
+-version = "1.10.2"
++version = "1.10.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "380b951a9c5e80ddfd6136919eef32310721aa4aacd4889a8d39124b026ab343"
++checksum = "b62dbe01f0b06f9d8dc7d49e05a0785f153b00b2c227856282f671e0318c9b15"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -2524,9 +2505,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-automata"
+-version = "0.4.3"
++version = "0.4.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5f804c7828047e88b2d32e2d7fe5a105da8ee3264f01902f796c8e067dc2483f"
++checksum = "5bb987efffd3c6d0d8f5f89510bb458559eab11e4f869acb20bf845e016259cd"
+ dependencies = [
+  "aho-corasick",
+  "memchr",
+@@ -2613,11 +2594,11 @@ dependencies = [
+ 
+ [[package]]
+ name = "rustix"
+-version = "0.38.30"
++version = "0.38.31"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "322394588aaf33c24007e8bb3238ee3e4c5c09c084ab32bc73890b99ff326bca"
++checksum = "6ea3e1a662af26cd7a3ba09c0297a31af215563ecf42817c98df621387f4e949"
+ dependencies = [
+- "bitflags 2.4.1",
++ "bitflags 2.4.2",
+  "errno",
+  "libc",
+  "linux-raw-sys",
+@@ -2676,9 +2657,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "scarb-metadata"
+-version = "1.10.0"
++version = "1.11.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bf68e81d9cb0b64c94e6c00e5124f27e3ecfc5d33d4cd7043a15f723be90ff9d"
++checksum = "662ffdd31cf7be3533c8658cf15a55105a6b21e6c06bcc50962be6c568a8964e"
+ dependencies = [
+  "camino",
+  "semver",
+@@ -2729,18 +2710,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde"
+-version = "1.0.195"
++version = "1.0.196"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "63261df402c67811e9ac6def069e4786148c4563f4b50fd4bf30aa370d626b02"
++checksum = "870026e60fa08c69f064aa766c10f10b1d62db9ccd4d0abb206472bee0ce3b32"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.195"
++version = "1.0.196"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "46fe8f8603d81ba86327b23a2e9cdf49e1255fb94a4c5f297f6ee0547178ea2c"
++checksum = "33c85360c95e7d137454dc81d9a4ed2b8efd8fbe19cee57357b32b9771fccb67"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -2760,9 +2741,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde_json"
+-version = "1.0.111"
++version = "1.0.113"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "176e46fa42316f18edd598015a5166857fc835ec732f5215eac6b7bdbf0a84f4"
++checksum = "69801b70b1c3dac963ecb03a364ba0ceda9cf60c71cfe475e99864759c8b8a79"
+ dependencies = [
+  "itoa",
+  "ryu",
+@@ -2849,15 +2830,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "smallvec"
+-version = "1.12.0"
++version = "1.13.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2593d31f82ead8df961d8bd23a64c2ccf2eb5dd34b0a34bfb4dd54011c72009e"
++checksum = "e6ecd384b10a64542d77071bd64bd7b231f4ed5940fba55e98c3de13824cf3d7"
+ 
+ [[package]]
+ name = "smol_str"
+-version = "0.2.0"
++version = "0.2.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "74212e6bbe9a4352329b2f68ba3130c15a3f26fe88ff22dbdc6cdd58fa85e99c"
++checksum = "e6845563ada680337a52d43bb0b29f396f2d911616f6573012645b9e3d048a49"
+ dependencies = [
+  "serde",
+ ]
+@@ -3191,13 +3172,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "time"
+-version = "0.3.31"
++version = "0.3.34"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f657ba42c3f86e7680e53c8cd3af8abbe56b5491790b46e22e19c0d57463583e"
++checksum = "c8248b6521bb14bc45b4067159b9b6ad792e2d6d754d6c41fb50e29fefe38749"
+ dependencies = [
+  "deranged",
+  "itoa",
+  "libc",
++ "num-conv",
+  "num_threads",
+  "powerfmt",
+  "serde",
+@@ -3213,10 +3195,11 @@ checksum = "ef927ca75afb808a4d64dd374f00a2adf8d0fcff8e7b184af886c3c87ec4a3f3"
+ 
+ [[package]]
+ name = "time-macros"
+-version = "0.2.16"
++version = "0.2.17"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "26197e33420244aeb70c3e8c78376ca46571bc4e701e4791c2cd9f57dcb3a43f"
++checksum = "7ba3a3ef41e6672a2f0f001392bb5dcd3ff0a9992d618ca761a11c3121547774"
+ dependencies = [
++ "num-conv",
+  "time-core",
+ ]
+ 
+@@ -3246,9 +3229,9 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
+ 
+ [[package]]
+ name = "tokio"
+-version = "1.35.1"
++version = "1.36.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c89b4efa943be685f629b149f53829423f8f5531ea21249408e8e2f8671ec104"
++checksum = "61285f6515fa018fb2d1e46eb21223fff441ee8db5d0f1435e8ab4f5cdb80931"
+ dependencies = [
+  "backtrace",
+  "bytes",
+@@ -3290,14 +3273,14 @@ dependencies = [
+ 
+ [[package]]
+ name = "toml"
+-version = "0.8.8"
++version = "0.8.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a1a195ec8c9da26928f773888e0742ca3ca1040c6cd859c919c9f59c1954ab35"
++checksum = "c6a4b9e8023eb94392d3dca65d717c53abc5dad49c07cb65bb8fcd87115fa325"
+ dependencies = [
+  "serde",
+  "serde_spanned",
+  "toml_datetime",
+- "toml_edit 0.21.0",
++ "toml_edit 0.21.1",
+ ]
+ 
+ [[package]]
+@@ -3315,18 +3298,18 @@ version = "0.20.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "70f427fce4d84c72b5b732388bf4a9f4531b53f74e2887e3ecb2481f68f66d81"
+ dependencies = [
+- "indexmap 2.1.0",
++ "indexmap 2.2.2",
+  "toml_datetime",
+  "winnow",
+ ]
+ 
+ [[package]]
+ name = "toml_edit"
+-version = "0.21.0"
++version = "0.21.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d34d383cd00a163b4a5b85053df514d45bc330f6de7737edfe0a93311d1eaa03"
++checksum = "6a8534fd7f78b5405e860340ad6575217ce99f38d4d5c8f2442cb5ecb50090e1"
+ dependencies = [
+- "indexmap 2.1.0",
++ "indexmap 2.2.2",
+  "serde",
+  "serde_spanned",
+  "toml_datetime",
+@@ -3432,18 +3415,18 @@ checksum = "42ff0bf0c66b8238c6f3b578df37d0b7848e55df8577b3f74f92a69acceeb825"
+ 
+ [[package]]
+ name = "unescaper"
+-version = "0.1.3"
++version = "0.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d8f0f68e58d297ba8b22b8b5a96a87b863ba6bb46aaf51e19a4b02c5a6dd5b7f"
++checksum = "0adf6ad32eb5b3cadff915f7b770faaac8f7ff0476633aa29eb0d9584d889d34"
+ dependencies = [
+  "thiserror",
+ ]
+ 
+ [[package]]
+ name = "unicode-bidi"
+-version = "0.3.14"
++version = "0.3.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6f2528f27a9eb2b21e69c95319b30bd0efd85d09c379741b0f78ea1d86be2416"
++checksum = "08f95100a766bf4f8f28f90d77e0a5461bbdb219042e7679bebe79004fed8d75"
+ 
+ [[package]]
+ name = "unicode-ident"
+@@ -3737,9 +3720,9 @@ checksum = "dff9641d1cd4be8d1a070daf9e3773c5f67e78b4d9d42263020c057706765c04"
+ 
+ [[package]]
+ name = "winnow"
+-version = "0.5.34"
++version = "0.5.37"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b7cf47b659b318dccbd69cc4797a39ae128f533dce7902a1096044d1967b9c16"
++checksum = "a7cad8365489051ae9f054164e459304af2e7e9bb407c958076c8bf4aef52da5"
+ dependencies = [
+  "memchr",
+ ]
+diff --git a/crates/cairo-lang-plugins/src/plugins/config.rs b/crates/cairo-lang-plugins/src/plugins/config.rs
+index 05548ca8e..75e75295b 100644
+--- a/crates/cairo-lang-plugins/src/plugins/config.rs
++++ b/crates/cairo-lang-plugins/src/plugins/config.rs
+@@ -9,7 +9,7 @@ use cairo_lang_syntax::attribute::structured::{
+     Attribute, AttributeArg, AttributeArgVariant, AttributeStructurize,
+ };
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::QueryAttrs;
++use cairo_lang_syntax::node::helpers::{BodyItems, QueryAttrs};
+ use cairo_lang_syntax::node::{ast, Terminal, TypedSyntaxNode};
+ use cairo_lang_utils::try_extract_matches;
+ 
+@@ -56,6 +56,41 @@ impl MacroPlugin for ConfigPlugin {
+     }
+ }
+ 
++/// Iterator over the items that are included in the given config set, among the given items in
++/// `iterator`.
++pub struct ItemsInCfg<'a, Item: QueryAttrs> {
++    db: &'a dyn SyntaxGroup,
++    cfg_set: &'a CfgSet,
++    iterator: <Vec<Item> as IntoIterator>::IntoIter,
++}
++
++impl<'a, Item: QueryAttrs> Iterator for ItemsInCfg<'a, Item> {
++    type Item = Item;
++
++    fn next(&mut self) -> Option<Self::Item> {
++        self.iterator.find(|item| !should_drop(self.db, self.cfg_set, item, &mut vec![]))
++    }
++}
++
++/// Extension trait for `BodyItems` filtering out items that are not included in the cfg.
++pub trait HasItemsInCfgEx<Item: QueryAttrs>: BodyItems<Item = Item> {
++    fn iter_items_in_cfg<'a>(
++        &self,
++        db: &'a dyn SyntaxGroup,
++        cfg_set: &'a CfgSet,
++    ) -> ItemsInCfg<'a, Item>;
++}
++
++impl<Item: QueryAttrs, Body: BodyItems<Item = Item>> HasItemsInCfgEx<Item> for Body {
++    fn iter_items_in_cfg<'a>(
++        &self,
++        db: &'a dyn SyntaxGroup,
++        cfg_set: &'a CfgSet,
++    ) -> ItemsInCfg<'a, Item> {
++        ItemsInCfg { db, cfg_set, iterator: self.items_vec(db).into_iter() }
++    }
++}
++
+ /// Handles an item that is not dropped from the AST completely due to not matching the config.
+ /// In case it includes dropped elements and needs to be rewritten, it returns the appropriate
+ /// PatchBuilder. Otherwise returns `None`, and it won't be rewritten or dropped.
+@@ -68,8 +103,7 @@ fn handle_undropped_item<'a>(
+     match item_ast {
+         ast::ModuleItem::Trait(trait_item) => {
+             let body = try_extract_matches!(trait_item.body(db), ast::MaybeTraitBody::Some)?;
+-            let items =
+-                get_kept_items_nodes(db, cfg_set, &body.items(db).elements(db), diagnostics)?;
++            let items = get_kept_items_nodes(db, cfg_set, &body.items_vec(db), diagnostics)?;
+             let mut builder = PatchBuilder::new(db);
+             builder.add_node(trait_item.attributes(db).as_syntax_node());
+             builder.add_node(trait_item.trait_kw(db).as_syntax_node());
+@@ -84,8 +118,7 @@ fn handle_undropped_item<'a>(
+         }
+         ast::ModuleItem::Impl(impl_item) => {
+             let body = try_extract_matches!(impl_item.body(db), ast::MaybeImplBody::Some)?;
+-            let items =
+-                get_kept_items_nodes(db, cfg_set, &body.items(db).elements(db), diagnostics)?;
++            let items = get_kept_items_nodes(db, cfg_set, &body.items_vec(db), diagnostics)?;
+             let mut builder = PatchBuilder::new(db);
+             builder.add_node(impl_item.attributes(db).as_syntax_node());
+             builder.add_node(impl_item.impl_kw(db).as_syntax_node());
+diff --git a/crates/cairo-lang-plugins/src/plugins/generate_trait.rs b/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
+index 70e6262df..0e2377639 100644
+--- a/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
++++ b/crates/cairo-lang-plugins/src/plugins/generate_trait.rs
+@@ -6,7 +6,7 @@ use cairo_lang_defs::plugin::{
+ };
+ use cairo_lang_syntax::attribute::structured::{AttributeArgVariant, AttributeStructurize};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::{GenericParamEx, QueryAttrs};
++use cairo_lang_syntax::node::helpers::{BodyItems, GenericParamEx, QueryAttrs};
+ use cairo_lang_syntax::node::kind::SyntaxKind;
+ use cairo_lang_syntax::node::{ast, Terminal, TypedSyntaxNode};
+ 
+@@ -147,7 +147,7 @@ fn generate_trait_for_impl(db: &dyn SyntaxGroup, impl_ast: ast::ItemImpl) -> Plu
+         ast::MaybeImplBody::Some(body) => {
+             builder.add_node(impl_generic_params.as_syntax_node());
+             builder.add_node(body.lbrace(db).as_syntax_node());
+-            for item in body.items(db).elements(db) {
++            for item in body.items_vec(db) {
+                 let ast::ImplItem::Function(item) = item else {
+                     // Only functions are supported as trait items for now.
+                     continue;
+diff --git a/crates/cairo-lang-starknet/Cargo.toml b/crates/cairo-lang-starknet/Cargo.toml
+index 1cdbf01e7..b103ffe30 100644
+--- a/crates/cairo-lang-starknet/Cargo.toml
++++ b/crates/cairo-lang-starknet/Cargo.toml
+@@ -15,6 +15,7 @@ cairo-lang-defs = { path = "../cairo-lang-defs", version = "2.5.0" }
+ cairo-lang-diagnostics = { path = "../cairo-lang-diagnostics", version = "2.5.0" }
+ cairo-lang-filesystem = { path = "../cairo-lang-filesystem", version = "2.5.0" }
+ cairo-lang-lowering = { path = "../cairo-lang-lowering", version = "2.5.0" }
++cairo-lang-plugins = { path = "../cairo-lang-plugins", version = "2.5.0" }
+ cairo-lang-semantic = { path = "../cairo-lang-semantic", version = "2.5.0" }
+ cairo-lang-sierra = { path = "../cairo-lang-sierra", version = "2.5.0" }
+ cairo-lang-sierra-generator = { path = "../cairo-lang-sierra-generator", version = "2.5.0" }
+diff --git a/crates/cairo-lang-starknet/src/plugin/dispatcher.rs b/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
+index bf2d57935..c92f7b255 100644
+--- a/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
++++ b/crates/cairo-lang-starknet/src/plugin/dispatcher.rs
+@@ -2,7 +2,7 @@ use cairo_lang_defs::patcher::{PatchBuilder, RewriteNode};
+ use cairo_lang_defs::plugin::{PluginDiagnostic, PluginGeneratedFile, PluginResult};
+ use cairo_lang_syntax::node::ast::{self, MaybeTraitBody, OptionReturnTypeClause};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::QueryAttrs;
++use cairo_lang_syntax::node::helpers::{BodyItems, QueryAttrs};
+ use cairo_lang_syntax::node::{Terminal, TypedSyntaxNode};
+ use indoc::formatdoc;
+ use itertools::Itertools;
+@@ -83,7 +83,7 @@ pub fn handle_trait(db: &dyn SyntaxGroup, trait_ast: ast::ItemTrait) -> PluginRe
+     let safe_contract_caller_name = format!("{base_name}SafeDispatcher");
+     let library_caller_name = format!("{base_name}LibraryDispatcher");
+     let safe_library_caller_name = format!("{base_name}SafeLibraryDispatcher");
+-    for item_ast in body.items(db).elements(db) {
++    for item_ast in body.items_vec(db) {
+         match item_ast {
+             ast::TraitItem::Function(func) => {
+                 let declaration = func.declaration(db);
+diff --git a/crates/cairo-lang-starknet/src/plugin/embeddable.rs b/crates/cairo-lang-starknet/src/plugin/embeddable.rs
+index 48677e5fd..7db3c760d 100644
+--- a/crates/cairo-lang-starknet/src/plugin/embeddable.rs
++++ b/crates/cairo-lang-starknet/src/plugin/embeddable.rs
+@@ -1,7 +1,7 @@
+ use cairo_lang_defs::patcher::{PatchBuilder, RewriteNode};
+ use cairo_lang_defs::plugin::{PluginDiagnostic, PluginGeneratedFile, PluginResult};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::GenericParamEx;
++use cairo_lang_syntax::node::helpers::{BodyItems, GenericParamEx};
+ use cairo_lang_syntax::node::{ast, Terminal, TypedSyntaxNode};
+ use cairo_lang_utils::try_extract_matches;
+ use indoc::formatdoc;
+@@ -111,7 +111,7 @@ pub fn handle_embeddable(db: &dyn SyntaxGroup, item_impl: ast::ItemImpl) -> Plug
+         return PluginResult { code: None, diagnostics, remove_original_item: false };
+     };
+     let mut data = EntryPointsGenerationData::default();
+-    for item in body.items(db).elements(db) {
++    for item in body.items_vec(db) {
+         // TODO(yuval): do the same in embeddable_As, to get a better diagnostic.
+         forbid_attributes_in_impl(db, &mut diagnostics, &item, "#[embeddable]");
+         let ast::ImplItem::Function(item_function) = item else {
+diff --git a/crates/cairo-lang-starknet/src/plugin/mod.rs b/crates/cairo-lang-starknet/src/plugin/mod.rs
+index ef76085ef..1c066f1fd 100644
+--- a/crates/cairo-lang-starknet/src/plugin/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/mod.rs
+@@ -34,7 +34,7 @@ impl MacroPlugin for StarkNetPlugin {
+         &self,
+         db: &dyn SyntaxGroup,
+         item_ast: ast::ModuleItem,
+-        _metadata: &MacroPluginMetadata<'_>,
++        metadata: &MacroPluginMetadata<'_>,
+     ) -> PluginResult {
+         match item_ast {
+             ast::ModuleItem::Module(module_ast) => handle_module(db, module_ast),
+@@ -43,7 +43,7 @@ impl MacroPlugin for StarkNetPlugin {
+                 handle_embeddable(db, impl_ast)
+             }
+             ast::ModuleItem::Struct(struct_ast) if struct_ast.has_attr(db, STORAGE_ATTR) => {
+-                handle_module_by_storage(db, struct_ast).unwrap_or_default()
++                handle_module_by_storage(db, struct_ast, metadata).unwrap_or_default()
+             }
+             ast::ModuleItem::Struct(_) | ast::ModuleItem::Enum(_)
+                 if derive_needed(&item_ast, db) =>
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+index 30b64fa4e..bd52c63cb 100644
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/component.rs
+@@ -1,5 +1,6 @@
+ use cairo_lang_defs::patcher::RewriteNode;
+-use cairo_lang_defs::plugin::PluginDiagnostic;
++use cairo_lang_defs::plugin::{MacroPluginMetadata, PluginDiagnostic};
++use cairo_lang_plugins::plugins::HasItemsInCfgEx;
+ use cairo_lang_syntax::attribute::structured::{AttributeArg, AttributeArgVariant};
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+ use cairo_lang_syntax::node::helpers::{PathSegmentEx, QueryAttrs};
+@@ -53,11 +54,12 @@ pub(super) fn generate_component_specific_code(
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     common_data: StarknetModuleCommonGenerationData,
+     body: &ast::ModuleBody,
++    metadata: &MacroPluginMetadata<'_>,
+ ) -> RewriteNode {
+     let mut generation_data = ComponentGenerationData { common: common_data, ..Default::default() };
+     generate_has_component_trait_code(&mut generation_data.specific);
+-    for item in body.items(db).elements(db) {
+-        handle_component_item(db, diagnostics, &item, &mut generation_data);
++    for item in body.iter_items_in_cfg(db, metadata.cfg_set) {
++        handle_component_item(db, diagnostics, &item, metadata, &mut generation_data);
+     }
+     generation_data.into_rewrite_node(db, diagnostics)
+ }
+@@ -67,11 +69,12 @@ fn handle_component_item(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     item: &ast::ModuleItem,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut ComponentGenerationData,
+ ) {
+     match &item {
+         ast::ModuleItem::Impl(item_impl) => {
+-            handle_component_impl(db, diagnostics, item_impl, data);
++            handle_component_impl(db, diagnostics, item_impl, metadata, data);
+         }
+         ast::ModuleItem::Struct(item_struct)
+             if item_struct.name(db).text(db) == STORAGE_STRUCT_NAME =>
+@@ -217,6 +220,7 @@ fn handle_component_impl(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     item_impl: &ast::ItemImpl,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut ComponentGenerationData,
+ ) {
+     let Some(attr) = item_impl.find_attr(db, EMBEDDABLE_AS_ATTR) else {
+@@ -245,7 +249,7 @@ fn handle_component_impl(
+     let trait_path_without_generics = remove_generics_from_path(db, &params.trait_path);
+ 
+     let mut impl_functions = vec![];
+-    for item in params.impl_body.items(db).elements(db) {
++    for item in params.impl_body.iter_items_in_cfg(db, metadata.cfg_set) {
+         let Some(impl_function) = handle_component_embeddable_as_impl_item(
+             db,
+             diagnostics,
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+index 9cf57df01..aa8bb3c82 100644
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/contract.rs
+@@ -1,5 +1,6 @@
+ use cairo_lang_defs::patcher::RewriteNode;
+-use cairo_lang_defs::plugin::{PluginDiagnostic, PluginResult};
++use cairo_lang_defs::plugin::{MacroPluginMetadata, PluginDiagnostic, PluginResult};
++use cairo_lang_plugins::plugins::HasItemsInCfgEx;
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+ use cairo_lang_syntax::node::helpers::{
+     is_single_arg_attr, GetIdentifier, PathSegmentEx, QueryAttrs,
+@@ -229,6 +230,7 @@ fn handle_contract_item(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     item: &ast::ModuleItem,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut ContractGenerationData,
+ ) {
+     match item {
+@@ -241,7 +243,13 @@ fn handle_contract_item(
+             );
+         }
+         ast::ModuleItem::Impl(item_impl) => {
+-            handle_contract_impl(db, diagnostics, item_impl, &mut data.specific.entry_points_code);
++            handle_contract_impl(
++                db,
++                diagnostics,
++                item_impl,
++                metadata,
++                &mut data.specific.entry_points_code,
++            );
+         }
+         ast::ModuleItem::Struct(item_struct)
+             if item_struct.name(db).text(db) == STORAGE_STRUCT_NAME =>
+@@ -379,6 +387,7 @@ fn handle_contract_impl(
+     db: &dyn SyntaxGroup,
+     diagnostics: &mut Vec<PluginDiagnostic>,
+     imp: &ast::ItemImpl,
++    metadata: &MacroPluginMetadata<'_>,
+     data: &mut EntryPointsGenerationData,
+ ) {
+     let abi_config = impl_abi_config(db, diagnostics, imp);
+@@ -390,7 +399,7 @@ fn handle_contract_impl(
+     };
+     let impl_name = imp.name(db);
+     let impl_name_node = RewriteNode::new_trimmed(impl_name.as_syntax_node());
+-    for item in impl_body.items(db).elements(db) {
++    for item in impl_body.iter_items_in_cfg(db, metadata.cfg_set) {
+         if abi_config == ImplAbiConfig::Embed {
+             forbid_attributes_in_impl(db, diagnostics, &item, "#[abi(embed_v0)]");
+         } else if abi_config == ImplAbiConfig::External {
+diff --git a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+index 127deaa8a..e86293bed 100644
+--- a/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
++++ b/crates/cairo-lang-starknet/src/plugin/starknet_module/mod.rs
+@@ -3,11 +3,13 @@ use std::vec;
+ use cairo_lang_defs::db::get_all_path_leafs;
+ use cairo_lang_defs::patcher::{PatchBuilder, RewriteNode};
+ use cairo_lang_defs::plugin::{
+-    DynGeneratedFileAuxData, PluginDiagnostic, PluginGeneratedFile, PluginResult,
++    DynGeneratedFileAuxData, MacroPluginMetadata, PluginDiagnostic, PluginGeneratedFile,
++    PluginResult,
+ };
++use cairo_lang_plugins::plugins::HasItemsInCfgEx;
+ use cairo_lang_syntax::node::ast::MaybeModuleBody;
+ use cairo_lang_syntax::node::db::SyntaxGroup;
+-use cairo_lang_syntax::node::helpers::{GetIdentifier, QueryAttrs};
++use cairo_lang_syntax::node::helpers::{BodyItems, GetIdentifier, QueryAttrs};
+ use cairo_lang_syntax::node::kind::SyntaxKind;
+ use cairo_lang_syntax::node::{ast, SyntaxNode, Terminal, TypedSyntaxNode};
+ use cairo_lang_utils::extract_matches;
+@@ -127,7 +129,7 @@ fn validate_module(
+             remove_original_item: false,
+         };
+     };
+-    let Some(storage_struct_ast) = body.items(db).elements(db).into_iter().find(|item| {
++    let Some(storage_struct_ast) = body.items_vec(db).into_iter().find(|item| {
+         matches!(item, ast::ModuleItem::Struct(struct_ast) if struct_ast.name(db).text(db) == STORAGE_STRUCT_NAME)
+     }) else {
+         return PluginResult {
+@@ -159,6 +161,7 @@ fn validate_module(
+ pub(super) fn handle_module_by_storage(
+     db: &dyn SyntaxGroup,
+     struct_ast: ast::ItemStruct,
++    metadata: &MacroPluginMetadata<'_>,
+ ) -> Option<PluginResult> {
+     let (module_ast, module_kind) =
+         grand_grand_parent_starknet_module(struct_ast.as_syntax_node(), db)?;
+@@ -172,7 +175,7 @@ pub(super) fn handle_module_by_storage(
+     let mut event_variants = vec![];
+     // Use declarations to add to the internal submodules. Mapping from 'use' items to their path.
+     let mut extra_uses = OrderedHashMap::default();
+-    for item in body.items(db).elements(db) {
++    for item in body.iter_items_in_cfg(db, metadata.cfg_set) {
+         if let Some(variants) =
+             get_starknet_event_variants(db, &mut diagnostics, &item, module_kind)
+         {
+@@ -202,10 +205,11 @@ pub(super) fn handle_module_by_storage(
+             common_data,
+             &body,
+             &module_ast,
++            metadata,
+             event_variants,
+         ),
+         StarknetModuleKind::Component => {
+-            generate_component_specific_code(db, &mut diagnostics, common_data, &body)
++            generate_component_specific_code(db, &mut diagnostics, common_data, &body, metadata)
+         }
+     };
+ 
+diff --git a/crates/cairo-lang-syntax/src/node/helpers.rs b/crates/cairo-lang-syntax/src/node/helpers.rs
+index bb3485033..94fc22a4d 100644
+--- a/crates/cairo-lang-syntax/src/node/helpers.rs
++++ b/crates/cairo-lang-syntax/src/node/helpers.rs
+@@ -560,3 +560,38 @@ impl OptionWrappedGenericParamListHelper for ast::OptionWrappedGenericParamList
+         }
+     }
+ }
++
++/// Trait for getting the items of a body-item (an item that contains items), as a vector.
++pub trait BodyItems {
++    /// The type of an Item.
++    type Item;
++    /// Returns the items of the body-item as a vector.
++    /// Use with caution, as this includes items that may be filtered out by plugins.
++    /// Do note that plugins that directly run on this body-item without going/checking up on the
++    /// syntax tree may assume that e.g. out-of-config items were already filtered out.
++    /// Don't use on an item that is not the original plugin's context, unless you are sure that
++    /// while traversing the AST to get to it from the original plugin's context, you did not go
++    /// through another submodule.
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<Self::Item>;
++}
++
++impl BodyItems for ast::ModuleBody {
++    type Item = ModuleItem;
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<ModuleItem> {
++        self.items(db).elements(db)
++    }
++}
++
++impl BodyItems for ast::TraitBody {
++    type Item = TraitItem;
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<TraitItem> {
++        self.items(db).elements(db)
++    }
++}
++
++impl BodyItems for ast::ImplBody {
++    type Item = ImplItem;
++    fn items_vec(&self, db: &dyn SyntaxGroup) -> Vec<ImplItem> {
++        self.items(db).elements(db)
++    }
++}
+2026-04-17 04:44:58,567 - INFO - Grading answer for starkware-libs__cairo-4909...
+2026-04-17 04:44:58,584 - INFO - report: {'starkware-libs__cairo-4909': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['contract::test::test_starknet_keccak', 'allowed_libfuncs::test::all_list_includes_all_supported', 'allowed_libfuncs::test::libfunc_lists_include_only_supported_libfuncs', 'contract_class::test::test_serialization', 'felt252_serde::test::test_long_ids', 'felt252_serde::test::test_libfunc_serde', 'casm_contract_class::test::test_casm_contract_from_contract_class_failure::_test_contract_test_contract_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_failure::_new_syntax_test_contract_counter_contract_expects', 'plugin::test::expand_component::no_storage', 'plugin::test::expand_component::no_body', 'plugin::test::expand_contract::no_body', 'felt252_serde::test::test_felt252_serde::_hello_starknet_expects', 'felt252_serde::test::test_felt252_serde::_test_contract_test_contract_expects', 'felt252_serde::test::test_felt252_serde::_with_ownable_expects', 'felt252_serde::test::test_felt252_serde::_new_syntax_test_contract_expects', 'felt252_serde::test::test_felt252_serde::_upgradable_counter_expects', 'felt252_serde::test::test_felt252_serde::_with_erc20_expects', 'felt252_serde::test::test_felt252_serde::_ownable_erc20_expects', 'felt252_serde::test::test_felt252_serde::_mintable_expects', 'felt252_serde::test::test_felt252_serde::_multi_component_contract_with_4_components_expects', 'plugin::test::expand_contract::external_event', 'plugin::test::expand_contract::raw_output', 'plugin::test::expand_contract::l1_handler', 'contract::test::test_contract_resolving', 'plugin::test::expand_contract::contract', 'plugin::test::expand_component::embeddable_as', 'plugin::test::expand_contract::events', 'plugin::test::expand_component::diagnostics', 'plugin::test::expand_contract::with_component', 'plugin::test::expand_contract::user_defined_types', 'plugin::test::expand_component::component', 'plugin::test::expand_contract::dispatcher', 'plugin::test::expand_contract::storage', 'plugin::test::expand_contract::interfaces', 'plugin::test::expand_contract_from_crate::with_erc20', 'plugin::test::expand_contract_from_crate::ownable_erc20', 'plugin::test::expand_contract_from_crate::with_ownable', 'plugin::test::expand_contract_from_crate::hello_starknet', 'plugin::test::expand_contract_from_crate::mintable', 'plugin::test::expand_contract_from_crate::multi_component', 'plugin::test::expand_contract_from_crate::upgradable_counter', 'plugin::test::expand_contract::embedded_impl', 'plugin::test::expand_contract::with_component_diagnostics', 'plugin::test::expand_contract::diagnostics', 'abi::test::abi_failures::abi_failures', 'contract_class::test::test_compile_path_from_contracts_crate::_minimal_contract_minimal_contract_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_minimal_contract_minimal_contract_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_hello_starknet_hello_starknet_expects', 'contract_class::test::test_full_contract_deserialization_from_contracts_crate::_hello_starknet_hello_starknet_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_hello_starknet_hello_starknet_expects', 'contract_class::test::test_full_contract_deserialization_from_contracts_crate::_test_contract_test_contract_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_test_contract_test_contract_expects', 'contract_class::test::test_full_contract_deserialization_from_contracts_crate::_with_ownable_ownable_balance_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_with_ownable_ownable_balance_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_new_syntax_test_contract_counter_contract_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_test_contract_test_contract_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_with_ownable_ownable_balance_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_new_syntax_test_contract_counter_contract_expects', 'contract_class::test::test_full_contract_deserialization_from_contracts_crate::_upgradable_counter_counter_contract_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_upgradable_counter_counter_contract_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_token_bridge_token_bridge_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_account_account_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_upgradable_counter_counter_contract_expects', 'contract_class::test::test_full_contract_deserialization_from_contracts_crate::_erc20_erc_20_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_token_bridge_token_bridge_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_erc20_erc_20_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_account_account_expects', 'contract_class::test::test_full_contract_deserialization_from_contracts_crate::_with_erc20_erc20_contract_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_with_erc20_erc20_contract_expects', 'contract_class::test::test_full_contract_deserialization_from_contracts_crate::_ownable_erc20_ownable_erc20_contract_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_erc20_erc_20_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_ownable_erc20_ownable_erc20_contract_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_mintable_mintable_erc20_ownable_expects', 'contract_class::test::test_full_contract_deserialization_from_contracts_crate::_mintable_mintable_erc20_ownable_expects', 'contract_class::test::test_full_contract_deserialization_from_contracts_crate::_multi_component_contract_with_4_components_expects', 'contract_class::test::test_compile_path_from_contracts_crate::_multi_component_contract_with_4_components_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_with_erc20_erc20_contract_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_ownable_erc20_ownable_erc20_contract_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_mintable_mintable_erc20_ownable_expects', 'casm_contract_class::test::test_casm_contract_from_contract_class_from_contracts_crate::_multi_component_contract_with_4_components_expects'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for starkware-libs__cairo-4909: resolved: True
+2026-04-17 04:44:58,584 - INFO - Attempting to stop container rustb.eval.starkware-libs__cairo-4909.gold_run1...
+2026-04-17 04:45:29,188 - INFO - Attempting to remove container rustb.eval.starkware-libs__cairo-4909.gold_run1...
+2026-04-17 04:45:29,312 - INFO - Container rustb.eval.starkware-libs__cairo-4909.gold_run1 removed.
+2026-04-17 04:45:29,312 - INFO - Attempting to remove image rustbench/starkware-libs__cairo:pr-4909...
+2026-04-17 04:45:30,153 - INFO - Image rustbench/starkware-libs__cairo:pr-4909 removed.

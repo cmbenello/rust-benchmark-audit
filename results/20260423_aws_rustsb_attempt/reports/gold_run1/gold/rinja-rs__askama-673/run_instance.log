@@ -1,0 +1,461 @@
+2026-04-17 09:14:32,989 - INFO - Environment image rustb.env.x86_64.rinja-rs_askama:latest found for rinja-rs__askama-673
+Building instance image rustbench/rinja-rs__askama:pr-673 for rinja-rs__askama-673
+2026-04-17 09:29:01,745 - INFO - Creating container for rinja-rs__askama-673...
+2026-04-17 09:29:01,894 - INFO - Container for rinja-rs__askama-673 created: 65cb26c0033a0f064ac39fb4966c6d9fb09e952a8b32aee2534f5b4162157504
+2026-04-17 09:29:02,123 - INFO - Container for rinja-rs__askama-673 started: 65cb26c0033a0f064ac39fb4966c6d9fb09e952a8b32aee2534f5b4162157504
+2026-04-17 09:29:02,124 - INFO - Intermediate patch for rinja-rs__askama-673 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-673/patch.diff, now applying to container...
+2026-04-17 09:29:02,371 - INFO - >>>>> Applied Patch:
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/generator.rs...
+Checking patch askama_shared/src/lib.rs...
+Checking patch askama_shared/src/parser.rs...
+Checking patch askama_shared/src/parser.rs...
+Checking patch askama_shared/src/parser.rs...
+Checking patch book/src/configuration.md...
+Checking patch book/src/configuration.md...
+Checking patch book/src/configuration.md...
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/generator.rs cleanly.
+Applied patch askama_shared/src/lib.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch askama_shared/src/parser.rs cleanly.
+Applied patch book/src/configuration.md cleanly.
+Applied patch book/src/configuration.md cleanly.
+Applied patch book/src/configuration.md cleanly.
+
+2026-04-17 09:29:02,420 - INFO - Git diff before:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index a8636fa..9174a77 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -246,7 +246,7 @@ struct Generator<'a, S: std::hash::BuildHasher> {
+     next_ws: Option<&'a str>,
+     // Whitespace suppression from the previous non-literal. Will be used to
+     // determine whether to flush prefix whitespace from the next literal.
+-    skip_ws: bool,
++    skip_ws: WhitespaceHandling,
+     // If currently in a block, this will contain the name of a potential parent block
+     super_block: Option<(&'a str, usize)>,
+     // buffer for writable
+@@ -272,7 +272,7 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+             heritage,
+             locals,
+             next_ws: None,
+-            skip_ws: false,
++            skip_ws: WhitespaceHandling::Preserve,
+             super_block: None,
+             buf_writable: vec![],
+             named: 0,
+@@ -1230,13 +1230,22 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+     fn visit_lit(&mut self, lws: &'a str, val: &'a str, rws: &'a str) {
+         assert!(self.next_ws.is_none());
+         if !lws.is_empty() {
+-            if self.skip_ws {
+-                self.skip_ws = false;
+-            } else if val.is_empty() {
+-                assert!(rws.is_empty());
+-                self.next_ws = Some(lws);
+-            } else {
+-                self.buf_writable.push(Writable::Lit(lws));
++            match self.skip_ws {
++                WhitespaceHandling::Suppress => {
++                    self.skip_ws = WhitespaceHandling::Preserve;
++                }
++                _ if val.is_empty() => {
++                    assert!(rws.is_empty());
++                    self.next_ws = Some(lws);
++                }
++                WhitespaceHandling::Preserve => self.buf_writable.push(Writable::Lit(lws)),
++                WhitespaceHandling::Minimize => {
++                    self.buf_writable
++                        .push(Writable::Lit(match lws.contains('\n') {
++                            true => "\n",
++                            false => " ",
++                        }))
++                }
+             }
+         }
+ 
+@@ -1819,11 +1828,12 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+         self.prepare_ws(ws);
+     }
+ 
+-    fn should_trim_ws(&self, ws: Option<Whitespace>) -> bool {
++    fn should_trim_ws(&self, ws: Option<Whitespace>) -> WhitespaceHandling {
+         match ws {
+-            Some(Whitespace::Trim) => true,
+-            Some(Whitespace::Preserve) => false,
+-            None => self.whitespace == WhitespaceHandling::Suppress,
++            Some(Whitespace::Suppress) => WhitespaceHandling::Suppress,
++            Some(Whitespace::Preserve) => WhitespaceHandling::Preserve,
++            Some(Whitespace::Minimize) => WhitespaceHandling::Minimize,
++            None => self.whitespace,
+         }
+     }
+ 
+@@ -1837,11 +1847,24 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+ 
+         // If `whitespace` is set to `suppress`, we keep the whitespace characters only if there is
+         // a `+` character.
+-        if !self.should_trim_ws(ws.0) {
+-            let val = self.next_ws.unwrap();
+-            if !val.is_empty() {
+-                self.buf_writable.push(Writable::Lit(val));
++        match self.should_trim_ws(ws.0) {
++            WhitespaceHandling::Preserve => {
++                let val = self.next_ws.unwrap();
++                if !val.is_empty() {
++                    self.buf_writable.push(Writable::Lit(val));
++                }
++            }
++            WhitespaceHandling::Minimize => {
++                let val = self.next_ws.unwrap();
++                if !val.is_empty() {
++                    self.buf_writable
++                        .push(Writable::Lit(match val.contains('\n') {
++                            true => "\n",
++                            false => " ",
++                        }));
++                }
+             }
++            WhitespaceHandling::Suppress => {}
+         }
+         self.next_ws = None;
+     }
+diff --git a/askama_shared/src/lib.rs b/askama_shared/src/lib.rs
+index 874be9d..3e87242 100644
+--- a/askama_shared/src/lib.rs
++++ b/askama_shared/src/lib.rs
+@@ -314,6 +314,10 @@ pub(crate) enum WhitespaceHandling {
+     Preserve,
+     /// It'll remove all the whitespace characters before and after the jinja block.
+     Suppress,
++    /// It'll remove all the whitespace characters except one before and after the jinja blocks.
++    /// If there is a newline character, the preserved character in the trimmed characters, it will
++    /// the one preserved.
++    Minimize,
+ }
+ 
+ impl Default for WhitespaceHandling {
+diff --git a/askama_shared/src/parser.rs b/askama_shared/src/parser.rs
+index 4654e82..b0177be 100644
+--- a/askama_shared/src/parser.rs
++++ b/askama_shared/src/parser.rs
+@@ -132,14 +132,16 @@ pub(crate) enum Target<'a> {
+ #[derive(Clone, Copy, Debug, PartialEq)]
+ pub(crate) enum Whitespace {
+     Preserve,
+-    Trim,
++    Suppress,
++    Minimize,
+ }
+ 
+ impl From<char> for Whitespace {
+     fn from(c: char) -> Self {
+         match c {
+             '+' => Self::Preserve,
+-            '-' => Self::Trim,
++            '-' => Self::Suppress,
++            '~' => Self::Minimize,
+             _ => panic!("unsupported `Whitespace` conversion"),
+         }
+     }
+@@ -677,7 +679,7 @@ expr_prec_layer!(expr_and, expr_compare, "&&");
+ expr_prec_layer!(expr_or, expr_and, "||");
+ 
+ fn expr_handle_ws(i: &str) -> IResult<&str, Whitespace> {
+-    alt((char('-'), char('+')))(i).map(|(s, r)| (s, Whitespace::from(r)))
++    alt((char('-'), char('+'), char('~')))(i).map(|(s, r)| (s, Whitespace::from(r)))
+ }
+ 
+ fn expr_any(i: &str) -> IResult<&str, Expr<'_>> {
+@@ -1135,9 +1137,11 @@ fn block_comment<'a>(i: &'a str, s: &State<'_>) -> IResult<&'a str, Node<'a>> {
+     ));
+     let (i, (_, (pws, tail, _))) = p(i)?;
+     let nws = if tail.ends_with('-') {
+-        Some(Whitespace::Trim)
++        Some(Whitespace::Suppress)
+     } else if tail.ends_with('+') {
+         Some(Whitespace::Preserve)
++    } else if tail.ends_with('~') {
++        Some(Whitespace::Minimize)
+     } else {
+         None
+     };
+diff --git a/book/src/configuration.md b/book/src/configuration.md
+index acc9751..abf276d 100644
+--- a/book/src/configuration.md
++++ b/book/src/configuration.md
+@@ -11,7 +11,7 @@ This example file demonstrates the default configuration:
+ [general]
+ # Directories to search for templates, relative to the crate root.
+ dirs = ["templates"]
+-# Unless you add a `-` in a block, whitespace won't be trimmed.
++# Unless you add a `-` in a block, whitespace characters won't be trimmed.
+ whitespace = "preserve"
+ ```
+ 
+@@ -24,7 +24,7 @@ whitespace should be suppressed before or after a block. For example:
+ 
+ {%- if something %}
+ Hello
+-(% endif %}
++{% endif %}
+ ```
+ 
+ In the template above, only the whitespace between `<div>` and `{%-` will be
+@@ -35,11 +35,26 @@ characters, you can use the `+` operator:
+ ```jinja
+ {% if something +%}
+ Hello
+-(%+ endif %}
++{%+ endif %}
+ ```
+ 
+ In this example, `Hello` will be surrounded with newline characters.
+ 
++There is a third possibility: in case you want to suppress all whitespace
++characters except one, you can use `~`:
++
++```jinja
++{% if something ~%}
++Hello
++{%~ endif %}
++```
++
++To be noted, if one of the trimmed characters is a newline, then the only
++character remaining will be a newline.
++
++If you want this to be the default behaviour, you can set `whitespace` to
++`"minimize"`.
++
+ Here is an example that defines two custom syntaxes:
+ 
+ ```toml
+2026-04-17 09:29:02,421 - INFO - Eval script for rinja-rs__askama-673 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-673/eval.sh; copying to container...
+2026-04-17 09:31:26,419 - INFO - Test runtime: 143.88 seconds
+2026-04-17 09:31:26,419 - INFO - Test output for rinja-rs__askama-673 written to logs/run_evaluation/gold_run1/gold/rinja-rs__askama-673/test_output.txt
+2026-04-17 09:31:26,560 - INFO - Git diff after:
+diff --git a/askama_shared/src/generator.rs b/askama_shared/src/generator.rs
+index a8636fa..9174a77 100644
+--- a/askama_shared/src/generator.rs
++++ b/askama_shared/src/generator.rs
+@@ -246,7 +246,7 @@ struct Generator<'a, S: std::hash::BuildHasher> {
+     next_ws: Option<&'a str>,
+     // Whitespace suppression from the previous non-literal. Will be used to
+     // determine whether to flush prefix whitespace from the next literal.
+-    skip_ws: bool,
++    skip_ws: WhitespaceHandling,
+     // If currently in a block, this will contain the name of a potential parent block
+     super_block: Option<(&'a str, usize)>,
+     // buffer for writable
+@@ -272,7 +272,7 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+             heritage,
+             locals,
+             next_ws: None,
+-            skip_ws: false,
++            skip_ws: WhitespaceHandling::Preserve,
+             super_block: None,
+             buf_writable: vec![],
+             named: 0,
+@@ -1230,13 +1230,22 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+     fn visit_lit(&mut self, lws: &'a str, val: &'a str, rws: &'a str) {
+         assert!(self.next_ws.is_none());
+         if !lws.is_empty() {
+-            if self.skip_ws {
+-                self.skip_ws = false;
+-            } else if val.is_empty() {
+-                assert!(rws.is_empty());
+-                self.next_ws = Some(lws);
+-            } else {
+-                self.buf_writable.push(Writable::Lit(lws));
++            match self.skip_ws {
++                WhitespaceHandling::Suppress => {
++                    self.skip_ws = WhitespaceHandling::Preserve;
++                }
++                _ if val.is_empty() => {
++                    assert!(rws.is_empty());
++                    self.next_ws = Some(lws);
++                }
++                WhitespaceHandling::Preserve => self.buf_writable.push(Writable::Lit(lws)),
++                WhitespaceHandling::Minimize => {
++                    self.buf_writable
++                        .push(Writable::Lit(match lws.contains('\n') {
++                            true => "\n",
++                            false => " ",
++                        }))
++                }
+             }
+         }
+ 
+@@ -1819,11 +1828,12 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+         self.prepare_ws(ws);
+     }
+ 
+-    fn should_trim_ws(&self, ws: Option<Whitespace>) -> bool {
++    fn should_trim_ws(&self, ws: Option<Whitespace>) -> WhitespaceHandling {
+         match ws {
+-            Some(Whitespace::Trim) => true,
+-            Some(Whitespace::Preserve) => false,
+-            None => self.whitespace == WhitespaceHandling::Suppress,
++            Some(Whitespace::Suppress) => WhitespaceHandling::Suppress,
++            Some(Whitespace::Preserve) => WhitespaceHandling::Preserve,
++            Some(Whitespace::Minimize) => WhitespaceHandling::Minimize,
++            None => self.whitespace,
+         }
+     }
+ 
+@@ -1837,11 +1847,24 @@ impl<'a, S: std::hash::BuildHasher> Generator<'a, S> {
+ 
+         // If `whitespace` is set to `suppress`, we keep the whitespace characters only if there is
+         // a `+` character.
+-        if !self.should_trim_ws(ws.0) {
+-            let val = self.next_ws.unwrap();
+-            if !val.is_empty() {
+-                self.buf_writable.push(Writable::Lit(val));
++        match self.should_trim_ws(ws.0) {
++            WhitespaceHandling::Preserve => {
++                let val = self.next_ws.unwrap();
++                if !val.is_empty() {
++                    self.buf_writable.push(Writable::Lit(val));
++                }
++            }
++            WhitespaceHandling::Minimize => {
++                let val = self.next_ws.unwrap();
++                if !val.is_empty() {
++                    self.buf_writable
++                        .push(Writable::Lit(match val.contains('\n') {
++                            true => "\n",
++                            false => " ",
++                        }));
++                }
+             }
++            WhitespaceHandling::Suppress => {}
+         }
+         self.next_ws = None;
+     }
+diff --git a/askama_shared/src/lib.rs b/askama_shared/src/lib.rs
+index 874be9d..3e87242 100644
+--- a/askama_shared/src/lib.rs
++++ b/askama_shared/src/lib.rs
+@@ -314,6 +314,10 @@ pub(crate) enum WhitespaceHandling {
+     Preserve,
+     /// It'll remove all the whitespace characters before and after the jinja block.
+     Suppress,
++    /// It'll remove all the whitespace characters except one before and after the jinja blocks.
++    /// If there is a newline character, the preserved character in the trimmed characters, it will
++    /// the one preserved.
++    Minimize,
+ }
+ 
+ impl Default for WhitespaceHandling {
+diff --git a/askama_shared/src/parser.rs b/askama_shared/src/parser.rs
+index 4654e82..b0177be 100644
+--- a/askama_shared/src/parser.rs
++++ b/askama_shared/src/parser.rs
+@@ -132,14 +132,16 @@ pub(crate) enum Target<'a> {
+ #[derive(Clone, Copy, Debug, PartialEq)]
+ pub(crate) enum Whitespace {
+     Preserve,
+-    Trim,
++    Suppress,
++    Minimize,
+ }
+ 
+ impl From<char> for Whitespace {
+     fn from(c: char) -> Self {
+         match c {
+             '+' => Self::Preserve,
+-            '-' => Self::Trim,
++            '-' => Self::Suppress,
++            '~' => Self::Minimize,
+             _ => panic!("unsupported `Whitespace` conversion"),
+         }
+     }
+@@ -677,7 +679,7 @@ expr_prec_layer!(expr_and, expr_compare, "&&");
+ expr_prec_layer!(expr_or, expr_and, "||");
+ 
+ fn expr_handle_ws(i: &str) -> IResult<&str, Whitespace> {
+-    alt((char('-'), char('+')))(i).map(|(s, r)| (s, Whitespace::from(r)))
++    alt((char('-'), char('+'), char('~')))(i).map(|(s, r)| (s, Whitespace::from(r)))
+ }
+ 
+ fn expr_any(i: &str) -> IResult<&str, Expr<'_>> {
+@@ -1135,9 +1137,11 @@ fn block_comment<'a>(i: &'a str, s: &State<'_>) -> IResult<&'a str, Node<'a>> {
+     ));
+     let (i, (_, (pws, tail, _))) = p(i)?;
+     let nws = if tail.ends_with('-') {
+-        Some(Whitespace::Trim)
++        Some(Whitespace::Suppress)
+     } else if tail.ends_with('+') {
+         Some(Whitespace::Preserve)
++    } else if tail.ends_with('~') {
++        Some(Whitespace::Minimize)
+     } else {
+         None
+     };
+diff --git a/book/src/configuration.md b/book/src/configuration.md
+index acc9751..abf276d 100644
+--- a/book/src/configuration.md
++++ b/book/src/configuration.md
+@@ -11,7 +11,7 @@ This example file demonstrates the default configuration:
+ [general]
+ # Directories to search for templates, relative to the crate root.
+ dirs = ["templates"]
+-# Unless you add a `-` in a block, whitespace won't be trimmed.
++# Unless you add a `-` in a block, whitespace characters won't be trimmed.
+ whitespace = "preserve"
+ ```
+ 
+@@ -24,7 +24,7 @@ whitespace should be suppressed before or after a block. For example:
+ 
+ {%- if something %}
+ Hello
+-(% endif %}
++{% endif %}
+ ```
+ 
+ In the template above, only the whitespace between `<div>` and `{%-` will be
+@@ -35,11 +35,26 @@ characters, you can use the `+` operator:
+ ```jinja
+ {% if something +%}
+ Hello
+-(%+ endif %}
++{%+ endif %}
+ ```
+ 
+ In this example, `Hello` will be surrounded with newline characters.
+ 
++There is a third possibility: in case you want to suppress all whitespace
++characters except one, you can use `~`:
++
++```jinja
++{% if something ~%}
++Hello
++{%~ endif %}
++```
++
++To be noted, if one of the trimmed characters is a newline, then the only
++character remaining will be a newline.
++
++If you want this to be the default behaviour, you can set `whitespace` to
++`"minimize"`.
++
+ Here is an example that defines two custom syntaxes:
+ 
+ ```toml
+2026-04-17 09:31:26,560 - INFO - Grading answer for rinja-rs__askama-673...
+2026-04-17 09:31:26,561 - INFO - report: {'rinja-rs__askama-673': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['filters::json::tests::test_json', 'filters::tests::test_abs', 'filters::tests::test_center', 'filters::tests::test_capitalize', 'filters::tests::test_filesizeformat', 'filters::tests::test_indent', 'filters::tests::test_into_f64', 'filters::tests::test_into_isize', 'filters::tests::test_join', 'filters::tests::test_linebreaks', 'filters::tests::test_linebreaksbr', 'filters::tests::test_lower', 'filters::tests::test_paragraphbreaks', 'filters::tests::test_trim', 'filters::tests::test_truncate', 'filters::tests::test_upper', 'filters::tests::test_urlencoding', 'filters::tests::test_wordcount', 'input::tests::test_double_ext', 'input::tests::test_ext', 'input::tests::test_only_jinja_ext', 'input::tests::test_skip_jinja_ext', 'parser::tests::change_delimiters_parse_filter', 'parser::tests::test_invalid_block - should panic', 'parser::tests::test_parse_comments', 'parser::tests::test_parse_const', 'parser::tests::test_parse_numbers', 'parser::tests::test_associativity', 'parser::tests::test_parse_filter', 'parser::tests::test_parse_path_call', 'parser::tests::test_ws_splitter', 'parser::tests::test_parse_root_path', 'parser::tests::test_parse_var', 'parser::tests::test_parse_path', 'parser::tests::test_parse_var_call', 'tests::dyn_template', 'tests::add_syntax_two', 'tests::duplicated_syntax_name_on_list - should panic', 'tests::add_syntax', 'tests::find_absolute', 'parser::tests::test_odd_calls', 'tests::find_relative', 'tests::find_relative_nonexistent - should panic', 'tests::escape_modes', 'tests::find_relative_sub', 'tests::get_source', 'tests::test_default_config', 'tests::is_not_exist_default_syntax - should panic', 'tests::test_config_dirs', 'tests::use_default_at_syntax_name - should panic', 'parser::tests::test_precedence', 'tests::test_whitespace_parsing', 'parser::tests::test_parse_tuple'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for rinja-rs__askama-673: resolved: True
+2026-04-17 09:31:26,561 - INFO - Attempting to stop container rustb.eval.rinja-rs__askama-673.gold_run1...
+2026-04-17 09:32:14,560 - INFO - Attempting to remove container rustb.eval.rinja-rs__askama-673.gold_run1...
+2026-04-17 09:32:14,692 - INFO - Container rustb.eval.rinja-rs__askama-673.gold_run1 removed.
+2026-04-17 09:32:14,692 - INFO - Attempting to remove image rustbench/rinja-rs__askama:pr-673...
+2026-04-17 09:32:15,691 - INFO - Image rustbench/rinja-rs__askama:pr-673 removed.

@@ -1,0 +1,57 @@
+{
+    "starkware-libs__cairo-3264": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "optimizations::match_optimizer::test::match_optimizer::arm_pattern_destructure",
+                    "test::lowering::implicits",
+                    "optimizations::match_optimizer::test::match_optimizer::option"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "test::lowering_phases::tests",
+                    "test::lowering::rebindings",
+                    "test::lowering::assignment",
+                    "test::lowering::tuple",
+                    "test::lowering::enums",
+                    "test::lowering::error_propagate",
+                    "test::lowering::constant",
+                    "optimizations::delay_var_def::test::delay_var_def::move_literals",
+                    "lower::usage::test::inlining::usage",
+                    "test::lowering::loop_",
+                    "inline::test::inlining::inline_diagnostics",
+                    "test::lowering::call",
+                    "test::lowering::destruct",
+                    "test::lowering::panic",
+                    "test::lowering::members",
+                    "test::lowering::struct_",
+                    "test::lowering::generics",
+                    "test::lowering::if_",
+                    "test::lowering::arm_pattern_destructure",
+                    "test::lowering::snapshot",
+                    "test::lowering::borrow_check",
+                    "lower::generated_test::inlining::loop_",
+                    "test::lowering::extern_",
+                    "test::lowering::tests",
+                    "test::lowering::match_",
+                    "inline::test::inlining::inline"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

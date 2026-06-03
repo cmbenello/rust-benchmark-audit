@@ -1,0 +1,1165 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch cargo-dist/src/lib.rs...
+Checking patch cargo-dist/tests/cli-tests.rs...
+Checking patch cargo-dist/tests/gallery/dist/powershell.rs...
+Checking patch cargo-dist/tests/gallery/dist/shell.rs...
+Checking patch cargo-dist/tests/snapshots/akaikatana_basic.snap...
+Checking patch cargo-dist/tests/snapshots/akaikatana_basic.snap...
+Checking patch cargo-dist/tests/snapshots/akaikatana_musl.snap...
+Checking patch cargo-dist/tests/snapshots/akaikatana_one_alias_among_many_binaries.snap...
+Checking patch cargo-dist/tests/snapshots/akaikatana_one_alias_among_many_binaries.snap...
+Checking patch cargo-dist/tests/snapshots/akaikatana_two_bin_aliases.snap...
+Checking patch cargo-dist/tests/snapshots/akaikatana_two_bin_aliases.snap...
+Checking patch cargo-dist/tests/snapshots/akaikatana_updaters.snap...
+Checking patch cargo-dist/tests/snapshots/akaikatana_updaters.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_abyss.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_abyss.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_abyss_only.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_abyss_only.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_alias.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_alias.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_alias_ignores_missing_bins.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_alias_ignores_missing_bins.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_basic.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_basic.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_basic_lies.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_basic_lies.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_build_setup_steps.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_build_setup_steps.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_checksum_blake2b.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_checksum_blake2s.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_checksum_sha3_256.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_checksum_sha3_512.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_cross1.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_cross1.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_cross2.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_cross2.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_disable_source_tarball.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_disable_source_tarball.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_dist_url_override.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_dist_url_override.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_generic_workspace_basic.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_generic_workspace_basic.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_generic_workspace_basic.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_generic_workspace_basic.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_homebrew_packages.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_homebrew_packages.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_musl.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_musl_no_gnu.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_no_homebrew_publish.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_no_homebrew_publish.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_several_aliases.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_several_aliases.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign_prod.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign_prod.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_updaters.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_updaters.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_global_build_job.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_global_build_job.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_host_job.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_host_job.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_local_build_job.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_local_build_job.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_plan_job.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_plan_job.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_publish_job.snap...
+Checking patch cargo-dist/tests/snapshots/axolotlsay_user_publish_job.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_cargo_home.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_cargo_home.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_env_no_subdir.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_env_no_subdir.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_env_subdir.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_env_subdir.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_env_subdir_space.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_env_subdir_space.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_env_subdir_space_deeper.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_env_subdir_space_deeper.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_fallback_no_env_var_set.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_fallback_no_env_var_set.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_home_subdir_deeper.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_home_subdir_deeper.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_home_subdir_min.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_home_subdir_min.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_home_subdir_space.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_home_subdir_space.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_home_subdir_space_deeper.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_home_subdir_space_deeper.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_no_fallback_taken.snap...
+Checking patch cargo-dist/tests/snapshots/install_path_no_fallback_taken.snap...
+Applied patch cargo-dist/src/lib.rs cleanly.
+Applied patch cargo-dist/tests/cli-tests.rs cleanly.
+Applied patch cargo-dist/tests/gallery/dist/powershell.rs cleanly.
+Applied patch cargo-dist/tests/gallery/dist/shell.rs cleanly.
+Applied patch cargo-dist/tests/snapshots/akaikatana_basic.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/akaikatana_basic.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/akaikatana_musl.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/akaikatana_one_alias_among_many_binaries.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/akaikatana_one_alias_among_many_binaries.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/akaikatana_two_bin_aliases.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/akaikatana_two_bin_aliases.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/akaikatana_updaters.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/akaikatana_updaters.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_abyss.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_abyss.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_abyss_only.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_abyss_only.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_alias.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_alias.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_alias_ignores_missing_bins.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_alias_ignores_missing_bins.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_basic.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_basic.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_basic_lies.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_basic_lies.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_build_setup_steps.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_build_setup_steps.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_checksum_blake2b.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_checksum_blake2s.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_checksum_sha3_256.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_checksum_sha3_512.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_cross1.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_cross1.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_cross2.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_cross2.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_disable_source_tarball.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_disable_source_tarball.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_dist_url_override.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_dist_url_override.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_edit_existing.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_generic_workspace_basic.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_generic_workspace_basic.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_generic_workspace_basic.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_generic_workspace_basic.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_homebrew_packages.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_homebrew_packages.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_musl.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_musl_no_gnu.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_no_homebrew_publish.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_no_homebrew_publish.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_several_aliases.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_several_aliases.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign_prod.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_ssldotcom_windows_sign_prod.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_updaters.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_updaters.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_global_build_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_global_build_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_host_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_host_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_local_build_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_local_build_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_plan_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_plan_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_publish_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/axolotlsay_user_publish_job.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_cargo_home.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_cargo_home.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_env_no_subdir.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_env_no_subdir.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_env_subdir.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_env_subdir.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_env_subdir_space.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_env_subdir_space.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_env_subdir_space_deeper.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_env_subdir_space_deeper.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_fallback_no_env_var_set.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_fallback_no_env_var_set.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_home_subdir_deeper.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_home_subdir_deeper.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_home_subdir_min.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_home_subdir_min.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_home_subdir_space.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_home_subdir_space.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_home_subdir_space_deeper.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_home_subdir_space_deeper.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_no_fallback_taken.snap cleanly.
+Applied patch cargo-dist/tests/snapshots/install_path_no_fallback_taken.snap cleanly.
++ cd cargo-dist
++ cargo test --no-fail-fast --all-features
+warning: `/workspace/.cargo/config` is deprecated in favor of `config.toml`
+note: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: `/root/.cargo/config` is deprecated in favor of `config.toml`
+note: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+ Downloading crates ...
+  Downloaded adler2 v2.0.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded anstyle-parse v0.2.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded addr2line v0.24.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded anstyle v1.0.10 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded ahash v0.8.11 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded colorchoice v1.0.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustc-hash v2.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded http-body-util v0.1.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded powerfmt v0.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded futures-task v0.3.31 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded num-traits v0.2.19 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_provider v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded pkg-config v0.3.31 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded lock_api v0.4.12 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded linked-hash-map v0.5.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded libyml v0.0.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded image v0.25.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tokio v1.42.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded regex-automata v0.4.9 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded libc v0.2.169 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zstd-sys v2.0.13+zstd.1.5.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded petgraph v0.6.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded spdx v0.10.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded sha3 v0.10.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded encoding_rs v0.8.35 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded linux-raw-sys v0.4.14 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded regex v1.11.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded lzma-sys v0.1.20 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded lexopt v0.3.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded lazy_static v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded keccak v0.1.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded itoa v1.0.14 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded itertools v0.11.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded is_terminal_polyfill v1.70.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded is_ci v1.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded is-terminal v0.4.13 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded ipnet v2.10.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded inout v0.1.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded indexmap v2.7.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded ring v0.17.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded indexmap v1.9.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded include_dir_macros v0.7.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded include_dir v0.7.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded idna_adapter v1.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded idna v1.0.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded ident_case v1.0.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_provider_macros v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded iana-time-zone v0.1.61 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded hyper-util v0.1.10 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded hyper-rustls v0.27.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded hyper v1.5.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded humantime v2.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zstd-safe v7.2.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zstd-safe v5.0.2+zstd.1.5.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zstd v0.13.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zip v0.6.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustc-cfg v0.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded reqwest v0.12.9 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rand v0.8.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded quinn-proto v0.11.9 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded proc-macro2 v1.0.92 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded pin-project-internal v1.1.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded password-hash v0.4.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded parse-changelog v0.6.10 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded oro-package-spec v0.3.34 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded itertools v0.13.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded httparse v1.9.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zstd v0.11.2+zstd.1.5.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded walkdir v2.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded version_check v0.9.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded quinn v0.11.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded pin-project-lite v0.2.15 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded pathdiff v0.2.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded parking_lot v0.12.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded owo-colors v4.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded oro-common v0.3.34 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded openssl-probe v0.1.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded object v0.36.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded miette-derive v5.10.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded unicode-width v0.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded unicode-width v0.1.14 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded syn v2.0.90 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustls v0.23.20 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustix v0.38.42 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded litemap v0.7.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded jobserver v0.1.32 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded insta v1.41.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded quote v1.0.37 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded quinn-udp v0.5.9 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded quick-error v1.2.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded ppv-lite86 v0.2.20 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded pin-utils v0.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded parking_lot_core v0.9.10 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded overload v0.1.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded miette v5.10.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded memo-map v0.3.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded memchr v2.7.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded mach_object v0.1.17 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tracing v0.1.41 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded toml_edit v0.22.22 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded time v0.3.37 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded syn v1.0.109 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded serde_yml v0.0.11 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded serde_json v1.0.133 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded serde v1.0.216 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustls-webpki v0.102.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded bzip2-sys v0.1.11+1.0.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded pin-project v1.1.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded peresil v0.3.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded once_cell v1.20.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded miette v7.4.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_properties_data v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_properties v1.5.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded log v0.4.22 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zerovec-derive v0.10.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded uuid v1.11.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded utf8parse v0.2.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded utf8_iter v1.0.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded utf16_iter v1.0.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded url v2.5.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded untrusted v0.9.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded unicode-segmentation v1.12.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded unicode-ident v1.0.14 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded typenum v1.17.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded try-lock v0.2.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tracing-subscriber v0.3.19 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tracing-log v0.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tracing-core v0.1.33 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tracing-attributes v0.1.28 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tower-service v0.3.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded toml_datetime v0.6.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded toml v0.8.19 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tinyvec_macros v0.1.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tinyvec v1.8.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tinystr v0.7.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded time-macros v0.2.19 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded time-core v0.1.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded thread_local v1.1.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded thiserror-impl v2.0.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded thiserror-impl v1.0.69 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded thiserror v2.0.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded thiserror v1.0.69 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded textwrap v0.16.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded terminal_size v0.4.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded termcolor v1.4.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tempfile v3.14.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded temp-dir v0.1.14 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded target-spec v3.2.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded target-lexicon v0.12.16 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tar v0.4.43 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded synstructure v0.13.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded sxd-xpath v0.4.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded sxd-document v0.3.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded strum_macros v0.26.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded strum v0.26.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded static_assertions v1.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded spin v0.9.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded socket2 v0.5.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded smallvec v1.13.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded similar v2.6.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded signal-hook-registry v1.4.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded sharded-slab v0.1.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded sha2 v0.10.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded serde_derive_internals v0.29.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded serde_derive v1.0.216 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded semver v1.0.24 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded self_cell v1.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded scroll_derive v0.12.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded scroll v0.12.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded schemars_derive v0.8.21 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded schemars v0.8.21 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded ryu v1.0.18 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustversion v1.0.18 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustls-pki-types v1.10.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustls-pemfile v2.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_normalizer_data v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_normalizer v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_locid_transform_data v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_locid_transform v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_locid v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded icu_collections v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded nix v0.29.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded minijinja v2.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded winnow v0.6.20 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded webpki-roots v0.26.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded unicode-linebreak v0.1.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded typed-arena v1.7.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tokio-rustls v0.26.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded tokio-macros v2.4.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded sync_wrapper v1.0.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded supports-unicode v3.0.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded supports-color v3.0.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded strsim v0.10.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded stable_deref_trait v1.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded slab v0.4.9 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded shlex v1.3.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded sha1 v0.10.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded serde_urlencoded v0.7.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustls-native-certs v0.8.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rustc-demangle v0.1.24 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded regex-syntax v0.8.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded gimli v0.31.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded chrono v0.4.39 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded axoasset v1.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded anyhow v1.0.94 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded aho-corasick v1.1.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded num-conv v0.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded nu-ansi-term v0.46.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded nom v7.1.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded node-semver v2.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded newline-converter v0.3.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded nested v0.1.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded mustache v0.9.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded mio v1.0.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded miniz_oxide v0.8.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded minimal-lexical v0.2.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded mime v0.3.17 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded miette-derive v7.4.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded log v0.3.9 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zerovec v0.10.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zeroize v1.8.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zerofrom-derive v0.1.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zerofrom v0.1.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zerocopy-derive v0.7.35 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded zerocopy v0.7.35 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded yoke-derive v0.7.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded yoke v0.7.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded xz2 v0.1.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded xattr v1.3.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded writeable v0.5.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded write16 v1.0.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded want v0.3.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rand_core v0.6.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded rand_chacha v0.3.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded supports-hyperlinks v3.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded subtle v2.6.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded strsim v0.11.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded shell-words v1.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded serde_spanned v0.6.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded http v1.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded hmac v0.12.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded hashbrown v0.15.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded hashbrown v0.12.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded guppy v0.17.10 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded goblin v0.8.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded getrandom v0.2.15 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded gazenot v0.3.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded futures-util v0.3.31 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded futures-channel v0.3.31 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded flate2 v1.0.35 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded env_logger v0.10.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded either v1.13.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded displaydoc v0.2.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded digest v0.10.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded dialoguer v0.11.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded derive_builder_core v0.11.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded derive_builder v0.11.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded darling_core v0.14.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded darling v0.14.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded crossterm v0.28.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded crc32fast v1.4.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded console v0.15.10 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded comfy-table v7.1.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded clap_derive v4.5.18 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded clap_builder v4.5.23 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded clap v4.5.23 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cfg-expr v0.17.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cc v1.2.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cargo_metadata v0.19.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cargo_metadata v0.18.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cargo-wix v0.3.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded camino v1.1.9 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded bzip2 v0.4.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded bytes v1.9.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded byteorder v1.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded bytemuck v1.20.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded blake2 v0.10.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded bitflags v2.6.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded base64ct v1.6.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded base64 v0.22.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded backtrace v0.3.74 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded backon v0.4.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded axoupdater v0.9.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded axocli v0.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded autocfg v1.4.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded anstyle-query v1.1.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded aes v0.8.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded form_urlencoded v1.2.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded encoding_rs_io v0.1.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded deranged v0.3.11 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded color-backtrace v0.6.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cipher v0.4.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cfg_aliases v0.2.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded backtrace-ext v0.2.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded axotag v0.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded plain v0.2.3 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded percent-encoding v2.3.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded pbkdf2 v0.11.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded homedir v0.3.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded guppy-workspace-hack v0.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded generic-array v0.14.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded futures-core v0.3.31 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded fnv v1.0.7 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded errno v0.3.10 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded derive_builder_macro v0.11.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded debug-ignore v1.0.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded current_platform v0.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded bytecount v0.6.8 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded block-buffer v0.10.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded axoprocess v0.2.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded http-body v1.0.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded heck v0.5.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded fixedbitset v0.4.2 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded filetime v0.2.25 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded fastrand v2.3.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded equivalent v1.0.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded dyn-clone v1.0.17 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded darling_macro v0.14.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded crypto-common v0.1.6 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cpufeatures v0.2.16 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded constant_time_eq v0.1.5 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded clap_lex v0.7.4 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded clap-cargo v0.14.1 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded cargo-platform v0.1.9 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded byteorder-lite v0.1.0 (registry `lts-repo-at-4bd60382b9`)
+  Downloaded anstream v0.6.18 (registry `lts-repo-at-4bd60382b9`)
+   Compiling unicode-ident v1.0.14
+   Compiling proc-macro2 v1.0.92
+   Compiling libc v0.2.169
+   Compiling cfg-if v1.0.0
+   Compiling serde v1.0.216
+   Compiling shlex v1.3.0
+   Compiling memchr v2.7.4
+   Compiling autocfg v1.4.0
+   Compiling once_cell v1.20.2
+   Compiling smallvec v1.13.2
+   Compiling itoa v1.0.14
+   Compiling version_check v0.9.5
+   Compiling pkg-config v0.3.31
+   Compiling typenum v1.17.0
+   Compiling stable_deref_trait v1.2.0
+   Compiling log v0.4.22
+   Compiling thiserror v1.0.69
+   Compiling bitflags v2.6.0
+   Compiling fnv v1.0.7
+   Compiling rustix v0.38.42
+   Compiling linux-raw-sys v0.4.14
+   Compiling ryu v1.0.18
+   Compiling subtle v2.6.1
+   Compiling serde_json v1.0.133
+   Compiling parking_lot_core v0.9.10
+   Compiling pin-project-lite v0.2.15
+   Compiling scopeguard v1.2.0
+   Compiling litemap v0.7.4
+   Compiling writeable v0.5.5
+   Compiling adler2 v2.0.0
+   Compiling bytes v1.9.0
+   Compiling miniz_oxide v0.8.2
+   Compiling unicode-width v0.1.14
+   Compiling futures-core v0.3.31
+   Compiling icu_locid_transform_data v1.5.0
+   Compiling gimli v0.31.1
+   Compiling icu_properties_data v1.5.0
+   Compiling camino v1.1.9
+   Compiling tracing-core v0.1.33
+   Compiling rustls-pki-types v1.10.1
+   Compiling icu_normalizer_data v1.5.0
+   Compiling hashbrown v0.15.2
+   Compiling equivalent v1.0.1
+   Compiling utf16_iter v1.0.5
+   Compiling write16 v1.0.0
+   Compiling rustc-demangle v0.1.24
+   Compiling utf8_iter v1.0.4
+   Compiling lazy_static v1.5.0
+   Compiling httparse v1.9.5
+   Compiling futures-task v0.3.31
+   Compiling percent-encoding v2.3.1
+   Compiling spin v0.9.8
+   Compiling pin-utils v0.1.0
+   Compiling untrusted v0.9.0
+   Compiling owo-colors v4.1.0
+   Compiling futures-util v0.3.31
+   Compiling form_urlencoded v1.2.1
+   Compiling is_ci v1.2.0
+   Compiling semver v1.0.24
+   Compiling rustls v0.23.20
+   Compiling syn v1.0.109
+   Compiling http v1.2.0
+   Compiling object v0.36.5
+   Compiling unicode-linebreak v0.1.5
+   Compiling cpufeatures v0.2.16
+   Compiling zeroize v1.8.1
+   Compiling try-lock v0.2.5
+   Compiling want v0.3.1
+   Compiling textwrap v0.16.1
+   Compiling supports-color v3.0.2
+   Compiling futures-channel v0.3.31
+   Compiling powerfmt v0.2.0
+   Compiling time-core v0.1.2
+   Compiling num-conv v0.1.0
+   Compiling zstd-safe v5.0.2+zstd.1.5.2
+   Compiling thiserror v2.0.8
+   Compiling supports-unicode v3.0.0
+   Compiling fastrand v2.3.0
+   Compiling supports-hyperlinks v3.1.0
+   Compiling aho-corasick v1.1.3
+   Compiling strsim v0.10.0
+   Compiling time-macros v0.2.19
+   Compiling tower-service v0.3.3
+   Compiling deranged v0.3.11
+   Compiling rand_core v0.6.4
+   Compiling openssl-probe v0.1.5
+   Compiling zstd-safe v7.2.1
+   Compiling ident_case v1.0.1
+   Compiling base64ct v1.6.0
+   Compiling rustls-native-certs v0.8.1
+   Compiling webpki-roots v0.26.7
+   Compiling crc32fast v1.4.2
+   Compiling generic-array v0.14.7
+   Compiling serde_yml v0.0.11
+   Compiling byteorder v1.5.0
+   Compiling winnow v0.6.20
+   Compiling regex-syntax v0.8.5
+   Compiling quote v1.0.37
+   Compiling http-body v1.0.1
+   Compiling password-hash v0.4.2
+   Compiling same-file v1.0.6
+   Compiling target-lexicon v0.12.16
+   Compiling flate2 v1.0.35
+   Compiling rustls-pemfile v2.2.0
+   Compiling syn v2.0.90
+   Compiling walkdir v2.5.0
+   Compiling lock_api v0.4.12
+   Compiling num-traits v0.2.19
+   Compiling http-body-util v0.1.2
+   Compiling sync_wrapper v1.0.2
+   Compiling libyml v0.0.4
+   Compiling jobserver v0.1.32
+   Compiling getrandom v0.2.15
+   Compiling cc v1.2.5
+   Compiling socket2 v0.5.8
+   Compiling mio v1.0.3
+   Compiling signal-hook-registry v1.4.2
+   Compiling filetime v0.2.25
+   Compiling ipnet v2.10.1
+   Compiling utf8parse v0.2.2
+   Compiling addr2line v0.24.2
+   Compiling base64 v0.22.1
+   Compiling parking_lot v0.12.3
+   Compiling bytemuck v1.20.0
+   Compiling heck v0.5.0
+   Compiling byteorder-lite v0.1.0
+   Compiling mime v0.3.17
+   Compiling constant_time_eq v0.1.5
+   Compiling anstyle-parse v0.2.6
+   Compiling schemars v0.8.21
+   Compiling colorchoice v1.0.3
+   Compiling minimal-lexical v0.2.1
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.4
+   Compiling inout v0.1.3
+   Compiling anstyle-query v1.1.2
+   Compiling regex-automata v0.4.9
+   Compiling terminal_size v0.4.1
+   Compiling digest v0.10.7
+   Compiling cipher v0.4.4
+   Compiling tempfile v3.14.0
+   Compiling xattr v1.3.1
+   Compiling image v0.25.5
+   Compiling unicode-width v0.2.0
+   Compiling tar v0.4.43
+   Compiling hmac v0.12.1
+   Compiling sha2 v0.10.8
+   Compiling sha1 v0.10.6
+   Compiling aes v0.8.4
+   Compiling either v1.13.0
+   Compiling cfg_aliases v0.2.1
+   Compiling is_terminal_polyfill v1.70.1
+   Compiling guppy-workspace-hack v0.1.0
+   Compiling anstyle v1.0.10
+   Compiling nix v0.29.0
+   Compiling nom v7.1.3
+   Compiling pbkdf2 v0.11.0
+   Compiling indexmap v1.9.3
+   Compiling ahash v0.8.11
+   Compiling target-spec v3.2.2
+   Compiling clap_lex v0.7.4
+   Compiling anstream v0.6.18
+   Compiling dyn-clone v1.0.17
+   Compiling bytecount v0.6.8
+   Compiling anyhow v1.0.94
+   Compiling rustversion v1.0.18
+   Compiling strsim v0.11.1
+   Compiling cfg-expr v0.17.2
+   Compiling console v0.15.10
+   Compiling overload v0.1.1
+   Compiling termcolor v1.4.1
+   Compiling typed-arena v1.7.0
+   Compiling clap_builder v4.5.23
+   Compiling hashbrown v0.12.3
+   Compiling fixedbitset v0.4.2
+   Compiling peresil v0.3.0
+   Compiling zerocopy v0.7.35
+   Compiling nu-ansi-term v0.46.0
+   Compiling itertools v0.13.0
+   Compiling sxd-document v0.3.2
+   Compiling uuid v1.11.0
+   Compiling is-terminal v0.4.13
+   Compiling tracing-log v0.2.0
+   Compiling sharded-slab v0.1.7
+   Compiling thread_local v1.1.8
+   Compiling log v0.3.9
+   Compiling backtrace v0.3.74
+   Compiling encoding_rs v0.8.35
+   Compiling iana-time-zone v0.1.61
+   Compiling static_assertions v1.1.0
+   Compiling debug-ignore v1.0.5
+   Compiling quick-error v1.2.3
+   Compiling lexopt v0.3.0
+   Compiling humantime v2.1.0
+   Compiling nested v0.1.1
+   Compiling current_platform v0.2.0
+   Compiling sxd-xpath v0.4.2
+   Compiling chrono v0.4.39
+   Compiling backtrace-ext v0.2.1
+   Compiling darling_core v0.14.4
+   Compiling homedir v0.3.4
+   Compiling tracing-subscriber v0.3.19
+   Compiling include_dir_macros v0.7.4
+   Compiling itertools v0.11.0
+   Compiling crossterm v0.28.1
+   Compiling unicode-segmentation v1.12.0
+   Compiling self_cell v1.1.0
+   Compiling regex v1.11.1
+   Compiling shell-words v1.1.0
+   Compiling similar v2.6.0
+   Compiling bitflags v1.3.2
+   Compiling plain v0.2.3
+   Compiling keccak v0.1.5
+   Compiling memo-map v0.3.3
+   Compiling strum v0.26.3
+   Compiling env_logger v0.10.2
+   Compiling sha3 v0.10.8
+   Compiling newline-converter v0.3.0
+   Compiling color-backtrace v0.6.1
+   Compiling blake2 v0.10.6
+   Compiling spdx v0.10.7
+   Compiling temp-dir v0.1.14
+   Compiling encoding_rs_io v0.1.7
+   Compiling linked-hash-map v0.5.6
+   Compiling synstructure v0.13.1
+   Compiling serde_derive_internals v0.29.1
+   Compiling insta v1.41.1
+   Compiling include_dir v0.7.4
+   Compiling time v0.3.37
+   Compiling zstd-sys v2.0.13+zstd.1.5.6
+   Compiling ring v0.17.8
+   Compiling bzip2-sys v0.1.11+1.0.8
+   Compiling lzma-sys v0.1.20
+   Compiling darling_macro v0.14.4
+   Compiling bzip2 v0.4.4
+   Compiling serde_derive v1.0.216
+   Compiling zerofrom-derive v0.1.5
+   Compiling yoke-derive v0.7.5
+   Compiling zerovec-derive v0.10.3
+   Compiling thiserror-impl v1.0.69
+   Compiling displaydoc v0.2.5
+   Compiling icu_provider_macros v1.5.0
+   Compiling tokio-macros v2.4.0
+   Compiling tracing-attributes v0.1.28
+   Compiling miette-derive v7.4.0
+   Compiling thiserror-impl v2.0.8
+   Compiling darling v0.14.4
+   Compiling miette-derive v5.10.0
+   Compiling xz2 v0.1.7
+   Compiling pin-project-internal v1.1.7
+   Compiling derive_builder_core v0.11.2
+   Compiling rustls-webpki v0.102.8
+   Compiling schemars_derive v0.8.21
+   Compiling clap_derive v4.5.18
+   Compiling tokio v1.42.0
+   Compiling scroll_derive v0.12.0
+   Compiling strum_macros v0.26.4
+   Compiling rustc-cfg v0.5.0
+   Compiling miette v7.4.0
+   Compiling dialoguer v0.11.0
+   Compiling mach_object v0.1.17
+   Compiling zerofrom v0.1.5
+   Compiling scroll v0.12.0
+   Compiling goblin v0.8.2
+   Compiling yoke v0.7.5
+   Compiling derive_builder_macro v0.11.2
+   Compiling pin-project v1.1.7
+   Compiling miette v5.10.0
+   Compiling zerovec v0.10.4
+   Compiling hyper v1.5.2
+   Compiling tracing v0.1.41
+   Compiling tokio-rustls v0.26.1
+   Compiling backon v0.4.4
+   Compiling tinystr v0.7.6
+   Compiling icu_collections v1.5.0
+   Compiling icu_locid v1.5.0
+   Compiling hyper-util v0.1.10
+   Compiling axoprocess v0.2.0
+   Compiling icu_provider v1.5.0
+   Compiling derive_builder v0.11.2
+   Compiling icu_locid_transform v1.5.0
+   Compiling hyper-rustls v0.27.4
+   Compiling clap v4.5.23
+   Compiling icu_properties v1.5.1
+   Compiling zstd v0.13.2
+   Compiling zstd v0.11.2+zstd.1.5.2
+   Compiling comfy-table v7.1.3
+   Compiling zip v0.6.6
+   Compiling clap-cargo v0.14.1
+   Compiling icu_normalizer v1.5.0
+   Compiling indexmap v2.7.0
+   Compiling toml_datetime v0.6.8
+   Compiling serde_spanned v0.6.8
+   Compiling serde_urlencoded v0.7.1
+   Compiling cargo-platform v0.1.9
+   Compiling node-semver v2.1.0
+   Compiling mustache v0.9.0
+   Compiling axotag v0.2.0
+   Compiling pathdiff v0.2.3
+   Compiling idna_adapter v1.2.0
+   Compiling idna v1.0.3
+   Compiling toml_edit v0.22.22
+   Compiling petgraph v0.6.5
+   Compiling url v2.5.4
+   Compiling cargo_metadata v0.19.1
+   Compiling parse-changelog v0.6.10
+   Compiling cargo_metadata v0.18.1
+   Compiling axocli v0.2.0
+   Compiling minijinja v2.5.0
+   Compiling reqwest v0.12.9
+   Compiling oro-common v0.3.34
+   Compiling oro-package-spec v0.3.34
+   Compiling cargo-wix v0.3.8
+   Compiling guppy v0.17.10
+   Compiling toml v0.8.19
+   Compiling axoasset v1.2.0
+   Compiling gazenot v0.3.3
+   Compiling axoproject v0.26.1 (/workspace/axoproject)
+   Compiling cargo-dist-schema v0.26.1 (/workspace/cargo-dist-schema)
+   Compiling axoupdater v0.9.0
+   Compiling cargo-dist v0.26.1 (/workspace/cargo-dist)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 12s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/cargo_dist-75bdc158c9f93d8d)
+
+running 80 tests
+test announce::tests::sort_platforms ... ok
+test backend::ci::github::tests::validator_catches_invalid_with - should panic ... ok
+test backend::ci::github::tests::validator_catches_run_and_uses - should panic ... ok
+test backend::ci::github::tests::build_setup_can_read ... ok
+test backend::ci::github::tests::validator_catches_run_and_shell - should panic ... ok
+test backend::ci::github::tests::validator_catches_run_and_cwd - should panic ... ok
+test backend::ci::github::tests::build_setup_with_if ... ok
+test backend::ci::github::tests::validator_catches_run_and_with - should panic ... ok
+test backend::ci::github::tests::validator_errors_with_id - should panic ... ok
+test backend::ci::github::tests::validator_errors_with_name - should panic ... ok
+test backend::ci::github::tests::validator_errors_with_name_over_id - should panic ... ok
+test backend::ci::github::tests::validator_works ... ok
+test backend::installer::homebrew::tests::ampersand_but_no_digit ... ok
+test backend::installer::homebrew::tests::class_caps_after_numbers ... ok
+test backend::installer::homebrew::tests::class_case_basic ... ok
+test backend::installer::homebrew::tests::ends_with_dash ... ok
+test backend::installer::homebrew::tests::handles_dashes ... ok
+test backend::installer::homebrew::tests::handles_pluralization ... ok
+test backend::installer::homebrew::tests::handles_single_letter_then_dash ... ok
+test backend::installer::homebrew::tests::handles_strings_with_dots ... ok
+test backend::installer::homebrew::tests::handles_underscores ... ok
+test backend::installer::homebrew::tests::multiple_ampersands ... ok
+test backend::installer::homebrew::tests::multiple_periods ... ok
+test backend::installer::homebrew::tests::multiple_special_chars ... ok
+test backend::installer::homebrew::tests::multiple_underscores ... ok
+test backend::installer::homebrew::tests::replaces_ampersand_with_at ... ok
+test backend::installer::homebrew::tests::replaces_plus_with_x ... ok
+test backend::installer::homebrew::tests::spdx_invalid_adjacent_operator ... ok
+test backend::installer::homebrew::tests::spdx_invalid_dangling_operator ... ok
+test backend::installer::homebrew::tests::spdx_invalid_just_operator ... ok
+test backend::installer::homebrew::tests::spdx_invalid_license_name ... ok
+test backend::installer::homebrew::tests::spdx_nested_parentheses ... ok
+test backend::installer::homebrew::tests::spdx_parentheses ... ok
+test backend::installer::homebrew::tests::spdx_single_license ... ok
+test backend::installer::homebrew::tests::spdx_single_license_with_plus ... ok
+test backend::installer::homebrew::tests::spdx_three_licenses ... ok
+test backend::installer::homebrew::tests::spdx_three_licenses_and_or ... ok
+test backend::installer::homebrew::tests::spdx_three_licenses_or_and ... ok
+test backend::installer::homebrew::tests::spdx_two_licenses_all ... ok
+test backend::installer::homebrew::tests::spdx_two_licenses_any ... ok
+test backend::installer::homebrew::tests::spdx_two_licenses_with_plus ... ok
+test build::cargo::tests::build_command_auditable ... ok
+test build::cargo::tests::build_command_not_auditable ... ok
+test platform::github_runners::tests::test_target_for_github_runner ... ok
+test tests::config::basic_cargo_toml_multi_item_arrays ... ok
+test tests::config::basic_cargo_toml_one_item_arrays ... ok
+test tests::config::basic_cargo_toml_no_change ... ok
+test backend::templates::test::ensure_known_templates ... ok
+test tests::tag::parse_one_package_v_alpha ... ok
+test tests::host::github_implicit ... ok
+test tests::host::no_ci_no_problem ... ok
+test tests::tag::parse_unified_infer ... ok
+test tests::tag::parse_one_package_slashv ... ok
+test tests::tag::parse_disjoint_lib ... ok
+test tests::tag::parse_one_v_alpha ... ok
+test tests::tag::parse_one_prefix_many_slash_package_slash ... ok
+test tests::host::github_and_axo_simple ... ok
+test tests::host::github_simple ... ok
+test tests::tag::parse_disjoint_v_oddball ... ok
+test tests::host::github_diff_repository ... ok
+test tests::host::github_dot_git ... ok
+test tests::tag::parse_one ... ok
+test tests::tag::parse_one_infer ... ok
+test tests::tag::parse_one_package_v ... ok
+test tests::tag::parse_one_package_slash ... ok
+test tests::tag::parse_unified_lib ... ok
+test tests::tag::parse_one_prefix_slashv ... ok
+test tests::tag::parse_disjoint_v ... ok
+test tests::host::github_not_github_repository ... ok
+test tests::host::github_diff_repository_on_non_distables ... ok
+test tests::tag::parse_one_prefix_slash_package_slash ... ok
+test tests::tag::parse_one_prefix_slash ... ok
+test tests::tag::parse_one_v ... ok
+test tests::host::github_no_repository ... ok
+test tests::tag::parse_one_package ... ok
+test tests::tag::parse_one_prefix_slash_package_v ... ok
+test tests::tag::parse_unified_v ... ok
+test tests::tag::parse_one_prefix_slash_package_slashv ... ok
+test tests::tag::parse_disjoint_infer - should panic ... ok
+test tests::host::github_trail_slash ... ok
+
+test result: ok. 80 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/main.rs (/workspace/target/debug/deps/dist-0dfc1757ef86b74d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/cli-tests.rs (/workspace/target/debug/deps/cli_tests-245cfbb3029b34a1)
+
+running 9 tests
+test test_self_update ... ok
+test test_version ... ok
+test test_short_help ... ok
+test test_long_help ... ok
+test test_markdown_help ... ok
+test test_error_manifest ... ok
+test test_manifest ... ok
+test test_lib_manifest_slash ... ok
+test test_lib_manifest ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.97s
+
+     Running tests/integration-tests.rs (/workspace/target/debug/deps/integration_tests-a257438a5976fc0f)
+
+running 61 tests
+test akaikatana_basic ... ok
+test akaikatana_one_alias_among_many_binaries ... ok
+test akaikatana_musl ... ok
+test axolotlsay_abyss_only ... ok
+test akaikatana_two_bin_aliases ... ok
+test akaikatana_updaters ... ok
+test axoasset_basic - should panic ... ok
+test axolotlsay_abyss ... ok
+test axolotlsay_alias ... ok
+test axolotlsay_alias_ignores_missing_bins ... ok
+test axolotlsay_basic ... FAILED
+test axolotlsay_build_setup_steps ... ok
+test axolotlsay_basic_lies ... ok
+test axolotlsay_checksum_blake2s ... ok
+test axolotlsay_checksum_blake2b ... ok
+test axolotlsay_checksum_sha3_256 ... ok
+test axolotlsay_checksum_sha3_512 ... ok
+test axolotlsay_cross1 ... ok
+test axolotlsay_cross2 ... ok
+test axolotlsay_custom_formula ... ok
+test axolotlsay_custom_github_runners ... ok
+test axolotlsay_disable_source_tarball ... ok
+test axolotlsay_dispatch ... ok
+test axolotlsay_dispatch_abyss ... ok
+test axolotlsay_dispatch_abyss_only ... ok
+test axolotlsay_dist_false - should panic ... ok
+test axolotlsay_dist_url_override ... ok
+test axolotlsay_edit_existing ... ok
+test axolotlsay_generic_workspace_basic ... ok
+test axolotlsay_homebrew_linux_only ... ok
+test axolotlsay_homebrew_macos_x86_64_only ... ok
+test axolotlsay_homebrew_packages ... ok
+test axolotlsay_musl ... ok
+test axolotlsay_musl_no_gnu ... ok
+test axolotlsay_no_homebrew_publish ... ok
+test axolotlsay_no_locals ... ok
+test axolotlsay_no_locals_but_custom ... ok
+test axolotlsay_several_aliases ... ok
+test axolotlsay_ssldotcom_windows_sign ... ok
+test axolotlsay_ssldotcom_windows_sign_prod ... ok
+test axolotlsay_tag_namespace ... ok
+test axolotlsay_updaters ... ok
+test axolotlsay_user_global_build_job ... ok
+test axolotlsay_user_host_job ... ok
+test axolotlsay_user_local_build_job ... ok
+test axolotlsay_user_plan_job ... ok
+test axolotlsay_user_publish_job ... ok
+test env_path_invalid - should panic ... ok
+test install_path_cargo_home ... ok
+test install_path_env_no_subdir ... ok
+test install_path_env_subdir ... ok
+test install_path_env_subdir_space ... ok
+test install_path_env_subdir_space_deeper ... ok
+test install_path_fallback_no_env_var_set ... ok
+test install_path_fallback_to_cargo_home - should panic ... ok
+test install_path_home_subdir_deeper ... ok
+test install_path_home_subdir_min ... ok
+test install_path_home_subdir_space ... ok
+test install_path_home_subdir_space_deeper ... ok
+test install_path_invalid - should panic ... ok
+test install_path_no_fallback_taken ... ok
+
+failures:
+
+---- axolotlsay_basic stdout ----
+loading Cargo.toml...
+editing Cargo.toml...
+
+[workspace.metadata.dist]
+cargo-dist-version = "0.26.1"
+installers = ["shell", "powershell", "homebrew", "npm", "msi", "pkg"]
+tap = "axodotdev/homebrew-packages"
+publish-jobs = ["homebrew", "npm"]
+targets = ["x86_64-unknown-linux-gnu", "i686-unknown-linux-gnu", "x86_64-apple-darwin", "x86_64-pc-windows-msvc", "x86_64-pc-windows-gnu", "aarch64-apple-darwin"]
+install-success-msg = ">o_o< everything's installed!"
+ci = ["github"]
+unix-archive = ".tar.gz"
+windows-archive = ".tar.gz"
+npm-scope ="@axodotdev"
+cargo-auditable = true
+cargo-cyclonedx = true
+omnibor = true
+
+[workspace.metadata.dist.min-glibc-version]
+"*" = "2.17"
+x86_64-unknown-linux-gnu = "2.18"
+
+[package.metadata.wix]
+upgrade-guid = "B36177BE-EA4D-44FB-B05C-EDDABDAA95CA"
+path-guid = "BFD25009-65A4-4D1E-97F1-0030465D90D6"
+
+[package.metadata.dist.mac-pkg-config]
+identifier = "dev.axo.axolotsay"
+
+
+
+[workspace.metadata.dist]
+cargo-dist-version = "0.26.1"
+installers = ["shell", "powershell", "homebrew", "npm", "msi", "pkg"]
+tap = "axodotdev/homebrew-packages"
+publish-jobs = ["homebrew", "npm"]
+targets = ["x86_64-unknown-linux-gnu", "i686-unknown-linux-gnu", "x86_64-apple-darwin", "x86_64-pc-windows-msvc", "x86_64-pc-windows-gnu", "aarch64-apple-darwin"]
+install-success-msg = ">o_o< everything's installed!"
+ci = ["github"]
+unix-archive = ".tar.gz"
+windows-archive = ".tar.gz"
+npm-scope ="@axodotdev"
+cargo-auditable = true
+cargo-cyclonedx = true
+omnibor = true
+
+[workspace.metadata.dist.min-glibc-version]
+"*" = "2.17"
+x86_64-unknown-linux-gnu = "2.18"
+
+[package.metadata.wix]
+upgrade-guid = "B36177BE-EA4D-44FB-B05C-EDDABDAA95CA"
+path-guid = "BFD25009-65A4-4D1E-97F1-0030465D90D6"
+
+[package.metadata.dist.mac-pkg-config]
+identifier = "dev.axo.axolotsay"
+
+
+new toml:
+[package]
+name = "axolotlsay"
+description = "💬 a CLI for learning to distribute CLIs in rust"
+version = "0.2.2"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/axodotdev/axolotlsay.git"
+homepage = "https://github.com/axodotdev/axolotlsay"
+authors = ["axodotdev <hello@axo.dev>"]
+
+[workspace.metadata.dist]
+cargo-dist-version = "0.26.1"
+installers = ["shell", "powershell", "homebrew", "npm", "msi", "pkg"]
+tap = "axodotdev/homebrew-packages"
+publish-jobs = ["homebrew", "npm"]
+targets = ["x86_64-unknown-linux-gnu", "i686-unknown-linux-gnu", "x86_64-apple-darwin", "x86_64-pc-windows-msvc", "x86_64-pc-windows-gnu", "aarch64-apple-darwin"]
+install-success-msg = ">o_o< everything's installed!"
+ci = ["github"]
+unix-archive = ".tar.gz"
+windows-archive = ".tar.gz"
+npm-scope ="@axodotdev"
+cargo-auditable = true
+cargo-cyclonedx = true
+omnibor = true
+
+[dependencies]
+clap = { version = "4.1.4", features = ["derive"] }
+unicode-width = "0.1.10"
+
+[workspace.metadata.dist.min-glibc-version]
+"*" = "2.17"
+x86_64-unknown-linux-gnu = "2.18"
+
+[package.metadata.wix]
+upgrade-guid = "B36177BE-EA4D-44FB-B05C-EDDABDAA95CA"
+path-guid = "BFD25009-65A4-4D1E-97F1-0030465D90D6"
+
+[dev-dependencies]
+assert_cmd = "2.0.8"
+
+[package.metadata.dist.mac-pkg-config]
+identifier = "dev.axo.axolotsay"
+
+# The profile that 'cargo dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
+
+writing Cargo.toml...
+running dist generate...
+Some(".github/workflows/release.yml")
+running dist build -aglobal...
+Error: 
+  × "cargo-dist dist build -aglobal" failed (exit status: 255)
+  ╰─▶ 
+      stdout:
+      
+      stderr:
+      
+        × The following tools are required to run this task, but are missing:
+        │ - omnibor-cli
+        help: Please install the tools mentioned above and try again.
+      
+      
+
+
+
+failures:
+    axolotlsay_basic
+
+test result: FAILED. 60 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 42.74s
+
+error: test failed, to rerun pass `--test integration-tests`
+   Doc-tests cargo_dist
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: 1 target failed:
+    `--test integration-tests`
++ cd ../
++ git reset --hard aa437ee6ed8b01bf28cfcac1d2fa1a7fe95979a6
+HEAD is now at aa437ee6 Merge pull request #1656 from axodotdev/migrate_dist_alone
++ git clean -fd
+Removing .cargo/

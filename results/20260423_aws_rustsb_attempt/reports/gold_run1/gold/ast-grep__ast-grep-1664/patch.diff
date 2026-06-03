@@ -1,0 +1,399 @@
+diff --git a/crates/cli/src/print/cloud_print.rs b/crates/cli/src/print/cloud_print.rs
+--- a/crates/cli/src/print/cloud_print.rs
++++ b/crates/cli/src/print/cloud_print.rs
+@@ -94,8 +94,8 @@ fn print_rule<'a, W: Write + Send + Sync>(
+   let title = &rule.id;
+   let name = path.display();
+   for m in matches {
+-    let line = m.start_pos().row() + 1;
+-    let end_line = m.end_pos().row() + 1;
++    let line = m.start_pos().line() + 1;
++    let end_line = m.end_pos().line() + 1;
+     let message = rule.get_message(&m);
+     writeln!(
+       &mut writer,
+diff --git a/crates/cli/src/print/colored_print.rs b/crates/cli/src/print/colored_print.rs
+--- a/crates/cli/src/print/colored_print.rs
++++ b/crates/cli/src/print/colored_print.rs
+@@ -267,7 +267,7 @@ impl<'a> MatchMerger<'a> {
+   fn new(nm: &NodeMatch<'a, SgLang>, (before, after): (u16, u16)) -> Self {
+     let display = nm.display_context(before as usize, after as usize);
+     let last_start_line = display.start_line + 1;
+-    let last_end_line = nm.end_pos().row() + 1;
++    let last_end_line = nm.end_pos().line() + 1;
+     let last_trailing = display.trailing;
+     let last_end_offset = nm.range().end;
+     Self {
+diff --git a/crates/cli/src/print/colored_print.rs b/crates/cli/src/print/colored_print.rs
+--- a/crates/cli/src/print/colored_print.rs
++++ b/crates/cli/src/print/colored_print.rs
+@@ -296,7 +296,7 @@ impl<'a> MatchMerger<'a> {
+   fn conclude_match(&mut self, nm: &NodeMatch<'a, SgLang>) {
+     let display = self.display(nm);
+     self.last_start_line = display.start_line + 1;
+-    self.last_end_line = nm.end_pos().row() + 1;
++    self.last_end_line = nm.end_pos().line() + 1;
+     self.last_trailing = display.trailing;
+     self.last_end_offset = nm.range().end;
+   }
+diff --git a/crates/cli/src/print/interactive_print.rs b/crates/cli/src/print/interactive_print.rs
+--- a/crates/cli/src/print/interactive_print.rs
++++ b/crates/cli/src/print/interactive_print.rs
+@@ -82,7 +82,7 @@ impl<P: Printer> Printer for InteractivePrinter<P> {
+     utils::run_in_alternate_screen(|| {
+       let matches: Vec<_> = matches.collect();
+       let first_match = match matches.first() {
+-        Some(n) => n.start_pos().row(),
++        Some(n) => n.start_pos().line(),
+         None => return Ok(()),
+       };
+       let file_path = PathBuf::from(file.name().to_string());
+diff --git a/crates/cli/src/print/interactive_print.rs b/crates/cli/src/print/interactive_print.rs
+--- a/crates/cli/src/print/interactive_print.rs
++++ b/crates/cli/src/print/interactive_print.rs
+@@ -174,7 +174,7 @@ fn print_diff_and_prompt_action(
+       'y' => Ok((true, false)),
+       'a' => Ok((true, true)),
+       'e' => {
+-        let pos = diff.node_match.start_pos().row();
++        let pos = diff.node_match.start_pos().line();
+         open_in_editor(path, pos)?;
+         Ok((false, false))
+       }
+diff --git a/crates/cli/src/print/interactive_print.rs b/crates/cli/src/print/interactive_print.rs
+--- a/crates/cli/src/print/interactive_print.rs
++++ b/crates/cli/src/print/interactive_print.rs
+@@ -193,7 +193,7 @@ fn print_matches_and_confirm_next<'a>(
+   let printer = &interactive.inner;
+   let matches: Vec<_> = matches.collect();
+   let first_match = match matches.first() {
+-    Some(n) => n.start_pos().row(),
++    Some(n) => n.start_pos().line(),
+     None => return Ok(()),
+   };
+   printer.print_matches(matches.into_iter(), path)?;
+diff --git a/crates/cli/src/print/json_print.rs b/crates/cli/src/print/json_print.rs
+--- a/crates/cli/src/print/json_print.rs
++++ b/crates/cli/src/print/json_print.rs
+@@ -146,11 +146,11 @@ fn get_range(n: &Node<'_, SgLang>) -> Range {
+   Range {
+     byte_offset: n.range(),
+     start: Position {
+-      line: start_pos.row(),
++      line: start_pos.line(),
+       column: start_pos.column(n),
+     },
+     end: Position {
+-      line: end_pos.row(),
++      line: end_pos.line(),
+       column: end_pos.column(n),
+     },
+   }
+diff --git a/crates/config/src/combined.rs b/crates/config/src/combined.rs
+--- a/crates/config/src/combined.rs
++++ b/crates/config/src/combined.rs
+@@ -18,9 +18,9 @@ impl Suppressions {
+     if !node.kind().contains("comment") || !node.text().contains(IGNORE_TEXT) {
+       return;
+     }
+-    let line = node.start_pos().row();
++    let line = node.start_pos().line();
+     let suppress_next_line = if let Some(prev) = node.prev() {
+-      prev.start_pos().row() != line
++      prev.start_pos().line() != line
+     } else {
+       true
+     };
+diff --git a/crates/config/src/combined.rs b/crates/config/src/combined.rs
+--- a/crates/config/src/combined.rs
++++ b/crates/config/src/combined.rs
+@@ -39,7 +39,7 @@ impl Suppressions {
+   }
+ 
+   fn check_suppression<D: Doc>(&mut self, node: &Node<D>) -> MaySuppressed {
+-    let line = node.start_pos().row();
++    let line = node.start_pos().line();
+     if let Some(sup) = self.0.get_mut(&line) {
+       MaySuppressed::Yes(sup)
+     } else {
+diff --git a/crates/config/src/rule/range.rs b/crates/config/src/rule/range.rs
+--- a/crates/config/src/rule/range.rs
++++ b/crates/config/src/rule/range.rs
+@@ -5,13 +5,13 @@ use serde::{Deserialize, Serialize};
+ /// Represents a zero-based character-wise position in a document
+ #[derive(Serialize, Deserialize, Clone, JsonSchema)]
+ pub struct SerializablePosition {
+-  /// 0-based row number in the source code
+-  pub row: usize,
++  /// 0-based line number in the source code
++  pub line: usize,
+   /// 0-based column number in the source code
+   pub column: usize,
+ }
+ 
+-/// Represents a position in source code using 0-based row and column numbers
++/// Represents a position in source code using 0-based line and column numbers
+ #[derive(Serialize, Deserialize, Clone, JsonSchema)]
+ pub struct SerializableRange {
+   /// start position in the source code
+diff --git a/crates/config/src/rule/range.rs b/crates/config/src/rule/range.rs
+--- a/crates/config/src/rule/range.rs
++++ b/crates/config/src/rule/range.rs
+@@ -32,7 +32,7 @@ use super::Matcher;
+ pub enum RangeMatcherError {
+   /// Returned when the range is invalid. This can occur when:
+   /// - start position is after end position
+-  /// - positions contain invalid row/column values
++  /// - positions contain invalid line/column values
+   #[error("The start position must be before the end position.")]
+   InvalidRange,
+ }
+diff --git a/crates/config/src/rule/range.rs b/crates/config/src/rule/range.rs
+--- a/crates/config/src/rule/range.rs
++++ b/crates/config/src/rule/range.rs
+@@ -56,8 +56,8 @@ impl<L: Language> RangeMatcher<L> {
+     start_pos: SerializablePosition,
+     end_pos: SerializablePosition,
+   ) -> Result<RangeMatcher<L>, RangeMatcherError> {
+-    if start_pos.row > end_pos.row
+-      || (start_pos.row == end_pos.row && start_pos.column > end_pos.column)
++    if start_pos.line > end_pos.line
++      || (start_pos.line == end_pos.line && start_pos.column > end_pos.column)
+     {
+       return Err(RangeMatcherError::InvalidRange);
+     }
+diff --git a/crates/config/src/rule/range.rs b/crates/config/src/rule/range.rs
+--- a/crates/config/src/rule/range.rs
++++ b/crates/config/src/rule/range.rs
+@@ -76,8 +76,8 @@ impl<L: Language> Matcher<L> for RangeMatcher<L> {
+     let node_start_pos = node.start_pos();
+     let node_end_pos = node.end_pos();
+ 
+-    // first check row since it is cheaper
+-    if self.start.row != node_start_pos.row() || self.end.row != node_end_pos.row() {
++    // first check line since it is cheaper
++    if self.start.line != node_start_pos.line() || self.end.line != node_end_pos.line() {
+       return None;
+     }
+     // then check column, this can be expensive for utf-8 encoded files
+diff --git a/crates/core/src/node.rs b/crates/core/src/node.rs
+--- a/crates/core/src/node.rs
++++ b/crates/core/src/node.rs
+@@ -10,13 +10,13 @@ type Edit<D> = E<<D as Doc>::Source>;
+ use std::borrow::Cow;
+ 
+ /// Represents a position in the source code.
+-/// The row and column are zero-based, character offsets.
++/// The line and column are zero-based, character offsets.
+ /// It is different from tree-sitter's position which is zero-based `byte` offsets.
+ /// Note, accessing `column` is O(n) operation.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+ pub struct Position {
+-  /// zero-based row offset. Text encoding does not matter.
+-  row: usize,
++  /// zero-based line offset. Text encoding does not matter.
++  line: usize,
+   /// zero-based BYTE offset instead of character offset
+   byte_column: usize,
+   /// byte offset of this position
+diff --git a/crates/core/src/node.rs b/crates/core/src/node.rs
+--- a/crates/core/src/node.rs
++++ b/crates/core/src/node.rs
+@@ -24,15 +24,15 @@ pub struct Position {
+ }
+ 
+ impl Position {
+-  fn new(row: u32, byte_column: u32, byte_offset: u32) -> Self {
++  fn new(line: u32, byte_column: u32, byte_offset: u32) -> Self {
+     Self {
+-      row: row as usize,
++      line: line as usize,
+       byte_column: byte_column as usize,
+       byte_offset: byte_offset as usize,
+     }
+   }
+-  pub fn row(&self) -> usize {
+-    self.row
++  pub fn line(&self) -> usize {
++    self.line
+   }
+   /// TODO: return unicode character offset
+   pub fn column<D: Doc>(&self, node: &Node<D>) -> usize {
+diff --git a/crates/core/src/node.rs b/crates/core/src/node.rs
+--- a/crates/core/src/node.rs
++++ b/crates/core/src/node.rs
+@@ -41,7 +41,7 @@ impl Position {
+   }
+   /// Convert to tree-sitter's Point
+   pub fn ts_point(&self) -> tree_sitter::Point {
+-    tree_sitter::Point::new(self.row as u32, self.byte_column as u32)
++    tree_sitter::Point::new(self.line as u32, self.byte_column as u32)
+   }
+ }
+ 
+diff --git a/crates/core/src/node.rs b/crates/core/src/node.rs
+--- a/crates/core/src/node.rs
++++ b/crates/core/src/node.rs
+@@ -290,7 +290,7 @@ impl<'r, L: Language> Node<'r, StrDoc<L>> {
+       matched: self.text(),
+       leading: &source[leading..start],
+       trailing: &source[end..trailing],
+-      start_line: self.start_pos().row() - offset,
++      start_line: self.start_pos().line() - offset,
+     }
+   }
+ 
+diff --git a/crates/core/src/node.rs b/crates/core/src/node.rs
+--- a/crates/core/src/node.rs
++++ b/crates/core/src/node.rs
+@@ -741,9 +741,9 @@ if (a) {
+     let root = Tsx.ast_grep("a");
+     let root = root.root();
+     let node = root.find("$A").expect("should exist");
+-    assert_eq!(node.start_pos().row(), 0);
++    assert_eq!(node.start_pos().line(), 0);
+     assert_eq!(node.start_pos().column(&node), 0);
+-    assert_eq!(node.end_pos().row(), 0);
++    assert_eq!(node.end_pos().line(), 0);
+     assert_eq!(node.end_pos().column(&node), 1);
+   }
+ 
+diff --git a/crates/core/src/node.rs b/crates/core/src/node.rs
+--- a/crates/core/src/node.rs
++++ b/crates/core/src/node.rs
+@@ -752,16 +752,16 @@ if (a) {
+     let root = Tsx.ast_grep("🦀");
+     let root = root.root();
+     let node = root.find("$A").expect("should exist");
+-    assert_eq!(node.start_pos().row(), 0);
++    assert_eq!(node.start_pos().line(), 0);
+     assert_eq!(node.start_pos().column(&node), 0);
+-    assert_eq!(node.end_pos().row(), 0);
++    assert_eq!(node.end_pos().line(), 0);
+     assert_eq!(node.end_pos().column(&node), 1);
+     let root = Tsx.ast_grep("\n  🦀🦀");
+     let root = root.root();
+     let node = root.find("$A").expect("should exist");
+-    assert_eq!(node.start_pos().row(), 1);
++    assert_eq!(node.start_pos().line(), 1);
+     assert_eq!(node.start_pos().column(&node), 2);
+-    assert_eq!(node.end_pos().row(), 1);
++    assert_eq!(node.end_pos().line(), 1);
+     assert_eq!(node.end_pos().column(&node), 4);
+   }
+ }
+diff --git a/crates/lsp/src/utils.rs b/crates/lsp/src/utils.rs
+--- a/crates/lsp/src/utils.rs
++++ b/crates/lsp/src/utils.rs
+@@ -61,11 +61,11 @@ fn convert_node_to_range<D: Doc>(node_match: &Node<D>) -> Range {
+   let end = node_match.end_pos();
+   Range {
+     start: Position {
+-      line: start.row() as u32,
++      line: start.line() as u32,
+       character: start.column(node_match) as u32,
+     },
+     end: Position {
+-      line: end.row() as u32,
++      line: end.line() as u32,
+       character: end.column(node_match) as u32,
+     },
+   }
+diff --git a/crates/napi/index.d.ts b/crates/napi/index.d.ts
+--- a/crates/napi/index.d.ts
++++ b/crates/napi/index.d.ts
+@@ -292,4 +292,4 @@ export declare namespace css {
+    * `callback` will receive matching nodes found in a file.
+    */
+   export function findInFiles(config: FindConfig, callback: (err: null | Error, result: SgNode[]) => void): Promise<number>
+-}
+\ No newline at end of file
++}
+diff --git a/crates/napi/manual.d.ts b/crates/napi/manual.d.ts
+--- a/crates/napi/manual.d.ts
++++ b/crates/napi/manual.d.ts
+@@ -34,8 +34,8 @@ export interface NthChildObject {
+ export type NthChild = number | string | NthChildObject
+ 
+ export interface Position {
+-  /** 0-indexed row number. */
+-  row: number
++  /** 0-indexed line number. */
++  line: number
+   /** 0-indexed column number. */
+   column: number
+ }
+diff --git a/crates/napi/src/sg_node.rs b/crates/napi/src/sg_node.rs
+--- a/crates/napi/src/sg_node.rs
++++ b/crates/napi/src/sg_node.rs
+@@ -42,7 +42,7 @@ pub struct SgNode {
+ impl SgNode {
+   fn to_pos(&self, pos: Position, offset: usize) -> Pos {
+     Pos {
+-      line: pos.row() as u32,
++      line: pos.line() as u32,
+       column: pos.column(&self.inner) as u32,
+       index: offset as u32 / 2,
+     }
+diff --git a/crates/pyo3/ast_grep_py/__init__.py b/crates/pyo3/ast_grep_py/__init__.py
+--- a/crates/pyo3/ast_grep_py/__init__.py
++++ b/crates/pyo3/ast_grep_py/__init__.py
+@@ -16,7 +16,7 @@ class NthChild(TypedDict):
+     nth: int
+ 
+ class PosRule(TypedDict):
+-    row: int
++    line: int
+     column: int
+ 
+ class RangeRule(TypedDict):
+diff --git a/crates/pyo3/src/range.rs b/crates/pyo3/src/range.rs
+--- a/crates/pyo3/src/range.rs
++++ b/crates/pyo3/src/range.rs
+@@ -52,7 +52,7 @@ impl Pos {
+ 
+ fn to_pos<D: Doc>(node: &Node<D>, pos: Position, offset: usize) -> Pos {
+   Pos {
+-    line: pos.row(),
++    line: pos.line(),
+     column: pos.column(node),
+     index: offset,
+   }
+diff --git a/schemas/rule.json b/schemas/rule.json
+--- a/schemas/rule.json
++++ b/schemas/rule.json
+@@ -513,7 +513,7 @@
+       "type": "object",
+       "required": [
+         "column",
+-        "row"
++        "line"
+       ],
+       "properties": {
+         "column": {
+diff --git a/schemas/rule.json b/schemas/rule.json
+--- a/schemas/rule.json
++++ b/schemas/rule.json
+@@ -522,8 +522,8 @@
+           "format": "uint",
+           "minimum": 0.0
+         },
+-        "row": {
+-          "description": "0-based row number in the source code",
++        "line": {
++          "description": "0-based line number in the source code",
+           "type": "integer",
+           "format": "uint",
+           "minimum": 0.0
+diff --git a/schemas/rule.json b/schemas/rule.json
+--- a/schemas/rule.json
++++ b/schemas/rule.json
+@@ -531,7 +531,7 @@
+       }
+     },
+     "SerializableRange": {
+-      "description": "Represents a position in source code using 0-based row and column numbers",
++      "description": "Represents a position in source code using 0-based line and column numbers",
+       "type": "object",
+       "required": [
+         "end",

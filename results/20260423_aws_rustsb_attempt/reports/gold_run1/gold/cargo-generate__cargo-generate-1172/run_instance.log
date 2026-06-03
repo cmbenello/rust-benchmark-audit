@@ -1,0 +1,733 @@
+2026-04-17 03:20:05,003 - INFO - Environment image rustb.env.x86_64.cargo-generate_cargo-generate:latest found for cargo-generate__cargo-generate-1172
+Building instance image rustbench/cargo-generate__cargo-generate:pr-1172 for cargo-generate__cargo-generate-1172
+2026-04-17 03:20:09,642 - INFO - Creating container for cargo-generate__cargo-generate-1172...
+2026-04-17 03:20:10,323 - INFO - Container for cargo-generate__cargo-generate-1172 created: 68aa29ccf118a37c657a8b04a19767edf91a874c8af8afb056d76b35c81fc103
+2026-04-17 03:20:10,604 - INFO - Container for cargo-generate__cargo-generate-1172 started: 68aa29ccf118a37c657a8b04a19767edf91a874c8af8afb056d76b35c81fc103
+2026-04-17 03:20:10,604 - INFO - Intermediate patch for cargo-generate__cargo-generate-1172 written to logs/run_evaluation/gold_run1/gold/cargo-generate__cargo-generate-1172/patch.diff, now applying to container...
+2026-04-17 03:20:10,832 - INFO - Failed to apply patch to container, trying again...
+2026-04-17 03:20:10,944 - INFO - >>>>> Applied Patch:
+patching file Cargo.lock
+patching file Cargo.lock
+Hunk #1 succeeded at 211 with fuzz 1 (offset -1 lines).
+patching file guide/src/templates/builtin_placeholders.md
+patching file guide/src/templates/scripting.hook-types.md
+patching file src/lib.rs
+patching file src/template_variables/project_dir.rs
+patching file src/template_variables/project_dir.rs
+patching file src/template_variables/project_dir.rs
+Hunk #1 succeeded at 49 (offset 1 line).
+patching file src/template_variables/project_name.rs
+patching file src/template_variables/project_name.rs
+patching file src/template_variables/project_name_input.rs
+
+2026-04-17 03:20:11,448 - INFO - Git diff before:
+diff --git a/Cargo.lock b/Cargo.lock
+index 6cbd81e..5839820 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -175,7 +175,6 @@ dependencies = [
+  "assert_cmd",
+  "auth-git2",
+  "bstr",
+- "cargo-husky",
+  "clap",
+  "console",
+  "dialoguer",
+@@ -212,17 +211,11 @@ dependencies = [
+  "walkdir",
+ ]
+ 
+-[[package]]
+-name = "cargo-husky"
+-version = "1.5.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7b02b629252fe8ef6460461409564e2c21d0c8e77e0944f3d189ff06c4e932ad"
+-
+ [[package]]
+ name = "cc"
+-version = "1.0.90"
++version = "1.0.92"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8cd6604a82acf3039f1144f54b8eb34e91ffba622051189e71b781822d5ee1f5"
++checksum = "2678b2e3449475e95b0aa6f9b506a28e61b3dc8996592b983695e8ebb58a8b41"
+ dependencies = [
+  "jobserver",
+  "libc",
+@@ -566,9 +559,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "getrandom"
+-version = "0.2.12"
++version = "0.2.14"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "190092ea657667030ac6a35e305e62fc4dd69fd98ac98631e5d3a2b1575a12b5"
++checksum = "94b22e06ecb0110981051723910cbf0b5f5e09a2062dd7663334ee79a9d1286c"
+ dependencies = [
+  "cfg-if",
+  "libc",
+@@ -980,13 +973,12 @@ dependencies = [
+ 
+ [[package]]
+ name = "libredox"
+-version = "0.0.1"
++version = "0.1.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "85c833ca1e66078851dba29046874e38f08b2c883700aa29a03ddd3b23814ee8"
++checksum = "c0ff37bd590ca25063e35af745c343cb7a0271906fb7b37e4813e8f79f00268d"
+ dependencies = [
+  "bitflags 2.5.0",
+  "libc",
+- "redox_syscall",
+ ]
+ 
+ [[package]]
+@@ -1096,9 +1088,9 @@ checksum = "90ed8c1e510134f979dbc4f070f87d4313098b704861a105fe34231c70a3901c"
+ 
+ [[package]]
+ name = "memchr"
+-version = "2.7.1"
++version = "2.7.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "523dc4f511e55ab87b694dc30d0f820d60906ef06413f93d4d7a1385599cc149"
++checksum = "6c8640c5d730cb13ebd907d8d04b52f55ac9a2eec55b440c8892f40d56c76c1d"
+ 
+ [[package]]
+ name = "memmap2"
+@@ -1223,9 +1215,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "openssl-sys"
+-version = "0.9.101"
++version = "0.9.102"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dda2b0f344e78efc2facf7d195d098df0dd72151b26ab98da807afc26c198dff"
++checksum = "c597637d56fbc83893a35eb0dd04b2b8e7a50c91e64e9493e398b5df4fb45fa2"
+ dependencies = [
+  "cc",
+  "libc",
+@@ -1295,9 +1287,9 @@ checksum = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e"
+ 
+ [[package]]
+ name = "pest"
+-version = "2.7.8"
++version = "2.7.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "56f8023d0fb78c8e03784ea1c7f3fa36e68a723138990b8d5a47d916b651e7a8"
++checksum = "311fb059dee1a7b802f036316d790138c613a4e8b180c822e3925a662e9f0c95"
+ dependencies = [
+  "memchr",
+  "thiserror",
+@@ -1306,9 +1298,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pest_derive"
+-version = "2.7.8"
++version = "2.7.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b0d24f72393fd16ab6ac5738bc33cdb6a9aa73f8b902e8fe29cf4e67d7dd1026"
++checksum = "f73541b156d32197eecda1a4014d7f868fd2bcb3c550d5386087cfba442bf69c"
+ dependencies = [
+  "pest",
+  "pest_generator",
+@@ -1316,9 +1308,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pest_generator"
+-version = "2.7.8"
++version = "2.7.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fdc17e2a6c7d0a492f0158d7a4bd66cc17280308bbaff78d5bef566dca35ab80"
++checksum = "c35eeed0a3fab112f75165fdc026b3913f4183133f19b49be773ac9ea966e8bd"
+ dependencies = [
+  "pest",
+  "pest_meta",
+@@ -1329,9 +1321,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pest_meta"
+-version = "2.7.8"
++version = "2.7.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "934cd7631c050f4674352a6e835d5f6711ffbfb9345c2fc0107155ac495ae293"
++checksum = "2adbf29bb9776f28caece835398781ab24435585fe0d4dc1374a61db5accedca"
+ dependencies = [
+  "once_cell",
+  "pest",
+@@ -1457,9 +1449,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "redox_users"
+-version = "0.4.4"
++version = "0.4.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a18479200779601e498ada4e8c1e1f50e3ee19deb0259c25825a98b5603b2cb4"
++checksum = "bd283d9651eeda4b2a83a43c1c91b266c40fd76ecd39a50a8c630ae69dc72891"
+ dependencies = [
+  "getrandom",
+  "libredox",
+@@ -1491,9 +1483,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-syntax"
+-version = "0.8.2"
++version = "0.8.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c08c74e62047bb2de4ff487b251e4a92e24f48745648451635cec7d591162d9f"
++checksum = "adad44e29e4c806119491a7f06f03de4d1af22c3a680dd47f1e6e179439d1f56"
+ 
+ [[package]]
+ name = "remove_dir_all"
+@@ -1669,9 +1661,9 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
+ 
+ [[package]]
+ name = "syn"
+-version = "2.0.55"
++version = "2.0.58"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "002a1b3dbf967edfafc32655d0f377ab0bb7b994aa1d32c8cc7e9b8bf3ebb8f0"
++checksum = "44cfb93f38070beee36b3fef7d4f5a16f27751d94b187b666a5cc5e9b0d30687"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+diff --git a/guide/src/templates/builtin_placeholders.md b/guide/src/templates/builtin_placeholders.md
+index 411ae59..f81e15a 100644
+--- a/guide/src/templates/builtin_placeholders.md
++++ b/guide/src/templates/builtin_placeholders.md
+@@ -3,37 +3,47 @@
+ `cargo-generate` supports a number of builtin placeholders for use in templates.
+ 
+ These placeholders can be used directly in files using the [Liquid language][liquid], or from
+-[Rhai scripts][rhai] using the syntax: `variable::get("placeholder name")`.
+-
+-The current supported builtin placeholders are:
+-
+-* `{{authors}}`
+-
+-  this will be filled in by a function borrowed from Cargo's source code, that determines your information from Cargo's configuration. It will either be on the form `username <email>` or just plain `username`.
+-* `{{project-name}}`
+-
+-  this is supplied by either passing the `--name` flag to the command or working with the interactive CLI to supply a name.
+-* `{{crate_name}}`
+-
+-  the snake_case_version of `project-name`
+-* `{{crate_type}}`
+-
+-  this is supplied by either passing the `--bin` or `--lib` flag to the command line, contains either `bin` or `lib`, `--bin` is the default
+-* `{{os-arch}}`
+-
+-  contains the current operating system and architecture ex: `linux-x86_64`
+-* `{{username}}`
+-
+-  this will be filled in by a function borrowed from Cargo's source code, that determines your information from Cargo's configuration.
+-
+-* `{{within_cargo_project}}`
+-
+-  A boolean with the value `true` if the template is being expanded inside a `Cargo` project. It's 
+-  a simple matter of whether `Cargo.toml` is present in any parent folder.
+-
+-* `{{is_init}}`
+-
+-  A boolean that reflects the value of the `--init` parameter of `cargo-generate`.
++[Rhai scripts][rhai] using the syntax:
++
++```rhai
++variable::get("placeholder name")
++````
++
++Builtin placeholders are:
++
++* `authors`
++    * this will be filled in by a function borrowed from Cargo's source code, that determines your information from
++      Cargo's configuration. It will either be on the form `username <email>` or just plain `username`.
++* `project-name`
++    * this is supplied by either passing the `--name` flag to the command or working with the interactive CLI to supply
++      a name. It can be provided in snake_case or dash-case, in all other cases it is converted to dash-case.
++    * it can also be supplied via the environment variable `CARGO_GENERATE_VALUE_PROJECT_NAME` when running in `--silent` mode 
++      > ⚠️ Note: the `--force` flag allows you to use the project name as it is given, without adjusting. Please use it carefully.
++* `crate_name`
++    * the snake_case_version of `project-name`
++* `crate_type`
++    * this is supplied by either passing the `--bin` or `--lib` flag to the command line, contains either `bin`
++      or `lib`, `--bin` is the default
++* `os-arch`
++    * contains the current operating system and architecture ex: `linux-x86_64`
++* `username`
++    * this will be filled in by a function borrowed from Cargo's source code, that determines your information from
++      Cargo's
++      configuration.
++* `within_cargo_project`
++    * A boolean with the value `true` if the template is being expanded inside a `Cargo` project. It's
++      a simple matter of whether `Cargo.toml` is present in any parent folder.
++* `is_init`
++    * A boolean that reflects the value of the `--init` parameter of `cargo-generate`.
++
++## Usage example
++
++```markdown
++// README.md
++
++This awesome crate `{{ crate_name }}` is brought to you by {{ authors }}.
++```
+ 
+ [liquid]: https://shopify.github.io/liquid
++
+ [Rhai]: https://rhai.rs/book/
+diff --git a/guide/src/templates/scripting.hook-types.md b/guide/src/templates/scripting.hook-types.md
+index cf97ed9..0a54fea 100644
+--- a/guide/src/templates/scripting.hook-types.md
++++ b/guide/src/templates/scripting.hook-types.md
+@@ -2,7 +2,7 @@
+ 
+ ### Init
+ 
+-- Init hooks are run before anything else.
++- Init hooks are executed before anything else.
+ - The variables `crate_type`/`authors`/`username`/`os-arch` and `is_init` are available.
+ - The variable `project-name` *may* be available.
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+index 3de230f..71aa56d 100755
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -521,8 +521,8 @@ fn expand_template(
+     )?;
+ 
+     let project_name_input = ProjectNameInput::try_from((&liquid_object, user_parsed_input))?;
+-    let destination = ProjectDir::try_from((&project_name_input, user_parsed_input))?;
+     let project_name = ProjectName::from((&project_name_input, user_parsed_input));
++    let destination = ProjectDir::try_from((&project_name_input, user_parsed_input))?;
+     let crate_name = CrateName::from(&project_name_input);
+     set_project_name_variables(&liquid_object, &destination, &project_name, &crate_name)?;
+ 
+diff --git a/src/template_variables/project_dir.rs b/src/template_variables/project_dir.rs
+index 3987805..88618b1 100644
+--- a/src/template_variables/project_dir.rs
++++ b/src/template_variables/project_dir.rs
+@@ -5,8 +5,8 @@ use std::{
+ 
+ use anyhow::bail;
+ use console::style;
+-use heck::ToKebabCase;
+ 
++use crate::template_variables::project_name::sanitize_project_name;
+ use crate::{emoji, user_parsed_input::UserParsedInput};
+ use log::warn;
+ 
+@@ -14,6 +14,7 @@ use super::project_name_input::ProjectNameInput;
+ 
+ /// Stores user inputted name and provides convenience methods
+ /// for handling casing.
++#[derive(Debug, PartialEq)]
+ pub struct ProjectDir(PathBuf);
+ 
+ impl AsRef<Path> for ProjectDir {
+@@ -48,7 +49,7 @@ impl TryFrom<(&ProjectNameInput, &UserParsedInput)> for ProjectDir {
+             .force()
+             .then(|| name.clone())
+             .unwrap_or_else(|| {
+-                let renamed_project_name = name.to_kebab_case();
++                let renamed_project_name = sanitize_project_name(name.as_str());
+                 if renamed_project_name != name {
+                     warn!(
+                         "{} `{}` {} `{}`{}",
+diff --git a/src/template_variables/project_name.rs b/src/template_variables/project_name.rs
+index 976c10d..79a05dd 100644
+--- a/src/template_variables/project_name.rs
++++ b/src/template_variables/project_name.rs
+@@ -1,12 +1,12 @@
+ use std::fmt::Display;
+ 
+-use heck::ToKebabCase;
++use heck::{ToKebabCase, ToSnakeCase};
+ 
+ use crate::user_parsed_input::UserParsedInput;
+ 
+ use super::ProjectNameInput;
+ 
+-#[derive(Debug)]
++#[derive(Debug, PartialEq)]
+ pub struct ProjectName(String);
+ 
+ impl From<(&ProjectNameInput, &UserParsedInput)> for ProjectName {
+@@ -17,7 +17,7 @@ impl From<(&ProjectNameInput, &UserParsedInput)> for ProjectName {
+             user_parsed_input
+                 .force()
+                 .then(|| project_name_input.as_ref().to_owned())
+-                .unwrap_or_else(|| project_name_input.as_ref().to_kebab_case()),
++                .unwrap_or_else(|| sanitize_project_name(project_name_input.as_ref())),
+         )
+     }
+ }
+diff --git a/src/template_variables/project_name_input.rs b/src/template_variables/project_name_input.rs
+index 8444a96..071afa7 100644
+--- a/src/template_variables/project_name_input.rs
++++ b/src/template_variables/project_name_input.rs
+@@ -10,7 +10,7 @@ use crate::{
+ use log::warn;
+ 
+ #[derive(Debug)]
+-pub struct ProjectNameInput(String);
++pub struct ProjectNameInput(pub(crate) String);
+ 
+ impl TryFrom<(&LiquidObjectResource, &UserParsedInput)> for ProjectNameInput {
+     type Error = anyhow::Error;
+2026-04-17 03:20:11,448 - INFO - Eval script for cargo-generate__cargo-generate-1172 written to logs/run_evaluation/gold_run1/gold/cargo-generate__cargo-generate-1172/eval.sh; copying to container...
+2026-04-17 03:22:28,584 - INFO - Test runtime: 136.99 seconds
+2026-04-17 03:22:28,584 - INFO - Test output for cargo-generate__cargo-generate-1172 written to logs/run_evaluation/gold_run1/gold/cargo-generate__cargo-generate-1172/test_output.txt
+2026-04-17 03:22:28,668 - INFO - Git diff after:
+diff --git a/Cargo.lock b/Cargo.lock
+index 6cbd81e..5839820 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -175,7 +175,6 @@ dependencies = [
+  "assert_cmd",
+  "auth-git2",
+  "bstr",
+- "cargo-husky",
+  "clap",
+  "console",
+  "dialoguer",
+@@ -212,17 +211,11 @@ dependencies = [
+  "walkdir",
+ ]
+ 
+-[[package]]
+-name = "cargo-husky"
+-version = "1.5.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7b02b629252fe8ef6460461409564e2c21d0c8e77e0944f3d189ff06c4e932ad"
+-
+ [[package]]
+ name = "cc"
+-version = "1.0.90"
++version = "1.0.92"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8cd6604a82acf3039f1144f54b8eb34e91ffba622051189e71b781822d5ee1f5"
++checksum = "2678b2e3449475e95b0aa6f9b506a28e61b3dc8996592b983695e8ebb58a8b41"
+ dependencies = [
+  "jobserver",
+  "libc",
+@@ -566,9 +559,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "getrandom"
+-version = "0.2.12"
++version = "0.2.14"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "190092ea657667030ac6a35e305e62fc4dd69fd98ac98631e5d3a2b1575a12b5"
++checksum = "94b22e06ecb0110981051723910cbf0b5f5e09a2062dd7663334ee79a9d1286c"
+ dependencies = [
+  "cfg-if",
+  "libc",
+@@ -980,13 +973,12 @@ dependencies = [
+ 
+ [[package]]
+ name = "libredox"
+-version = "0.0.1"
++version = "0.1.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "85c833ca1e66078851dba29046874e38f08b2c883700aa29a03ddd3b23814ee8"
++checksum = "c0ff37bd590ca25063e35af745c343cb7a0271906fb7b37e4813e8f79f00268d"
+ dependencies = [
+  "bitflags 2.5.0",
+  "libc",
+- "redox_syscall",
+ ]
+ 
+ [[package]]
+@@ -1096,9 +1088,9 @@ checksum = "90ed8c1e510134f979dbc4f070f87d4313098b704861a105fe34231c70a3901c"
+ 
+ [[package]]
+ name = "memchr"
+-version = "2.7.1"
++version = "2.7.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "523dc4f511e55ab87b694dc30d0f820d60906ef06413f93d4d7a1385599cc149"
++checksum = "6c8640c5d730cb13ebd907d8d04b52f55ac9a2eec55b440c8892f40d56c76c1d"
+ 
+ [[package]]
+ name = "memmap2"
+@@ -1223,9 +1215,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "openssl-sys"
+-version = "0.9.101"
++version = "0.9.102"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dda2b0f344e78efc2facf7d195d098df0dd72151b26ab98da807afc26c198dff"
++checksum = "c597637d56fbc83893a35eb0dd04b2b8e7a50c91e64e9493e398b5df4fb45fa2"
+ dependencies = [
+  "cc",
+  "libc",
+@@ -1295,9 +1287,9 @@ checksum = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e"
+ 
+ [[package]]
+ name = "pest"
+-version = "2.7.8"
++version = "2.7.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "56f8023d0fb78c8e03784ea1c7f3fa36e68a723138990b8d5a47d916b651e7a8"
++checksum = "311fb059dee1a7b802f036316d790138c613a4e8b180c822e3925a662e9f0c95"
+ dependencies = [
+  "memchr",
+  "thiserror",
+@@ -1306,9 +1298,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pest_derive"
+-version = "2.7.8"
++version = "2.7.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b0d24f72393fd16ab6ac5738bc33cdb6a9aa73f8b902e8fe29cf4e67d7dd1026"
++checksum = "f73541b156d32197eecda1a4014d7f868fd2bcb3c550d5386087cfba442bf69c"
+ dependencies = [
+  "pest",
+  "pest_generator",
+@@ -1316,9 +1308,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pest_generator"
+-version = "2.7.8"
++version = "2.7.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fdc17e2a6c7d0a492f0158d7a4bd66cc17280308bbaff78d5bef566dca35ab80"
++checksum = "c35eeed0a3fab112f75165fdc026b3913f4183133f19b49be773ac9ea966e8bd"
+ dependencies = [
+  "pest",
+  "pest_meta",
+@@ -1329,9 +1321,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pest_meta"
+-version = "2.7.8"
++version = "2.7.9"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "934cd7631c050f4674352a6e835d5f6711ffbfb9345c2fc0107155ac495ae293"
++checksum = "2adbf29bb9776f28caece835398781ab24435585fe0d4dc1374a61db5accedca"
+ dependencies = [
+  "once_cell",
+  "pest",
+@@ -1457,9 +1449,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "redox_users"
+-version = "0.4.4"
++version = "0.4.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a18479200779601e498ada4e8c1e1f50e3ee19deb0259c25825a98b5603b2cb4"
++checksum = "bd283d9651eeda4b2a83a43c1c91b266c40fd76ecd39a50a8c630ae69dc72891"
+ dependencies = [
+  "getrandom",
+  "libredox",
+@@ -1491,9 +1483,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "regex-syntax"
+-version = "0.8.2"
++version = "0.8.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c08c74e62047bb2de4ff487b251e4a92e24f48745648451635cec7d591162d9f"
++checksum = "adad44e29e4c806119491a7f06f03de4d1af22c3a680dd47f1e6e179439d1f56"
+ 
+ [[package]]
+ name = "remove_dir_all"
+@@ -1669,9 +1661,9 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
+ 
+ [[package]]
+ name = "syn"
+-version = "2.0.55"
++version = "2.0.58"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "002a1b3dbf967edfafc32655d0f377ab0bb7b994aa1d32c8cc7e9b8bf3ebb8f0"
++checksum = "44cfb93f38070beee36b3fef7d4f5a16f27751d94b187b666a5cc5e9b0d30687"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+diff --git a/guide/src/templates/builtin_placeholders.md b/guide/src/templates/builtin_placeholders.md
+index 411ae59..f81e15a 100644
+--- a/guide/src/templates/builtin_placeholders.md
++++ b/guide/src/templates/builtin_placeholders.md
+@@ -3,37 +3,47 @@
+ `cargo-generate` supports a number of builtin placeholders for use in templates.
+ 
+ These placeholders can be used directly in files using the [Liquid language][liquid], or from
+-[Rhai scripts][rhai] using the syntax: `variable::get("placeholder name")`.
+-
+-The current supported builtin placeholders are:
+-
+-* `{{authors}}`
+-
+-  this will be filled in by a function borrowed from Cargo's source code, that determines your information from Cargo's configuration. It will either be on the form `username <email>` or just plain `username`.
+-* `{{project-name}}`
+-
+-  this is supplied by either passing the `--name` flag to the command or working with the interactive CLI to supply a name.
+-* `{{crate_name}}`
+-
+-  the snake_case_version of `project-name`
+-* `{{crate_type}}`
+-
+-  this is supplied by either passing the `--bin` or `--lib` flag to the command line, contains either `bin` or `lib`, `--bin` is the default
+-* `{{os-arch}}`
+-
+-  contains the current operating system and architecture ex: `linux-x86_64`
+-* `{{username}}`
+-
+-  this will be filled in by a function borrowed from Cargo's source code, that determines your information from Cargo's configuration.
+-
+-* `{{within_cargo_project}}`
+-
+-  A boolean with the value `true` if the template is being expanded inside a `Cargo` project. It's 
+-  a simple matter of whether `Cargo.toml` is present in any parent folder.
+-
+-* `{{is_init}}`
+-
+-  A boolean that reflects the value of the `--init` parameter of `cargo-generate`.
++[Rhai scripts][rhai] using the syntax:
++
++```rhai
++variable::get("placeholder name")
++````
++
++Builtin placeholders are:
++
++* `authors`
++    * this will be filled in by a function borrowed from Cargo's source code, that determines your information from
++      Cargo's configuration. It will either be on the form `username <email>` or just plain `username`.
++* `project-name`
++    * this is supplied by either passing the `--name` flag to the command or working with the interactive CLI to supply
++      a name. It can be provided in snake_case or dash-case, in all other cases it is converted to dash-case.
++    * it can also be supplied via the environment variable `CARGO_GENERATE_VALUE_PROJECT_NAME` when running in `--silent` mode 
++      > ⚠️ Note: the `--force` flag allows you to use the project name as it is given, without adjusting. Please use it carefully.
++* `crate_name`
++    * the snake_case_version of `project-name`
++* `crate_type`
++    * this is supplied by either passing the `--bin` or `--lib` flag to the command line, contains either `bin`
++      or `lib`, `--bin` is the default
++* `os-arch`
++    * contains the current operating system and architecture ex: `linux-x86_64`
++* `username`
++    * this will be filled in by a function borrowed from Cargo's source code, that determines your information from
++      Cargo's
++      configuration.
++* `within_cargo_project`
++    * A boolean with the value `true` if the template is being expanded inside a `Cargo` project. It's
++      a simple matter of whether `Cargo.toml` is present in any parent folder.
++* `is_init`
++    * A boolean that reflects the value of the `--init` parameter of `cargo-generate`.
++
++## Usage example
++
++```markdown
++// README.md
++
++This awesome crate `{{ crate_name }}` is brought to you by {{ authors }}.
++```
+ 
+ [liquid]: https://shopify.github.io/liquid
++
+ [Rhai]: https://rhai.rs/book/
+diff --git a/guide/src/templates/scripting.hook-types.md b/guide/src/templates/scripting.hook-types.md
+index cf97ed9..0a54fea 100644
+--- a/guide/src/templates/scripting.hook-types.md
++++ b/guide/src/templates/scripting.hook-types.md
+@@ -2,7 +2,7 @@
+ 
+ ### Init
+ 
+-- Init hooks are run before anything else.
++- Init hooks are executed before anything else.
+ - The variables `crate_type`/`authors`/`username`/`os-arch` and `is_init` are available.
+ - The variable `project-name` *may* be available.
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+index 3de230f..71aa56d 100755
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -521,8 +521,8 @@ fn expand_template(
+     )?;
+ 
+     let project_name_input = ProjectNameInput::try_from((&liquid_object, user_parsed_input))?;
+-    let destination = ProjectDir::try_from((&project_name_input, user_parsed_input))?;
+     let project_name = ProjectName::from((&project_name_input, user_parsed_input));
++    let destination = ProjectDir::try_from((&project_name_input, user_parsed_input))?;
+     let crate_name = CrateName::from(&project_name_input);
+     set_project_name_variables(&liquid_object, &destination, &project_name, &crate_name)?;
+ 
+diff --git a/src/template_variables/project_dir.rs b/src/template_variables/project_dir.rs
+index 3987805..88618b1 100644
+--- a/src/template_variables/project_dir.rs
++++ b/src/template_variables/project_dir.rs
+@@ -5,8 +5,8 @@ use std::{
+ 
+ use anyhow::bail;
+ use console::style;
+-use heck::ToKebabCase;
+ 
++use crate::template_variables::project_name::sanitize_project_name;
+ use crate::{emoji, user_parsed_input::UserParsedInput};
+ use log::warn;
+ 
+@@ -14,6 +14,7 @@ use super::project_name_input::ProjectNameInput;
+ 
+ /// Stores user inputted name and provides convenience methods
+ /// for handling casing.
++#[derive(Debug, PartialEq)]
+ pub struct ProjectDir(PathBuf);
+ 
+ impl AsRef<Path> for ProjectDir {
+@@ -48,7 +49,7 @@ impl TryFrom<(&ProjectNameInput, &UserParsedInput)> for ProjectDir {
+             .force()
+             .then(|| name.clone())
+             .unwrap_or_else(|| {
+-                let renamed_project_name = name.to_kebab_case();
++                let renamed_project_name = sanitize_project_name(name.as_str());
+                 if renamed_project_name != name {
+                     warn!(
+                         "{} `{}` {} `{}`{}",
+diff --git a/src/template_variables/project_name.rs b/src/template_variables/project_name.rs
+index 976c10d..79a05dd 100644
+--- a/src/template_variables/project_name.rs
++++ b/src/template_variables/project_name.rs
+@@ -1,12 +1,12 @@
+ use std::fmt::Display;
+ 
+-use heck::ToKebabCase;
++use heck::{ToKebabCase, ToSnakeCase};
+ 
+ use crate::user_parsed_input::UserParsedInput;
+ 
+ use super::ProjectNameInput;
+ 
+-#[derive(Debug)]
++#[derive(Debug, PartialEq)]
+ pub struct ProjectName(String);
+ 
+ impl From<(&ProjectNameInput, &UserParsedInput)> for ProjectName {
+@@ -17,7 +17,7 @@ impl From<(&ProjectNameInput, &UserParsedInput)> for ProjectName {
+             user_parsed_input
+                 .force()
+                 .then(|| project_name_input.as_ref().to_owned())
+-                .unwrap_or_else(|| project_name_input.as_ref().to_kebab_case()),
++                .unwrap_or_else(|| sanitize_project_name(project_name_input.as_ref())),
+         )
+     }
+ }
+diff --git a/src/template_variables/project_name_input.rs b/src/template_variables/project_name_input.rs
+index 8444a96..071afa7 100644
+--- a/src/template_variables/project_name_input.rs
++++ b/src/template_variables/project_name_input.rs
+@@ -10,7 +10,7 @@ use crate::{
+ use log::warn;
+ 
+ #[derive(Debug)]
+-pub struct ProjectNameInput(String);
++pub struct ProjectNameInput(pub(crate) String);
+ 
+ impl TryFrom<(&LiquidObjectResource, &UserParsedInput)> for ProjectNameInput {
+     type Error = anyhow::Error;
+2026-04-17 03:22:28,668 - INFO - Grading answer for cargo-generate__cargo-generate-1172...
+2026-04-17 03:22:28,673 - INFO - report: {'cargo-generate__cargo-generate-1172': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['config::tests::config_try_from_handles_empty', 'config::tests::config_try_from_errors_on_invalid_keys', 'config::tests::config_try_from_handles_placeholders', 'config::tests::locate_configs_doesnt_look_past_cargo_generate', 'git::utils::should_canonicalize', 'config::tests::locate_configs_returns_empty_upon_failure', 'project_variables::tests::block_invalid_key_names', 'project_variables::tests::bools_cant_have_regex', 'project_variables::tests::boolean_cant_have_choices', 'args::cli_tests::test_cli', 'project_variables::tests::choices_cant_be_an_empty_array', 'project_variables::tests::choices_array_cant_have_anything_but_strings', 'config::tests::locate_configs_can_locate_paths_with_cargo_generate', 'config::tests::test_deserializes_config', 'project_variables::tests::choices_is_array_string_no_regex_is_fine', 'project_variables::tests::choices_is_not_array_string_is_error', 'project_variables::tests::default_for_bool_only_accepts_bool', 'git::gitconfig::test::should_resolve_instead_url', 'project_variables::tests::default_for_boolean_is_fine', 'project_variables::tests::default_for_string_is_on_choices', 'project_variables::tests::default_for_string_isnt_on_choices', 'project_variables::tests::default_for_string_only_accepts_strings', 'project_variables::tests::default_for_string_with_no_choices_and_no_regex', 'project_variables::tests::editor_cant_have_choices', 'project_variables::tests::empty_default_is_fine', 'project_variables::tests::empty_type_is_string', 'project_variables::tests::choices_is_array_string_that_all_match_regex_is_good', 'project_variables::tests::no_choices_boolean', 'project_variables::tests::invalid_regex_is_err', 'project_variables::tests::no_choices_editor', 'project_variables::tests::default_for_string_with_no_choices_and_matching_regex', 'project_variables::tests::choices_is_array_string_that_doesnt_match_regex_is_error', 'project_variables::tests::no_choices_for_type_string', 'project_variables::tests::no_choices_text', 'project_variables::tests::default_for_string_is_on_choices_and_matches_regex', 'project_variables::tests::no_regex_is_ok', 'project_variables::tests::default_for_string_with_no_choices_and_regex_doesnt_match', 'project_variables::tests::only_tables_as_placeholder_values', 'project_variables::tests::prompt_as_string_is_ok', 'project_variables::tests::prompt_cant_be_empty', 'project_variables::tests::prompt_must_be_string', 'project_variables::tests::text_cant_have_choices', 'project_variables::tests::type_must_be_string_type', 'project_variables::tests::type_must_either_be_string_or_bool', 'project_variables::tests::strings_can_have_regex', 'filenames::tests::should_prevent_exploitation', 'filenames::tests::should_prevent_invalid_filenames', 'filenames::tests::should_do_happy_path', 'tests::auto_locate_template_can_resolve_configured_subtemplates', 'user_parsed_input::tests::should_support_colon_abbreviations', 'tests::auto_locate_template_returns_base_when_no_cargo_generate_is_found', 'tests::auto_locate_template_returns_path_when_single_cargo_generate_is_found', 'user_parsed_input::tests::should_appreviation_org_repo_to_github', 'tests::auto_locate_template_prompts_when_multiple_cargo_generate_is_found', 'template_variables::test::names_may_contain_dash', 'template_variables::test::names_may_contain_digits', 'template_variables::test::names_may_contain_underscore', 'template_variables::test::spaces_are_not_allowed_in_names', 'template_variables::test::spaces_around_assignment_is_ok', 'tests::auto_locate_template_recurses_to_resolve_subtemplates', 'hooks::variable_mod::tests::test_rhai_set', 'template_variables::test::names_must_start_with_word_char', 'git::should_retrieve_an_instead_of_url', 'git::should_find_them_all', 'basics::error_message_for_invalid_repo_or_user'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for cargo-generate__cargo-generate-1172: resolved: True
+2026-04-17 03:22:28,674 - INFO - Attempting to stop container rustb.eval.cargo-generate__cargo-generate-1172.gold_run1...
+2026-04-17 03:24:02,487 - INFO - Attempting to remove container rustb.eval.cargo-generate__cargo-generate-1172.gold_run1...
+2026-04-17 03:24:02,999 - INFO - Container rustb.eval.cargo-generate__cargo-generate-1172.gold_run1 removed.

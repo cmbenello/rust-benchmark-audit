@@ -1,0 +1,1598 @@
+diff --git a/Cargo.lock b/Cargo.lock
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -34,6 +34,8 @@ version = "0.8.0"
+ dependencies = [
+  "clap 2.32.0 (registry+https://github.com/rust-lang/crates.io-index)",
+  "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
++ "proc-macro2 0.4.25 (registry+https://github.com/rust-lang/crates.io-index)",
++ "quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
+  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
+  "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
+  "serde_json 1.0.36 (registry+https://github.com/rust-lang/crates.io-index)",
+diff --git a/Cargo.toml b/Cargo.toml
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -21,11 +21,13 @@ serde_json = "1.0"
+ serde_derive = "1.0"
+ tempfile = "3.0"
+ toml = "0.4"
++proc-macro2 = "0.4"
++quote = "0.6"
+ 
+ [dependencies.syn]
+ version = "0.15.0"
+ default-features = false
+-features = ["clone-impls", "derive", "extra-traits", "full", "parsing", "printing"]
++features = ["clone-impls", "extra-traits", "full", "parsing", "printing"]
+ 
+ [[bin]]
+ name = "cbindgen"
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -8,12 +8,17 @@ use std::io::{Read, Write};
+ use std::path;
+ 
+ use bindgen::config::{Config, Language};
+-use bindgen::ir::{Constant, Function, ItemContainer, Static};
++use bindgen::ir::{
++    Constant, Function, ItemContainer, ItemMap, Path as BindgenPath, Static, Struct,
++};
+ use bindgen::writer::{Source, SourceWriter};
+ 
+ /// A bindings header that can be written.
+ pub struct Bindings {
+-    config: Config,
++    pub config: Config,
++    /// The map from path to struct, used to lookup whether a given type is a
++    /// transparent struct. This is needed to generate code for constants.
++    struct_map: ItemMap<Struct>,
+     globals: Vec<Static>,
+     constants: Vec<Constant>,
+     items: Vec<ItemContainer>,
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -23,20 +28,29 @@ pub struct Bindings {
+ impl Bindings {
+     pub(crate) fn new(
+         config: Config,
++        struct_map: ItemMap<Struct>,
+         constants: Vec<Constant>,
+         globals: Vec<Static>,
+         items: Vec<ItemContainer>,
+         functions: Vec<Function>,
+     ) -> Bindings {
+         Bindings {
+-            config: config,
+-            globals: globals,
+-            constants: constants,
+-            items: items,
+-            functions: functions,
++            config,
++            struct_map,
++            globals,
++            constants,
++            items,
++            functions,
+         }
+     }
+ 
++    // FIXME(emilio): What to do when the configuration doesn't match?
++    pub fn struct_is_transparent(&self, path: &BindgenPath) -> bool {
++        let mut any = false;
++        self.struct_map.for_items(path, |s| any |= s.is_transparent);
++        any
++    }
++
+     pub fn write_to_file<P: AsRef<path::Path>>(&self, path: P) -> bool {
+         // Don't compare files if we've never written this file before
+         if !path.as_ref().is_file() {
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -126,7 +140,7 @@ impl Bindings {
+     }
+ 
+     pub fn write<F: Write>(&self, file: F) {
+-        let mut out = SourceWriter::new(file, &self.config);
++        let mut out = SourceWriter::new(file, self);
+ 
+         if !self.config.no_includes
+             || !self.config.includes.is_empty()
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -142,7 +156,7 @@ impl Bindings {
+         for constant in &self.constants {
+             if constant.ty.is_primitive_or_ptr_primitive() {
+                 out.new_line_if_not_start();
+-                constant.write(&self.config, &mut out);
++                constant.write(&self.config, &mut out, None);
+                 out.new_line();
+             }
+         }
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -158,14 +172,14 @@ impl Bindings {
+             }
+ 
+             out.new_line_if_not_start();
+-            match item {
+-                &ItemContainer::Constant(..) => unreachable!(),
+-                &ItemContainer::Static(..) => unreachable!(),
+-                &ItemContainer::Enum(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::Struct(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::Union(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::OpaqueItem(ref x) => x.write(&self.config, &mut out),
+-                &ItemContainer::Typedef(ref x) => x.write(&self.config, &mut out),
++            match *item {
++                ItemContainer::Constant(..) => unreachable!(),
++                ItemContainer::Static(..) => unreachable!(),
++                ItemContainer::Enum(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::Struct(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::Union(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::OpaqueItem(ref x) => x.write(&self.config, &mut out),
++                ItemContainer::Typedef(ref x) => x.write(&self.config, &mut out),
+             }
+             out.new_line();
+         }
+diff --git a/src/bindgen/bindings.rs b/src/bindgen/bindings.rs
+--- a/src/bindgen/bindings.rs
++++ b/src/bindgen/bindings.rs
+@@ -173,7 +187,7 @@ impl Bindings {
+         for constant in &self.constants {
+             if !constant.ty.is_primitive_or_ptr_primitive() {
+                 out.new_line_if_not_start();
+-                constant.write(&self.config, &mut out);
++                constant.write(&self.config, &mut out, None);
+                 out.new_line();
+             }
+         }
+diff --git /dev/null b/src/bindgen/bitflags.rs
+new file mode 100644
+--- /dev/null
++++ b/src/bindgen/bitflags.rs
+@@ -0,0 +1,138 @@
++/* This Source Code Form is subject to the terms of the Mozilla Public
++ * License, v. 2.0. If a copy of the MPL was not distributed with this
++ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
++
++use proc_macro2::TokenStream;
++use syn;
++use syn::parse::{Parse, ParseStream, Parser, Result as ParseResult};
++
++// $(#[$outer:meta])*
++// ($($vis:tt)*) $BitFlags:ident: $T:ty {
++//     $(
++//         $(#[$inner:ident $($args:tt)*])*
++//         const $Flag:ident = $value:expr;
++//     )+
++// }
++#[derive(Debug)]
++pub struct Bitflags {
++    attrs: Vec<syn::Attribute>,
++    vis: syn::Visibility,
++    struct_token: Token![struct],
++    name: syn::Ident,
++    colon_token: Token![:],
++    repr: syn::Type,
++    flags: Flags,
++}
++
++impl Bitflags {
++    pub fn expand(&self) -> (syn::ItemStruct, syn::ItemImpl) {
++        let Bitflags {
++            ref attrs,
++            ref vis,
++            ref name,
++            ref repr,
++            ref flags,
++            ..
++        } = *self;
++
++        let struct_ = parse_quote! {
++            #(#attrs)*
++            #vis struct #name {
++                bits: #repr,
++            }
++        };
++
++        let consts = flags.expand(name);
++        let impl_ = parse_quote! {
++            impl #name {
++                #consts
++            }
++        };
++
++        (struct_, impl_)
++    }
++}
++
++impl Parse for Bitflags {
++    fn parse(input: ParseStream) -> ParseResult<Self> {
++        Ok(Self {
++            attrs: input.call(syn::Attribute::parse_outer)?,
++            vis: input.parse()?,
++            struct_token: input.parse()?,
++            name: input.parse()?,
++            colon_token: input.parse()?,
++            repr: input.parse()?,
++            flags: input.parse()?,
++        })
++    }
++}
++
++// $(#[$inner:ident $($args:tt)*])*
++// const $Flag:ident = $value:expr;
++#[derive(Debug)]
++struct Flag {
++    attrs: Vec<syn::Attribute>,
++    const_token: Token![const],
++    name: syn::Ident,
++    equals_token: Token![=],
++    value: syn::Expr,
++    semicolon_token: Token![;],
++}
++
++impl Flag {
++    fn expand(&self, struct_name: &syn::Ident) -> TokenStream {
++        let Flag {
++            ref attrs,
++            ref name,
++            ref value,
++            ..
++        } = *self;
++        quote! {
++            #(#attrs)*
++            const #name : #struct_name = #struct_name { bits: #value };
++        }
++    }
++}
++
++impl Parse for Flag {
++    fn parse(input: ParseStream) -> ParseResult<Self> {
++        Ok(Self {
++            attrs: input.call(syn::Attribute::parse_outer)?,
++            const_token: input.parse()?,
++            name: input.parse()?,
++            equals_token: input.parse()?,
++            value: input.parse()?,
++            semicolon_token: input.parse()?,
++        })
++    }
++}
++
++#[derive(Debug)]
++struct Flags(Vec<Flag>);
++
++impl Parse for Flags {
++    fn parse(input: ParseStream) -> ParseResult<Self> {
++        let content;
++        let _ = braced!(content in input);
++        let mut flags = vec![];
++        while !content.is_empty() {
++            flags.push(content.parse()?);
++        }
++        Ok(Flags(flags))
++    }
++}
++
++impl Flags {
++    fn expand(&self, struct_name: &syn::Ident) -> TokenStream {
++        let mut ts = quote! {};
++        for flag in &self.0 {
++            ts.extend(flag.expand(struct_name));
++        }
++        ts
++    }
++}
++
++pub fn parse(tokens: TokenStream) -> ParseResult<Bitflags> {
++    let parser = Bitflags::parse;
++    parser.parse2(tokens)
++}
+diff --git a/src/bindgen/config.rs b/src/bindgen/config.rs
+--- a/src/bindgen/config.rs
++++ b/src/bindgen/config.rs
+@@ -284,6 +284,9 @@ pub struct StructConfig {
+     pub derive_gt: bool,
+     /// Whether to generate a greater than or equal to operator on structs with one field
+     pub derive_gte: bool,
++    /// Whether associated constants should be in the body. Only applicable to
++    /// non-transparent structs, and in C++-only.
++    pub associated_constants_in_body: bool,
+ }
+ 
+ impl Default for StructConfig {
+diff --git a/src/bindgen/config.rs b/src/bindgen/config.rs
+--- a/src/bindgen/config.rs
++++ b/src/bindgen/config.rs
+@@ -297,6 +300,7 @@ impl Default for StructConfig {
+             derive_lte: false,
+             derive_gt: false,
+             derive_gte: false,
++            associated_constants_in_body: false,
+         }
+     }
+ }
+diff --git a/src/bindgen/ir/cfg.rs b/src/bindgen/ir/cfg.rs
+--- a/src/bindgen/ir/cfg.rs
++++ b/src/bindgen/ir/cfg.rs
+@@ -93,14 +93,12 @@ impl Cfg {
+         }
+     }
+ 
+-    pub fn append(parent: &Option<Cfg>, child: Option<Cfg>) -> Option<Cfg> {
++    pub fn append(parent: Option<&Cfg>, child: Option<Cfg>) -> Option<Cfg> {
+         match (parent, child) {
+-            (&None, None) => None,
+-            (&None, Some(child)) => Some(child),
+-            (&Some(ref parent), None) => Some(parent.clone()),
+-            (&Some(ref parent), Some(ref child)) => {
+-                Some(Cfg::All(vec![parent.clone(), child.clone()]))
+-            }
++            (None, None) => None,
++            (None, Some(child)) => Some(child),
++            (Some(parent), None) => Some(parent.clone()),
++            (Some(parent), Some(child)) => Some(Cfg::All(vec![parent.clone(), child])),
+         }
+     }
+ 
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -2,6 +2,7 @@
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
++use std::borrow::Cow;
+ use std::fmt;
+ use std::io::Write;
+ use std::mem;
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -10,17 +11,24 @@ use syn;
+ 
+ use bindgen::config::{Config, Language};
+ use bindgen::declarationtyperesolver::DeclarationTypeResolver;
++use bindgen::dependencies::Dependencies;
+ use bindgen::ir::{
+     AnnotationSet, Cfg, ConditionWrite, Documentation, GenericParams, Item, ItemContainer, Path,
+-    ToCondition, Type,
++    Struct, ToCondition, Type,
+ };
++use bindgen::library::Library;
+ use bindgen::writer::{Source, SourceWriter};
+ 
+ #[derive(Debug, Clone)]
+ pub enum Literal {
+     Expr(String),
++    BinOp {
++        left: Box<Literal>,
++        op: &'static str,
++        right: Box<Literal>,
++    },
+     Struct {
+-        name: String,
++        path: Path,
+         export_name: String,
+         fields: Vec<(String, Literal)>,
+     },
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -30,8 +38,13 @@ impl fmt::Display for Literal {
+     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+         match self {
+             Literal::Expr(v) => write!(f, "{}", v),
++            Literal::BinOp {
++                ref left,
++                op,
++                ref right,
++            } => write!(f, "{} {} {}", left, op, right),
+             Literal::Struct {
+-                name: _,
++                path: _,
+                 export_name,
+                 fields,
+             } => write!(
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -52,7 +65,7 @@ impl Literal {
+     pub fn rename_for_config(&mut self, config: &Config) {
+         match self {
+             Literal::Struct {
+-                name: _,
++                path: _,
+                 ref mut export_name,
+                 fields,
+             } => {
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -61,25 +74,52 @@ impl Literal {
+                     lit.rename_for_config(config);
+                 }
+             }
++            Literal::BinOp {
++                ref mut left,
++                ref mut right,
++                ..
++            } => {
++                left.rename_for_config(config);
++                right.rename_for_config(config);
++            }
+             Literal::Expr(_) => {}
+         }
+     }
+ 
+     pub fn load(expr: &syn::Expr) -> Result<Literal, String> {
+-        match expr {
+-            &syn::Expr::Lit(syn::ExprLit {
++        match *expr {
++            syn::Expr::Binary(ref bin_expr) => {
++                let l = Self::load(&bin_expr.left)?;
++                let r = Self::load(&bin_expr.right)?;
++                let op = match bin_expr.op {
++                    syn::BinOp::Add(..) => "+",
++                    syn::BinOp::Sub(..) => "-",
++                    syn::BinOp::Mul(..) => "*",
++                    syn::BinOp::Div(..) => "/",
++                    syn::BinOp::Rem(..) => "%",
++                    syn::BinOp::Shl(..) => "<<",
++                    syn::BinOp::Shr(..) => ">>",
++                    _ => return Err(format!("Unsupported binary op {:?}", bin_expr.op)),
++                };
++                Ok(Literal::BinOp {
++                    left: Box::new(l),
++                    op,
++                    right: Box::new(r),
++                })
++            }
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Str(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("u8\"{}\"", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Byte(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Char(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Int(ref value),
+                 ..
+             }) => match value.suffix() {
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -102,16 +142,16 @@ impl Literal {
+                     )))
+                 },
+             },
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Float(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value()))),
+-            &syn::Expr::Lit(syn::ExprLit {
++            syn::Expr::Lit(syn::ExprLit {
+                 lit: syn::Lit::Bool(ref value),
+                 ..
+             }) => Ok(Literal::Expr(format!("{}", value.value))),
+ 
+-            &syn::Expr::Struct(syn::ExprStruct {
++            syn::Expr::Struct(syn::ExprStruct {
+                 ref path,
+                 ref fields,
+                 ..
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -128,7 +168,7 @@ impl Literal {
+                     field_pairs.push((key, value));
+                 }
+                 Ok(Literal::Struct {
+-                    name: struct_name.clone(),
++                    path: Path::new(struct_name.clone()),
+                     export_name: struct_name,
+                     fields: field_pairs,
+                 })
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -147,84 +187,48 @@ pub struct Constant {
+     pub cfg: Option<Cfg>,
+     pub annotations: AnnotationSet,
+     pub documentation: Documentation,
++    pub associated_to: Option<Path>,
++}
++
++fn can_handle(ty: &Type, expr: &syn::Expr) -> bool {
++    if ty.is_primitive_or_ptr_primitive() {
++        return true;
++    }
++    match *expr {
++        syn::Expr::Struct(_) => true,
++        _ => false,
++    }
+ }
+ 
+ impl Constant {
+     pub fn load(
+         path: Path,
+-        item: &syn::ItemConst,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
++        ty: &syn::Type,
++        expr: &syn::Expr,
++        attrs: &[syn::Attribute],
++        associated_to: Option<Path>,
+     ) -> Result<Constant, String> {
+-        let ty = Type::load(&item.ty)?;
+-
+-        if ty.is_none() {
+-            return Err("Cannot have a zero sized const definition.".to_owned());
+-        }
+-
+-        let ty = ty.unwrap();
+-
+-        if !ty.is_primitive_or_ptr_primitive()
+-            && match *item.expr {
+-                syn::Expr::Struct(_) => false,
+-                _ => true,
++        let ty = Type::load(ty)?;
++        let ty = match ty {
++            Some(ty) => ty,
++            None => {
++                return Err("Cannot have a zero sized const definition.".to_owned());
+             }
+-        {
+-            return Err("Unhanded const definition".to_owned());
+-        }
+-
+-        Ok(Constant::new(
+-            path,
+-            ty,
+-            Literal::load(&item.expr)?,
+-            Cfg::append(mod_cfg, Cfg::load(&item.attrs)),
+-            AnnotationSet::load(&item.attrs)?,
+-            Documentation::load(&item.attrs),
+-        ))
+-    }
+-
+-    pub fn load_assoc(
+-        name: String,
+-        item: &syn::ImplItemConst,
+-        mod_cfg: &Option<Cfg>,
+-        is_transparent: bool,
+-        struct_path: &Path,
+-    ) -> Result<Constant, String> {
+-        let ty = Type::load(&item.ty)?;
+-
+-        if ty.is_none() {
+-            return Err("Cannot have a zero sized const definition.".to_owned());
+-        }
+-        let ty = ty.unwrap();
+-
+-        let can_handle_const_expr = match item.expr {
+-            syn::Expr::Struct(_) => true,
+-            _ => false,
+         };
+ 
+-        if !ty.is_primitive_or_ptr_primitive() && !can_handle_const_expr {
+-            return Err("Unhandled const definition".to_owned());
++        if !can_handle(&ty, expr) {
++            return Err("Unhanded const definition".to_owned());
+         }
+ 
+-        let expr = Literal::load(match item.expr {
+-            syn::Expr::Struct(syn::ExprStruct { ref fields, .. }) => {
+-                if is_transparent && fields.len() == 1 {
+-                    &fields[0].expr
+-                } else {
+-                    &item.expr
+-                }
+-            }
+-            _ => &item.expr,
+-        })?;
+-
+-        let full_name = Path::new(format!("{}_{}", struct_path, name));
+-
+         Ok(Constant::new(
+-            full_name,
++            path,
+             ty,
+-            expr,
+-            Cfg::append(mod_cfg, Cfg::load(&item.attrs)),
+-            AnnotationSet::load(&item.attrs)?,
+-            Documentation::load(&item.attrs),
++            Literal::load(&expr)?,
++            Cfg::append(mod_cfg, Cfg::load(attrs)),
++            AnnotationSet::load(attrs)?,
++            Documentation::load(attrs),
++            associated_to,
+         ))
+     }
+ 
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -235,6 +239,7 @@ impl Constant {
+         cfg: Option<Cfg>,
+         annotations: AnnotationSet,
+         documentation: Documentation,
++        associated_to: Option<Path>,
+     ) -> Self {
+         let export_name = path.name().to_owned();
+         Self {
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -245,6 +250,7 @@ impl Constant {
+             cfg,
+             annotations,
+             documentation,
++            associated_to,
+         }
+     }
+ }
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -254,12 +260,16 @@ impl Item for Constant {
+         &self.path
+     }
+ 
++    fn add_dependencies(&self, library: &Library, out: &mut Dependencies) {
++        self.ty.add_dependencies(library, out);
++    }
++
+     fn export_name(&self) -> &str {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/constant.rs b/src/bindgen/ir/constant.rs
+--- a/src/bindgen/ir/constant.rs
++++ b/src/bindgen/ir/constant.rs
+@@ -275,7 +285,9 @@ impl Item for Constant {
+     }
+ 
+     fn rename_for_config(&mut self, config: &Config) {
+-        config.export.rename(&mut self.export_name);
++        if self.associated_to.is_none() {
++            config.export.rename(&mut self.export_name);
++        }
+         self.value.rename_for_config(config);
+         self.ty.rename_for_config(config, &GenericParams::default()); // FIXME: should probably propagate something here
+     }
+diff --git a/src/bindgen/ir/enumeration.rs b/src/bindgen/ir/enumeration.rs
+--- a/src/bindgen/ir/enumeration.rs
++++ b/src/bindgen/ir/enumeration.rs
+@@ -54,7 +54,7 @@ impl EnumVariant {
+         is_tagged: bool,
+         variant: &syn::Variant,
+         generic_params: GenericParams,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+     ) -> Result<Self, String> {
+         let discriminant = match variant.discriminant {
+             Some((_, ref expr)) => match value_from_expr(expr) {
+diff --git a/src/bindgen/ir/enumeration.rs b/src/bindgen/ir/enumeration.rs
+--- a/src/bindgen/ir/enumeration.rs
++++ b/src/bindgen/ir/enumeration.rs
+@@ -250,7 +250,7 @@ impl Enum {
+         }
+     }
+ 
+-    pub fn load(item: &syn::ItemEnum, mod_cfg: &Option<Cfg>) -> Result<Enum, String> {
++    pub fn load(item: &syn::ItemEnum, mod_cfg: Option<&Cfg>) -> Result<Enum, String> {
+         let repr = Repr::load(&item.attrs)?;
+         if repr == Repr::RUST {
+             return Err("Enum not marked with a valid repr(prim) or repr(C).".to_owned());
+diff --git a/src/bindgen/ir/enumeration.rs b/src/bindgen/ir/enumeration.rs
+--- a/src/bindgen/ir/enumeration.rs
++++ b/src/bindgen/ir/enumeration.rs
+@@ -332,8 +332,8 @@ impl Item for Enum {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/function.rs b/src/bindgen/ir/function.rs
+--- a/src/bindgen/ir/function.rs
++++ b/src/bindgen/ir/function.rs
+@@ -37,7 +37,7 @@ impl Function {
+         decl: &syn::FnDecl,
+         extern_decl: bool,
+         attrs: &[syn::Attribute],
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+     ) -> Result<Function, String> {
+         let args = decl.inputs.iter().try_skip_map(|x| x.as_ident_and_type())?;
+         let ret = match decl.output {
+diff --git a/src/bindgen/ir/global.rs b/src/bindgen/ir/global.rs
+--- a/src/bindgen/ir/global.rs
++++ b/src/bindgen/ir/global.rs
+@@ -25,7 +25,7 @@ pub struct Static {
+ }
+ 
+ impl Static {
+-    pub fn load(item: &syn::ItemStatic, mod_cfg: &Option<Cfg>) -> Result<Static, String> {
++    pub fn load(item: &syn::ItemStatic, mod_cfg: Option<&Cfg>) -> Result<Static, String> {
+         let ty = Type::load(&item.ty)?;
+ 
+         if ty.is_none() {
+diff --git a/src/bindgen/ir/global.rs b/src/bindgen/ir/global.rs
+--- a/src/bindgen/ir/global.rs
++++ b/src/bindgen/ir/global.rs
+@@ -76,8 +76,8 @@ impl Item for Static {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/item.rs b/src/bindgen/ir/item.rs
+--- a/src/bindgen/ir/item.rs
++++ b/src/bindgen/ir/item.rs
+@@ -23,7 +23,7 @@ pub trait Item {
+     fn export_name(&self) -> &str {
+         self.name()
+     }
+-    fn cfg(&self) -> &Option<Cfg>;
++    fn cfg(&self) -> Option<&Cfg>;
+     fn annotations(&self) -> &AnnotationSet;
+     fn annotations_mut(&mut self) -> &mut AnnotationSet;
+ 
+diff --git a/src/bindgen/ir/item.rs b/src/bindgen/ir/item.rs
+--- a/src/bindgen/ir/item.rs
++++ b/src/bindgen/ir/item.rs
+@@ -206,7 +206,6 @@ impl<T: Item + Clone> ItemMap<T> {
+         }
+     }
+ 
+-    #[allow(dead_code)]
+     pub fn for_items<F>(&self, path: &Path, mut callback: F)
+     where
+         F: FnMut(&T),
+diff --git a/src/bindgen/ir/opaque.rs b/src/bindgen/ir/opaque.rs
+--- a/src/bindgen/ir/opaque.rs
++++ b/src/bindgen/ir/opaque.rs
+@@ -33,7 +33,7 @@ impl OpaqueItem {
+         path: Path,
+         generics: &syn::Generics,
+         attrs: &[syn::Attribute],
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+     ) -> Result<OpaqueItem, String> {
+         Ok(Self::new(
+             path,
+diff --git a/src/bindgen/ir/opaque.rs b/src/bindgen/ir/opaque.rs
+--- a/src/bindgen/ir/opaque.rs
++++ b/src/bindgen/ir/opaque.rs
+@@ -72,8 +72,8 @@ impl Item for OpaqueItem {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -10,8 +10,8 @@ use bindgen::config::{Config, Language};
+ use bindgen::declarationtyperesolver::DeclarationTypeResolver;
+ use bindgen::dependencies::Dependencies;
+ use bindgen::ir::{
+-    AnnotationSet, Cfg, ConditionWrite, Documentation, GenericParams, Item, ItemContainer, Path,
+-    Repr, ToCondition, Type, Typedef,
++    AnnotationSet, Cfg, ConditionWrite, Constant, Documentation, GenericParams, Item,
++    ItemContainer, Path, Repr, ToCondition, Type, Typedef,
+ };
+ use bindgen::library::Library;
+ use bindgen::mangle;
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -37,6 +37,7 @@ pub struct Struct {
+     pub cfg: Option<Cfg>,
+     pub annotations: AnnotationSet,
+     pub documentation: Documentation,
++    pub associated_constants: Vec<Constant>,
+ }
+ 
+ impl Struct {
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -45,7 +46,11 @@ impl Struct {
+         !self.fields.is_empty() && self.fields.iter().all(|x| x.1.can_cmp_eq())
+     }
+ 
+-    pub fn load(item: &syn::ItemStruct, mod_cfg: &Option<Cfg>) -> Result<Self, String> {
++    pub fn add_associated_constant(&mut self, c: Constant) {
++        self.associated_constants.push(c);
++    }
++
++    pub fn load(item: &syn::ItemStruct, mod_cfg: Option<&Cfg>) -> Result<Self, String> {
+         let is_transparent = match Repr::load(&item.attrs)? {
+             Repr::C => false,
+             Repr::TRANSPARENT => true,
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -118,6 +123,7 @@ impl Struct {
+             cfg,
+             annotations,
+             documentation,
++            associated_constants: vec![],
+         }
+     }
+ 
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -178,8 +184,8 @@ impl Item for Struct {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -266,6 +272,10 @@ impl Item for Struct {
+         for field in &mut self.fields {
+             reserved::escape(&mut field.0);
+         }
++
++        for c in self.associated_constants.iter_mut() {
++            c.rename_for_config(config);
++        }
+     }
+ 
+     fn add_dependencies(&self, library: &Library, out: &mut Dependencies) {
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -279,6 +289,10 @@ impl Item for Struct {
+         for &(_, ref ty, _) in fields {
+             ty.add_dependencies_ignoring_generics(&self.generic_params, library, out);
+         }
++
++        for c in &self.associated_constants {
++            c.add_dependencies(library, out);
++        }
+     }
+ 
+     fn instantiate_monomorph(
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -327,7 +341,12 @@ impl Source for Struct {
+                 annotations: self.annotations.clone(),
+                 documentation: self.documentation.clone(),
+             };
+-            return typedef.write(config, out);
++            typedef.write(config, out);
++            for constant in &self.associated_constants {
++                out.new_line();
++                constant.write(config, out, Some(self));
++            }
++            return;
+         }
+ 
+         let condition = (&self.cfg).to_condition(config);
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -484,6 +503,16 @@ impl Source for Struct {
+             out.write_raw_block(body);
+         }
+ 
++        if config.language == Language::Cxx
++            && config.structure.associated_constants_in_body
++            && config.constant.allow_static_const
++        {
++            for constant in &self.associated_constants {
++                out.new_line();
++                constant.write_declaration(config, out, self);
++            }
++        }
++
+         if config.language == Language::C && config.style.generate_typedef() {
+             out.close_brace(false);
+             write!(out, " {};", self.export_name());
+diff --git a/src/bindgen/ir/structure.rs b/src/bindgen/ir/structure.rs
+--- a/src/bindgen/ir/structure.rs
++++ b/src/bindgen/ir/structure.rs
+@@ -491,6 +520,11 @@ impl Source for Struct {
+             out.close_brace(true);
+         }
+ 
++        for constant in &self.associated_constants {
++            out.new_line();
++            constant.write(config, out, Some(self));
++        }
++
+         condition.write_after(config, out);
+     }
+ }
+diff --git a/src/bindgen/ir/typedef.rs b/src/bindgen/ir/typedef.rs
+--- a/src/bindgen/ir/typedef.rs
++++ b/src/bindgen/ir/typedef.rs
+@@ -32,7 +32,7 @@ pub struct Typedef {
+ }
+ 
+ impl Typedef {
+-    pub fn load(item: &syn::ItemType, mod_cfg: &Option<Cfg>) -> Result<Typedef, String> {
++    pub fn load(item: &syn::ItemType, mod_cfg: Option<&Cfg>) -> Result<Typedef, String> {
+         if let Some(x) = Type::load(&item.ty)? {
+             let path = Path::new(item.ident.to_string());
+             Ok(Typedef::new(
+diff --git a/src/bindgen/ir/typedef.rs b/src/bindgen/ir/typedef.rs
+--- a/src/bindgen/ir/typedef.rs
++++ b/src/bindgen/ir/typedef.rs
+@@ -122,8 +122,8 @@ impl Item for Typedef {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/ir/union.rs b/src/bindgen/ir/union.rs
+--- a/src/bindgen/ir/union.rs
++++ b/src/bindgen/ir/union.rs
+@@ -34,7 +34,7 @@ pub struct Union {
+ }
+ 
+ impl Union {
+-    pub fn load(item: &syn::ItemUnion, mod_cfg: &Option<Cfg>) -> Result<Union, String> {
++    pub fn load(item: &syn::ItemUnion, mod_cfg: Option<&Cfg>) -> Result<Union, String> {
+         if Repr::load(&item.attrs)? != Repr::C {
+             return Err("Union is not marked #[repr(C)].".to_owned());
+         }
+diff --git a/src/bindgen/ir/union.rs b/src/bindgen/ir/union.rs
+--- a/src/bindgen/ir/union.rs
++++ b/src/bindgen/ir/union.rs
+@@ -119,8 +119,8 @@ impl Item for Union {
+         &self.export_name
+     }
+ 
+-    fn cfg(&self) -> &Option<Cfg> {
+-        &self.cfg
++    fn cfg(&self) -> Option<&Cfg> {
++        self.cfg.as_ref()
+     }
+ 
+     fn annotations(&self) -> &AnnotationSet {
+diff --git a/src/bindgen/library.rs b/src/bindgen/library.rs
+--- a/src/bindgen/library.rs
++++ b/src/bindgen/library.rs
+@@ -74,6 +74,9 @@ impl Library {
+         self.globals.for_all_items(|global| {
+             global.add_dependencies(&self, &mut dependencies);
+         });
++        self.constants.for_all_items(|constant| {
++            constant.add_dependencies(&self, &mut dependencies);
++        });
+         for name in &self.config.export.include {
+             let path = Path::new(name.clone());
+             if let Some(items) = self.get_items(&path) {
+diff --git a/src/bindgen/library.rs b/src/bindgen/library.rs
+--- a/src/bindgen/library.rs
++++ b/src/bindgen/library.rs
+@@ -112,6 +115,7 @@ impl Library {
+ 
+         Ok(Bindings::new(
+             self.config,
++            self.structs,
+             constants,
+             globals,
+             items,
+diff --git a/src/bindgen/mod.rs b/src/bindgen/mod.rs
+--- a/src/bindgen/mod.rs
++++ b/src/bindgen/mod.rs
+@@ -37,6 +37,7 @@ macro_rules! deserialize_enum_str {
+ }
+ 
+ mod bindings;
++mod bitflags;
+ mod builder;
+ mod cargo;
+ mod cdecl;
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -9,11 +9,12 @@ use std::path::{Path as FilePath, PathBuf as FilePathBuf};
+ 
+ use syn;
+ 
++use bindgen::bitflags;
+ use bindgen::cargo::{Cargo, PackageRef};
+ use bindgen::error::Error;
+ use bindgen::ir::{
+-    AnnotationSet, Cfg, Constant, Documentation, Enum, Function, GenericParams, ItemContainer,
+-    ItemMap, OpaqueItem, Path, Static, Struct, Type, Typedef, Union,
++    AnnotationSet, Cfg, Constant, Documentation, Enum, Function, GenericParams, ItemMap,
++    OpaqueItem, Path, Static, Struct, Type, Typedef, Union,
+ };
+ use bindgen::utilities::{SynAbiHelpers, SynItemHelpers};
+ 
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -202,7 +203,7 @@ impl Parser {
+         self.out.load_syn_crate_mod(
+             &self.binding_crate_name,
+             &pkg.name,
+-            &Cfg::join(&self.cfg_stack),
++            Cfg::join(&self.cfg_stack).as_ref(),
+             items,
+         );
+ 
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -227,7 +228,7 @@ impl Parser {
+                         self.cfg_stack.pop();
+                     }
+                 }
+-                &syn::Item::ExternCrate(ref item) => {
++                syn::Item::ExternCrate(ref item) => {
+                     let dep_pkg_name = item.ident.to_string();
+ 
+                     let cfg = Cfg::load(&item.attrs);
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -311,7 +312,7 @@ impl Parser {
+         self.out.load_syn_crate_mod(
+             &self.binding_crate_name,
+             &pkg.name,
+-            &Cfg::join(&self.cfg_stack),
++            Cfg::join(&self.cfg_stack).as_ref(),
+             items,
+         );
+ 
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -374,7 +375,7 @@ impl Parser {
+                         self.cfg_stack.pop();
+                     }
+                 }
+-                &syn::Item::ExternCrate(ref item) => {
++                syn::Item::ExternCrate(ref item) => {
+                     let dep_pkg_name = item.ident.to_string();
+ 
+                     let cfg = Cfg::load(&item.attrs);
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -487,7 +488,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         items: &[syn::Item],
+     ) {
+         let mut impls_with_assoc_consts = Vec::new();
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -530,31 +531,44 @@ impl Parse {
+                         impls_with_assoc_consts.push(item_impl);
+                     }
+                 }
++                syn::Item::Macro(ref item) => {
++                    self.load_builtin_macro(binding_crate_name, crate_name, mod_cfg, item)
++                }
+                 _ => {}
+             }
+         }
+ 
+         for item_impl in impls_with_assoc_consts {
+-            let associated_constants = item_impl.items.iter().filter_map(|item| match item {
+-                syn::ImplItem::Const(ref associated_constant) => Some(associated_constant),
+-                _ => None,
+-            });
+-            self.load_syn_assoc_consts(
+-                binding_crate_name,
+-                crate_name,
+-                mod_cfg,
+-                &item_impl.self_ty,
+-                associated_constants,
+-            );
++            self.load_syn_assoc_consts_from_impl(binding_crate_name, crate_name, mod_cfg, item_impl)
+         }
+     }
+ 
++    fn load_syn_assoc_consts_from_impl(
++        &mut self,
++        binding_crate_name: &str,
++        crate_name: &str,
++        mod_cfg: Option<&Cfg>,
++        item_impl: &syn::ItemImpl,
++    ) {
++        let associated_constants = item_impl.items.iter().filter_map(|item| match item {
++            syn::ImplItem::Const(ref associated_constant) => Some(associated_constant),
++            _ => None,
++        });
++        self.load_syn_assoc_consts(
++            binding_crate_name,
++            crate_name,
++            mod_cfg,
++            &item_impl.self_ty,
++            associated_constants,
++        );
++    }
++
+     /// Enters a `extern "C" { }` declaration and loads function declarations.
+     fn load_syn_foreign_mod(
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemForeignMod,
+     ) {
+         if !item.abi.is_c() {
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -563,8 +577,8 @@ impl Parse {
+         }
+ 
+         for foreign_item in &item.items {
+-            match foreign_item {
+-                &syn::ForeignItem::Fn(ref function) => {
++            match *foreign_item {
++                syn::ForeignItem::Fn(ref function) => {
+                     if crate_name != binding_crate_name {
+                         info!(
+                             "Skip {}::{} - (fn's outside of the binding crate are not used).",
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -597,7 +611,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemFn,
+     ) {
+         if crate_name != binding_crate_name {
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -644,46 +658,12 @@ impl Parse {
+         }
+     }
+ 
+-    fn is_assoc_const_of_transparent_struct(
+-        &self,
+-        const_item: &syn::ImplItemConst,
+-    ) -> Result<bool, ()> {
+-        let ty = match Type::load(&const_item.ty) {
+-            Ok(Some(t)) => t,
+-            _ => return Ok(false),
+-        };
+-        let path = match ty.get_root_path() {
+-            Some(p) => p,
+-            _ => return Ok(false),
+-        };
+-
+-        match self.structs.get_items(&path) {
+-            Some(items) => {
+-                if items.len() != 1 {
+-                    error!(
+-                        "Expected one struct to match path {}, but found {}",
+-                        path,
+-                        items.len(),
+-                    );
+-                    return Err(());
+-                }
+-
+-                Ok(if let ItemContainer::Struct(ref s) = items[0] {
+-                    s.is_transparent
+-                } else {
+-                    false
+-                })
+-            }
+-            _ => Ok(false),
+-        }
+-    }
+-
+     /// Loads associated `const` declarations
+     fn load_syn_assoc_consts<'a, I>(
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         impl_ty: &syn::Type,
+         items: I,
+     ) where
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -703,12 +683,6 @@ impl Parse {
+         let impl_path = ty.unwrap().get_root_path().unwrap();
+ 
+         for item in items.into_iter() {
+-            let is_assoc_const_of_transparent_struct =
+-                match self.is_assoc_const_of_transparent_struct(&item) {
+-                    Ok(b) => b,
+-                    Err(_) => continue,
+-                };
+-
+             if crate_name != binding_crate_name {
+                 info!(
+                     "Skip {}::{} - (const's outside of the binding crate are not used).",
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -717,21 +691,29 @@ impl Parse {
+                 continue;
+             }
+ 
+-            let const_name = item.ident.to_string();
+-
+-            match Constant::load_assoc(
+-                const_name,
+-                item,
++            let path = Path::new(item.ident.to_string());
++            match Constant::load(
++                path,
+                 mod_cfg,
+-                is_assoc_const_of_transparent_struct,
+-                &impl_path,
++                &item.ty,
++                &item.expr,
++                &item.attrs,
++                Some(impl_path.clone()),
+             ) {
+                 Ok(constant) => {
+-                    info!("Take {}::{}.", crate_name, &item.ident);
+-
+-                    let full_name = constant.path.clone();
+-                    if !self.constants.try_insert(constant) {
+-                        error!("Conflicting name for constant {}", full_name);
++                    info!("Take {}::{}::{}.", crate_name, impl_path, &item.ident);
++                    let mut any = false;
++                    self.structs.for_items_mut(&impl_path, |item| {
++                        any = true;
++                        item.add_associated_constant(constant.clone());
++                    });
++                    // Handle associated constants to other item types that are
++                    // not structs like enums or such as regular constants.
++                    if !any && !self.constants.try_insert(constant) {
++                        error!(
++                            "Conflicting name for constant {}::{}::{}.",
++                            crate_name, impl_path, &item.ident,
++                        );
+                     }
+                 }
+                 Err(msg) => {
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -746,7 +728,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemConst,
+     ) {
+         if crate_name != binding_crate_name {
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -758,8 +740,7 @@ impl Parse {
+         }
+ 
+         let path = Path::new(item.ident.to_string());
+-
+-        match Constant::load(path, item, mod_cfg) {
++        match Constant::load(path, mod_cfg, &item.ty, &item.expr, &item.attrs, None) {
+             Ok(constant) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+ 
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -779,7 +760,7 @@ impl Parse {
+         &mut self,
+         binding_crate_name: &str,
+         crate_name: &str,
+-        mod_cfg: &Option<Cfg>,
++        mod_cfg: Option<&Cfg>,
+         item: &syn::ItemStatic,
+     ) {
+         if crate_name != binding_crate_name {
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -816,11 +797,10 @@ impl Parse {
+     }
+ 
+     /// Loads a `struct` declaration
+-    fn load_syn_struct(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemStruct) {
++    fn load_syn_struct(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemStruct) {
+         match Struct::load(item, mod_cfg) {
+             Ok(st) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+-
+                 self.structs.try_insert(st);
+             }
+             Err(msg) => {
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -834,7 +814,7 @@ impl Parse {
+     }
+ 
+     /// Loads a `union` declaration
+-    fn load_syn_union(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemUnion) {
++    fn load_syn_union(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemUnion) {
+         match Union::load(item, mod_cfg) {
+             Ok(st) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -852,7 +832,7 @@ impl Parse {
+     }
+ 
+     /// Loads a `enum` declaration
+-    fn load_syn_enum(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemEnum) {
++    fn load_syn_enum(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemEnum) {
+         if item.generics.lifetimes().count() > 0 {
+             info!(
+                 "Skip {}::{} - (has generics or lifetimes or where bounds).",
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -877,7 +857,7 @@ impl Parse {
+     }
+ 
+     /// Loads a `type` declaration
+-    fn load_syn_ty(&mut self, crate_name: &str, mod_cfg: &Option<Cfg>, item: &syn::ItemType) {
++    fn load_syn_ty(&mut self, crate_name: &str, mod_cfg: Option<&Cfg>, item: &syn::ItemType) {
+         match Typedef::load(item, mod_cfg) {
+             Ok(st) => {
+                 info!("Take {}::{}.", crate_name, &item.ident);
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -893,4 +873,36 @@ impl Parse {
+             }
+         }
+     }
++
++    fn load_builtin_macro(
++        &mut self,
++        binding_crate_name: &str,
++        crate_name: &str,
++        mod_cfg: Option<&Cfg>,
++        item: &syn::ItemMacro,
++    ) {
++        let name = match item.mac.path.segments.last() {
++            Some(ref n) => n.value().ident.to_string(),
++            None => return,
++        };
++
++        if name != "bitflags" {
++            return;
++        }
++
++        let bitflags = match bitflags::parse(item.mac.tts.clone()) {
++            Ok(b) => b,
++            Err(e) => {
++                warn!("Failed to parse bitflags invocation: {:?}", e);
++                return;
++            }
++        };
++
++        let (struct_, impl_) = bitflags.expand();
++        self.load_syn_struct(crate_name, mod_cfg, &struct_);
++        // We know that the expansion will only reference `struct_`, so it's
++        // fine to just do it here instead of deferring it like we do with the
++        // other calls to this function.
++        self.load_syn_assoc_consts_from_impl(binding_crate_name, crate_name, mod_cfg, &impl_);
++    }
+ }
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -7,6 +7,7 @@ use std::io;
+ use std::io::Write;
+ 
+ use bindgen::config::{Braces, Config};
++use bindgen::Bindings;
+ 
+ /// A type of way to format a list.
+ pub enum ListType<'a> {
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -57,7 +58,7 @@ impl<'a, 'b, F: Write> Write for InnerWriter<'a, 'b, F> {
+ /// A utility writer for generating code easier.
+ pub struct SourceWriter<'a, F: Write> {
+     out: F,
+-    config: &'a Config,
++    bindings: &'a Bindings,
+     spaces: Vec<usize>,
+     line_started: bool,
+     line_length: usize,
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -67,10 +68,10 @@ pub struct SourceWriter<'a, F: Write> {
+ pub type MeasureWriter<'a> = SourceWriter<'a, NullFile>;
+ 
+ impl<'a, F: Write> SourceWriter<'a, F> {
+-    pub fn new(out: F, config: &'a Config) -> SourceWriter<'a, F> {
++    pub fn new(out: F, bindings: &'a Bindings) -> Self {
+         SourceWriter {
+-            out: out,
+-            config: config,
++            out,
++            bindings,
+             spaces: vec![0],
+             line_started: false,
+             line_length: 0,
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -79,6 +80,10 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+         }
+     }
+ 
++    pub fn bindings(&self) -> &Bindings {
++        &self.bindings
++    }
++
+     /// Takes a function that writes source and returns the maximum line length
+     /// written.
+     pub fn measure<T>(&self, func: T) -> usize
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -87,7 +92,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     {
+         let mut measurer = SourceWriter {
+             out: NullFile,
+-            config: self.config,
++            bindings: self.bindings,
+             spaces: self.spaces.clone(),
+             line_started: self.line_started,
+             line_length: self.line_length,
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -117,8 +122,8 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     }
+ 
+     pub fn push_tab(&mut self) {
+-        let spaces =
+-            self.spaces() - (self.spaces() % self.config.tab_width) + self.config.tab_width;
++        let spaces = self.spaces() - (self.spaces() % self.bindings.config.tab_width)
++            + self.bindings.config.tab_width;
+         self.spaces.push(spaces);
+     }
+ 
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -141,7 +146,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+     }
+ 
+     pub fn open_brace(&mut self) {
+-        match self.config.braces {
++        match self.bindings.config.braces {
+             Braces::SameLine => {
+                 self.write(" {");
+                 self.push_tab();
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -186,7 +191,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+         list_type: ListType<'b>,
+     ) {
+         for (i, ref item) in items.iter().enumerate() {
+-            item.write(self.config, self);
++            item.write(&self.bindings.config, self);
+ 
+             match list_type {
+                 ListType::Join(text) => {
+diff --git a/src/bindgen/writer.rs b/src/bindgen/writer.rs
+--- a/src/bindgen/writer.rs
++++ b/src/bindgen/writer.rs
+@@ -209,7 +214,7 @@ impl<'a, F: Write> SourceWriter<'a, F> {
+         let align_length = self.line_length_for_align();
+         self.push_set_spaces(align_length);
+         for (i, ref item) in items.iter().enumerate() {
+-            item.write(self.config, self);
++            item.write(&self.bindings.config, self);
+ 
+             match list_type {
+                 ListType::Join(text) => {
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -4,9 +4,13 @@
+ 
+ #[macro_use]
+ extern crate log;
++extern crate proc_macro2;
+ #[macro_use]
+ extern crate serde;
+ extern crate serde_json;
++#[macro_use]
++extern crate quote;
++#[macro_use]
+ extern crate syn;
+ extern crate toml;
+ 
+diff --git a/src/main.rs b/src/main.rs
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -9,9 +9,13 @@ use std::path::{Path, PathBuf};
+ extern crate clap;
+ #[macro_use]
+ extern crate log;
++extern crate proc_macro2;
+ #[macro_use]
+ extern crate serde;
+ extern crate serde_json;
++#[macro_use]
++extern crate quote;
++#[macro_use]
+ extern crate syn;
+ extern crate toml;
+ 

@@ -1,0 +1,40 @@
+#!/bin/bash
+set -uxo pipefail
+cp -r /testbed/. /workspace
+git config --global --add safe.directory /workspace
+cd /workspace
+git apply -v - <<'EOF_114329324912'
+diff --git a/testing/tests/simple.rs b/testing/tests/simple.rs
+--- a/testing/tests/simple.rs
++++ b/testing/tests/simple.rs
+@@ -484,3 +484,23 @@ fn test_num_literals() {
+         "[90, -90, 90, 2, 56, 240, 10.5, 10.5, 100000000000, 105000000000]",
+     );
+ }
++
++#[allow(non_snake_case)]
++#[derive(askama::Template)]
++#[template(source = "{{ xY }}", ext = "txt")]
++struct MixedCase {
++    xY: &'static str,
++}
++
++/// Test that we can use mixed case in variable names
++///
++/// We use some heuristics to distinguish paths (`std::str::String`) from
++/// variable names (`foo`). Previously, this test would fail because any
++/// name containing uppercase characters would be considered a path.
++///
++/// https://github.com/djc/askama/issues/924
++#[test]
++fn test_mixed_case() {
++    let template = MixedCase { xY: "foo" };
++    assert_eq!(template.render().unwrap(), "foo");
++}
+
+EOF_114329324912
+cd "testing"
+cargo test --no-fail-fast --all-features --test "simple"
+cd ../
+git reset --hard 29b25505b496510217a39606a5f72884867ef492
+git clean -fd

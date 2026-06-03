@@ -1,0 +1,165 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch testing/templates/let-shadow.html...
+Checking patch testing/tests/vars.rs...
+Applied patch testing/templates/let-shadow.html cleanly.
+Applied patch testing/tests/vars.rs cleanly.
++ cd testing
++ cargo test --no-fail-fast --all-features --test vars
+ Downloading crates ...
+  Downloaded bitflags v1.2.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded ryu v1.0.5 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded atty v0.2.14 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded percent-encoding v2.1.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded same-file v1.0.6 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded num_cpus v1.13.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded num-traits v0.2.14 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded cast v0.2.3 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded serde_cbor v0.11.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded regex-automata v0.1.9 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded criterion-plot v0.4.3 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded crossbeam-channel v0.5.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded criterion v0.3.3 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded const_fn v0.4.4 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded cfg-if v1.0.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded memoffset v0.6.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded oorandom v11.1.3 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded glob v0.3.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded autocfg v1.0.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded unicode-width v0.1.8 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded textwrap v0.11.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded crossbeam-deque v0.8.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded byteorder v1.3.4 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded termcolor v1.1.2 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded quote v1.0.8 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded clap v2.33.3 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded serde_derive v1.0.118 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded crossbeam-epoch v0.9.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded rayon-core v1.9.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded toml v0.5.8 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded serde v1.0.118 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded bitvec v0.19.4 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded serde_json v1.0.60 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded bstr v0.2.14 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded libc v0.2.81 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded unicode-xid v0.2.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded version_check v0.9.2 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded either v1.6.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded tap v1.0.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded csv v1.1.5 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded semver-parser v0.7.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded radium v0.5.3 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded funty v1.1.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded walkdir v2.3.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded semver v0.9.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded tinytemplate v1.1.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded csv-core v0.1.10 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded memchr v2.3.4 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded trybuild v1.0.38 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded wyz v0.2.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded lazy_static v1.4.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded humansize v1.1.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded crossbeam-utils v0.8.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded scopeguard v1.1.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded itoa v0.4.6 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded rustc_version v0.2.3 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded half v1.6.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded itertools v0.9.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded proc-macro2 v1.0.24 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded nom v6.0.1 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded rayon v1.5.0 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded regex v1.4.2 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded regex-syntax v0.6.21 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded syn v1.0.55 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+  Downloaded plotters v0.2.15 (registry `/testbed/.cargo/lts-repo-at-e4c463b958`)
+   Compiling autocfg v1.0.1
+   Compiling proc-macro2 v1.0.24
+   Compiling unicode-xid v0.2.1
+   Compiling syn v1.0.55
+   Compiling serde_derive v1.0.118
+   Compiling serde v1.0.118
+   Compiling memchr v2.3.4
+   Compiling ryu v1.0.5
+   Compiling lazy_static v1.4.0
+   Compiling serde_json v1.0.60
+   Compiling itoa v0.4.6
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.81
+   Compiling const_fn v0.4.4
+   Compiling semver-parser v0.7.0
+   Compiling radium v0.5.3
+   Compiling version_check v0.9.2
+   Compiling byteorder v1.3.4
+   Compiling rayon-core v1.9.0
+   Compiling wyz v0.2.0
+   Compiling funty v1.1.0
+   Compiling scopeguard v1.1.0
+   Compiling tap v1.0.0
+   Compiling either v1.6.1
+   Compiling bitflags v1.2.1
+   Compiling unicode-width v0.1.8
+   Compiling percent-encoding v2.1.0
+   Compiling askama_escape v0.10.1 (/workspace/askama_escape)
+   Compiling humansize v1.1.0
+   Compiling trybuild v1.0.38
+   Compiling same-file v1.0.6
+   Compiling half v1.6.0
+   Compiling regex-syntax v0.6.21
+   Compiling termcolor v1.1.2
+   Compiling glob v0.3.0
+   Compiling oorandom v11.1.3
+   Compiling textwrap v0.11.0
+   Compiling walkdir v2.3.1
+   Compiling itertools v0.9.0
+   Compiling semver v0.9.0
+   Compiling nom v6.0.1
+   Compiling crossbeam-utils v0.8.1
+   Compiling memoffset v0.6.1
+   Compiling num-traits v0.2.14
+   Compiling rayon v1.5.0
+   Compiling rustc_version v0.2.3
+   Compiling clap v2.33.3
+   Compiling bitvec v0.19.4
+   Compiling csv-core v0.1.10
+   Compiling cast v0.2.3
+   Compiling regex-automata v0.1.9
+   Compiling quote v1.0.8
+   Compiling num_cpus v1.13.0
+   Compiling atty v0.2.14
+   Compiling crossbeam-epoch v0.9.1
+   Compiling crossbeam-channel v0.5.0
+   Compiling criterion-plot v0.4.3
+   Compiling crossbeam-deque v0.8.0
+   Compiling plotters v0.2.15
+   Compiling regex v1.4.2
+   Compiling toml v0.5.8
+   Compiling bstr v0.2.14
+   Compiling serde_cbor v0.11.1
+   Compiling csv v1.1.5
+   Compiling tinytemplate v1.1.0
+   Compiling askama_shared v0.11.1 (/workspace/askama_shared)
+   Compiling criterion v0.3.3
+   Compiling askama_derive v0.10.5 (/workspace/askama_derive)
+   Compiling askama v0.10.5 (/workspace/askama)
+   Compiling askama_testing v0.1.0 (/workspace/testing)
+    Finished test [unoptimized + debuginfo] target(s) in 20.02s
+     Running /workspace/target/debug/deps/vars-35cf4bfff2902486
+
+running 6 tests
+test test_if_let ... ok
+test test_let_shadow ... ok
+test test_let ... ok
+test test_self_iter ... ok
+test test_let_decl ... ok
+test test_let_tuple ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
++ cd ../
++ git reset --hard c7697cbd406dce0962618e99a6b78116b14fdb1c
+HEAD is now at c7697cb Improved implicit borrowing and changed to resolve Askama variables at compile time
++ git clean -fd
+Removing .cargo/
+Removing testing/templates/let-shadow.html

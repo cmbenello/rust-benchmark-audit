@@ -1,0 +1,691 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch aya-obj/src/obj.rs...
+Checking patch aya/src/maps/bloom_filter.rs...
+Checking patch aya/src/maps/hash_map/hash_map.rs...
+Checking patch aya/src/maps/lpm_trie.rs...
+Checking patch aya/src/maps/mod.rs...
+Checking patch aya/src/maps/perf/perf_buffer.rs...
+Checking patch aya/src/programs/links.rs...
+Checking patch aya/src/util.rs...
+Checking patch test/integration-test/Cargo.toml...
+Checking patch test/integration-test/src/tests/rbpf.rs...
+Checking patch test/integration-test/src/tests/rbpf.rs...
+Applied patch aya-obj/src/obj.rs cleanly.
+Applied patch aya/src/maps/bloom_filter.rs cleanly.
+Applied patch aya/src/maps/hash_map/hash_map.rs cleanly.
+Applied patch aya/src/maps/lpm_trie.rs cleanly.
+Applied patch aya/src/maps/mod.rs cleanly.
+Applied patch aya/src/maps/perf/perf_buffer.rs cleanly.
+Applied patch aya/src/programs/links.rs cleanly.
+Applied patch aya/src/util.rs cleanly.
+Applied patch test/integration-test/Cargo.toml cleanly.
+Applied patch test/integration-test/src/tests/rbpf.rs cleanly.
+Applied patch test/integration-test/src/tests/rbpf.rs cleanly.
++ cd aya-obj
++ cargo test --no-fail-fast --all-features
+warning: Both `/workspace/.cargo/config` and `/workspace/.cargo/config.toml` exist. Using `/workspace/.cargo/config`
+    Updating `lts-repo-at-b05a486d75` index
+ Downloading crates ...
+  Downloaded unicode-ident v1.0.10 (registry `lts-repo-at-b05a486d75`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-b05a486d75`)
+  Downloaded once_cell v1.18.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded quote v1.0.29 (registry `lts-repo-at-b05a486d75`)
+  Downloaded proc-macro2 v1.0.64 (registry `lts-repo-at-b05a486d75`)
+  Downloaded proc-macro-hack v0.5.20+deprecated (registry `lts-repo-at-b05a486d75`)
+  Downloaded hashbrown v0.14.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded ahash v0.8.3 (registry `lts-repo-at-b05a486d75`)
+  Downloaded object v0.31.1 (registry `lts-repo-at-b05a486d75`)
+  Downloaded libc v0.2.147 (registry `lts-repo-at-b05a486d75`)
+  Downloaded syn v1.0.109 (registry `lts-repo-at-b05a486d75`)
+  Downloaded memchr v2.5.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded thiserror v1.0.43 (registry `lts-repo-at-b05a486d75`)
+  Downloaded syn v2.0.25 (registry `lts-repo-at-b05a486d75`)
+  Downloaded log v0.4.19 (registry `lts-repo-at-b05a486d75`)
+  Downloaded time-macros-impl v0.1.2 (registry `lts-repo-at-b05a486d75`)
+  Downloaded rbpf v0.2.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded time-macros v0.1.1 (registry `lts-repo-at-b05a486d75`)
+  Downloaded time v0.2.27 (registry `lts-repo-at-b05a486d75`)
+  Downloaded thiserror-impl v1.0.43 (registry `lts-repo-at-b05a486d75`)
+  Downloaded standback v0.2.17 (registry `lts-repo-at-b05a486d75`)
+  Downloaded const_fn v0.4.9 (registry `lts-repo-at-b05a486d75`)
+  Downloaded combine v2.5.2 (registry `lts-repo-at-b05a486d75`)
+  Downloaded byteorder v1.4.3 (registry `lts-repo-at-b05a486d75`)
+  Downloaded ascii v0.7.1 (registry `lts-repo-at-b05a486d75`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded bytes v1.4.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded assert_matches v1.5.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded core-error v0.0.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded allocator-api2 v0.2.16 (registry `lts-repo-at-b05a486d75`)
+   Compiling version_check v0.9.4
+   Compiling proc-macro2 v1.0.64
+   Compiling unicode-ident v1.0.10
+   Compiling quote v1.0.29
+   Compiling syn v1.0.109
+   Compiling proc-macro-hack v0.5.20+deprecated
+   Compiling const_fn v0.4.9
+   Compiling memchr v2.5.0
+   Compiling libc v0.2.147
+   Compiling thiserror v1.0.43
+   Compiling cfg-if v1.0.0
+   Compiling once_cell v1.18.0
+   Compiling byteorder v1.4.3
+   Compiling ascii v0.7.1
+   Compiling allocator-api2 v0.2.16
+   Compiling log v0.4.19
+   Compiling bytes v1.4.0
+   Compiling assert_matches v1.5.0
+   Compiling combine v2.5.2
+   Compiling standback v0.2.17
+   Compiling ahash v0.8.3
+   Compiling time v0.2.27
+   Compiling core-error v0.0.0
+   Compiling hashbrown v0.14.0
+   Compiling object v0.31.1
+   Compiling syn v2.0.25
+   Compiling time-macros-impl v0.1.2
+   Compiling time-macros v0.1.1
+   Compiling thiserror-impl v1.0.43
+   Compiling rbpf v0.2.0
+   Compiling aya-obj v0.1.0 (/workspace/aya-obj)
+    Finished test [unoptimized + debuginfo] target(s) in 8.17s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/aya_obj-342046c7d2d2b63f)
+
+running 79 tests
+test btf::btf::tests::parsing_older_ext_data ... ok
+test btf::btf::tests::test_fixup_func_proto ... ok
+test btf::btf::tests::test_fixup_datasec ... ok
+test btf::btf::tests::test_fixup_ptr ... ok
+test btf::btf::tests::test_parse_header ... ok
+test btf::btf::tests::test_parse_btf ... ok
+test btf::btf::tests::test_sanitize_datasec ... ok
+test btf::btf::tests::test_sanitize_decl_tag ... ok
+test btf::btf::tests::test_sanitize_float ... ok
+test btf::btf::tests::test_sanitize_func_and_proto ... ok
+test btf::btf::tests::test_sanitize_func_global ... ok
+test btf::btf::tests::test_sanitize_type_tag ... ok
+test btf::btf::tests::test_sanitize_mem_builtins ... ok
+test btf::btf::tests::test_sanitize_var ... ok
+test btf::btf::tests::test_write_btf ... ok
+test btf::types::tests::test_read_btf_type_array ... ok
+test btf::types::tests::test_read_btf_type_const ... ok
+test btf::types::tests::test_read_btf_type_enum ... ok
+test btf::types::tests::test_read_btf_type_float ... ok
+test btf::types::tests::test_read_btf_type_func ... ok
+test btf::types::tests::test_read_btf_type_func_datasec ... ok
+test btf::types::tests::test_read_btf_type_func_proto ... ok
+test btf::types::tests::test_read_btf_type_func_var ... ok
+test btf::types::tests::test_read_btf_type_fwd ... ok
+test btf::types::tests::test_read_btf_type_int ... ok
+test btf::types::tests::test_read_btf_type_ptr ... ok
+test btf::types::tests::test_read_btf_type_restrict ... ok
+test btf::types::tests::test_read_btf_type_struct ... ok
+test btf::types::tests::test_read_btf_type_typedef ... ok
+test btf::types::tests::test_read_btf_type_union ... ok
+test btf::types::tests::test_read_btf_type_volatile ... ok
+test btf::types::tests::test_types_are_compatible ... ok
+test btf::types::tests::test_write_btf_func_proto ... ok
+test btf::types::tests::test_write_btf_long_unsigned_int ... ok
+test btf::types::tests::test_write_btf_signed_short_int ... ok
+test btf::types::tests::test_write_btf_uchar ... ok
+test obj::tests::sanitizes_empty_btf_files_to_none ... ok
+test obj::tests::test_parse_generic_error ... ok
+test obj::tests::test_parse_license ... ok
+test obj::tests::test_parse_btf_map_section ... ok
+test obj::tests::test_parse_map_def ... ok
+test obj::tests::test_parse_map_data ... ok
+test obj::tests::test_parse_map_def_error ... ok
+test obj::tests::test_parse_program ... ok
+test obj::tests::test_parse_program_error ... ok
+test obj::tests::test_parse_map_def_with_padding ... ok
+test obj::tests::test_parse_section_btf_tracepoint ... ok
+test obj::tests::test_parse_section_cgroup_skb_no_direction_unamed ... ok
+test obj::tests::test_parse_map_short ... ok
+test obj::tests::test_parse_section_fexit ... ok
+test obj::tests::test_parse_section_kprobe ... ok
+test obj::tests::test_parse_section_lsm ... ok
+test obj::tests::test_parse_section_map ... ok
+test obj::tests::test_parse_section_lsm_sleepable ... ok
+test obj::tests::test_parse_section_multiple_maps ... ok
+test obj::tests::test_parse_section_cgroup_skb_ingress_unnamed ... ok
+test obj::tests::test_parse_section_raw_tp ... ok
+test obj::tests::test_parse_section_cgroup_skb_no_direction_named ... ok
+test obj::tests::test_parse_section_cgroup_skb_ingress_named ... ok
+test obj::tests::test_parse_section_skskb_named ... ok
+test obj::tests::test_parse_section_data ... ok
+test obj::tests::test_parse_section_fentry ... ok
+test obj::tests::test_parse_section_sockopt_named ... ok
+test obj::tests::test_parse_section_skskb_unnamed ... ok
+test obj::tests::test_parse_section_sockopt_unnamed ... ok
+test obj::tests::test_parse_section_xdp ... ok
+test obj::tests::test_parse_section_xdp_frags ... ok
+test obj::tests::test_parse_version ... ok
+test obj::tests::test_patch_map_data ... ok
+test obj::tests::test_parse_section_sock_addr_unnamed ... ok
+test relocation::test::test_multiple_btf_map_relocation ... ok
+test relocation::test::test_multiple_legacy_map_relocation ... ok
+test obj::tests::test_parse_section_socket_filter ... ok
+test obj::tests::test_parse_section_trace_point ... ok
+test obj::tests::test_parse_section_sock_addr_named ... ok
+test obj::tests::test_parse_section_uprobe ... ok
+test relocation::test::test_single_legacy_map_relocation ... ok
+test relocation::test::test_single_btf_map_relocation ... ok
+test btf::btf::tests::test_read_btf_from_sys_fs ... ok
+
+test result: ok. 79 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+   Doc-tests aya-obj
+
+running 2 tests
+test src/lib.rs - (line 33) - compile ... ok
+test src/obj.rs - obj::ProgramSection (line 201) ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+
++ cd ../
++ cd aya
++ cargo test --no-fail-fast --all-features
+warning: Both `/workspace/.cargo/config` and `/workspace/.cargo/config.toml` exist. Using `/workspace/.cargo/config`
+ Downloading crates ...
+  Downloaded fastrand v1.9.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded futures-core v0.3.28 (registry `lts-repo-at-b05a486d75`)
+  Downloaded event-listener v2.5.3 (registry `lts-repo-at-b05a486d75`)
+  Downloaded futures-io v0.3.28 (registry `lts-repo-at-b05a486d75`)
+  Downloaded futures-lite v1.13.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded futures v0.3.28 (registry `lts-repo-at-b05a486d75`)
+  Downloaded futures-channel v0.3.28 (registry `lts-repo-at-b05a486d75`)
+  Downloaded pin-utils v0.1.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded waker-fn v1.1.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded futures-task v0.3.28 (registry `lts-repo-at-b05a486d75`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded slab v0.4.8 (registry `lts-repo-at-b05a486d75`)
+  Downloaded async-lock v2.7.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded scopeguard v1.1.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded lazy_static v1.4.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded crossbeam-utils v0.8.16 (registry `lts-repo-at-b05a486d75`)
+  Downloaded pin-project-lite v0.2.10 (registry `lts-repo-at-b05a486d75`)
+  Downloaded tempfile v3.6.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded parking_lot v0.12.1 (registry `lts-repo-at-b05a486d75`)
+  Downloaded mio v0.8.8 (registry `lts-repo-at-b05a486d75`)
+  Downloaded parking v2.1.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded io-lifetimes v1.0.11 (registry `lts-repo-at-b05a486d75`)
+  Downloaded async-io v1.13.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded futures-util v0.3.28 (registry `lts-repo-at-b05a486d75`)
+  Downloaded futures-sink v0.3.28 (registry `lts-repo-at-b05a486d75`)
+  Downloaded socket2 v0.4.9 (registry `lts-repo-at-b05a486d75`)
+  Downloaded rustix v0.37.23 (registry `lts-repo-at-b05a486d75`)
+  Downloaded smallvec v1.11.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded polling v2.8.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded parking_lot_core v0.9.8 (registry `lts-repo-at-b05a486d75`)
+  Downloaded lock_api v0.4.10 (registry `lts-repo-at-b05a486d75`)
+  Downloaded concurrent-queue v2.2.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded tokio v1.29.1 (registry `lts-repo-at-b05a486d75`)
+  Downloaded linux-raw-sys v0.3.8 (registry `lts-repo-at-b05a486d75`)
+  Downloaded bitflags v2.3.3 (registry `lts-repo-at-b05a486d75`)
+  Downloaded bitflags v1.3.2 (registry `lts-repo-at-b05a486d75`)
+   Compiling autocfg v1.1.0
+   Compiling libc v0.2.147
+   Compiling memchr v2.5.0
+   Compiling futures-core v0.3.28
+   Compiling io-lifetimes v1.0.11
+   Compiling pin-project-lite v0.2.10
+   Compiling futures-io v0.3.28
+   Compiling crossbeam-utils v0.8.16
+   Compiling rustix v0.37.23
+   Compiling futures-task v0.3.28
+   Compiling linux-raw-sys v0.3.8
+   Compiling parking_lot_core v0.9.8
+   Compiling bitflags v1.3.2
+   Compiling futures-channel v0.3.28
+   Compiling fastrand v1.9.0
+   Compiling futures-util v0.3.28
+   Compiling scopeguard v1.1.0
+   Compiling smallvec v1.11.0
+   Compiling waker-fn v1.1.0
+   Compiling parking v2.1.0
+   Compiling futures-sink v0.3.28
+   Compiling event-listener v2.5.3
+   Compiling pin-utils v0.1.0
+   Compiling bitflags v2.3.3
+   Compiling lazy_static v1.4.0
+   Compiling async-lock v2.7.0
+   Compiling slab v0.4.8
+   Compiling polling v2.8.0
+   Compiling lock_api v0.4.10
+   Compiling tokio v1.29.1
+   Compiling async-io v1.13.0
+   Compiling tempfile v3.6.0
+   Compiling concurrent-queue v2.2.0
+   Compiling object v0.31.1
+   Compiling futures-lite v1.13.0
+   Compiling socket2 v0.4.9
+   Compiling mio v0.8.8
+   Compiling parking_lot v0.12.1
+   Compiling aya-obj v0.1.0 (/workspace/aya-obj)
+   Compiling futures v0.3.28
+   Compiling aya v0.11.0 (/workspace/aya)
+    Finished test [unoptimized + debuginfo] target(s) in 6.62s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/aya-e56fc1d8eaa6774d)
+
+running 70 tests
+test maps::bloom_filter::tests::test_contains_not_found ... ok
+test maps::bloom_filter::tests::test_contains_syscall_error ... ok
+test maps::bloom_filter::tests::test_insert_ok ... ok
+test maps::bloom_filter::tests::test_insert_syscall_error ... ok
+test maps::bloom_filter::tests::test_new_not_created ... ok
+test maps::bloom_filter::tests::test_new_ok ... ok
+test maps::bloom_filter::tests::test_try_from_ok ... ok
+test maps::bloom_filter::tests::test_try_from_wrong_map ... ok
+test maps::bloom_filter::tests::test_wrong_value_size ... ok
+test maps::hash_map::hash_map::tests::test_get_not_found ... ok
+test maps::hash_map::hash_map::tests::test_get_syscall_error ... ok
+test maps::hash_map::hash_map::tests::test_insert_boxed_ok ... ok
+test maps::hash_map::hash_map::tests::test_insert_ok ... ok
+test maps::hash_map::hash_map::tests::test_insert_syscall_error ... ok
+test maps::hash_map::hash_map::tests::test_iter ... ok
+test maps::hash_map::hash_map::tests::test_iter_key_deleted ... ok
+test maps::hash_map::hash_map::tests::test_iter_key_error ... ok
+test maps::hash_map::hash_map::tests::test_iter_value_error ... ok
+test maps::hash_map::hash_map::tests::test_keys ... ok
+test maps::hash_map::hash_map::tests::test_keys_empty ... ok
+test maps::hash_map::hash_map::tests::test_keys_error ... ok
+test maps::hash_map::hash_map::tests::test_new_not_created ... ok
+test maps::hash_map::hash_map::tests::test_new_ok ... ok
+test maps::hash_map::hash_map::tests::test_remove_ok ... ok
+test maps::hash_map::hash_map::tests::test_remove_syscall_error ... ok
+test maps::hash_map::hash_map::tests::test_try_from_ok ... ok
+test maps::hash_map::hash_map::tests::test_try_from_ok_lru ... ok
+test maps::hash_map::hash_map::tests::test_try_from_wrong_map ... ok
+test maps::hash_map::hash_map::tests::test_try_from_wrong_map_values ... ok
+test maps::hash_map::hash_map::tests::test_wrong_key_size ... ok
+test maps::hash_map::hash_map::tests::test_wrong_value_size ... ok
+test maps::lpm_trie::tests::test_get_not_found ... ok
+test maps::lpm_trie::tests::test_get_syscall_error ... ok
+test maps::lpm_trie::tests::test_insert_ok ... ok
+test maps::lpm_trie::tests::test_insert_syscall_error ... ok
+test maps::lpm_trie::tests::test_new_not_created ... ok
+test maps::lpm_trie::tests::test_new_ok ... ok
+test maps::lpm_trie::tests::test_remove_syscall_error ... ok
+test maps::lpm_trie::tests::test_remove_ok ... ok
+test maps::lpm_trie::tests::test_try_from_ok ... ok
+test maps::lpm_trie::tests::test_try_from_wrong_map ... ok
+test maps::lpm_trie::tests::test_wrong_key_size ... ok
+test maps::lpm_trie::tests::test_wrong_value_size ... ok
+test maps::perf::perf_buffer::tests::test_invalid_page_count ... ok
+test maps::perf::perf_buffer::tests::test_no_events ... ok
+test maps::perf::perf_buffer::tests::test_no_out_bufs ... ok
+test maps::perf::perf_buffer::tests::test_read_first_lost ... ok
+test maps::perf::perf_buffer::tests::test_read_first_sample ... ok
+test maps::perf::perf_buffer::tests::test_read_wrapping_sample_size ... ok
+test maps::tests::test_create ... ok
+test programs::links::tests::test_already_attached ... ok
+test maps::perf::perf_buffer::tests::test_read_last_sample ... ok
+test programs::links::tests::test_link_map ... ok
+test maps::perf::perf_buffer::tests::test_read_many_with_many_reads ... ok
+test maps::tests::test_create_failed ... ok
+test programs::links::tests::test_drop_detach ... ok
+test maps::perf::perf_buffer::tests::test_read_wrapping_value ... ok
+test programs::links::tests::test_not_attached ... ok
+test sys::bpf::tests::test_perf_link_supported ... ok
+test sys::netlink::tests::test_nlattr_iterator_many ... ok
+test programs::links::tests::test_owned_detach ... ok
+test sys::netlink::tests::test_nlattr_iterator_nested ... ok
+test maps::perf::perf_buffer::tests::test_read_many_with_one_read ... ok
+test sys::netlink::tests::test_nlattr_iterator_one ... ok
+test util::tests::test_parse_kernel_symbols ... ok
+test util::tests::test_parse_kernel_version_string ... ok
+test util::tests::test_parse_online_cpus ... ok
+test sys::netlink::tests::test_nested_attrs ... ok
+test sys::netlink::tests::test_nlattr_iterator_empty ... ok
+test programs::links::tests::test_pin ... ok
+
+test result: ok. 70 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests aya
+
+running 68 tests
+test src/bpf.rs - bpf::BpfLoader<'a>::set_global (line 243) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::allow_unsupported_maps (line 202) - compile ... ok
+test src/bpf.rs - bpf::Bpf::load_file (line 762) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::set_global (line 250) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::set_max_entries (line 293) - compile ... ok
+test src/bpf.rs - bpf::Bpf::programs (line 897) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::load (line 369) - compile ... ok
+test src/bpf.rs - bpf::Bpf::program_mut (line 881) - compile ... ok
+test src/maps/hash_map/hash_map.rs - maps::hash_map::hash_map::HashMap (line 20) - compile ... ok
+test src/bpf.rs - bpf::Bpf::load (line 784) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::load_file (line 351) - compile ... ok
+test src/maps/lpm_trie.rs - maps::lpm_trie::Key (line 59) - compile ... ok
+test src/maps/lpm_trie.rs - maps::lpm_trie::Key<K>::new (line 82) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::set_global (line 266) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::extension (line 315) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::verifier_log_level (line 333) - compile ... ok
+test src/maps/array/program_array.rs - maps::array::program_array::ProgramArray (line 25) - compile ... ok
+test src/bpf.rs - bpf::Bpf::program (line 864) - compile ... ok
+test src/maps/hash_map/per_cpu_hash_map.rs - maps::hash_map::per_cpu_hash_map::PerCpuHashMap (line 27) - compile ... ok
+test src/bpf.rs - bpf::Bpf::maps (line 840) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader (line 111) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::map_pin_path (line 223) - compile ... ok
+test src/maps/array/array.rs - maps::array::array::Array (line 22) - compile ... ok
+test src/maps/bloom_filter.rs - maps::bloom_filter::BloomFilter (line 18) - compile ... ok
+test src/maps/lpm_trie.rs - maps::lpm_trie::LpmTrie (line 21) - compile ... ok
+test src/bpf.rs - bpf::BpfLoader<'a>::btf (line 177) - compile ... ok
+test src/maps/hash_map/per_cpu_hash_map.rs - maps::hash_map::per_cpu_hash_map::PerCpuHashMap<T,K,V>::insert (line 94) - compile ... ok
+test src/maps/mod.rs - maps (line 20) - compile ... ok
+test src/maps/array/per_cpu_array.rs - maps::array::per_cpu_array::PerCpuArray (line 22) - compile ... ok
+test src/maps/mod.rs - maps::PerCpuValues (line 761) - compile ... ok
+test src/maps/perf/async_perf_event_array.rs - maps::perf::async_perf_event_array::AsyncPerfEventArray (line 38) - compile ... ok
+test src/bpf.rs - bpf::Bpf::programs_mut (line 915) - compile ... ok
+test src/maps/stack.rs - maps::stack::Stack (line 20) - compile ... ok
+test src/programs/kprobe.rs - programs::kprobe::KProbe (line 31) - compile ... ok
+test src/maps/queue.rs - maps::queue::Queue (line 20) - compile ... ok
+test src/util.rs - util::include_bytes_aligned (line 282) ... ignored
+test src/programs/cgroup_device.rs - programs::cgroup_device::CgroupDevice (line 27) - compile ... ok
+test src/maps/stack_trace.rs - maps::stack_trace::StackTraceMap (line 24) - compile ... ok
+test src/maps/sock/sock_map.rs - maps::sock::sock_map::SockMap (line 28) - compile ... ok
+test src/programs/fentry.rs - programs::fentry::FEntry (line 26) - compile ... ok
+test src/programs/lsm.rs - programs::lsm::Lsm (line 28) - compile ... ok
+test src/programs/raw_trace_point.rs - programs::raw_trace_point::RawTracePoint (line 26) - compile ... ok
+test src/programs/extension.rs - programs::extension::Extension (line 36) - compile ... ok
+test src/programs/cgroup_skb.rs - programs::cgroup_skb::CgroupSkb (line 36) - compile ... ok
+test src/programs/links.rs - programs::links::FdLink (line 96) - compile ... ok
+test src/programs/fexit.rs - programs::fexit::FExit (line 26) - compile ... ok
+test src/programs/links.rs - programs::links::FdLink::pin (line 128) - compile ... ok
+test src/maps/sock/sock_hash.rs - maps::sock::sock_hash::SockHash (line 30) - compile ... ok
+test src/programs/cgroup_sock_addr.rs - programs::cgroup_sock_addr::CgroupSockAddr (line 35) - compile ... ok
+test src/programs/mod.rs - programs (line 16) - compile ... ok
+test src/maps/perf/perf_event_array.rs - maps::perf::perf_event_array::PerfEventArray (line 84) - compile ... ok
+test src/programs/cgroup_sock.rs - programs::cgroup_sock::CgroupSock (line 34) - compile ... ok
+test src/programs/perf_event.rs - programs::perf_event::PerfEvent (line 90) - compile ... ok
+test src/programs/lirc_mode2.rs - programs::lirc_mode2::LircMode2 (line 25) - compile ... ok
+test src/programs/sk_msg.rs - programs::sk_msg::SkMsg (line 27) - compile ... ok
+test src/programs/cgroup_sysctl.rs - programs::cgroup_sysctl::CgroupSysctl (line 28) - compile ... ok
+test src/programs/cgroup_sockopt.rs - programs::cgroup_sockopt::CgroupSockopt (line 32) - compile ... ok
+test src/programs/xdp.rs - programs::xdp::Xdp (line 65) - compile ... ok
+test src/programs/sk_skb.rs - programs::sk_skb::SkSkb (line 40) - compile ... ok
+test src/util.rs - util::syscall_prefix (line 231) - compile ... ok
+test src/programs/tc.rs - programs::tc::SchedClassifierLink::attached (line 261) - compile ... ok
+test src/programs/tc.rs - programs::tc::SchedClassifier (line 47) - compile ... ok
+test src/programs/sk_lookup.rs - programs::sk_lookup::SkLookup (line 25) - compile ... ok
+test src/programs/trace_point.rs - programs::trace_point::TracePoint (line 42) - compile ... ok
+test src/programs/sock_ops.rs - programs::sock_ops::SockOps (line 25) - compile ... ok
+test src/programs/tp_btf.rs - programs::tp_btf::BtfTracePoint (line 25) - compile ... ok
+test src/programs/socket_filter.rs - programs::socket_filter::SocketFilter (line 37) - compile ... ok
+test src/programs/mod.rs - programs::loaded_programs (line 1040) ... ok
+
+test result: ok. 67 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.77s
+
++ cd ../
++ cd test/integration-test
++ cargo test --no-fail-fast --all-features
+warning: Both `/workspace/.cargo/config` and `/workspace/.cargo/config.toml` exist. Using `/workspace/.cargo/config`
+ Downloading crates ...
+  Downloaded num_enum_derive v0.6.1 (registry `lts-repo-at-b05a486d75`)
+  Downloaded semver v1.0.17 (registry `lts-repo-at-b05a486d75`)
+  Downloaded cargo-platform v0.1.3 (registry `lts-repo-at-b05a486d75`)
+  Downloaded tokio-macros v2.1.0 (registry `lts-repo-at-b05a486d75`)
+  Downloaded ryu v1.0.14 (registry `lts-repo-at-b05a486d75`)
+  Downloaded cargo_metadata v0.15.4 (registry `lts-repo-at-b05a486d75`)
+  Downloaded num_enum v0.6.1 (registry `lts-repo-at-b05a486d75`)
+  Downloaded serde_json v1.0.102 (registry `lts-repo-at-b05a486d75`)
+  Downloaded serde_derive v1.0.171 (registry `lts-repo-at-b05a486d75`)
+  Downloaded serde v1.0.171 (registry `lts-repo-at-b05a486d75`)
+  Downloaded camino v1.1.6 (registry `lts-repo-at-b05a486d75`)
+  Downloaded anyhow v1.0.71 (registry `lts-repo-at-b05a486d75`)
+  Downloaded itoa v1.0.8 (registry `lts-repo-at-b05a486d75`)
+   Compiling serde v1.0.171
+   Compiling memchr v2.5.0
+   Compiling semver v1.0.17
+   Compiling serde_json v1.0.102
+   Compiling camino v1.1.6
+   Compiling itoa v1.0.8
+   Compiling ryu v1.0.14
+   Compiling tokio v1.29.1
+   Compiling anyhow v1.0.71
+   Compiling syn v2.0.25
+   Compiling mio v0.8.8
+   Compiling parking_lot_core v0.9.8
+   Compiling socket2 v0.4.9
+   Compiling parking_lot v0.12.1
+   Compiling object v0.31.1
+   Compiling serde_derive v1.0.171
+   Compiling thiserror-impl v1.0.43
+   Compiling tokio-macros v2.1.0
+   Compiling num_enum_derive v0.6.1
+   Compiling num_enum v0.6.1
+   Compiling aya-log-common v0.1.13 (/workspace/aya-log-common)
+   Compiling thiserror v1.0.43
+   Compiling aya-obj v0.1.0 (/workspace/aya-obj)
+   Compiling aya v0.11.0 (/workspace/aya)
+   Compiling aya-log v0.1.13 (/workspace/aya-log)
+   Compiling cargo-platform v0.1.3
+   Compiling cargo_metadata v0.15.4
+   Compiling integration-test v0.1.0 (/workspace/test/integration-test)
+    Finished test [unoptimized + debuginfo] target(s) in 9.43s
+     Running unittests src/lib.rs (/workspace/target/debug/deps/integration_test-1049ccdec5f057e3)
+
+running 34 tests
+test tests::elf::test_maps ... FAILED
+test tests::rbpf::run_with_rbpf ... FAILED
+test tests::rbpf::use_map_with_rbpf ... FAILED
+test tests::btf_relocations::relocate_enum64_signed ... FAILED
+test tests::btf_relocations::relocate_enum ... FAILED
+test tests::btf_relocations::relocate_enum_signed ... FAILED
+test tests::btf_relocations::relocate_pointer ... FAILED
+test tests::btf_relocations::relocate_struct_flavors ... FAILED
+test tests::btf_relocations::relocate_field ... FAILED
+test tests::btf_relocations::relocate_enum64 ... FAILED
+test tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_truncate ... FAILED
+test tests::bpf_probe_read::bpf_probe_read_user_str_bytes_empty_dest ... FAILED
+test tests::relocations::relocations ... FAILED
+test tests::bpf_probe_read::bpf_probe_read_user_str_bytes ... FAILED
+test tests::load::pin_link ... FAILED
+test tests::smoke::xdp ... FAILED
+test tests::load::multiple_btf_maps ... FAILED
+test tests::load::basic_uprobe ... FAILED
+test tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_empty_string ... FAILED
+test tests::load::unload_kprobe ... FAILED
+test tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_empty_dest ... FAILED
+test tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes ... FAILED
+test tests::log::log ... FAILED
+test tests::load::unload_xdp ... FAILED
+test tests::load::long_name ... FAILED
+test tests::load::basic_tracepoint ... FAILED
+test tests::load::pin_lifecycle ... FAILED
+test tests::load::pin_lifecycle_kprobe ... FAILED
+test tests::relocations::text_64_64_reloc ... FAILED
+test tests::bpf_probe_read::bpf_probe_read_user_str_bytes_empty_string ... FAILED
+test tests::load::pin_lifecycle_tracepoint ... FAILED
+test tests::bpf_probe_read::bpf_probe_read_user_str_bytes_truncate ... FAILED
+test tests::smoke::extension ... FAILED
+test tests::load::pin_lifecycle_uprobe ... FAILED
+
+failures:
+
+---- tests::elf::test_maps stdout ----
+thread 'tests::elf::test_maps' panicked at 'called `Result::unwrap()` on an `Err` value: Error("Could not read file magic")', test/integration-test/src/tests/elf.rs:5:57
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- tests::rbpf::run_with_rbpf stdout ----
+thread 'tests::rbpf::run_with_rbpf' panicked at 'called `Result::unwrap()` on an `Err` value: ElfError(Error("Could not read file magic"))', test/integration-test/src/tests/rbpf.rs:8:45
+
+---- tests::rbpf::use_map_with_rbpf stdout ----
+thread 'tests::rbpf::use_map_with_rbpf' panicked at 'called `Result::unwrap()` on an `Err` value: ElfError(Error("Could not read file magic"))', test/integration-test/src/tests/rbpf.rs:35:57
+
+---- tests::btf_relocations::relocate_enum64_signed stdout ----
+thread 'tests::btf_relocations::relocate_enum64_signed' panicked at 'called `Result::unwrap()` on an `Err` value: failed to compile eBPF program
+
+Caused by:
+    0: failed to spawn "clang" "-c" "-g" "-O2" "-target" "bpf" "-x" "c" "-" "-o" "-"
+    1: No such file or directory (os error 2)', test/integration-test/src/tests/btf_relocations.rs:134:6
+
+---- tests::btf_relocations::relocate_enum stdout ----
+thread 'tests::btf_relocations::relocate_enum' panicked at 'called `Result::unwrap()` on an `Err` value: failed to compile eBPF program
+
+Caused by:
+    0: failed to spawn "clang" "-c" "-g" "-O2" "-target" "bpf" "-x" "c" "-" "-o" "-"
+    1: No such file or directory (os error 2)', test/integration-test/src/tests/btf_relocations.rs:59:6
+
+---- tests::btf_relocations::relocate_enum_signed stdout ----
+thread 'tests::btf_relocations::relocate_enum_signed' panicked at 'called `Result::unwrap()` on an `Err` value: failed to compile eBPF program
+
+Caused by:
+    0: failed to spawn "clang" "-c" "-g" "-O2" "-target" "bpf" "-x" "c" "-" "-o" "-"
+    1: No such file or directory (os error 2)', test/integration-test/src/tests/btf_relocations.rs:84:6
+
+---- tests::btf_relocations::relocate_pointer stdout ----
+thread 'tests::btf_relocations::relocate_pointer' panicked at 'called `Result::unwrap()` on an `Err` value: failed to compile eBPF program
+
+Caused by:
+    0: failed to spawn "clang" "-c" "-g" "-O2" "-target" "bpf" "-x" "c" "-" "-o" "-"
+    1: No such file or directory (os error 2)', test/integration-test/src/tests/btf_relocations.rs:157:6
+
+---- tests::btf_relocations::relocate_struct_flavors stdout ----
+thread 'tests::btf_relocations::relocate_struct_flavors' panicked at 'called `Result::unwrap()` on an `Err` value: failed to compile eBPF program
+
+Caused by:
+    0: failed to spawn "clang" "-c" "-g" "-O2" "-target" "bpf" "-x" "c" "-" "-o" "-"
+    1: No such file or directory (os error 2)', test/integration-test/src/tests/btf_relocations.rs:187:6
+
+---- tests::btf_relocations::relocate_field stdout ----
+thread 'tests::btf_relocations::relocate_field' panicked at 'called `Result::unwrap()` on an `Err` value: failed to compile eBPF program
+
+Caused by:
+    0: failed to spawn "clang" "-c" "-g" "-O2" "-target" "bpf" "-x" "c" "-" "-o" "-"
+    1: No such file or directory (os error 2)', test/integration-test/src/tests/btf_relocations.rs:39:6
+
+---- tests::btf_relocations::relocate_enum64 stdout ----
+thread 'tests::btf_relocations::relocate_enum64' panicked at 'called `Result::unwrap()` on an `Err` value: failed to compile eBPF program
+
+Caused by:
+    0: failed to spawn "clang" "-c" "-g" "-O2" "-target" "bpf" "-x" "c" "-" "-o" "-"
+    1: No such file or directory (os error 2)', test/integration-test/src/tests/btf_relocations.rs:109:6
+
+---- tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_truncate stdout ----
+thread 'tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_truncate' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/bpf_probe_read.rs:106:36
+
+---- tests::bpf_probe_read::bpf_probe_read_user_str_bytes_empty_dest stdout ----
+thread 'tests::bpf_probe_read::bpf_probe_read_user_str_bytes_empty_dest' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/bpf_probe_read.rs:106:36
+
+---- tests::relocations::relocations stdout ----
+thread 'tests::relocations::relocations' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/relocations.rs:34:36
+
+---- tests::bpf_probe_read::bpf_probe_read_user_str_bytes stdout ----
+thread 'tests::bpf_probe_read::bpf_probe_read_user_str_bytes' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/bpf_probe_read.rs:106:36
+
+---- tests::load::pin_link stdout ----
+thread 'tests::load::pin_link' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:226:42
+
+---- tests::smoke::xdp stdout ----
+thread 'tests::smoke::xdp' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/smoke.rs:15:42
+
+---- tests::load::multiple_btf_maps stdout ----
+thread 'tests::load::multiple_btf_maps' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:34:50
+
+---- tests::load::basic_uprobe stdout ----
+thread 'tests::load::basic_uprobe' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:193:42
+
+---- tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_empty_string stdout ----
+thread 'tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_empty_string' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/bpf_probe_read.rs:106:36
+
+---- tests::load::unload_kprobe stdout ----
+thread 'tests::load::unload_kprobe' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:137:42
+
+---- tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_empty_dest stdout ----
+thread 'tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_empty_dest' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/bpf_probe_read.rs:106:36
+
+---- tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes stdout ----
+thread 'tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/bpf_probe_read.rs:106:36
+
+---- tests::log::log stdout ----
+thread 'tests::log::log' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/log.rs:92:41
+
+---- tests::load::unload_xdp stdout ----
+thread 'tests::load::unload_xdp' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:112:42
+
+---- tests::load::long_name stdout ----
+thread 'tests::load::long_name' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:18:47
+
+---- tests::load::basic_tracepoint stdout ----
+thread 'tests::load::basic_tracepoint' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:162:42
+
+---- tests::load::pin_lifecycle stdout ----
+thread 'tests::load::pin_lifecycle' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:259:46
+
+---- tests::load::pin_lifecycle_kprobe stdout ----
+thread 'tests::load::pin_lifecycle_kprobe' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:367:46
+
+---- tests::relocations::text_64_64_reloc stdout ----
+thread 'tests::relocations::text_64_64_reloc' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/relocations.rs:34:36
+
+---- tests::bpf_probe_read::bpf_probe_read_user_str_bytes_empty_string stdout ----
+thread 'tests::bpf_probe_read::bpf_probe_read_user_str_bytes_empty_string' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/bpf_probe_read.rs:106:36
+
+---- tests::load::pin_lifecycle_tracepoint stdout ----
+thread 'tests::load::pin_lifecycle_tracepoint' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:313:46
+
+---- tests::bpf_probe_read::bpf_probe_read_user_str_bytes_truncate stdout ----
+thread 'tests::bpf_probe_read::bpf_probe_read_user_str_bytes_truncate' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/bpf_probe_read.rs:106:36
+
+---- tests::smoke::extension stdout ----
+thread 'tests::smoke::extension' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/smoke.rs:28:42
+
+---- tests::load::pin_lifecycle_uprobe stdout ----
+thread 'tests::load::pin_lifecycle_uprobe' panicked at 'called `Result::unwrap()` on an `Err` value: ParseError(ElfError(Error("Could not read file magic")))', test/integration-test/src/tests/load.rs:425:46
+
+
+failures:
+    tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes
+    tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_empty_dest
+    tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_empty_string
+    tests::bpf_probe_read::bpf_probe_read_kernel_str_bytes_truncate
+    tests::bpf_probe_read::bpf_probe_read_user_str_bytes
+    tests::bpf_probe_read::bpf_probe_read_user_str_bytes_empty_dest
+    tests::bpf_probe_read::bpf_probe_read_user_str_bytes_empty_string
+    tests::bpf_probe_read::bpf_probe_read_user_str_bytes_truncate
+    tests::btf_relocations::relocate_enum
+    tests::btf_relocations::relocate_enum64
+    tests::btf_relocations::relocate_enum64_signed
+    tests::btf_relocations::relocate_enum_signed
+    tests::btf_relocations::relocate_field
+    tests::btf_relocations::relocate_pointer
+    tests::btf_relocations::relocate_struct_flavors
+    tests::elf::test_maps
+    tests::load::basic_tracepoint
+    tests::load::basic_uprobe
+    tests::load::long_name
+    tests::load::multiple_btf_maps
+    tests::load::pin_lifecycle
+    tests::load::pin_lifecycle_kprobe
+    tests::load::pin_lifecycle_tracepoint
+    tests::load::pin_lifecycle_uprobe
+    tests::load::pin_link
+    tests::load::unload_kprobe
+    tests::load::unload_xdp
+    tests::log::log
+    tests::rbpf::run_with_rbpf
+    tests::rbpf::use_map_with_rbpf
+    tests::relocations::relocations
+    tests::relocations::text_64_64_reloc
+    tests::smoke::extension
+    tests::smoke::xdp
+
+test result: FAILED. 0 passed; 34 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+error: test failed, to rerun pass `--lib`
+   Doc-tests integration-test
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: 1 target failed:
+    `--lib`
++ cd ../../
++ git reset --hard 61608e64583f9dc599eef9b8db098f38a765b285
+HEAD is now at 61608e64 Merge pull request #650 from aya-rs/test-cleanup
++ git clean -fd
+Removing .cargo/config
+Removing .cargo/lts-repo-at-b05a486d75/

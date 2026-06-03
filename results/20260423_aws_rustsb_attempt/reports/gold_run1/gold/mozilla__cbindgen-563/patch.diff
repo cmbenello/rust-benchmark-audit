@@ -1,0 +1,110 @@
+diff --git a/src/bindgen/ir/generic_path.rs b/src/bindgen/ir/generic_path.rs
+--- a/src/bindgen/ir/generic_path.rs
++++ b/src/bindgen/ir/generic_path.rs
+@@ -27,18 +27,13 @@ impl GenericParams {
+                 .collect(),
+         )
+     }
+-}
+-
+-impl Deref for GenericParams {
+-    type Target = [Path];
+-
+-    fn deref(&self) -> &[Path] {
+-        &self.0
+-    }
+-}
+ 
+-impl Source for GenericParams {
+-    fn write<F: Write>(&self, config: &Config, out: &mut SourceWriter<F>) {
++    fn write_internal<F: Write>(
++        &self,
++        config: &Config,
++        out: &mut SourceWriter<F>,
++        with_default: bool,
++    ) {
+         if !self.0.is_empty() && config.language == Language::Cxx {
+             out.write("template<");
+             for (i, item) in self.0.iter().enumerate() {
+diff --git a/src/bindgen/ir/generic_path.rs b/src/bindgen/ir/generic_path.rs
+--- a/src/bindgen/ir/generic_path.rs
++++ b/src/bindgen/ir/generic_path.rs
+@@ -46,11 +41,32 @@ impl Source for GenericParams {
+                     out.write(", ");
+                 }
+                 write!(out, "typename {}", item);
++                if with_default {
++                    write!(out, " = void");
++                }
+             }
+             out.write(">");
+             out.new_line();
+         }
+     }
++
++    pub fn write_with_default<F: Write>(&self, config: &Config, out: &mut SourceWriter<F>) {
++        self.write_internal(config, out, true);
++    }
++}
++
++impl Deref for GenericParams {
++    type Target = [Path];
++
++    fn deref(&self) -> &[Path] {
++        &self.0
++    }
++}
++
++impl Source for GenericParams {
++    fn write<F: Write>(&self, config: &Config, out: &mut SourceWriter<F>) {
++        self.write_internal(config, out, false);
++    }
+ }
+ 
+ #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+diff --git a/src/bindgen/ir/opaque.rs b/src/bindgen/ir/opaque.rs
+--- a/src/bindgen/ir/opaque.rs
++++ b/src/bindgen/ir/opaque.rs
+@@ -105,12 +105,16 @@ impl Item for OpaqueItem {
+         out: &mut Monomorphs,
+     ) {
+         assert!(
+-            self.generic_params.len() > 0,
++            !self.generic_params.is_empty(),
+             "{} is not generic",
+             self.path
+         );
++
++        // We can be instantiated with less generic params because of default
++        // template parameters, or because of empty types that we remove during
++        // parsing (`()`).
+         assert!(
+-            self.generic_params.len() == generic_values.len(),
++            self.generic_params.len() >= generic_values.len(),
+             "{} has {} params but is being instantiated with {} values",
+             self.path,
+             self.generic_params.len(),
+diff --git a/src/bindgen/ir/opaque.rs b/src/bindgen/ir/opaque.rs
+--- a/src/bindgen/ir/opaque.rs
++++ b/src/bindgen/ir/opaque.rs
+@@ -137,7 +141,7 @@ impl Source for OpaqueItem {
+ 
+         self.documentation.write(config, out);
+ 
+-        self.generic_params.write(config, out);
++        self.generic_params.write_with_default(config, out);
+ 
+         if config.style.generate_typedef() && config.language == Language::C {
+             write!(
+diff --git a/src/bindgen/parser.rs b/src/bindgen/parser.rs
+--- a/src/bindgen/parser.rs
++++ b/src/bindgen/parser.rs
+@@ -391,7 +391,7 @@ impl Parse {
+         add_opaque("Option", vec!["T"]);
+         add_opaque("NonNull", vec!["T"]);
+         add_opaque("Vec", vec!["T"]);
+-        add_opaque("HashMap", vec!["K", "V"]);
++        add_opaque("HashMap", vec!["K", "V", "Hasher"]);
+         add_opaque("BTreeMap", vec!["K", "V"]);
+         add_opaque("HashSet", vec!["T"]);
+         add_opaque("BTreeSet", vec!["T"]);

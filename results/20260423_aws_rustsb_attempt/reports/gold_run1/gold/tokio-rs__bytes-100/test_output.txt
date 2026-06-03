@@ -1,0 +1,233 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch tests/test_bytes.rs...
+Applied patch tests/test_bytes.rs cleanly.
++ cargo test --no-fail-fast --all-features
+ Downloading tokio-core v0.1.6 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading iovec v0.1.0 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading byteorder v1.0.0 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading tokio-io v0.1.1 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading futures v0.1.12 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading mio v0.6.6 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading slab v0.3.0 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading bytes v0.4.1 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading scoped-tls v0.1.0 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading log v0.3.7 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading lazycell v0.4.0 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading net2 v0.2.27 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading libc v0.2.21 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+ Downloading cfg-if v0.1.0 (registry file:///testbed/.cargo/lts-repo-at-44816e6dd8)
+   Compiling lazycell v0.4.0
+   Compiling libc v0.2.21
+   Compiling futures v0.1.12
+   Compiling slab v0.3.0
+   Compiling scoped-tls v0.1.0
+   Compiling cfg-if v0.1.0
+   Compiling log v0.3.7
+   Compiling byteorder v1.0.0
+   Compiling iovec v0.1.0
+   Compiling net2 v0.2.27
+   Compiling bytes v0.4.1 (file:///workspace)
+   Compiling bytes v0.4.1
+   Compiling mio v0.6.6
+   Compiling tokio-io v0.1.1
+   Compiling tokio-core v0.1.6
+    Finished dev [unoptimized + debuginfo] target(s) in 7.52 secs
+     Running target/debug/deps/bytes-34a0eda9fbff6451
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured
+
+     Running target/debug/deps/test_buf-d51b77a2d589e928
+
+running 5 tests
+test test_bufs_vec ... ok
+test test_fresh_cursor_vec ... ok
+test test_get_u16 ... ok
+test test_get_u8 ... ok
+test test_get_u16_buffer_underflow ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured
+
+     Running target/debug/deps/test_buf_mut-26a918daa1b2b45e
+
+running 5 tests
+test test_bufs_vec_mut ... ok
+test test_clone ... ok
+test test_put_u16 ... ok
+test test_vec_as_mut_buf ... ok
+test test_put_u8 ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured
+
+     Running target/debug/deps/test_bytes-39d8d51685c93371
+
+running 27 tests
+test extend ... ok
+test fmt ... ok
+test from_slice ... ok
+test fns_defined_for_bytes_mut ... ok
+test from_static ... ok
+test index ... ok
+test inline_storage ... ok
+test len ... ok
+test reserve_growth ... ok
+test reserve_convert ... ok
+test reserve_allocates_at_least_original_capacity ... ok
+test slice_oob_1 ... ok
+test slice ... ok
+test split_off ... ok
+test slice_oob_2 ... ok
+test split_off_oob ... ok
+test split_off_to_at_gt_len ... ok
+test split_off_uninitialized ... ok
+test split_to_1 ... ok
+test split_to_2 ... ok
+test split_to_oob ... ok
+test split_to_uninitialized ... ok
+test split_to_oob_mut ... ok
+test test_bounds ... ok
+test split_off_to_loop ... ok
+test reserve_max_original_capacity_value ... ok
+test stress ... ok
+
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured
+
+     Running target/debug/deps/test_chain-2bd9cebbb97fd7d1
+
+running 4 tests
+test collect_two_bufs ... ok
+test iterating_two_bufs ... ok
+test vectored_read ... ok
+test writing_chained ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured
+
+     Running target/debug/deps/test_debug-3fd73e72b56636af
+
+running 1 test
+test fmt ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured
+
+     Running target/debug/deps/test_from_buf-70251e31789a4d10
+
+running 3 tests
+test collect_to_bytes ... ok
+test collect_to_bytes_mut ... ok
+test collect_to_vec ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured
+
+   Doc-tests bytes
+
+running 99 tests
+test buf::buf::Buf::get_f32_0 ... ok
+test buf::buf::Buf::get_u8_0 ... ok
+test buf::buf::Buf::get_i8_0 ... ok
+test buf::buf::Buf::bytes_0 ... ok
+test buf::buf::Buf::get_u64_0 ... ok
+test buf::buf::Buf::get_f64_0 ... ok
+test buf::buf::Buf::get_i16_0 ... ok
+test buf::buf_mut::BufMut::has_remaining_mut_0 ... ok
+test buf::buf::Buf::get_i64_0 ... ok
+test buf::buf::Buf::iter_0 ... ok
+test buf::buf::Buf::remaining_0 ... ok
+test buf::buf::Buf::get_uint_0 ... ok
+test buf::buf::Buf::get_i32_0 ... ok
+test buf::buf::Buf::collect_0 ... ok
+test _0 ... ok
+test buf::buf::Buf::advance_0 ... ok
+test buf::buf::Buf::has_remaining_0 ... ok
+test buf::buf::Buf::get_u32_0 ... ok
+test buf::buf_mut::BufMut::put_f32_0 ... ok
+test buf::buf_mut::BufMut::advance_mut_0 ... ok
+test buf::buf::Buf::get_u16_0 ... ok
+test buf::buf::Buf::get_int_0 ... ok
+test buf::buf::Buf::take_0 ... ok
+test buf::buf::Buf::by_ref_0 ... ok
+test buf::buf::Buf::chain_0 ... ok
+test buf::buf_mut::BufMut::by_ref_0 ... ok
+test buf::buf::Buf_0 ... ok
+test buf::buf::Buf::copy_to_slice_0 ... ok
+test buf::buf::Buf::reader_0 ... ok
+test buf::buf_mut::BufMut::bytes_mut_0 ... ok
+test buf::buf_mut::BufMut::put_f64_0 ... ok
+test buf::buf_mut::BufMut::put_0 ... ok
+test buf::buf_mut::BufMut::put_slice_0 ... ok
+test buf::buf_mut::BufMut::remaining_mut_0 ... ok
+test buf::chain::Chain<T, U>::first_ref_0 ... ok
+test buf::buf_mut::BufMut::put_i32_0 ... ok
+test buf::buf_mut::BufMut::put_int_0 ... ok
+test buf::chain::Chain<T, U>::new_0 ... ok
+test buf::buf_mut::BufMut::put_u16_0 ... ok
+test buf::buf_mut::BufMut_0 ... ok
+test buf::chain::Chain<T, U>::first_mut_0 ... ok
+test buf::buf_mut::BufMut::put_i16_0 ... ok
+test buf::buf_mut::BufMut::put_u64_0 ... ok
+test buf::chain::Chain<T, U>::last_mut_0 ... ok
+test buf::buf_mut::BufMut::put_u8_0 ... ok
+test buf::buf_mut::BufMut::put_i64_0 ... ok
+test buf::chain::Chain<T, U>::last_ref_0 ... ok
+test buf::buf_mut::BufMut::put_i8_0 ... ok
+test buf::buf_mut::BufMut::put_uint_0 ... ok
+test buf::chain::Chain<T, U>::into_inner_0 ... ok
+test buf::buf_mut::BufMut::writer_0 ... ok
+test buf::buf_mut::BufMut::put_u32_0 ... ok
+test buf::iter::Iter<T>::get_ref_0 ... ok
+test buf::iter::Iter<T>::into_inner_0 ... ok
+test buf::reader::Reader<B>::get_ref_0 ... ok
+test buf::iter::Iter<T>::get_mut_0 ... ok
+test buf::chain::Chain_0 ... ok
+test buf::from_buf::FromBuf_0 ... ok
+test buf::from_buf::FromBuf::from_buf_0 ... ok
+test buf::into_buf::IntoBuf::into_buf_0 ... ok
+test buf::take::Take<T>::get_ref_0 ... ok
+test buf::from_buf::FromBuf_1 ... ok
+test buf::into_buf::IntoBuf_0 ... ok
+test buf::writer::Writer<B>::get_ref_0 ... ok
+test buf::take::Take<T>::limit_0 ... ok
+test bytes::Bytes::from_static_0 ... ok
+test buf::from_buf::FromBuf_2 ... ok
+test bytes::Bytes::is_empty_0 ... ok
+test buf::take::Take<T>::get_mut_0 ... ok
+test buf::reader::Reader<B>::into_inner_0 ... ok
+test buf::iter::Iter_0 ... ok
+test buf::take::Take<T>::set_limit_0 ... ok
+test bytes::Bytes::len_0 ... ok
+test buf::reader::Reader<B>::get_mut_0 ... ok
+test bytes::Bytes::slice_0 ... ok
+test bytes::Bytes::split_off_0 ... ok
+test bytes::BytesMut::capacity_0 ... ok
+test buf::writer::Writer<B>::get_mut_0 ... ok
+test buf::writer::Writer<B>::into_inner_0 ... ok
+test bytes::BytesMut::len_0 ... ok
+test bytes::Bytes::try_mut_0 ... ok
+test bytes::BytesMut::reserve_0 ... ok
+test bytes::Bytes::split_to_0 ... ok
+test bytes::Bytes::slice_from_0 ... ok
+test bytes::Bytes::new_0 ... ok
+test bytes::BytesMut::clear_0 ... ok
+test buf::take::Take<T>::into_inner_0 ... ok
+test bytes::BytesMut::is_empty_0 ... ok
+test bytes::BytesMut::set_len_0 ... ok
+test bytes::BytesMut::reserve_1 ... ok
+test bytes::Bytes::slice_to_0 ... ok
+test bytes::BytesMut::split_to_0 ... ok
+test bytes::BytesMut::split_off_0 ... ok
+test bytes::BytesMut::truncate_0 ... ok
+test bytes::BytesMut::with_capacity_0 ... ok
+test bytes::Bytes_0 ... ok
+test bytes::BytesMut_0 ... ok
+test bytes::BytesMut::take_0 ... ok
+test bytes::BytesMut::freeze_0 ... ok
+
+test result: ok. 99 passed; 0 failed; 0 ignored; 0 measured
+
++ git reset --hard 627864187c531af38c21aa44315a1b3204f9a175
+HEAD is now at 6278641 Bytes::split_{off,to} should panic if `at > len` (#91)
++ git clean -fd
+Removing .cargo/

@@ -1,0 +1,184 @@
++ cp -r /testbed/. /workspace
++ git config --global --add safe.directory /workspace
++ cd /workspace
++ git apply -v -
+Checking patch testing/templates/match-enum-or.html...
+<stdin>:13: new blank line at EOF.
++
+Checking patch testing/tests/matches.rs...
+Applied patch testing/templates/match-enum-or.html cleanly.
+Applied patch testing/tests/matches.rs cleanly.
+warning: 1 line adds whitespace errors.
++ cd testing
++ cargo test --no-fail-fast --all-features --test matches
+ Downloading crates ...
+  Downloaded basic-toml v0.1.7 (registry `lts-repo-at-97ce818a54`)
+  Downloaded cfg-if v1.0.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded cast v0.3.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded bitflags v2.4.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded typed-arena v2.0.2 (registry `lts-repo-at-97ce818a54`)
+  Downloaded anes v0.1.6 (registry `lts-repo-at-97ce818a54`)
+  Downloaded serde v1.0.193 (registry `lts-repo-at-97ce818a54`)
+  Downloaded trybuild v1.0.85 (registry `lts-repo-at-97ce818a54`)
+  Downloaded same-file v1.0.6 (registry `lts-repo-at-97ce818a54`)
+  Downloaded rayon-core v1.12.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded ryu v1.0.15 (registry `lts-repo-at-97ce818a54`)
+  Downloaded deunicode v1.4.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded termcolor v1.4.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded slug v0.1.5 (registry `lts-repo-at-97ce818a54`)
+  Downloaded clap v4.4.8 (registry `lts-repo-at-97ce818a54`)
+  Downloaded tinytemplate v1.2.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded regex-syntax v0.8.2 (registry `lts-repo-at-97ce818a54`)
+  Downloaded walkdir v2.4.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded unicase v2.7.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded regex-automata v0.4.3 (registry `lts-repo-at-97ce818a54`)
+  Downloaded regex v1.10.2 (registry `lts-repo-at-97ce818a54`)
+  Downloaded mime v0.3.17 (registry `lts-repo-at-97ce818a54`)
+  Downloaded libc v0.2.150 (registry `lts-repo-at-97ce818a54`)
+  Downloaded version_check v0.9.4 (registry `lts-repo-at-97ce818a54`)
+  Downloaded unicode_categories v0.1.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded unicode-ident v1.0.12 (registry `lts-repo-at-97ce818a54`)
+  Downloaded serde_derive v1.0.193 (registry `lts-repo-at-97ce818a54`)
+  Downloaded scopeguard v1.2.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded rustix v0.38.25 (registry `lts-repo-at-97ce818a54`)
+  Downloaded rayon v1.8.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded quote v1.0.33 (registry `lts-repo-at-97ce818a54`)
+  Downloaded proc-macro2 v1.0.69 (registry `lts-repo-at-97ce818a54`)
+  Downloaded plotters-svg v0.3.5 (registry `lts-repo-at-97ce818a54`)
+  Downloaded plotters-backend v0.3.5 (registry `lts-repo-at-97ce818a54`)
+  Downloaded plotters v0.3.5 (registry `lts-repo-at-97ce818a54`)
+  Downloaded percent-encoding v2.3.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded oorandom v11.1.3 (registry `lts-repo-at-97ce818a54`)
+  Downloaded once_cell v1.18.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded num-traits v0.2.17 (registry `lts-repo-at-97ce818a54`)
+  Downloaded mime_guess v2.0.4 (registry `lts-repo-at-97ce818a54`)
+  Downloaded memchr v2.6.4 (registry `lts-repo-at-97ce818a54`)
+  Downloaded linux-raw-sys v0.4.11 (registry `lts-repo-at-97ce818a54`)
+  Downloaded libm v0.2.8 (registry `lts-repo-at-97ce818a54`)
+  Downloaded itoa v1.0.9 (registry `lts-repo-at-97ce818a54`)
+  Downloaded itertools v0.10.5 (registry `lts-repo-at-97ce818a54`)
+  Downloaded glob v0.3.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded crossbeam-utils v0.8.16 (registry `lts-repo-at-97ce818a54`)
+  Downloaded crossbeam-deque v0.8.3 (registry `lts-repo-at-97ce818a54`)
+  Downloaded criterion-plot v0.5.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded ciborium-ll v0.2.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded ciborium-io v0.2.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded humansize v2.1.3 (registry `lts-repo-at-97ce818a54`)
+  Downloaded half v1.8.2 (registry `lts-repo-at-97ce818a54`)
+  Downloaded crossbeam-epoch v0.9.15 (registry `lts-repo-at-97ce818a54`)
+  Downloaded comrak v0.18.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded clap_lex v0.6.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded syn v2.0.39 (registry `lts-repo-at-97ce818a54`)
+  Downloaded serde_json v1.0.108 (registry `lts-repo-at-97ce818a54`)
+  Downloaded nom v7.1.3 (registry `lts-repo-at-97ce818a54`)
+  Downloaded memoffset v0.9.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded errno v0.3.7 (registry `lts-repo-at-97ce818a54`)
+  Downloaded entities v1.0.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded either v1.9.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded criterion v0.5.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded clap_builder v4.4.8 (registry `lts-repo-at-97ce818a54`)
+  Downloaded ciborium v0.2.1 (registry `lts-repo-at-97ce818a54`)
+  Downloaded aho-corasick v1.1.2 (registry `lts-repo-at-97ce818a54`)
+  Downloaded autocfg v1.1.0 (registry `lts-repo-at-97ce818a54`)
+  Downloaded anstyle v1.0.4 (registry `lts-repo-at-97ce818a54`)
+  Downloaded is-terminal v0.4.9 (registry `lts-repo-at-97ce818a54`)
+  Downloaded minimal-lexical v0.2.1 (registry `lts-repo-at-97ce818a54`)
+   Compiling proc-macro2 v1.0.69
+   Compiling autocfg v1.1.0
+   Compiling unicode-ident v1.0.12
+   Compiling serde v1.0.193
+   Compiling version_check v0.9.4
+   Compiling crossbeam-utils v0.8.16
+   Compiling memchr v2.6.4
+   Compiling serde_json v1.0.108
+   Compiling cfg-if v1.0.0
+   Compiling regex-syntax v0.8.2
+   Compiling itoa v1.0.9
+   Compiling ryu v1.0.15
+   Compiling scopeguard v1.2.0
+   Compiling libm v0.2.8
+   Compiling minimal-lexical v0.2.1
+   Compiling either v1.9.0
+   Compiling once_cell v1.18.0
+   Compiling rustix v0.38.25
+   Compiling rayon-core v1.12.0
+   Compiling plotters-backend v0.3.5
+   Compiling linux-raw-sys v0.4.11
+   Compiling mime v0.3.17
+   Compiling anstyle v1.0.4
+   Compiling deunicode v1.4.1
+   Compiling clap_lex v0.6.0
+   Compiling bitflags v2.4.1
+   Compiling half v1.8.2
+   Compiling ciborium-io v0.2.1
+   Compiling trybuild v1.0.85
+   Compiling unicode_categories v0.1.1
+   Compiling ciborium-ll v0.2.1
+   Compiling plotters-svg v0.3.5
+   Compiling clap_builder v4.4.8
+   Compiling itertools v0.10.5
+   Compiling same-file v1.0.6
+   Compiling aho-corasick v1.1.2
+   Compiling nom v7.1.3
+   Compiling entities v1.0.1
+   Compiling typed-arena v2.0.2
+   Compiling cast v0.3.0
+   Compiling termcolor v1.4.0
+   Compiling walkdir v2.4.0
+   Compiling percent-encoding v2.3.0
+   Compiling anes v0.1.6
+   Compiling askama_escape v0.10.3 (/workspace/askama_escape)
+   Compiling glob v0.3.1
+   Compiling slug v0.1.5
+   Compiling oorandom v11.1.3
+   Compiling memoffset v0.9.0
+   Compiling crossbeam-epoch v0.9.15
+   Compiling num-traits v0.2.17
+   Compiling unicase v2.7.0
+   Compiling criterion-plot v0.5.0
+   Compiling regex-automata v0.4.3
+   Compiling mime_guess v2.0.4
+   Compiling askama_parser v0.1.1 (/workspace/askama_parser)
+   Compiling clap v4.4.8
+   Compiling humansize v2.1.3
+   Compiling crossbeam-deque v0.8.3
+   Compiling quote v1.0.33
+   Compiling syn v2.0.39
+   Compiling is-terminal v0.4.9
+   Compiling rayon v1.8.0
+   Compiling plotters v0.3.5
+   Compiling regex v1.10.2
+   Compiling serde_derive v1.0.193
+   Compiling comrak v0.18.0
+   Compiling basic-toml v0.1.7
+   Compiling ciborium v0.2.1
+   Compiling askama_derive v0.12.2 (/workspace/askama_derive)
+   Compiling tinytemplate v1.2.1
+   Compiling criterion v0.5.1
+   Compiling askama v0.12.1 (/workspace/askama)
+   Compiling askama_testing v0.1.0 (/workspace/testing)
+    Finished test [unoptimized + debuginfo] target(s) in 21.36s
+     Running tests/matches.rs (/workspace/target/debug/deps/matches-cdcd79e18203fcda)
+
+running 12 tests
+test test_match_custom_enum ... ok
+test test_match_enum_or ... ok
+test test_match_literal_char ... ok
+test test_match_literal ... ok
+test test_match_literal_num ... ok
+test test_match_no_whitespace ... ok
+test test_match_option ... ok
+test test_match_option_bool ... ok
+test test_match_option_result_option ... ok
+test test_match_ref_deref ... ok
+test test_match_with_comment ... ok
+test test_match_without_with_keyword ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
++ cd ../
++ git reset --hard 6cbfde04514a90d4e24350c21ef490c40666d820
+HEAD is now at 6cbfde0 Derive Clone for Expr and Target
++ git clean -fd
+Removing .cargo/
+Removing testing/templates/match-enum-or.html

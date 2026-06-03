@@ -1,0 +1,549 @@
+2026-04-17 08:53:54,784 - INFO - Environment image rustb.env.x86_64.chronotope_chrono:latest found for chronotope__chrono-242
+Building instance image rustbench/chronotope__chrono:pr-242 for chronotope__chrono-242
+2026-04-17 09:03:14,803 - INFO - Creating container for chronotope__chrono-242...
+2026-04-17 09:03:14,848 - INFO - Container for chronotope__chrono-242 created: 830b440af6e78f90d860c37ee6e6235122abdbbd17e14e8bfe8681c7ffb2d7d3
+2026-04-17 09:03:15,466 - INFO - Container for chronotope__chrono-242 started: 830b440af6e78f90d860c37ee6e6235122abdbbd17e14e8bfe8681c7ffb2d7d3
+2026-04-17 09:03:15,466 - INFO - Intermediate patch for chronotope__chrono-242 written to logs/run_evaluation/gold_run1/gold/chronotope__chrono-242/patch.diff, now applying to container...
+2026-04-17 09:03:16,332 - INFO - >>>>> Applied Patch:
+Checking patch src/format/mod.rs...
+Checking patch src/format/mod.rs...
+Checking patch src/format/mod.rs...
+Checking patch src/format/mod.rs...
+Checking patch src/format/mod.rs...
+Checking patch src/format/parse.rs...
+Checking patch src/format/parse.rs...
+Checking patch src/format/scan.rs...
+Checking patch src/format/scan.rs...
+Checking patch src/format/strftime.rs...
+Checking patch src/format/strftime.rs...
+Checking patch src/format/strftime.rs...
+Checking patch src/format/strftime.rs...
+Checking patch src/format/strftime.rs...
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/mod.rs cleanly.
+Applied patch src/format/parse.rs cleanly.
+Applied patch src/format/parse.rs cleanly.
+Applied patch src/format/scan.rs cleanly.
+Applied patch src/format/scan.rs cleanly.
+Applied patch src/format/strftime.rs cleanly.
+Applied patch src/format/strftime.rs cleanly.
+Applied patch src/format/strftime.rs cleanly.
+Applied patch src/format/strftime.rs cleanly.
+Applied patch src/format/strftime.rs cleanly.
+
+2026-04-17 09:03:16,386 - INFO - Git diff before:
+diff --git a/src/format/mod.rs b/src/format/mod.rs
+index fc1e902..caecb2b 100644
+--- a/src/format/mod.rs
++++ b/src/format/mod.rs
+@@ -213,29 +213,22 @@ pub enum Fixed {
+ }
+ 
+ /// An opaque type representing fixed-format item types for internal uses only.
++#[derive(Debug, Clone, PartialEq, Eq)]
+ pub struct InternalFixed {
+-    _dummy: Void,
+-}
+-
+-impl Clone for InternalFixed {
+-    fn clone(&self) -> Self {
+-        match self._dummy {}
+-    }
++    val: InternalInternal,
+ }
+ 
+-impl PartialEq for InternalFixed {
+-    fn eq(&self, _other: &InternalFixed) -> bool {
+-        match self._dummy {}
+-    }
+-}
+-
+-impl Eq for InternalFixed {
+-}
+-
+-impl fmt::Debug for InternalFixed {
+-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+-        write!(f, "<InternalFixed>")
+-    }
++#[derive(Debug, Clone, PartialEq, Eq)]
++enum InternalInternal {
++    /// Same as [`TimezoneOffsetColonZ`](#variant.TimezoneOffsetColonZ), but
++    /// allows missing minutes (per [ISO 8601][iso8601]).
++    ///
++    /// # Panics
++    ///
++    /// If you try to use this for printing.
++    ///
++    /// [iso8601]: https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC
++    TimezoneOffsetPermissive,
+ }
+ 
+ /// A single formatting item. This is used for both formatting and parsing.
+@@ -264,6 +257,7 @@ macro_rules! num  { ($x:ident) => (Item::Numeric(Numeric::$x, Pad::None)) }
+ macro_rules! num0 { ($x:ident) => (Item::Numeric(Numeric::$x, Pad::Zero)) }
+ macro_rules! nums { ($x:ident) => (Item::Numeric(Numeric::$x, Pad::Space)) }
+ macro_rules! fix  { ($x:ident) => (Item::Fixed(Fixed::$x)) }
++macro_rules! internal_fix { ($x:ident) => (Item::Fixed(Fixed::Internal(InternalFixed { val: InternalInternal::$x })))}
+ 
+ /// An error from the `parse` function.
+ #[derive(Debug, Clone, PartialEq, Eq, Copy)]
+@@ -491,6 +485,8 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+                         off.map(|&(_, off)| write_local_minus_utc(w, off, false, false)),
+                     TimezoneOffsetZ =>
+                         off.map(|&(_, off)| write_local_minus_utc(w, off, true, false)),
++                    Internal(InternalFixed { val: InternalInternal::TimezoneOffsetPermissive }) =>
++                        panic!("Do not try to write %#z it is undefined"),
+                     RFC2822 => // same to `%a, %e %b %Y %H:%M:%S %z`
+                         if let (Some(d), Some(t), Some(&(_, off))) = (date, time, off) {
+                             let sec = t.second() + t.nanosecond() / 1_000_000_000;
+@@ -511,9 +507,6 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+                         } else {
+                             None
+                         },
+-
+-                    // for the future expansion
+-                    Internal(ref int) => match int._dummy {},
+                 };
+ 
+                 match ret {
+@@ -609,4 +602,3 @@ impl FromStr for Weekday {
+         }
+     }
+ }
+-
+diff --git a/src/format/parse.rs b/src/format/parse.rs
+index 5132bda..a00f30c 100644
+--- a/src/format/parse.rs
++++ b/src/format/parse.rs
+@@ -9,7 +9,7 @@ use std::usize;
+ use Weekday;
+ 
+ use super::scan;
+-use super::{Parsed, ParseResult, Item};
++use super::{Parsed, ParseResult, Item, InternalFixed, InternalInternal};
+ use super::{OUT_OF_RANGE, INVALID, TOO_SHORT, TOO_LONG, BAD_FORMAT};
+ 
+ fn set_weekday_with_num_days_from_sunday(p: &mut Parsed, v: i64) -> ParseResult<()> {
+@@ -328,12 +328,14 @@ pub fn parse<'a, I>(parsed: &mut Parsed, mut s: &str, items: I) -> ParseResult<(
+                                                                              scan::colon_or_space));
+                         try!(parsed.set_offset(i64::from(offset)));
+                     }
++                    Internal(InternalFixed { val: InternalInternal::TimezoneOffsetPermissive }) => {
++                        let offset = try_consume!(scan::timezone_offset_permissive(
++                            s.trim_left(), scan::colon_or_space));
++                        try!(parsed.set_offset(i64::from(offset)));
++                    }
+ 
+                     RFC2822 => try_consume!(parse_rfc2822(parsed, s)),
+                     RFC3339 => try_consume!(parse_rfc3339(parsed, s)),
+-
+-                    // for the future expansion
+-                    Internal(ref int) => match int._dummy {},
+                 }
+             }
+ 
+diff --git a/src/format/scan.rs b/src/format/scan.rs
+index 154369b..4a00641 100644
+--- a/src/format/scan.rs
++++ b/src/format/scan.rs
+@@ -171,8 +171,15 @@ pub fn colon_or_space(s: &str) -> ParseResult<&str> {
+ ///
+ /// The additional `colon` may be used to parse a mandatory or optional `:`
+ /// between hours and minutes, and should return either a new suffix or `Err` when parsing fails.
+-pub fn timezone_offset<F>(mut s: &str, mut colon: F) -> ParseResult<(&str, i32)>
++pub fn timezone_offset<F>(s: &str, consume_colon: F) -> ParseResult<(&str, i32)>
+         where F: FnMut(&str) -> ParseResult<&str> {
++    timezone_offset_internal(s, consume_colon, false)
++}
++
++fn timezone_offset_internal<F>(mut s: &str, mut consume_colon: F, allow_missing_minutes: bool)
++-> ParseResult<(&str, i32)>
++    where F: FnMut(&str) -> ParseResult<&str>
++{
+     fn digits(s: &str) -> ParseResult<(u8, u8)> {
+         let b = s.as_bytes();
+         if b.len() < 2 {
+@@ -197,29 +204,54 @@ pub fn timezone_offset<F>(mut s: &str, mut colon: F) -> ParseResult<(&str, i32)>
+     s = &s[2..];
+ 
+     // colons (and possibly other separators)
+-    s = try!(colon(s));
++    s = try!(consume_colon(s));
+ 
+     // minutes (00--59)
+-    let minutes = match try!(digits(s)) {
+-        (m1 @ b'0'...b'5', m2 @ b'0'...b'9') => i32::from((m1 - b'0') * 10 + (m2 - b'0')),
+-        (b'6'...b'9', b'0'...b'9') => return Err(OUT_OF_RANGE),
+-        _ => return Err(INVALID),
++    // if the next two items are digits then we have to add minutes
++    let minutes = if let Ok(ds) = digits(s) {
++        match ds {
++            (m1 @ b'0'...b'5', m2 @ b'0'...b'9') => i32::from((m1 - b'0') * 10 + (m2 - b'0')),
++            (b'6'...b'9', b'0'...b'9') => return Err(OUT_OF_RANGE),
++            _ => return Err(INVALID),
++        }
++    } else if allow_missing_minutes {
++        0
++    } else {
++        return Err(TOO_SHORT);
++    };
++    s = match s.len() {
++        len if len >= 2 => &s[2..],
++        len if len == 0 => s,
++        _ => return Err(TOO_SHORT),
+     };
+-    s = &s[2..];
+ 
+     let seconds = hours * 3600 + minutes * 60;
+     Ok((s, if negative {-seconds} else {seconds}))
+ }
+ 
+ /// Same to `timezone_offset` but also allows for `z`/`Z` which is same to `+00:00`.
+-pub fn timezone_offset_zulu<F>(s: &str, colon: F) -> ParseResult<(&str, i32)>
+-        where F: FnMut(&str) -> ParseResult<&str> {
++pub fn timezone_offset_zulu<F>(s: &str, colon: F)
++-> ParseResult<(&str, i32)>
++    where F: FnMut(&str) -> ParseResult<&str>
++{
+     match s.as_bytes().first() {
+         Some(&b'z') | Some(&b'Z') => Ok((&s[1..], 0)),
+         _ => timezone_offset(s, colon),
+     }
+ }
+ 
++/// Same to `timezone_offset` but also allows for `z`/`Z` which is same to
++/// `+00:00`, and allows missing minutes entirely.
++pub fn timezone_offset_permissive<F>(s: &str, colon: F)
++-> ParseResult<(&str, i32)>
++    where F: FnMut(&str) -> ParseResult<&str>
++{
++    match s.as_bytes().first() {
++        Some(&b'z') | Some(&b'Z') => Ok((&s[1..], 0)),
++        _ => timezone_offset_internal(s, colon, true),
++    }
++}
++
+ /// Same to `timezone_offset` but also allows for RFC 2822 legacy timezones.
+ /// May return `None` which indicates an insufficient offset data (i.e. `-0000`).
+ pub fn timezone_offset_2822(s: &str) -> ParseResult<(&str, Option<i32>)> {
+diff --git a/src/format/strftime.rs b/src/format/strftime.rs
+index 86cf47b..5357b9b 100644
+--- a/src/format/strftime.rs
++++ b/src/format/strftime.rs
+@@ -68,6 +68,7 @@ The following specifiers are available both to formatting and parsing.
+ | `%Z`  | `ACST`   | *Formatting only:* Local time zone name.                                   |
+ | `%z`  | `+0930`  | Offset from the local time to UTC (with UTC being `+0000`).                |
+ | `%:z` | `+09:30` | Same to `%z` but with a colon.                                             |
++| `%#z` | `+09`    | *Parsing only:* Same to `%z` but allows minutes to be missing or present.  |
+ |       |          |                                                                            |
+ |       |          | **DATE & TIME SPECIFIERS:**                                                |
+ |`%c`|`Sun Jul  8 00:34:60 2001`|`ctime` date & time format. Same to `%a %b %e %T %Y` sans `\n`.|
+@@ -146,7 +147,7 @@ Notes:
+ 
+ */
+ 
+-use super::{Item, Numeric, Fixed, Pad};
++use super::{Item, Numeric, Fixed, InternalFixed, InternalInternal, Pad};
+ 
+ /// Parsing iterator for `strftime`-like format strings.
+ #[derive(Clone, Debug)]
+@@ -167,6 +168,8 @@ impl<'a> StrftimeItems<'a> {
+     }
+ }
+ 
++const HAVE_ALTERNATES: &'static str = "z";
++
+ impl<'a> Iterator for StrftimeItems<'a> {
+     type Item = Item<'a>;
+ 
+@@ -205,7 +208,11 @@ impl<'a> Iterator for StrftimeItems<'a> {
+                     '_' => Some(Pad::Space),
+                     _ => None,
+                 };
+-                let spec = if pad_override.is_some() { next!() } else { spec };
++                let is_alternate = spec == '#';
++                let spec = if pad_override.is_some() || is_alternate { next!() } else { spec };
++                if is_alternate && !HAVE_ALTERNATES.contains(spec) {
++                    return Some(Item::Error);
++                }
+ 
+                 macro_rules! recons {
+                     [$head:expr, $($tail:expr),+] => ({
+@@ -262,7 +269,11 @@ impl<'a> Iterator for StrftimeItems<'a> {
+                     'x' => recons![num0!(Month), lit!("/"), num0!(Day), lit!("/"),
+                                    num0!(YearMod100)],
+                     'y' => num0!(YearMod100),
+-                    'z' => fix!(TimezoneOffset),
++                    'z' => if is_alternate {
++                        internal_fix!(TimezoneOffsetPermissive)
++                    } else {
++                        fix!(TimezoneOffset)
++                    },
+                     '+' => fix!(RFC3339),
+                     ':' => match next!() {
+                         'z' => fix!(TimezoneOffsetColon),
+2026-04-17 09:03:16,386 - INFO - Eval script for chronotope__chrono-242 written to logs/run_evaluation/gold_run1/gold/chronotope__chrono-242/eval.sh; copying to container...
+2026-04-17 09:03:50,044 - INFO - Test runtime: 33.51 seconds
+2026-04-17 09:03:50,044 - INFO - Test output for chronotope__chrono-242 written to logs/run_evaluation/gold_run1/gold/chronotope__chrono-242/test_output.txt
+2026-04-17 09:03:50,092 - INFO - Git diff after:
+diff --git a/src/format/mod.rs b/src/format/mod.rs
+index fc1e902..caecb2b 100644
+--- a/src/format/mod.rs
++++ b/src/format/mod.rs
+@@ -213,29 +213,22 @@ pub enum Fixed {
+ }
+ 
+ /// An opaque type representing fixed-format item types for internal uses only.
++#[derive(Debug, Clone, PartialEq, Eq)]
+ pub struct InternalFixed {
+-    _dummy: Void,
+-}
+-
+-impl Clone for InternalFixed {
+-    fn clone(&self) -> Self {
+-        match self._dummy {}
+-    }
++    val: InternalInternal,
+ }
+ 
+-impl PartialEq for InternalFixed {
+-    fn eq(&self, _other: &InternalFixed) -> bool {
+-        match self._dummy {}
+-    }
+-}
+-
+-impl Eq for InternalFixed {
+-}
+-
+-impl fmt::Debug for InternalFixed {
+-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+-        write!(f, "<InternalFixed>")
+-    }
++#[derive(Debug, Clone, PartialEq, Eq)]
++enum InternalInternal {
++    /// Same as [`TimezoneOffsetColonZ`](#variant.TimezoneOffsetColonZ), but
++    /// allows missing minutes (per [ISO 8601][iso8601]).
++    ///
++    /// # Panics
++    ///
++    /// If you try to use this for printing.
++    ///
++    /// [iso8601]: https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC
++    TimezoneOffsetPermissive,
+ }
+ 
+ /// A single formatting item. This is used for both formatting and parsing.
+@@ -264,6 +257,7 @@ macro_rules! num  { ($x:ident) => (Item::Numeric(Numeric::$x, Pad::None)) }
+ macro_rules! num0 { ($x:ident) => (Item::Numeric(Numeric::$x, Pad::Zero)) }
+ macro_rules! nums { ($x:ident) => (Item::Numeric(Numeric::$x, Pad::Space)) }
+ macro_rules! fix  { ($x:ident) => (Item::Fixed(Fixed::$x)) }
++macro_rules! internal_fix { ($x:ident) => (Item::Fixed(Fixed::Internal(InternalFixed { val: InternalInternal::$x })))}
+ 
+ /// An error from the `parse` function.
+ #[derive(Debug, Clone, PartialEq, Eq, Copy)]
+@@ -491,6 +485,8 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+                         off.map(|&(_, off)| write_local_minus_utc(w, off, false, false)),
+                     TimezoneOffsetZ =>
+                         off.map(|&(_, off)| write_local_minus_utc(w, off, true, false)),
++                    Internal(InternalFixed { val: InternalInternal::TimezoneOffsetPermissive }) =>
++                        panic!("Do not try to write %#z it is undefined"),
+                     RFC2822 => // same to `%a, %e %b %Y %H:%M:%S %z`
+                         if let (Some(d), Some(t), Some(&(_, off))) = (date, time, off) {
+                             let sec = t.second() + t.nanosecond() / 1_000_000_000;
+@@ -511,9 +507,6 @@ pub fn format<'a, I>(w: &mut fmt::Formatter, date: Option<&NaiveDate>, time: Opt
+                         } else {
+                             None
+                         },
+-
+-                    // for the future expansion
+-                    Internal(ref int) => match int._dummy {},
+                 };
+ 
+                 match ret {
+@@ -609,4 +602,3 @@ impl FromStr for Weekday {
+         }
+     }
+ }
+-
+diff --git a/src/format/parse.rs b/src/format/parse.rs
+index 5132bda..a00f30c 100644
+--- a/src/format/parse.rs
++++ b/src/format/parse.rs
+@@ -9,7 +9,7 @@ use std::usize;
+ use Weekday;
+ 
+ use super::scan;
+-use super::{Parsed, ParseResult, Item};
++use super::{Parsed, ParseResult, Item, InternalFixed, InternalInternal};
+ use super::{OUT_OF_RANGE, INVALID, TOO_SHORT, TOO_LONG, BAD_FORMAT};
+ 
+ fn set_weekday_with_num_days_from_sunday(p: &mut Parsed, v: i64) -> ParseResult<()> {
+@@ -328,12 +328,14 @@ pub fn parse<'a, I>(parsed: &mut Parsed, mut s: &str, items: I) -> ParseResult<(
+                                                                              scan::colon_or_space));
+                         try!(parsed.set_offset(i64::from(offset)));
+                     }
++                    Internal(InternalFixed { val: InternalInternal::TimezoneOffsetPermissive }) => {
++                        let offset = try_consume!(scan::timezone_offset_permissive(
++                            s.trim_left(), scan::colon_or_space));
++                        try!(parsed.set_offset(i64::from(offset)));
++                    }
+ 
+                     RFC2822 => try_consume!(parse_rfc2822(parsed, s)),
+                     RFC3339 => try_consume!(parse_rfc3339(parsed, s)),
+-
+-                    // for the future expansion
+-                    Internal(ref int) => match int._dummy {},
+                 }
+             }
+ 
+diff --git a/src/format/scan.rs b/src/format/scan.rs
+index 154369b..4a00641 100644
+--- a/src/format/scan.rs
++++ b/src/format/scan.rs
+@@ -171,8 +171,15 @@ pub fn colon_or_space(s: &str) -> ParseResult<&str> {
+ ///
+ /// The additional `colon` may be used to parse a mandatory or optional `:`
+ /// between hours and minutes, and should return either a new suffix or `Err` when parsing fails.
+-pub fn timezone_offset<F>(mut s: &str, mut colon: F) -> ParseResult<(&str, i32)>
++pub fn timezone_offset<F>(s: &str, consume_colon: F) -> ParseResult<(&str, i32)>
+         where F: FnMut(&str) -> ParseResult<&str> {
++    timezone_offset_internal(s, consume_colon, false)
++}
++
++fn timezone_offset_internal<F>(mut s: &str, mut consume_colon: F, allow_missing_minutes: bool)
++-> ParseResult<(&str, i32)>
++    where F: FnMut(&str) -> ParseResult<&str>
++{
+     fn digits(s: &str) -> ParseResult<(u8, u8)> {
+         let b = s.as_bytes();
+         if b.len() < 2 {
+@@ -197,29 +204,54 @@ pub fn timezone_offset<F>(mut s: &str, mut colon: F) -> ParseResult<(&str, i32)>
+     s = &s[2..];
+ 
+     // colons (and possibly other separators)
+-    s = try!(colon(s));
++    s = try!(consume_colon(s));
+ 
+     // minutes (00--59)
+-    let minutes = match try!(digits(s)) {
+-        (m1 @ b'0'...b'5', m2 @ b'0'...b'9') => i32::from((m1 - b'0') * 10 + (m2 - b'0')),
+-        (b'6'...b'9', b'0'...b'9') => return Err(OUT_OF_RANGE),
+-        _ => return Err(INVALID),
++    // if the next two items are digits then we have to add minutes
++    let minutes = if let Ok(ds) = digits(s) {
++        match ds {
++            (m1 @ b'0'...b'5', m2 @ b'0'...b'9') => i32::from((m1 - b'0') * 10 + (m2 - b'0')),
++            (b'6'...b'9', b'0'...b'9') => return Err(OUT_OF_RANGE),
++            _ => return Err(INVALID),
++        }
++    } else if allow_missing_minutes {
++        0
++    } else {
++        return Err(TOO_SHORT);
++    };
++    s = match s.len() {
++        len if len >= 2 => &s[2..],
++        len if len == 0 => s,
++        _ => return Err(TOO_SHORT),
+     };
+-    s = &s[2..];
+ 
+     let seconds = hours * 3600 + minutes * 60;
+     Ok((s, if negative {-seconds} else {seconds}))
+ }
+ 
+ /// Same to `timezone_offset` but also allows for `z`/`Z` which is same to `+00:00`.
+-pub fn timezone_offset_zulu<F>(s: &str, colon: F) -> ParseResult<(&str, i32)>
+-        where F: FnMut(&str) -> ParseResult<&str> {
++pub fn timezone_offset_zulu<F>(s: &str, colon: F)
++-> ParseResult<(&str, i32)>
++    where F: FnMut(&str) -> ParseResult<&str>
++{
+     match s.as_bytes().first() {
+         Some(&b'z') | Some(&b'Z') => Ok((&s[1..], 0)),
+         _ => timezone_offset(s, colon),
+     }
+ }
+ 
++/// Same to `timezone_offset` but also allows for `z`/`Z` which is same to
++/// `+00:00`, and allows missing minutes entirely.
++pub fn timezone_offset_permissive<F>(s: &str, colon: F)
++-> ParseResult<(&str, i32)>
++    where F: FnMut(&str) -> ParseResult<&str>
++{
++    match s.as_bytes().first() {
++        Some(&b'z') | Some(&b'Z') => Ok((&s[1..], 0)),
++        _ => timezone_offset_internal(s, colon, true),
++    }
++}
++
+ /// Same to `timezone_offset` but also allows for RFC 2822 legacy timezones.
+ /// May return `None` which indicates an insufficient offset data (i.e. `-0000`).
+ pub fn timezone_offset_2822(s: &str) -> ParseResult<(&str, Option<i32>)> {
+diff --git a/src/format/strftime.rs b/src/format/strftime.rs
+index 86cf47b..5357b9b 100644
+--- a/src/format/strftime.rs
++++ b/src/format/strftime.rs
+@@ -68,6 +68,7 @@ The following specifiers are available both to formatting and parsing.
+ | `%Z`  | `ACST`   | *Formatting only:* Local time zone name.                                   |
+ | `%z`  | `+0930`  | Offset from the local time to UTC (with UTC being `+0000`).                |
+ | `%:z` | `+09:30` | Same to `%z` but with a colon.                                             |
++| `%#z` | `+09`    | *Parsing only:* Same to `%z` but allows minutes to be missing or present.  |
+ |       |          |                                                                            |
+ |       |          | **DATE & TIME SPECIFIERS:**                                                |
+ |`%c`|`Sun Jul  8 00:34:60 2001`|`ctime` date & time format. Same to `%a %b %e %T %Y` sans `\n`.|
+@@ -146,7 +147,7 @@ Notes:
+ 
+ */
+ 
+-use super::{Item, Numeric, Fixed, Pad};
++use super::{Item, Numeric, Fixed, InternalFixed, InternalInternal, Pad};
+ 
+ /// Parsing iterator for `strftime`-like format strings.
+ #[derive(Clone, Debug)]
+@@ -167,6 +168,8 @@ impl<'a> StrftimeItems<'a> {
+     }
+ }
+ 
++const HAVE_ALTERNATES: &'static str = "z";
++
+ impl<'a> Iterator for StrftimeItems<'a> {
+     type Item = Item<'a>;
+ 
+@@ -205,7 +208,11 @@ impl<'a> Iterator for StrftimeItems<'a> {
+                     '_' => Some(Pad::Space),
+                     _ => None,
+                 };
+-                let spec = if pad_override.is_some() { next!() } else { spec };
++                let is_alternate = spec == '#';
++                let spec = if pad_override.is_some() || is_alternate { next!() } else { spec };
++                if is_alternate && !HAVE_ALTERNATES.contains(spec) {
++                    return Some(Item::Error);
++                }
+ 
+                 macro_rules! recons {
+                     [$head:expr, $($tail:expr),+] => ({
+@@ -262,7 +269,11 @@ impl<'a> Iterator for StrftimeItems<'a> {
+                     'x' => recons![num0!(Month), lit!("/"), num0!(Day), lit!("/"),
+                                    num0!(YearMod100)],
+                     'y' => num0!(YearMod100),
+-                    'z' => fix!(TimezoneOffset),
++                    'z' => if is_alternate {
++                        internal_fix!(TimezoneOffsetPermissive)
++                    } else {
++                        fix!(TimezoneOffset)
++                    },
+                     '+' => fix!(RFC3339),
+                     ':' => match next!() {
+                         'z' => fix!(TimezoneOffsetColon),
+2026-04-17 09:03:50,092 - INFO - Grading answer for chronotope__chrono-242...
+2026-04-17 09:03:50,092 - INFO - report: {'chronotope__chrono-242': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'tests_status': {'FAIL_TO_PASS': {'success': ['datetime::serde::test_serde_bincode', 'datetime::rustc_serialize::test_encodable', 'datetime::tests::test_datetime_date_and_time', 'datetime::rustc_serialize::test_decodable_timestamps', 'datetime::serde::test_serde_deserialize', 'datetime::rustc_serialize::test_decodable', 'datetime::tests::test_datetime_is_copy', 'datetime::tests::test_datetime_format_with_local', 'datetime::serde::test_serde_serialize', 'datetime::tests::test_datetime_offset', 'datetime::tests::test_datetime_from_str', 'datetime::tests::test_datetime_with_timezone', 'datetime::tests::test_from_system_time', 'datetime::tests::test_datetime_parse_from_str', 'datetime::tests::test_datetime_is_send', 'datetime::tests::test_rfc3339_opts', 'datetime::tests::test_subsecond_part', 'div::tests::test_div_mod_floor', 'datetime::tests::test_datetime_rfc2822_and_rfc3339', 'div::tests::test_mod_floor', 'datetime::tests::test_rfc3339_opts_nonexhaustive', 'format::parsed::tests::test_parsed_set_fields', 'format::parsed::tests::test_parsed_to_datetime', 'format::parsed::tests::test_parsed_to_datetime_with_timezone', 'format::parse::test_rfc2822', 'format::parse::parse_rfc850', 'format::parsed::tests::test_parsed_to_naive_datetime_with_offset', 'naive::date::rustc_serialize::test_encodable', 'format::parse::test_rfc3339', 'format::parsed::tests::test_parsed_to_naive_time', 'naive::date::tests::test_date_addassignment', 'naive::date::serde::test_serde_bincode', 'naive::date::rustc_serialize::test_decodable', 'naive::date::test_date_bounds', 'format::strftime::test_strftime_items', 'naive::date::tests::test_date_fields', 'naive::date::tests::test_date_add', 'naive::date::tests::test_date_from_isoywd', 'naive::date::tests::test_date_fmt', 'naive::date::tests::test_date_from_ymd', 'naive::date::tests::test_date_from_yo', 'format::parsed::tests::test_parsed_to_naive_date', 'naive::date::serde::test_serde_deserialize', 'naive::date::tests::test_date_format', 'naive::date::tests::test_date_pred', 'naive::date::serde::test_serde_serialize', 'naive::date::tests::test_date_subassignment', 'naive::date::tests::test_date_from_str', 'naive::date::tests::test_date_sub', 'format::strftime::test_strftime_docs', 'naive::date::tests::test_date_succ', 'naive::date::tests::test_date_parse_from_str', 'naive::date::tests::test_date_with_fields', 'naive::datetime::rustc_serialize::test_decodable_timestamps', 'naive::date::tests::test_date_weekday', 'naive::datetime::serde::test_serde_bincode', 'naive::datetime::serde::test_serde_serialize', 'format::parse::test_parse', 'naive::datetime::tests::test_datetime_add', 'naive::datetime::rustc_serialize::test_encodable', 'naive::datetime::tests::test_datetime_add_sub_invariant', 'naive::datetime::tests::test_datetime_addassignment', 'naive::datetime::tests::test_datetime_from_timestamp', 'naive::datetime::tests::test_datetime_from_str', 'naive::datetime::tests::test_datetime_sub', 'naive::datetime::tests::test_datetime_subassignment', 'naive::datetime::tests::test_datetime_timestamp', 'naive::datetime::tests::test_datetime_format', 'naive::datetime::rustc_serialize::test_decodable', 'naive::datetime::tests::test_datetime_parse_from_str', 'naive::datetime::serde::test_serde_deserialize', 'naive::internals::tests::test_of_isoweekdate_raw', 'naive::internals::tests::test_of_fields', 'naive::internals::tests::test_year_flags_ndays_from_year', 'naive::internals::tests::test_year_flags_nisoweeks', 'naive::isoweek::tests::test_iso_week_extremes', 'naive::internals::tests::test_mdf_fields', 'naive::time::rustc_serialize::test_encodable', 'naive::time::serde::test_serde_bincode', 'naive::time::tests::test_time_add', 'naive::time::tests::test_time_addassignment', 'naive::time::serde::test_serde_serialize', 'naive::time::serde::test_serde_deserialize', 'naive::time::tests::test_date_from_str', 'naive::internals::tests::test_of', 'naive::time::rustc_serialize::test_decodable', 'naive::time::tests::test_time_fmt', 'naive::internals::tests::test_of_weekday', 'naive::time::tests::test_time_from_hms_milli', 'naive::time::tests::test_time_from_hms_micro', 'naive::time::tests::test_time_format', 'naive::time::tests::test_time_hms', 'naive::time::tests::test_time_overflowing_add', 'naive::time::tests::test_time_parse_from_str', 'naive::time::tests::test_time_sub', 'naive::time::tests::test_time_subassignment', 'naive::internals::tests::test_mdf_to_of', 'offset::fixed::tests::test_date_extreme_offset', 'naive::internals::tests::test_of_to_mdf_to_of', 'offset::local::tests::test_leap_second', 'offset::local::tests::test_local_date_sanity_check', 'naive::internals::tests::test_mdf_to_of_to_mdf', 'naive::internals::tests::test_of_to_mdf', 'round::tests::test_round_leap_nanos', 'round::tests::test_round', 'round::tests::test_trunc', 'round::tests::test_trunc_leap_nanos', 'weekday_serde::test_serde_serialize', 'weekday_serde::test_serde_deserialize', 'naive::internals::tests::test_of_with_fields', 'naive::date::tests::test_date_from_num_days_from_ce', 'naive::date::tests::test_date_num_days_from_ce', 'naive::internals::tests::test_mdf_with_fields', 'naive::internals::tests::test_mdf_valid', 'naive::date::tests::test_date_from_isoywd_and_iso_week', 'test_readme_doomsday', 'src/lib.rs -  (line 52)', 'src/lib.rs -  (line 59)', 'src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 447)', 'src/format/mod.rs - format::Weekday (line 590)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_micro_opt (line 609)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_milli_opt (line 558)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_nano_opt (line 660)', 'src/lib.rs -  (line 122)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_opt (line 510)', 'src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 438)', 'src/naive/date.rs - naive::date::NaiveDate::from_ymd_opt (line 172)', 'src/naive/date.rs - naive::date::NaiveDate::from_yo_opt (line 220)', 'src/datetime.rs - datetime::DateTime<Tz>::from_utc (line 69)', 'src/naive/date.rs - naive::date::NaiveDate::ordinal0 (line 1115)', 'src/naive/date.rs - naive::date::NaiveDate::from_num_days_from_ce (line 360)', 'src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 429)', 'src/naive/date.rs - naive::date::NaiveDate::parse_from_str (line 416)', 'src/naive/date.rs - naive::date::NaiveDate::month0 (line 1002)', 'src/naive/date.rs - naive::date::NaiveDate::pred (line 753)', 'src/naive/date.rs - naive::date::NaiveDate::from_num_days_from_ce_opt (line 388)', 'src/naive/date.rs - naive::date::NaiveDate::ordinal (line 1076)', 'src/naive/date.rs - naive::date::NaiveDate::with_day (line 1224)', 'src/naive/date.rs - naive::date::NaiveDate::day0 (line 1059)', 'src/naive/date.rs - naive::date::NaiveDate::and_time (line 462)', 'src/naive/date.rs - naive::date::NaiveDate (line 1490)', 'src/naive/date.rs - naive::date::NaiveDate::weekday (line 1130)', 'src/naive/date.rs - naive::date::NaiveDate::day (line 1019)', 'src/naive/date.rs - naive::date::NaiveDate::succ_opt (line 734)', 'src/naive/date.rs - naive::date::NaiveDate::month (line 985)', 'src/naive/date.rs - naive::date::NaiveDate::with_month0 (line 1205)', 'src/datetime.rs - datetime::DateTime<FixedOffset>::parse_from_str (line 279)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms (line 486)', 'src/naive/date.rs - naive::date::NaiveDate (line 1441)', 'src/datetime.rs - datetime::DateTime<Tz>::timestamp_nanos (line 135)', 'src/datetime.rs - datetime::DateTime<Tz>::timestamp_millis (line 111)', 'src/naive/date.rs - naive::date::NaiveDate::succ (line 716)', 'src/naive/date.rs - naive::date::NaiveDate::with_ordinal (line 1262)', 'src/naive/date.rs - naive::date::NaiveDate::pred_opt (line 771)', 'src/naive/date.rs - naive::date::NaiveDate::checked_sub_signed (line 826)', 'src/naive/date.rs - naive::date::NaiveDate::ordinal (line 1087)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_milli (line 533)', 'src/naive/date.rs - naive::date::NaiveDate::with_day0 (line 1243)', 'src/naive/date.rs - naive::date::NaiveDate::with_ordinal0 (line 1286)', 'src/naive/date.rs - naive::date::NaiveDate::with_month (line 1186)', 'src/naive/date.rs - naive::date::NaiveDate::from_isoywd_opt (line 271)', 'src/naive/date.rs - naive::date::NaiveDate (line 1399)', 'src/naive/date.rs - naive::date::NaiveDate::from_isoywd_opt (line 288)', 'src/naive/date.rs - naive::date::NaiveDate::signed_duration_since (line 864)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_nano (line 635)', 'src/naive/date.rs - naive::date::NaiveDate (line 1466)', 'src/naive/date.rs - naive::date::NaiveDate (line 1476)', 'src/naive/date.rs - naive::date::NaiveDate::day (line 1030)', 'src/naive/date.rs - naive::date::NaiveDate::checked_add_signed (line 790)', 'src/naive/date.rs - naive::date::NaiveDate::and_hms_micro (line 584)', 'src/naive/date.rs - naive::date::NaiveDate (line 1355)', 'src/naive/date.rs - naive::date::NaiveDate (line 1431)', 'src/naive/date.rs - naive::date::NaiveDate (line 1313)', 'src/naive/date.rs - naive::date::NaiveDate::from_yo (line 196)', 'src/naive/date.rs - naive::date::NaiveDate::from_ymd (line 148)', 'src/naive/date.rs - naive::date::NaiveDate::from_isoywd (line 246)', 'src/naive/date.rs - naive::date::NaiveDate::from_num_days_from_ce (line 340)', 'src/lib.rs -  (line 134)', 'src/lib.rs -  (line 261)', 'src/naive/date.rs - naive::date::NaiveDate::with_year (line 1163)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 31)', 'src/naive/date.rs - naive::date::NaiveDate::format (line 951)', 'src/naive/date.rs - naive::date::NaiveDate::format_with_items (line 912)', 'src/naive/date.rs - naive::date::NaiveDate::year (line 968)', 'src/naive/date.rs - naive::date::NaiveDate::format_with_items (line 900)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 200)', 'src/naive/date.rs - naive::date::NaiveDate::with_year (line 1152)', 'src/naive/date.rs - naive::date::NaiveDate::format (line 941)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::from_timestamp_opt (line 122)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::hour (line 995)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 42)', 'src/datetime.rs - datetime::serde::ts_seconds::serialize (line 921)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::nanosecond (line 1049)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::day0 (line 753)', 'src/datetime.rs - datetime::serde::ts_nanoseconds::deserialize (line 1044)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::date (line 217)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::month0 (line 715)', 'src/lib.rs -  (line 302)', 'src/datetime.rs - datetime::serde::ts_nanoseconds::serialize (line 1078)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::ordinal0 (line 791)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_add_signed (line 422)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1408)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1386)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 165)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::minute (line 1012)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1417)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1323)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::day (line 734)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 152)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1377)', 'src/datetime.rs - datetime::DateTime<Tz>::to_rfc3339_opts (line 315)', 'src/datetime.rs - datetime::serde::ts_seconds::deserialize (line 887)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::weekday (line 808)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::ordinal (line 772)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_subsec_nanos (line 369)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::time (line 232)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_add_signed (line 434)', 'src/lib.rs -  (line 323)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::second (line 1029)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_add_signed (line 394)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1278)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_millis (line 278)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::month (line 696)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 186)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::parse_from_str (line 176)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::new (line 63)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_nanos (line 305)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1343)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp (line 250)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_subsec_micros (line 348)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_day (line 898)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1252)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_minute (line 1091)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1433)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_day0 (line 919)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::timestamp_subsec_millis (line 327)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::from_timestamp (line 94)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_sub_signed (line 480)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1206)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_month (line 854)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_sub_signed (line 508)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime (line 1180)', 'src/lib.rs -  (line 220)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::signed_duration_since (line 562)', 'src/lib.rs -  (line 168)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_nanosecond (line 1140)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::signed_duration_since (line 583)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_hour (line 1069)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek::week0 (line 95)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_month0 (line 876)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::checked_sub_signed (line 520)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek::week (line 78)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_nano_opt (line 363)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::year (line 677)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_micro_opt (line 312)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_opt (line 213)', 'src/naive/time.rs - naive::time::NaiveTime::from_num_seconds_from_midnight_opt (line 415)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_milli_opt (line 261)', 'src/naive/time.rs - naive::time::NaiveTime (line 1022)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 488)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_ordinal0 (line 968)', 'src/naive/time.rs - naive::time::NaiveTime (line 1270)', 'src/naive/time.rs - naive::time::NaiveTime (line 60)', 'src/naive/time.rs - naive::time::NaiveTime::hour (line 784)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_second (line 1115)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_ordinal (line 940)', 'src/naive/time.rs - naive::time::NaiveTime::minute (line 799)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::with_year (line 833)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_nano (line 340)', 'src/naive/time.rs - naive::time::NaiveTime (line 1035)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 451)', 'src/naive/time.rs - naive::time::NaiveTime (line 1173)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::format_with_items (line 619)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek (line 123)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek::year (line 51)', 'src/naive/time.rs - naive::time::NaiveTime::nanosecond (line 842)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::format_with_items (line 607)', 'src/naive/time.rs - naive::time::NaiveTime::from_num_seconds_from_midnight (line 392)', 'src/naive/time.rs - naive::time::NaiveTime::num_seconds_from_midnight (line 964)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_milli (line 238)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek::year (line 61)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::format (line 648)', 'src/naive/time.rs - naive::time::NaiveTime (line 1220)', 'src/naive/time.rs - naive::time::NaiveTime (line 1077)', 'src/naive/time.rs - naive::time::NaiveTime::overflowing_sub_signed (line 592)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms_micro (line 289)', 'src/naive/time.rs - naive::time::NaiveTime::second (line 814)', 'src/naive/time.rs - naive::time::NaiveTime::overflowing_add_signed (line 506)', 'src/naive/time.rs - naive::time::NaiveTime::from_hms (line 190)', 'src/naive/datetime.rs - naive::datetime::NaiveDateTime::format (line 658)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 462)', 'src/naive/time.rs - naive::time::NaiveTime (line 1002)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 438)', 'src/naive/time.rs - naive::time::NaiveTime (line 147)', 'src/naive/time.rs - naive::time::NaiveTime (line 1259)', 'src/naive/time.rs - naive::time::NaiveTime::parse_from_str (line 472)', 'src/naive/time.rs - naive::time::NaiveTime::with_minute (line 890)', 'src/naive/time.rs - naive::time::NaiveTime (line 1283)', 'src/naive/isoweek.rs - naive::isoweek::IsoWeek (line 113)', 'src/naive/time.rs - naive::time::NaiveTime (line 1107)', 'src/naive/time.rs - naive::time::NaiveTime::with_nanosecond (line 948)', 'src/naive/time.rs - naive::time::NaiveTime (line 1095)', 'src/naive/time.rs - naive::time::NaiveTime::signed_duration_since (line 655)', 'src/datetime.rs - datetime::serde::ts_nanoseconds (line 1001)', 'src/naive/time.rs - naive::time::NaiveTime (line 1209)', 'src/datetime.rs - datetime::serde::ts_seconds (line 844)', 'src/naive/time.rs - naive::time::NaiveTime::with_second (line 912)', 'src/naive/time.rs - naive::time::NaiveTime::with_hour (line 870)', 'src/naive/time.rs - naive::time::NaiveTime (line 161)', 'src/naive/time.rs - naive::time::NaiveTime::with_nanosecond (line 934)', 'src/offset/local.rs - offset::local::Local (line 74)', 'src/naive/time.rs - naive::time::NaiveTime::signed_duration_since (line 625)', 'src/naive/time.rs - naive::time::NaiveTime::format_with_items (line 707)', 'src/offset/mod.rs - offset::TimeZone::timestamp (line 291)', 'src/naive/time.rs - naive::time::NaiveTime (line 1151)', 'src/offset/mod.rs - offset::TimeZone::isoywd (line 257)', 'src/naive/time.rs - naive::time::NaiveTime::format (line 759)', 'src/offset/mod.rs - offset::TimeZone::ymd_opt (line 199)', 'src/naive/time.rs - naive::time::NaiveTime::format_with_items (line 719)', 'src/naive/datetime.rs - naive::datetime::serde::ts_seconds::serialize (line 1778)', 'src/naive/time.rs - naive::time::NaiveTime::nanosecond (line 853)', 'src/round.rs - round::SubsecRound::round_subsecs (line 20)', 'src/round.rs - round::SubsecRound::trunc_subsecs (line 32)', 'src/offset/utc.rs - offset::utc::Utc (line 24)', 'src/offset/mod.rs - offset::TimeZone::ymd (line 180)', 'src/naive/time.rs - naive::time::NaiveTime::format (line 748)', 'src/offset/mod.rs - offset::TimeZone::yo (line 222)', 'src/naive/datetime.rs - naive::datetime::serde::ts_seconds::deserialize (line 1742)', 'src/offset/fixed.rs - offset::fixed::FixedOffset::west (line 65)', 'src/offset/fixed.rs - offset::fixed::FixedOffset::east (line 35)', 'src/naive/time.rs - naive::time::NaiveTime::second (line 825)', 'src/naive/datetime.rs - naive::datetime::serde::ts_seconds (line 1699)'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for chronotope__chrono-242: resolved: True
+2026-04-17 09:03:50,093 - INFO - Attempting to stop container rustb.eval.chronotope__chrono-242.gold_run1...
+2026-04-17 09:04:05,457 - INFO - Attempting to remove container rustb.eval.chronotope__chrono-242.gold_run1...
+2026-04-17 09:04:05,474 - INFO - Container rustb.eval.chronotope__chrono-242.gold_run1 removed.
+2026-04-17 09:04:05,474 - INFO - Attempting to remove image rustbench/chronotope__chrono:pr-242...
+2026-04-17 09:04:06,807 - INFO - Image rustbench/chronotope__chrono:pr-242 removed.

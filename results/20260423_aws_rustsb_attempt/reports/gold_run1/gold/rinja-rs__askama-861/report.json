@@ -1,0 +1,48 @@
+{
+    "rinja-rs__askama-861": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "tests::fuzzed_unicode_slice"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [
+                    "tests::change_delimiters_parse_filter",
+                    "tests::test_missing_space_after_kw",
+                    "tests::test_invalid_block - should panic",
+                    "tests::test_parse_comments",
+                    "tests::test_associativity",
+                    "tests::test_parse_const",
+                    "tests::test_parse_numbers",
+                    "tests::test_odd_calls",
+                    "tests::test_parse_root_path",
+                    "tests::test_parse_filter",
+                    "tests::test_parse_array",
+                    "tests::test_parse_path_call",
+                    "tests::test_parse_path",
+                    "tests::test_parse_var",
+                    "tests::test_ws_splitter",
+                    "tests::test_parse_var_call",
+                    "tests::test_rust_macro",
+                    "tests::test_precedence",
+                    "tests::test_parse_tuple"
+                ],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}

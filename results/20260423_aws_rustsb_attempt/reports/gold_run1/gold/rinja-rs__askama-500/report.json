@@ -1,0 +1,36 @@
+{
+    "rinja-rs__askama-500": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+            "FAIL_TO_PASS": {
+                "success": [
+                    "test_for",
+                    "test_for_array",
+                    "test_for_method_call",
+                    "test_for_index",
+                    "test_for_range",
+                    "test_for_path_call",
+                    "test_for_zip_ranges",
+                    "test_nested_for",
+                    "test_precedence_for"
+                ],
+                "failure": []
+            },
+            "PASS_TO_PASS": {
+                "success": [],
+                "failure": []
+            },
+            "FAIL_TO_FAIL": {
+                "success": [],
+                "failure": []
+            },
+            "PASS_TO_FAIL": {
+                "success": [],
+                "failure": []
+            }
+        }
+    }
+}
