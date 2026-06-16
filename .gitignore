@@ -13,3 +13,4 @@ logs/
 out/patches/
 benchmark-policy-gap-export.tgz
 data/nushell__nushell_dataset.jsonl
+data/FOOBAR_AC_531_rustbench_2
