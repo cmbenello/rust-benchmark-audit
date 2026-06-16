@@ -56,13 +56,9 @@ TARGET_REPOS = [
 # Prefixes used to match instance_ids: "org/repo" -> "org__repo"
 _TARGET_PREFIXES = tuple(repo.replace("/", "__") + "-" for repo in TARGET_REPOS)
 
-# Regex grabs a unified-diff blob, anchored on `diff --git` and ending at the
-# first non-diff line (or end of string). This is intentionally permissive —
-# patches may have multiple files, trailing whitespace, etc.
-_DIFF_BLOCK_RE = re.compile(
-    r"(diff --git a/[^\n]+\n(?:(?!\n(?:[^\-\+@diff\s\\ ]|diff --git ))[\s\S])+)",
-    re.MULTILINE,
-)
+# Matches where a unified diff starts; we grab everything from there to the
+# end of the text (or until a clearly non-diff line after all hunks are done).
+_DIFF_START_RE = re.compile(r"diff --git a/")
 
 
 def _instance_id_from_run(run) -> str | None:
@@ -143,9 +139,11 @@ def _extract_patch_from_transcripts(transcripts: Iterable, instance_id: str) -> 
         for j in range(i + 1, min(i + 6, len(msgs))):  # short window
             if getattr(msgs[j], "role", None) == "tool":
                 cand = _msg_text(msgs[j])
-                m = _DIFF_BLOCK_RE.search(cand)
+                m = _DIFF_START_RE.search(cand)
                 if m:
-                    return m.group(1)
+                    patch = cand[m.start():]
+                    patch = re.sub(r'\n\[exit code \d+\]\s*$', '', patch)
+                    return patch
                 # tool result wasn't a diff; keep falling back to the
                 # any-diff scan below.
 
@@ -154,9 +152,11 @@ def _extract_patch_from_transcripts(transcripts: Iterable, instance_id: str) -> 
         text = _msg_text(msgs[i])
         if not text:
             continue
-        m = _DIFF_BLOCK_RE.search(text)
+        m = _DIFF_START_RE.search(text)
         if m:
-            return m.group(1)
+            patch = text[m.start():]
+            patch = re.sub(r'\n\[exit code \d+\]\s*$', '', patch)
+            return patch
 
     return None
 
